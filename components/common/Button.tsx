@@ -1,0 +1,84 @@
+import { Pressable, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+
+interface ButtonProps {
+  title: string;
+  onPress: () => void;
+  variant?: 'primary' | 'secondary' | 'danger';
+  disabled?: boolean;
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+}
+
+export const Button = ({
+  title,
+  onPress,
+  variant = 'primary',
+  disabled = false,
+  style,
+  textStyle,
+}: ButtonProps) => {
+  const getButtonStyle = () => {
+    switch (variant) {
+      case 'secondary':
+        return styles.buttonSecondary;
+      case 'danger':
+        return styles.buttonDanger;
+      default:
+        return styles.buttonPrimary;
+    }
+  };
+
+  return (
+    <Pressable
+      style={({ pressed }) => [
+        styles.button,
+        getButtonStyle(),
+        disabled && styles.buttonDisabled,
+        pressed && styles.buttonPressed,
+        style,
+      ]}
+      onPress={onPress}
+      disabled={disabled}
+    >
+      <Text style={[styles.buttonText, disabled && styles.buttonTextDisabled, textStyle]}>
+        {title}
+      </Text>
+    </Pressable>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonPrimary: {
+    backgroundColor: '#4CAF50',
+  },
+  buttonSecondary: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  buttonDanger: {
+    backgroundColor: '#F44336',
+  },
+  buttonDisabled: {
+    backgroundColor: '#555',
+    opacity: 0.5,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  buttonTextDisabled: {
+    color: '#888',
+  },
+  buttonPressed: {
+    opacity: 0.7,
+  },
+});
