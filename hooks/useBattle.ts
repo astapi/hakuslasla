@@ -4,17 +4,13 @@ import { getDungeon } from '@/data/dungeons';
 import { getRandomEnemy } from '@/data/enemies';
 import { getRandomItem } from '@/data/items';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-
-// ダメージ計算
-const calculateDamage = (atk: number, def: number): number => {
-  const damage = atk - def;
-  return Math.max(1, damage); // 最低ダメージは1
-};
+import { calculateDamage } from '@/core';
 
 // 敵をBattleEnemy形式に変換
 const createBattleEnemy = (enemy: Enemy): BattleEnemy => ({
   id: enemy.id,
   name: enemy.name,
+  image: enemy.image,
   currentHp: enemy.maxHp,
   maxHp: enemy.maxHp,
   atk: enemy.atk,

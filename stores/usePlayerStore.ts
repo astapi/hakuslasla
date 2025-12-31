@@ -8,11 +8,12 @@ import {
   equipmentRepository,
   skillRepository,
 } from '@/db';
-
-// 経験値テーブル（レベルアップに必要な経験値）
-const getExpToNextLevel = (level: number): number => {
-  return level * 50;
-};
+import {
+  INITIAL_STATS,
+  LEVEL_UP_BONUS,
+  getExpToNextLevel,
+  calculateLevelUp,
+} from '@/core';
 
 // 初期装備
 const initialEquipment: Equipment = {
@@ -70,9 +71,9 @@ const initialState: PlayerState = {
   exp: 0,
   expToNextLevel: getExpToNextLevel(1),
   skillPoints: 0,
-  maxHp: 100,
-  atk: 10,
-  def: 5,
+  maxHp: INITIAL_STATS.maxHp,
+  atk: INITIAL_STATS.atk,
+  def: INITIAL_STATS.def,
   equipment: initialEquipment,
   inventory: [],
   unlockedSkills: [],
@@ -125,24 +126,16 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     const state = get();
     if (!state.characterId) return;
 
-    let newExp = state.exp + amount;
-    let newLevel = state.level;
-    let newExpToNext = state.expToNextLevel;
-    let newSkillPoints = state.skillPoints;
-    let newMaxHp = state.maxHp;
-    let newAtk = state.atk;
-    let newDef = state.def;
+    // coreのcalculateLevelUpを使用
+    const levelUpResult = calculateLevelUp(state.level, state.exp, amount);
 
-    // レベルアップ処理
-    while (newExp >= newExpToNext) {
-      newExp -= newExpToNext;
-      newLevel += 1;
-      newExpToNext = getExpToNextLevel(newLevel);
-      newSkillPoints += 1;
-      newMaxHp += 10;
-      newAtk += 2;
-      newDef += 1;
-    }
+    const newLevel = levelUpResult.newLevel;
+    const newExp = levelUpResult.newExp;
+    const newExpToNext = levelUpResult.expToNextLevel;
+    const newSkillPoints = state.skillPoints + levelUpResult.skillPointsGained;
+    const newMaxHp = state.maxHp + levelUpResult.statsGained.maxHp;
+    const newAtk = state.atk + levelUpResult.statsGained.atk;
+    const newDef = state.def + levelUpResult.statsGained.def;
 
     // DBに保存
     await characterRepository.updateStats(state.characterId, {
@@ -326,11 +319,13 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     return true;
   },
 
+  // ロジックはcore/player.tsのcalculateTotalStatsと同一
+  // UI型（Item）とcore型（ItemConfig）の違いのためここで計算
   getTotalStats: () => {
     const state = get();
     let totalAtk = state.atk;
     let totalDef = state.def;
-    let totalMaxHp = state.maxHp;
+    const totalMaxHp = state.maxHp;
 
     Object.values(state.equipment).forEach((item) => {
       if (item) {

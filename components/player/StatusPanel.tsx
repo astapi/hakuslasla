@@ -7,7 +7,10 @@ interface StatusPanelProps {
 }
 
 export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
-  const { level, exp, expToNextLevel, skillPoints, getTotalStats } = usePlayerStore();
+  // 装備・スキル変更時に再レンダリングするため、関連する state を購読
+  const { level, exp, expToNextLevel, skillPoints, maxHp, atk, def, equipment, getTotalStats } = usePlayerStore();
+  void equipment; // 購読のためだけに使用
+  void maxHp; void atk; void def; // スキル取得時の再レンダリング用
   const stats = getTotalStats();
 
   return (

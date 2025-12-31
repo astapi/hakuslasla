@@ -87,6 +87,7 @@ export interface SkillNode {
 export interface Enemy {
   id: string;
   name: string;
+  image: string; // 画像ID
   maxHp: number;
   atk: number;
   def: number;
@@ -128,6 +129,7 @@ export type BattlePhase = 'fighting' | 'victory' | 'defeat' | 'cleared';
 export interface BattleEnemy {
   id: string;
   name: string;
+  image: string;
   currentHp: number;
   maxHp: number;
   atk: number;

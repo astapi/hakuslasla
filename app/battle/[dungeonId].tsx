@@ -40,7 +40,7 @@ export default function BattleScreen() {
   }, [state.phase, dungeonId, router, dungeon, state]);
 
   const handleRetreat = () => {
-    router.replace('/');
+    router.replace('/home');
   };
 
   return (
@@ -66,6 +66,7 @@ export default function BattleScreen() {
               name={state.enemy.name}
               currentHp={state.enemy.currentHp}
               maxHp={state.enemy.maxHp}
+              imageId={state.enemy.image}
             />
           )}
         </View>

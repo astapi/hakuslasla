@@ -4,6 +4,7 @@ export const enemies: Record<string, Enemy> = {
   slime: {
     id: 'slime',
     name: 'スライム',
+    image: 'slime',
     maxHp: 20,
     atk: 5,
     def: 2,
@@ -12,6 +13,7 @@ export const enemies: Record<string, Enemy> = {
   goblin: {
     id: 'goblin',
     name: 'ゴブリン',
+    image: 'goblin',
     maxHp: 30,
     atk: 8,
     def: 3,
@@ -20,6 +22,7 @@ export const enemies: Record<string, Enemy> = {
   wolf: {
     id: 'wolf',
     name: 'オオカミ',
+    image: 'wolf',
     maxHp: 25,
     atk: 10,
     def: 2,
@@ -28,6 +31,7 @@ export const enemies: Record<string, Enemy> = {
   skeleton: {
     id: 'skeleton',
     name: 'スケルトン',
+    image: 'skeleton',
     maxHp: 35,
     atk: 12,
     def: 5,
@@ -36,6 +40,7 @@ export const enemies: Record<string, Enemy> = {
   orc: {
     id: 'orc',
     name: 'オーク',
+    image: 'orc',
     maxHp: 50,
     atk: 15,
     def: 8,
@@ -44,6 +49,7 @@ export const enemies: Record<string, Enemy> = {
   troll: {
     id: 'troll',
     name: 'トロール',
+    image: 'troll',
     maxHp: 80,
     atk: 20,
     def: 10,

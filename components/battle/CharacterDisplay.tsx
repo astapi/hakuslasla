@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image, ImageSourcePropType } from 'react-native';
 import { HPBar } from './HPBar';
+import { playerImages, getMonsterImage } from '@/data/images';
 
 interface CharacterDisplayProps {
   name: string;
@@ -7,6 +8,7 @@ interface CharacterDisplayProps {
   maxHp: number;
   level?: number;
   isPlayer?: boolean;
+  imageId?: string; // モンスターの場合は画像ID
 }
 
 export const CharacterDisplay = ({
@@ -15,11 +17,25 @@ export const CharacterDisplay = ({
   maxHp,
   level,
   isPlayer = false,
+  imageId,
 }: CharacterDisplayProps) => {
+  // 画像ソースを取得
+  const imageSource: ImageSourcePropType | undefined = isPlayer
+    ? playerImages.battle
+    : imageId
+      ? getMonsterImage(imageId)
+      : undefined;
+
   return (
     <View style={[styles.container, isPlayer ? styles.playerContainer : styles.enemyContainer]}>
       <View style={styles.avatarContainer}>
-        <Text style={styles.avatar}>{isPlayer ? '🧙' : '👹'}</Text>
+        {imageSource ? (
+          <Image source={imageSource} style={styles.avatar} resizeMode="contain" />
+        ) : (
+          <View style={styles.avatarPlaceholder}>
+            <Text style={styles.avatarPlaceholderText}>?</Text>
+          </View>
+        )}
       </View>
       <View style={styles.infoContainer}>
         <View style={styles.nameRow}>
@@ -50,7 +66,20 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   avatar: {
-    fontSize: 48,
+    width: 64,
+    height: 64,
+  },
+  avatarPlaceholder: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarPlaceholderText: {
+    fontSize: 24,
+    color: '#aaa',
   },
   infoContainer: {
     width: '100%',
