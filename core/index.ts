@@ -10,6 +10,7 @@ export * from './types';
 export {
   INITIAL_STATS,
   LEVEL_UP_BONUS,
+  INVENTORY_MAX_SIZE,
   getExpToNextLevel,
   calculateLevelUp,
   calculateTotalStats,

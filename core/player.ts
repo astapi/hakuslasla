@@ -29,6 +29,9 @@ export const LEVEL_UP_BONUS = {
   skillPoints: 1,
 };
 
+/** インベントリの最大サイズ */
+export const INVENTORY_MAX_SIZE = 50;
+
 // ========================================
 // 経験値計算
 // ========================================

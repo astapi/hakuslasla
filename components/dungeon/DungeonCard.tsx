@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { Dungeon } from '@/types';
+import { DungeonListItem } from '@/types';
 
 interface DungeonCardProps {
-  dungeon: Dungeon;
+  dungeon: DungeonListItem;
   onPress: () => void;
 }
 
@@ -20,7 +20,10 @@ export const DungeonCard = ({ dungeon, onPress }: DungeonCardProps) => {
         <Text style={styles.description} numberOfLines={2}>
           {dungeon.description}
         </Text>
-        <Text style={styles.floors}>全{dungeon.maxFloor}階</Text>
+        <View style={styles.metaRow}>
+          <Text style={styles.floors}>全{dungeon.maxFloor}階</Text>
+          <Text style={styles.level}>推奨Lv.{dungeon.recommendedLevel}</Text>
+        </View>
       </View>
       <View style={styles.arrowContainer}>
         <Text style={styles.arrow}>→</Text>
@@ -66,9 +69,18 @@ const styles = StyleSheet.create({
     color: '#aaa',
     marginBottom: 4,
   },
+  metaRow: {
+    flexDirection: 'row',
+    gap: 12,
+  },
   floors: {
     fontSize: 12,
     color: '#4CAF50',
+    fontWeight: 'bold',
+  },
+  level: {
+    fontSize: 12,
+    color: '#FFD700',
     fontWeight: 'bold',
   },
   arrowContainer: {

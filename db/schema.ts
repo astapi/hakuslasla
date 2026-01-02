@@ -1,4 +1,4 @@
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 export const CREATE_TABLES_SQL = `
 -- キャラクター基本情報
@@ -16,23 +16,26 @@ CREATE TABLE IF NOT EXISTS characters (
 );
 
 -- 装備（キャラクターごと、スロットごとに1レコード）
+-- item_data: Item全体をJSON形式で保存（MOD含む）
 CREATE TABLE IF NOT EXISTS character_equipment (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   character_id INTEGER NOT NULL,
   slot TEXT NOT NULL,
-  item_id TEXT,
+  item_data TEXT,
   FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
   UNIQUE(character_id, slot)
 );
 
--- インベントリ（キャラクターごと、スタック対応）
+-- インベントリ（キャラクターごと、MOD付きItem個別保存）
+-- instance_id: 各アイテムのユニークID
+-- item_data: Item全体をJSON形式で保存（MOD含む）
 CREATE TABLE IF NOT EXISTS character_inventory (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   character_id INTEGER NOT NULL,
-  item_id TEXT NOT NULL,
-  quantity INTEGER NOT NULL DEFAULT 1,
+  instance_id TEXT NOT NULL,
+  item_data TEXT NOT NULL,
   FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
-  UNIQUE(character_id, item_id)
+  UNIQUE(character_id, instance_id)
 );
 
 -- 習得済みスキル

@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Button } from '@/components/common/Button';
 import { storageRepository } from '@/db';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-import { getItem } from '@/data/items';
+import { getItemBase, createItemInstance } from '@/data/items';
 import { StorageItem } from '@/types';
 
 export default function StorageScreen() {
@@ -37,7 +37,11 @@ export default function StorageScreen() {
   const handleWithdraw = async (itemId: string) => {
     const success = await storageRepository.withdraw(itemId, 1);
     if (success) {
-      await addToInventory(itemId, 1);
+      // 倉庫アイテムはMODなし（modCount = 0）でItemインスタンスを作成
+      const item = createItemInstance(itemId, 0);
+      if (item) {
+        await addToInventory(item);
+      }
       await fetchStorage();
     }
   };
@@ -55,22 +59,22 @@ export default function StorageScreen() {
         ) : (
           <View style={styles.itemList}>
             {storageItems.map((storageItem) => {
-              const item = getItem(storageItem.itemId);
-              if (!item) return null;
+              const itemBase = getItemBase(storageItem.itemId);
+              if (!itemBase) return null;
               return (
                 <View key={storageItem.itemId} style={styles.itemCard}>
                   <View style={styles.itemInfo}>
                     <View style={styles.itemHeader}>
-                      <Text style={styles.itemName}>{item.name}</Text>
+                      <Text style={styles.itemName}>{itemBase.name}</Text>
                       {storageItem.quantity > 1 && (
                         <Text style={styles.itemQuantity}>x{storageItem.quantity}</Text>
                       )}
                     </View>
-                    <Text style={styles.itemSlot}>{item.slot}</Text>
+                    <Text style={styles.itemSlot}>{itemBase.slot}</Text>
                   </View>
                   <View style={styles.itemStats}>
-                    {item.atk > 0 && <Text style={styles.statText}>ATK +{item.atk}</Text>}
-                    {item.def > 0 && <Text style={styles.statText}>DEF +{item.def}</Text>}
+                    {itemBase.atk > 0 && <Text style={styles.statText}>ATK +{itemBase.atk}</Text>}
+                    {itemBase.def > 0 && <Text style={styles.statText}>DEF +{itemBase.def}</Text>}
                   </View>
                   <View style={styles.itemActions}>
                     <Pressable

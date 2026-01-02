@@ -1,10 +1,15 @@
 import { useReducer, useCallback, useEffect, useRef } from 'react';
-import { BattleState, BattleAction, BattleEnemy, Item, Enemy } from '@/types';
+import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState } from '@/types';
 import { getDungeon } from '@/data/dungeons';
 import { getRandomEnemy } from '@/data/enemies';
-import { getRandomItem } from '@/data/items';
+import { tryUniqueDrop, rollDropCount, rollDropItems, ModEffects } from '@/data/items';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculateDamage } from '@/core';
+
+// 毒ダメージ計算（攻撃ダメージの50%）
+const POISON_DAMAGE_RATIO = 0.5;
+// 毒の持続ターン数
+const POISON_DURATION = 5;
 
 // 敵をBattleEnemy形式に変換
 const createBattleEnemy = (enemy: Enemy): BattleEnemy => ({
@@ -16,6 +21,7 @@ const createBattleEnemy = (enemy: Enemy): BattleEnemy => ({
   atk: enemy.atk,
   def: enemy.def,
   exp: enemy.exp,
+  uniqueDrop: enemy.uniqueDrop,
 });
 
 // 初期状態を作成
@@ -28,6 +34,7 @@ const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState
     playerCurrentHp: playerMaxHp,
     playerMaxHp: playerMaxHp,
     enemy: null,
+    enemyPoison: null,
     phase: 'fighting',
     battleLog: [],
     droppedItems: [],
@@ -59,6 +66,9 @@ const battleReducer = (state: BattleState, action: BattleAction): BattleState =>
     case 'PLAYER_ATTACK':
       if (!state.enemy) return state;
       const newEnemyHp = state.enemy.currentHp - action.damage;
+      const attackMessage = action.isCritical
+        ? `クリティカルヒット！ ${state.enemy.name}に${action.damage}ダメージ！`
+        : `プレイヤーの攻撃！ ${state.enemy.name}に${action.damage}ダメージ！`;
       return {
         ...state,
         enemy: {
@@ -69,8 +79,8 @@ const battleReducer = (state: BattleState, action: BattleAction): BattleState =>
           ...state.battleLog,
           {
             id: logIdCounter++,
-            message: `プレイヤーの攻撃！ ${state.enemy.name}に${action.damage}ダメージ！`,
-            type: 'player_attack',
+            message: attackMessage,
+            type: action.isCritical ? 'critical' : 'player_attack',
           },
         ],
       };
@@ -91,17 +101,26 @@ const battleReducer = (state: BattleState, action: BattleAction): BattleState =>
       };
 
     case 'ENEMY_DEFEATED':
+      const defeatLogs = [
+        {
+          id: logIdCounter++,
+          message: `${state.enemy?.name}を倒した！ 経験値${action.exp}を獲得！`,
+          type: 'victory' as const,
+        },
+      ];
+      // ドロップアイテムがあればログに追加
+      for (const item of action.droppedItems) {
+        defeatLogs.push({
+          id: logIdCounter++,
+          message: `${item.name}をドロップした！`,
+          type: 'victory' as const,
+        });
+      }
       return {
         ...state,
         totalExpGained: state.totalExpGained + action.exp,
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            message: `${state.enemy?.name}を倒した！ 経験値${action.exp}を獲得！`,
-            type: 'victory',
-          },
-        ],
+        droppedItems: [...state.droppedItems, ...action.droppedItems],
+        battleLog: [...state.battleLog, ...defeatLogs],
       };
 
     case 'PLAYER_DEFEATED':
@@ -123,6 +142,7 @@ const battleReducer = (state: BattleState, action: BattleAction): BattleState =>
         ...state,
         currentFloor: state.currentFloor + 1,
         enemy: action.enemy,
+        enemyPoison: null, // 次の敵には毒状態をリセット
         phase: 'fighting',
         battleLog: [
           ...state.battleLog,
@@ -143,7 +163,6 @@ const battleReducer = (state: BattleState, action: BattleAction): BattleState =>
       return {
         ...state,
         phase: 'cleared',
-        droppedItems: action.items,
         battleLog: [
           ...state.battleLog,
           {
@@ -166,14 +185,94 @@ const battleReducer = (state: BattleState, action: BattleAction): BattleState =>
         ],
       };
 
+    case 'APPLY_POISON':
+      return {
+        ...state,
+        enemyPoison: {
+          damagePerTurn: action.damagePerTurn,
+          remainingTurns: action.turns,
+        },
+        battleLog: [
+          ...state.battleLog,
+          {
+            id: logIdCounter++,
+            message: `${state.enemy?.name}に毒を付与した！（${action.damagePerTurn}ダメージ x ${action.turns}ターン）`,
+            type: 'poison',
+          },
+        ],
+      };
+
+    case 'POISON_DAMAGE':
+      if (!state.enemy || !state.enemyPoison) return state;
+      const poisonedEnemyHp = Math.max(0, state.enemy.currentHp - action.damage);
+      const newPoisonState: PoisonState | null = state.enemyPoison.remainingTurns > 1
+        ? { ...state.enemyPoison, remainingTurns: state.enemyPoison.remainingTurns - 1 }
+        : null;
+      return {
+        ...state,
+        enemy: {
+          ...state.enemy,
+          currentHp: poisonedEnemyHp,
+        },
+        enemyPoison: newPoisonState,
+        battleLog: [
+          ...state.battleLog,
+          {
+            id: logIdCounter++,
+            message: `毒ダメージ！ ${state.enemy.name}に${action.damage}ダメージ！${newPoisonState ? `（残り${newPoisonState.remainingTurns}ターン）` : '（毒が切れた）'}`,
+            type: 'poison',
+          },
+        ],
+      };
+
+    case 'HP_REGEN':
+      const healedHp = Math.min(state.playerMaxHp, state.playerCurrentHp + action.amount);
+      const actualHeal = healedHp - state.playerCurrentHp;
+      if (actualHeal <= 0) return state; // 既にMAXHPなら何もしない
+      return {
+        ...state,
+        playerCurrentHp: healedHp,
+        battleLog: [
+          ...state.battleLog,
+          {
+            id: logIdCounter++,
+            message: `HP回復！ HPが${actualHeal}回復した！`,
+            type: 'heal',
+          },
+        ],
+      };
+
     default:
       return state;
   }
 };
 
 export const useBattle = (dungeonId: string) => {
-  const { getTotalStats, gainExp, addToInventory } = usePlayerStore();
+  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment } = usePlayerStore();
   const stats = getTotalStats();
+
+  // 装備品から戦闘時MOD効果を取得（ATK/DEFはgetTotalStats()で反映済み）
+  const getModEffectsFromEquipment = useCallback((): Omit<ModEffects, 'atkBonus' | 'defBonus'> => {
+    const combined = {
+      hpRegen: 0,
+      poisonChance: 0,
+      criticalChance: 0,
+    };
+
+    Object.values(equipment).forEach((item) => {
+      if (item && item.mods) {
+        for (const mod of item.mods) {
+          switch (mod.type) {
+            case 'hp_regen': combined.hpRegen += mod.value; break;
+            case 'poison_chance': combined.poisonChance += mod.value; break;
+            case 'critical_chance': combined.criticalChance += mod.value; break;
+          }
+        }
+      }
+    });
+
+    return combined;
+  }, [equipment]);
 
   const [state, dispatch] = useReducer(
     battleReducer,
@@ -188,7 +287,7 @@ export const useBattle = (dungeonId: string) => {
     const dungeon = getDungeon(dungeonId);
     if (!dungeon) return;
 
-    const enemy = getRandomEnemy(dungeon.enemies);
+    const enemy = getRandomEnemy(dungeon.monsters);
     if (!enemy) return;
 
     dispatch({ type: 'START_BATTLE', enemy: createBattleEnemy(enemy) });
@@ -201,32 +300,119 @@ export const useBattle = (dungeonId: string) => {
     isProcessingRef.current = true;
     const stats = getTotalStats();
     const dungeon = getDungeon(dungeonId);
+    const modEffects = getModEffectsFromEquipment();
 
-    // プレイヤーの攻撃
-    const playerDamage = calculateDamage(stats.atk, state.enemy.def);
-    dispatch({ type: 'PLAYER_ATTACK', damage: playerDamage });
+    // ターン開始時のHP回復（MOD効果）
+    if (modEffects.hpRegen > 0 && state.playerCurrentHp < state.playerMaxHp) {
+      dispatch({ type: 'HP_REGEN', amount: modEffects.hpRegen });
+    }
 
-    const enemyHpAfterPlayerAttack = state.enemy.currentHp - playerDamage;
+    // 毒ダメージ処理（敵に毒が付与されている場合）
+    let currentEnemyHp = state.enemy.currentHp;
+    if (state.enemyPoison && state.enemyPoison.remainingTurns > 0) {
+      dispatch({ type: 'POISON_DAMAGE', damage: state.enemyPoison.damagePerTurn });
+      currentEnemyHp -= state.enemyPoison.damagePerTurn;
+      // 毒で倒れた場合
+      if (currentEnemyHp <= 0) {
+        // ドロップアイテム収集
+        const droppedItems: Item[] = [];
+
+        // 1. ユニークドロップ判定（モンスター固有）
+        if (state.enemy.uniqueDrop) {
+          const uniqueItem = tryUniqueDrop(
+            state.enemy.uniqueDrop.itemId,
+            state.enemy.uniqueDrop.dropRate
+          );
+          if (uniqueItem) {
+            droppedItems.push(uniqueItem);
+          }
+        }
+
+        // 2. 通常ドロップ判定（ドロップテーブルから）
+        if (dungeon) {
+          const dropCount = rollDropCount();
+          const normalDrops = rollDropItems(dungeon.dropTable, dropCount);
+          droppedItems.push(...normalDrops);
+        }
+
+        dispatch({
+          type: 'ENEMY_DEFEATED',
+          exp: state.enemy.exp,
+          droppedItems,
+        });
+
+        if (state.currentFloor >= state.maxFloor) {
+          dispatch({ type: 'DUNGEON_CLEARED' });
+        } else {
+          if (dungeon) {
+            const nextEnemy = getRandomEnemy(dungeon.monsters);
+            if (nextEnemy) {
+              setTimeout(() => {
+                dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy) });
+                isProcessingRef.current = false;
+              }, 500);
+              return;
+            }
+          }
+        }
+        isProcessingRef.current = false;
+        return;
+      }
+    }
+
+    // クリティカル判定（MOD効果）
+    const isCritical = modEffects.criticalChance > 0 && Math.random() * 100 < modEffects.criticalChance;
+    const criticalMultiplier = isCritical ? 2 : 1;
+
+    // プレイヤーの攻撃（ATK/DEFボーナスはgetTotalStats()で既に反映済み）
+    const baseDamage = calculateDamage(stats.atk, state.enemy.def);
+    const playerDamage = Math.floor(baseDamage * criticalMultiplier);
+    dispatch({ type: 'PLAYER_ATTACK', damage: playerDamage, isCritical });
+
+    const enemyHpAfterPlayerAttack = currentEnemyHp - playerDamage;
+
+    // 毒付与判定（MOD効果、敵がまだ毒になっていない場合のみ）
+    if (!state.enemyPoison && modEffects.poisonChance > 0 && Math.random() * 100 < modEffects.poisonChance) {
+      const poisonDamage = Math.max(1, Math.floor(playerDamage * POISON_DAMAGE_RATIO));
+      dispatch({ type: 'APPLY_POISON', damagePerTurn: poisonDamage, turns: POISON_DURATION });
+    }
 
     // 敵を倒したかチェック
     if (enemyHpAfterPlayerAttack <= 0) {
-      dispatch({ type: 'ENEMY_DEFEATED', exp: state.enemy.exp });
+      // ドロップアイテム収集
+      const droppedItems: Item[] = [];
+
+      // 1. ユニークドロップ判定（モンスター固有）
+      if (state.enemy.uniqueDrop) {
+        const uniqueItem = tryUniqueDrop(
+          state.enemy.uniqueDrop.itemId,
+          state.enemy.uniqueDrop.dropRate
+        );
+        if (uniqueItem) {
+          droppedItems.push(uniqueItem);
+        }
+      }
+
+      // 2. 通常ドロップ判定（ドロップテーブルから）
+      if (dungeon) {
+        const dropCount = rollDropCount();
+        const normalDrops = rollDropItems(dungeon.dropTable, dropCount);
+        droppedItems.push(...normalDrops);
+      }
+
+      dispatch({
+        type: 'ENEMY_DEFEATED',
+        exp: state.enemy.exp,
+        droppedItems,
+      });
 
       // 最終階層かチェック
       if (state.currentFloor >= state.maxFloor) {
-        // ダンジョンクリア
-        const droppedItems: Item[] = [];
-        if (dungeon) {
-          const item = getRandomItem(dungeon.dropTable);
-          if (item) {
-            droppedItems.push(item);
-          }
-        }
-        dispatch({ type: 'DUNGEON_CLEARED', items: droppedItems });
+        dispatch({ type: 'DUNGEON_CLEARED' });
       } else {
         // 次の階層へ
         if (dungeon) {
-          const nextEnemy = getRandomEnemy(dungeon.enemies);
+          const nextEnemy = getRandomEnemy(dungeon.monsters);
           if (nextEnemy) {
             setTimeout(() => {
               dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy) });
@@ -240,7 +426,7 @@ export const useBattle = (dungeonId: string) => {
       return;
     }
 
-    // 敵の攻撃
+    // 敵の攻撃（DEFボーナスはgetTotalStats()で既に反映済み）
     setTimeout(() => {
       const enemyDamage = calculateDamage(state.enemy!.atk, stats.def);
       dispatch({ type: 'ENEMY_ATTACK', damage: enemyDamage });
@@ -254,7 +440,7 @@ export const useBattle = (dungeonId: string) => {
 
       isProcessingRef.current = false;
     }, 500);
-  }, [state, getTotalStats, dungeonId]);
+  }, [state, getTotalStats, dungeonId, getModEffectsFromEquipment]);
 
   // 自動戦闘
   useEffect(() => {
@@ -278,14 +464,23 @@ export const useBattle = (dungeonId: string) => {
         if (state.totalExpGained > 0) {
           await gainExp(state.totalExpGained);
         }
-        // ドロップアイテムをインベントリに追加
-        for (const item of state.droppedItems) {
-          await addToInventory(item.id, 1);
+        // ドロップアイテムをインベントリに追加（空き枠分のみ）
+        const availableSpace = getInventorySpace();
+        const itemsToAdd = state.droppedItems.slice(0, availableSpace);
+
+        for (const item of itemsToAdd) {
+          await addToInventory(item);
+        }
+
+        // 追加できなかったアイテム数（ログは結果画面で表示）
+        const discardedCount = state.droppedItems.length - itemsToAdd.length;
+        if (discardedCount > 0) {
+          console.log(`[Battle] ${discardedCount}個のアイテムがインベントリ満杯で破棄されました`);
         }
       }
     };
     saveResults();
-  }, [state.phase, state.totalExpGained, state.droppedItems, gainExp, addToInventory]);
+  }, [state.phase, state.totalExpGained, state.droppedItems, gainExp, addToInventory, getInventorySpace]);
 
   // 初回マウント時に戦闘開始
   useEffect(() => {

@@ -1,67 +1,49 @@
-import { Enemy } from '@/types';
+import { Enemy, MonsterSpawn } from '@/types';
+import monstersData from './json/monsters.json';
 
-export const enemies: Record<string, Enemy> = {
-  slime: {
-    id: 'slime',
-    name: 'スライム',
-    image: 'slime',
-    maxHp: 20,
-    atk: 5,
-    def: 2,
-    exp: 10,
-  },
-  goblin: {
-    id: 'goblin',
-    name: 'ゴブリン',
-    image: 'goblin',
-    maxHp: 30,
-    atk: 8,
-    def: 3,
-    exp: 15,
-  },
-  wolf: {
-    id: 'wolf',
-    name: 'オオカミ',
-    image: 'wolf',
-    maxHp: 25,
-    atk: 10,
-    def: 2,
-    exp: 12,
-  },
-  skeleton: {
-    id: 'skeleton',
-    name: 'スケルトン',
-    image: 'skeleton',
-    maxHp: 35,
-    atk: 12,
-    def: 5,
-    exp: 20,
-  },
-  orc: {
-    id: 'orc',
-    name: 'オーク',
-    image: 'orc',
-    maxHp: 50,
-    atk: 15,
-    def: 8,
-    exp: 30,
-  },
-  troll: {
-    id: 'troll',
-    name: 'トロール',
-    image: 'troll',
-    maxHp: 80,
-    atk: 20,
-    def: 10,
-    exp: 50,
-  },
-};
+// モンスターデータ
+const monsters: Record<string, Enemy> = monstersData.monsters as Record<string, Enemy>;
 
 export const getEnemy = (id: string): Enemy | undefined => {
-  return enemies[id];
+  return monsters[id];
 };
 
-export const getRandomEnemy = (enemyIds: string[]): Enemy | undefined => {
+export const getAllEnemies = (): Enemy[] => {
+  return Object.values(monsters);
+};
+
+/**
+ * 出現確率に基づいてランダムな敵を選択
+ * @param monsterSpawns モンスター出現設定の配列
+ * @returns 選択された敵、または見つからない場合はundefined
+ */
+export const getRandomEnemy = (monsterSpawns: MonsterSpawn[]): Enemy | undefined => {
+  if (monsterSpawns.length === 0) return undefined;
+
+  // 合計確率を計算
+  const totalRate = monsterSpawns.reduce((sum, spawn) => sum + spawn.spawnRate, 0);
+
+  // ランダム値を生成（0〜totalRate）
+  const random = Math.random() * totalRate;
+
+  // 累積確率で選択
+  let cumulative = 0;
+  for (const spawn of monsterSpawns) {
+    cumulative += spawn.spawnRate;
+    if (random < cumulative) {
+      return getEnemy(spawn.monsterId);
+    }
+  }
+
+  // フォールバック（最後のモンスターを返す）
+  return getEnemy(monsterSpawns[monsterSpawns.length - 1].monsterId);
+};
+
+/**
+ * 敵IDの配列からランダムな敵を選択（旧API互換）
+ * @deprecated getRandomEnemy(monsterSpawns) を使用してください
+ */
+export const getRandomEnemyByIds = (enemyIds: string[]): Enemy | undefined => {
   const randomIndex = Math.floor(Math.random() * enemyIds.length);
   return getEnemy(enemyIds[randomIndex]);
 };

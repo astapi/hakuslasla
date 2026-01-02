@@ -1,0 +1,184 @@
+{
+  "monsters": {
+    "slime": {
+      "id": "slime",
+      "name": "スライム",
+      "image": "slime",
+      "maxHp": 20,
+      "atk": 5,
+      "def": 2,
+      "exp": 10,
+      "uniqueDrop": {
+        "itemId": "division_core",
+        "dropRate": 5
+      }
+    },
+    "wild_rabbit": {
+      "id": "wild_rabbit",
+      "name": "キラーラビット",
+      "image": "wild_rabbit",
+      "maxHp": 15,
+      "atk": 6,
+      "def": 1,
+      "exp": 8,
+      "uniqueDrop": null
+    },
+    "goblin": {
+      "id": "goblin",
+      "name": "ゴブリン",
+      "image": "goblin",
+      "maxHp": 30,
+      "atk": 8,
+      "def": 3,
+      "exp": 15,
+      "uniqueDrop": null
+    },
+    "bee": {
+      "id": "bee",
+      "name": "キラービー",
+      "image": "bee",
+      "maxHp": 12,
+      "atk": 10,
+      "def": 1,
+      "exp": 12,
+      "uniqueDrop": {
+        "itemId": "poison_needle_ring",
+        "dropRate": 5
+      }
+    },
+    "wolf": {
+      "id": "wolf",
+      "name": "オオカミ",
+      "image": "wolf",
+      "maxHp": 25,
+      "atk": 10,
+      "def": 2,
+      "exp": 14,
+      "uniqueDrop": {
+        "itemId": "wolf_fang",
+        "dropRate": 5
+      }
+    },
+    "bat": {
+      "id": "bat",
+      "name": "ジャイアントバット",
+      "image": "bat",
+      "maxHp": 28,
+      "atk": 12,
+      "def": 3,
+      "exp": 18,
+      "uniqueDrop": {
+        "itemId": "dark_night_mantle",
+        "dropRate": 3
+      }
+    },
+    "goblin_warrior": {
+      "id": "goblin_warrior",
+      "name": "ゴブリンウォリアー",
+      "image": "goblin_warrior",
+      "maxHp": 45,
+      "atk": 14,
+      "def": 6,
+      "exp": 25,
+      "uniqueDrop": null
+    },
+    "skeleton": {
+      "id": "skeleton",
+      "name": "スケルトン",
+      "image": "skeleton",
+      "maxHp": 35,
+      "atk": 12,
+      "def": 5,
+      "exp": 20,
+      "uniqueDrop": {
+        "itemId": "bone_sword",
+        "dropRate": 3
+      }
+    },
+    "rock_lizard": {
+      "id": "rock_lizard",
+      "name": "岩トカゲ",
+      "image": "rock_lizard",
+      "maxHp": 50,
+      "atk": 11,
+      "def": 10,
+      "exp": 22,
+      "uniqueDrop": null
+    },
+    "orc": {
+      "id": "orc",
+      "name": "オーク",
+      "image": "orc",
+      "maxHp": 60,
+      "atk": 16,
+      "def": 8,
+      "exp": 30,
+      "uniqueDrop": {
+        "itemId": "war_ogre_belt",
+        "dropRate": 3
+      }
+    },
+    "skeleton_knight": {
+      "id": "skeleton_knight",
+      "name": "スケルトンナイト",
+      "image": "skeleton_knight",
+      "maxHp": 70,
+      "atk": 18,
+      "def": 12,
+      "exp": 40,
+      "uniqueDrop": null
+    },
+    "golem": {
+      "id": "golem",
+      "name": "ゴーレム",
+      "image": "golem",
+      "maxHp": 100,
+      "atk": 20,
+      "def": 15,
+      "exp": 50,
+      "uniqueDrop": {
+        "itemId": "core_stone",
+        "dropRate": 2
+      }
+    },
+    "mummy": {
+      "id": "mummy",
+      "name": "ミイラ",
+      "image": "mummy",
+      "maxHp": 65,
+      "atk": 22,
+      "def": 8,
+      "exp": 45,
+      "uniqueDrop": {
+        "itemId": "curse_bandage",
+        "dropRate": 2
+      }
+    },
+    "lich": {
+      "id": "lich",
+      "name": "リッチ",
+      "image": "lich",
+      "maxHp": 55,
+      "atk": 28,
+      "def": 6,
+      "exp": 60,
+      "uniqueDrop": {
+        "itemId": "lost_grimoire",
+        "dropRate": 2
+      }
+    },
+    "gargoyle": {
+      "id": "gargoyle",
+      "name": "ガーゴイル",
+      "image": "gargoyle",
+      "maxHp": 80,
+      "atk": 24,
+      "def": 14,
+      "exp": 55,
+      "uniqueDrop": {
+        "itemId": "stone_wing_boots",
+        "dropRate": 2
+      }
+    }
+  }
+}

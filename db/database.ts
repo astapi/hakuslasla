@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import { CREATE_TABLES_SQL, SCHEMA_VERSION, EQUIPMENT_SLOTS } from './schema';
+import { getCurrentVersion, runMigrations } from './migrations';
 
 const DATABASE_NAME = 'hakusla_dungeon.db';
 
@@ -17,19 +18,24 @@ export const initializeDatabase = async (): Promise<void> => {
   // 外部キー制約を有効化
   await database.execAsync('PRAGMA foreign_keys = ON;');
 
-  // テーブル作成
-  await database.execAsync(CREATE_TABLES_SQL);
+  // 現在のバージョンを確認
+  const currentVersion = await getCurrentVersion(database);
 
-  // スキーマバージョンを確認・設定
-  const versionResult = await database.getFirstAsync<{ version: number }>(
-    'SELECT version FROM schema_version LIMIT 1'
-  );
-
-  if (!versionResult) {
+  if (currentVersion === 0) {
+    // 新規インストール: テーブル作成して最新バージョンを設定
+    console.log('[DB] Fresh install, creating tables...');
+    await database.execAsync(CREATE_TABLES_SQL);
     await database.runAsync(
       'INSERT INTO schema_version (version) VALUES (?)',
       SCHEMA_VERSION
     );
+    console.log(`[DB] Initialized at version ${SCHEMA_VERSION}`);
+  } else if (currentVersion < SCHEMA_VERSION) {
+    // アップグレード: マイグレーション実行
+    console.log(`[DB] Upgrading from version ${currentVersion} to ${SCHEMA_VERSION}...`);
+    await runMigrations(database, SCHEMA_VERSION);
+  } else {
+    console.log(`[DB] Already at version ${currentVersion}`);
   }
 };
 
@@ -40,7 +46,7 @@ export const createCharacterWithEquipmentSlots = async (
   // 装備スロットを初期化（全て未装備）
   for (const slot of EQUIPMENT_SLOTS) {
     await database.runAsync(
-      'INSERT INTO character_equipment (character_id, slot, item_id) VALUES (?, ?, NULL)',
+      'INSERT INTO character_equipment (character_id, slot, item_data) VALUES (?, ?, NULL)',
       characterId,
       slot
     );

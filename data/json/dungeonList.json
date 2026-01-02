@@ -1,0 +1,25 @@
+{
+  "dungeons": [
+    {
+      "id": "grassland",
+      "name": "始まりの草原",
+      "description": "冒険者が最初に訪れる穏やかな草原。弱いモンスターが生息している。",
+      "recommendedLevel": 1,
+      "maxFloor": 5
+    },
+    {
+      "id": "cave",
+      "name": "地底洞窟",
+      "description": "地下深くに広がる暗い洞窟。中級のモンスターが潜んでいる。",
+      "recommendedLevel": 5,
+      "maxFloor": 7
+    },
+    {
+      "id": "ruins",
+      "name": "忘却の遺跡",
+      "description": "古代文明の遺跡。強力なモンスターが徘徊する危険な場所。",
+      "recommendedLevel": 10,
+      "maxFloor": 10
+    }
+  ]
+}

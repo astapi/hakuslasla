@@ -2,11 +2,11 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { DungeonCard } from '@/components/dungeon/DungeonCard';
 import { Button } from '@/components/common/Button';
-import { getAllDungeons } from '@/data/dungeons';
+import { getDungeonList } from '@/data/dungeons';
 
 export default function DungeonSelectScreen() {
   const router = useRouter();
-  const dungeons = getAllDungeons();
+  const dungeons = getDungeonList();
 
   const handleDungeonSelect = (dungeonId: string) => {
     // 戦闘開始時はダンジョン選択を履歴から消す

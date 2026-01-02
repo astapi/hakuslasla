@@ -1,0 +1,308 @@
+{
+  "items": {
+    "_comment": "=== 共通ドロップ（全ダンジョン） ===",
+
+    "rusted_sword": {
+      "id": "rusted_sword",
+      "name": "朽ちた剣",
+      "slot": "weapon",
+      "atk": 2,
+      "def": 0
+    },
+    "wooden_club": {
+      "id": "wooden_club",
+      "name": "木製クラブ",
+      "slot": "weapon",
+      "atk": 3,
+      "def": 0
+    },
+    "hunter_dagger": {
+      "id": "hunter_dagger",
+      "name": "狩人の短剣",
+      "slot": "weapon",
+      "atk": 4,
+      "def": 0
+    },
+    "worn_bow": {
+      "id": "worn_bow",
+      "name": "使い古しの弓",
+      "slot": "weapon",
+      "atk": 3,
+      "def": 1
+    },
+    "cloth_clothes": {
+      "id": "cloth_clothes",
+      "name": "布の服",
+      "slot": "armor",
+      "atk": 0,
+      "def": 2
+    },
+    "leather_hat": {
+      "id": "leather_hat",
+      "name": "革の帽子",
+      "slot": "armor",
+      "atk": 0,
+      "def": 1
+    },
+    "leather_gloves": {
+      "id": "leather_gloves",
+      "name": "革の手袋",
+      "slot": "gloves",
+      "atk": 1,
+      "def": 1
+    },
+    "leather_boots": {
+      "id": "leather_boots",
+      "name": "革のブーツ",
+      "slot": "boots",
+      "atk": 0,
+      "def": 2
+    },
+    "copper_ring": {
+      "id": "copper_ring",
+      "name": "銅の指輪",
+      "slot": "accessory",
+      "atk": 1,
+      "def": 1
+    },
+    "traveler_amulet": {
+      "id": "traveler_amulet",
+      "name": "旅人の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 2
+    },
+
+    "_comment2": "=== 始まりの草原 固有ドロップ ===",
+
+    "grassland_sword": {
+      "id": "grassland_sword",
+      "name": "草原の剣",
+      "slot": "weapon",
+      "atk": 5,
+      "def": 0
+    },
+    "light_leather": {
+      "id": "light_leather",
+      "name": "軽量レザー",
+      "slot": "armor",
+      "atk": 0,
+      "def": 4
+    },
+    "rabbit_boots": {
+      "id": "rabbit_boots",
+      "name": "うさぎのブーツ",
+      "slot": "boots",
+      "atk": 1,
+      "def": 3
+    },
+
+    "_comment3": "=== 始まりの草原 ユニークドロップ ===",
+
+    "division_core": {
+      "id": "division_core",
+      "name": "分裂核",
+      "slot": "accessory",
+      "atk": 2,
+      "def": 2,
+      "fixedMods": [
+        { "type": "hp_regen", "value": 20 }
+      ]
+    },
+    "wolf_fang": {
+      "id": "wolf_fang",
+      "name": "狼の牙",
+      "slot": "weapon",
+      "atk": 6,
+      "def": 0,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 15 }
+      ]
+    },
+    "poison_needle_ring": {
+      "id": "poison_needle_ring",
+      "name": "毒針の指輪",
+      "slot": "accessory",
+      "atk": 4,
+      "def": 0,
+      "fixedMods": [
+        { "type": "poison_chance", "value": 60 }
+      ]
+    },
+
+    "_comment4": "=== 地底洞窟 固有ドロップ ===",
+
+    "cave_iron_sword": {
+      "id": "cave_iron_sword",
+      "name": "洞窟の鉄剣",
+      "slot": "weapon",
+      "atk": 8,
+      "def": 0
+    },
+    "bone_shield": {
+      "id": "bone_shield",
+      "name": "骨の盾",
+      "slot": "armor",
+      "atk": 0,
+      "def": 6
+    },
+    "bat_mantle": {
+      "id": "bat_mantle",
+      "name": "バットマント",
+      "slot": "armor",
+      "atk": 1,
+      "def": 5
+    },
+    "underground_charm": {
+      "id": "underground_charm",
+      "name": "地底のお守り",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 4
+    },
+    "warrior_ring": {
+      "id": "warrior_ring",
+      "name": "戦士の指輪",
+      "slot": "accessory",
+      "atk": 3,
+      "def": 1
+    },
+
+    "_comment5": "=== 地底洞窟 ユニークドロップ ===",
+
+    "bone_sword": {
+      "id": "bone_sword",
+      "name": "骨の剣",
+      "slot": "weapon",
+      "atk": 10,
+      "def": 0,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 5 }
+      ]
+    },
+    "war_ogre_belt": {
+      "id": "war_ogre_belt",
+      "name": "戦鬼の腰帯",
+      "slot": "accessory",
+      "atk": 4,
+      "def": 2,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 3 },
+        { "type": "def_bonus", "value": 3 }
+      ]
+    },
+    "dark_night_mantle": {
+      "id": "dark_night_mantle",
+      "name": "闇夜のマント",
+      "slot": "armor",
+      "atk": 2,
+      "def": 7,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 5 }
+      ]
+    },
+
+    "_comment6": "=== 忘却の遺跡 固有ドロップ ===",
+
+    "ruins_magic_sword": {
+      "id": "ruins_magic_sword",
+      "name": "遺跡の魔剣",
+      "slot": "weapon",
+      "atk": 12,
+      "def": 0
+    },
+    "cursed_robe": {
+      "id": "cursed_robe",
+      "name": "呪われたローブ",
+      "slot": "armor",
+      "atk": 3,
+      "def": 8
+    },
+    "gargoyle_boots": {
+      "id": "gargoyle_boots",
+      "name": "ガーゴイルブーツ",
+      "slot": "boots",
+      "atk": 2,
+      "def": 6
+    },
+    "ancient_ring": {
+      "id": "ancient_ring",
+      "name": "古代の指輪",
+      "slot": "accessory",
+      "atk": 4,
+      "def": 4
+    },
+    "oblivion_amulet": {
+      "id": "oblivion_amulet",
+      "name": "忘却の護符",
+      "slot": "accessory",
+      "atk": 2,
+      "def": 6
+    },
+
+    "_comment7": "=== 忘却の遺跡 ユニークドロップ ===",
+
+    "core_stone": {
+      "id": "core_stone",
+      "name": "心核石",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 10,
+      "fixedMods": [
+        { "type": "hp_regen", "value": 10 },
+        { "type": "def_bonus", "value": 5 }
+      ]
+    },
+    "curse_bandage": {
+      "id": "curse_bandage",
+      "name": "呪縛の包帯",
+      "slot": "gloves",
+      "atk": 5,
+      "def": 4,
+      "fixedMods": [
+        { "type": "poison_chance", "value": 30 }
+      ]
+    },
+    "lost_grimoire": {
+      "id": "lost_grimoire",
+      "name": "失われた魔導書",
+      "slot": "accessory",
+      "atk": 8,
+      "def": 0,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 25 }
+      ]
+    },
+    "stone_wing_boots": {
+      "id": "stone_wing_boots",
+      "name": "石翼のブーツ",
+      "slot": "boots",
+      "atk": 3,
+      "def": 8,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 5 }
+      ]
+    }
+  },
+
+  "commonDrops": [
+    "rusted_sword",
+    "wooden_club",
+    "hunter_dagger",
+    "worn_bow",
+    "cloth_clothes",
+    "leather_hat",
+    "leather_gloves",
+    "leather_boots",
+    "copper_ring",
+    "traveler_amulet"
+  ],
+
+  "modConfigs": [
+    { "type": "atk_bonus", "minValue": 1, "maxValue": 5, "weight": 20 },
+    { "type": "def_bonus", "minValue": 1, "maxValue": 5, "weight": 20 },
+    { "type": "hp_regen", "minValue": 1, "maxValue": 10, "weight": 15 },
+    { "type": "poison_chance", "minValue": 5, "maxValue": 30, "weight": 10 },
+    { "type": "critical_chance", "minValue": 5, "maxValue": 20, "weight": 15 }
+  ]
+}

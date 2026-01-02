@@ -1,7 +1,6 @@
 import { create } from 'zustand';
-import { Equipment, EquipmentSlot, Item, InventoryItem } from '@/types';
+import { Equipment, EquipmentSlot, Item } from '@/types';
 import { getSkillNode } from '@/data/skills';
-import { getItem } from '@/data/items';
 import {
   characterRepository,
   inventoryRepository,
@@ -10,7 +9,7 @@ import {
 } from '@/db';
 import {
   INITIAL_STATS,
-  LEVEL_UP_BONUS,
+  INVENTORY_MAX_SIZE,
   getExpToNextLevel,
   calculateLevelUp,
 } from '@/core';
@@ -36,7 +35,7 @@ interface PlayerState {
   atk: number;
   def: number;
   equipment: Equipment;
-  inventory: InventoryItem[];
+  inventory: Item[]; // MOD付きItemの配列
   unlockedSkills: string[];
   isLoaded: boolean;
 }
@@ -48,16 +47,20 @@ interface PlayerActions {
   gainExp: (amount: number) => Promise<void>;
   // スキルを取得
   unlockSkill: (skillId: string) => Promise<boolean>;
-  // 装備を変更（インベントリから）
-  equipItem: (itemId: string) => Promise<void>;
+  // 装備を変更（インベントリから、instanceIdで指定）
+  equipItem: (instanceId: string) => Promise<void>;
   // 装備を解除（インベントリへ）
   unequipItem: (slot: EquipmentSlot) => Promise<void>;
-  // アイテムをインベントリに追加
-  addToInventory: (itemId: string, quantity?: number) => Promise<void>;
-  // アイテムをインベントリから削除
-  removeFromInventory: (itemId: string, quantity?: number) => Promise<boolean>;
+  // アイテムをインベントリに追加（MOD付きItem）、制限超過時はfalse
+  addToInventory: (item: Item) => Promise<boolean>;
+  // アイテムをインベントリから削除（instanceIdで指定）
+  removeFromInventory: (instanceId: string) => Promise<boolean>;
   // 計算されたステータスを取得
   getTotalStats: () => { maxHp: number; atk: number; def: number };
+  // インベントリの空き数を取得
+  getInventorySpace: () => number;
+  // インベントリがいっぱいかどうか
+  isInventoryFull: () => boolean;
   // データを再読み込み
   refresh: () => Promise<void>;
   // クリア
@@ -87,19 +90,16 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     const character = await characterRepository.getById(characterId);
     if (!character) throw new Error('Character not found');
 
-    // 装備を読み込み
+    // 装備を読み込み（Item JSONを直接取得）
     const equipmentRecords = await equipmentRepository.getAll(characterId);
     const equipment: Equipment = { ...initialEquipment };
     for (const record of equipmentRecords) {
-      if (record.itemId) {
-        const item = getItem(record.itemId);
-        if (item) {
-          equipment[record.slot] = item;
-        }
+      if (record.item) {
+        equipment[record.slot] = record.item;
       }
     }
 
-    // インベントリを読み込み
+    // インベントリを読み込み（Item[]を直接取得）
     const inventory = await inventoryRepository.getAll(characterId);
 
     // スキルを読み込み
@@ -197,48 +197,32 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     return true;
   },
 
-  equipItem: async (itemId: string) => {
+  equipItem: async (instanceId: string) => {
     const state = get();
     if (!state.characterId) return;
 
-    const item = getItem(itemId);
+    // インベントリからアイテムを探す
+    const item = state.inventory.find((i) => i.instanceId === instanceId);
     if (!item) return;
-
-    // インベントリにアイテムがあるか確認
-    const inventoryItem = state.inventory.find((i) => i.itemId === itemId);
-    if (!inventoryItem || inventoryItem.quantity < 1) return;
 
     // 現在の装備を取得
     const oldItem = state.equipment[item.slot];
 
     // インベントリからアイテムを削除
-    await inventoryRepository.removeItem(state.characterId, itemId, 1);
+    await inventoryRepository.removeItem(state.characterId, instanceId);
 
     // 古い装備があればインベントリに戻す
     if (oldItem) {
-      await inventoryRepository.addItem(state.characterId, oldItem.id, 1);
+      await inventoryRepository.addItem(state.characterId, oldItem);
     }
 
     // 新しい装備をセット
-    await equipmentRepository.equip(state.characterId, item.slot, itemId);
+    await equipmentRepository.equip(state.characterId, item.slot, item);
 
     // メモリの状態を更新
-    const newInventory = [...state.inventory];
-    const idx = newInventory.findIndex((i) => i.itemId === itemId);
-    if (idx !== -1) {
-      if (newInventory[idx].quantity === 1) {
-        newInventory.splice(idx, 1);
-      } else {
-        newInventory[idx] = { ...newInventory[idx], quantity: newInventory[idx].quantity - 1 };
-      }
-    }
+    const newInventory = state.inventory.filter((i) => i.instanceId !== instanceId);
     if (oldItem) {
-      const oldIdx = newInventory.findIndex((i) => i.itemId === oldItem.id);
-      if (oldIdx !== -1) {
-        newInventory[oldIdx] = { ...newInventory[oldIdx], quantity: newInventory[oldIdx].quantity + 1 };
-      } else {
-        newInventory.push({ itemId: oldItem.id, quantity: 1 });
-      }
+      newInventory.push(oldItem);
     }
 
     set({
@@ -261,66 +245,49 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     await equipmentRepository.unequip(state.characterId, slot);
 
     // インベントリに追加
-    await inventoryRepository.addItem(state.characterId, item.id, 1);
+    await inventoryRepository.addItem(state.characterId, item);
 
     // メモリの状態を更新
-    const newInventory = [...state.inventory];
-    const idx = newInventory.findIndex((i) => i.itemId === item.id);
-    if (idx !== -1) {
-      newInventory[idx] = { ...newInventory[idx], quantity: newInventory[idx].quantity + 1 };
-    } else {
-      newInventory.push({ itemId: item.id, quantity: 1 });
-    }
-
     set({
       equipment: {
         ...state.equipment,
         [slot]: null,
       },
-      inventory: newInventory,
+      inventory: [...state.inventory, item],
     });
   },
 
-  addToInventory: async (itemId: string, quantity: number = 1) => {
-    const state = get();
-    if (!state.characterId) return;
-
-    await inventoryRepository.addItem(state.characterId, itemId, quantity);
-
-    const newInventory = [...state.inventory];
-    const idx = newInventory.findIndex((i) => i.itemId === itemId);
-    if (idx !== -1) {
-      newInventory[idx] = { ...newInventory[idx], quantity: newInventory[idx].quantity + quantity };
-    } else {
-      newInventory.push({ itemId, quantity });
-    }
-
-    set({ inventory: newInventory });
-  },
-
-  removeFromInventory: async (itemId: string, quantity: number = 1): Promise<boolean> => {
+  addToInventory: async (item: Item): Promise<boolean> => {
     const state = get();
     if (!state.characterId) return false;
 
-    const success = await inventoryRepository.removeItem(state.characterId, itemId, quantity);
-    if (!success) return false;
-
-    const newInventory = [...state.inventory];
-    const idx = newInventory.findIndex((i) => i.itemId === itemId);
-    if (idx !== -1) {
-      if (newInventory[idx].quantity <= quantity) {
-        newInventory.splice(idx, 1);
-      } else {
-        newInventory[idx] = { ...newInventory[idx], quantity: newInventory[idx].quantity - quantity };
-      }
+    // インベントリ制限チェック
+    if (state.inventory.length >= INVENTORY_MAX_SIZE) {
+      return false;
     }
 
-    set({ inventory: newInventory });
+    await inventoryRepository.addItem(state.characterId, item);
+
+    set({ inventory: [...state.inventory, item] });
+    return true;
+  },
+
+  removeFromInventory: async (instanceId: string): Promise<boolean> => {
+    const state = get();
+    if (!state.characterId) return false;
+
+    const success = await inventoryRepository.removeItem(state.characterId, instanceId);
+    if (!success) return false;
+
+    set({
+      inventory: state.inventory.filter((i) => i.instanceId !== instanceId),
+    });
     return true;
   },
 
   // ロジックはcore/player.tsのcalculateTotalStatsと同一
   // UI型（Item）とcore型（ItemConfig）の違いのためここで計算
+  // ATK/DEF MODも装備ステータスとして加算
   getTotalStats: () => {
     const state = get();
     let totalAtk = state.atk;
@@ -331,6 +298,13 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       if (item) {
         totalAtk += item.atk;
         totalDef += item.def;
+        // MODからATK/DEFボーナスを加算
+        if (item.mods) {
+          for (const mod of item.mods) {
+            if (mod.type === 'atk_bonus') totalAtk += mod.value;
+            if (mod.type === 'def_bonus') totalDef += mod.value;
+          }
+        }
       }
     });
 
@@ -339,6 +313,16 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       atk: totalAtk,
       def: totalDef,
     };
+  },
+
+  getInventorySpace: () => {
+    const state = get();
+    return INVENTORY_MAX_SIZE - state.inventory.length;
+  },
+
+  isInventoryFull: () => {
+    const state = get();
+    return state.inventory.length >= INVENTORY_MAX_SIZE;
   },
 
   refresh: async () => {

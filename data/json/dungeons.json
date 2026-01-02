@@ -1,0 +1,103 @@
+{
+  "dungeons": {
+    "grassland": {
+      "id": "grassland",
+      "name": "始まりの草原",
+      "description": "冒険者が最初に訪れる穏やかな草原。弱いモンスターが生息している。",
+      "maxFloor": 5,
+      "recommendedLevel": 1,
+      "monsters": [
+        { "monsterId": "slime", "spawnRate": 30 },
+        { "monsterId": "wild_rabbit", "spawnRate": 25 },
+        { "monsterId": "goblin", "spawnRate": 20 },
+        { "monsterId": "bee", "spawnRate": 15 },
+        { "monsterId": "wolf", "spawnRate": 10 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "rusted_sword", "dropRate": 10 },
+          { "itemId": "wooden_club", "dropRate": 10 },
+          { "itemId": "hunter_dagger", "dropRate": 8 },
+          { "itemId": "worn_bow", "dropRate": 8 },
+          { "itemId": "cloth_clothes", "dropRate": 10 },
+          { "itemId": "leather_hat", "dropRate": 10 },
+          { "itemId": "leather_gloves", "dropRate": 10 },
+          { "itemId": "leather_boots", "dropRate": 10 },
+          { "itemId": "copper_ring", "dropRate": 8 },
+          { "itemId": "traveler_amulet", "dropRate": 8 }
+        ],
+        "dungeon": [
+          { "itemId": "grassland_sword", "dropRate": 15 },
+          { "itemId": "light_leather", "dropRate": 15 },
+          { "itemId": "rabbit_boots", "dropRate": 15 }
+        ]
+      }
+    },
+    "cave": {
+      "id": "cave",
+      "name": "地底洞窟",
+      "description": "地下深くに広がる暗い洞窟。中級のモンスターが潜んでいる。",
+      "maxFloor": 7,
+      "recommendedLevel": 5,
+      "monsters": [
+        { "monsterId": "bat", "spawnRate": 25 },
+        { "monsterId": "goblin_warrior", "spawnRate": 20 },
+        { "monsterId": "skeleton", "spawnRate": 25 },
+        { "monsterId": "rock_lizard", "spawnRate": 15 },
+        { "monsterId": "orc", "spawnRate": 15 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "rusted_sword", "dropRate": 5 },
+          { "itemId": "wooden_club", "dropRate": 5 },
+          { "itemId": "hunter_dagger", "dropRate": 8 },
+          { "itemId": "worn_bow", "dropRate": 8 },
+          { "itemId": "cloth_clothes", "dropRate": 5 },
+          { "itemId": "leather_hat", "dropRate": 5 },
+          { "itemId": "leather_gloves", "dropRate": 8 },
+          { "itemId": "leather_boots", "dropRate": 8 },
+          { "itemId": "copper_ring", "dropRate": 8 },
+          { "itemId": "traveler_amulet", "dropRate": 8 }
+        ],
+        "dungeon": [
+          { "itemId": "cave_iron_sword", "dropRate": 15 },
+          { "itemId": "bone_shield", "dropRate": 12 },
+          { "itemId": "bat_mantle", "dropRate": 12 },
+          { "itemId": "underground_charm", "dropRate": 10 },
+          { "itemId": "warrior_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "ruins": {
+      "id": "ruins",
+      "name": "忘却の遺跡",
+      "description": "古代文明の遺跡。強力なモンスターが徘徊する危険な場所。",
+      "maxFloor": 10,
+      "recommendedLevel": 10,
+      "monsters": [
+        { "monsterId": "skeleton_knight", "spawnRate": 25 },
+        { "monsterId": "golem", "spawnRate": 15 },
+        { "monsterId": "mummy", "spawnRate": 25 },
+        { "monsterId": "lich", "spawnRate": 15 },
+        { "monsterId": "gargoyle", "spawnRate": 20 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "hunter_dagger", "dropRate": 5 },
+          { "itemId": "worn_bow", "dropRate": 5 },
+          { "itemId": "leather_gloves", "dropRate": 5 },
+          { "itemId": "leather_boots", "dropRate": 5 },
+          { "itemId": "copper_ring", "dropRate": 5 },
+          { "itemId": "traveler_amulet", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "ruins_magic_sword", "dropRate": 15 },
+          { "itemId": "cursed_robe", "dropRate": 12 },
+          { "itemId": "gargoyle_boots", "dropRate": 12 },
+          { "itemId": "ancient_ring", "dropRate": 10 },
+          { "itemId": "oblivion_amulet", "dropRate": 10 }
+        ]
+      }
+    }
+  }
+}

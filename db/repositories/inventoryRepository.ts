@@ -1,81 +1,127 @@
 import { getDatabase } from '../database';
-import { InventoryItem } from '@/types';
+import { Item } from '@/types';
+import { getItemBase } from '@/data/items';
 
 interface InventoryRow {
-  item_id: string;
-  quantity: number;
+  instance_id: string;
+  item_data: string;
+}
+
+// マイグレーション済みアイテムのフラグ付き型
+interface MigratedItem extends Partial<Item> {
+  id: string;
+  instanceId: string;
+  mods: Item['mods'];
+  _needsMigration?: boolean;
+}
+
+/**
+ * マイグレーション済みアイテムをマスターデータから補完
+ */
+function completeItemFromMaster(data: MigratedItem): Item | null {
+  if (!data._needsMigration) {
+    // マイグレーション不要な正常なItem
+    return data as Item;
+  }
+
+  // マスターデータから補完
+  const base = getItemBase(data.id);
+  if (!base) {
+    console.warn(`[Migration] Item master not found: ${data.id}`);
+    return null;
+  }
+
+  return {
+    ...base,
+    instanceId: data.instanceId,
+    mods: data.mods || base.fixedMods || [],
+  };
 }
 
 export const inventoryRepository = {
-  async getAll(characterId: number): Promise<InventoryItem[]> {
+  /**
+   * キャラクターのインベントリを全取得
+   */
+  async getAll(characterId: number): Promise<Item[]> {
     const db = await getDatabase();
     const rows = await db.getAllAsync<InventoryRow>(
-      'SELECT item_id, quantity FROM character_inventory WHERE character_id = ?',
+      'SELECT instance_id, item_data FROM character_inventory WHERE character_id = ?',
       characterId
     );
-    return rows.map((row) => ({
-      itemId: row.item_id,
-      quantity: row.quantity,
-    }));
+
+    const items: Item[] = [];
+    const needsUpdate: Item[] = [];
+
+    for (const row of rows) {
+      const data = JSON.parse(row.item_data) as MigratedItem;
+      const item = completeItemFromMaster(data);
+
+      if (item) {
+        items.push(item);
+        // マイグレーション済みアイテムは更新が必要
+        if (data._needsMigration) {
+          needsUpdate.push(item);
+        }
+      }
+    }
+
+    // マイグレーション済みアイテムをDBに書き戻し（次回から補完不要に）
+    for (const item of needsUpdate) {
+      await db.runAsync(
+        'UPDATE character_inventory SET item_data = ? WHERE character_id = ? AND instance_id = ?',
+        JSON.stringify(item),
+        characterId,
+        item.instanceId
+      );
+    }
+
+    return items;
   },
 
-  async addItem(characterId: number, itemId: string, quantity: number = 1): Promise<void> {
+  /**
+   * アイテムをインベントリに追加（MOD付きItemインスタンス）
+   */
+  async addItem(characterId: number, item: Item): Promise<void> {
     const db = await getDatabase();
-    // UPSERT: 既存なら数量追加、なければ新規作成
     await db.runAsync(
-      `INSERT INTO character_inventory (character_id, item_id, quantity)
-       VALUES (?, ?, ?)
-       ON CONFLICT(character_id, item_id) DO UPDATE SET quantity = quantity + excluded.quantity`,
+      `INSERT INTO character_inventory (character_id, instance_id, item_data)
+       VALUES (?, ?, ?)`,
       characterId,
-      itemId,
-      quantity
+      item.instanceId,
+      JSON.stringify(item)
     );
   },
 
-  async removeItem(characterId: number, itemId: string, quantity: number = 1): Promise<boolean> {
+  /**
+   * アイテムをインベントリから削除（instanceIdで指定）
+   */
+  async removeItem(characterId: number, instanceId: string): Promise<boolean> {
     const db = await getDatabase();
-
-    // 現在の数量を確認
-    const current = await db.getFirstAsync<{ quantity: number }>(
-      'SELECT quantity FROM character_inventory WHERE character_id = ? AND item_id = ?',
+    const result = await db.runAsync(
+      'DELETE FROM character_inventory WHERE character_id = ? AND instance_id = ?',
       characterId,
-      itemId
+      instanceId
     );
-
-    if (!current || current.quantity < quantity) {
-      return false; // 足りない
-    }
-
-    if (current.quantity === quantity) {
-      // 全部削除
-      await db.runAsync(
-        'DELETE FROM character_inventory WHERE character_id = ? AND item_id = ?',
-        characterId,
-        itemId
-      );
-    } else {
-      // 数量を減らす
-      await db.runAsync(
-        'UPDATE character_inventory SET quantity = quantity - ? WHERE character_id = ? AND item_id = ?',
-        quantity,
-        characterId,
-        itemId
-      );
-    }
-
-    return true;
+    return result.changes > 0;
   },
 
-  async getItemQuantity(characterId: number, itemId: string): Promise<number> {
+  /**
+   * 特定のアイテムを取得
+   */
+  async getItem(characterId: number, instanceId: string): Promise<Item | null> {
     const db = await getDatabase();
-    const row = await db.getFirstAsync<{ quantity: number }>(
-      'SELECT quantity FROM character_inventory WHERE character_id = ? AND item_id = ?',
+    const row = await db.getFirstAsync<InventoryRow>(
+      'SELECT instance_id, item_data FROM character_inventory WHERE character_id = ? AND instance_id = ?',
       characterId,
-      itemId
+      instanceId
     );
-    return row?.quantity ?? 0;
+    if (!row) return null;
+    return JSON.parse(row.item_data) as Item;
   },
 
+  /**
+   * インベントリをクリア
+   */
   async clear(characterId: number): Promise<void> {
     const db = await getDatabase();
     await db.runAsync(

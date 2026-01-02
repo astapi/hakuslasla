@@ -31,10 +31,34 @@ export const EquipmentSlots = () => {
                 {item?.name || '-'}
               </Text>
               {item && (
-                <Text style={styles.itemStats}>
-                  {item.atk > 0 ? `+${item.atk}ATK ` : ''}
-                  {item.def > 0 ? `+${item.def}DEF` : ''}
-                </Text>
+                <>
+                  {(() => {
+                    // ATK/DEF MODを加算した合計値
+                    let totalAtk = item.atk;
+                    let totalDef = item.def;
+                    let otherModCount = 0;
+                    if (item.mods) {
+                      for (const mod of item.mods) {
+                        if (mod.type === 'atk_bonus') totalAtk += mod.value;
+                        else if (mod.type === 'def_bonus') totalDef += mod.value;
+                        else otherModCount++;
+                      }
+                    }
+                    return (
+                      <>
+                        <Text style={styles.itemStats}>
+                          {totalAtk > 0 ? `+${totalAtk}ATK ` : ''}
+                          {totalDef > 0 ? `+${totalDef}DEF` : ''}
+                        </Text>
+                        {otherModCount > 0 && (
+                          <View style={styles.modBadge}>
+                            <Text style={styles.modBadgeText}>MOD x{otherModCount}</Text>
+                          </View>
+                        )}
+                      </>
+                    );
+                  })()}
+                </>
               )}
             </View>
           );
@@ -94,5 +118,17 @@ const styles = StyleSheet.create({
     fontSize: 8,
     color: '#4CAF50',
     textAlign: 'center',
+  },
+  modBadge: {
+    backgroundColor: 'rgba(255, 215, 0, 0.3)',
+    borderRadius: 4,
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+    marginTop: 2,
+  },
+  modBadgeText: {
+    fontSize: 7,
+    color: '#FFD700',
+    fontWeight: 'bold',
   },
 });

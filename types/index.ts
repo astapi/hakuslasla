@@ -34,11 +34,7 @@ export interface UpdateCharacterStats {
   def?: number;
 }
 
-// インベントリアイテム（スタック対応）
-export interface InventoryItem {
-  itemId: string;
-  quantity: number;
-}
+// インベントリアイテムはItem[]として保存（各アイテムが独自のMODを持つ）
 
 // 倉庫アイテム（スタック対応）
 export interface StorageItem {
@@ -46,23 +42,54 @@ export interface StorageItem {
   quantity: number;
 }
 
-// DBの装備レコード
-export interface EquipmentRecord {
-  slot: EquipmentSlot;
-  itemId: string | null;
-}
+// DBの装備レコードはequipmentRepositoryで定義
 
 // ========================================
 // Game Types
 // ========================================
 
-// アイテム定義
-export interface Item {
+// MODタイプ
+export type ModType =
+  | 'atk_bonus'      // ATK+X
+  | 'def_bonus'      // DEF+X
+  | 'hp_regen'       // 毎ターンHP X回復
+  | 'poison_chance'  // 毒付与確率+X%
+  | 'critical_chance'; // クリティカル確率+X%
+
+// MOD定義
+export interface ItemMod {
+  type: ModType;
+  value: number;
+}
+
+// MOD設定（ランダム生成用）
+export interface ModConfig {
+  type: ModType;
+  minValue: number;
+  maxValue: number;
+  weight: number; // 出現確率の重み
+}
+
+// アイテム基本定義（マスターデータ）
+export interface ItemBase {
   id: string;
   name: string;
   slot: EquipmentSlot;
   atk: number;
   def: number;
+  fixedMods?: ItemMod[]; // ユニークアイテムの固有MOD
+}
+
+// アイテムインスタンス（MOD付き）
+export interface Item extends ItemBase {
+  instanceId: string;  // ユニークなインスタンスID
+  mods: ItemMod[];     // 付与されたMOD（固有MOD + ランダムMOD）
+}
+
+// 毒状態
+export interface PoisonState {
+  damagePerTurn: number;
+  remainingTurns: number;
 }
 
 // 装備中アイテム
@@ -83,7 +110,13 @@ export interface SkillNode {
   requiredSkillId: string | null; // 前提スキルのID（nullなら最初から取得可能）
 }
 
-// 敵定義
+// ユニークドロップ設定
+export interface UniqueDrop {
+  itemId: string;
+  dropRate: number; // ドロップ確率（%）
+}
+
+// 敵定義（モンスター）
 export interface Enemy {
   id: string;
   name: string;
@@ -92,16 +125,45 @@ export interface Enemy {
   atk: number;
   def: number;
   exp: number;
+  uniqueDrop: UniqueDrop | null; // モンスター固有ドロップ
 }
 
-// ダンジョン定義
+// モンスター出現設定
+export interface MonsterSpawn {
+  monsterId: string;
+  spawnRate: number; // 出現確率（%）
+}
+
+// アイテムドロップ設定
+export interface ItemDrop {
+  itemId: string;
+  dropRate: number; // ドロップ確率（%）
+}
+
+// ダンジョンドロップテーブル
+export interface DungeonDropTable {
+  common: ItemDrop[];  // 共通ドロップ
+  dungeon: ItemDrop[]; // ダンジョン固有ドロップ
+}
+
+// ダンジョン定義（詳細）
 export interface Dungeon {
   id: string;
   name: string;
   description: string;
   maxFloor: number;
-  enemies: string[]; // 出現する敵のIDリスト
-  dropTable: string[]; // ドロップするアイテムのIDリスト
+  recommendedLevel: number;
+  monsters: MonsterSpawn[];
+  dropTable: DungeonDropTable;
+}
+
+// ダンジョンリスト用（選択画面用）
+export interface DungeonListItem {
+  id: string;
+  name: string;
+  description: string;
+  recommendedLevel: number;
+  maxFloor: number;
 }
 
 // プレイヤーの基本ステータス
@@ -132,6 +194,7 @@ export interface BattleEnemy {
   image: string;
   currentHp: number;
   maxHp: number;
+  uniqueDrop: UniqueDrop | null;
   atk: number;
   def: number;
   exp: number;
@@ -141,7 +204,7 @@ export interface BattleEnemy {
 export interface BattleLogEntry {
   id: number;
   message: string;
-  type: 'player_attack' | 'enemy_attack' | 'victory' | 'defeat' | 'floor_clear' | 'info';
+  type: 'player_attack' | 'enemy_attack' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'critical' | 'heal';
 }
 
 // 戦闘状態（useReducer用）
@@ -152,6 +215,7 @@ export interface BattleState {
   playerCurrentHp: number;
   playerMaxHp: number;
   enemy: BattleEnemy | null;
+  enemyPoison: PoisonState | null; // 敵の毒状態
   phase: BattlePhase;
   battleLog: BattleLogEntry[];
   droppedItems: Item[];
@@ -161,13 +225,16 @@ export interface BattleState {
 // 戦闘アクション
 export type BattleAction =
   | { type: 'START_BATTLE'; enemy: BattleEnemy }
-  | { type: 'PLAYER_ATTACK'; damage: number }
+  | { type: 'PLAYER_ATTACK'; damage: number; isCritical?: boolean }
   | { type: 'ENEMY_ATTACK'; damage: number }
-  | { type: 'ENEMY_DEFEATED'; exp: number }
+  | { type: 'ENEMY_DEFEATED'; exp: number; droppedItems: Item[] } // 複数アイテム対応
   | { type: 'PLAYER_DEFEATED' }
   | { type: 'NEXT_FLOOR'; enemy: BattleEnemy }
-  | { type: 'DUNGEON_CLEARED'; items: Item[] }
-  | { type: 'ADD_LOG'; entry: Omit<BattleLogEntry, 'id'> };
+  | { type: 'DUNGEON_CLEARED' }
+  | { type: 'ADD_LOG'; entry: Omit<BattleLogEntry, 'id'> }
+  | { type: 'APPLY_POISON'; damagePerTurn: number; turns: number }
+  | { type: 'POISON_DAMAGE'; damage: number }
+  | { type: 'HP_REGEN'; amount: number };
 
 // 結果画面用のパラメータ
 export interface BattleResult {
