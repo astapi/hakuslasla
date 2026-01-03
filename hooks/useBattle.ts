@@ -1,4 +1,4 @@
-import { useReducer, useCallback, useEffect, useRef } from 'react';
+import { useReducer, useCallback, useEffect, useRef, useState } from 'react';
 import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState } from '@/types';
 import { getDungeon } from '@/data/dungeons';
 import { getRandomEnemy } from '@/data/enemies';
@@ -279,8 +279,14 @@ export const useBattle = (dungeonId: string) => {
     createInitialState(dungeonId, stats.maxHp)
   );
 
+  const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isProcessingRef = useRef(false);
+
+  // 一時停止の切り替え
+  const togglePause = useCallback(() => {
+    setIsPaused((prev) => !prev);
+  }, []);
 
   // 戦闘開始
   const startBattle = useCallback(() => {
@@ -444,7 +450,7 @@ export const useBattle = (dungeonId: string) => {
 
   // 自動戦闘
   useEffect(() => {
-    if (state.phase !== 'fighting' || !state.enemy) return;
+    if (state.phase !== 'fighting' || !state.enemy || isPaused) return;
 
     timerRef.current = setTimeout(() => {
       executeTurn();
@@ -455,7 +461,7 @@ export const useBattle = (dungeonId: string) => {
         clearTimeout(timerRef.current);
       }
     };
-  }, [state.phase, state.enemy, state.playerCurrentHp, state.battleLog.length, executeTurn]);
+  }, [state.phase, state.enemy, state.playerCurrentHp, state.battleLog.length, executeTurn, isPaused]);
 
   // 戦闘終了時に経験値を付与
   useEffect(() => {
@@ -492,5 +498,7 @@ export const useBattle = (dungeonId: string) => {
   return {
     state,
     startBattle,
+    isPaused,
+    togglePause,
   };
 };

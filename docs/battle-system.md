@@ -2,7 +2,7 @@
 
 ## 概要
 
-完全自動戦闘RPG。プレイヤー操作は「撤退」のみで、1秒ごとに自動でターンが進行します。
+完全自動戦闘RPG。プレイヤー操作は「一時停止」と「撤退」のみで、1秒ごとに自動でターンが進行します。
 
 ## ファイル構成
 
@@ -150,15 +150,28 @@ useEffect(() => {
 
 ```typescript
 useEffect(() => {
-  if (state.phase !== 'fighting' || !state.enemy) return;
+  if (state.phase !== 'fighting' || !state.enemy || isPaused) return;
 
   timerRef.current = setTimeout(() => {
     executeTurn();
   }, 1000);  // 1秒ごとにターン実行
 
   return () => clearTimeout(timerRef.current);
-}, [state.phase, state.enemy, state.playerCurrentHp, state.battleLog.length]);
+}, [state.phase, state.enemy, state.playerCurrentHp, state.battleLog.length, isPaused]);
 ```
+
+### 一時停止機能
+
+```typescript
+const [isPaused, setIsPaused] = useState(false);
+
+const togglePause = useCallback(() => {
+  setIsPaused((prev) => !prev);
+}, []);
+```
+
+- 一時停止中は自動戦闘タイマーが停止
+- 「再開」ボタンで戦闘を再開
 
 ### 1ターンの処理フロー
 
@@ -670,7 +683,7 @@ useEffect(() => {
 
 | 特徴 | 説明 |
 |------|------|
-| 完全自動戦闘 | プレイヤー操作不要（撤退のみ可能） |
+| 完全自動戦闘 | プレイヤー操作不要（一時停止・撤退のみ可能） |
 | MOD効果 | 装備のランダムMODで戦闘に変化 |
 | 複数階層 | 同一ダンジョン内で連続戦闘 |
 | 詳細ログ | 毒、クリティカル、回復など色分け表示 |

@@ -23,10 +23,10 @@ export const INITIAL_STATS: Stats = {
 
 /** レベルアップ時の上昇値 */
 export const LEVEL_UP_BONUS = {
-  maxHp: 10,
-  atk: 2,
-  def: 1,
-  skillPoints: 1,
+  maxHp: 0,       // ステータス強化はスキルツリーで行う
+  atk: 0,         // ステータス強化はスキルツリーで行う
+  def: 0,         // ステータス強化はスキルツリーで行う
+  skillPoints: 1, // スキルポイントのみ獲得
 };
 
 /** インベントリの最大サイズ */

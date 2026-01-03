@@ -13,7 +13,7 @@ import { getDungeon } from '@/data/dungeons';
 export default function BattleScreen() {
   const { dungeonId } = useLocalSearchParams<{ dungeonId: string }>();
   const router = useRouter();
-  const { state } = useBattle(dungeonId || '');
+  const { state, isPaused, togglePause } = useBattle(dungeonId || '');
   const { level } = usePlayerStore();
   const dungeon = getDungeon(dungeonId || '');
 
@@ -72,7 +72,9 @@ export default function BattleScreen() {
         </View>
 
         {state.phase === 'fighting' && (
-          <Text style={styles.fightingText}>戦闘中...</Text>
+          <Text style={styles.fightingText}>
+            {isPaused ? '一時停止中' : '戦闘中...'}
+          </Text>
         )}
         {state.phase === 'victory' && (
           <Text style={styles.victoryText}>勝利！</Text>
@@ -97,8 +99,17 @@ export default function BattleScreen() {
         <EquipmentSlots />
 
         {state.phase === 'fighting' && (
-          <View style={styles.retreatButton}>
-            <Button title="撤退する" onPress={handleRetreat} variant="danger" />
+          <View style={styles.actionButtons}>
+            <View style={styles.buttonWrapper}>
+              <Button
+                title={isPaused ? '再開' : '一時停止'}
+                onPress={togglePause}
+                variant="secondary"
+              />
+            </View>
+            <View style={styles.buttonWrapper}>
+              <Button title="撤退する" onPress={handleRetreat} variant="danger" />
+            </View>
           </View>
         )}
       </View>
@@ -166,7 +177,12 @@ const styles = StyleSheet.create({
   spacer: {
     height: 12,
   },
-  retreatButton: {
+  actionButtons: {
+    flexDirection: 'row',
+    gap: 12,
     marginTop: 16,
+  },
+  buttonWrapper: {
+    flex: 1,
   },
 });

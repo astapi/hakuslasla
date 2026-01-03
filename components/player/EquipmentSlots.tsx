@@ -1,14 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot } from '@/types';
-
-const slotLabels: Record<EquipmentSlot, string> = {
-  weapon: '武器',
-  armor: '防具',
-  gloves: '手袋',
-  boots: '靴',
-  accessory: 'アクセ',
-};
+import { getSlotIcon, getSlotLabel } from '@/data/itemIcons';
 
 export const EquipmentSlots = () => {
   const { equipment } = usePlayerStore();
@@ -23,10 +16,8 @@ export const EquipmentSlots = () => {
           const item = equipment[slot];
           return (
             <View key={slot} style={styles.slotItem}>
-              <View style={styles.slotIcon}>
-                <Text style={styles.slotIconText}>{slotLabels[slot].charAt(0)}</Text>
-              </View>
-              <Text style={styles.slotLabel}>{slotLabels[slot]}</Text>
+              <Image source={getSlotIcon(slot)} style={styles.slotIcon} />
+              <Text style={styles.slotLabel}>{getSlotLabel(slot)}</Text>
               <Text style={styles.itemName} numberOfLines={1}>
                 {item?.name || '-'}
               </Text>
@@ -91,18 +82,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   slotIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 28,
+    height: 28,
     marginBottom: 4,
-  },
-  slotIconText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#fff',
   },
   slotLabel: {
     fontSize: 10,
