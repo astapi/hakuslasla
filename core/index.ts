@@ -17,7 +17,11 @@ export {
   calculateBaseStatsForLevel,
   getPlayerCombatStats,
   createDefaultPlayerConfig,
+  PASSIVE_ROUTES,
+  PASSIVE_PRESETS,
 } from './player';
+
+export type { PassivePresetKey } from './player';
 
 // 戦闘関連
 export {

@@ -1,0 +1,141 @@
+{
+  "startNodeId": "start",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "冒険者の素質",
+      "description": "HP +30, ATK +5",
+      "effect": { "hp": 30, "atk": 5 },
+      "requiredNodes": [],
+      "position": { "x": 0, "y": 0 }
+    },
+    {
+      "id": "atk_1",
+      "name": "攻撃強化 I",
+      "description": "ATK +5",
+      "effect": { "atk": 5 },
+      "requiredNodes": ["start"],
+      "position": { "x": -1, "y": 1 }
+    },
+    {
+      "id": "hp_1",
+      "name": "体力強化 I",
+      "description": "HP +20",
+      "effect": { "hp": 20 },
+      "requiredNodes": ["start"],
+      "position": { "x": 1, "y": 1 }
+    },
+    {
+      "id": "atk_2",
+      "name": "攻撃強化 II",
+      "description": "ATK +5",
+      "effect": { "atk": 5 },
+      "requiredNodes": ["atk_1"],
+      "position": { "x": -1, "y": 2 }
+    },
+    {
+      "id": "hp_2",
+      "name": "体力強化 II",
+      "description": "HP +20",
+      "effect": { "hp": 20 },
+      "requiredNodes": ["hp_1"],
+      "position": { "x": 1, "y": 2 }
+    },
+    {
+      "id": "atk_3",
+      "name": "攻撃強化 III",
+      "description": "ATK +10",
+      "effect": { "atk": 10 },
+      "requiredNodes": ["atk_2"],
+      "position": { "x": -1, "y": 3 }
+    },
+    {
+      "id": "hp_3",
+      "name": "体力強化 III",
+      "description": "HP +30",
+      "effect": { "hp": 30 },
+      "requiredNodes": ["hp_2"],
+      "position": { "x": 1, "y": 3 }
+    },
+    {
+      "id": "merge",
+      "name": "戦士の心得",
+      "description": "HP +30, ATK +5, DEF +2",
+      "effect": { "hp": 30, "atk": 5, "def": 2 },
+      "requiredNodes": [["atk_3", "hp_3"]],
+      "position": { "x": 0, "y": 4 }
+    },
+    {
+      "id": "poison_1",
+      "name": "毒の知識 I",
+      "description": "毒付与率 +5%",
+      "effect": { "poison_chance": 5 },
+      "requiredNodes": ["merge"],
+      "position": { "x": -1, "y": 5 }
+    },
+    {
+      "id": "crit_1",
+      "name": "急所狙い I",
+      "description": "クリティカル率 +5%",
+      "effect": { "critical_chance": 5 },
+      "requiredNodes": ["merge"],
+      "position": { "x": 0, "y": 5 }
+    },
+    {
+      "id": "regen_1",
+      "name": "生命力 I",
+      "description": "毎ターンHP +10回復",
+      "effect": { "hp_regen": 10 },
+      "requiredNodes": ["merge"],
+      "position": { "x": 1, "y": 5 }
+    },
+    {
+      "id": "poison_2",
+      "name": "毒の知識 II",
+      "description": "毒付与率 +5%",
+      "effect": { "poison_chance": 5 },
+      "requiredNodes": ["poison_1"],
+      "position": { "x": -1, "y": 6 }
+    },
+    {
+      "id": "crit_2",
+      "name": "急所狙い II",
+      "description": "クリティカル率 +5%",
+      "effect": { "critical_chance": 5 },
+      "requiredNodes": ["crit_1"],
+      "position": { "x": 0, "y": 6 }
+    },
+    {
+      "id": "regen_2",
+      "name": "生命力 II",
+      "description": "毎ターンHP +10回復",
+      "effect": { "hp_regen": 10 },
+      "requiredNodes": ["regen_1"],
+      "position": { "x": 1, "y": 6 }
+    },
+    {
+      "id": "poison_3",
+      "name": "毒の知識 III",
+      "description": "毒付与率 +5%",
+      "effect": { "poison_chance": 5 },
+      "requiredNodes": ["poison_2"],
+      "position": { "x": -1, "y": 7 }
+    },
+    {
+      "id": "crit_3",
+      "name": "急所狙い III",
+      "description": "クリティカル率 +5%",
+      "effect": { "critical_chance": 5 },
+      "requiredNodes": ["crit_2"],
+      "position": { "x": 0, "y": 7 }
+    },
+    {
+      "id": "regen_3",
+      "name": "生命力 III",
+      "description": "毎ターンHP +10回復",
+      "effect": { "hp_regen": 10 },
+      "requiredNodes": ["regen_2"],
+      "position": { "x": 1, "y": 7 }
+    }
+  ]
+}

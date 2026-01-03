@@ -1,6 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { SkillTree } from '@/components/player/SkillTree';
+import { PassiveTree } from '@/components/player/PassiveTree';
 import { Button } from '@/components/common/Button';
 
 export default function SkillsScreen() {
@@ -12,8 +12,8 @@ export default function SkillsScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.skillTreeContainer}>
-        <SkillTree />
+      <View style={styles.passiveTreeContainer}>
+        <PassiveTree />
       </View>
       <View style={styles.footer}>
         <Button title="閉じる" onPress={handleClose} variant="secondary" />
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1a1a2e',
     padding: 16,
   },
-  skillTreeContainer: {
+  passiveTreeContainer: {
     flex: 1,
   },
   footer: {

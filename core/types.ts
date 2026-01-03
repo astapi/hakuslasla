@@ -13,6 +13,13 @@ export interface Stats {
   def: number;
 }
 
+// パッシブ効果（戦闘特殊効果含む）
+export interface PassiveStats extends Stats {
+  poison_chance: number;    // 毒付与率（%）
+  critical_chance: number;  // クリティカル率（%）
+  hp_regen: number;         // 毎ターンHP回復
+}
+
 export interface CombatStats extends Stats {
   currentHp: number;
 }

@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-nati
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StatusPanel } from '@/components/player/StatusPanel';
-import { EquipmentSlots } from '@/components/player/EquipmentSlots';
+import { EquipmentList } from '@/components/player/EquipmentList';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { playerImages } from '@/data/images';
 
@@ -60,7 +60,7 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.section}>
-          <EquipmentSlots />
+          <EquipmentList />
         </View>
       </ScrollView>
 

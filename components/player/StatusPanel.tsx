@@ -8,9 +8,24 @@ interface StatusPanelProps {
 
 export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
   // 装備・スキル変更時に再レンダリングするため、関連する state を購読
-  const { level, exp, expToNextLevel, skillPoints, maxHp, atk, def, equipment, getTotalStats } = usePlayerStore();
-  void equipment; // 購読のためだけに使用
-  void maxHp; void atk; void def; // スキル取得時の再レンダリング用
+  const {
+    level,
+    exp,
+    expToNextLevel,
+    skillPoints,
+    maxHp,
+    atk,
+    def,
+    equipment,
+    unlockedSkills,
+    getTotalStats,
+  } = usePlayerStore();
+  // 購読のためだけに使用（値の変更を検知して再レンダリング）
+  void equipment;
+  void unlockedSkills;
+  void maxHp;
+  void atk;
+  void def;
   const stats = getTotalStats();
 
   return (

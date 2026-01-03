@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Equipment, EquipmentSlot, Item } from '@/types';
-import { getSkillNode } from '@/data/skills';
+import { getPassiveNode, canUnlockNode } from '@/data/passiveTree';
 import {
   characterRepository,
   inventoryRepository,
@@ -158,25 +158,27 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     });
   },
 
-  unlockSkill: async (skillId: string): Promise<boolean> => {
+  unlockSkill: async (nodeId: string): Promise<boolean> => {
     const state = get();
     if (!state.characterId) return false;
 
-    const skill = getSkillNode(skillId);
-    if (!skill) return false;
+    // パッシブノードを取得
+    const node = getPassiveNode(nodeId);
+    if (!node) return false;
+
+    // SPチェック
     if (state.skillPoints < 1) return false;
-    if (state.unlockedSkills.includes(skillId)) return false;
-    if (skill.requiredSkillId && !state.unlockedSkills.includes(skill.requiredSkillId)) {
-      return false;
-    }
+
+    // 取得可能かチェック（分岐・合流対応）
+    if (!canUnlockNode(nodeId, state.unlockedSkills)) return false;
 
     // DBに保存
-    const success = await skillRepository.unlock(state.characterId, skillId);
+    const success = await skillRepository.unlock(state.characterId, nodeId);
     if (!success) return false;
 
-    const newMaxHp = state.maxHp + (skill.effect.hp || 0);
-    const newAtk = state.atk + (skill.effect.atk || 0);
-    const newDef = state.def + (skill.effect.def || 0);
+    const newMaxHp = state.maxHp + (node.effect.hp || 0);
+    const newAtk = state.atk + (node.effect.atk || 0);
+    const newDef = state.def + (node.effect.def || 0);
     const newSkillPoints = state.skillPoints - 1;
 
     await characterRepository.updateStats(state.characterId, {
@@ -188,7 +190,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
 
     set({
       skillPoints: newSkillPoints,
-      unlockedSkills: [...state.unlockedSkills, skillId],
+      unlockedSkills: [...state.unlockedSkills, nodeId],
       maxHp: newMaxHp,
       atk: newAtk,
       def: newDef,

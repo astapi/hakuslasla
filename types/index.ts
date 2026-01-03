@@ -97,7 +97,57 @@ export type Equipment = {
   [key in EquipmentSlot]: Item | null;
 };
 
-// スキルノード定義
+// パッシブノード効果
+export interface PassiveEffect {
+  hp?: number;
+  atk?: number;
+  def?: number;
+  poison_chance?: number;    // 毒付与率（%）
+  critical_chance?: number;  // クリティカル率（%）
+  hp_regen?: number;         // 毎ターンHP回復
+}
+
+// パッシブノード位置（UI表示用）
+export interface PassiveNodePosition {
+  x: number;
+  y: number;
+}
+
+// 前提ノード条件の型
+// - string: 単一ノード（AND条件の一部）
+// - string[]: OR条件（配列内のいずれか1つでOK）
+// 例: ["a", ["b", "c"]] → a AND (b OR c)
+export type NodeRequirement = string | string[];
+
+// パッシブノード定義（JSON用）
+export interface PassiveNodeData {
+  id: string;
+  name: string;
+  description: string;
+  effect: PassiveEffect;
+  requiredNodes: NodeRequirement[];  // 前提ノード条件
+  position: PassiveNodePosition;
+}
+
+// パッシブツリー定義（JSON用）
+export interface PassiveTreeData {
+  startNodeId: string;
+  nodes: PassiveNodeData[];
+}
+
+// パッシブノード（ランタイム用、接続情報付き）
+export interface PassiveNode extends PassiveNodeData {
+  childNodes: string[];  // このノードを前提とするノードのID配列
+}
+
+// パッシブツリー（ランタイム用）
+export interface PassiveTree {
+  startNodeId: string;
+  nodes: Map<string, PassiveNode>;
+}
+
+// 後方互換性のため残す（非推奨）
+/** @deprecated PassiveNodeDataを使用してください */
 export interface SkillNode {
   id: string;
   name: string;
@@ -107,7 +157,7 @@ export interface SkillNode {
     atk?: number;
     def?: number;
   };
-  requiredSkillId: string | null; // 前提スキルのID（nullなら最初から取得可能）
+  requiredSkillId: string | null;
 }
 
 // ユニークドロップ設定

@@ -159,3 +159,62 @@ export function createDefaultPlayerConfig(level: number = 1): PlayerConfig {
     unlockedSkills: [],
   };
 }
+
+// ========================================
+// パッシブルートプリセット
+// ========================================
+
+/** パッシブルート定義 */
+export const PASSIVE_ROUTES = {
+  // 基本ルート（分岐前まで）
+  ATK_BASE: ['start', 'atk_1', 'atk_2', 'atk_3', 'merge'],
+  HP_BASE: ['start', 'hp_1', 'hp_2', 'hp_3', 'merge'],
+
+  // 特化ルート
+  POISON: ['poison_1', 'poison_2', 'poison_3'],
+  CRIT: ['crit_1', 'crit_2', 'crit_3'],
+  REGEN: ['regen_1', 'regen_2', 'regen_3'],
+} as const;
+
+/** パッシブプリセット型 */
+export interface PassivePreset {
+  name: string;
+  nodes: string[];
+}
+
+/** シミュレーション用パッシブプリセット */
+export const PASSIVE_PRESETS: Record<string, PassivePreset> = {
+  // パッシブなし
+  NONE: {
+    name: 'パッシブなし',
+    nodes: [],
+  },
+  // ATKルート
+  ATK_POISON: {
+    name: 'ATK+毒',
+    nodes: [...PASSIVE_ROUTES.ATK_BASE, ...PASSIVE_ROUTES.POISON],
+  },
+  ATK_CRIT: {
+    name: 'ATK+クリ',
+    nodes: [...PASSIVE_ROUTES.ATK_BASE, ...PASSIVE_ROUTES.CRIT],
+  },
+  ATK_REGEN: {
+    name: 'ATK+回復',
+    nodes: [...PASSIVE_ROUTES.ATK_BASE, ...PASSIVE_ROUTES.REGEN],
+  },
+  // HPルート
+  HP_POISON: {
+    name: 'HP+毒',
+    nodes: [...PASSIVE_ROUTES.HP_BASE, ...PASSIVE_ROUTES.POISON],
+  },
+  HP_CRIT: {
+    name: 'HP+クリ',
+    nodes: [...PASSIVE_ROUTES.HP_BASE, ...PASSIVE_ROUTES.CRIT],
+  },
+  HP_REGEN: {
+    name: 'HP+回復',
+    nodes: [...PASSIVE_ROUTES.HP_BASE, ...PASSIVE_ROUTES.REGEN],
+  },
+};
+
+export type PassivePresetKey = keyof typeof PASSIVE_PRESETS;

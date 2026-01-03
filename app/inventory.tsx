@@ -48,9 +48,12 @@ function calculateItemStats(item: Item) {
 
 export default function InventoryScreen() {
   const router = useRouter();
-  const { inventory, equipItem, removeFromInventory } = usePlayerStore();
+  const { inventory, equipment, equipItem, removeFromInventory } = usePlayerStore();
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+
+  // 選択中アイテムのスロットに対応する装備中アイテム
+  const equippedItem = selectedItem ? equipment[selectedItem.slot] : null;
 
   // カテゴリごとにアイテムをグループ化
   const itemsBySlot = useMemo(() => {
@@ -129,6 +132,7 @@ export default function InventoryScreen() {
         {selectedItem ? (
           <ItemDetail
             item={selectedItem}
+            equippedItem={equippedItem}
             onEquip={() => handleEquip(selectedItem.instanceId)}
             onDiscard={() => handleDiscard(selectedItem.instanceId)}
           />
@@ -220,47 +224,113 @@ export default function InventoryScreen() {
   );
 }
 
+// 差分表示用コンポーネント
+function StatDiff({ label, newValue, oldValue }: { label: string; newValue: number; oldValue: number }) {
+  const diff = newValue - oldValue;
+  if (diff === 0) return null;
+
+  const isPositive = diff > 0;
+  return (
+    <Text style={[styles.diffText, isPositive ? styles.diffPositive : styles.diffNegative]}>
+      {label} {isPositive ? '+' : ''}{diff}
+    </Text>
+  );
+}
+
 // アイテム詳細コンポーネント
 function ItemDetail({
   item,
+  equippedItem,
   onEquip,
   onDiscard,
 }: {
   item: Item;
+  equippedItem: Item | null;
   onEquip: () => void;
   onDiscard: () => void;
 }) {
   const stats = calculateItemStats(item);
+  const equippedStats = equippedItem ? calculateItemStats(equippedItem) : null;
 
   return (
     <View style={styles.detailContent}>
-      <View style={styles.detailHeader}>
-        <Image
-          source={getItemIcon(item.id, item.slot)}
-          style={styles.detailIcon}
-        />
-        <View style={styles.detailTitleArea}>
-          <Text style={styles.detailName}>{item.name}</Text>
-          <Text style={styles.detailSlot}>{getSlotLabel(item.slot)}</Text>
+      {/* 比較表示 */}
+      <View style={styles.comparisonContainer}>
+        {/* 選択中のアイテム */}
+        <View style={styles.comparisonItem}>
+          <Text style={styles.comparisonLabel}>選択中</Text>
+          <View style={styles.comparisonHeader}>
+            <Image
+              source={getItemIcon(item.id, item.slot)}
+              style={styles.comparisonIcon}
+            />
+            <View style={styles.comparisonInfo}>
+              <Text style={styles.comparisonName} numberOfLines={1}>{item.name}</Text>
+              <View style={styles.comparisonStats}>
+                {stats.totalAtk > 0 && (
+                  <Text style={styles.atkText}>ATK {stats.totalAtk}</Text>
+                )}
+                {stats.totalDef > 0 && (
+                  <Text style={styles.defText}>DEF {stats.totalDef}</Text>
+                )}
+              </View>
+            </View>
+          </View>
+          {stats.allMods.length > 0 && (
+            <View style={styles.comparisonMods}>
+              {stats.allMods.map((mod, idx) => (
+                <Text key={idx} style={styles.modText} numberOfLines={1}>{mod.desc}</Text>
+              ))}
+            </View>
+          )}
+        </View>
+
+        {/* 矢印と差分 */}
+        <View style={styles.comparisonArrow}>
+          <Text style={styles.arrowText}>→</Text>
+          <View style={styles.diffContainer}>
+            <StatDiff label="ATK" newValue={stats.totalAtk} oldValue={equippedStats?.totalAtk ?? 0} />
+            <StatDiff label="DEF" newValue={stats.totalDef} oldValue={equippedStats?.totalDef ?? 0} />
+          </View>
+        </View>
+
+        {/* 装備中のアイテム */}
+        <View style={styles.comparisonItem}>
+          <Text style={styles.comparisonLabel}>装備中</Text>
+          {equippedItem && equippedStats ? (
+            <>
+              <View style={styles.comparisonHeader}>
+                <Image
+                  source={getItemIcon(equippedItem.id, equippedItem.slot)}
+                  style={styles.comparisonIcon}
+                />
+                <View style={styles.comparisonInfo}>
+                  <Text style={styles.comparisonName} numberOfLines={1}>{equippedItem.name}</Text>
+                  <View style={styles.comparisonStats}>
+                    {equippedStats.totalAtk > 0 && (
+                      <Text style={styles.atkText}>ATK {equippedStats.totalAtk}</Text>
+                    )}
+                    {equippedStats.totalDef > 0 && (
+                      <Text style={styles.defText}>DEF {equippedStats.totalDef}</Text>
+                    )}
+                  </View>
+                </View>
+              </View>
+              {equippedStats.allMods.length > 0 && (
+                <View style={styles.comparisonMods}>
+                  {equippedStats.allMods.map((mod, idx) => (
+                    <Text key={idx} style={styles.modText} numberOfLines={1}>{mod.desc}</Text>
+                  ))}
+                </View>
+              )}
+            </>
+          ) : (
+            <View style={styles.emptyEquipped}>
+              <Text style={styles.emptyEquippedText}>未装備</Text>
+            </View>
+          )}
         </View>
       </View>
-
-      <View style={styles.detailStats}>
-        {stats.totalAtk > 0 && (
-          <Text style={styles.detailStatText}>ATK +{stats.totalAtk}</Text>
-        )}
-        {stats.totalDef > 0 && (
-          <Text style={styles.detailStatText}>DEF +{stats.totalDef}</Text>
-        )}
-      </View>
-
-      {stats.allMods.length > 0 && (
-        <View style={styles.detailMods}>
-          {stats.allMods.map((mod, idx) => (
-            <Text key={idx} style={styles.detailModText}>{mod.desc}</Text>
-          ))}
-        </View>
-      )}
 
       <View style={styles.detailActions}>
         <Pressable style={styles.equipButton} onPress={onEquip}>
@@ -304,7 +374,7 @@ const styles = StyleSheet.create({
   // 詳細表示エリア
   detailArea: {
     minHeight: 180,
-    padding: 16,
+    padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
@@ -320,46 +390,99 @@ const styles = StyleSheet.create({
   detailContent: {
     flex: 1,
   },
-  detailHeader: {
+  // 比較表示
+  comparisonContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  comparisonItem: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: 8,
+    padding: 8,
+  },
+  comparisonLabel: {
+    fontSize: 10,
+    color: '#888',
+    marginBottom: 6,
+  },
+  comparisonHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
   },
-  detailIcon: {
-    width: 48,
-    height: 48,
-    marginRight: 12,
+  comparisonIcon: {
+    width: 36,
+    height: 36,
+    marginRight: 8,
   },
-  detailTitleArea: {
+  comparisonInfo: {
     flex: 1,
   },
-  detailName: {
-    fontSize: 18,
+  comparisonName: {
+    fontSize: 12,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 2,
   },
-  detailSlot: {
-    fontSize: 12,
-    color: '#aaa',
-    marginTop: 2,
-  },
-  detailStats: {
+  comparisonStats: {
     flexDirection: 'row',
-    gap: 16,
-    marginBottom: 8,
+    gap: 8,
   },
-  detailStatText: {
-    fontSize: 16,
-    color: '#4CAF50',
+  atkText: {
+    fontSize: 11,
+    color: '#FF6B6B',
+  },
+  defText: {
+    fontSize: 11,
+    color: '#4ECDC4',
+  },
+  comparisonMods: {
+    marginTop: 6,
+    paddingTop: 6,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  modText: {
+    fontSize: 10,
+    color: '#FFD700',
+  },
+  // 矢印と差分
+  comparisonArrow: {
+    width: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 20,
+  },
+  arrowText: {
+    fontSize: 18,
+    color: '#666',
+    marginBottom: 4,
+  },
+  diffContainer: {
+    alignItems: 'center',
+  },
+  diffText: {
+    fontSize: 11,
     fontWeight: 'bold',
   },
-  detailMods: {
-    marginBottom: 12,
+  diffPositive: {
+    color: '#4CAF50',
   },
-  detailModText: {
-    fontSize: 13,
-    color: '#FFD700',
-    marginTop: 2,
+  diffNegative: {
+    color: '#F44336',
+  },
+  // 未装備表示
+  emptyEquipped: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 16,
+  },
+  emptyEquippedText: {
+    fontSize: 12,
+    color: '#666',
+    fontStyle: 'italic',
   },
   detailActions: {
     flexDirection: 'row',
