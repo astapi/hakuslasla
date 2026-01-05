@@ -12,12 +12,21 @@ import { getDungeon } from '@/data/dungeons';
 export default function BattleScreen() {
   const { dungeonId } = useLocalSearchParams<{ dungeonId: string }>();
   const router = useRouter();
-  const { state, isPaused, togglePause } = useBattle(dungeonId || '');
+  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun } = useBattle(dungeonId || '');
   const { level } = usePlayerStore();
   const dungeon = getDungeon(dungeonId || '');
 
   useEffect(() => {
+    // 自動周回中でクリアした場合は結果画面に遷移しない（次の周回が始まる）
+    if (isAutoRunning && state.phase === 'cleared') {
+      return;
+    }
+
     if (state.phase === 'cleared' || state.phase === 'defeat') {
+      // 累計（現在の周回分を含む）
+      const finalTotalExp = (state.grandTotalExp || 0) + state.totalExpGained;
+      const finalTotalItems = [...(state.grandTotalItems || []), ...state.droppedItems];
+
       // 結果画面に遷移
       const timer = setTimeout(() => {
         router.replace({
@@ -30,13 +39,16 @@ export default function BattleScreen() {
             maxFloor: state.maxFloor.toString(),
             expGained: state.totalExpGained.toString(),
             itemsGained: JSON.stringify(state.droppedItems),
+            runCount: state.runCount?.toString() || '1',
+            grandTotalExp: finalTotalExp.toString(),
+            grandTotalItems: JSON.stringify(finalTotalItems),
           },
         });
       }, 2000);
 
       return () => clearTimeout(timer);
     }
-  }, [state.phase, dungeonId, router, dungeon, state]);
+  }, [state.phase, dungeonId, router, dungeon, state, isAutoRunning]);
 
   const handleRetreat = () => {
     router.replace('/home');
@@ -49,7 +61,11 @@ export default function BattleScreen() {
         <View style={styles.floorInfo}>
           <Text style={styles.floorText}>
             {dungeon?.name} - {state.currentFloor}/{state.maxFloor}階
+            {state.runCount > 1 && ` (${state.runCount}周目)`}
           </Text>
+          {isAutoRunning && (
+            <Text style={styles.autoRunText}>自動周回中</Text>
+          )}
         </View>
 
         <View style={styles.charactersContainer}>
@@ -105,7 +121,22 @@ export default function BattleScreen() {
               />
             </View>
             <View style={styles.buttonWrapper}>
-              <Button title="撤退する" onPress={handleRetreat} variant="danger" />
+              {isAutoRunning ? (
+                <Button
+                  title="周回停止"
+                  onPress={stopAutoRun}
+                  variant="warning"
+                />
+              ) : (
+                <Button
+                  title="自動周回"
+                  onPress={startAutoRun}
+                  variant="primary"
+                />
+              )}
+            </View>
+            <View style={styles.buttonWrapper}>
+              <Button title="撤退" onPress={handleRetreat} variant="danger" />
             </View>
           </View>
         )}
@@ -131,6 +162,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  autoRunText: {
+    fontSize: 12,
+    color: '#4CAF50',
+    marginTop: 4,
   },
   charactersContainer: {
     flexDirection: 'row',

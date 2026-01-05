@@ -98,6 +98,40 @@
           { "itemId": "oblivion_amulet", "dropRate": 10 }
         ]
       }
+    },
+    "goblin_fort": {
+      "id": "goblin_fort",
+      "name": "ゴブリンの砦",
+      "description": "ゴブリンたちが築いた巨大な砦。奥深くにはゴブリンキングが君臨している。",
+      "maxFloor": 20,
+      "recommendedLevel": 15,
+      "monsters": [
+        { "monsterId": "goblin_warrior", "spawnRate": 25 },
+        { "monsterId": "goblin_archer", "spawnRate": 25 },
+        { "monsterId": "goblin_shaman", "spawnRate": 20 },
+        { "monsterId": "goblin_knight", "spawnRate": 18 },
+        { "monsterId": "goblin_champion", "spawnRate": 12 }
+      ],
+      "boss": {
+        "monsterId": "goblin_king",
+        "floor": 20
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "ruins_magic_sword", "dropRate": 5 },
+          { "itemId": "cursed_robe", "dropRate": 5 },
+          { "itemId": "gargoyle_boots", "dropRate": 5 },
+          { "itemId": "ancient_ring", "dropRate": 5 },
+          { "itemId": "oblivion_amulet", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "goblin_blade", "dropRate": 15 },
+          { "itemId": "goblin_mail", "dropRate": 12 },
+          { "itemId": "spiked_gauntlets", "dropRate": 12 },
+          { "itemId": "raider_boots", "dropRate": 10 },
+          { "itemId": "tribal_ring", "dropRate": 10 }
+        ]
+      }
     }
   }
 }

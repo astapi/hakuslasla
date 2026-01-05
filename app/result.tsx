@@ -13,6 +13,9 @@ export default function ResultScreen() {
     maxFloor: string;
     expGained: string;
     itemsGained: string;
+    runCount: string;
+    grandTotalExp: string;
+    grandTotalItems: string;
   }>();
 
   const result = params.result as 'cleared' | 'defeat';
@@ -20,12 +23,16 @@ export default function ResultScreen() {
   const maxFloor = parseInt(params.maxFloor || '5', 10);
   const expGained = parseInt(params.expGained || '0', 10);
   const itemsGained: Item[] = params.itemsGained ? JSON.parse(params.itemsGained) : [];
+  const runCount = parseInt(params.runCount || '1', 10);
+  const grandTotalExp = parseInt(params.grandTotalExp || expGained.toString(), 10);
+  const grandTotalItems: Item[] = params.grandTotalItems ? JSON.parse(params.grandTotalItems) : itemsGained;
 
   const handleReturn = () => {
     router.replace('/home');
   };
 
   const isCleared = result === 'cleared';
+  const isMultiRun = runCount > 1;
 
   return (
     <View style={styles.container}>
@@ -34,6 +41,9 @@ export default function ResultScreen() {
           <Text style={[styles.resultText, isCleared ? styles.clearedText : styles.defeatText]}>
             {isCleared ? 'ダンジョン踏破！' : '敗北...'}
           </Text>
+          {isMultiRun && (
+            <Text style={styles.runCountText}>{runCount}周完了</Text>
+          )}
         </View>
 
         <View style={styles.dungeonInfo}>
@@ -46,27 +56,38 @@ export default function ResultScreen() {
         <View style={styles.rewardsSection}>
           <Text style={styles.sectionTitle}>獲得報酬</Text>
 
+          {/* 累計経験値 */}
           <View style={styles.rewardItem}>
-            <Text style={styles.rewardLabel}>経験値</Text>
-            <Text style={styles.rewardValue}>+{expGained} EXP</Text>
+            <Text style={styles.rewardLabel}>
+              {isMultiRun ? '累計経験値' : '経験値'}
+            </Text>
+            <Text style={styles.rewardValue}>+{grandTotalExp} EXP</Text>
           </View>
 
-          {itemsGained.length > 0 && (
+          {/* 累計アイテム */}
+          {grandTotalItems.length > 0 && (
             <View style={styles.itemsSection}>
-              <Text style={styles.itemsTitle}>獲得アイテム</Text>
-              {itemsGained.map((item, index) => (
-                <View key={`${item.id}-${index}`} style={styles.itemRow}>
-                  <Text style={styles.itemName}>{item.name}</Text>
-                  <Text style={styles.itemStats}>
-                    {item.atk > 0 ? `ATK+${item.atk} ` : ''}
-                    {item.def > 0 ? `DEF+${item.def}` : ''}
-                  </Text>
-                </View>
-              ))}
+              <Text style={styles.itemsTitle}>
+                {isMultiRun ? `累計アイテム (${grandTotalItems.length}個)` : '獲得アイテム'}
+              </Text>
+              <ScrollView
+                style={styles.itemsScrollView}
+                nestedScrollEnabled={true}
+              >
+                {grandTotalItems.map((item, index) => (
+                  <View key={`${item.id}-${index}`} style={styles.itemRow}>
+                    <Text style={styles.itemName}>{item.name}</Text>
+                    <Text style={styles.itemStats}>
+                      {item.atk > 0 ? `ATK+${item.atk} ` : ''}
+                      {item.def > 0 ? `DEF+${item.def}` : ''}
+                    </Text>
+                  </View>
+                ))}
+              </ScrollView>
             </View>
           )}
 
-          {itemsGained.length === 0 && (
+          {grandTotalItems.length === 0 && (
             <View style={styles.noItems}>
               <Text style={styles.noItemsText}>アイテムなし</Text>
             </View>
@@ -106,6 +127,12 @@ const styles = StyleSheet.create({
   },
   defeatText: {
     color: '#F44336',
+  },
+  runCountText: {
+    fontSize: 18,
+    color: '#4CAF50',
+    marginTop: 8,
+    fontWeight: 'bold',
   },
   dungeonInfo: {
     alignItems: 'center',
@@ -158,6 +185,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#aaa',
     marginBottom: 8,
+  },
+  itemsScrollView: {
+    maxHeight: 300,
   },
   itemRow: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 
 export const CREATE_TABLES_SQL = `
 -- キャラクター基本情報
@@ -47,11 +47,11 @@ CREATE TABLE IF NOT EXISTS character_skills (
   UNIQUE(character_id, skill_id)
 );
 
--- 倉庫（全キャラクター共有、スタック対応）
+-- 倉庫（全キャラクター共有、MOD保持・個別管理）
 CREATE TABLE IF NOT EXISTS storage (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  item_id TEXT NOT NULL UNIQUE,
-  quantity INTEGER NOT NULL DEFAULT 1
+  instance_id TEXT NOT NULL UNIQUE,
+  item_data TEXT NOT NULL
 );
 
 -- ゲーム設定

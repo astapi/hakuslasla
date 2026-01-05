@@ -157,8 +157,11 @@ export function runDungeon(
   const droppedItems: string[] = [];
 
   for (let floor = 1; floor <= dungeon.maxFloor; floor++) {
-    // ランダムな敵を選択
-    const enemyId = getRandomEnemyId(dungeon.enemies);
+    // ボス階層かどうかチェック
+    const isBossFloor = dungeon.boss && dungeon.boss.floor === floor;
+    const enemyId = isBossFloor
+      ? dungeon.boss!.monsterId
+      : getRandomEnemyId(dungeon.enemies);
     const enemy = getEnemy(enemyId);
 
     if (!enemy) {

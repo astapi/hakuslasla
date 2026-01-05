@@ -129,11 +129,54 @@ export const migrations: Migration[] = [
       console.log('[Migration] V1 → V2 completed');
     },
   },
-  // 今後のマイグレーションはここに追加
-  // {
-  //   version: 3,
-  //   migrate: async (db) => { ... }
-  // },
+  {
+    // V2 → V3: 倉庫をスタック形式からItem個別管理形式に変更
+    version: 3,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      // 1. 新しい形式のテーブルを作成
+      await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS storage_new (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          instance_id TEXT NOT NULL UNIQUE,
+          item_data TEXT NOT NULL
+        );
+      `);
+
+      // 2. 既存データを移行（item_id + quantityからItem JSONに変換）
+      const oldStorage = await db.getAllAsync<{
+        item_id: string;
+        quantity: number;
+      }>(`SELECT item_id, quantity FROM storage`);
+
+      let instanceCounter = 0;
+      for (const row of oldStorage) {
+        // 個数分だけItemインスタンスを作成
+        for (let i = 0; i < row.quantity; i++) {
+          const instanceId = `storage_migrated_${Date.now()}_${instanceCounter++}`;
+          const itemData = JSON.stringify({
+            id: row.item_id,
+            instanceId,
+            mods: [],
+            _needsMigration: true,
+          });
+
+          await db.runAsync(
+            `INSERT INTO storage_new (instance_id, item_data) VALUES (?, ?)`,
+            instanceId,
+            itemData
+          );
+        }
+      }
+
+      // 3. 古いテーブルを削除して新しいテーブルにリネーム
+      await db.execAsync(`
+        DROP TABLE storage;
+        ALTER TABLE storage_new RENAME TO storage;
+      `);
+
+      console.log('[Migration] V2 → V3 completed');
+    },
+  },
 ];
 
 /**

@@ -282,6 +282,174 @@
       "fixedMods": [
         { "type": "def_bonus", "value": 5 }
       ]
+    },
+
+    "_comment8": "=== ゴブリンの砦 固有ドロップ ===",
+
+    "goblin_blade": {
+      "id": "goblin_blade",
+      "name": "ゴブリンの蛮刀",
+      "slot": "weapon",
+      "atk": 14,
+      "def": 0
+    },
+    "goblin_mail": {
+      "id": "goblin_mail",
+      "name": "ゴブリンメイル",
+      "slot": "armor",
+      "atk": 0,
+      "def": 10
+    },
+    "spiked_gauntlets": {
+      "id": "spiked_gauntlets",
+      "name": "棘付きの篭手",
+      "slot": "gloves",
+      "atk": 3,
+      "def": 4
+    },
+    "raider_boots": {
+      "id": "raider_boots",
+      "name": "略奪者のブーツ",
+      "slot": "boots",
+      "atk": 2,
+      "def": 7
+    },
+    "tribal_ring": {
+      "id": "tribal_ring",
+      "name": "蛮族の指輪",
+      "slot": "accessory",
+      "atk": 5,
+      "def": 5
+    },
+
+    "_comment9": "=== ゴブリンの砦 ユニークドロップ ===",
+
+    "shaman_staff": {
+      "id": "shaman_staff",
+      "name": "シャーマンの杖",
+      "slot": "weapon",
+      "atk": 10,
+      "def": 0,
+      "fixedMods": [
+        { "type": "poison_chance", "value": 40 }
+      ]
+    },
+    "goblin_shield": {
+      "id": "goblin_shield",
+      "name": "ゴブリンの大盾",
+      "slot": "armor",
+      "atk": 0,
+      "def": 14,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 8 }
+      ]
+    },
+    "champion_axe": {
+      "id": "champion_axe",
+      "name": "チャンピオンアクス",
+      "slot": "weapon",
+      "atk": 16,
+      "def": 0,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 8 },
+        { "type": "critical_chance", "value": 15 }
+      ]
+    },
+    "kings_crown": {
+      "id": "kings_crown",
+      "name": "ゴブリンキングの王冠",
+      "slot": "accessory",
+      "atk": 10,
+      "def": 10,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 10 },
+        { "type": "def_bonus", "value": 10 },
+        { "type": "hp_regen", "value": 30 }
+      ]
+    },
+
+    "_comment10": "=== 魔王城（将来用） 固有ドロップ ===",
+
+    "demon_blade": {
+      "id": "demon_blade",
+      "name": "魔剣デモンブレイド",
+      "slot": "weapon",
+      "atk": 18,
+      "def": 0
+    },
+    "dark_plate": {
+      "id": "dark_plate",
+      "name": "闇騎士の鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 14
+    },
+    "dragon_gauntlets": {
+      "id": "dragon_gauntlets",
+      "name": "竜鱗の篭手",
+      "slot": "gloves",
+      "atk": 4,
+      "def": 6
+    },
+    "inferno_boots": {
+      "id": "inferno_boots",
+      "name": "業火のブーツ",
+      "slot": "boots",
+      "atk": 3,
+      "def": 10
+    },
+    "chaos_ring": {
+      "id": "chaos_ring",
+      "name": "混沌の指輪",
+      "slot": "accessory",
+      "atk": 6,
+      "def": 6
+    },
+
+    "_comment9": "=== 魔王城 ユニークドロップ ===",
+
+    "dark_grimoire": {
+      "id": "dark_grimoire",
+      "name": "闇の魔導書",
+      "slot": "accessory",
+      "atk": 12,
+      "def": 0,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 30 }
+      ]
+    },
+    "demon_horn": {
+      "id": "demon_horn",
+      "name": "デーモンホーン",
+      "slot": "accessory",
+      "atk": 8,
+      "def": 8,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 10 },
+        { "type": "def_bonus", "value": 10 }
+      ]
+    },
+    "wyvern_scale": {
+      "id": "wyvern_scale",
+      "name": "飛竜の鱗鎧",
+      "slot": "armor",
+      "atk": 5,
+      "def": 16,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 10 }
+      ]
+    },
+    "dragon_heart": {
+      "id": "dragon_heart",
+      "name": "竜の心臓",
+      "slot": "accessory",
+      "atk": 15,
+      "def": 15,
+      "fixedMods": [
+        { "type": "hp_regen", "value": 50 },
+        { "type": "atk_bonus", "value": 10 },
+        { "type": "def_bonus", "value": 10 }
+      ]
     }
   },
 

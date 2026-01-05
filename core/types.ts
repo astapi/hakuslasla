@@ -66,12 +66,18 @@ export interface EnemyConfig {
 // ダンジョン関連
 // ========================================
 
+export interface BossConfig {
+  monsterId: string;
+  floor: number;
+}
+
 export interface DungeonConfig {
   id: string;
   name: string;
   maxFloor: number;
   enemies: string[];
   dropTable: string[];
+  boss?: BossConfig;
 }
 
 // ========================================

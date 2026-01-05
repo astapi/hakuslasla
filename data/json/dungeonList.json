@@ -20,6 +20,13 @@
       "description": "古代文明の遺跡。強力なモンスターが徘徊する危険な場所。",
       "recommendedLevel": 10,
       "maxFloor": 10
+    },
+    {
+      "id": "goblin_fort",
+      "name": "ゴブリンの砦",
+      "description": "ゴブリンたちが築いた巨大な砦。奥深くにはゴブリンキングが君臨している。",
+      "recommendedLevel": 15,
+      "maxFloor": 20
     }
   ]
 }

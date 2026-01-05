@@ -1,11 +1,13 @@
 import { useState, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Button } from '@/components/common/Button';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot, Item } from '@/types';
 import { getItemIcon, getSlotIcon, getSlotLabel } from '@/data/itemIcons';
 import { INVENTORY_MAX_SIZE } from '@/core';
+import { storageRepository } from '@/db/repositories/storageRepository';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -104,8 +106,16 @@ export default function InventoryScreen() {
     setSelectedItem(null);
   };
 
-  const handleDiscard = async (instanceId: string) => {
+  const handleSell = async (instanceId: string) => {
+    // TODO: お金の概念を追加したら売却金額を加算
     await removeFromInventory(instanceId);
+    setSelectedItem(null);
+  };
+
+  const handleStorage = async (item: Item) => {
+    // 倉庫に送る（MOD保持）
+    await storageRepository.addItem(item);
+    await removeFromInventory(item.instanceId);
     setSelectedItem(null);
   };
 
@@ -134,7 +144,8 @@ export default function InventoryScreen() {
             item={selectedItem}
             equippedItem={equippedItem}
             onEquip={() => handleEquip(selectedItem.instanceId)}
-            onDiscard={() => handleDiscard(selectedItem.instanceId)}
+            onStorage={() => handleStorage(selectedItem)}
+            onSell={() => handleSell(selectedItem.instanceId)}
           />
         ) : (
           <View style={styles.emptyDetail}>
@@ -242,12 +253,14 @@ function ItemDetail({
   item,
   equippedItem,
   onEquip,
-  onDiscard,
+  onStorage,
+  onSell,
 }: {
   item: Item;
   equippedItem: Item | null;
   onEquip: () => void;
-  onDiscard: () => void;
+  onStorage: () => void;
+  onSell: () => void;
 }) {
   const stats = calculateItemStats(item);
   const equippedStats = equippedItem ? calculateItemStats(equippedItem) : null;
@@ -332,12 +345,18 @@ function ItemDetail({
         </View>
       </View>
 
+      {/* アクションボタン（案4: メインボタン + アイコンボタン） */}
       <View style={styles.detailActions}>
         <Pressable style={styles.equipButton} onPress={onEquip}>
           <Text style={styles.equipButtonText}>装備</Text>
         </Pressable>
-        <Pressable style={styles.discardButton} onPress={onDiscard}>
-          <Text style={styles.discardButtonText}>捨てる</Text>
+        <Pressable style={styles.iconButton} onPress={onStorage}>
+          <MaterialCommunityIcons name="warehouse" size={20} color="#4ECDC4" />
+          <Text style={styles.iconButtonText}>倉庫</Text>
+        </Pressable>
+        <Pressable style={styles.iconButton} onPress={onSell}>
+          <MaterialCommunityIcons name="cash" size={20} color="#FFD700" />
+          <Text style={styles.iconButtonText}>売却</Text>
         </Pressable>
       </View>
     </View>
@@ -486,6 +505,7 @@ const styles = StyleSheet.create({
   },
   detailActions: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
     marginTop: 'auto',
   },
@@ -501,17 +521,17 @@ const styles = StyleSheet.create({
     color: '#4CAF50',
     fontWeight: 'bold',
   },
-  discardButton: {
-    flex: 1,
-    paddingVertical: 10,
-    backgroundColor: 'rgba(244, 67, 54, 0.2)',
+  iconButton: {
+    width: 50,
+    paddingVertical: 6,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
     borderRadius: 8,
     alignItems: 'center',
   },
-  discardButtonText: {
-    fontSize: 14,
-    color: '#F44336',
-    fontWeight: 'bold',
+  iconButtonText: {
+    fontSize: 9,
+    color: '#aaa',
+    marginTop: 2,
   },
   // カテゴリタブ
   categoryTabs: {

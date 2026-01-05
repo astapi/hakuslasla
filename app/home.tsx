@@ -98,7 +98,7 @@ export default function HomeScreen() {
         </Pressable>
 
         <Pressable
-          style={({ pressed }) => [styles.menuItem, styles.dungeonMenuItem, pressed && styles.menuItemPressed]}
+          style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenDungeonSelect}
         >
           <MaterialCommunityIcons name="castle" size={24} color="#fff" />
@@ -207,10 +207,5 @@ const styles = StyleSheet.create({
   },
   menuLabelHighlight: {
     color: '#FFD700',
-  },
-  dungeonMenuItem: {
-    backgroundColor: 'rgba(76, 175, 80, 0.2)',
-    borderRadius: 8,
-    marginLeft: 8,
   },
 });

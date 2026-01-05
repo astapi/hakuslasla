@@ -1,7 +1,7 @@
 import { useReducer, useCallback, useEffect, useRef, useState } from 'react';
 import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState } from '@/types';
 import { getDungeon } from '@/data/dungeons';
-import { getRandomEnemy } from '@/data/enemies';
+import { getRandomEnemy, getEnemy } from '@/data/enemies';
 import { tryUniqueDrop, rollDropCount, rollDropItems, ModEffects } from '@/data/items';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculateDamage } from '@/core';
@@ -45,9 +45,60 @@ const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState
 // ログIDカウンター
 let logIdCounter = 0;
 
+// 周回状態を含む拡張State
+interface ExtendedBattleState extends BattleState {
+  runCount: number; // 周回回数
+  grandTotalExp: number; // 全周回の累計経験値
+  grandTotalItems: Item[]; // 全周回の累計アイテム
+}
+
+// 拡張初期状態を作成
+const createExtendedInitialState = (
+  dungeonId: string,
+  playerMaxHp: number,
+  runCount: number = 1,
+  grandTotalExp: number = 0,
+  grandTotalItems: Item[] = []
+): ExtendedBattleState => {
+  const dungeon = getDungeon(dungeonId);
+  return {
+    dungeonId,
+    currentFloor: 1,
+    maxFloor: dungeon?.maxFloor || 5,
+    playerCurrentHp: playerMaxHp,
+    playerMaxHp: playerMaxHp,
+    enemy: null,
+    enemyPoison: null,
+    phase: 'fighting',
+    battleLog: runCount > 1 ? [{
+      id: logIdCounter++,
+      message: `=== ${runCount}周目開始 ===`,
+      type: 'info',
+    }] : [],
+    droppedItems: [],
+    totalExpGained: 0,
+    runCount,
+    grandTotalExp,
+    grandTotalItems,
+  };
+};
+
+// 拡張アクション型
+type ExtendedBattleAction = BattleAction | { type: 'RESET_DUNGEON'; playerMaxHp: number };
+
 // リデューサー
-const battleReducer = (state: BattleState, action: BattleAction): BattleState => {
+const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction): ExtendedBattleState => {
   switch (action.type) {
+    case 'RESET_DUNGEON':
+      // 周回完了時に累計を更新
+      return createExtendedInitialState(
+        state.dungeonId,
+        action.playerMaxHp,
+        state.runCount + 1,
+        state.grandTotalExp + state.totalExpGained,
+        [...state.grandTotalItems, ...state.droppedItems]
+      );
+
     case 'START_BATTLE':
       return {
         ...state,
@@ -276,10 +327,11 @@ export const useBattle = (dungeonId: string) => {
 
   const [state, dispatch] = useReducer(
     battleReducer,
-    createInitialState(dungeonId, stats.maxHp)
+    createExtendedInitialState(dungeonId, stats.maxHp)
   );
 
   const [isPaused, setIsPaused] = useState(false);
+  const [isAutoRunning, setIsAutoRunning] = useState(false); // 自動周回モード
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isProcessingRef = useRef(false);
 
@@ -288,16 +340,38 @@ export const useBattle = (dungeonId: string) => {
     setIsPaused((prev) => !prev);
   }, []);
 
+  // 自動周回の開始
+  const startAutoRun = useCallback(() => {
+    setIsAutoRunning(true);
+    setIsPaused(false);
+  }, []);
+
+  // 自動周回の停止
+  const stopAutoRun = useCallback(() => {
+    setIsAutoRunning(false);
+  }, []);
+
+  // 指定フロアの敵を取得（ボスフロアならボスを返す）
+  const getEnemyForFloor = useCallback((floor: number): Enemy | undefined => {
+    const dungeon = getDungeon(dungeonId);
+    if (!dungeon) return undefined;
+
+    // ボスフロアかチェック
+    if (dungeon.boss && dungeon.boss.floor === floor) {
+      return getEnemy(dungeon.boss.monsterId);
+    }
+
+    // 通常の敵をランダム選択
+    return getRandomEnemy(dungeon.monsters);
+  }, [dungeonId]);
+
   // 戦闘開始
   const startBattle = useCallback(() => {
-    const dungeon = getDungeon(dungeonId);
-    if (!dungeon) return;
-
-    const enemy = getRandomEnemy(dungeon.monsters);
+    const enemy = getEnemyForFloor(1);
     if (!enemy) return;
 
     dispatch({ type: 'START_BATTLE', enemy: createBattleEnemy(enemy) });
-  }, [dungeonId]);
+  }, [getEnemyForFloor]);
 
   // 1ターン実行
   const executeTurn = useCallback(() => {
@@ -350,15 +424,14 @@ export const useBattle = (dungeonId: string) => {
         if (state.currentFloor >= state.maxFloor) {
           dispatch({ type: 'DUNGEON_CLEARED' });
         } else {
-          if (dungeon) {
-            const nextEnemy = getRandomEnemy(dungeon.monsters);
-            if (nextEnemy) {
-              setTimeout(() => {
-                dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy) });
-                isProcessingRef.current = false;
-              }, 500);
-              return;
-            }
+          const nextFloor = state.currentFloor + 1;
+          const nextEnemy = getEnemyForFloor(nextFloor);
+          if (nextEnemy) {
+            setTimeout(() => {
+              dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy) });
+              isProcessingRef.current = false;
+            }, 500);
+            return;
           }
         }
         isProcessingRef.current = false;
@@ -417,15 +490,14 @@ export const useBattle = (dungeonId: string) => {
         dispatch({ type: 'DUNGEON_CLEARED' });
       } else {
         // 次の階層へ
-        if (dungeon) {
-          const nextEnemy = getRandomEnemy(dungeon.monsters);
-          if (nextEnemy) {
-            setTimeout(() => {
-              dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy) });
-              isProcessingRef.current = false;
-            }, 500);
-            return;
-          }
+        const nextFloor = state.currentFloor + 1;
+        const nextEnemy = getEnemyForFloor(nextFloor);
+        if (nextEnemy) {
+          setTimeout(() => {
+            dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy) });
+            isProcessingRef.current = false;
+          }, 500);
+          return;
         }
       }
       isProcessingRef.current = false;
@@ -488,17 +560,41 @@ export const useBattle = (dungeonId: string) => {
     saveResults();
   }, [state.phase, state.totalExpGained, state.droppedItems, gainExp, addToInventory, getInventorySpace]);
 
-  // 初回マウント時に戦闘開始
+  // 自動周回処理（クリア時に次の周回を開始、敗北時は終了）
+  useEffect(() => {
+    if (!isAutoRunning) return;
+
+    if (state.phase === 'defeat') {
+      // 敗北時は自動周回を終了
+      setIsAutoRunning(false);
+      return;
+    }
+
+    if (state.phase === 'cleared') {
+      // クリア時は次の周回を開始
+      const timer = setTimeout(() => {
+        const currentStats = getTotalStats();
+        dispatch({ type: 'RESET_DUNGEON', playerMaxHp: currentStats.maxHp });
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [state.phase, isAutoRunning, getTotalStats]);
+
+  // 戦闘開始（初回マウント時 & RESET_DUNGEON後）
   useEffect(() => {
     if (!state.enemy && state.phase === 'fighting') {
       startBattle();
     }
-  }, []);
+  }, [state.enemy, state.phase, startBattle]);
 
   return {
     state,
     startBattle,
     isPaused,
     togglePause,
+    isAutoRunning,
+    startAutoRun,
+    stopAutoRun,
   };
 };

@@ -3,7 +3,7 @@ import { Pressable, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native'
 interface ButtonProps {
   title: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary' | 'danger';
+  variant?: 'primary' | 'secondary' | 'danger' | 'warning';
   disabled?: boolean;
   style?: ViewStyle;
   textStyle?: TextStyle;
@@ -23,6 +23,8 @@ export const Button = ({
         return styles.buttonSecondary;
       case 'danger':
         return styles.buttonDanger;
+      case 'warning':
+        return styles.buttonWarning;
       default:
         return styles.buttonPrimary;
     }
@@ -65,6 +67,9 @@ const styles = StyleSheet.create({
   },
   buttonDanger: {
     backgroundColor: '#F44336',
+  },
+  buttonWarning: {
+    backgroundColor: '#FF9800',
   },
   buttonDisabled: {
     backgroundColor: '#555',

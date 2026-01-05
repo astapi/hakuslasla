@@ -16,7 +16,7 @@
     "wild_rabbit": {
       "id": "wild_rabbit",
       "name": "キラーラビット",
-      "image": "wild_rabbit",
+      "image": "killer_rabbit",
       "maxHp": 15,
       "atk": 6,
       "def": 1,
@@ -36,7 +36,7 @@
     "bee": {
       "id": "bee",
       "name": "キラービー",
-      "image": "bee",
+      "image": "killer_bee",
       "maxHp": 12,
       "atk": 10,
       "def": 1,
@@ -62,7 +62,7 @@
     "bat": {
       "id": "bat",
       "name": "ジャイアントバット",
-      "image": "bat",
+      "image": "giant_bat",
       "maxHp": 28,
       "atk": 12,
       "def": 3,
@@ -178,6 +178,137 @@
       "uniqueDrop": {
         "itemId": "stone_wing_boots",
         "dropRate": 2
+      }
+    },
+
+    "_comment_goblin_fort": "=== ゴブリンの砦 ===",
+
+    "goblin_archer": {
+      "id": "goblin_archer",
+      "name": "ゴブリンアーチャー",
+      "image": "goblin_archer",
+      "maxHp": 60,
+      "atk": 38,
+      "def": 18,
+      "exp": 60,
+      "uniqueDrop": null
+    },
+    "goblin_shaman": {
+      "id": "goblin_shaman",
+      "name": "ゴブリンシャーマン",
+      "image": "goblin_shaman",
+      "maxHp": 55,
+      "atk": 42,
+      "def": 15,
+      "exp": 65,
+      "uniqueDrop": {
+        "itemId": "shaman_staff",
+        "dropRate": 3
+      }
+    },
+    "goblin_knight": {
+      "id": "goblin_knight",
+      "name": "ゴブリンナイト",
+      "image": "goblin_knight",
+      "maxHp": 90,
+      "atk": 35,
+      "def": 25,
+      "exp": 70,
+      "uniqueDrop": {
+        "itemId": "goblin_shield",
+        "dropRate": 3
+      }
+    },
+    "goblin_champion": {
+      "id": "goblin_champion",
+      "name": "ゴブリンチャンピオン",
+      "image": "goblin_champion",
+      "maxHp": 110,
+      "atk": 40,
+      "def": 22,
+      "exp": 80,
+      "uniqueDrop": {
+        "itemId": "champion_axe",
+        "dropRate": 2
+      }
+    },
+    "goblin_king": {
+      "id": "goblin_king",
+      "name": "ゴブリンキング",
+      "image": "goblin_king",
+      "maxHp": 600,
+      "atk": 48,
+      "def": 28,
+      "exp": 500,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "kings_crown",
+        "dropRate": 10
+      }
+    },
+
+    "_comment_castle": "=== 魔王城（将来用） ===",
+
+    "death_knight": {
+      "id": "death_knight",
+      "name": "デスナイト",
+      "image": "death_knight",
+      "maxHp": 120,
+      "atk": 35,
+      "def": 18,
+      "exp": 80,
+      "uniqueDrop": null
+    },
+    "dark_mage": {
+      "id": "dark_mage",
+      "name": "ダークメイジ",
+      "image": "dark_mage",
+      "maxHp": 80,
+      "atk": 45,
+      "def": 10,
+      "exp": 90,
+      "uniqueDrop": {
+        "itemId": "dark_grimoire",
+        "dropRate": 2
+      }
+    },
+    "demon": {
+      "id": "demon",
+      "name": "デーモン",
+      "image": "demon",
+      "maxHp": 150,
+      "atk": 40,
+      "def": 20,
+      "exp": 100,
+      "uniqueDrop": {
+        "itemId": "demon_horn",
+        "dropRate": 2
+      }
+    },
+    "wyvern": {
+      "id": "wyvern",
+      "name": "ワイバーン",
+      "image": "wyvern",
+      "maxHp": 140,
+      "atk": 42,
+      "def": 16,
+      "exp": 110,
+      "uniqueDrop": {
+        "itemId": "wyvern_scale",
+        "dropRate": 2
+      }
+    },
+    "elder_dragon": {
+      "id": "elder_dragon",
+      "name": "エルダードラゴン",
+      "image": "elder_dragon",
+      "maxHp": 200,
+      "atk": 50,
+      "def": 25,
+      "exp": 150,
+      "uniqueDrop": {
+        "itemId": "dragon_heart",
+        "dropRate": 1
       }
     }
   }
