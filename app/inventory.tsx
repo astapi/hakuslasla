@@ -101,22 +101,40 @@ export default function InventoryScreen() {
     router.back();
   };
 
+  // 削除後に次のアイテムを選択するための共通関数
+  const getNextItemAfterRemoval = (instanceId: string): Item | null => {
+    const items = itemsBySlot[selectedSlot];
+    const currentIndex = items.findIndex(item => item.instanceId === instanceId);
+
+    if (items.length <= 1) {
+      return null;
+    }
+
+    // 最後のアイテムでなければ次のアイテム、最後なら前のアイテム
+    if (currentIndex < items.length - 1) {
+      return items[currentIndex + 1];
+    }
+    return items[currentIndex - 1];
+  };
+
   const handleEquip = async (instanceId: string) => {
     await equipItem(instanceId);
     setSelectedItem(null);
   };
 
   const handleSell = async (instanceId: string) => {
+    const nextItem = getNextItemAfterRemoval(instanceId);
     // TODO: お金の概念を追加したら売却金額を加算
     await removeFromInventory(instanceId);
-    setSelectedItem(null);
+    setSelectedItem(nextItem);
   };
 
   const handleStorage = async (item: Item) => {
+    const nextItem = getNextItemAfterRemoval(item.instanceId);
     // 倉庫に送る（MOD保持）
     await storageRepository.addItem(item);
     await removeFromInventory(item.instanceId);
-    setSelectedItem(null);
+    setSelectedItem(nextItem);
   };
 
   const handleSelectItem = (item: Item) => {
