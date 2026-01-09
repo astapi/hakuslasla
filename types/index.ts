@@ -50,11 +50,20 @@ export interface StorageItem {
 
 // MODタイプ
 export type ModType =
-  | 'atk_bonus'      // ATK+X
-  | 'def_bonus'      // DEF+X
-  | 'hp_regen'       // 毎ターンHP X回復
-  | 'poison_chance'  // 毒付与確率+X%
-  | 'critical_chance'; // クリティカル確率+X%
+  | 'atk_bonus'          // ATK+X (フラット)
+  | 'def_bonus'          // DEF+X (フラット)
+  | 'hp_bonus'           // HP+X (フラット)
+  | 'atk_increased_pct'  // ATK +X% (increased、加算)
+  | 'def_increased_pct'  // DEF +X% (increased、加算)
+  | 'hp_increased_pct'   // HP +X% (increased、加算)
+  | 'atk_more_pct'       // ATK X% more (乗算、非常に強力)
+  | 'def_more_pct'       // DEF X% more (乗算、非常に強力)
+  | 'hp_more_pct'        // HP X% more (乗算、非常に強力)
+  | 'hp_regen'           // 毎ターンHP X回復
+  | 'hp_regen_pct'       // 毎ターンHP X%回復
+  | 'poison_chance'      // 毒付与確率+X%
+  | 'critical_chance'    // クリティカル確率+X%
+  | 'critical_damage';   // クリティカルダメージ+X%
 
 // MOD定義
 export interface ItemMod {
@@ -99,12 +108,24 @@ export type Equipment = {
 
 // パッシブノード効果
 export interface PassiveEffect {
+  // フラット加算
   hp?: number;
   atk?: number;
   def?: number;
-  poison_chance?: number;    // 毒付与率（%）
-  critical_chance?: number;  // クリティカル率（%）
-  hp_regen?: number;         // 毎ターンHP回復
+  // increased% (加算で合計)
+  hp_increased_pct?: number;   // HP +X% increased
+  atk_increased_pct?: number;  // ATK +X% increased
+  def_increased_pct?: number;  // DEF +X% increased
+  // more% (乗算、非常に強力)
+  hp_more_pct?: number;        // HP X% more
+  atk_more_pct?: number;       // ATK X% more
+  def_more_pct?: number;       // DEF X% more
+  // その他
+  poison_chance?: number;      // 毒付与率（%）
+  critical_chance?: number;    // クリティカル率（%）
+  critical_damage?: number;    // クリティカルダメージ+X%
+  hp_regen?: number;           // 毎ターンHP回復
+  hp_regen_pct?: number;       // 毎ターンHP X%回復
 }
 
 // パッシブノード位置（UI表示用）

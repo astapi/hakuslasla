@@ -5,6 +5,7 @@
 
 import {
   Stats,
+  PassiveStats,
   EnemyConfig,
   BattleState,
   TurnResult,
@@ -13,6 +14,61 @@ import {
   DungeonResult,
   FloorResult,
 } from './types';
+
+// ========================================
+// PoE式ステータス計算
+// ========================================
+
+/**
+ * ステータス計算: base × (1 + total_increased%) × (1 + total_more%)
+ * @param base 基礎値（フラット）
+ * @param increasedPct increased%の合計（加算）
+ * @param moreMultipliers more%の配列（加算して合計）
+ * @returns 最終値（小数点以下切り捨て）
+ */
+export function applyPercentageScaling(
+  base: number,
+  increasedPct: number,
+  moreMultipliers: number[]
+): number {
+  // Step 1: base × (1 + total_increased%)
+  let result = base * (1 + increasedPct / 100);
+
+  // Step 2: × (1 + total_more%)  ※more%も加算
+  const totalMore = moreMultipliers.reduce((sum, more) => sum + more, 0);
+  result = result * (1 + totalMore / 100);
+
+  return Math.floor(result);
+}
+
+/**
+ * パッシブ効果を適用した最終ステータスを計算
+ * @param baseStats 基礎ステータス（レベル+装備+フラットパッシブ）
+ * @param passiveStats パッシブ効果（inc%、more%含む）
+ * @returns 最終戦闘ステータス
+ */
+export function calculateFinalStats(
+  baseStats: Stats,
+  passiveStats: Pick<PassiveStats, 'hp_increased_pct' | 'atk_increased_pct' | 'def_increased_pct' | 'hp_more_pct' | 'atk_more_pct' | 'def_more_pct'>
+): Stats {
+  return {
+    maxHp: applyPercentageScaling(
+      baseStats.maxHp,
+      passiveStats.hp_increased_pct,
+      passiveStats.hp_more_pct
+    ),
+    atk: applyPercentageScaling(
+      baseStats.atk,
+      passiveStats.atk_increased_pct,
+      passiveStats.atk_more_pct
+    ),
+    def: applyPercentageScaling(
+      baseStats.def,
+      passiveStats.def_increased_pct,
+      passiveStats.def_more_pct
+    ),
+  };
+}
 
 // ========================================
 // ダメージ計算

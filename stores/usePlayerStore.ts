@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Equipment, EquipmentSlot, Item } from '@/types';
-import { getPassiveNode, canUnlockNode } from '@/data/passiveTree';
+import { getPassiveNode, canUnlockNode, calculatePassiveEffects } from '@/data/passiveTree';
 import {
   characterRepository,
   inventoryRepository,
@@ -12,6 +12,7 @@ import {
   INVENTORY_MAX_SIZE,
   getExpToNextLevel,
   calculateLevelUp,
+  calculateFinalStats,
 } from '@/core';
 
 // 初期装備
@@ -287,34 +288,48 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     return true;
   },
 
-  // ロジックはcore/player.tsのcalculateTotalStatsと同一
-  // UI型（Item）とcore型（ItemConfig）の違いのためここで計算
-  // ATK/DEF MODも装備ステータスとして加算
+  // PoE式計算: base × (1 + total_increased%) × more1 × more2 × ...
+  // パッシブのinc%/more%も反映した最終ステータスを返す
   getTotalStats: () => {
     const state = get();
-    let totalAtk = state.atk;
-    let totalDef = state.def;
-    const totalMaxHp = state.maxHp;
 
+    // 1. 基礎ステータス（レベルアップ分+装備+フラットMOD+フラットパッシブ）
+    let baseAtk = state.atk;
+    let baseDef = state.def;
+    let baseMaxHp = state.maxHp;
+
+    // 装備ステータス加算
     Object.values(state.equipment).forEach((item) => {
       if (item) {
-        totalAtk += item.atk;
-        totalDef += item.def;
+        baseAtk += item.atk;
+        baseDef += item.def;
         // MODからATK/DEFボーナスを加算
         if (item.mods) {
           for (const mod of item.mods) {
-            if (mod.type === 'atk_bonus') totalAtk += mod.value;
-            if (mod.type === 'def_bonus') totalDef += mod.value;
+            if (mod.type === 'atk_bonus') baseAtk += mod.value;
+            if (mod.type === 'def_bonus') baseDef += mod.value;
           }
         }
       }
     });
 
-    return {
-      maxHp: totalMaxHp,
-      atk: totalAtk,
-      def: totalDef,
-    };
+    // 2. パッシブ効果を取得（inc%/more%含む）
+    const passiveEffects = calculatePassiveEffects(state.unlockedSkills);
+
+    // 3. PoE式計算で最終ステータスを算出
+    const finalStats = calculateFinalStats(
+      { maxHp: baseMaxHp, atk: baseAtk, def: baseDef },
+      {
+        hp_increased_pct: passiveEffects.hp_increased_pct,
+        atk_increased_pct: passiveEffects.atk_increased_pct,
+        def_increased_pct: passiveEffects.def_increased_pct,
+        hp_more_pct: passiveEffects.hp_more_pct,
+        atk_more_pct: passiveEffects.atk_more_pct,
+        def_more_pct: passiveEffects.def_more_pct,
+      }
+    );
+
+    return finalStats;
   },
 
   getInventorySpace: () => {

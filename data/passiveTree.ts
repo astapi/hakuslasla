@@ -152,35 +152,74 @@ export function getNodeConnections(): [string, string][] {
 
 /**
  * 取得済みパッシブノードの合計効果を計算
+ * PoE式: base × (1 + total_increased%) × more1 × more2 × ...
  */
 export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   hp: number;
   atk: number;
   def: number;
+  hp_increased_pct: number;
+  atk_increased_pct: number;
+  def_increased_pct: number;
+  hp_more_pct: number[];
+  atk_more_pct: number[];
+  def_more_pct: number[];
   poison_chance: number;
   critical_chance: number;
+  critical_damage: number;
   hp_regen: number;
+  hp_regen_pct: number;
 } {
+  // フラット加算
   let hp = 0;
   let atk = 0;
   let def = 0;
+  // increased% (加算で合計)
+  let hp_increased_pct = 0;
+  let atk_increased_pct = 0;
+  let def_increased_pct = 0;
+  // more% (配列で保持、後で乗算)
+  const hp_more_pct: number[] = [];
+  const atk_more_pct: number[] = [];
+  const def_more_pct: number[] = [];
+  // 戦闘特殊効果
   let poison_chance = 0;
   let critical_chance = 0;
+  let critical_damage = 0;
   let hp_regen = 0;
+  let hp_regen_pct = 0;
 
   for (const nodeId of unlockedNodeIds) {
     const node = getPassiveNode(nodeId);
     if (node) {
+      // フラット
       hp += node.effect.hp || 0;
       atk += node.effect.atk || 0;
       def += node.effect.def || 0;
+      // increased%
+      hp_increased_pct += node.effect.hp_increased_pct || 0;
+      atk_increased_pct += node.effect.atk_increased_pct || 0;
+      def_increased_pct += node.effect.def_increased_pct || 0;
+      // more% (配列に追加)
+      if (node.effect.hp_more_pct) hp_more_pct.push(node.effect.hp_more_pct);
+      if (node.effect.atk_more_pct) atk_more_pct.push(node.effect.atk_more_pct);
+      if (node.effect.def_more_pct) def_more_pct.push(node.effect.def_more_pct);
+      // 戦闘特殊効果
       poison_chance += node.effect.poison_chance || 0;
       critical_chance += node.effect.critical_chance || 0;
+      critical_damage += node.effect.critical_damage || 0;
       hp_regen += node.effect.hp_regen || 0;
+      hp_regen_pct += node.effect.hp_regen_pct || 0;
     }
   }
 
-  return { hp, atk, def, poison_chance, critical_chance, hp_regen };
+  return {
+    hp, atk, def,
+    hp_increased_pct, atk_increased_pct, def_increased_pct,
+    hp_more_pct, atk_more_pct, def_more_pct,
+    poison_chance, critical_chance, critical_damage,
+    hp_regen, hp_regen_pct,
+  };
 }
 
 // 後方互換性のため、旧APIも維持

@@ -29,6 +29,9 @@ export const LEVEL_UP_BONUS = {
   skillPoints: 1, // スキルポイントのみ獲得
 };
 
+/** レベル上限 */
+export const MAX_LEVEL = 50;
+
 /** インベントリの最大サイズ */
 export const INVENTORY_MAX_SIZE = 50;
 
@@ -63,8 +66,19 @@ export function calculateLevelUp(
   let totalDefGained = 0;
   let skillPointsGained = 0;
 
+  // レベル上限チェック
+  if (level >= MAX_LEVEL) {
+    return {
+      newLevel: MAX_LEVEL,
+      newExp: 0, // 上限時は経験値を貯めない
+      expToNextLevel: 0,
+      skillPointsGained: 0,
+      statsGained: { maxHp: 0, atk: 0, def: 0 },
+    };
+  }
+
   // レベルアップ処理（複数回レベルアップ対応）
-  while (exp >= expToNext) {
+  while (exp >= expToNext && level < MAX_LEVEL) {
     exp -= expToNext;
     level += 1;
     expToNext = getExpToNextLevel(level);
@@ -73,6 +87,12 @@ export function calculateLevelUp(
     totalAtkGained += LEVEL_UP_BONUS.atk;
     totalDefGained += LEVEL_UP_BONUS.def;
     skillPointsGained += LEVEL_UP_BONUS.skillPoints;
+  }
+
+  // 上限到達時は経験値をリセット
+  if (level >= MAX_LEVEL) {
+    exp = 0;
+    expToNext = 0;
   }
 
   return {
@@ -169,11 +189,29 @@ export const PASSIVE_ROUTES = {
   // 基本ルート（分岐前まで）
   ATK_BASE: ['start', 'atk_1', 'atk_2', 'atk_3', 'merge'],
   HP_BASE: ['start', 'hp_1', 'hp_2', 'hp_3', 'merge'],
+  DEF_BASE: ['start', 'def_1', 'def_2', 'def_3', 'merge'],
 
-  // 特化ルート
+  // 特化ルート（Tier 1）
   POISON: ['poison_1', 'poison_2', 'poison_3'],
   CRIT: ['crit_1', 'crit_2', 'crit_3'],
   REGEN: ['regen_1', 'regen_2', 'regen_3'],
+  ATK_PCT_1: ['atk_pct_1', 'atk_pct_2', 'atk_pct_3'],
+
+  // Tier 2 (merge_2以降)
+  MERGE_2: ['merge_2'],
+  HP_PCT: ['hp_pct_1', 'hp_pct_2', 'hp_pct_3', 'notable_hp_more'],
+  DEF_PCT: ['def_pct_1', 'def_pct_2', 'def_pct_3', 'notable_def_more'],
+  ATK_PCT_2: ['atk_pct_4', 'atk_pct_5', 'atk_pct_6', 'notable_atk_more'],
+  CRIT_DMG: ['crit_dmg_1', 'crit_dmg_2', 'crit_dmg_3', 'notable_crit'],
+
+  // Tier 3 (merge_3以降)
+  MERGE_3: ['merge_3'],
+  ATK_PCT_3: ['atk_pct_7', 'atk_pct_8', 'notable_atk_more_2'],
+  HP_PCT_2: ['hp_pct_4', 'hp_pct_5', 'notable_hp_more_2'],
+  DEF_PCT_2: ['def_pct_4', 'def_pct_5', 'notable_def_more_2'],
+
+  // 最終ノード
+  FINAL: ['final_merge', 'legendary_node'],
 } as const;
 
 /** パッシブプリセット型 */
@@ -189,7 +227,7 @@ export const PASSIVE_PRESETS: Record<string, PassivePreset> = {
     name: 'パッシブなし',
     nodes: [],
   },
-  // ATKルート
+  // 基本ルート（ATK）
   ATK_POISON: {
     name: 'ATK+毒',
     nodes: [...PASSIVE_ROUTES.ATK_BASE, ...PASSIVE_ROUTES.POISON],
@@ -202,7 +240,11 @@ export const PASSIVE_PRESETS: Record<string, PassivePreset> = {
     name: 'ATK+回復',
     nodes: [...PASSIVE_ROUTES.ATK_BASE, ...PASSIVE_ROUTES.REGEN],
   },
-  // HPルート
+  ATK_ATK_PCT: {
+    name: 'ATK+ATK%',
+    nodes: [...PASSIVE_ROUTES.ATK_BASE, ...PASSIVE_ROUTES.ATK_PCT_1],
+  },
+  // 基本ルート（HP）
   HP_POISON: {
     name: 'HP+毒',
     nodes: [...PASSIVE_ROUTES.HP_BASE, ...PASSIVE_ROUTES.POISON],
@@ -214,6 +256,51 @@ export const PASSIVE_PRESETS: Record<string, PassivePreset> = {
   HP_REGEN: {
     name: 'HP+回復',
     nodes: [...PASSIVE_ROUTES.HP_BASE, ...PASSIVE_ROUTES.REGEN],
+  },
+  // Tier 2完全版（ATK% moreまで）
+  TIER2_ATK_MORE: {
+    name: 'ATK% more',
+    nodes: [
+      ...PASSIVE_ROUTES.ATK_BASE,
+      ...PASSIVE_ROUTES.ATK_PCT_1,
+      ...PASSIVE_ROUTES.MERGE_2,
+      ...PASSIVE_ROUTES.ATK_PCT_2,
+    ],
+  },
+  // Tier 2完全版（HP% moreまで）
+  TIER2_HP_MORE: {
+    name: 'HP% more',
+    nodes: [
+      ...PASSIVE_ROUTES.HP_BASE,
+      ...PASSIVE_ROUTES.ATK_PCT_1,
+      ...PASSIVE_ROUTES.MERGE_2,
+      ...PASSIVE_ROUTES.HP_PCT,
+    ],
+  },
+  // Tier 3完全版（ATK特化）
+  TIER3_ATK_FULL: {
+    name: 'ATK特化フル',
+    nodes: [
+      ...PASSIVE_ROUTES.ATK_BASE,
+      ...PASSIVE_ROUTES.ATK_PCT_1,
+      ...PASSIVE_ROUTES.MERGE_2,
+      ...PASSIVE_ROUTES.ATK_PCT_2,
+      ...PASSIVE_ROUTES.MERGE_3,
+      ...PASSIVE_ROUTES.ATK_PCT_3,
+    ],
+  },
+  // フルビルド（伝説ノードまで）
+  FULL_LEGENDARY: {
+    name: '伝説フル',
+    nodes: [
+      ...PASSIVE_ROUTES.ATK_BASE,
+      ...PASSIVE_ROUTES.ATK_PCT_1,
+      ...PASSIVE_ROUTES.MERGE_2,
+      ...PASSIVE_ROUTES.ATK_PCT_2,
+      ...PASSIVE_ROUTES.MERGE_3,
+      ...PASSIVE_ROUTES.ATK_PCT_3,
+      ...PASSIVE_ROUTES.FINAL,
+    ],
   },
 };
 

@@ -10,6 +10,7 @@ export * from './types';
 export {
   INITIAL_STATS,
   LEVEL_UP_BONUS,
+  MAX_LEVEL,
   INVENTORY_MAX_SIZE,
   getExpToNextLevel,
   calculateLevelUp,
@@ -25,6 +26,8 @@ export type { PassivePresetKey } from './player';
 
 // 戦闘関連
 export {
+  applyPercentageScaling,
+  calculateFinalStats,
   calculateDamage,
   executeTurn,
   runBattle,

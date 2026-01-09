@@ -15,9 +15,20 @@ export interface Stats {
 
 // パッシブ効果（戦闘特殊効果含む）
 export interface PassiveStats extends Stats {
-  poison_chance: number;    // 毒付与率（%）
-  critical_chance: number;  // クリティカル率（%）
-  hp_regen: number;         // 毎ターンHP回復
+  // increased% (加算で合計)
+  hp_increased_pct: number;   // HP +X% increased
+  atk_increased_pct: number;  // ATK +X% increased
+  def_increased_pct: number;  // DEF +X% increased
+  // more% (乗算、複数あれば掛け合わせ)
+  hp_more_pct: number[];      // HP X% more (配列で保持)
+  atk_more_pct: number[];     // ATK X% more (配列で保持)
+  def_more_pct: number[];     // DEF X% more (配列で保持)
+  // 戦闘特殊効果
+  poison_chance: number;      // 毒付与率（%）
+  critical_chance: number;    // クリティカル率（%）
+  critical_damage: number;    // クリティカルダメージ+X%
+  hp_regen: number;           // 毎ターンHP回復
+  hp_regen_pct: number;       // 毎ターンHP X%回復
 }
 
 export interface CombatStats extends Stats {

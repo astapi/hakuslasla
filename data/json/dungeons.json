@@ -132,6 +132,313 @@
           { "itemId": "tribal_ring", "dropRate": 10 }
         ]
       }
+    },
+    "demon_castle": {
+      "id": "demon_castle",
+      "name": "魔王城",
+      "description": "闇の力が渦巻く魔王の居城。強力な魔物たちが主を守護している。",
+      "maxFloor": 15,
+      "recommendedLevel": 20,
+      "monsters": [
+        { "monsterId": "death_knight", "spawnRate": 25 },
+        { "monsterId": "dark_mage", "spawnRate": 25 },
+        { "monsterId": "demon", "spawnRate": 25 },
+        { "monsterId": "wyvern", "spawnRate": 25 }
+      ],
+      "boss": {
+        "monsterId": "demon_lord",
+        "floor": 15
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "goblin_blade", "dropRate": 5 },
+          { "itemId": "goblin_mail", "dropRate": 5 },
+          { "itemId": "spiked_gauntlets", "dropRate": 5 },
+          { "itemId": "raider_boots", "dropRate": 5 },
+          { "itemId": "tribal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "demon_blade", "dropRate": 15 },
+          { "itemId": "dark_plate", "dropRate": 12 },
+          { "itemId": "dragon_gauntlets", "dropRate": 12 },
+          { "itemId": "inferno_boots", "dropRate": 10 },
+          { "itemId": "dark_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "ice_cave": {
+      "id": "ice_cave",
+      "name": "氷結の洞窟",
+      "description": "永久凍土の奥深くに眠る氷の洞窟。極寒の魔物が生息する。",
+      "maxFloor": 15,
+      "recommendedLevel": 25,
+      "monsters": [
+        { "monsterId": "ice_golem", "spawnRate": 20 },
+        { "monsterId": "frost_wolf", "spawnRate": 25 },
+        { "monsterId": "ice_witch", "spawnRate": 20 },
+        { "monsterId": "yeti", "spawnRate": 20 },
+        { "monsterId": "frost_wyrm", "spawnRate": 15 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "demon_blade", "dropRate": 5 },
+          { "itemId": "dark_plate", "dropRate": 5 },
+          { "itemId": "dragon_gauntlets", "dropRate": 5 },
+          { "itemId": "inferno_boots", "dropRate": 5 },
+          { "itemId": "dark_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "frost_blade", "dropRate": 15 },
+          { "itemId": "ice_armor", "dropRate": 12 },
+          { "itemId": "frozen_gauntlets", "dropRate": 12 },
+          { "itemId": "blizzard_boots", "dropRate": 10 },
+          { "itemId": "ice_crystal_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "volcano": {
+      "id": "volcano",
+      "name": "灼熱の火山",
+      "description": "活火山の内部に広がる灼熱の迷宮。炎の魔物が棲みついている。",
+      "maxFloor": 15,
+      "recommendedLevel": 30,
+      "monsters": [
+        { "monsterId": "fire_elemental", "spawnRate": 20 },
+        { "monsterId": "magma_golem", "spawnRate": 20 },
+        { "monsterId": "salamander", "spawnRate": 25 },
+        { "monsterId": "flame_knight", "spawnRate": 20 },
+        { "monsterId": "phoenix", "spawnRate": 15 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "frost_blade", "dropRate": 5 },
+          { "itemId": "ice_armor", "dropRate": 5 },
+          { "itemId": "frozen_gauntlets", "dropRate": 5 },
+          { "itemId": "blizzard_boots", "dropRate": 5 },
+          { "itemId": "ice_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "magma_blade", "dropRate": 15 },
+          { "itemId": "volcano_armor", "dropRate": 12 },
+          { "itemId": "flame_gauntlets", "dropRate": 12 },
+          { "itemId": "ember_boots", "dropRate": 10 },
+          { "itemId": "fire_ruby_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "dark_forest": {
+      "id": "dark_forest",
+      "name": "深淵の森",
+      "description": "光の届かない暗黒の森。古代の魔獣が潜んでいる。",
+      "maxFloor": 18,
+      "recommendedLevel": 35,
+      "monsters": [
+        { "monsterId": "dark_treant", "spawnRate": 20 },
+        { "monsterId": "shadow_wolf", "spawnRate": 25 },
+        { "monsterId": "forest_witch", "spawnRate": 20 },
+        { "monsterId": "chimera", "spawnRate": 20 },
+        { "monsterId": "nightmare", "spawnRate": 15 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "magma_blade", "dropRate": 5 },
+          { "itemId": "volcano_armor", "dropRate": 5 },
+          { "itemId": "flame_gauntlets", "dropRate": 5 },
+          { "itemId": "ember_boots", "dropRate": 5 },
+          { "itemId": "fire_ruby_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "shadow_blade", "dropRate": 15 },
+          { "itemId": "dark_bark_armor", "dropRate": 12 },
+          { "itemId": "nightmare_gauntlets", "dropRate": 12 },
+          { "itemId": "forest_walker_boots", "dropRate": 10 },
+          { "itemId": "cursed_eye_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "sky_tower": {
+      "id": "sky_tower",
+      "name": "天空の塔",
+      "description": "雲を突き抜けてそびえ立つ神秘の塔。天界の守護者が待ち受ける。",
+      "maxFloor": 18,
+      "recommendedLevel": 40,
+      "monsters": [
+        { "monsterId": "sky_knight", "spawnRate": 20 },
+        { "monsterId": "storm_harpy", "spawnRate": 25 },
+        { "monsterId": "thunder_bird", "spawnRate": 20 },
+        { "monsterId": "cloud_giant", "spawnRate": 15 },
+        { "monsterId": "wind_elemental", "spawnRate": 20 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "shadow_blade", "dropRate": 5 },
+          { "itemId": "dark_bark_armor", "dropRate": 5 },
+          { "itemId": "nightmare_gauntlets", "dropRate": 5 },
+          { "itemId": "forest_walker_boots", "dropRate": 5 },
+          { "itemId": "cursed_eye_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "sky_blade", "dropRate": 15 },
+          { "itemId": "cloud_armor", "dropRate": 12 },
+          { "itemId": "storm_gauntlets", "dropRate": 12 },
+          { "itemId": "wind_walker_boots", "dropRate": 10 },
+          { "itemId": "sky_sapphire_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "hell_gate": {
+      "id": "hell_gate",
+      "name": "地獄の門",
+      "description": "冥界へと通じる禁断の門。地獄の番人たちが侵入者を阻む。",
+      "maxFloor": 20,
+      "recommendedLevel": 50,
+      "monsters": [
+        { "monsterId": "hell_hound", "spawnRate": 20 },
+        { "monsterId": "infernal_knight", "spawnRate": 20 },
+        { "monsterId": "succubus", "spawnRate": 20 },
+        { "monsterId": "balrog", "spawnRate": 20 },
+        { "monsterId": "cerberus", "spawnRate": 20 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "sky_blade", "dropRate": 5 },
+          { "itemId": "cloud_armor", "dropRate": 5 },
+          { "itemId": "storm_gauntlets", "dropRate": 5 },
+          { "itemId": "wind_walker_boots", "dropRate": 5 },
+          { "itemId": "sky_sapphire_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "hellfire_blade", "dropRate": 15 },
+          { "itemId": "infernal_plate", "dropRate": 12 },
+          { "itemId": "demon_gauntlets", "dropRate": 12 },
+          { "itemId": "hellwalker_boots", "dropRate": 10 },
+          { "itemId": "infernal_ruby_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "dragon_nest": {
+      "id": "dragon_nest",
+      "name": "竜の巣穴",
+      "description": "古龍たちが眠る伝説の巣穴。最強の竜種が生息する。",
+      "maxFloor": 20,
+      "recommendedLevel": 60,
+      "monsters": [
+        { "monsterId": "drake", "spawnRate": 25 },
+        { "monsterId": "fire_dragon", "spawnRate": 20 },
+        { "monsterId": "ice_dragon", "spawnRate": 20 },
+        { "monsterId": "thunder_dragon", "spawnRate": 20 },
+        { "monsterId": "elder_dragon", "spawnRate": 15 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "hellfire_blade", "dropRate": 5 },
+          { "itemId": "infernal_plate", "dropRate": 5 },
+          { "itemId": "demon_gauntlets", "dropRate": 5 },
+          { "itemId": "hellwalker_boots", "dropRate": 5 },
+          { "itemId": "infernal_ruby_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "dragon_slayer", "dropRate": 15 },
+          { "itemId": "dragon_scale_armor", "dropRate": 12 },
+          { "itemId": "dragon_claw_gauntlets", "dropRate": 12 },
+          { "itemId": "dragon_hide_boots", "dropRate": 10 },
+          { "itemId": "dragon_eye_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "sacred_temple": {
+      "id": "sacred_temple",
+      "name": "神域の神殿",
+      "description": "神々に仕える守護者たちが守る聖なる神殿。",
+      "maxFloor": 25,
+      "recommendedLevel": 70,
+      "monsters": [
+        { "monsterId": "divine_knight", "spawnRate": 20 },
+        { "monsterId": "seraph", "spawnRate": 20 },
+        { "monsterId": "temple_guardian", "spawnRate": 20 },
+        { "monsterId": "holy_dragon", "spawnRate": 20 },
+        { "monsterId": "valkyrie", "spawnRate": 20 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "dragon_slayer", "dropRate": 5 },
+          { "itemId": "dragon_scale_armor", "dropRate": 5 },
+          { "itemId": "dragon_claw_gauntlets", "dropRate": 5 },
+          { "itemId": "dragon_hide_boots", "dropRate": 5 },
+          { "itemId": "dragon_eye_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "holy_blade", "dropRate": 15 },
+          { "itemId": "divine_armor", "dropRate": 12 },
+          { "itemId": "seraph_gauntlets", "dropRate": 12 },
+          { "itemId": "divine_boots", "dropRate": 10 },
+          { "itemId": "holy_diamond_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "chaos_realm": {
+      "id": "chaos_realm",
+      "name": "混沌の領域",
+      "description": "現実と虚無の狭間に存在する混沌の世界。あらゆる法則が歪む。",
+      "maxFloor": 25,
+      "recommendedLevel": 80,
+      "monsters": [
+        { "monsterId": "chaos_knight", "spawnRate": 20 },
+        { "monsterId": "void_walker", "spawnRate": 20 },
+        { "monsterId": "abomination", "spawnRate": 20 },
+        { "monsterId": "chaos_dragon", "spawnRate": 20 },
+        { "monsterId": "elder_thing", "spawnRate": 20 }
+      ],
+      "dropTable": {
+        "common": [
+          { "itemId": "holy_blade", "dropRate": 5 },
+          { "itemId": "divine_armor", "dropRate": 5 },
+          { "itemId": "seraph_gauntlets", "dropRate": 5 },
+          { "itemId": "divine_boots", "dropRate": 5 },
+          { "itemId": "holy_diamond_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "chaos_blade", "dropRate": 15 },
+          { "itemId": "void_armor", "dropRate": 12 },
+          { "itemId": "chaos_gauntlets", "dropRate": 12 },
+          { "itemId": "void_boots", "dropRate": 10 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 10 }
+        ]
+      }
+    },
+    "final_land": {
+      "id": "final_land",
+      "name": "終焉の地",
+      "description": "世界の果てに存在する最後の地。最強の存在が待ち構える。",
+      "maxFloor": 30,
+      "recommendedLevel": 99,
+      "monsters": [
+        { "monsterId": "apocalypse_knight", "spawnRate": 20 },
+        { "monsterId": "world_eater", "spawnRate": 20 },
+        { "monsterId": "primordial_titan", "spawnRate": 20 },
+        { "monsterId": "god_slayer", "spawnRate": 20 },
+        { "monsterId": "end_bringer", "spawnRate": 20 }
+      ],
+      "boss": {
+        "monsterId": "true_final_boss",
+        "floor": 30
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      }
     }
   }
 }

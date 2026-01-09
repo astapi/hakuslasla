@@ -368,7 +368,7 @@
       ]
     },
 
-    "_comment10": "=== 魔王城（将来用） 固有ドロップ ===",
+    "_comment10": "=== 魔王城 固有ドロップ ===",
 
     "demon_blade": {
       "id": "demon_blade",
@@ -398,15 +398,15 @@
       "atk": 3,
       "def": 10
     },
-    "chaos_ring": {
-      "id": "chaos_ring",
-      "name": "混沌の指輪",
+    "dark_ring": {
+      "id": "dark_ring",
+      "name": "闇の指輪",
       "slot": "accessory",
       "atk": 6,
       "def": 6
     },
 
-    "_comment9": "=== 魔王城 ユニークドロップ ===",
+    "_comment11": "=== 魔王城 ユニークドロップ ===",
 
     "dark_grimoire": {
       "id": "dark_grimoire",
@@ -439,16 +439,606 @@
         { "type": "def_bonus", "value": 10 }
       ]
     },
+    "demon_crown": {
+      "id": "demon_crown",
+      "name": "魔王の冠",
+      "slot": "accessory",
+      "atk": 12,
+      "def": 12,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 15 },
+        { "type": "def_bonus", "value": 15 },
+        { "type": "hp_regen", "value": 40 }
+      ]
+    },
+
+    "_comment12": "=== 氷結の洞窟 固有ドロップ ===",
+
+    "frost_blade": {
+      "id": "frost_blade",
+      "name": "氷結の剣",
+      "slot": "weapon",
+      "atk": 22,
+      "def": 0
+    },
+    "ice_armor": {
+      "id": "ice_armor",
+      "name": "アイスアーマー",
+      "slot": "armor",
+      "atk": 0,
+      "def": 18
+    },
+    "frozen_gauntlets": {
+      "id": "frozen_gauntlets",
+      "name": "凍てつく篭手",
+      "slot": "gloves",
+      "atk": 5,
+      "def": 8
+    },
+    "blizzard_boots": {
+      "id": "blizzard_boots",
+      "name": "ブリザードブーツ",
+      "slot": "boots",
+      "atk": 4,
+      "def": 12
+    },
+    "ice_crystal_ring": {
+      "id": "ice_crystal_ring",
+      "name": "氷晶の指輪",
+      "slot": "accessory",
+      "atk": 8,
+      "def": 8
+    },
+
+    "_comment13": "=== 氷結の洞窟 ユニークドロップ ===",
+
+    "frozen_staff": {
+      "id": "frozen_staff",
+      "name": "凍結の杖",
+      "slot": "weapon",
+      "atk": 20,
+      "def": 0,
+      "fixedMods": [
+        { "type": "poison_chance", "value": 50 }
+      ]
+    },
+    "yeti_fur": {
+      "id": "yeti_fur",
+      "name": "イエティの毛皮",
+      "slot": "armor",
+      "atk": 0,
+      "def": 22,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 15 },
+        { "type": "hp_regen", "value": 20 }
+      ]
+    },
+
+    "_comment14": "=== 灼熱の火山 固有ドロップ ===",
+
+    "magma_blade": {
+      "id": "magma_blade",
+      "name": "マグマブレイド",
+      "slot": "weapon",
+      "atk": 28,
+      "def": 0
+    },
+    "volcano_armor": {
+      "id": "volcano_armor",
+      "name": "火山の鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 24
+    },
+    "flame_gauntlets": {
+      "id": "flame_gauntlets",
+      "name": "炎の篭手",
+      "slot": "gloves",
+      "atk": 7,
+      "def": 10
+    },
+    "ember_boots": {
+      "id": "ember_boots",
+      "name": "灼熱のブーツ",
+      "slot": "boots",
+      "atk": 5,
+      "def": 15
+    },
+    "fire_ruby_ring": {
+      "id": "fire_ruby_ring",
+      "name": "炎のルビー指輪",
+      "slot": "accessory",
+      "atk": 10,
+      "def": 10
+    },
+
+    "_comment15": "=== 灼熱の火山 ユニークドロップ ===",
+
+    "magma_core": {
+      "id": "magma_core",
+      "name": "マグマコア",
+      "slot": "accessory",
+      "atk": 15,
+      "def": 5,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 20 },
+        { "type": "critical_chance", "value": 20 }
+      ]
+    },
+    "flame_sword": {
+      "id": "flame_sword",
+      "name": "炎剣フレイムソード",
+      "slot": "weapon",
+      "atk": 32,
+      "def": 0,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 15 }
+      ]
+    },
+
+    "_comment16": "=== 深淵の森 固有ドロップ ===",
+
+    "shadow_blade": {
+      "id": "shadow_blade",
+      "name": "シャドウブレイド",
+      "slot": "weapon",
+      "atk": 38,
+      "def": 0
+    },
+    "dark_bark_armor": {
+      "id": "dark_bark_armor",
+      "name": "暗黒樹皮の鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 32
+    },
+    "nightmare_gauntlets": {
+      "id": "nightmare_gauntlets",
+      "name": "悪夢の篭手",
+      "slot": "gloves",
+      "atk": 10,
+      "def": 14
+    },
+    "forest_walker_boots": {
+      "id": "forest_walker_boots",
+      "name": "森歩きのブーツ",
+      "slot": "boots",
+      "atk": 7,
+      "def": 20
+    },
+    "cursed_eye_ring": {
+      "id": "cursed_eye_ring",
+      "name": "呪眼の指輪",
+      "slot": "accessory",
+      "atk": 14,
+      "def": 14
+    },
+
+    "_comment17": "=== 深淵の森 ユニークドロップ ===",
+
+    "cursed_branch": {
+      "id": "cursed_branch",
+      "name": "呪いの枝",
+      "slot": "weapon",
+      "atk": 35,
+      "def": 0,
+      "fixedMods": [
+        { "type": "poison_chance", "value": 70 }
+      ]
+    },
+    "chimera_fang": {
+      "id": "chimera_fang",
+      "name": "キメラの牙",
+      "slot": "accessory",
+      "atk": 20,
+      "def": 10,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 25 },
+        { "type": "critical_chance", "value": 25 }
+      ]
+    },
+
+    "_comment18": "=== 天空の塔 固有ドロップ ===",
+
+    "sky_blade": {
+      "id": "sky_blade",
+      "name": "天空剣",
+      "slot": "weapon",
+      "atk": 50,
+      "def": 0
+    },
+    "cloud_armor": {
+      "id": "cloud_armor",
+      "name": "雲海の鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 42
+    },
+    "storm_gauntlets": {
+      "id": "storm_gauntlets",
+      "name": "嵐の篭手",
+      "slot": "gloves",
+      "atk": 14,
+      "def": 18
+    },
+    "wind_walker_boots": {
+      "id": "wind_walker_boots",
+      "name": "風渡りのブーツ",
+      "slot": "boots",
+      "atk": 10,
+      "def": 26
+    },
+    "sky_sapphire_ring": {
+      "id": "sky_sapphire_ring",
+      "name": "蒼空のサファイア指輪",
+      "slot": "accessory",
+      "atk": 18,
+      "def": 18
+    },
+
+    "_comment19": "=== 天空の塔 ユニークドロップ ===",
+
+    "thunder_feather": {
+      "id": "thunder_feather",
+      "name": "雷鳥の羽",
+      "slot": "accessory",
+      "atk": 25,
+      "def": 15,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 35 },
+        { "type": "atk_bonus", "value": 20 }
+      ]
+    },
+    "giant_belt": {
+      "id": "giant_belt",
+      "name": "巨人の帯",
+      "slot": "accessory",
+      "atk": 15,
+      "def": 30,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 30 },
+        { "type": "hp_regen", "value": 40 }
+      ]
+    },
+
+    "_comment20": "=== 地獄の門 固有ドロップ ===",
+
+    "hellfire_blade": {
+      "id": "hellfire_blade",
+      "name": "獄炎剣",
+      "slot": "weapon",
+      "atk": 68,
+      "def": 0
+    },
+    "infernal_plate": {
+      "id": "infernal_plate",
+      "name": "煉獄の鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 56
+    },
+    "demon_gauntlets": {
+      "id": "demon_gauntlets",
+      "name": "魔人の篭手",
+      "slot": "gloves",
+      "atk": 20,
+      "def": 24
+    },
+    "hellwalker_boots": {
+      "id": "hellwalker_boots",
+      "name": "地獄歩きのブーツ",
+      "slot": "boots",
+      "atk": 14,
+      "def": 35
+    },
+    "infernal_ruby_ring": {
+      "id": "infernal_ruby_ring",
+      "name": "煉獄のルビー指輪",
+      "slot": "accessory",
+      "atk": 25,
+      "def": 25
+    },
+
+    "_comment21": "=== 地獄の門 ユニークドロップ ===",
+
+    "infernal_armor": {
+      "id": "infernal_armor",
+      "name": "インファーナルアーマー",
+      "slot": "armor",
+      "atk": 10,
+      "def": 65,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 40 },
+        { "type": "hp_regen", "value": 50 }
+      ]
+    },
+    "balrog_whip": {
+      "id": "balrog_whip",
+      "name": "バルログの鞭",
+      "slot": "weapon",
+      "atk": 75,
+      "def": 0,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 35 },
+        { "type": "critical_chance", "value": 30 }
+      ]
+    },
+
+    "_comment22": "=== 竜の巣穴 固有ドロップ ===",
+
+    "dragon_slayer": {
+      "id": "dragon_slayer",
+      "name": "竜殺しの剣",
+      "slot": "weapon",
+      "atk": 90,
+      "def": 0
+    },
+    "dragon_scale_armor": {
+      "id": "dragon_scale_armor",
+      "name": "竜鱗の鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 75
+    },
+    "dragon_claw_gauntlets": {
+      "id": "dragon_claw_gauntlets",
+      "name": "竜爪の篭手",
+      "slot": "gloves",
+      "atk": 28,
+      "def": 32
+    },
+    "dragon_hide_boots": {
+      "id": "dragon_hide_boots",
+      "name": "竜皮のブーツ",
+      "slot": "boots",
+      "atk": 18,
+      "def": 48
+    },
+    "dragon_eye_ring": {
+      "id": "dragon_eye_ring",
+      "name": "竜眼の指輪",
+      "slot": "accessory",
+      "atk": 35,
+      "def": 35
+    },
+
+    "_comment23": "=== 竜の巣穴 ユニークドロップ ===",
+
+    "fire_dragon_scale": {
+      "id": "fire_dragon_scale",
+      "name": "炎竜の鱗",
+      "slot": "armor",
+      "atk": 15,
+      "def": 80,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 50 },
+        { "type": "atk_bonus", "value": 30 }
+      ]
+    },
+    "ice_dragon_scale": {
+      "id": "ice_dragon_scale",
+      "name": "氷竜の鱗",
+      "slot": "armor",
+      "atk": 10,
+      "def": 90,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 60 },
+        { "type": "hp_regen", "value": 60 }
+      ]
+    },
     "dragon_heart": {
       "id": "dragon_heart",
       "name": "竜の心臓",
       "slot": "accessory",
-      "atk": 15,
-      "def": 15,
+      "atk": 40,
+      "def": 40,
       "fixedMods": [
-        { "type": "hp_regen", "value": 50 },
-        { "type": "atk_bonus", "value": 10 },
-        { "type": "def_bonus", "value": 10 }
+        { "type": "hp_regen", "value": 80 },
+        { "type": "atk_bonus", "value": 30 },
+        { "type": "def_bonus", "value": 30 }
+      ]
+    },
+
+    "_comment24": "=== 神域の神殿 固有ドロップ ===",
+
+    "holy_blade": {
+      "id": "holy_blade",
+      "name": "聖剣",
+      "slot": "weapon",
+      "atk": 120,
+      "def": 0
+    },
+    "divine_armor": {
+      "id": "divine_armor",
+      "name": "神聖なる鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 100
+    },
+    "seraph_gauntlets": {
+      "id": "seraph_gauntlets",
+      "name": "熾天使の篭手",
+      "slot": "gloves",
+      "atk": 38,
+      "def": 44
+    },
+    "divine_boots": {
+      "id": "divine_boots",
+      "name": "神のブーツ",
+      "slot": "boots",
+      "atk": 25,
+      "def": 65
+    },
+    "holy_diamond_ring": {
+      "id": "holy_diamond_ring",
+      "name": "聖なるダイヤ指輪",
+      "slot": "accessory",
+      "atk": 48,
+      "def": 48
+    },
+
+    "_comment25": "=== 神域の神殿 ユニークドロップ ===",
+
+    "holy_feather": {
+      "id": "holy_feather",
+      "name": "熾天使の羽",
+      "slot": "accessory",
+      "atk": 50,
+      "def": 50,
+      "fixedMods": [
+        { "type": "hp_regen", "value": 100 },
+        { "type": "critical_chance", "value": 40 }
+      ]
+    },
+    "holy_dragon_scale": {
+      "id": "holy_dragon_scale",
+      "name": "聖竜の鱗",
+      "slot": "armor",
+      "atk": 20,
+      "def": 120,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 80 },
+        { "type": "hp_regen", "value": 80 }
+      ]
+    },
+
+    "_comment26": "=== 混沌の領域 固有ドロップ ===",
+
+    "chaos_blade": {
+      "id": "chaos_blade",
+      "name": "混沌の剣",
+      "slot": "weapon",
+      "atk": 160,
+      "def": 0
+    },
+    "void_armor": {
+      "id": "void_armor",
+      "name": "虚無の鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 135
+    },
+    "chaos_gauntlets": {
+      "id": "chaos_gauntlets",
+      "name": "混沌の篭手",
+      "slot": "gloves",
+      "atk": 52,
+      "def": 60
+    },
+    "void_boots": {
+      "id": "void_boots",
+      "name": "虚無のブーツ",
+      "slot": "boots",
+      "atk": 35,
+      "def": 88
+    },
+    "chaos_crystal_ring": {
+      "id": "chaos_crystal_ring",
+      "name": "混沌水晶の指輪",
+      "slot": "accessory",
+      "atk": 65,
+      "def": 65
+    },
+
+    "_comment27": "=== 混沌の領域 ユニークドロップ ===",
+
+    "void_essence": {
+      "id": "void_essence",
+      "name": "虚無のエッセンス",
+      "slot": "accessory",
+      "atk": 70,
+      "def": 70,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 60 },
+        { "type": "def_bonus", "value": 60 }
+      ]
+    },
+    "chaos_scale": {
+      "id": "chaos_scale",
+      "name": "カオスドラゴンの鱗",
+      "slot": "armor",
+      "atk": 30,
+      "def": 150,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 100 },
+        { "type": "hp_regen", "value": 100 }
+      ]
+    },
+
+    "_comment28": "=== 終焉の地 固有ドロップ ===",
+
+    "apocalypse_blade": {
+      "id": "apocalypse_blade",
+      "name": "終焉の剣",
+      "slot": "weapon",
+      "atk": 220,
+      "def": 0
+    },
+    "end_armor": {
+      "id": "end_armor",
+      "name": "終末の鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 180
+    },
+    "titan_gauntlets": {
+      "id": "titan_gauntlets",
+      "name": "泰坦の篭手",
+      "slot": "gloves",
+      "atk": 70,
+      "def": 80
+    },
+    "end_walker_boots": {
+      "id": "end_walker_boots",
+      "name": "終末を歩む者のブーツ",
+      "slot": "boots",
+      "atk": 48,
+      "def": 120
+    },
+    "oblivion_ring": {
+      "id": "oblivion_ring",
+      "name": "忘却の指輪",
+      "slot": "accessory",
+      "atk": 88,
+      "def": 88
+    },
+
+    "_comment29": "=== 終焉の地 ユニークドロップ ===",
+
+    "world_fragment": {
+      "id": "world_fragment",
+      "name": "世界の欠片",
+      "slot": "accessory",
+      "atk": 100,
+      "def": 100,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 80 },
+        { "type": "def_bonus", "value": 80 },
+        { "type": "hp_regen", "value": 120 }
+      ]
+    },
+    "divine_blade": {
+      "id": "divine_blade",
+      "name": "神殺しの剣",
+      "slot": "weapon",
+      "atk": 250,
+      "def": 0,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 100 },
+        { "type": "critical_chance", "value": 50 }
+      ]
+    },
+    "crown_of_end": {
+      "id": "crown_of_end",
+      "name": "終焉の王冠",
+      "slot": "accessory",
+      "atk": 120,
+      "def": 120,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 100 },
+        { "type": "def_bonus", "value": 100 },
+        { "type": "hp_regen", "value": 150 },
+        { "type": "critical_chance", "value": 50 }
       ]
     }
   },
@@ -467,10 +1057,16 @@
   ],
 
   "modConfigs": [
-    { "type": "atk_bonus", "minValue": 1, "maxValue": 5, "weight": 20 },
-    { "type": "def_bonus", "minValue": 1, "maxValue": 5, "weight": 20 },
-    { "type": "hp_regen", "minValue": 1, "maxValue": 10, "weight": 15 },
-    { "type": "poison_chance", "minValue": 5, "maxValue": 30, "weight": 10 },
-    { "type": "critical_chance", "minValue": 5, "maxValue": 20, "weight": 15 }
+    { "type": "atk_bonus", "minValue": 1, "maxValue": 5, "weight": 15 },
+    { "type": "def_bonus", "minValue": 1, "maxValue": 5, "weight": 15 },
+    { "type": "hp_bonus", "minValue": 5, "maxValue": 30, "weight": 15 },
+    { "type": "hp_regen", "minValue": 1, "maxValue": 10, "weight": 10 },
+    { "type": "hp_regen_pct", "minValue": 1, "maxValue": 3, "weight": 5 },
+    { "type": "poison_chance", "minValue": 5, "maxValue": 30, "weight": 8 },
+    { "type": "critical_chance", "minValue": 5, "maxValue": 20, "weight": 10 },
+    { "type": "critical_damage", "minValue": 10, "maxValue": 30, "weight": 8 },
+    { "type": "atk_increased_pct", "minValue": 5, "maxValue": 15, "weight": 6 },
+    { "type": "def_increased_pct", "minValue": 5, "maxValue": 15, "weight": 4 },
+    { "type": "hp_increased_pct", "minValue": 5, "maxValue": 15, "weight": 4 }
   ]
 }
