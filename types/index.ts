@@ -129,12 +129,22 @@ export interface PassiveEffect {
   hp_more_pct?: number;        // HP X% more
   atk_more_pct?: number;       // ATK X% more
   def_more_pct?: number;       // DEF X% more
-  // その他
+  // 毒系
   poison_chance?: number;      // 毒付与率（%）
+  poison_damage_pct?: number;  // 毒ダメージ倍率 +X%（increased）
+  poison_damage_more_pct?: number; // 毒ダメージ倍率 X% more
+  poison_max_stacks?: number;  // 毒スタック上限増加
+  poison_damage_reduction?: number; // 敵が毒状態時のダメージ軽減 +X%
+  no_direct_damage?: boolean;  // 通常ダメージを与えられなくなる（キーストーン）
+  // クリティカル系
   critical_chance?: number;    // クリティカル率（%）
   critical_damage?: number;    // クリティカルダメージ+X%
+  critical_lifesteal?: number; // クリティカル発生時のみダメージ吸収 +X%
+  // 回復・防御系
   hp_regen?: number;           // 毎ターンHP回復
   hp_regen_pct?: number;       // 毎ターンHP X%回復
+  damage_reduction_pct?: number; // ダメージ軽減+X%
+  lifesteal?: number;          // ライフスティール+X%（与ダメージ吸収）
 }
 
 // パッシブノード位置（UI表示用）
@@ -316,7 +326,7 @@ export interface BattleState {
   playerCurrentHp: number;
   playerMaxHp: number;
   enemy: BattleEnemy | null;
-  enemyPoison: PoisonState | null; // 敵の毒状態
+  enemyPoison: PoisonState[]; // 敵の毒状態（複数スタック対応）
   phase: BattlePhase;
   battleLog: BattleLogEntry[];
   droppedItems: Item[];

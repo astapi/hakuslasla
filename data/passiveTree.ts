@@ -165,10 +165,18 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   atk_more_pct: number[];
   def_more_pct: number[];
   poison_chance: number;
+  poison_damage_pct: number;
+  poison_damage_more_pct: number[];
+  poison_max_stacks: number;
+  poison_damage_reduction: number;
+  no_direct_damage: boolean;
   critical_chance: number;
   critical_damage: number;
+  critical_lifesteal: number;
   hp_regen: number;
   hp_regen_pct: number;
+  damage_reduction_pct: number;
+  lifesteal: number;
 } {
   // フラット加算
   let hp = 0;
@@ -182,12 +190,22 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   const hp_more_pct: number[] = [];
   const atk_more_pct: number[] = [];
   const def_more_pct: number[] = [];
-  // 戦闘特殊効果
+  // 毒系
   let poison_chance = 0;
+  let poison_damage_pct = 0;
+  const poison_damage_more_pct: number[] = [];
+  let poison_max_stacks = 0;
+  let poison_damage_reduction = 0;
+  let no_direct_damage = false;
+  // クリティカル系
   let critical_chance = 0;
   let critical_damage = 0;
+  let critical_lifesteal = 0;
+  // 回復・防御系
   let hp_regen = 0;
   let hp_regen_pct = 0;
+  let damage_reduction_pct = 0;
+  let lifesteal = 0;
 
   for (const nodeId of unlockedNodeIds) {
     const node = getPassiveNode(nodeId);
@@ -204,12 +222,22 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       if (node.effect.hp_more_pct) hp_more_pct.push(node.effect.hp_more_pct);
       if (node.effect.atk_more_pct) atk_more_pct.push(node.effect.atk_more_pct);
       if (node.effect.def_more_pct) def_more_pct.push(node.effect.def_more_pct);
-      // 戦闘特殊効果
+      // 毒系
       poison_chance += node.effect.poison_chance || 0;
+      poison_damage_pct += node.effect.poison_damage_pct || 0;
+      if (node.effect.poison_damage_more_pct) poison_damage_more_pct.push(node.effect.poison_damage_more_pct);
+      poison_max_stacks += node.effect.poison_max_stacks || 0;
+      poison_damage_reduction += node.effect.poison_damage_reduction || 0;
+      if (node.effect.no_direct_damage) no_direct_damage = true;
+      // クリティカル系
       critical_chance += node.effect.critical_chance || 0;
       critical_damage += node.effect.critical_damage || 0;
+      critical_lifesteal += node.effect.critical_lifesteal || 0;
+      // 回復・防御系
       hp_regen += node.effect.hp_regen || 0;
       hp_regen_pct += node.effect.hp_regen_pct || 0;
+      damage_reduction_pct += node.effect.damage_reduction_pct || 0;
+      lifesteal += node.effect.lifesteal || 0;
     }
   }
 
@@ -217,8 +245,11 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     hp, atk, def,
     hp_increased_pct, atk_increased_pct, def_increased_pct,
     hp_more_pct, atk_more_pct, def_more_pct,
-    poison_chance, critical_chance, critical_damage,
+    poison_chance, poison_damage_pct, poison_damage_more_pct,
+    poison_max_stacks, poison_damage_reduction, no_direct_damage,
+    critical_chance, critical_damage, critical_lifesteal,
     hp_regen, hp_regen_pct,
+    damage_reduction_pct, lifesteal,
   };
 }
 

@@ -4,418 +4,135 @@
     {
       "id": "start",
       "name": "冒険者の素質",
-      "description": "HP +30, ATK +5",
-      "effect": { "hp": 30, "atk": 5 },
+      "description": "HP +30, ATK +5, DEF +3",
+      "effect": { "hp": 30, "atk": 5, "def": 3 },
       "requiredNodes": [],
       "position": { "x": 0, "y": 0 }
     },
-    {
-      "id": "atk_1",
-      "name": "攻撃強化 I",
-      "description": "ATK +5",
-      "effect": { "atk": 5 },
-      "requiredNodes": ["start"],
-      "position": { "x": -2, "y": 1 }
-    },
-    {
-      "id": "hp_1",
-      "name": "体力強化 I",
-      "description": "HP +20",
-      "effect": { "hp": 20 },
-      "requiredNodes": ["start"],
-      "position": { "x": 2, "y": 1 }
-    },
-    {
-      "id": "def_1",
-      "name": "防御強化 I",
-      "description": "DEF +3",
-      "effect": { "def": 3 },
-      "requiredNodes": ["start"],
-      "position": { "x": 0, "y": 1 }
-    },
-    {
-      "id": "atk_2",
-      "name": "攻撃強化 II",
-      "description": "ATK +5",
-      "effect": { "atk": 5 },
-      "requiredNodes": ["atk_1"],
-      "position": { "x": -2, "y": 2 }
-    },
-    {
-      "id": "hp_2",
-      "name": "体力強化 II",
-      "description": "HP +20",
-      "effect": { "hp": 20 },
-      "requiredNodes": ["hp_1"],
-      "position": { "x": 2, "y": 2 }
-    },
-    {
-      "id": "def_2",
-      "name": "防御強化 II",
-      "description": "DEF +3",
-      "effect": { "def": 3 },
-      "requiredNodes": ["def_1"],
-      "position": { "x": 0, "y": 2 }
-    },
-    {
-      "id": "atk_3",
-      "name": "攻撃強化 III",
-      "description": "ATK +10",
-      "effect": { "atk": 10 },
-      "requiredNodes": ["atk_2"],
-      "position": { "x": -2, "y": 3 }
-    },
-    {
-      "id": "hp_3",
-      "name": "体力強化 III",
-      "description": "HP +30",
-      "effect": { "hp": 30 },
-      "requiredNodes": ["hp_2"],
-      "position": { "x": 2, "y": 3 }
-    },
-    {
-      "id": "def_3",
-      "name": "防御強化 III",
-      "description": "DEF +5",
-      "effect": { "def": 5 },
-      "requiredNodes": ["def_2"],
-      "position": { "x": 0, "y": 3 }
-    },
-    {
-      "id": "merge",
-      "name": "戦士の心得",
-      "description": "HP +30, ATK +5, DEF +2",
-      "effect": { "hp": 30, "atk": 5, "def": 2 },
-      "requiredNodes": [["atk_3", "hp_3", "def_3"]],
-      "position": { "x": 0, "y": 4 }
-    },
-    {
-      "id": "poison_1",
-      "name": "毒の知識 I",
-      "description": "毒付与率 +5%",
-      "effect": { "poison_chance": 5 },
-      "requiredNodes": ["merge"],
-      "position": { "x": -3, "y": 5 }
-    },
-    {
-      "id": "crit_1",
-      "name": "急所狙い I",
-      "description": "クリティカル率 +5%",
-      "effect": { "critical_chance": 5 },
-      "requiredNodes": ["merge"],
-      "position": { "x": -1, "y": 5 }
-    },
-    {
-      "id": "regen_1",
-      "name": "生命力 I",
-      "description": "毎ターンHP +10回復",
-      "effect": { "hp_regen": 10 },
-      "requiredNodes": ["merge"],
-      "position": { "x": 1, "y": 5 }
-    },
-    {
-      "id": "atk_pct_1",
-      "name": "攻撃増幅 I",
-      "description": "ATK +15% increased",
-      "effect": { "atk_increased_pct": 15 },
-      "requiredNodes": ["merge"],
-      "position": { "x": 3, "y": 5 }
-    },
-    {
-      "id": "poison_2",
-      "name": "毒の知識 II",
-      "description": "毒付与率 +5%",
-      "effect": { "poison_chance": 5 },
-      "requiredNodes": ["poison_1"],
-      "position": { "x": -3, "y": 6 }
-    },
-    {
-      "id": "crit_2",
-      "name": "急所狙い II",
-      "description": "クリティカル率 +5%",
-      "effect": { "critical_chance": 5 },
-      "requiredNodes": ["crit_1"],
-      "position": { "x": -1, "y": 6 }
-    },
-    {
-      "id": "regen_2",
-      "name": "生命力 II",
-      "description": "毎ターンHP +10回復",
-      "effect": { "hp_regen": 10 },
-      "requiredNodes": ["regen_1"],
-      "position": { "x": 1, "y": 6 }
-    },
-    {
-      "id": "atk_pct_2",
-      "name": "攻撃増幅 II",
-      "description": "ATK +15% increased",
-      "effect": { "atk_increased_pct": 15 },
-      "requiredNodes": ["atk_pct_1"],
-      "position": { "x": 3, "y": 6 }
-    },
-    {
-      "id": "poison_3",
-      "name": "毒の知識 III",
-      "description": "毒付与率 +5%",
-      "effect": { "poison_chance": 5 },
-      "requiredNodes": ["poison_2"],
-      "position": { "x": -3, "y": 7 }
-    },
-    {
-      "id": "crit_3",
-      "name": "急所狙い III",
-      "description": "クリティカル率 +5%",
-      "effect": { "critical_chance": 5 },
-      "requiredNodes": ["crit_2"],
-      "position": { "x": -1, "y": 7 }
-    },
-    {
-      "id": "regen_3",
-      "name": "生命力 III",
-      "description": "毎ターンHP +10回復",
-      "effect": { "hp_regen": 10 },
-      "requiredNodes": ["regen_2"],
-      "position": { "x": 1, "y": 7 }
-    },
-    {
-      "id": "atk_pct_3",
-      "name": "攻撃増幅 III",
-      "description": "ATK +20% increased",
-      "effect": { "atk_increased_pct": 20 },
-      "requiredNodes": ["atk_pct_2"],
-      "position": { "x": 3, "y": 7 }
-    },
-    {
-      "id": "merge_2",
-      "name": "熟練の心得",
-      "description": "ATK +10, HP +50, DEF +5",
-      "effect": { "atk": 10, "hp": 50, "def": 5 },
-      "requiredNodes": [["poison_3", "crit_3", "regen_3", "atk_pct_3"]],
-      "position": { "x": 0, "y": 8 }
-    },
-    {
-      "id": "hp_pct_1",
-      "name": "生命増幅 I",
-      "description": "HP +20% increased",
-      "effect": { "hp_increased_pct": 20 },
-      "requiredNodes": ["merge_2"],
-      "position": { "x": -3, "y": 9 }
-    },
-    {
-      "id": "def_pct_1",
-      "name": "防御増幅 I",
-      "description": "DEF +20% increased",
-      "effect": { "def_increased_pct": 20 },
-      "requiredNodes": ["merge_2"],
-      "position": { "x": -1, "y": 9 }
-    },
-    {
-      "id": "atk_pct_4",
-      "name": "攻撃増幅 IV",
-      "description": "ATK +25% increased",
-      "effect": { "atk_increased_pct": 25 },
-      "requiredNodes": ["merge_2"],
-      "position": { "x": 1, "y": 9 }
-    },
-    {
-      "id": "crit_dmg_1",
-      "name": "致命の一撃 I",
-      "description": "クリティカルダメージ +30%",
-      "effect": { "critical_damage": 30 },
-      "requiredNodes": ["merge_2"],
-      "position": { "x": 3, "y": 9 }
-    },
-    {
-      "id": "hp_pct_2",
-      "name": "生命増幅 II",
-      "description": "HP +20% increased",
-      "effect": { "hp_increased_pct": 20 },
-      "requiredNodes": ["hp_pct_1"],
-      "position": { "x": -3, "y": 10 }
-    },
-    {
-      "id": "def_pct_2",
-      "name": "防御増幅 II",
-      "description": "DEF +20% increased",
-      "effect": { "def_increased_pct": 20 },
-      "requiredNodes": ["def_pct_1"],
-      "position": { "x": -1, "y": 10 }
-    },
-    {
-      "id": "atk_pct_5",
-      "name": "攻撃増幅 V",
-      "description": "ATK +25% increased",
-      "effect": { "atk_increased_pct": 25 },
-      "requiredNodes": ["atk_pct_4"],
-      "position": { "x": 1, "y": 10 }
-    },
-    {
-      "id": "crit_dmg_2",
-      "name": "致命の一撃 II",
-      "description": "クリティカルダメージ +30%",
-      "effect": { "critical_damage": 30 },
-      "requiredNodes": ["crit_dmg_1"],
-      "position": { "x": 3, "y": 10 }
-    },
-    {
-      "id": "hp_pct_3",
-      "name": "生命増幅 III",
-      "description": "HP +25% increased",
-      "effect": { "hp_increased_pct": 25 },
-      "requiredNodes": ["hp_pct_2"],
-      "position": { "x": -3, "y": 11 }
-    },
-    {
-      "id": "def_pct_3",
-      "name": "防御増幅 III",
-      "description": "DEF +25% increased",
-      "effect": { "def_increased_pct": 25 },
-      "requiredNodes": ["def_pct_2"],
-      "position": { "x": -1, "y": 11 }
-    },
-    {
-      "id": "atk_pct_6",
-      "name": "攻撃増幅 VI",
-      "description": "ATK +30% increased",
-      "effect": { "atk_increased_pct": 30 },
-      "requiredNodes": ["atk_pct_5"],
-      "position": { "x": 1, "y": 11 }
-    },
-    {
-      "id": "crit_dmg_3",
-      "name": "致命の一撃 III",
-      "description": "クリティカルダメージ +40%",
-      "effect": { "critical_damage": 40 },
-      "requiredNodes": ["crit_dmg_2"],
-      "position": { "x": 3, "y": 11 }
-    },
-    {
-      "id": "notable_atk_more",
-      "name": "破壊の化身",
-      "description": "ATK 30% more (乗算)",
-      "effect": { "atk_more_pct": 30 },
-      "requiredNodes": ["atk_pct_6"],
-      "position": { "x": 1, "y": 12 }
-    },
-    {
-      "id": "notable_hp_more",
-      "name": "不滅の守護者",
-      "description": "HP 30% more (乗算)",
-      "effect": { "hp_more_pct": 30 },
-      "requiredNodes": ["hp_pct_3"],
-      "position": { "x": -3, "y": 12 }
-    },
-    {
-      "id": "notable_def_more",
-      "name": "鉄壁の防人",
-      "description": "DEF 30% more (乗算)",
-      "effect": { "def_more_pct": 30 },
-      "requiredNodes": ["def_pct_3"],
-      "position": { "x": -1, "y": 12 }
-    },
-    {
-      "id": "notable_crit",
-      "name": "必殺の刃",
-      "description": "クリティカル率 +10%, クリティカルダメージ +50%",
-      "effect": { "critical_chance": 10, "critical_damage": 50 },
-      "requiredNodes": ["crit_dmg_3"],
-      "position": { "x": 3, "y": 12 }
-    },
-    {
-      "id": "merge_3",
-      "name": "英雄の資質",
-      "description": "ATK +20, HP +100, DEF +10, ATK +10% increased",
-      "effect": { "atk": 20, "hp": 100, "def": 10, "atk_increased_pct": 10 },
-      "requiredNodes": [["notable_atk_more", "notable_hp_more", "notable_def_more", "notable_crit"]],
-      "position": { "x": 0, "y": 13 }
-    },
-    {
-      "id": "atk_pct_7",
-      "name": "攻撃増幅 VII",
-      "description": "ATK +35% increased",
-      "effect": { "atk_increased_pct": 35 },
-      "requiredNodes": ["merge_3"],
-      "position": { "x": -2, "y": 14 }
-    },
-    {
-      "id": "hp_pct_4",
-      "name": "生命増幅 IV",
-      "description": "HP +30% increased",
-      "effect": { "hp_increased_pct": 30 },
-      "requiredNodes": ["merge_3"],
-      "position": { "x": 0, "y": 14 }
-    },
-    {
-      "id": "def_pct_4",
-      "name": "防御増幅 IV",
-      "description": "DEF +30% increased",
-      "effect": { "def_increased_pct": 30 },
-      "requiredNodes": ["merge_3"],
-      "position": { "x": 2, "y": 14 }
-    },
-    {
-      "id": "atk_pct_8",
-      "name": "攻撃増幅 VIII",
-      "description": "ATK +40% increased",
-      "effect": { "atk_increased_pct": 40 },
-      "requiredNodes": ["atk_pct_7"],
-      "position": { "x": -2, "y": 15 }
-    },
-    {
-      "id": "hp_pct_5",
-      "name": "生命増幅 V",
-      "description": "HP +35% increased",
-      "effect": { "hp_increased_pct": 35 },
-      "requiredNodes": ["hp_pct_4"],
-      "position": { "x": 0, "y": 15 }
-    },
-    {
-      "id": "def_pct_5",
-      "name": "防御増幅 V",
-      "description": "DEF +35% increased",
-      "effect": { "def_increased_pct": 35 },
-      "requiredNodes": ["def_pct_4"],
-      "position": { "x": 2, "y": 15 }
-    },
-    {
-      "id": "notable_atk_more_2",
-      "name": "滅びの権化",
-      "description": "ATK 40% more (乗算)",
-      "effect": { "atk_more_pct": 40 },
-      "requiredNodes": ["atk_pct_8"],
-      "position": { "x": -2, "y": 16 }
-    },
-    {
-      "id": "notable_hp_more_2",
-      "name": "永遠の命",
-      "description": "HP 40% more (乗算)",
-      "effect": { "hp_more_pct": 40 },
-      "requiredNodes": ["hp_pct_5"],
-      "position": { "x": 0, "y": 16 }
-    },
-    {
-      "id": "notable_def_more_2",
-      "name": "絶対防御",
-      "description": "DEF 40% more (乗算)",
-      "effect": { "def_more_pct": 40 },
-      "requiredNodes": ["def_pct_5"],
-      "position": { "x": 2, "y": 16 }
-    },
-    {
-      "id": "final_merge",
-      "name": "究極の戦士",
-      "description": "ATK +50, HP +200, DEF +20, ATK +20% increased, HP +20% increased",
-      "effect": { "atk": 50, "hp": 200, "def": 20, "atk_increased_pct": 20, "hp_increased_pct": 20 },
-      "requiredNodes": [["notable_atk_more_2", "notable_hp_more_2", "notable_def_more_2"]],
-      "position": { "x": 0, "y": 17 }
-    },
-    {
-      "id": "legendary_node",
-      "name": "伝説の勇者",
-      "description": "ATK 50% more, HP 50% more, DEF 50% more",
-      "effect": { "atk_more_pct": 50, "hp_more_pct": 50, "def_more_pct": 50 },
-      "requiredNodes": ["final_merge"],
-      "position": { "x": 0, "y": 18 }
-    }
+
+    {"id": "poison_1", "name": "毒の心得", "description": "HP +20, 毒付与率 +3%", "effect": { "hp": 20, "poison_chance": 3 }, "requiredNodes": ["start"], "position": { "x": 0, "y": -1 }},
+    {"id": "poison_2", "name": "毒の知識 I", "description": "毒付与率 +3%", "effect": { "poison_chance": 3 }, "requiredNodes": ["poison_1"], "position": { "x": 0, "y": -2 }},
+    {"id": "poison_3", "name": "体力強化", "description": "HP +20", "effect": { "hp": 20 }, "requiredNodes": ["poison_2"], "position": { "x": -1, "y": -2.5 }},
+    {"id": "poison_4", "name": "防御強化", "description": "DEF +3", "effect": { "def": 3 }, "requiredNodes": ["poison_2"], "position": { "x": 1, "y": -2.5 }},
+    {"id": "poison_5", "name": "毒の知識 II", "description": "毒付与率 +3%", "effect": { "poison_chance": 3 }, "requiredNodes": [["poison_3", "poison_4"]], "position": { "x": 0, "y": -3 }},
+    {"id": "poison_6", "name": "体力強化 II", "description": "HP +25", "effect": { "hp": 25 }, "requiredNodes": ["poison_5"], "position": { "x": 0, "y": -4 }},
+    {"id": "poison_7", "name": "防御強化 II", "description": "DEF +4", "effect": { "def": 4 }, "requiredNodes": ["poison_6"], "position": { "x": 0, "y": -5 }},
+    {"id": "poison_key1", "name": "猛毒使い", "description": "毒付与率 +10%, 毒ダメージ +20%", "effect": { "poison_chance": 10, "poison_damage_pct": 20 }, "requiredNodes": ["poison_7"], "position": { "x": 0, "y": -6 }},
+    {"id": "poison_8", "name": "毒の知識 III", "description": "毒付与率 +5%", "effect": { "poison_chance": 5 }, "requiredNodes": ["poison_key1"], "position": { "x": 0, "y": -7 }},
+    {"id": "poison_9", "name": "毒ダメージ強化 I", "description": "毒ダメージ +15%", "effect": { "poison_damage_pct": 15 }, "requiredNodes": ["poison_8"], "position": { "x": -1, "y": -7.5 }},
+    {"id": "poison_10", "name": "毒耐性", "description": "敵が毒状態時、被ダメージ -3%", "effect": { "poison_damage_reduction": 3 }, "requiredNodes": ["poison_8"], "position": { "x": 1, "y": -7.5 }},
+    {"id": "poison_11", "name": "毒の知識 IV", "description": "毒付与率 +5%", "effect": { "poison_chance": 5 }, "requiredNodes": [["poison_9", "poison_10"]], "position": { "x": 0, "y": -8 }},
+    {"id": "poison_12", "name": "毒ダメージ強化 II", "description": "毒ダメージ +20%", "effect": { "poison_damage_pct": 20 }, "requiredNodes": ["poison_11"], "position": { "x": 0, "y": -9 }},
+    {"id": "poison_13", "name": "毒スタック強化", "description": "毒が2スタックまで重複可能", "effect": { "poison_max_stacks": 2 }, "requiredNodes": ["poison_12"], "position": { "x": 0, "y": -10 }},
+    {"id": "poison_a1", "name": "深淵の毒", "description": "毒ダメージ +25%", "effect": { "poison_damage_pct": 25 }, "requiredNodes": ["poison_13"], "position": { "x": -1.5, "y": -11 }},
+    {"id": "poison_a2", "name": "毒の極致", "description": "毒スタック +3（計5スタック可能）", "effect": { "poison_max_stacks": 3 }, "requiredNodes": ["poison_a1"], "position": { "x": -1.5, "y": -12 }},
+    {"id": "poison_b1", "name": "毒の護り", "description": "敵が毒状態時、被ダメージ -5%", "effect": { "poison_damage_reduction": 5 }, "requiredNodes": ["poison_13"], "position": { "x": 1.5, "y": -11 }},
+    {"id": "poison_b2", "name": "毒龍の鱗", "description": "敵が毒状態時、被ダメージ -7%, HP +30", "effect": { "poison_damage_reduction": 7, "hp": 30 }, "requiredNodes": ["poison_b1"], "position": { "x": 1.5, "y": -12 }},
+    {"id": "poison_14", "name": "毒の知識 V", "description": "毒付与率 +8%", "effect": { "poison_chance": 8 }, "requiredNodes": [["poison_a2", "poison_b2"]], "position": { "x": 0, "y": -13 }},
+    {"id": "poison_15", "name": "致死毒", "description": "毒ダメージ +30%", "effect": { "poison_damage_pct": 30 }, "requiredNodes": ["poison_14"], "position": { "x": 0, "y": -14 }},
+    {"id": "poison_16", "name": "毒の極意", "description": "毒付与率 +10%", "effect": { "poison_chance": 10 }, "requiredNodes": ["poison_15"], "position": { "x": 0, "y": -15 }},
+    {"id": "poison_17", "name": "猛毒の守護", "description": "敵が毒状態時、被ダメージ -5%", "effect": { "poison_damage_reduction": 5 }, "requiredNodes": ["poison_16"], "position": { "x": 0, "y": -16 }},
+    {"id": "poison_final1", "name": "毒蛇の化身", "description": "毒付与率 +15%, 毒ダメージ 20% more", "effect": { "poison_chance": 15, "poison_damage_more_pct": 20 }, "requiredNodes": ["poison_17"], "position": { "x": 0, "y": -17 }},
+    {"id": "poison_final2", "name": "純粋毒【キーストーン】", "description": "通常ダメージを与えられなくなる。毒ダメージ 50% more", "effect": { "no_direct_damage": true, "poison_damage_more_pct": 50 }, "requiredNodes": ["poison_final1"], "position": { "x": 0, "y": -18 }},
+
+    {"id": "crit_1", "name": "急所の心得", "description": "ATK +5, クリティカル率 +3%", "effect": { "atk": 5, "critical_chance": 3 }, "requiredNodes": ["start"], "position": { "x": 2, "y": -0.5 }},
+    {"id": "crit_2", "name": "急所狙い I", "description": "クリティカル率 +3%", "effect": { "critical_chance": 3 }, "requiredNodes": ["crit_1"], "position": { "x": 3, "y": -1 }},
+    {"id": "crit_3", "name": "攻撃強化", "description": "ATK +5", "effect": { "atk": 5 }, "requiredNodes": ["crit_2"], "position": { "x": 3.5, "y": -2 }},
+    {"id": "crit_4", "name": "致命打 I", "description": "クリティカルダメージ +15%", "effect": { "critical_damage": 15 }, "requiredNodes": ["crit_2"], "position": { "x": 4.5, "y": -1.5 }},
+    {"id": "crit_5", "name": "急所狙い II", "description": "クリティカル率 +3%", "effect": { "critical_chance": 3 }, "requiredNodes": [["crit_3", "crit_4"]], "position": { "x": 4, "y": -2.5 }},
+    {"id": "crit_6", "name": "攻撃強化 II", "description": "ATK +8", "effect": { "atk": 8 }, "requiredNodes": ["crit_5"], "position": { "x": 4.5, "y": -3.5 }},
+    {"id": "crit_7", "name": "致命打 II", "description": "クリティカルダメージ +20%", "effect": { "critical_damage": 20 }, "requiredNodes": ["crit_6"], "position": { "x": 5, "y": -4.5 }},
+    {"id": "crit_key1", "name": "必殺の一撃", "description": "クリティカルダメージ +30%", "effect": { "critical_damage": 30 }, "requiredNodes": ["crit_7"], "position": { "x": 5.5, "y": -5.5 }},
+    {"id": "crit_8", "name": "急所狙い III", "description": "クリティカル率 +5%", "effect": { "critical_chance": 5 }, "requiredNodes": ["crit_key1"], "position": { "x": 6, "y": -6.5 }},
+    {"id": "crit_9", "name": "攻撃増幅", "description": "ATK +15% increased", "effect": { "atk_increased_pct": 15 }, "requiredNodes": ["crit_8"], "position": { "x": 5.5, "y": -7.5 }},
+    {"id": "crit_10", "name": "致命打 III", "description": "クリティカルダメージ +20%", "effect": { "critical_damage": 20 }, "requiredNodes": ["crit_8"], "position": { "x": 7, "y": -7 }},
+    {"id": "crit_11", "name": "急所狙い IV", "description": "クリティカル率 +5%", "effect": { "critical_chance": 5 }, "requiredNodes": [["crit_9", "crit_10"]], "position": { "x": 6.5, "y": -8 }},
+    {"id": "crit_12", "name": "攻撃強化 III", "description": "ATK +10", "effect": { "atk": 10 }, "requiredNodes": ["crit_11"], "position": { "x": 7, "y": -9 }},
+    {"id": "crit_13", "name": "致命打 IV", "description": "クリティカルダメージ +25%", "effect": { "critical_damage": 25 }, "requiredNodes": ["crit_12"], "position": { "x": 7.5, "y": -10 }},
+    {"id": "crit_a1", "name": "精密打撃", "description": "クリティカル率 +8%", "effect": { "critical_chance": 8 }, "requiredNodes": ["crit_13"], "position": { "x": 7, "y": -11 }},
+    {"id": "crit_a2", "name": "確実な急所", "description": "クリティカル率 +10%", "effect": { "critical_chance": 10 }, "requiredNodes": ["crit_a1"], "position": { "x": 7, "y": -12 }},
+    {"id": "crit_b1", "name": "破壊的一撃", "description": "クリティカルダメージ +30%", "effect": { "critical_damage": 30 }, "requiredNodes": ["crit_13"], "position": { "x": 8.5, "y": -11 }},
+    {"id": "crit_b2", "name": "壊滅の刃", "description": "クリティカルダメージ +40%", "effect": { "critical_damage": 40 }, "requiredNodes": ["crit_b1"], "position": { "x": 8.5, "y": -12 }},
+    {"id": "crit_14", "name": "急所狙い V", "description": "クリティカル率 +5%", "effect": { "critical_chance": 5 }, "requiredNodes": [["crit_a2", "crit_b2"]], "position": { "x": 8, "y": -13 }},
+    {"id": "crit_15", "name": "血の刃", "description": "クリティカル時ダメージ吸収 +5%", "effect": { "critical_lifesteal": 5 }, "requiredNodes": ["crit_14"], "position": { "x": 8.5, "y": -14 }},
+    {"id": "crit_16", "name": "致命打 V", "description": "クリティカルダメージ +30%", "effect": { "critical_damage": 30 }, "requiredNodes": ["crit_15"], "position": { "x": 9, "y": -15 }},
+    {"id": "crit_17", "name": "血の渇望", "description": "クリティカル時ダメージ吸収 +8%", "effect": { "critical_lifesteal": 8 }, "requiredNodes": ["crit_16"], "position": { "x": 9.5, "y": -16 }},
+    {"id": "crit_final1", "name": "必殺の刃", "description": "クリティカル率 +10%, クリティカルダメージ +50%", "effect": { "critical_chance": 10, "critical_damage": 50 }, "requiredNodes": ["crit_17"], "position": { "x": 10, "y": -17 }},
+    {"id": "crit_final2", "name": "処刑人", "description": "クリティカル時ダメージ吸収 +15%, ATK 15% more", "effect": { "critical_lifesteal": 15, "atk_more_pct": 15 }, "requiredNodes": ["crit_final1"], "position": { "x": 10.5, "y": -18 }},
+
+    {"id": "guard_1", "name": "守りの心得", "description": "DEF +5, ダメージ軽減 +2%", "effect": { "def": 5, "damage_reduction_pct": 2 }, "requiredNodes": ["start"], "position": { "x": 2, "y": 0.5 }},
+    {"id": "guard_2", "name": "堅守 I", "description": "ダメージ軽減 +2%", "effect": { "damage_reduction_pct": 2 }, "requiredNodes": ["guard_1"], "position": { "x": 3, "y": 1 }},
+    {"id": "guard_3", "name": "防御強化", "description": "DEF +4", "effect": { "def": 4 }, "requiredNodes": ["guard_2"], "position": { "x": 3.5, "y": 2 }},
+    {"id": "guard_4", "name": "体力強化", "description": "HP +25", "effect": { "hp": 25 }, "requiredNodes": ["guard_2"], "position": { "x": 4.5, "y": 1.5 }},
+    {"id": "guard_5", "name": "堅守 II", "description": "ダメージ軽減 +2%", "effect": { "damage_reduction_pct": 2 }, "requiredNodes": [["guard_3", "guard_4"]], "position": { "x": 4, "y": 2.5 }},
+    {"id": "guard_6", "name": "防御強化 II", "description": "DEF +5", "effect": { "def": 5 }, "requiredNodes": ["guard_5"], "position": { "x": 4.5, "y": 3.5 }},
+    {"id": "guard_7", "name": "体力強化 II", "description": "HP +30", "effect": { "hp": 30 }, "requiredNodes": ["guard_6"], "position": { "x": 5, "y": 4.5 }},
+    {"id": "guard_key1", "name": "鉄壁の盾", "description": "ダメージ軽減 +8%", "effect": { "damage_reduction_pct": 8 }, "requiredNodes": ["guard_7"], "position": { "x": 5.5, "y": 5.5 }},
+    {"id": "guard_8", "name": "堅守 III", "description": "ダメージ軽減 +3%", "effect": { "damage_reduction_pct": 3 }, "requiredNodes": ["guard_key1"], "position": { "x": 6, "y": 6.5 }},
+    {"id": "guard_9", "name": "防御増幅", "description": "DEF +20% increased", "effect": { "def_increased_pct": 20 }, "requiredNodes": ["guard_8"], "position": { "x": 5.5, "y": 7.5 }},
+    {"id": "guard_10", "name": "生命力増幅", "description": "HP +20% increased", "effect": { "hp_increased_pct": 20 }, "requiredNodes": ["guard_8"], "position": { "x": 7, "y": 7 }},
+    {"id": "guard_11", "name": "堅守 IV", "description": "ダメージ軽減 +3%", "effect": { "damage_reduction_pct": 3 }, "requiredNodes": [["guard_9", "guard_10"]], "position": { "x": 6.5, "y": 8 }},
+    {"id": "guard_12", "name": "防御強化 III", "description": "DEF +8", "effect": { "def": 8 }, "requiredNodes": ["guard_11"], "position": { "x": 7, "y": 9 }},
+    {"id": "guard_13", "name": "体力強化 III", "description": "HP +40", "effect": { "hp": 40 }, "requiredNodes": ["guard_12"], "position": { "x": 7.5, "y": 10 }},
+    {"id": "guard_a1", "name": "鋼の肉体", "description": "DEF +25% increased", "effect": { "def_increased_pct": 25 }, "requiredNodes": ["guard_13"], "position": { "x": 7, "y": 11 }},
+    {"id": "guard_a2", "name": "不動の砦", "description": "DEF +12", "effect": { "def": 12 }, "requiredNodes": ["guard_a1"], "position": { "x": 7, "y": 12 }},
+    {"id": "guard_b1", "name": "豊かな生命", "description": "HP +25% increased", "effect": { "hp_increased_pct": 25 }, "requiredNodes": ["guard_13"], "position": { "x": 8.5, "y": 11 }},
+    {"id": "guard_b2", "name": "生命の護り", "description": "HP +60", "effect": { "hp": 60 }, "requiredNodes": ["guard_b1"], "position": { "x": 8.5, "y": 12 }},
+    {"id": "guard_14", "name": "堅守 V", "description": "ダメージ軽減 +4%", "effect": { "damage_reduction_pct": 4 }, "requiredNodes": [["guard_a2", "guard_b2"]], "position": { "x": 8, "y": 13 }},
+    {"id": "guard_15", "name": "防御の極み", "description": "DEF +15", "effect": { "def": 15 }, "requiredNodes": ["guard_14"], "position": { "x": 8.5, "y": 14 }},
+    {"id": "guard_16", "name": "堅守 VI", "description": "ダメージ軽減 +5%", "effect": { "damage_reduction_pct": 5 }, "requiredNodes": ["guard_15"], "position": { "x": 9, "y": 15 }},
+    {"id": "guard_17", "name": "生命の極み", "description": "HP +80", "effect": { "hp": 80 }, "requiredNodes": ["guard_16"], "position": { "x": 9.5, "y": 16 }},
+    {"id": "guard_final1", "name": "鉄壁の守護者", "description": "ダメージ軽減 +10%, DEF 20% more", "effect": { "damage_reduction_pct": 10, "def_more_pct": 20 }, "requiredNodes": ["guard_17"], "position": { "x": 10, "y": 17 }},
+    {"id": "guard_final2", "name": "不滅の城壁", "description": "HP 20% more", "effect": { "hp_more_pct": 20 }, "requiredNodes": ["guard_final1"], "position": { "x": 10.5, "y": 18 }},
+
+    {"id": "vamp_1", "name": "吸血の心得", "description": "ATK +5, ライフスティール +2%", "effect": { "atk": 5, "lifesteal": 2 }, "requiredNodes": ["start"], "position": { "x": -2, "y": 0.5 }},
+    {"id": "vamp_2", "name": "吸血 I", "description": "ライフスティール +2%", "effect": { "lifesteal": 2 }, "requiredNodes": ["vamp_1"], "position": { "x": -3, "y": 1 }},
+    {"id": "vamp_3", "name": "攻撃強化", "description": "ATK +5", "effect": { "atk": 5 }, "requiredNodes": ["vamp_2"], "position": { "x": -3.5, "y": 2 }},
+    {"id": "vamp_4", "name": "生命回復", "description": "毎ターンHP +8回復", "effect": { "hp_regen": 8 }, "requiredNodes": ["vamp_2"], "position": { "x": -4.5, "y": 1.5 }},
+    {"id": "vamp_5", "name": "吸血 II", "description": "ライフスティール +2%", "effect": { "lifesteal": 2 }, "requiredNodes": [["vamp_3", "vamp_4"]], "position": { "x": -4, "y": 2.5 }},
+    {"id": "vamp_6", "name": "攻撃強化 II", "description": "ATK +8", "effect": { "atk": 8 }, "requiredNodes": ["vamp_5"], "position": { "x": -4.5, "y": 3.5 }},
+    {"id": "vamp_7", "name": "生命回復 II", "description": "毎ターンHP +10回復", "effect": { "hp_regen": 10 }, "requiredNodes": ["vamp_6"], "position": { "x": -5, "y": 4.5 }},
+    {"id": "vamp_key1", "name": "血の渇望", "description": "ライフスティール +8%", "effect": { "lifesteal": 8 }, "requiredNodes": ["vamp_7"], "position": { "x": -5.5, "y": 5.5 }},
+    {"id": "vamp_8", "name": "吸血 III", "description": "ライフスティール +3%", "effect": { "lifesteal": 3 }, "requiredNodes": ["vamp_key1"], "position": { "x": -6, "y": 6.5 }},
+    {"id": "vamp_9", "name": "攻撃増幅", "description": "ATK +15% increased", "effect": { "atk_increased_pct": 15 }, "requiredNodes": ["vamp_8"], "position": { "x": -5.5, "y": 7.5 }},
+    {"id": "vamp_10", "name": "持続回復", "description": "毎ターンHP 1%回復", "effect": { "hp_regen_pct": 1 }, "requiredNodes": ["vamp_8"], "position": { "x": -7, "y": 7 }},
+    {"id": "vamp_11", "name": "吸血 IV", "description": "ライフスティール +3%", "effect": { "lifesteal": 3 }, "requiredNodes": [["vamp_9", "vamp_10"]], "position": { "x": -6.5, "y": 8 }},
+    {"id": "vamp_12", "name": "攻撃強化 III", "description": "ATK +10", "effect": { "atk": 10 }, "requiredNodes": ["vamp_11"], "position": { "x": -7, "y": 9 }},
+    {"id": "vamp_13", "name": "生命回復 III", "description": "毎ターンHP +12回復", "effect": { "hp_regen": 12 }, "requiredNodes": ["vamp_12"], "position": { "x": -7.5, "y": 10 }},
+    {"id": "vamp_a1", "name": "猛攻", "description": "ATK +20% increased", "effect": { "atk_increased_pct": 20 }, "requiredNodes": ["vamp_13"], "position": { "x": -7, "y": 11 }},
+    {"id": "vamp_a2", "name": "破壊の拳", "description": "ATK +15", "effect": { "atk": 15 }, "requiredNodes": ["vamp_a1"], "position": { "x": -7, "y": 12 }},
+    {"id": "vamp_b1", "name": "治癒の力", "description": "毎ターンHP 1.5%回復", "effect": { "hp_regen_pct": 1.5 }, "requiredNodes": ["vamp_13"], "position": { "x": -8.5, "y": 11 }},
+    {"id": "vamp_b2", "name": "生命の奔流", "description": "毎ターンHP +20回復", "effect": { "hp_regen": 20 }, "requiredNodes": ["vamp_b1"], "position": { "x": -8.5, "y": 12 }},
+    {"id": "vamp_14", "name": "吸血 V", "description": "ライフスティール +4%", "effect": { "lifesteal": 4 }, "requiredNodes": [["vamp_a2", "vamp_b2"]], "position": { "x": -8, "y": 13 }},
+    {"id": "vamp_15", "name": "攻撃増幅 II", "description": "ATK +20% increased", "effect": { "atk_increased_pct": 20 }, "requiredNodes": ["vamp_14"], "position": { "x": -8.5, "y": 14 }},
+    {"id": "vamp_16", "name": "吸血 VI", "description": "ライフスティール +5%", "effect": { "lifesteal": 5 }, "requiredNodes": ["vamp_15"], "position": { "x": -9, "y": 15 }},
+    {"id": "vamp_17", "name": "攻撃の極み", "description": "ATK +20", "effect": { "atk": 20 }, "requiredNodes": ["vamp_16"], "position": { "x": -9.5, "y": 16 }},
+    {"id": "vamp_final1", "name": "血の支配者", "description": "ライフスティール +10%, ATK 15% more", "effect": { "lifesteal": 10, "atk_more_pct": 15 }, "requiredNodes": ["vamp_17"], "position": { "x": -10, "y": 17 }},
+    {"id": "vamp_final2", "name": "永遠の吸血鬼", "description": "毎ターンHP 3%回復", "effect": { "hp_regen_pct": 3 }, "requiredNodes": ["vamp_final1"], "position": { "x": -10.5, "y": 18 }},
+
+    {"id": "regen_1", "name": "回復の心得", "description": "HP +30, 毎ターンHP +5回復", "effect": { "hp": 30, "hp_regen": 5 }, "requiredNodes": ["start"], "position": { "x": -2, "y": -0.5 }},
+    {"id": "regen_2", "name": "生命力 I", "description": "毎ターンHP +5回復", "effect": { "hp_regen": 5 }, "requiredNodes": ["regen_1"], "position": { "x": -3, "y": -1 }},
+    {"id": "regen_3", "name": "体力強化", "description": "HP +25", "effect": { "hp": 25 }, "requiredNodes": ["regen_2"], "position": { "x": -3.5, "y": -2 }},
+    {"id": "regen_4", "name": "回復強化", "description": "毎ターンHP +8回復", "effect": { "hp_regen": 8 }, "requiredNodes": ["regen_2"], "position": { "x": -4.5, "y": -1.5 }},
+    {"id": "regen_5", "name": "生命力 II", "description": "HP +20% increased", "effect": { "hp_increased_pct": 20 }, "requiredNodes": [["regen_3", "regen_4"]], "position": { "x": -4, "y": -2.5 }},
+    {"id": "regen_6", "name": "体力強化 II", "description": "HP +30", "effect": { "hp": 30 }, "requiredNodes": ["regen_5"], "position": { "x": -4.5, "y": -3.5 }},
+    {"id": "regen_7", "name": "回復強化 II", "description": "毎ターンHP +10回復", "effect": { "hp_regen": 10 }, "requiredNodes": ["regen_6"], "position": { "x": -5, "y": -4.5 }},
+    {"id": "regen_key1", "name": "生命の泉", "description": "毎ターンHP 2%回復", "effect": { "hp_regen_pct": 2 }, "requiredNodes": ["regen_7"], "position": { "x": -5.5, "y": -5.5 }},
+    {"id": "regen_8", "name": "生命力 III", "description": "HP +25% increased", "effect": { "hp_increased_pct": 25 }, "requiredNodes": ["regen_key1"], "position": { "x": -6, "y": -6.5 }},
+    {"id": "regen_9", "name": "体力増幅", "description": "HP +40", "effect": { "hp": 40 }, "requiredNodes": ["regen_8"], "position": { "x": -5.5, "y": -7.5 }},
+    {"id": "regen_10", "name": "回復増幅", "description": "毎ターンHP +12回復", "effect": { "hp_regen": 12 }, "requiredNodes": ["regen_8"], "position": { "x": -7, "y": -7 }},
+    {"id": "regen_11", "name": "生命力 IV", "description": "HP +20% increased", "effect": { "hp_increased_pct": 20 }, "requiredNodes": [["regen_9", "regen_10"]], "position": { "x": -6.5, "y": -8 }},
+    {"id": "regen_12", "name": "体力強化 III", "description": "HP +50", "effect": { "hp": 50 }, "requiredNodes": ["regen_11"], "position": { "x": -7, "y": -9 }},
+    {"id": "regen_13", "name": "回復強化 III", "description": "毎ターンHP +15回復", "effect": { "hp_regen": 15 }, "requiredNodes": ["regen_12"], "position": { "x": -7.5, "y": -10 }},
+    {"id": "regen_a1", "name": "強靭な生命", "description": "HP +30% increased", "effect": { "hp_increased_pct": 30 }, "requiredNodes": ["regen_13"], "position": { "x": -7, "y": -11 }},
+    {"id": "regen_a2", "name": "不屈の体", "description": "HP +70", "effect": { "hp": 70 }, "requiredNodes": ["regen_a1"], "position": { "x": -7, "y": -12 }},
+    {"id": "regen_b1", "name": "超回復", "description": "毎ターンHP 1.5%回復", "effect": { "hp_regen_pct": 1.5 }, "requiredNodes": ["regen_13"], "position": { "x": -8.5, "y": -11 }},
+    {"id": "regen_b2", "name": "治癒の極み", "description": "毎ターンHP +25回復", "effect": { "hp_regen": 25 }, "requiredNodes": ["regen_b1"], "position": { "x": -8.5, "y": -12 }},
+    {"id": "regen_14", "name": "生命力 V", "description": "HP +25% increased", "effect": { "hp_increased_pct": 25 }, "requiredNodes": [["regen_a2", "regen_b2"]], "position": { "x": -8, "y": -13 }},
+    {"id": "regen_15", "name": "体力強化 IV", "description": "HP +60", "effect": { "hp": 60 }, "requiredNodes": ["regen_14"], "position": { "x": -8.5, "y": -14 }},
+    {"id": "regen_16", "name": "回復強化 IV", "description": "毎ターンHP +20回復", "effect": { "hp_regen": 20 }, "requiredNodes": ["regen_15"], "position": { "x": -9, "y": -15 }},
+    {"id": "regen_17", "name": "生命の加護", "description": "毎ターンHP 2%回復", "effect": { "hp_regen_pct": 2 }, "requiredNodes": ["regen_16"], "position": { "x": -9.5, "y": -16 }},
+    {"id": "regen_final1", "name": "不死鳥の祝福", "description": "HP 25% more, 毎ターンHP +25回復", "effect": { "hp_more_pct": 25, "hp_regen": 25 }, "requiredNodes": ["regen_17"], "position": { "x": -10, "y": -17 }},
+    {"id": "regen_final2", "name": "永遠の生命", "description": "毎ターンHP 4%回復", "effect": { "hp_regen_pct": 4 }, "requiredNodes": ["regen_final1"], "position": { "x": -10.5, "y": -18 }}
   ]
 }

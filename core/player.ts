@@ -41,9 +41,14 @@ export const INVENTORY_MAX_SIZE = 50;
 
 /**
  * 次のレベルに必要な経験値を計算
+ * PoE風曲線: 100 × level^1.8
+ * - Lv1→2: 100 EXP
+ * - Lv25→26: 約32,000 EXP
+ * - Lv49→50: 約100,000 EXP
+ * - 累計約100万EXP でレベル50到達
  */
 export function getExpToNextLevel(level: number): number {
-  return level * 50;
+  return Math.floor(100 * Math.pow(level, 1.8));
 }
 
 /**
