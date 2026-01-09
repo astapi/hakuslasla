@@ -8,6 +8,7 @@ import { storageRepository } from '@/db';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { getItemIcon, getSlotIcon, getSlotLabel } from '@/data/itemIcons';
 import { Item, EquipmentSlot } from '@/types';
+import { getTierColor, getTierDisplayName } from '@/data/items';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -15,30 +16,63 @@ const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'acce
 function calculateItemStats(item: Item) {
   let totalAtk = item.atk;
   let totalDef = item.def;
-  const otherMods: { type: string; value: number; desc: string }[] = [];
+  const otherMods: { type: string; value: number; tier: number; desc: string; color: string }[] = [];
 
   if (item.mods) {
     for (const mod of item.mods) {
       let desc = '';
+      const tier = mod.tier ?? 10;
+      const tierLabel = getTierDisplayName(tier);
+      const color = getTierColor(tier);
+
       switch (mod.type) {
         case 'atk_bonus':
           totalAtk += mod.value;
+          desc = `[${tierLabel}] ATK+${mod.value}`;
           break;
         case 'def_bonus':
           totalDef += mod.value;
+          desc = `[${tierLabel}] DEF+${mod.value}`;
+          break;
+        case 'hp_bonus':
+          desc = `[${tierLabel}] HP+${mod.value}`;
           break;
         case 'hp_regen':
-          desc = `HP回復+${mod.value}`;
+          desc = `[${tierLabel}] HP回復+${mod.value}`;
+          break;
+        case 'hp_regen_pct':
+          desc = `[${tierLabel}] HP回復+${mod.value}%`;
           break;
         case 'poison_chance':
-          desc = `毒+${mod.value}%`;
+          desc = `[${tierLabel}] 毒+${mod.value}%`;
           break;
         case 'critical_chance':
-          desc = `クリ+${mod.value}%`;
+          desc = `[${tierLabel}] クリ+${mod.value}%`;
+          break;
+        case 'critical_damage':
+          desc = `[${tierLabel}] クリダメ+${mod.value}%`;
+          break;
+        case 'atk_increased_pct':
+          desc = `[${tierLabel}] ATK+${mod.value}%`;
+          break;
+        case 'def_increased_pct':
+          desc = `[${tierLabel}] DEF+${mod.value}%`;
+          break;
+        case 'hp_increased_pct':
+          desc = `[${tierLabel}] HP+${mod.value}%`;
+          break;
+        case 'atk_more_pct':
+          desc = `[${tierLabel}] ATK ${mod.value}% more`;
+          break;
+        case 'def_more_pct':
+          desc = `[${tierLabel}] DEF ${mod.value}% more`;
+          break;
+        case 'hp_more_pct':
+          desc = `[${tierLabel}] HP ${mod.value}% more`;
           break;
       }
       if (desc) {
-        otherMods.push({ type: mod.type, value: mod.value, desc });
+        otherMods.push({ type: mod.type, value: mod.value, tier, desc, color });
       }
     }
   }
@@ -280,7 +314,7 @@ function StorageItemDetail({
       {stats.otherMods.length > 0 && (
         <View style={styles.detailMods}>
           {stats.otherMods.map((mod, idx) => (
-            <Text key={idx} style={styles.modText}>{mod.desc}</Text>
+            <Text key={idx} style={[styles.modText, { color: mod.color }]}>{mod.desc}</Text>
           ))}
         </View>
       )}

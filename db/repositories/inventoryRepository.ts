@@ -1,6 +1,6 @@
 import { getDatabase } from '../database';
 import { Item } from '@/types';
-import { getItemBase } from '@/data/items';
+import { getItemBase, ensureModTiers } from '@/data/items';
 
 interface InventoryRow {
   instance_id: string;
@@ -17,11 +17,12 @@ interface MigratedItem extends Partial<Item> {
 
 /**
  * マイグレーション済みアイテムをマスターデータから補完
+ * また、MODにtierがない場合はデフォルト値（10）を補完
  */
 function completeItemFromMaster(data: MigratedItem): Item | null {
   if (!data._needsMigration) {
-    // マイグレーション不要な正常なItem
-    return data as Item;
+    // マイグレーション不要な正常なItem（tierの補完は必要）
+    return ensureModTiers(data as Item);
   }
 
   // マスターデータから補完
@@ -31,11 +32,14 @@ function completeItemFromMaster(data: MigratedItem): Item | null {
     return null;
   }
 
-  return {
+  const item: Item = {
     ...base,
     instanceId: data.instanceId,
     mods: data.mods || base.fixedMods || [],
   };
+
+  // MODのtierを補完
+  return ensureModTiers(item);
 }
 
 export const inventoryRepository = {

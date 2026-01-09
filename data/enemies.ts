@@ -1,8 +1,13 @@
 import { Enemy, MonsterSpawn } from '@/types';
 import monstersData from './json/monsters.json';
 
-// モンスターデータ
-const monsters: Record<string, Enemy> = monstersData.monsters as Record<string, Enemy>;
+// モンスターデータ（_commentキーを除外）
+const monsters: Record<string, Enemy> = {};
+for (const [id, monster] of Object.entries(monstersData.monsters)) {
+  if (!id.startsWith('_comment')) {
+    monsters[id] = monster as Enemy;
+  }
+}
 
 export const getEnemy = (id: string): Enemy | undefined => {
   return monsters[id];

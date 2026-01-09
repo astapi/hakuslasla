@@ -75,10 +75,21 @@ export function calculateFinalStats(
 // ========================================
 
 /**
- * ダメージ計算（最低1ダメージ保証）
+ * ダメージ計算（DEF減衰式、最低1ダメージ保証）
+ * DEFが高いほど1ポイントあたりの軽減効果が減少する
+ * reduction = def / (def + 100)
+ * - DEF 100 → 50%軽減
+ * - DEF 200 → 67%軽減
+ * - DEF 300 → 75%軽減
+ * @param atk 攻撃力
+ * @param def 防御力
+ * @param additionalReduction 追加軽減率（%、MODなど）
  */
-export function calculateDamage(atk: number, def: number): number {
-  return Math.max(1, atk - def);
+export function calculateDamage(atk: number, def: number, additionalReduction: number = 0): number {
+  const defReduction = def / (def + 100);
+  // DEF軽減 + 追加軽減（合計は99%まで）
+  const totalReduction = Math.min(0.99, defReduction + additionalReduction / 100);
+  return Math.max(1, Math.floor(atk * (1 - totalReduction)));
 }
 
 // ========================================

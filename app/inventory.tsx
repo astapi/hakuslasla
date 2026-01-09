@@ -8,6 +8,7 @@ import { EquipmentSlot, Item } from '@/types';
 import { getItemIcon, getSlotIcon, getSlotLabel } from '@/data/itemIcons';
 import { INVENTORY_MAX_SIZE } from '@/core';
 import { storageRepository } from '@/db/repositories/storageRepository';
+import { getTierColor, getTierDisplayName } from '@/data/items';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -15,32 +16,63 @@ const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'acce
 function calculateItemStats(item: Item) {
   let totalAtk = item.atk;
   let totalDef = item.def;
-  const allMods: { type: string; value: number; desc: string }[] = [];
+  const allMods: { type: string; value: number; tier: number; desc: string; color: string }[] = [];
 
   if (item.mods) {
     for (const mod of item.mods) {
       let desc = '';
+      const tier = mod.tier ?? 10;  // 既存アイテムはデフォルトtier 10
+      const tierLabel = getTierDisplayName(tier);
+      const color = getTierColor(tier);
+
       switch (mod.type) {
         case 'atk_bonus':
           totalAtk += mod.value;
-          desc = `ATK+${mod.value}`;
+          desc = `[${tierLabel}] ATK+${mod.value}`;
           break;
         case 'def_bonus':
           totalDef += mod.value;
-          desc = `DEF+${mod.value}`;
+          desc = `[${tierLabel}] DEF+${mod.value}`;
+          break;
+        case 'hp_bonus':
+          desc = `[${tierLabel}] HP+${mod.value}`;
           break;
         case 'hp_regen':
-          desc = `毎ターンHP${mod.value}回復`;
+          desc = `[${tierLabel}] 毎ターンHP${mod.value}回復`;
+          break;
+        case 'hp_regen_pct':
+          desc = `[${tierLabel}] 毎ターンHP${mod.value}%回復`;
           break;
         case 'poison_chance':
-          desc = `毒付与+${mod.value}%`;
+          desc = `[${tierLabel}] 毒付与+${mod.value}%`;
           break;
         case 'critical_chance':
-          desc = `クリティカル+${mod.value}%`;
+          desc = `[${tierLabel}] クリティカル+${mod.value}%`;
+          break;
+        case 'critical_damage':
+          desc = `[${tierLabel}] クリダメ+${mod.value}%`;
+          break;
+        case 'atk_increased_pct':
+          desc = `[${tierLabel}] ATK+${mod.value}%`;
+          break;
+        case 'def_increased_pct':
+          desc = `[${tierLabel}] DEF+${mod.value}%`;
+          break;
+        case 'hp_increased_pct':
+          desc = `[${tierLabel}] HP+${mod.value}%`;
+          break;
+        case 'atk_more_pct':
+          desc = `[${tierLabel}] ATK ${mod.value}% more`;
+          break;
+        case 'def_more_pct':
+          desc = `[${tierLabel}] DEF ${mod.value}% more`;
+          break;
+        case 'hp_more_pct':
+          desc = `[${tierLabel}] HP ${mod.value}% more`;
           break;
       }
       if (desc) {
-        allMods.push({ type: mod.type, value: mod.value, desc });
+        allMods.push({ type: mod.type, value: mod.value, tier, desc, color });
       }
     }
   }
@@ -310,7 +342,7 @@ function ItemDetail({
           {stats.allMods.length > 0 && (
             <View style={styles.comparisonMods}>
               {stats.allMods.map((mod, idx) => (
-                <Text key={idx} style={styles.modText} numberOfLines={1}>{mod.desc}</Text>
+                <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={1}>{mod.desc}</Text>
               ))}
             </View>
           )}
@@ -350,7 +382,7 @@ function ItemDetail({
               {equippedStats.allMods.length > 0 && (
                 <View style={styles.comparisonMods}>
                   {equippedStats.allMods.map((mod, idx) => (
-                    <Text key={idx} style={styles.modText} numberOfLines={1}>{mod.desc}</Text>
+                    <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={1}>{mod.desc}</Text>
                   ))}
                 </View>
               )}

@@ -2,7 +2,7 @@
 
 ## 概要
 
-MOD（モディファイア）は、アイテムに付与される追加効果です。通常のステータス（ATK/DEF）に加え、特殊効果を付与します。
+MOD（モディファイア）は、アイテムに付与される追加効果です。各MODにはTier（1〜10、1が最高）があり、Tierによって値の範囲が決まります。
 
 ## ファイル構成
 
@@ -10,42 +10,57 @@ MOD（モディファイア）は、アイテムに付与される追加効果�
 |---------|------|
 | `types/index.ts` | MOD関連の型定義 |
 | `data/items.ts` | MOD生成ロジック |
-| `data/json/items.json` | MOD設定データ（modConfigs） |
+| `data/json/mods.json` | MOD設定データ（Tier別値範囲） |
+| `data/json/dungeons.json` | ダンジョン別Tier/MOD数設定 |
 | `hooks/useBattle.ts` | 戦闘中のMOD効果適用 |
 | `stores/usePlayerStore.ts` | 装備MODのステータス計算 |
+| `core/battle.ts` | ダメージ計算 |
 
 ---
 
 ## 1. 型定義
 
-### ModType（types/index.ts:52-57）
+### ModType（types/index.ts）
 
 ```typescript
 export type ModType =
-  | 'atk_bonus'        // 攻撃力ボーナス
-  | 'def_bonus'        // 防御力ボーナス
-  | 'hp_regen'         // 毎ターンHP回復
-  | 'poison_chance'    // 毒付与確率
-  | 'critical_chance'; // クリティカル確率
+  | 'atk_bonus'           // ATK+X (フラット)
+  | 'def_bonus'           // DEF+X (フラット)
+  | 'hp_bonus'            // HP+X (フラット)
+  | 'atk_increased_pct'   // ATK +X% (increased)
+  | 'def_increased_pct'   // DEF +X% (increased)
+  | 'hp_increased_pct'    // HP +X% (increased)
+  | 'hp_regen'            // 毎ターンHP X回復
+  | 'hp_regen_pct'        // 毎ターンHP X%回復
+  | 'poison_chance'       // 毒付与確率+X%
+  | 'critical_chance'     // クリティカル確率+X%
+  | 'critical_damage'     // クリティカルダメージ+X%
+  | 'damage_reduction_pct'; // ダメージ軽減+X%（鎧専用）
 ```
 
-### ItemMod（types/index.ts:60-63）
+### ItemMod
 
 ```typescript
 export interface ItemMod {
   type: ModType;
   value: number;
+  tier: number;  // 1〜10（1が最高、10が最低）
 }
 ```
 
-### ModConfig（types/index.ts:66-71）
+### ModConfig
 
 ```typescript
 export interface ModConfig {
   type: ModType;
-  minValue: number;  // 最小値
-  maxValue: number;  // 最大値
-  weight: number;    // 出現確率の重み
+  weight: number;  // 出現確率の重み
+  tiers: Record<string, TierValueRange>;  // tier番号 → 値範囲
+  slots?: EquipmentSlot[];  // 出現可能なスロット（未指定は全スロット）
+}
+
+export interface TierValueRange {
+  min: number;
+  max: number;
 }
 ```
 
@@ -53,341 +68,222 @@ export interface ModConfig {
 
 ## 2. MODの種類と効果
 
-| MODタイプ | 表示 | 効果 | 適用タイミング |
-|----------|------|------|---------------|
-| `atk_bonus` | ATK+X | 攻撃力に加算 | ステータス計算時 |
-| `def_bonus` | DEF+X | 防御力に加算 | ステータス計算時 |
-| `hp_regen` | 毎ターンHP X回復 | HPを回復 | ターン開始時 |
-| `poison_chance` | 毒付与+X% | 敵に毒を付与 | 攻撃時 |
-| `critical_chance` | クリティカル+X% | ダメージ2倍 | 攻撃時 |
+### ステータス系
 
-### 効果の詳細
+| MODタイプ | 効果 | 適用タイミング |
+|----------|------|---------------|
+| `atk_bonus` | ATK+X | ステータス計算時 |
+| `def_bonus` | DEF+X | ステータス計算時 |
+| `hp_bonus` | HP+X | ステータス計算時 |
+| `atk_increased_pct` | ATK +X% | ステータス計算時 |
+| `def_increased_pct` | DEF +X% | ステータス計算時 |
+| `hp_increased_pct` | HP +X% | ステータス計算時 |
 
-#### hp_regen
-- ターン開始時にHPを回復
-- maxHpを超えない
+### 戦闘系
 
-#### poison_chance
-- 攻撃時に確率で毒を付与
-- 毒ダメージ = プレイヤーダメージ × 0.5
-- 持続ターン: 5ターン
-- 敵が既に毒状態の場合は付与されない
+| MODタイプ | 効果 | 適用タイミング |
+|----------|------|---------------|
+| `hp_regen` | 毎ターンHP X回復 | ターン開始時 |
+| `hp_regen_pct` | 毎ターン最大HPのX%回復 | ターン開始時 |
+| `poison_chance` | 毒付与確率+X% | 攻撃時 |
+| `critical_chance` | クリティカル確率+X% | 攻撃時 |
+| `critical_damage` | クリティカルダメージ+X% | クリティカル発生時 |
+| `damage_reduction_pct` | 被ダメージX%軽減 | 被ダメージ時 |
 
-#### critical_chance
-- 攻撃時に確率でクリティカル発生
-- クリティカル時のダメージ倍率: 2倍
+### スロット制限
+
+| MODタイプ | 出現スロット |
+|----------|-------------|
+| `damage_reduction_pct` | armor（鎧）のみ |
+| その他 | 全スロット |
 
 ---
 
-## 3. MOD設定値
+## 3. Tierシステム
 
-**ファイル**: `data/json/items.json`
+### 概要
+
+- Tier範囲: 10（最低）〜 1（最高）
+- 各TierにはMODごとに固定の値範囲が設定
+- 隣接Tierと値が重ならない連続した範囲
+
+### MOD設定（data/json/mods.json）
 
 ```json
-"modConfigs": [
-  { "type": "atk_bonus",       "minValue": 1,  "maxValue": 5,  "weight": 20 },
-  { "type": "def_bonus",       "minValue": 1,  "maxValue": 5,  "weight": 20 },
-  { "type": "hp_regen",        "minValue": 1,  "maxValue": 10, "weight": 15 },
-  { "type": "poison_chance",   "minValue": 5,  "maxValue": 30, "weight": 10 },
-  { "type": "critical_chance", "minValue": 5,  "maxValue": 20, "weight": 15 }
-]
-```
-
-### 出現確率
-
-総重み = 20 + 20 + 15 + 10 + 15 = 80
-
-| MODタイプ | 重み | 出現確率 |
-|----------|------|---------|
-| atk_bonus | 20 | 25.0% |
-| def_bonus | 20 | 25.0% |
-| hp_regen | 15 | 18.75% |
-| poison_chance | 10 | 12.5% |
-| critical_chance | 15 | 18.75% |
-
----
-
-## 4. MOD生成ロジック
-
-### ランダムMOD生成（data/items.ts:102-137）
-
-```typescript
-function generateRandomMods(count: number): ItemMod[] {
-  const mods: ItemMod[] = [];
-  const usedTypes = new Set<ModType>();
-
-  for (let i = 0; i < count; i++) {
-    // 重み付きランダム選択
-    const totalWeight = modConfigs
-      .filter(c => !usedTypes.has(c.type))
-      .reduce((sum, c) => sum + c.weight, 0);
-
-    let roll = Math.random() * totalWeight;
-    for (const config of modConfigs) {
-      if (usedTypes.has(config.type)) continue;
-      roll -= config.weight;
-      if (roll <= 0) {
-        // minValue〜maxValueの範囲でランダム生成
-        const value = Math.floor(
-          Math.random() * (config.maxValue - config.minValue + 1)
-        ) + config.minValue;
-
-        mods.push({ type: config.type, value });
-        usedTypes.add(config.type);
-        break;
-      }
-    }
+{
+  "type": "atk_bonus",
+  "weight": 15,
+  "tiers": {
+    "10": { "min": 1, "max": 5 },
+    "9": { "min": 6, "max": 10 },
+    "8": { "min": 11, "max": 15 },
+    "7": { "min": 16, "max": 20 },
+    "6": { "min": 21, "max": 25 },
+    "5": { "min": 26, "max": 30 },
+    "4": { "min": 31, "max": 35 },
+    "3": { "min": 36, "max": 40 },
+    "2": { "min": 41, "max": 45 },
+    "1": { "min": 46, "max": 50 }
   }
-  return mods;
 }
 ```
 
-### アイテムインスタンス生成（data/items.ts:144-161）
+### Tier別色分け
+
+| Tier | 色 |
+|------|-----|
+| T1-T2 | 金色 (#FFD700) |
+| T3-T4 | 紫 (#9370DB) |
+| T5-T6 | 青 (#4169E1) |
+| T7-T8 | 緑 (#32CD32) |
+| T9-T10 | 灰色 (#AAAAAA) |
+
+---
+
+## 4. ダンジョン別設定
+
+### Tier範囲（modTierRange）
+
+ダンジョンが進むほど高Tierが出現可能に。
+
+| ダンジョン | Tier範囲 |
+|-----------|---------|
+| grassland | T10のみ |
+| cave | T10-9 |
+| ruins | T10-8 |
+| goblin_fort | T10-7 |
+| demon_castle | T10-6 |
+| ice_cave | T10-5 |
+| volcano | T10-4 |
+| dark_forest | T10-3 |
+| sky_tower | T10-2 |
+| hell_gate以降 | T10-1（全Tier） |
+
+### MOD数範囲（modCountRange）
+
+| ダンジョン | MOD数 |
+|-----------|-------|
+| grassland, cave, ruins | 0-1 |
+| goblin_fort, demon_castle, ice_cave | 0-3 |
+| volcano, dark_forest, sky_tower | 1-4 |
+| hell_gate以降 | 2-4 |
+
+---
+
+## 5. ダメージ計算
+
+### DEF減衰式
+
+```typescript
+export function calculateDamage(
+  atk: number,
+  def: number,
+  additionalReduction: number = 0
+): number {
+  const defReduction = def / (def + 100);
+  const totalReduction = Math.min(0.99, defReduction + additionalReduction / 100);
+  return Math.max(1, Math.floor(atk * (1 - totalReduction)));
+}
+```
+
+### DEF軽減率
+
+| DEF | 軽減率 |
+|-----|--------|
+| 50 | 33% |
+| 100 | 50% |
+| 200 | 67% |
+| 300 | 75% |
+| 500 | 83% |
+
+### damage_reduction_pct MODの効果
+
+DEF軽減率に加算される。
+
+例: DEF 50（33%軽減）+ damage_reduction_pct 5% = **38%軽減**
+
+---
+
+## 6. MOD生成ロジック
+
+### generateRandomMods()
+
+```typescript
+export function generateRandomMods(
+  count: number,
+  dungeonId?: string,
+  itemSlot?: EquipmentSlot
+): ItemMod[]
+```
+
+1. ダンジョンのTier範囲を取得
+2. スロット制限とTier範囲でMODをフィルタリング
+3. 重み付きランダムでMODタイプを選択
+4. 有効なTierから均等確率で選択
+5. Tierの値範囲内でランダムに値を決定
+
+### createItemInstance()
 
 ```typescript
 export function createItemInstance(
   itemId: string,
-  modCount: number = 0
-): Item | undefined {
-  const base = getItemBase(itemId);
-  if (!base) return undefined;
-
-  // 固有MOD + ランダムMOD
-  const fixedMods = base.fixedMods || [];
-  const randomMods = modCount > 0 ? generateRandomMods(modCount) : [];
-
-  // 固有MODと同じタイプのランダムMODは除外
-  const fixedTypes = new Set(fixedMods.map(m => m.type));
-  const filteredRandomMods = randomMods.filter(m => !fixedTypes.has(m.type));
-
-  return {
-    ...base,
-    instanceId: generateInstanceId(),
-    mods: [...fixedMods, ...filteredRandomMods],
-  };
-}
+  modCount: number = 0,
+  dungeonId?: string
+): Item | undefined
 ```
 
-### MOD数の決定
-
-ドロップ時に0〜2個のランダムMODが付与されます。
-
-```typescript
-const modCount = Math.floor(Math.random() * 3);  // 0, 1, or 2
-```
-
-| MOD数 | 確率 |
-|-------|------|
-| 0個 | 33.3% |
-| 1個 | 33.3% |
-| 2個 | 33.3% |
+- 固有MOD（fixedMods）はTier 1として扱う
+- ランダムMODはダンジョンとスロットを考慮して生成
+- 同一タイプのMODは1つまで（固有MOD優先）
 
 ---
 
-## 5. ユニークアイテムの固有MOD
-
-### 固有MODの特徴
-
-- `fixedMods`プロパティで定義
-- ランダムMODは付与されない（modCount=0）
-- 複数の固有MODを持つことが可能
-
-### ユニークアイテム一覧
-
-#### 始まりの草原
-
-| アイテム | スロット | 固有MOD |
-|---------|---------|--------|
-| 分裂核 | アクセサリ | hp_regen: 20 |
-| 狼の牙 | 武器 | critical_chance: 15 |
-| 毒針の指輪 | アクセサリ | poison_chance: 60 |
-
-#### 地底洞窟
-
-| アイテム | スロット | 固有MOD |
-|---------|---------|--------|
-| 骨の剣 | 武器 | atk_bonus: 5 |
-| 戦鬼の腰帯 | アクセサリ | atk_bonus: 3, def_bonus: 3 |
-| 闇夜のマント | 防具 | def_bonus: 5 |
-
-#### 忘却の遺跡
-
-| アイテム | スロット | 固有MOD |
-|---------|---------|--------|
-| 心核石 | アクセサリ | hp_regen: 10, def_bonus: 5 |
-| 呪縛の包帯 | 手袋 | poison_chance: 30 |
-| 失われた魔導書 | アクセサリ | critical_chance: 25 |
-| 石翼のブーツ | 靴 | def_bonus: 5 |
-
-### 固有MODの定義例（data/json/items.json）
-
-```json
-"wolf_fang": {
-  "id": "wolf_fang",
-  "name": "狼の牙",
-  "slot": "weapon",
-  "atk": 12,
-  "def": 0,
-  "fixedMods": [
-    { "type": "critical_chance", "value": 15 }
-  ]
-}
-```
-
----
-
-## 6. 戦闘中のMOD効果適用
-
-### 効果の集計（hooks/useBattle.ts:250-275）
-
-```typescript
-const getModEffectsFromEquipment = useCallback(() => {
-  const combined = {
-    hpRegen: 0,
-    poisonChance: 0,
-    criticalChance: 0,
-  };
-
-  Object.values(equipment).forEach((item) => {
-    if (item && item.mods) {
-      for (const mod of item.mods) {
-        switch (mod.type) {
-          case 'hp_regen':
-            combined.hpRegen += mod.value;
-            break;
-          case 'poison_chance':
-            combined.poisonChance += mod.value;
-            break;
-          case 'critical_chance':
-            combined.criticalChance += mod.value;
-            break;
-        }
-      }
-    }
-  });
-
-  return combined;
-}, [equipment]);
-```
+## 7. 戦闘中のMOD効果適用
 
 ### ターン処理フロー
 
 ```
 ターン開始
   │
-  ├─ 1. HP回復（hp_regen）
-  │     if (hpRegen > 0 && currentHp < maxHp)
-  │       currentHp += hpRegen
+  ├─ 1. HP回復（hp_regen + hp_regen_pct）
+  │     totalRegen = flatRegen + (maxHp * pctRegen / 100)
   │
   ├─ 2. 敵の毒ダメージ処理
-  │     if (enemyPoison.remainingTurns > 0)
-  │       enemyHp -= poisonDamage
   │
   ├─ 3. クリティカル判定（critical_chance）
   │     if (random < criticalChance)
-  │       damage *= 2
+  │       damage *= (1 + criticalDamage / 100)
   │
   ├─ 4. プレイヤー攻撃
   │
-  └─ 5. 毒付与判定（poison_chance）
-        if (!enemyPoison && random < poisonChance)
-          applyPoison(damage * 0.5, 5turns)
-```
-
-### ATK/DEFボーナスの適用（stores/usePlayerStore.ts:291-316）
-
-```typescript
-getTotalStats: () => {
-  let totalAtk = state.atk;
-  let totalDef = state.def;
-
-  Object.values(state.equipment).forEach((item) => {
-    if (item) {
-      totalAtk += item.atk;
-      totalDef += item.def;
-
-      // MODボーナスを加算
-      if (item.mods) {
-        for (const mod of item.mods) {
-          if (mod.type === 'atk_bonus') totalAtk += mod.value;
-          if (mod.type === 'def_bonus') totalDef += mod.value;
-        }
-      }
-    }
-  });
-
-  return { maxHp, atk: totalAtk, def: totalDef };
-}
+  ├─ 5. 毒付与判定（poison_chance）
+  │
+  └─ 6. 敵の攻撃
+        damage = calculateDamage(enemyAtk, playerDef, damageReductionPct)
 ```
 
 ---
 
-## 7. UI表示
+## 8. UI表示
 
-### MOD説明の取得（data/items.ts:215-230）
+### MOD説明の取得
 
 ```typescript
 export function getModDescription(mod: ItemMod): string {
+  const tierStr = `[T${mod.tier}] `;
   switch (mod.type) {
-    case 'atk_bonus':
-      return `ATK+${mod.value}`;
-    case 'def_bonus':
-      return `DEF+${mod.value}`;
-    case 'hp_regen':
-      return `毎ターンHP${mod.value}回復`;
-    case 'poison_chance':
-      return `毒付与+${mod.value}%`;
-    case 'critical_chance':
-      return `クリティカル+${mod.value}%`;
-    default:
-      return '';
+    case 'atk_bonus': return tierStr + `ATK+${mod.value}`;
+    case 'def_bonus': return tierStr + `DEF+${mod.value}`;
+    case 'hp_bonus': return tierStr + `HP+${mod.value}`;
+    case 'hp_regen': return tierStr + `毎ターンHP${mod.value}回復`;
+    case 'hp_regen_pct': return tierStr + `毎ターンHP${mod.value}%回復`;
+    case 'poison_chance': return tierStr + `毒付与+${mod.value}%`;
+    case 'critical_chance': return tierStr + `クリティカル+${mod.value}%`;
+    case 'critical_damage': return tierStr + `クリダメ+${mod.value}%`;
+    case 'damage_reduction_pct': return tierStr + `ダメージ軽減+${mod.value}%`;
+    // ...
   }
 }
-```
-
-### 表示ルール
-
-| 場所 | 表示方法 |
-|------|---------|
-| 装備スロット | ATK/DEFはステータスに合算、他MODは「MOD xN」バッジ |
-| インベントリ | 全MODを日本語説明で表示 |
-| ステータスパネル | 合計ATK/DEF値（MOD込み） |
-
----
-
-## 8. MODシステム全体フロー
-
-```
-【アイテムドロップ】
-      │
-      ├─ ユニークドロップ
-      │     └─ createItemInstance(itemId, 0)
-      │         └─ 固有MODのみ
-      │
-      └─ 通常ドロップ
-            └─ createItemInstance(itemId, 0〜2)
-                ├─ 固有MOD（あれば）
-                └─ ランダムMOD（0〜2個）
-                      │
-                      └─ generateRandomMods()
-                          ├─ 重み付きランダム選択
-                          ├─ min〜max範囲で値決定
-                          └─ 同一タイプは1個まで
-
-【装備時】
-      │
-      └─ usePlayerStore.equip()
-          └─ equipment に保存
-
-【戦闘時】
-      │
-      ├─ getTotalStats()
-      │     └─ atk_bonus/def_bonus を合算
-      │
-      └─ executeTurn()
-            ├─ hp_regen → ターン開始時回復
-            ├─ critical_chance → 攻撃時判定
-            └─ poison_chance → 攻撃後判定
 ```
 
 ---
@@ -397,27 +293,31 @@ export function getModDescription(mod: ItemMod): string {
 ### 新しいMODタイプを追加する場合
 
 1. `types/index.ts` の `ModType` に追加
-2. `data/json/items.json` の `modConfigs` に設定追加
-3. `data/items.ts` の `getModDescription()` に表示文追加
+2. `data/json/mods.json` にMOD設定を追加
+3. `data/items.ts` の `ModEffects` と関連関数を更新
 4. `hooks/useBattle.ts` に効果処理を実装
-5. 必要に応じてUI更新
+5. 必要に応じて `core/battle.ts` を更新
+6. `getModDescription()` に表示文を追加
+
+### スロット制限MODを追加する場合
+
+`mods.json` で `slots` を指定:
+
+```json
+{
+  "type": "new_mod_type",
+  "weight": 5,
+  "slots": ["armor", "gloves"],
+  "tiers": { ... }
+}
+```
 
 ### MODの出現率を調整する場合
 
-`data/json/items.json` の `modConfigs` の `weight` 値を変更
+`data/json/mods.json` の `weight` 値を変更
 
-### MODの値範囲を調整する場合
+### ダンジョンのMOD設定を調整する場合
 
-`data/json/items.json` の `modConfigs` の `minValue`/`maxValue` を変更
-
-### ユニークアイテムに固有MODを追加する場合
-
-`data/json/items.json` の対象アイテムに `fixedMods` を追加
-
-```json
-"item_id": {
-  "fixedMods": [
-    { "type": "critical_chance", "value": 20 }
-  ]
-}
-```
+`data/json/dungeons.json` の各ダンジョンの:
+- `modTierRange`: 出現可能なTier範囲
+- `modCountRange`: 付与されるMOD数の範囲

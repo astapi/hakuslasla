@@ -63,20 +63,28 @@ export type ModType =
   | 'hp_regen_pct'       // 毎ターンHP X%回復
   | 'poison_chance'      // 毒付与確率+X%
   | 'critical_chance'    // クリティカル確率+X%
-  | 'critical_damage';   // クリティカルダメージ+X%
+  | 'critical_damage'    // クリティカルダメージ+X%
+  | 'damage_reduction_pct';  // ダメージ軽減+X%（鎧専用）
 
 // MOD定義
 export interface ItemMod {
   type: ModType;
   value: number;
+  tier: number;  // 1〜10（1が最高、10が最低）
+}
+
+// Tier別の値範囲
+export interface TierValueRange {
+  min: number;
+  max: number;
 }
 
 // MOD設定（ランダム生成用）
 export interface ModConfig {
   type: ModType;
-  minValue: number;
-  maxValue: number;
   weight: number; // 出現確率の重み
+  tiers: Record<string, TierValueRange>;  // tier番号 → 値範囲
+  slots?: EquipmentSlot[];  // 出現可能なスロット（未指定は全スロット）
 }
 
 // アイテム基本定義（マスターデータ）
@@ -217,6 +225,24 @@ export interface DungeonDropTable {
   dungeon: ItemDrop[]; // ダンジョン固有ドロップ
 }
 
+// MOD tier範囲設定
+export interface ModTierRange {
+  minTier: number;  // 出現する最低tier（数値が大きい方、例: 10）
+  maxTier: number;  // 出現する最高tier（数値が小さい方、例: 7）
+}
+
+// MOD数範囲設定
+export interface ModCountRange {
+  min: number;  // 最小MOD数
+  max: number;  // 最大MOD数（最大4）
+}
+
+// ボス設定
+export interface DungeonBoss {
+  monsterId: string;
+  floor: number;
+}
+
 // ダンジョン定義（詳細）
 export interface Dungeon {
   id: string;
@@ -226,6 +252,9 @@ export interface Dungeon {
   recommendedLevel: number;
   monsters: MonsterSpawn[];
   dropTable: DungeonDropTable;
+  boss?: DungeonBoss;           // ボス設定
+  modTierRange?: ModTierRange;  // ダンジョンのMOD tier範囲
+  modCountRange?: ModCountRange; // ダンジョンのMOD数範囲
 }
 
 // ダンジョンリスト用（選択画面用）

@@ -1,6 +1,6 @@
 import { getDatabase } from '../database';
 import { Item } from '@/types';
-import { getItemBase } from '@/data/items';
+import { getItemBase, ensureModTiers } from '@/data/items';
 
 interface StorageRow {
   instance_id: string;
@@ -20,10 +20,12 @@ interface MigratedItem {
 
 /**
  * マイグレーションで作成されたアイテムをマスターデータで補完
+ * また、MODにtierがない場合はデフォルト値（10）を補完
  */
 function completeItemFromMaster(data: MigratedItem): Item | null {
   if (!data._needsMigration && data.slot) {
-    return data as Item;
+    // マイグレーション不要な正常なItem（tierの補完は必要）
+    return ensureModTiers(data as Item);
   }
 
   const base = getItemBase(data.id);
@@ -31,7 +33,7 @@ function completeItemFromMaster(data: MigratedItem): Item | null {
     return null;
   }
 
-  return {
+  const item: Item = {
     id: base.id,
     name: base.name,
     slot: base.slot,
@@ -40,6 +42,9 @@ function completeItemFromMaster(data: MigratedItem): Item | null {
     instanceId: data.instanceId,
     mods: data.mods || [],
   };
+
+  // MODのtierを補完
+  return ensureModTiers(item);
 }
 
 export const storageRepository = {

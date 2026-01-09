@@ -31,7 +31,9 @@
           { "itemId": "light_leather", "dropRate": 15 },
           { "itemId": "rabbit_boots", "dropRate": 15 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 10 },
+      "modCountRange": { "min": 0, "max": 1 }
     },
     "cave": {
       "id": "cave",
@@ -66,7 +68,9 @@
           { "itemId": "underground_charm", "dropRate": 10 },
           { "itemId": "warrior_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 9 },
+      "modCountRange": { "min": 0, "max": 1 }
     },
     "ruins": {
       "id": "ruins",
@@ -97,7 +101,9 @@
           { "itemId": "ancient_ring", "dropRate": 10 },
           { "itemId": "oblivion_amulet", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 8 },
+      "modCountRange": { "min": 0, "max": 1 }
     },
     "goblin_fort": {
       "id": "goblin_fort",
@@ -131,7 +137,9 @@
           { "itemId": "raider_boots", "dropRate": 10 },
           { "itemId": "tribal_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 7 },
+      "modCountRange": { "min": 0, "max": 3 }
     },
     "demon_castle": {
       "id": "demon_castle",
@@ -164,7 +172,9 @@
           { "itemId": "inferno_boots", "dropRate": 10 },
           { "itemId": "dark_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 6 },
+      "modCountRange": { "min": 0, "max": 3 }
     },
     "ice_cave": {
       "id": "ice_cave",
@@ -194,7 +204,9 @@
           { "itemId": "blizzard_boots", "dropRate": 10 },
           { "itemId": "ice_crystal_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 5 },
+      "modCountRange": { "min": 0, "max": 3 }
     },
     "volcano": {
       "id": "volcano",
@@ -224,7 +236,9 @@
           { "itemId": "ember_boots", "dropRate": 10 },
           { "itemId": "fire_ruby_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 4 },
+      "modCountRange": { "min": 1, "max": 4 }
     },
     "dark_forest": {
       "id": "dark_forest",
@@ -254,7 +268,9 @@
           { "itemId": "forest_walker_boots", "dropRate": 10 },
           { "itemId": "cursed_eye_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 3 },
+      "modCountRange": { "min": 1, "max": 4 }
     },
     "sky_tower": {
       "id": "sky_tower",
@@ -284,7 +300,9 @@
           { "itemId": "wind_walker_boots", "dropRate": 10 },
           { "itemId": "sky_sapphire_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 2 },
+      "modCountRange": { "min": 1, "max": 4 }
     },
     "hell_gate": {
       "id": "hell_gate",
@@ -314,7 +332,9 @@
           { "itemId": "hellwalker_boots", "dropRate": 10 },
           { "itemId": "infernal_ruby_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
     },
     "dragon_nest": {
       "id": "dragon_nest",
@@ -344,7 +364,9 @@
           { "itemId": "dragon_hide_boots", "dropRate": 10 },
           { "itemId": "dragon_eye_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
     },
     "sacred_temple": {
       "id": "sacred_temple",
@@ -374,7 +396,9 @@
           { "itemId": "divine_boots", "dropRate": 10 },
           { "itemId": "holy_diamond_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
     },
     "chaos_realm": {
       "id": "chaos_realm",
@@ -404,7 +428,9 @@
           { "itemId": "void_boots", "dropRate": 10 },
           { "itemId": "chaos_crystal_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
     },
     "final_land": {
       "id": "final_land",
@@ -438,7 +464,9 @@
           { "itemId": "end_walker_boots", "dropRate": 10 },
           { "itemId": "oblivion_ring", "dropRate": 10 }
         ]
-      }
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
     }
   }
 }

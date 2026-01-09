@@ -306,8 +306,10 @@ export const useBattle = (dungeonId: string) => {
   const getModEffectsFromEquipment = useCallback((): Omit<ModEffects, 'atkBonus' | 'defBonus'> => {
     const combined = {
       hpRegen: 0,
+      hpRegenPct: 0,
       poisonChance: 0,
       criticalChance: 0,
+      damageReductionPct: 0,
     };
 
     Object.values(equipment).forEach((item) => {
@@ -315,8 +317,10 @@ export const useBattle = (dungeonId: string) => {
         for (const mod of item.mods) {
           switch (mod.type) {
             case 'hp_regen': combined.hpRegen += mod.value; break;
+            case 'hp_regen_pct': combined.hpRegenPct += mod.value; break;
             case 'poison_chance': combined.poisonChance += mod.value; break;
             case 'critical_chance': combined.criticalChance += mod.value; break;
+            case 'damage_reduction_pct': combined.damageReductionPct += mod.value; break;
           }
         }
       }
@@ -383,8 +387,11 @@ export const useBattle = (dungeonId: string) => {
     const modEffects = getModEffectsFromEquipment();
 
     // ターン開始時のHP回復（MOD効果）
-    if (modEffects.hpRegen > 0 && state.playerCurrentHp < state.playerMaxHp) {
-      dispatch({ type: 'HP_REGEN', amount: modEffects.hpRegen });
+    const flatRegen = modEffects.hpRegen;
+    const pctRegen = Math.floor(state.playerMaxHp * modEffects.hpRegenPct / 100);
+    const totalRegen = flatRegen + pctRegen;
+    if (totalRegen > 0 && state.playerCurrentHp < state.playerMaxHp) {
+      dispatch({ type: 'HP_REGEN', amount: totalRegen });
     }
 
     // 毒ダメージ処理（敵に毒が付与されている場合）
@@ -411,7 +418,7 @@ export const useBattle = (dungeonId: string) => {
         // 2. 通常ドロップ判定（ドロップテーブルから）
         if (dungeon) {
           const dropCount = rollDropCount();
-          const normalDrops = rollDropItems(dungeon.dropTable, dropCount);
+          const normalDrops = rollDropItems(dungeon.dropTable, dropCount, state.dungeonId);
           droppedItems.push(...normalDrops);
         }
 
@@ -475,7 +482,7 @@ export const useBattle = (dungeonId: string) => {
       // 2. 通常ドロップ判定（ドロップテーブルから）
       if (dungeon) {
         const dropCount = rollDropCount();
-        const normalDrops = rollDropItems(dungeon.dropTable, dropCount);
+        const normalDrops = rollDropItems(dungeon.dropTable, dropCount, state.dungeonId);
         droppedItems.push(...normalDrops);
       }
 
@@ -504,9 +511,9 @@ export const useBattle = (dungeonId: string) => {
       return;
     }
 
-    // 敵の攻撃（DEFボーナスはgetTotalStats()で既に反映済み）
+    // 敵の攻撃（DEFボーナスはgetTotalStats()で既に反映済み、ダメージ軽減MODも考慮）
     setTimeout(() => {
-      const enemyDamage = calculateDamage(state.enemy!.atk, stats.def);
+      const enemyDamage = calculateDamage(state.enemy!.atk, stats.def, modEffects.damageReductionPct);
       dispatch({ type: 'ENEMY_ATTACK', damage: enemyDamage });
 
       const playerHpAfterEnemyAttack = state.playerCurrentHp - enemyDamage;

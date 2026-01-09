@@ -157,8 +157,9 @@ const dungeonInfo = {
  * アイテムIDからItemConfigを取得
  */
 function getItemConfig(itemId: string): ItemConfig | null {
-  const item = (itemsData.items as Record<string, { id: string; atk: number; def: number }>)[itemId];
-  if (!item) return null;
+  if (itemId.startsWith('_comment')) return null;
+  const item = (itemsData.items as Record<string, unknown>)[itemId] as { id: string; atk: number; def: number } | undefined;
+  if (!item || typeof item !== 'object') return null;
   return {
     id: item.id,
     atk: item.atk,

@@ -1054,19 +1054,5 @@
     "leather_boots",
     "copper_ring",
     "traveler_amulet"
-  ],
-
-  "modConfigs": [
-    { "type": "atk_bonus", "minValue": 1, "maxValue": 5, "weight": 15 },
-    { "type": "def_bonus", "minValue": 1, "maxValue": 5, "weight": 15 },
-    { "type": "hp_bonus", "minValue": 5, "maxValue": 30, "weight": 15 },
-    { "type": "hp_regen", "minValue": 1, "maxValue": 10, "weight": 10 },
-    { "type": "hp_regen_pct", "minValue": 1, "maxValue": 3, "weight": 5 },
-    { "type": "poison_chance", "minValue": 5, "maxValue": 30, "weight": 8 },
-    { "type": "critical_chance", "minValue": 5, "maxValue": 20, "weight": 10 },
-    { "type": "critical_damage", "minValue": 10, "maxValue": 30, "weight": 8 },
-    { "type": "atk_increased_pct", "minValue": 5, "maxValue": 15, "weight": 6 },
-    { "type": "def_increased_pct", "minValue": 5, "maxValue": 15, "weight": 4 },
-    { "type": "hp_increased_pct", "minValue": 5, "maxValue": 15, "weight": 4 }
   ]
 }
