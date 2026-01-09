@@ -310,6 +310,7 @@ export const useBattle = (dungeonId: string) => {
       poisonChance: 0,
       criticalChance: 0,
       damageReductionPct: 0,
+      lifesteal: 0,
     };
 
     Object.values(equipment).forEach((item) => {
@@ -321,6 +322,7 @@ export const useBattle = (dungeonId: string) => {
             case 'poison_chance': combined.poisonChance += mod.value; break;
             case 'critical_chance': combined.criticalChance += mod.value; break;
             case 'damage_reduction_pct': combined.damageReductionPct += mod.value; break;
+            case 'lifesteal': combined.lifesteal += mod.value; break;
           }
         }
       }
@@ -454,6 +456,12 @@ export const useBattle = (dungeonId: string) => {
     const baseDamage = calculateDamage(stats.atk, state.enemy.def);
     const playerDamage = Math.floor(baseDamage * criticalMultiplier);
     dispatch({ type: 'PLAYER_ATTACK', damage: playerDamage, isCritical });
+
+    // ライフスティール（ダメージ吸収）処理
+    if (modEffects.lifesteal > 0 && state.playerCurrentHp < state.playerMaxHp) {
+      const lifestealAmount = Math.max(1, Math.floor(playerDamage * modEffects.lifesteal / 100));
+      dispatch({ type: 'HP_REGEN', amount: lifestealAmount });
+    }
 
     const enemyHpAfterPlayerAttack = currentEnemyHp - playerDamage;
 

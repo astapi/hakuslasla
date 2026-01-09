@@ -43,6 +43,11 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
     let baseDef = state.def;
     let baseMaxHp = state.maxHp;
 
+    // 装備MODからの戦闘効果を集計
+    let modCriticalChance = 0;
+    let modCriticalDamage = 0;
+    let modPoisonChance = 0;
+
     // 装備ステータス加算
     Object.values(state.equipment).forEach((item) => {
       if (item) {
@@ -52,6 +57,9 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
           for (const mod of item.mods) {
             if (mod.type === 'atk_bonus') baseAtk += mod.value;
             if (mod.type === 'def_bonus') baseDef += mod.value;
+            if (mod.type === 'critical_chance') modCriticalChance += mod.value;
+            if (mod.type === 'critical_damage') modCriticalDamage += mod.value;
+            if (mod.type === 'poison_chance') modPoisonChance += mod.value;
           }
         }
       }
@@ -59,6 +67,11 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
 
     // パッシブ効果を取得
     const passiveEffects = calculatePassiveEffects(state.unlockedSkills);
+
+    // 合計値を計算
+    const totalCriticalChance = passiveEffects.critical_chance + modCriticalChance;
+    const totalCriticalDamage = 150 + passiveEffects.critical_damage + modCriticalDamage; // 基礎150%
+    const totalPoisonChance = passiveEffects.poison_chance + modPoisonChance;
 
     return {
       hp: {
@@ -76,6 +89,9 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
         inc: passiveEffects.def_increased_pct,
         more: passiveEffects.def_more_pct.reduce((sum, v) => sum + v, 0),
       },
+      criticalChance: totalCriticalChance,
+      criticalDamage: totalCriticalDamage,
+      poisonChance: totalPoisonChance,
     };
   };
 
@@ -133,6 +149,31 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
                 {breakdown.def.base}
                 {breakdown.def.inc > 0 && <Text style={styles.incText}> +{breakdown.def.inc}%inc</Text>}
                 {breakdown.def.more > 0 && <Text style={styles.moreText}> +{breakdown.def.more}%more</Text>}
+              </Text>
+            </View>
+            <View style={styles.separator} />
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>クリ率</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.criticalChance > 0 ? styles.critText : undefined}>
+                  {breakdown.criticalChance}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>クリダメ</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.criticalDamage > 150 ? styles.critText : undefined}>
+                  {breakdown.criticalDamage}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>毒付与</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.poisonChance > 0 ? styles.poisonText : undefined}>
+                  {breakdown.poisonChance}%
+                </Text>
               </Text>
             </View>
           </View>
@@ -227,6 +268,17 @@ const styles = StyleSheet.create({
   },
   moreText: {
     color: '#FFD700',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    marginVertical: 8,
+  },
+  critText: {
+    color: '#FF6B6B',
+  },
+  poisonText: {
+    color: '#9CCC65',
   },
   tapHint: {
     fontSize: 10,

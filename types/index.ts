@@ -64,7 +64,8 @@ export type ModType =
   | 'poison_chance'      // 毒付与確率+X%
   | 'critical_chance'    // クリティカル確率+X%
   | 'critical_damage'    // クリティカルダメージ+X%
-  | 'damage_reduction_pct';  // ダメージ軽減+X%（鎧専用）
+  | 'damage_reduction_pct'  // ダメージ軽減+X%（鎧専用）
+  | 'lifesteal';         // ダメージ吸収+X%（武器専用）
 
 // MOD定義
 export interface ItemMod {

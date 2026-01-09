@@ -35,7 +35,8 @@ export type ModType =
   | 'poison_chance'       // 毒付与確率+X%
   | 'critical_chance'     // クリティカル確率+X%
   | 'critical_damage'     // クリティカルダメージ+X%
-  | 'damage_reduction_pct'; // ダメージ軽減+X%（鎧専用）
+  | 'damage_reduction_pct' // ダメージ軽減+X%（鎧専用）
+  | 'lifesteal';          // ダメージ吸収+X%（武器専用）
 ```
 
 ### ItemMod
@@ -89,12 +90,14 @@ export interface TierValueRange {
 | `critical_chance` | クリティカル確率+X% | 攻撃時 |
 | `critical_damage` | クリティカルダメージ+X% | クリティカル発生時 |
 | `damage_reduction_pct` | 被ダメージX%軽減 | 被ダメージ時 |
+| `lifesteal` | 与ダメージのX%をHP回復 | 攻撃後 |
 
 ### スロット制限
 
 | MODタイプ | 出現スロット |
 |----------|-------------|
 | `damage_reduction_pct` | armor（鎧）のみ |
+| `lifesteal` | weapon（武器）のみ |
 | その他 | 全スロット |
 
 ---
@@ -281,6 +284,7 @@ export function getModDescription(mod: ItemMod): string {
     case 'critical_chance': return tierStr + `クリティカル+${mod.value}%`;
     case 'critical_damage': return tierStr + `クリダメ+${mod.value}%`;
     case 'damage_reduction_pct': return tierStr + `ダメージ軽減+${mod.value}%`;
+    case 'lifesteal': return tierStr + `ダメージ吸収+${mod.value}%`;
     // ...
   }
 }

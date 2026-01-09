@@ -333,6 +333,8 @@ export function getModDescription(mod: ItemMod): string {
       return `毒付与+${mod.value}%`;
     case 'critical_chance':
       return `クリティカル+${mod.value}%`;
+    case 'lifesteal':
+      return `ダメージ吸収+${mod.value}%`;
     default:
       return '';
   }
@@ -356,6 +358,7 @@ export interface ModEffects {
   poisonChance: number;
   criticalChance: number;
   damageReductionPct: number;
+  lifesteal: number;
 }
 
 /**
@@ -370,6 +373,7 @@ export function getModEffects(item: Item): ModEffects {
     poisonChance: 0,
     criticalChance: 0,
     damageReductionPct: 0,
+    lifesteal: 0,
   };
 
   for (const mod of item.mods) {
@@ -395,6 +399,9 @@ export function getModEffects(item: Item): ModEffects {
       case 'damage_reduction_pct':
         effects.damageReductionPct += mod.value;
         break;
+      case 'lifesteal':
+        effects.lifesteal += mod.value;
+        break;
     }
   }
 
@@ -413,6 +420,7 @@ export function combineModEffects(items: (Item | null)[]): ModEffects {
     poisonChance: 0,
     criticalChance: 0,
     damageReductionPct: 0,
+    lifesteal: 0,
   };
 
   for (const item of items) {
@@ -425,6 +433,7 @@ export function combineModEffects(items: (Item | null)[]): ModEffects {
       combined.poisonChance += effects.poisonChance;
       combined.criticalChance += effects.criticalChance;
       combined.damageReductionPct += effects.damageReductionPct;
+      combined.lifesteal += effects.lifesteal;
     }
   }
 
