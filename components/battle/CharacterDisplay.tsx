@@ -1,4 +1,12 @@
+import { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ImageSourcePropType } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSequence,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 import { HPBar } from './HPBar';
 import { playerImages, getMonsterImage } from '@/data/images';
 
@@ -9,6 +17,7 @@ interface CharacterDisplayProps {
   level?: number;
   isPlayer?: boolean;
   imageId?: string; // モンスターの場合は画像ID
+  isAttacking?: boolean; // 攻撃中フラグ
 }
 
 export const CharacterDisplay = ({
@@ -18,7 +27,38 @@ export const CharacterDisplay = ({
   level,
   isPlayer = false,
   imageId,
+  isAttacking = false,
 }: CharacterDisplayProps) => {
+  // 攻撃アニメーション用のSharedValue
+  const translateX = useSharedValue(0);
+
+  // 攻撃時のアニメーション
+  useEffect(() => {
+    if (isAttacking) {
+      // プレイヤーは右へ(+)、敵は左へ(-)移動
+      const direction = isPlayer ? 1 : -1;
+      const moveDistance = 25;
+
+      translateX.value = withSequence(
+        // 敵の方向へ移動（100ms）
+        withTiming(direction * moveDistance, {
+          duration: 100,
+          easing: Easing.out(Easing.quad),
+        }),
+        // 元の位置に戻る（100ms）
+        withTiming(0, {
+          duration: 100,
+          easing: Easing.in(Easing.quad),
+        })
+      );
+    }
+  }, [isAttacking, isPlayer, translateX]);
+
+  // アニメーションスタイル
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
   // 画像ソースを取得
   const imageSource: ImageSourcePropType | undefined = isPlayer
     ? playerImages.battle
@@ -28,7 +68,7 @@ export const CharacterDisplay = ({
 
   return (
     <View style={[styles.container, isPlayer ? styles.playerContainer : styles.enemyContainer]}>
-      <View style={styles.avatarContainer}>
+      <Animated.View style={[styles.avatarContainer, animatedStyle]}>
         {imageSource ? (
           <Image source={imageSource} style={styles.avatar} resizeMode="contain" />
         ) : (
@@ -36,7 +76,7 @@ export const CharacterDisplay = ({
             <Text style={styles.avatarPlaceholderText}>?</Text>
           </View>
         )}
-      </View>
+      </Animated.View>
       <View style={styles.infoContainer}>
         <View style={styles.nameRow}>
           <Text style={styles.name}>{name}</Text>

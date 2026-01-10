@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { CharacterDisplay } from '@/components/battle/CharacterDisplay';
@@ -15,6 +15,30 @@ export default function BattleScreen() {
   const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun } = useBattle(dungeonId || '');
   const { level } = usePlayerStore();
   const dungeon = getDungeon(dungeonId || '');
+
+  // 攻撃アニメーション用のstate
+  const [playerAttacking, setPlayerAttacking] = useState(false);
+  const [enemyAttacking, setEnemyAttacking] = useState(false);
+  const prevLogLengthRef = useRef(0);
+
+  // 戦闘ログの変化を監視して攻撃アニメーションをトリガー
+  useEffect(() => {
+    const currentLength = state.battleLog.length;
+    if (currentLength > prevLogLengthRef.current) {
+      // 新しいログエントリを取得
+      const newEntries = state.battleLog.slice(prevLogLengthRef.current);
+      for (const entry of newEntries) {
+        if (entry.type === 'player_attack' || entry.type === 'critical') {
+          setPlayerAttacking(true);
+          setTimeout(() => setPlayerAttacking(false), 200);
+        } else if (entry.type === 'enemy_attack') {
+          setEnemyAttacking(true);
+          setTimeout(() => setEnemyAttacking(false), 200);
+        }
+      }
+    }
+    prevLogLengthRef.current = currentLength;
+  }, [state.battleLog]);
 
   useEffect(() => {
     // 自動周回中でクリアした場合は結果画面に遷移しない（次の周回が始まる）
@@ -75,6 +99,7 @@ export default function BattleScreen() {
             maxHp={state.playerMaxHp}
             level={level}
             isPlayer
+            isAttacking={playerAttacking}
           />
           {state.enemy && (
             <CharacterDisplay
@@ -82,6 +107,7 @@ export default function BattleScreen() {
               currentHp={state.enemy.currentHp}
               maxHp={state.enemy.maxHp}
               imageId={state.enemy.image}
+              isAttacking={enemyAttacking}
             />
           )}
         </View>
