@@ -24,6 +24,7 @@ const createBattleEnemy = (enemy: Enemy): BattleEnemy => ({
   atk: enemy.atk,
   def: enemy.def,
   exp: enemy.exp,
+  attackSpeed: enemy.attackSpeed ?? 1.0, // デフォルト1.0
   uniqueDrop: enemy.uniqueDrop,
 });
 
@@ -42,6 +43,8 @@ const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState
     battleLog: [],
     droppedItems: [],
     totalExpGained: 0,
+    playerGauge: 0,
+    enemyGauge: 0,
   };
 };
 
@@ -80,6 +83,8 @@ const createExtendedInitialState = (
     }] : [],
     droppedItems: [],
     totalExpGained: 0,
+    playerGauge: 0,
+    enemyGauge: 0,
     runCount,
     grandTotalExp,
     grandTotalItems,
@@ -197,6 +202,8 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         currentFloor: state.currentFloor + 1,
         enemy: action.enemy,
         enemyPoison: [], // 次の敵には毒状態をリセット
+        playerGauge: 0,  // ゲージリセット
+        enemyGauge: 0,   // ゲージリセット
         phase: 'fighting',
         battleLog: [
           ...state.battleLog,
@@ -301,6 +308,25 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         ],
       };
 
+    case 'UPDATE_GAUGES':
+      return {
+        ...state,
+        playerGauge: action.playerGauge,
+        enemyGauge: action.enemyGauge,
+      };
+
+    case 'RESET_PLAYER_GAUGE':
+      return {
+        ...state,
+        playerGauge: 0,
+      };
+
+    case 'RESET_ENEMY_GAUGE':
+      return {
+        ...state,
+        enemyGauge: 0,
+      };
+
     default:
       return state;
   }
@@ -321,6 +347,8 @@ interface CombinedModEffects {
   criticalLifesteal: number;
   damageReductionPct: number;
   lifesteal: number;
+  attackSpeedPct: number;        // 攻撃速度 increased%
+  attackSpeedMorePct: number[];  // 攻撃速度 more%
 }
 
 export const useBattle = (dungeonId: string) => {
@@ -343,6 +371,8 @@ export const useBattle = (dungeonId: string) => {
       criticalLifesteal: 0,
       damageReductionPct: 0,
       lifesteal: 0,
+      attackSpeedPct: 0,
+      attackSpeedMorePct: [],
     };
 
     // 装備MODからの効果
@@ -357,6 +387,8 @@ export const useBattle = (dungeonId: string) => {
             case 'critical_damage': combined.criticalDamage += mod.value; break;
             case 'damage_reduction_pct': combined.damageReductionPct += mod.value; break;
             case 'lifesteal': combined.lifesteal += mod.value; break;
+            case 'attack_speed_pct': combined.attackSpeedPct += mod.value; break;
+            case 'attack_speed_more_pct': combined.attackSpeedMorePct.push(mod.value); break;
           }
         }
       }
@@ -377,6 +409,8 @@ export const useBattle = (dungeonId: string) => {
     combined.criticalLifesteal += passiveEffects.critical_lifesteal;
     combined.damageReductionPct += passiveEffects.damage_reduction_pct;
     combined.lifesteal += passiveEffects.lifesteal;
+    combined.attackSpeedPct += passiveEffects.attack_speed_pct;
+    combined.attackSpeedMorePct.push(...passiveEffects.attack_speed_more_pct);
 
     return combined;
   }, [equipment, unlockedSkills]);
@@ -439,7 +473,7 @@ export const useBattle = (dungeonId: string) => {
     return Math.floor(damage);
   }, []);
 
-  // 1ターン実行
+  // プレイヤーの攻撃実行（ゲージ100%時に呼ばれる）
   const executeTurn = useCallback(() => {
     if (state.phase !== 'fighting' || !state.enemy || isProcessingRef.current) return;
 
@@ -448,13 +482,7 @@ export const useBattle = (dungeonId: string) => {
     const dungeon = getDungeon(dungeonId);
     const modEffects = getCombinedModEffects();
 
-    // ターン開始時のHP回復（MOD効果）
-    const flatRegen = modEffects.hpRegen;
-    const pctRegen = Math.floor(state.playerMaxHp * modEffects.hpRegenPct / 100);
-    const totalRegen = flatRegen + pctRegen;
-    if (totalRegen > 0 && state.playerCurrentHp < state.playerMaxHp) {
-      dispatch({ type: 'HP_REGEN', amount: totalRegen });
-    }
+    // HP回復は別タイマーで処理するため削除
 
     // 毒ダメージ処理（敵に毒が付与されている場合）
     let currentEnemyHp = state.enemy.currentHp;
@@ -594,42 +622,138 @@ export const useBattle = (dungeonId: string) => {
       return;
     }
 
-    // 敵の攻撃（DEFボーナスはgetTotalStats()で既に反映済み、ダメージ軽減MODも考慮）
-    setTimeout(() => {
-      // 敵が毒状態時の追加ダメージ軽減
-      let totalDamageReduction = modEffects.damageReductionPct;
-      if (state.enemyPoison.length > 0) {
-        totalDamageReduction += modEffects.poisonDamageReduction;
-      }
-
-      const enemyDamage = calculateDamage(state.enemy!.atk, stats.def, totalDamageReduction);
-      dispatch({ type: 'ENEMY_ATTACK', damage: enemyDamage });
-
-      const playerHpAfterEnemyAttack = state.playerCurrentHp - enemyDamage;
-
-      // プレイヤーが倒れたかチェック
-      if (playerHpAfterEnemyAttack <= 0) {
-        dispatch({ type: 'PLAYER_DEFEATED' });
-      }
-
-      isProcessingRef.current = false;
-    }, 500);
+    // 敵の攻撃はゲージ制で独立して実行されるため削除
+    isProcessingRef.current = false;
   }, [state, getTotalStats, dungeonId, getCombinedModEffects, calculatePoisonDamage, getEnemyForFloor]);
 
-  // 自動戦闘
-  useEffect(() => {
-    if (state.phase !== 'fighting' || !state.enemy || isPaused) return;
+  // 敵の攻撃実行（敵ゲージ100%時に呼ばれる）
+  const executeEnemyAttack = useCallback(() => {
+    if (state.phase !== 'fighting' || !state.enemy) return;
 
-    timerRef.current = setTimeout(() => {
-      executeTurn();
+    const stats = getTotalStats();
+    const modEffects = getCombinedModEffects();
+
+    // 敵が毒状態時の追加ダメージ軽減
+    let totalDamageReduction = modEffects.damageReductionPct;
+    if (state.enemyPoison.length > 0) {
+      totalDamageReduction += modEffects.poisonDamageReduction;
+    }
+
+    const enemyDamage = calculateDamage(state.enemy.atk, stats.def, totalDamageReduction);
+    dispatch({ type: 'ENEMY_ATTACK', damage: enemyDamage });
+
+    const playerHpAfterEnemyAttack = state.playerCurrentHp - enemyDamage;
+
+    // プレイヤーが倒れたかチェック
+    if (playerHpAfterEnemyAttack <= 0) {
+      dispatch({ type: 'PLAYER_DEFEATED' });
+    }
+  }, [state, getTotalStats, getCombinedModEffects]);
+
+  // プレイヤーの攻撃速度を計算（PoE式）
+  const getPlayerAttackSpeed = useCallback((): number => {
+    const baseAS = 1.0;
+    const modEffects = getCombinedModEffects();
+    // PoE式: base × (1 + increased%) × more1 × more2 × ...
+    let finalAS = baseAS * (1 + modEffects.attackSpeedPct / 100);
+    for (const more of modEffects.attackSpeedMorePct) {
+      finalAS *= (1 + more / 100);
+    }
+    return finalAS;
+  }, [getCombinedModEffects]);
+
+  // ゲージ制ゲームループ（33msごとに更新 = 約30fps）
+  const TICK_INTERVAL = 33;
+  const gameLoopRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const regenTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const playerGaugeRef = useRef(0);
+  const enemyGaugeRef = useRef(0);
+
+  // ゲームループ本体
+  useEffect(() => {
+    if (state.phase !== 'fighting' || !state.enemy || isPaused) {
+      // 停止時はタイマーをクリア
+      if (gameLoopRef.current) {
+        clearInterval(gameLoopRef.current);
+        gameLoopRef.current = null;
+      }
+      return;
+    }
+
+    // refの初期化
+    playerGaugeRef.current = state.playerGauge;
+    enemyGaugeRef.current = state.enemyGauge;
+
+    const playerAS = getPlayerAttackSpeed();
+    const enemyAS = state.enemy.attackSpeed;
+    const ticksPerSecond = 1000 / TICK_INTERVAL;
+
+    gameLoopRef.current = setInterval(() => {
+      if (isProcessingRef.current) return;
+
+      // ゲージ増加量 = AS × 200 / ticks/sec (AS 1.0 = 0.5秒で1回攻撃)
+      const playerGaugeIncrease = (playerAS * 200) / ticksPerSecond;
+      const enemyGaugeIncrease = (enemyAS * 200) / ticksPerSecond;
+
+      playerGaugeRef.current += playerGaugeIncrease;
+      enemyGaugeRef.current += enemyGaugeIncrease;
+
+      // プレイヤーゲージが100に達したら攻撃
+      if (playerGaugeRef.current >= 100) {
+        playerGaugeRef.current = 0;
+        executeTurn();
+      }
+
+      // 敵ゲージが100に達したら攻撃
+      if (enemyGaugeRef.current >= 100) {
+        enemyGaugeRef.current = 0;
+        executeEnemyAttack();
+      }
+
+      // UIのゲージ表示を更新
+      dispatch({
+        type: 'UPDATE_GAUGES',
+        playerGauge: Math.min(100, playerGaugeRef.current),
+        enemyGauge: Math.min(100, enemyGaugeRef.current)
+      });
+    }, TICK_INTERVAL);
+
+    return () => {
+      if (gameLoopRef.current) {
+        clearInterval(gameLoopRef.current);
+        gameLoopRef.current = null;
+      }
+    };
+  }, [state.phase, state.enemy, isPaused, getPlayerAttackSpeed, executeTurn, executeEnemyAttack, state.playerGauge, state.enemyGauge]);
+
+  // HP回復タイマー（1秒ごと、ダンジョン滞在中は常時）
+  useEffect(() => {
+    // 敗北時・一時停止時は回復停止
+    if (state.phase === 'defeat' || isPaused) {
+      if (regenTimerRef.current) {
+        clearInterval(regenTimerRef.current);
+        regenTimerRef.current = null;
+      }
+      return;
+    }
+
+    regenTimerRef.current = setInterval(() => {
+      const modEffects = getCombinedModEffects();
+      const flatRegen = modEffects.hpRegen;
+      const pctRegen = Math.floor(state.playerMaxHp * modEffects.hpRegenPct / 100);
+      const totalRegen = flatRegen + pctRegen;
+      if (totalRegen > 0 && state.playerCurrentHp < state.playerMaxHp) {
+        dispatch({ type: 'HP_REGEN', amount: totalRegen });
+      }
     }, 1000);
 
     return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
+      if (regenTimerRef.current) {
+        clearInterval(regenTimerRef.current);
+        regenTimerRef.current = null;
       }
     };
-  }, [state.phase, state.enemy, state.playerCurrentHp, state.battleLog.length, executeTurn, isPaused]);
+  }, [state.phase, isPaused, state.playerCurrentHp, state.playerMaxHp, getCombinedModEffects]);
 
   // 戦闘終了時に経験値を付与
   useEffect(() => {

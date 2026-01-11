@@ -260,7 +260,11 @@ export default function InventoryScreen() {
                       source={getItemIcon(item.id, item.slot)}
                       style={styles.gridItemIcon}
                     />
-                    {hasMods && <View style={styles.modIndicator} />}
+                    {hasMods && (
+                      <View style={styles.modIndicator}>
+                        <Text style={styles.modIndicatorText}>{item.mods.length}</Text>
+                      </View>
+                    )}
                     <Text style={styles.gridItemName} numberOfLines={1}>
                       {item.name}
                     </Text>
@@ -674,12 +678,20 @@ const styles = StyleSheet.create({
   },
   modIndicator: {
     position: 'absolute',
-    top: 4,
-    right: 4,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    top: 2,
+    right: 2,
+    minWidth: 16,
+    height: 16,
+    borderRadius: 8,
     backgroundColor: '#FFD700',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
+  modIndicatorText: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: '#1a1a2e',
   },
   gridItemName: {
     fontSize: 10,

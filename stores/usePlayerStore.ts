@@ -298,16 +298,25 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     let baseDef = state.def;
     let baseMaxHp = state.maxHp;
 
+    // 装備MODからのincreased%
+    let equipHpIncPct = 0;
+    let equipAtkIncPct = 0;
+    let equipDefIncPct = 0;
+
     // 装備ステータス加算
     Object.values(state.equipment).forEach((item) => {
       if (item) {
         baseAtk += item.atk;
         baseDef += item.def;
-        // MODからATK/DEFボーナスを加算
+        // MODからステータスボーナスを加算
         if (item.mods) {
           for (const mod of item.mods) {
             if (mod.type === 'atk_bonus') baseAtk += mod.value;
             if (mod.type === 'def_bonus') baseDef += mod.value;
+            if (mod.type === 'hp_bonus') baseMaxHp += mod.value;
+            if (mod.type === 'hp_increased_pct') equipHpIncPct += mod.value;
+            if (mod.type === 'atk_increased_pct') equipAtkIncPct += mod.value;
+            if (mod.type === 'def_increased_pct') equipDefIncPct += mod.value;
           }
         }
       }
@@ -316,13 +325,13 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     // 2. パッシブ効果を取得（inc%/more%含む）
     const passiveEffects = calculatePassiveEffects(state.unlockedSkills);
 
-    // 3. PoE式計算で最終ステータスを算出
+    // 3. PoE式計算で最終ステータスを算出（装備+パッシブのincreased%を合算）
     const finalStats = calculateFinalStats(
       { maxHp: baseMaxHp, atk: baseAtk, def: baseDef },
       {
-        hp_increased_pct: passiveEffects.hp_increased_pct,
-        atk_increased_pct: passiveEffects.atk_increased_pct,
-        def_increased_pct: passiveEffects.def_increased_pct,
+        hp_increased_pct: passiveEffects.hp_increased_pct + equipHpIncPct,
+        atk_increased_pct: passiveEffects.atk_increased_pct + equipAtkIncPct,
+        def_increased_pct: passiveEffects.def_increased_pct + equipDefIncPct,
         hp_more_pct: passiveEffects.hp_more_pct,
         atk_more_pct: passiveEffects.atk_more_pct,
         def_more_pct: passiveEffects.def_more_pct,

@@ -65,7 +65,9 @@ export type ModType =
   | 'critical_chance'    // クリティカル確率+X%
   | 'critical_damage'    // クリティカルダメージ+X%
   | 'damage_reduction_pct'  // ダメージ軽減+X%（鎧専用）
-  | 'lifesteal';         // ダメージ吸収+X%（武器専用）
+  | 'lifesteal'          // ダメージ吸収+X%（武器専用）
+  | 'attack_speed_pct'   // AS +X% (increased、加算)
+  | 'attack_speed_more_pct'; // AS X% more (乗算)
 
 // MOD定義
 export interface ItemMod {
@@ -145,6 +147,9 @@ export interface PassiveEffect {
   hp_regen_pct?: number;       // 毎ターンHP X%回復
   damage_reduction_pct?: number; // ダメージ軽減+X%
   lifesteal?: number;          // ライフスティール+X%（与ダメージ吸収）
+  // 攻撃速度系
+  attack_speed_pct?: number;       // AS +X% increased
+  attack_speed_more_pct?: number;  // AS X% more
 }
 
 // パッシブノード位置（UI表示用）
@@ -215,6 +220,7 @@ export interface Enemy {
   atk: number;
   def: number;
   exp: number;
+  attackSpeed?: number; // 攻撃速度（デフォルト1.0）
   uniqueDrop: UniqueDrop | null; // モンスター固有ドロップ
 }
 
@@ -309,6 +315,7 @@ export interface BattleEnemy {
   atk: number;
   def: number;
   exp: number;
+  attackSpeed: number; // 攻撃速度
 }
 
 // 戦闘ログエントリ
@@ -331,6 +338,8 @@ export interface BattleState {
   battleLog: BattleLogEntry[];
   droppedItems: Item[];
   totalExpGained: number;
+  playerGauge: number; // プレイヤーの行動ゲージ (0-100)
+  enemyGauge: number;  // 敵の行動ゲージ (0-100)
 }
 
 // 戦闘アクション
@@ -345,7 +354,10 @@ export type BattleAction =
   | { type: 'ADD_LOG'; entry: Omit<BattleLogEntry, 'id'> }
   | { type: 'APPLY_POISON'; damagePerTurn: number; turns: number }
   | { type: 'POISON_DAMAGE'; damage: number }
-  | { type: 'HP_REGEN'; amount: number };
+  | { type: 'HP_REGEN'; amount: number }
+  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number }
+  | { type: 'RESET_PLAYER_GAUGE' }
+  | { type: 'RESET_ENEMY_GAUGE' };
 
 // 結果画面用のパラメータ
 export interface BattleResult {

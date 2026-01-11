@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Modal, Pressable } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { CharacterDisplay } from '@/components/battle/CharacterDisplay';
 import { BattleLog } from '@/components/battle/BattleLog';
@@ -20,6 +20,9 @@ export default function BattleScreen() {
   const [playerAttacking, setPlayerAttacking] = useState(false);
   const [enemyAttacking, setEnemyAttacking] = useState(false);
   const prevLogLengthRef = useRef(0);
+
+  // 撤退確認モーダル
+  const [showRetreatModal, setShowRetreatModal] = useState(false);
 
   // 戦闘ログの変化を監視して攻撃アニメーションをトリガー
   useEffect(() => {
@@ -74,7 +77,8 @@ export default function BattleScreen() {
     }
   }, [state.phase, dungeonId, router, dungeon, state, isAutoRunning]);
 
-  const handleRetreat = () => {
+  const handleRetreatConfirm = () => {
+    setShowRetreatModal(false);
     router.replace('/home');
   };
 
@@ -100,6 +104,7 @@ export default function BattleScreen() {
             level={level}
             isPlayer
             isAttacking={playerAttacking}
+            actionGauge={state.playerGauge}
           />
           {state.enemy && (
             <CharacterDisplay
@@ -108,6 +113,7 @@ export default function BattleScreen() {
               maxHp={state.enemy.maxHp}
               imageId={state.enemy.image}
               isAttacking={enemyAttacking}
+              actionGauge={state.enemyGauge}
             />
           )}
         </View>
@@ -146,27 +152,63 @@ export default function BattleScreen() {
                 variant="secondary"
               />
             </View>
-            <View style={styles.buttonWrapper}>
-              {isAutoRunning ? (
-                <Button
-                  title="周回停止"
-                  onPress={stopAutoRun}
-                  variant="warning"
-                />
-              ) : (
-                <Button
-                  title="自動周回"
-                  onPress={startAutoRun}
-                  variant="primary"
-                />
-              )}
-            </View>
-            <View style={styles.buttonWrapper}>
-              <Button title="撤退" onPress={handleRetreat} variant="danger" />
-            </View>
+            {!isPaused && (
+              <View style={styles.buttonWrapper}>
+                {isAutoRunning ? (
+                  <Button
+                    title="周回停止"
+                    onPress={stopAutoRun}
+                    variant="warning"
+                  />
+                ) : (
+                  <Button
+                    title="自動周回"
+                    onPress={startAutoRun}
+                    variant="primary"
+                  />
+                )}
+              </View>
+            )}
+            {isPaused && (
+              <View style={styles.buttonWrapper}>
+                <Button title="撤退" onPress={() => setShowRetreatModal(true)} variant="danger" />
+              </View>
+            )}
           </View>
         )}
       </View>
+
+      {/* 撤退確認モーダル */}
+      <Modal
+        visible={showRetreatModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowRetreatModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>撤退確認</Text>
+            <Text style={styles.modalMessage}>
+              本当に撤退しますか？{'\n'}
+              獲得した経験値とアイテムは失われます。
+            </Text>
+            <View style={styles.modalButtons}>
+              <Pressable
+                style={[styles.modalButton, styles.modalCancelButton]}
+                onPress={() => setShowRetreatModal(false)}
+              >
+                <Text style={styles.modalCancelText}>キャンセル</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.modalButton, styles.modalConfirmButton]}
+                onPress={handleRetreatConfirm}
+              >
+                <Text style={styles.modalConfirmText}>撤退する</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -240,5 +282,61 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     flex: 1,
+  },
+  // モーダル
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#1a1a2e',
+    borderRadius: 16,
+    padding: 24,
+    width: '80%',
+    maxWidth: 320,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  modalMessage: {
+    fontSize: 14,
+    color: '#aaa',
+    textAlign: 'center',
+    marginBottom: 24,
+    lineHeight: 22,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  modalButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  modalCancelButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  modalCancelText: {
+    fontSize: 14,
+    color: '#aaa',
+    fontWeight: 'bold',
+  },
+  modalConfirmButton: {
+    backgroundColor: 'rgba(244, 67, 54, 0.3)',
+  },
+  modalConfirmText: {
+    fontSize: 14,
+    color: '#F44336',
+    fontWeight: 'bold',
   },
 });

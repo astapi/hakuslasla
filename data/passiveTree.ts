@@ -177,6 +177,8 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   hp_regen_pct: number;
   damage_reduction_pct: number;
   lifesteal: number;
+  attack_speed_pct: number;
+  attack_speed_more_pct: number[];
 } {
   // フラット加算
   let hp = 0;
@@ -206,6 +208,9 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   let hp_regen_pct = 0;
   let damage_reduction_pct = 0;
   let lifesteal = 0;
+  // 攻撃速度系
+  let attack_speed_pct = 0;
+  const attack_speed_more_pct: number[] = [];
 
   for (const nodeId of unlockedNodeIds) {
     const node = getPassiveNode(nodeId);
@@ -238,6 +243,9 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       hp_regen_pct += node.effect.hp_regen_pct || 0;
       damage_reduction_pct += node.effect.damage_reduction_pct || 0;
       lifesteal += node.effect.lifesteal || 0;
+      // 攻撃速度系
+      attack_speed_pct += node.effect.attack_speed_pct || 0;
+      if (node.effect.attack_speed_more_pct) attack_speed_more_pct.push(node.effect.attack_speed_more_pct);
     }
   }
 
@@ -250,6 +258,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     critical_chance, critical_damage, critical_lifesteal,
     hp_regen, hp_regen_pct,
     damage_reduction_pct, lifesteal,
+    attack_speed_pct, attack_speed_more_pct,
   };
 }
 

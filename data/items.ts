@@ -61,6 +61,39 @@ export function getTierDisplayName(tier: number): string {
 }
 
 /**
+ * MODの値からTierを逆算
+ * @param modType MODタイプ
+ * @param value 値
+ * @returns 該当するTier（見つからない場合は10）
+ */
+export function calculateTierFromValue(modType: string, value: number): number {
+  const config = modConfigs.find(c => c.type === modType);
+  if (!config) return 10;
+
+  // 各tierの範囲をチェックして該当するものを返す
+  for (const [tierStr, range] of Object.entries(config.tiers)) {
+    const tier = parseInt(tierStr, 10);
+    if (value >= range.min && value <= range.max) {
+      return tier;
+    }
+  }
+
+  // 見つからない場合は最も近いtierを返す
+  const tiers = Object.entries(config.tiers).map(([t, r]) => ({
+    tier: parseInt(t, 10),
+    min: r.min,
+    max: r.max,
+  }));
+
+  // 値より小さい最大のmax、または値より大きい最小のminを持つtierを探す
+  for (const t of tiers.sort((a, b) => a.tier - b.tier)) {
+    if (value <= t.max) return t.tier;
+  }
+
+  return 10; // デフォルト
+}
+
+/**
  * tierに応じた色を取得
  */
 export function getTierColor(tier: number): string {
@@ -247,10 +280,10 @@ export function createItemInstance(itemId: string, modCount: number = 0, dungeon
   const base = getItemBase(itemId);
   if (!base) return undefined;
 
-  // 固有MOD（tierを追加: 固有MODは常にtier 1）
+  // 固有MOD（tierを値から逆算）
   const fixedMods: ItemMod[] = (base.fixedMods || []).map(mod => ({
     ...mod,
-    tier: mod.tier ?? 1,  // 固有MODはデフォルトtier 1
+    tier: mod.tier ?? calculateTierFromValue(mod.type, mod.value),
   }));
 
   // ランダムMOD（ダンジョンのtier範囲とスロットを考慮）
@@ -327,14 +360,30 @@ export function getModDescription(mod: ItemMod): string {
       return `ATK+${mod.value}`;
     case 'def_bonus':
       return `DEF+${mod.value}`;
+    case 'hp_bonus':
+      return `HP+${mod.value}`;
     case 'hp_regen':
-      return `毎ターンHP${mod.value}回復`;
+      return `毎秒HP${mod.value}回復`;
+    case 'hp_regen_pct':
+      return `毎秒HP${mod.value}%回復`;
     case 'poison_chance':
       return `毒付与+${mod.value}%`;
     case 'critical_chance':
       return `クリティカル+${mod.value}%`;
+    case 'critical_damage':
+      return `クリダメ+${mod.value}%`;
     case 'lifesteal':
       return `ダメージ吸収+${mod.value}%`;
+    case 'damage_reduction_pct':
+      return `被ダメ-${mod.value}%`;
+    case 'attack_speed_pct':
+      return `攻撃速度+${mod.value}%`;
+    case 'hp_increased_pct':
+      return `HP+${mod.value}%`;
+    case 'atk_increased_pct':
+      return `ATK+${mod.value}%`;
+    case 'def_increased_pct':
+      return `DEF+${mod.value}%`;
     default:
       return '';
   }
@@ -359,6 +408,7 @@ export interface ModEffects {
   criticalChance: number;
   damageReductionPct: number;
   lifesteal: number;
+  attackSpeedPct: number;
 }
 
 /**
@@ -374,6 +424,7 @@ export function getModEffects(item: Item): ModEffects {
     criticalChance: 0,
     damageReductionPct: 0,
     lifesteal: 0,
+    attackSpeedPct: 0,
   };
 
   for (const mod of item.mods) {
@@ -402,6 +453,9 @@ export function getModEffects(item: Item): ModEffects {
       case 'lifesteal':
         effects.lifesteal += mod.value;
         break;
+      case 'attack_speed_pct':
+        effects.attackSpeedPct += mod.value;
+        break;
     }
   }
 
@@ -421,6 +475,7 @@ export function combineModEffects(items: (Item | null)[]): ModEffects {
     criticalChance: 0,
     damageReductionPct: 0,
     lifesteal: 0,
+    attackSpeedPct: 0,
   };
 
   for (const item of items) {
@@ -434,6 +489,7 @@ export function combineModEffects(items: (Item | null)[]): ModEffects {
       combined.criticalChance += effects.criticalChance;
       combined.damageReductionPct += effects.damageReductionPct;
       combined.lifesteal += effects.lifesteal;
+      combined.attackSpeedPct += effects.attackSpeedPct;
     }
   }
 
@@ -448,10 +504,10 @@ export function createItemFromBase(itemId: string): Item | undefined {
   const base = getItemBase(itemId);
   if (!base) return undefined;
 
-  // 固有MODにtierを追加（デフォルトtier 1）
+  // 固有MODにtierを追加（値から逆算）
   const modsWithTier: ItemMod[] = (base.fixedMods || []).map(mod => ({
     ...mod,
-    tier: mod.tier ?? 1,
+    tier: mod.tier ?? calculateTierFromValue(mod.type, mod.value),
   }));
 
   return {
@@ -470,7 +526,7 @@ export function ensureModTiers(item: Item): Item {
     ...item,
     mods: item.mods.map(mod => ({
       ...mod,
-      tier: mod.tier ?? 10,  // 既存アイテムはデフォルトtier 10（最低）
+      tier: mod.tier ?? calculateTierFromValue(mod.type, mod.value),
     })),
   };
 }

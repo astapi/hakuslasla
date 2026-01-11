@@ -8,6 +8,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import { HPBar } from './HPBar';
+import { ActionGauge } from './ActionGauge';
 import { playerImages, getMonsterImage } from '@/data/images';
 
 interface CharacterDisplayProps {
@@ -18,6 +19,7 @@ interface CharacterDisplayProps {
   isPlayer?: boolean;
   imageId?: string; // モンスターの場合は画像ID
   isAttacking?: boolean; // 攻撃中フラグ
+  actionGauge?: number; // 行動ゲージ (0-100)
 }
 
 export const CharacterDisplay = ({
@@ -28,6 +30,7 @@ export const CharacterDisplay = ({
   isPlayer = false,
   imageId,
   isAttacking = false,
+  actionGauge = 0,
 }: CharacterDisplayProps) => {
   // 攻撃アニメーション用のSharedValue
   const translateX = useSharedValue(0);
@@ -83,6 +86,7 @@ export const CharacterDisplay = ({
           {level !== undefined && <Text style={styles.level}>Lv.{level}</Text>}
         </View>
         <HPBar current={currentHp} max={maxHp} color={isPlayer ? '#4CAF50' : '#F44336'} />
+        <ActionGauge value={actionGauge} color={isPlayer ? '#FFD700' : '#FF6B6B'} />
       </View>
     </View>
   );

@@ -8,6 +8,7 @@
       "atk": 5,
       "def": 2,
       "exp": 10,
+      "attackSpeed": 0.7,
       "uniqueDrop": {
         "itemId": "division_core",
         "dropRate": 5
@@ -21,6 +22,7 @@
       "atk": 6,
       "def": 1,
       "exp": 8,
+      "attackSpeed": 1.4,
       "uniqueDrop": null
     },
     "goblin": {
@@ -31,6 +33,7 @@
       "atk": 8,
       "def": 3,
       "exp": 15,
+      "attackSpeed": 1.0,
       "uniqueDrop": null
     },
     "bee": {
@@ -41,6 +44,7 @@
       "atk": 10,
       "def": 1,
       "exp": 12,
+      "attackSpeed": 1.5,
       "uniqueDrop": {
         "itemId": "poison_needle_ring",
         "dropRate": 5
@@ -54,6 +58,7 @@
       "atk": 10,
       "def": 2,
       "exp": 14,
+      "attackSpeed": 1.3,
       "uniqueDrop": {
         "itemId": "wolf_fang",
         "dropRate": 5
@@ -67,6 +72,7 @@
       "atk": 12,
       "def": 3,
       "exp": 18,
+      "attackSpeed": 1.2,
       "uniqueDrop": {
         "itemId": "dark_night_mantle",
         "dropRate": 3
@@ -80,6 +86,7 @@
       "atk": 14,
       "def": 6,
       "exp": 25,
+      "attackSpeed": 0.9,
       "uniqueDrop": null
     },
     "skeleton": {
@@ -90,6 +97,7 @@
       "atk": 12,
       "def": 5,
       "exp": 20,
+      "attackSpeed": 1.0,
       "uniqueDrop": {
         "itemId": "bone_sword",
         "dropRate": 3
@@ -103,6 +111,7 @@
       "atk": 11,
       "def": 10,
       "exp": 22,
+      "attackSpeed": 0.7,
       "uniqueDrop": null
     },
     "orc": {
@@ -113,6 +122,7 @@
       "atk": 16,
       "def": 8,
       "exp": 30,
+      "attackSpeed": 0.8,
       "uniqueDrop": {
         "itemId": "war_ogre_belt",
         "dropRate": 3
@@ -126,6 +136,7 @@
       "atk": 18,
       "def": 12,
       "exp": 40,
+      "attackSpeed": 0.9,
       "uniqueDrop": null
     },
     "golem": {
@@ -136,6 +147,7 @@
       "atk": 20,
       "def": 15,
       "exp": 50,
+      "attackSpeed": 0.6,
       "uniqueDrop": {
         "itemId": "core_stone",
         "dropRate": 2
@@ -149,6 +161,7 @@
       "atk": 22,
       "def": 8,
       "exp": 45,
+      "attackSpeed": 0.8,
       "uniqueDrop": {
         "itemId": "curse_bandage",
         "dropRate": 2
@@ -162,6 +175,7 @@
       "atk": 28,
       "def": 6,
       "exp": 60,
+      "attackSpeed": 1.1,
       "uniqueDrop": {
         "itemId": "lost_grimoire",
         "dropRate": 2
@@ -175,6 +189,7 @@
       "atk": 24,
       "def": 14,
       "exp": 55,
+      "attackSpeed": 0.9,
       "uniqueDrop": {
         "itemId": "stone_wing_boots",
         "dropRate": 2
@@ -191,6 +206,7 @@
       "atk": 38,
       "def": 18,
       "exp": 60,
+      "attackSpeed": 1.2,
       "uniqueDrop": null
     },
     "goblin_shaman": {
@@ -201,6 +217,7 @@
       "atk": 42,
       "def": 15,
       "exp": 65,
+      "attackSpeed": 1.0,
       "uniqueDrop": {
         "itemId": "shaman_staff",
         "dropRate": 3
@@ -214,6 +231,7 @@
       "atk": 35,
       "def": 25,
       "exp": 70,
+      "attackSpeed": 0.8,
       "uniqueDrop": {
         "itemId": "goblin_shield",
         "dropRate": 3
@@ -227,6 +245,7 @@
       "atk": 40,
       "def": 22,
       "exp": 80,
+      "attackSpeed": 0.9,
       "uniqueDrop": {
         "itemId": "champion_axe",
         "dropRate": 2
@@ -240,6 +259,7 @@
       "atk": 48,
       "def": 28,
       "exp": 500,
+      "attackSpeed": 0.6,
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "kings_crown",
@@ -257,6 +277,7 @@
       "atk": 45,
       "def": 28,
       "exp": 80,
+      "attackSpeed": 0.9,
       "uniqueDrop": null
     },
     "dark_mage": {
@@ -267,6 +288,7 @@
       "atk": 58,
       "def": 18,
       "exp": 90,
+      "attackSpeed": 1.1,
       "uniqueDrop": {
         "itemId": "dark_grimoire",
         "dropRate": 2
@@ -280,6 +302,7 @@
       "atk": 48,
       "def": 26,
       "exp": 95,
+      "attackSpeed": 0.9,
       "uniqueDrop": {
         "itemId": "demon_horn",
         "dropRate": 2
@@ -293,6 +316,7 @@
       "atk": 52,
       "def": 22,
       "exp": 85,
+      "attackSpeed": 1.1,
       "uniqueDrop": {
         "itemId": "wyvern_scale",
         "dropRate": 2
@@ -306,6 +330,7 @@
       "atk": 60,
       "def": 35,
       "exp": 600,
+      "attackSpeed": 0.5,
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "demon_crown",
@@ -323,6 +348,7 @@
       "atk": 65,
       "def": 45,
       "exp": 120,
+      "attackSpeed": 0.6,
       "uniqueDrop": null
     },
     "frost_wolf": {
@@ -333,6 +359,7 @@
       "atk": 78,
       "def": 30,
       "exp": 125,
+      "attackSpeed": 1.3,
       "uniqueDrop": null
     },
     "ice_witch": {
@@ -343,6 +370,7 @@
       "atk": 85,
       "def": 28,
       "exp": 135,
+      "attackSpeed": 1.0,
       "uniqueDrop": {
         "itemId": "frozen_staff",
         "dropRate": 2
@@ -356,6 +384,7 @@
       "atk": 70,
       "def": 38,
       "exp": 130,
+      "attackSpeed": 0.7,
       "uniqueDrop": {
         "itemId": "yeti_fur",
         "dropRate": 2
@@ -369,6 +398,7 @@
       "atk": 68,
       "def": 40,
       "exp": 125,
+      "attackSpeed": 0.8,
       "uniqueDrop": null
     },
 
@@ -382,6 +412,7 @@
       "atk": 120,
       "def": 45,
       "exp": 185,
+      "attackSpeed": 1.1,
       "uniqueDrop": null
     },
     "magma_golem": {
@@ -392,6 +423,7 @@
       "atk": 95,
       "def": 70,
       "exp": 200,
+      "attackSpeed": 0.6,
       "uniqueDrop": {
         "itemId": "magma_core",
         "dropRate": 2
@@ -405,6 +437,7 @@
       "atk": 115,
       "def": 50,
       "exp": 190,
+      "attackSpeed": 1.2,
       "uniqueDrop": null
     },
     "flame_knight": {
@@ -415,6 +448,7 @@
       "atk": 105,
       "def": 60,
       "exp": 195,
+      "attackSpeed": 0.9,
       "uniqueDrop": {
         "itemId": "flame_sword",
         "dropRate": 2
@@ -428,6 +462,7 @@
       "atk": 115,
       "def": 45,
       "exp": 185,
+      "attackSpeed": 1.3,
       "uniqueDrop": null
     },
 
@@ -441,6 +476,7 @@
       "atk": 150,
       "def": 100,
       "exp": 280,
+      "attackSpeed": 0.6,
       "uniqueDrop": null
     },
     "shadow_wolf": {
@@ -451,6 +487,7 @@
       "atk": 180,
       "def": 70,
       "exp": 290,
+      "attackSpeed": 1.4,
       "uniqueDrop": null
     },
     "forest_witch": {
@@ -461,6 +498,7 @@
       "atk": 190,
       "def": 65,
       "exp": 300,
+      "attackSpeed": 1.0,
       "uniqueDrop": {
         "itemId": "cursed_branch",
         "dropRate": 2
@@ -474,6 +512,7 @@
       "atk": 160,
       "def": 90,
       "exp": 285,
+      "attackSpeed": 1.1,
       "uniqueDrop": {
         "itemId": "chimera_fang",
         "dropRate": 2
@@ -487,6 +526,7 @@
       "atk": 170,
       "def": 85,
       "exp": 275,
+      "attackSpeed": 1.2,
       "uniqueDrop": null
     },
 
@@ -500,6 +540,7 @@
       "atk": 240,
       "def": 130,
       "exp": 420,
+      "attackSpeed": 1.0,
       "uniqueDrop": null
     },
     "storm_harpy": {
@@ -510,6 +551,7 @@
       "atk": 270,
       "def": 100,
       "exp": 435,
+      "attackSpeed": 1.4,
       "uniqueDrop": null
     },
     "thunder_bird": {
@@ -520,6 +562,7 @@
       "atk": 260,
       "def": 115,
       "exp": 440,
+      "attackSpeed": 1.3,
       "uniqueDrop": {
         "itemId": "thunder_feather",
         "dropRate": 2
@@ -533,6 +576,7 @@
       "atk": 220,
       "def": 150,
       "exp": 425,
+      "attackSpeed": 0.6,
       "uniqueDrop": {
         "itemId": "giant_belt",
         "dropRate": 2
@@ -546,6 +590,7 @@
       "atk": 245,
       "def": 115,
       "exp": 425,
+      "attackSpeed": 1.2,
       "uniqueDrop": null
     },
 
@@ -559,6 +604,7 @@
       "atk": 400,
       "def": 160,
       "exp": 640,
+      "attackSpeed": 1.4,
       "uniqueDrop": null
     },
     "infernal_knight": {
@@ -569,6 +615,7 @@
       "atk": 350,
       "def": 210,
       "exp": 650,
+      "attackSpeed": 0.8,
       "uniqueDrop": {
         "itemId": "infernal_armor",
         "dropRate": 2
@@ -582,6 +629,7 @@
       "atk": 420,
       "def": 150,
       "exp": 660,
+      "attackSpeed": 1.1,
       "uniqueDrop": null
     },
     "balrog": {
@@ -592,6 +640,7 @@
       "atk": 360,
       "def": 200,
       "exp": 640,
+      "attackSpeed": 0.7,
       "uniqueDrop": {
         "itemId": "balrog_whip",
         "dropRate": 2
@@ -605,6 +654,7 @@
       "atk": 380,
       "def": 180,
       "exp": 625,
+      "attackSpeed": 1.3,
       "uniqueDrop": null
     },
 
@@ -618,6 +668,7 @@
       "atk": 580,
       "def": 250,
       "exp": 950,
+      "attackSpeed": 1.0,
       "uniqueDrop": null
     },
     "fire_dragon": {
@@ -628,6 +679,7 @@
       "atk": 550,
       "def": 280,
       "exp": 980,
+      "attackSpeed": 0.8,
       "uniqueDrop": {
         "itemId": "fire_dragon_scale",
         "dropRate": 2
@@ -641,6 +693,7 @@
       "atk": 540,
       "def": 300,
       "exp": 970,
+      "attackSpeed": 0.7,
       "uniqueDrop": {
         "itemId": "ice_dragon_scale",
         "dropRate": 2
@@ -654,6 +707,7 @@
       "atk": 580,
       "def": 260,
       "exp": 960,
+      "attackSpeed": 1.1,
       "uniqueDrop": null
     },
     "elder_dragon": {
@@ -664,6 +718,7 @@
       "atk": 520,
       "def": 290,
       "exp": 965,
+      "attackSpeed": 0.6,
       "uniqueDrop": {
         "itemId": "dragon_heart",
         "dropRate": 1
@@ -680,6 +735,7 @@
       "atk": 800,
       "def": 450,
       "exp": 1440,
+      "attackSpeed": 0.9,
       "uniqueDrop": null
     },
     "seraph": {
@@ -690,6 +746,7 @@
       "atk": 900,
       "def": 380,
       "exp": 1480,
+      "attackSpeed": 1.2,
       "uniqueDrop": {
         "itemId": "holy_feather",
         "dropRate": 2
@@ -703,6 +760,7 @@
       "atk": 750,
       "def": 500,
       "exp": 1450,
+      "attackSpeed": 0.6,
       "uniqueDrop": null
     },
     "holy_dragon": {
@@ -713,6 +771,7 @@
       "atk": 850,
       "def": 400,
       "exp": 1460,
+      "attackSpeed": 0.8,
       "uniqueDrop": {
         "itemId": "holy_dragon_scale",
         "dropRate": 2
@@ -726,6 +785,7 @@
       "atk": 860,
       "def": 340,
       "exp": 1405,
+      "attackSpeed": 1.3,
       "uniqueDrop": null
     },
 
@@ -739,6 +799,7 @@
       "atk": 1200,
       "def": 650,
       "exp": 2150,
+      "attackSpeed": 1.0,
       "uniqueDrop": null
     },
     "void_walker": {
@@ -749,6 +810,7 @@
       "atk": 1350,
       "def": 550,
       "exp": 2200,
+      "attackSpeed": 1.1,
       "uniqueDrop": {
         "itemId": "void_essence",
         "dropRate": 2
@@ -762,6 +824,7 @@
       "atk": 1150,
       "def": 700,
       "exp": 2180,
+      "attackSpeed": 0.7,
       "uniqueDrop": null
     },
     "chaos_dragon": {
@@ -772,6 +835,7 @@
       "atk": 1280,
       "def": 600,
       "exp": 2170,
+      "attackSpeed": 0.9,
       "uniqueDrop": {
         "itemId": "chaos_scale",
         "dropRate": 2
@@ -785,6 +849,7 @@
       "atk": 1265,
       "def": 595,
       "exp": 2155,
+      "attackSpeed": 1.0,
       "uniqueDrop": null
     },
 
@@ -798,6 +863,7 @@
       "atk": 1800,
       "def": 950,
       "exp": 3200,
+      "attackSpeed": 0.9,
       "uniqueDrop": null
     },
     "world_eater": {
@@ -808,6 +874,7 @@
       "atk": 1750,
       "def": 1000,
       "exp": 3300,
+      "attackSpeed": 0.7,
       "uniqueDrop": {
         "itemId": "world_fragment",
         "dropRate": 2
@@ -821,6 +888,7 @@
       "atk": 1700,
       "def": 1100,
       "exp": 3350,
+      "attackSpeed": 0.5,
       "uniqueDrop": null
     },
     "god_slayer": {
@@ -831,6 +899,7 @@
       "atk": 2100,
       "def": 800,
       "exp": 3250,
+      "attackSpeed": 1.2,
       "uniqueDrop": {
         "itemId": "divine_blade",
         "dropRate": 2
@@ -844,6 +913,7 @@
       "atk": 2015,
       "def": 795,
       "exp": 3185,
+      "attackSpeed": 1.1,
       "uniqueDrop": null
     },
     "true_final_boss": {
@@ -854,6 +924,7 @@
       "atk": 2500,
       "def": 1200,
       "exp": 10000,
+      "attackSpeed": 0.4,
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "crown_of_end",
