@@ -116,8 +116,9 @@ export interface TierValueRange {
 export interface ModConfig {
   type: ModType;
   weight: number; // 出現確率の重み
-  tiers: Record<string, TierValueRange>;  // tier番号 → 値範囲
+  tiers: Record<string, TierValueRange>;  // tier番号 → 値範囲（デフォルト）
   slots?: EquipmentSlot[];  // 出現可能なスロット（未指定は全スロット）
+  slotTiers?: Partial<Record<EquipmentSlot, Record<string, TierValueRange>>>;  // スロット別tier設定（指定スロットはこちらを優先）
 }
 
 // アイテム基本定義（マスターデータ）

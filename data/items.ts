@@ -36,9 +36,20 @@ function calculateValueFromTierRange(min: number, max: number): number {
 
 /**
  * MOD設定から利用可能なtierリストを取得
+ * @param config MOD設定
+ * @param slot アイテムスロット（スロット別tier設定がある場合に使用）
  */
-function getAvailableTiers(config: ModConfig): number[] {
-  return Object.keys(config.tiers).map(t => parseInt(t, 10));
+function getAvailableTiers(config: ModConfig, slot?: EquipmentSlot): number[] {
+  // スロット別tier設定があればそちらを使用
+  const tiers = (slot && config.slotTiers?.[slot]) || config.tiers;
+  return Object.keys(tiers).map(t => parseInt(t, 10));
+}
+
+/**
+ * スロットに応じたtier設定を取得
+ */
+function getTiersForSlot(config: ModConfig, slot?: EquipmentSlot): Record<string, { min: number; max: number }> {
+  return (slot && config.slotTiers?.[slot]) || config.tiers;
 }
 
 /**
@@ -216,7 +227,8 @@ export function generateRandomMods(count: number, dungeonId?: string, itemSlot?:
     if (config.slots && itemSlot && !config.slots.includes(itemSlot)) {
       return false;
     }
-    const modTiers = getAvailableTiers(config);
+    // スロット別tier設定を考慮してtierリストを取得
+    const modTiers = getAvailableTiers(config, itemSlot);
     // ダンジョンで出現可能なtier範囲内にMODのtierが1つでもあるか
     return modTiers.some(t => t <= tierRange.minTier && t >= tierRange.maxTier);
   });
@@ -246,8 +258,8 @@ export function generateRandomMods(count: number, dungeonId?: string, itemSlot?:
         continue;
       }
 
-      // ダンジョン範囲内で利用可能なtierを取得
-      const modTiers = getAvailableTiers(selectedConfig);
+      // ダンジョン範囲内で利用可能なtierを取得（スロット別tier設定を考慮）
+      const modTiers = getAvailableTiers(selectedConfig, itemSlot);
       const validTiers = modTiers.filter(t => t <= tierRange.minTier && t >= tierRange.maxTier);
 
       if (validTiers.length === 0) continue;
@@ -255,8 +267,9 @@ export function generateRandomMods(count: number, dungeonId?: string, itemSlot?:
       // 有効なtierから均等抽選
       const tier = validTiers[Math.floor(Math.random() * validTiers.length)];
 
-      // tierの値範囲から値を取得
-      const tierConfig = selectedConfig.tiers[tier.toString()];
+      // tierの値範囲から値を取得（スロット別tier設定を考慮）
+      const slotTiers = getTiersForSlot(selectedConfig, itemSlot);
+      const tierConfig = slotTiers[tier.toString()];
       const value = calculateValueFromTierRange(tierConfig.min, tierConfig.max);
 
       mods.push({

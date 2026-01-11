@@ -1,5 +1,6 @@
+import { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StatusPanel } from '@/components/player/StatusPanel';
 import { EquipmentList } from '@/components/player/EquipmentList';
@@ -9,6 +10,16 @@ import { playerImages } from '@/data/images';
 export default function HomeScreen() {
   const router = useRouter();
   const { skillPoints, characterName, isLoaded, clear } = usePlayerStore();
+
+  // 画面フォーカス時に再レンダリングをトリガーするためのキー
+  const [focusKey, setFocusKey] = useState(0);
+
+  useFocusEffect(
+    useCallback(() => {
+      // 画面がフォーカスされたときにキーを更新して子コンポーネントを再レンダリング
+      setFocusKey(prev => prev + 1);
+    }, [])
+  );
 
   const handleOpenSkills = () => {
     router.push('/skills');
@@ -59,12 +70,12 @@ export default function HomeScreen() {
                 <Text style={styles.changeButtonText}>変更</Text>
               </Pressable>
             </View>
-            <StatusPanel />
+            <StatusPanel key={`status-${focusKey}`} />
           </View>
         </View>
 
         <View style={styles.section}>
-          <EquipmentList />
+          <EquipmentList key={`equipment-${focusKey}`} />
         </View>
       </ScrollView>
 
