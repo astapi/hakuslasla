@@ -22,6 +22,10 @@ export default function HomeScreen() {
     router.push('/storage');
   };
 
+  const handleOpenSettings = () => {
+    router.push('/settings');
+  };
+
   const handleOpenDungeonSelect = () => {
     router.push('/dungeon-select');
   };
@@ -95,6 +99,14 @@ export default function HomeScreen() {
         >
           <MaterialCommunityIcons name="treasure-chest" size={24} color="#fff" />
           <Text style={styles.menuLabel}>倉庫</Text>
+        </Pressable>
+
+        <Pressable
+          style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
+          onPress={handleOpenSettings}
+        >
+          <MaterialCommunityIcons name="filter-cog" size={24} color="#fff" />
+          <Text style={styles.menuLabel}>設定</Text>
         </Pressable>
 
         <Pressable

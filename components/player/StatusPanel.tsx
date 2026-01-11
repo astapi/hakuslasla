@@ -47,6 +47,9 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
     let modCriticalChance = 0;
     let modCriticalDamage = 0;
     let modPoisonChance = 0;
+    let modHpRegen = 0;
+    let modHpRegenPct = 0;
+    let modLifesteal = 0;
 
     // 装備ステータス加算
     Object.values(state.equipment).forEach((item) => {
@@ -60,6 +63,9 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
             if (mod.type === 'critical_chance') modCriticalChance += mod.value;
             if (mod.type === 'critical_damage') modCriticalDamage += mod.value;
             if (mod.type === 'poison_chance') modPoisonChance += mod.value;
+            if (mod.type === 'hp_regen') modHpRegen += mod.value;
+            if (mod.type === 'hp_regen_pct') modHpRegenPct += mod.value;
+            if (mod.type === 'lifesteal') modLifesteal += mod.value;
           }
         }
       }
@@ -72,6 +78,15 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
     const totalCriticalChance = passiveEffects.critical_chance + modCriticalChance;
     const totalCriticalDamage = 150 + passiveEffects.critical_damage + modCriticalDamage; // 基礎150%
     const totalPoisonChance = passiveEffects.poison_chance + modPoisonChance;
+    const totalHpRegen = passiveEffects.hp_regen + modHpRegen;
+    const totalHpRegenPct = passiveEffects.hp_regen_pct + modHpRegenPct;
+    const totalLifesteal = passiveEffects.lifesteal + modLifesteal;
+    const totalCriticalLifesteal = passiveEffects.critical_lifesteal;
+
+    // 毎秒HP回復量を計算（フラット + %回復）
+    // 最終HPを取得（getTotalStats()の結果を使用）
+    const finalMaxHp = state.getTotalStats().maxHp;
+    const hpRegenPerSecond = totalHpRegen + Math.floor(finalMaxHp * totalHpRegenPct / 100);
 
     return {
       hp: {
@@ -92,6 +107,9 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
       criticalChance: totalCriticalChance,
       criticalDamage: totalCriticalDamage,
       poisonChance: totalPoisonChance,
+      hpRegenPerSecond,
+      lifesteal: totalLifesteal,
+      criticalLifesteal: totalCriticalLifesteal,
     };
   };
 
@@ -173,6 +191,31 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
               <Text style={styles.detailValue}>
                 <Text style={breakdown.poisonChance > 0 ? styles.poisonText : undefined}>
                   {breakdown.poisonChance}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.separator} />
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>HP回復</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.hpRegenPerSecond > 0 ? styles.healText : undefined}>
+                  {breakdown.hpRegenPerSecond}/秒
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>吸収</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.lifesteal > 0 ? styles.healText : undefined}>
+                  {breakdown.lifesteal}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>クリ吸収</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.criticalLifesteal > 0 ? styles.critHealText : undefined}>
+                  +{breakdown.criticalLifesteal}%
                 </Text>
               </Text>
             </View>
@@ -279,6 +322,12 @@ const styles = StyleSheet.create({
   },
   poisonText: {
     color: '#9CCC65',
+  },
+  healText: {
+    color: '#4CAF50',
+  },
+  critHealText: {
+    color: '#FF9800',
   },
   tapHint: {
     fontSize: 10,

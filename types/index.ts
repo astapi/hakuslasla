@@ -1,6 +1,36 @@
 // 装備スロットの種類
 export type EquipmentSlot = 'weapon' | 'armor' | 'gloves' | 'boots' | 'accessory';
 
+// ドロップフィルター設定
+export interface DropFilterSettings {
+  // カテゴリフィルター（trueで取得、falseで除外）
+  categories: {
+    weapon: boolean;
+    armor: boolean;
+    gloves: boolean;
+    boots: boolean;
+    accessory: boolean;
+  };
+  // 最小MOD数（この数以上のMODを持つアイテムのみ取得）
+  minModCount: number;
+  // 最高Tier（1が最高品質）（このTier以下のMODを少なくとも1つ持つアイテムのみ取得）
+  // 0の場合はフィルタリングしない
+  maxTier: number;
+}
+
+// デフォルトのフィルター設定
+export const DEFAULT_DROP_FILTER: DropFilterSettings = {
+  categories: {
+    weapon: true,
+    armor: true,
+    gloves: true,
+    boots: true,
+    accessory: true,
+  },
+  minModCount: 0,
+  maxTier: 0,
+};
+
 // ========================================
 // Database Types
 // ========================================

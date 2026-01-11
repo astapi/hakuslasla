@@ -1,11 +1,12 @@
 import { useReducer, useCallback, useEffect, useRef, useState } from 'react';
-import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState } from '@/types';
+import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState, DropFilterSettings, DEFAULT_DROP_FILTER } from '@/types';
 import { getDungeon } from '@/data/dungeons';
 import { getRandomEnemy, getEnemy } from '@/data/enemies';
 import { tryUniqueDrop, rollDropCount, rollDropItems, ModEffects } from '@/data/items';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculateDamage } from '@/core';
+import { settingsRepository } from '@/db/repositories/settingsRepository';
 
 // 毒ダメージ計算（攻撃ダメージの50%）
 const POISON_DAMAGE_RATIO = 0.5;
@@ -351,9 +352,47 @@ interface CombinedModEffects {
   attackSpeedMorePct: number[];  // 攻撃速度 more%
 }
 
+// ドロップフィルタリング関数
+const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] => {
+  return items.filter((item) => {
+    // カテゴリフィルター
+    if (!filter.categories[item.slot]) {
+      return false;
+    }
+
+    // MOD数フィルター（0の場合は無効）
+    if (filter.minModCount > 0 && item.mods.length < filter.minModCount) {
+      return false;
+    }
+
+    // MOD Tierフィルター（0の場合は無効）
+    // 指定したTier以下のMODを少なくとも1つ持つアイテムのみ取得
+    if (filter.maxTier > 0) {
+      const hasGoodTierMod = item.mods.some((mod) => mod.tier <= filter.maxTier);
+      if (!hasGoodTierMod) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+};
+
 export const useBattle = (dungeonId: string) => {
   const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills } = usePlayerStore();
   const stats = getTotalStats();
+
+  // フィルター設定
+  const [dropFilter, setDropFilter] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
+
+  // フィルター設定の読み込み
+  useEffect(() => {
+    const loadFilter = async () => {
+      const filter = await settingsRepository.getDropFilter();
+      setDropFilter(filter);
+    };
+    loadFilter();
+  }, []);
 
   // 装備品+パッシブから戦闘時MOD効果を取得（ATK/DEFはgetTotalStats()で反映済み）
   const getCombinedModEffects = useCallback((): CombinedModEffects => {
@@ -514,10 +553,13 @@ export const useBattle = (dungeonId: string) => {
           droppedItems.push(...normalDrops);
         }
 
+        // フィルタリングを適用
+        const filteredItems = filterDroppedItems(droppedItems, dropFilter);
+
         dispatch({
           type: 'ENEMY_DEFEATED',
           exp: state.enemy.exp,
-          droppedItems,
+          droppedItems: filteredItems,
         });
 
         if (state.currentFloor >= state.maxFloor) {
@@ -597,10 +639,13 @@ export const useBattle = (dungeonId: string) => {
         droppedItems.push(...normalDrops);
       }
 
+      // フィルタリングを適用
+      const filteredItems = filterDroppedItems(droppedItems, dropFilter);
+
       dispatch({
         type: 'ENEMY_DEFEATED',
         exp: state.enemy.exp,
-        droppedItems,
+        droppedItems: filteredItems,
       });
 
       // 最終階層かチェック
@@ -624,7 +669,7 @@ export const useBattle = (dungeonId: string) => {
 
     // 敵の攻撃はゲージ制で独立して実行されるため削除
     isProcessingRef.current = false;
-  }, [state, getTotalStats, dungeonId, getCombinedModEffects, calculatePoisonDamage, getEnemyForFloor]);
+  }, [state, getTotalStats, dungeonId, getCombinedModEffects, calculatePoisonDamage, getEnemyForFloor, dropFilter]);
 
   // 敵の攻撃実行（敵ゲージ100%時に呼ばれる）
   const executeEnemyAttack = useCallback(() => {

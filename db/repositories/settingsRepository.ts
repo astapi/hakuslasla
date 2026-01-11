@@ -1,4 +1,7 @@
 import { getDatabase } from '../database';
+import { DropFilterSettings, DEFAULT_DROP_FILTER } from '@/types';
+
+const DROP_FILTER_KEY = 'drop_filter_settings';
 
 export const settingsRepository = {
   async get(key: string): Promise<string | null> {
@@ -37,5 +40,22 @@ export const settingsRepository = {
 
   async setLastCharacterId(characterId: number): Promise<void> {
     await this.set('last_character_id', characterId.toString());
+  },
+
+  // ドロップフィルター設定
+  async getDropFilter(): Promise<DropFilterSettings> {
+    const value = await this.get(DROP_FILTER_KEY);
+    if (!value) {
+      return DEFAULT_DROP_FILTER;
+    }
+    try {
+      return JSON.parse(value) as DropFilterSettings;
+    } catch {
+      return DEFAULT_DROP_FILTER;
+    }
+  },
+
+  async setDropFilter(settings: DropFilterSettings): Promise<void> {
+    await this.set(DROP_FILTER_KEY, JSON.stringify(settings));
   },
 };
