@@ -2,7 +2,7 @@
 
 ## 概要
 
-完全自動戦闘RPG。プレイヤー操作は「一時停止」と「撤退」のみで、1秒ごとに自動でターンが進行します。
+完全自動戦闘RPG。プレイヤー操作は「一時停止」「撤退」「自動周回」のみで、ゲージ制で自動的に戦闘が進行します。
 
 ## ファイル構成
 
@@ -16,6 +16,7 @@
 | `app/result.tsx` | 結果画面 |
 | `stores/usePlayerStore.ts` | プレイヤー状態管理 |
 | `components/battle/` | 戦闘UIコンポーネント |
+| `data/passiveTree.ts` | パッシブ効果計算 |
 
 ---
 
@@ -44,11 +45,23 @@ interface BattleState {
   playerCurrentHp: number;
   playerMaxHp: number;
   enemy: BattleEnemy | null;   // 現在の敵
-  enemyPoison: PoisonState | null;  // 敵の毒状態
+  enemyPoison: PoisonState[];  // 敵の毒状態（複数スタック対応）
   phase: BattlePhase;
   battleLog: BattleLogEntry[]; // 戦闘ログ
   droppedItems: Item[];        // 獲得アイテム
   totalExpGained: number;      // 累計経験値
+  playerGauge: number;         // プレイヤーの行動ゲージ (0-100)
+  enemyGauge: number;          // 敵の行動ゲージ (0-100)
+}
+```
+
+### ExtendedBattleState（周回機能用）
+
+```typescript
+interface ExtendedBattleState extends BattleState {
+  runCount: number;          // 周回回数
+  grandTotalExp: number;     // 全周回の累計経験値
+  grandTotalItems: Item[];   // 全周回の累計アイテム
 }
 ```
 
@@ -58,13 +71,14 @@ interface BattleState {
 interface BattleEnemy {
   id: string;
   name: string;
-  image: any;
+  image: string;
   currentHp: number;
   maxHp: number;
   atk: number;
   def: number;
   exp: number;
-  uniqueDrop?: UniqueDrop;
+  attackSpeed: number;       // 攻撃速度（デフォルト1.0）
+  uniqueDrop: UniqueDrop | null;
 }
 ```
 
@@ -90,12 +104,63 @@ interface PoisonState {
 
 ---
 
-## 2. 戦闘の開始・初期化
+## 2. ゲージ制戦闘システム（ATB風）
 
-### 初期状態の作成（createInitialState）
+### 概要
+
+従来のターン制から、アクションゲージ制（ATB風）に変更されました。プレイヤーと敵が独立してゲージを溜め、100%になると攻撃を実行します。
+
+### ゲームループ
 
 ```typescript
-const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState => {
+// 33msごとに更新（約30fps）
+const TICK_INTERVAL = 33;
+
+// ゲージ増加量 = AS × 200 / ticks/sec
+// AS 1.0 の場合、約0.5秒で1回攻撃
+const playerGaugeIncrease = (playerAS * 200) / ticksPerSecond;
+const enemyGaugeIncrease = (enemyAS * 200) / ticksPerSecond;
+```
+
+### 攻撃速度（Attack Speed）
+
+```typescript
+// PoE式: base × (1 + increased%) × (1 + more1%) × (1 + more2%) × ...
+// ※more%は加算して合計
+let finalAS = baseAS * (1 + attackSpeedPct / 100);
+const totalMore = attackSpeedMorePct.reduce((sum, more) => sum + more, 0);
+finalAS *= (1 + totalMore / 100);
+```
+
+| 攻撃速度 | 攻撃間隔 |
+|---------|---------|
+| AS 1.0 | 約0.5秒 |
+| AS 2.0 | 約0.25秒 |
+| AS 0.5 | 約1.0秒 |
+
+### ゲージUI
+
+```
+プレイヤー: ████████████░░░░░░░░ 60%
+敵:         ██████░░░░░░░░░░░░░░ 30%
+```
+
+ActionGaugeコンポーネントで表示。
+
+---
+
+## 3. 戦闘の開始・初期化
+
+### 初期状態の作成（createExtendedInitialState）
+
+```typescript
+const createExtendedInitialState = (
+  dungeonId: string,
+  playerMaxHp: number,
+  runCount: number = 1,
+  grandTotalExp: number = 0,
+  grandTotalItems: Item[] = []
+): ExtendedBattleState => {
   const dungeon = getDungeon(dungeonId);
   return {
     dungeonId,
@@ -104,238 +169,275 @@ const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState
     playerCurrentHp: playerMaxHp,
     playerMaxHp: playerMaxHp,
     enemy: null,
-    enemyPoison: null,
+    enemyPoison: [],  // 配列で複数スタック対応
     phase: 'fighting',
-    battleLog: [],
+    battleLog: runCount > 1 ? [{ message: `=== ${runCount}周目開始 ===`, type: 'info' }] : [],
     droppedItems: [],
     totalExpGained: 0,
+    playerGauge: 0,
+    enemyGauge: 0,
+    runCount,
+    grandTotalExp,
+    grandTotalItems,
   };
 };
 ```
 
-### 戦闘開始（startBattle）
+### 敵の取得（ボス対応）
 
 ```typescript
-const startBattle = useCallback(() => {
+const getEnemyForFloor = useCallback((floor: number): Enemy | undefined => {
   const dungeon = getDungeon(dungeonId);
-  if (!dungeon) return;
+  if (!dungeon) return undefined;
 
-  // ランダムに敵を選択
-  const enemy = getRandomEnemy(dungeon.monsters);
-  if (!enemy) return;
-
-  // 戦闘開始
-  dispatch({
-    type: 'START_BATTLE',
-    enemy: createBattleEnemy(enemy),
-  });
-}, [dungeonId]);
-```
-
-### 自動開始（マウント時）
-
-```typescript
-useEffect(() => {
-  if (!state.enemy && state.phase === 'fighting') {
-    startBattle();
+  // ボスフロアかチェック
+  if (dungeon.boss && dungeon.boss.floor === floor) {
+    return getEnemy(dungeon.boss.monsterId);
   }
-}, []);
+
+  // 通常の敵をランダム選択
+  return getRandomEnemy(dungeon.monsters);
+}, [dungeonId]);
 ```
 
 ---
 
-## 3. ターン実行ロジック
-
-### 自動戦闘タイマー
-
-```typescript
-useEffect(() => {
-  if (state.phase !== 'fighting' || !state.enemy || isPaused) return;
-
-  timerRef.current = setTimeout(() => {
-    executeTurn();
-  }, 1000);  // 1秒ごとにターン実行
-
-  return () => clearTimeout(timerRef.current);
-}, [state.phase, state.enemy, state.playerCurrentHp, state.battleLog.length, isPaused]);
-```
-
-### 一時停止機能
-
-```typescript
-const [isPaused, setIsPaused] = useState(false);
-
-const togglePause = useCallback(() => {
-  setIsPaused((prev) => !prev);
-}, []);
-```
-
-- 一時停止中は自動戦闘タイマーが停止
-- 「再開」ボタンで戦闘を再開
-
-### 1ターンの処理フロー
+## 4. 1ターンの処理フロー
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ 1. ターン開始時のHP回復（hp_regen MOD）                  │
-│    └ playerCurrentHp += modEffects.hpRegen              │
+│ プレイヤーゲージが100%に達した時                        │
 ├─────────────────────────────────────────────────────────┤
-│ 2. 敵の毒ダメージ処理                                    │
-│    ├ enemyHp -= poisonDamage                            │
-│    ├ remainingTurns--                                   │
-│    └ 毒で敵が倒れた場合 → ドロップ処理 → 次階層          │
+│ 1. 毒ダメージ処理（全スタック合計）                     │
+│    ├ 全スタックのダメージを合計                        │
+│    ├ enemyHp -= totalPoisonDamage                      │
+│    ├ 各スタックのremainingTurns--                      │
+│    └ 0以下になったスタックを除去                       │
 ├─────────────────────────────────────────────────────────┤
-│ 3. クリティカル判定                                      │
-│    └ random < criticalChance → ダメージ2倍             │
+│ 2. クリティカル判定                                     │
+│    └ random < criticalChance                           │
+│       → ダメージ倍率 = 1.5 + criticalDamage/100        │
 ├─────────────────────────────────────────────────────────┤
-│ 4. プレイヤー攻撃                                        │
-│    ├ damage = max(1, ATK - DEF)                         │
-│    ├ クリティカル時: damage *= 2                        │
-│    └ enemyHp -= damage                                  │
+│ 3. プレイヤー攻撃                                       │
+│    ├ damage = DEF減衰式で計算                          │
+│    ├ noDirectDamage時: damage = 0                      │
+│    ├ クリティカル時: damage *= 倍率                    │
+│    └ enemyHp -= damage                                 │
 ├─────────────────────────────────────────────────────────┤
-│ 5. 毒付与判定（敵が毒でない場合のみ）                    │
-│    └ random < poisonChance → 毒付与（5ターン）          │
+│ 4. ライフスティール処理                                 │
+│    ├ totalLifesteal = lifesteal + (クリティカル時のみ) │
+│    └ playerHp += damage * totalLifesteal / 100         │
 ├─────────────────────────────────────────────────────────┤
-│ 6. 敵撃破判定                                            │
-│    ├ enemyHp <= 0 → ドロップ処理                        │
-│    ├ 最終階層 → DUNGEON_CLEARED                         │
-│    └ それ以外 → 500ms後にNEXT_FLOOR                     │
+│ 5. 毒付与判定（スタック上限未満の場合のみ）             │
+│    ├ maxStacks = 1 + poison_max_stacks                 │
+│    └ random < poisonChance                             │
+│       → 毒付与（PoE式でダメージ計算）                  │
 ├─────────────────────────────────────────────────────────┤
-│ 7. 敵の反撃（敵が生存している場合）                      │
-│    ├ 500ms後に実行                                      │
-│    ├ damage = max(1, enemy.ATK - player.DEF)            │
-│    └ playerHp -= damage                                 │
+│ 6. 敵撃破判定                                           │
+│    ├ enemyHp <= 0 → ドロップ処理                       │
+│    ├ 最終階層 → DUNGEON_CLEARED                        │
+│    └ それ以外 → 500ms後にNEXT_FLOOR                    │
 ├─────────────────────────────────────────────────────────┤
-│ 8. プレイヤー敗北判定                                    │
-│    └ playerHp <= 0 → PLAYER_DEFEATED                    │
+│ 7. プレイヤーゲージリセット                             │
+└─────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│ 敵ゲージが100%に達した時                                │
+├─────────────────────────────────────────────────────────┤
+│ 1. ダメージ軽減計算                                     │
+│    ├ totalReduction = damageReductionPct               │
+│    └ 敵が毒状態 → + poisonDamageReduction              │
+├─────────────────────────────────────────────────────────┤
+│ 2. 敵の攻撃                                             │
+│    ├ damage = DEF減衰式で計算（追加軽減込み）          │
+│    └ playerHp -= damage                                │
+├─────────────────────────────────────────────────────────┤
+│ 3. プレイヤー敗北判定                                   │
+│    └ playerHp <= 0 → PLAYER_DEFEATED                   │
+├─────────────────────────────────────────────────────────┤
+│ 4. 敵ゲージリセット                                     │
+└─────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│ HP回復タイマー（1秒ごと、独立）                         │
+├─────────────────────────────────────────────────────────┤
+│ ├ flatRegen = hpRegen                                  │
+│ ├ pctRegen = maxHp × hpRegenPct / 100                  │
+│ └ playerHp += flatRegen + pctRegen                     │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 4. ダメージ計算
+## 5. ダメージ計算
 
-### 基本ダメージ（core/battle.ts）
+### DEF減衰式（core/battle.ts）
 
 ```typescript
-export function calculateDamage(atk: number, def: number): number {
-  return Math.max(1, atk - def);  // 最低1ダメージ保証
+export function calculateDamage(atk: number, def: number, additionalReduction: number = 0): number {
+  // DEF減衰: def / (def + 100)
+  // DEFが高いほど1ポイントあたりの軽減効果が減少
+  const defReduction = def / (def + 100);
+  // DEF軽減 + 追加軽減（合計は99%まで）
+  const totalReduction = Math.min(0.99, defReduction + additionalReduction / 100);
+  return Math.max(1, Math.floor(atk * (1 - totalReduction)));
 }
 ```
 
-### プレイヤー攻撃ダメージ
+### DEF減衰の効果
+
+| DEF | 軽減率 |
+|-----|--------|
+| 50 | 33% |
+| 100 | 50% |
+| 200 | 67% |
+| 300 | 75% |
+| 500 | 83% |
+
+### クリティカルダメージ
 
 ```typescript
-// 装備込みステータスを取得
-const stats = getTotalStats();
-
-// 基本ダメージ
-const baseDamage = calculateDamage(stats.atk, enemy.def);
-
-// クリティカル判定
-const isCritical = modEffects.criticalChance > 0
-  && Math.random() * 100 < modEffects.criticalChance;
-const criticalMultiplier = isCritical ? 2 : 1;
-
-// 最終ダメージ
-const playerDamage = Math.floor(baseDamage * criticalMultiplier);
+// 基礎倍率150% + ボーナス%
+const criticalMultiplier = isCritical ? (1.5 + criticalDamage / 100) : 1;
+const finalDamage = Math.floor(baseDamage * criticalMultiplier);
 ```
 
-### 敵攻撃ダメージ
+### 通常ダメージ無効化（キーストーン）
 
 ```typescript
-const enemyDamage = calculateDamage(enemy.atk, stats.def);
+// noDirectDamage = true の場合、通常攻撃ダメージは0
+const playerDamage = modEffects.noDirectDamage ? 0 : Math.floor(baseDamage * criticalMultiplier);
 ```
 
 ---
 
-## 5. MOD効果の適用
+## 6. MOD効果・パッシブ効果
 
-### 戦闘時MOD効果の取得
+### 効果の種類
+
+| カテゴリ | 効果 | 説明 |
+|---------|------|------|
+| **ステータス** | atk_bonus | ATK+X (フラット) |
+| | def_bonus | DEF+X (フラット) |
+| | hp_bonus | HP+X (フラット) |
+| | atk_increased_pct | ATK +X% (increased、加算) |
+| | def_increased_pct | DEF +X% (increased、加算) |
+| | hp_increased_pct | HP +X% (increased、加算) |
+| | atk_more_pct | ATK X% more (乗算) |
+| | def_more_pct | DEF X% more (乗算) |
+| | hp_more_pct | HP X% more (乗算) |
+| **攻撃速度** | attack_speed_pct | AS +X% (increased、加算) |
+| | attack_speed_more_pct | AS X% more (乗算) |
+| **回復** | hp_regen | 毎秒HP X回復 (フラット) |
+| | hp_regen_pct | 毎秒HP X%回復 |
+| | lifesteal | ダメージ吸収+X% |
+| **防御** | damage_reduction_pct | ダメージ軽減+X% |
+| **クリティカル** | critical_chance | クリティカル確率+X% |
+| | critical_damage | クリティカルダメージ+X% |
+| | critical_lifesteal | クリティカル時のみダメージ吸収+X% |
+| **毒** | poison_chance | 毒付与確率+X% |
+| | poison_damage_pct | 毒ダメージ倍率+X% (increased) |
+| | poison_damage_more_pct | 毒ダメージ倍率X% more |
+| | poison_max_stacks | 毒スタック上限+X |
+| | poison_damage_reduction | 敵毒状態時ダメージ軽減+X% |
+| **特殊** | no_direct_damage | 通常ダメージを与えられない（キーストーン） |
+
+### PoE式ステータス計算
 
 ```typescript
-const getModEffectsFromEquipment = useCallback(() => {
-  const combined = {
-    hpRegen: 0,
-    poisonChance: 0,
-    criticalChance: 0,
-  };
+// base × (1 + total_increased%) × (1 + total_more%)
+// ※more%は加算して合計
+export function applyPercentageScaling(
+  base: number,
+  increasedPct: number,
+  moreMultipliers: number[]
+): number {
+  let result = base * (1 + increasedPct / 100);
+  const totalMore = moreMultipliers.reduce((sum, more) => sum + more, 0);
+  result = result * (1 + totalMore / 100);
+  return Math.floor(result);
+}
+```
 
+### 効果の取得元
+
+1. **装備MOD** - 装備アイテムに付与されたランダムMOD
+2. **パッシブツリー** - 解放したパッシブノードの効果
+
+```typescript
+const getCombinedModEffects = useCallback((): CombinedModEffects => {
+  // 装備MODからの効果
   Object.values(equipment).forEach((item) => {
     if (item && item.mods) {
       for (const mod of item.mods) {
-        switch (mod.type) {
-          case 'hp_regen':
-            combined.hpRegen += mod.value;
-            break;
-          case 'poison_chance':
-            combined.poisonChance += mod.value;
-            break;
-          case 'critical_chance':
-            combined.criticalChance += mod.value;
-            break;
-        }
+        // MODタイプに応じて加算
       }
     }
   });
 
+  // パッシブツリーからの効果を加算
+  const passiveEffects = calculatePassiveEffects(unlockedSkills);
+  // 各効果を合算
+
   return combined;
-}, [equipment]);
+}, [equipment, unlockedSkills]);
 ```
-
-### 各MODの適用タイミング
-
-| MODタイプ | 適用タイミング | 効果 |
-|----------|---------------|------|
-| atk_bonus | ステータス計算時 | ATKに加算 |
-| def_bonus | ステータス計算時 | DEFに加算 |
-| hp_regen | ターン開始時 | HPを回復 |
-| poison_chance | 攻撃後 | 敵に毒を付与 |
-| critical_chance | 攻撃時 | ダメージ2倍 |
 
 ---
 
-## 6. 毒システム
+## 7. 毒システム
 
-### 毒付与条件
+### 毒の特徴
+
+| 項目 | 値 |
+|------|-----|
+| 基礎ダメージ | 攻撃ダメージの50% |
+| 持続ターン | 5ターン |
+| 基礎スタック上限 | 1 |
+| 重ね掛け | 可能（スタック上限まで） |
+| 階層移動時 | 敵の毒状態はリセット |
+
+### 毒ダメージ計算（PoE式）
 
 ```typescript
-if (!state.enemyPoison                           // 敵が毒でない
-    && modEffects.poisonChance > 0               // poison_chance MODあり
-    && Math.random() * 100 < poisonChance) {     // 確率判定成功
+// base × (1 + increased%) × (1 + more1%) × (1 + more2%) × ...
+// ※more%は加算して合計
+const calculatePoisonDamage = (baseDamage: number, modEffects: CombinedModEffects): number => {
+  let damage = baseDamage * (1 + modEffects.poisonDamagePct / 100);
+  const totalMore = modEffects.poisonDamageMorePct.reduce((sum, more) => sum + more, 0);
+  damage *= (1 + totalMore / 100);
+  return Math.floor(damage);
+};
+```
 
-  const poisonDamage = Math.max(1, Math.floor(playerDamage * 0.5));
-  dispatch({
-    type: 'APPLY_POISON',
-    damagePerTurn: poisonDamage,
-    turns: 5,  // 5ターン持続
-  });
+### 毒付与処理
+
+```typescript
+// スタック上限チェック
+const maxPoisonStacks = BASE_POISON_MAX_STACKS + modEffects.poisonMaxStacks;
+if (state.enemyPoison.length < maxPoisonStacks && modEffects.poisonChance > 0 && Math.random() * 100 < modEffects.poisonChance) {
+  const rawPoisonDamage = Math.max(1, Math.floor(baseDamage * POISON_DAMAGE_RATIO));
+  const poisonDamage = calculatePoisonDamage(rawPoisonDamage, modEffects);
+  dispatch({ type: 'APPLY_POISON', damagePerTurn: poisonDamage, turns: POISON_DURATION });
 }
 ```
 
 ### 毒ダメージ処理
 
 ```typescript
-// ターン開始時に処理
-if (state.enemyPoison && state.enemyPoison.remainingTurns > 0) {
-  dispatch({
-    type: 'POISON_DAMAGE',
-    damage: state.enemyPoison.damagePerTurn,
-  });
-  // 残りターン減少はreducerで処理
-}
+// 全スタックのダメージを合計
+const totalPoisonDamage = state.enemyPoison.reduce((sum, p) => sum + p.damagePerTurn, 0);
+dispatch({ type: 'POISON_DAMAGE', damage: totalPoisonDamage });
+
+// 各スタックの残りターンを減らし、0以下になったものを除去
+const updatedPoisonStacks = state.enemyPoison
+  .map(p => ({ ...p, remainingTurns: p.remainingTurns - 1 }))
+  .filter(p => p.remainingTurns > 0);
 ```
-
-### 毒の特徴
-
-- ダメージ量: 攻撃ダメージの50%
-- 持続ターン: 5ターン
-- 重ね掛け: 不可（既に毒状態なら付与されない）
-- 階層移動時: 敵の毒状態はリセット
 
 ---
 
-## 7. 敵撃破時の処理
+## 8. 敵撃破時の処理
 
 ### ドロップアイテム収集
 
@@ -356,45 +458,64 @@ if (state.enemy.uniqueDrop) {
 // 2. 通常ドロップ判定
 if (dungeon) {
   const dropCount = rollDropCount();  // 0-3個
-  const normalDrops = rollDropItems(dungeon.dropTable, dropCount);
+  const normalDrops = rollDropItems(dungeon.dropTable, dropCount, dungeonId);
   droppedItems.push(...normalDrops);
 }
 
-// 3. 敵撃破アクション
+// 3. フィルタリング適用
+const filteredItems = filterDroppedItems(droppedItems, dropFilter);
+
 dispatch({
   type: 'ENEMY_DEFEATED',
   exp: state.enemy.exp,
-  droppedItems,
+  droppedItems: filteredItems,
 });
 ```
 
-### 経験値の蓄積
+### ドロップフィルター
 
 ```typescript
-// reducerで処理
-case 'ENEMY_DEFEATED':
-  return {
-    ...state,
-    totalExpGained: state.totalExpGained + action.exp,
-    droppedItems: [...state.droppedItems, ...action.droppedItems],
+interface DropFilterSettings {
+  categories: {
+    weapon: boolean;
+    armor: boolean;
+    gloves: boolean;
+    boots: boolean;
+    accessory: boolean;
   };
+  minModCount: number;  // 最小MOD数
+  maxTier: number;      // 最高Tier（1が最高品質）
+}
+
+const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] => {
+  return items.filter((item) => {
+    // カテゴリフィルター
+    if (!filter.categories[item.slot]) return false;
+    // MOD数フィルター
+    if (filter.minModCount > 0 && item.mods.length < filter.minModCount) return false;
+    // Tierフィルター
+    if (filter.maxTier > 0) {
+      const hasGoodTierMod = item.mods.some((mod) => mod.tier <= filter.maxTier);
+      if (!hasGoodTierMod) return false;
+    }
+    return true;
+  });
+};
 ```
 
 ---
 
-## 8. 階層進行・クリア判定
+## 9. 階層進行・クリア判定
 
 ### 次階層への進行
 
 ```typescript
 if (state.currentFloor < state.maxFloor) {
-  const nextEnemy = getRandomEnemy(dungeon.monsters);
+  const nextFloor = state.currentFloor + 1;
+  const nextEnemy = getEnemyForFloor(nextFloor);
   setTimeout(() => {
-    dispatch({
-      type: 'NEXT_FLOOR',
-      enemy: createBattleEnemy(nextEnemy),
-    });
-  }, 500);  // 500ms後に次の敵
+    dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy) });
+  }, 500);
 }
 ```
 
@@ -406,7 +527,9 @@ case 'NEXT_FLOOR':
     ...state,
     currentFloor: state.currentFloor + 1,
     enemy: action.enemy,
-    enemyPoison: null,  // 毒状態リセット
+    enemyPoison: [],  // 毒状態リセット
+    playerGauge: 0,   // ゲージリセット
+    enemyGauge: 0,    // ゲージリセット
     phase: 'fighting',
     battleLog: [
       ...state.battleLog,
@@ -416,38 +539,44 @@ case 'NEXT_FLOOR':
   };
 ```
 
-### ダンジョンクリア
+---
+
+## 10. 自動周回機能
+
+### 機能概要
+
+- クリア時に自動で次の周回を開始
+- 敗北時は自動周回を終了
+- 累計経験値・アイテムを記録
+
+### 使用方法
 
 ```typescript
-if (state.currentFloor >= state.maxFloor) {
-  dispatch({ type: 'DUNGEON_CLEARED' });
-}
+const { isAutoRunning, startAutoRun, stopAutoRun } = useBattle(dungeonId);
 
-// reducerで処理
-case 'DUNGEON_CLEARED':
-  return {
-    ...state,
-    phase: 'cleared',
-    battleLog: [
-      ...state.battleLog,
-      { message: 'ダンジョンを踏破した！', type: 'victory' },
-    ],
-  };
+// 自動周回開始
+startAutoRun();
+
+// 自動周回停止
+stopAutoRun();
+```
+
+### RESET_DUNGEONアクション
+
+```typescript
+case 'RESET_DUNGEON':
+  return createExtendedInitialState(
+    state.dungeonId,
+    action.playerMaxHp,
+    state.runCount + 1,  // 周回数インクリメント
+    state.grandTotalExp + state.totalExpGained,  // 累計経験値更新
+    [...state.grandTotalItems, ...state.droppedItems]  // 累計アイテム更新
+  );
 ```
 
 ---
 
-## 9. プレイヤー敗北処理
-
-### 敗北判定
-
-```typescript
-const playerHpAfterEnemyAttack = state.playerCurrentHp - enemyDamage;
-
-if (playerHpAfterEnemyAttack <= 0) {
-  dispatch({ type: 'PLAYER_DEFEATED' });
-}
-```
+## 11. プレイヤー敗北処理
 
 ### 敗北時も報酬獲得
 
@@ -472,7 +601,7 @@ useEffect(() => {
 
 ---
 
-## 10. 戦闘ログシステム
+## 12. 戦闘ログシステム
 
 ### ログタイプと色分け
 
@@ -491,112 +620,55 @@ useEffect(() => {
 ### ログメッセージ例
 
 ```
+=== 2周目開始 ===
 スライムが現れた！
-プレイヤーの攻撃！スライムに8ダメージ！
-クリティカルヒット！16ダメージ！
-毒を付与した！（4ダメージ/ターン、5ターン）
-毒ダメージ！スライムに4ダメージ！（残り4ターン）
-HP回復！5回復した！
-スライムの攻撃！プレイヤーに3ダメージ！
-スライムを倒した！
+プレイヤーの攻撃！ スライムに8ダメージ！
+クリティカルヒット！ スライムに24ダメージ！
+スライムに毒を付与した！（4ダメージ x 5ターン）
+スライムに毒を付与した！（4ダメージ x 5ターン） [2スタック]
+毒ダメージ！ スライムに8ダメージ！（2スタック継続）
+HP回復！ HPが5回復した！
+スライムの攻撃！ 3ダメージを受けた！
+スライムを倒した！ 経験値50を獲得！
+朽ちた剣をドロップした！
 --- 2階へ進む ---
 ダンジョンを踏破した！
 ```
 
-### 自動スクロール
-
-```typescript
-const scrollViewRef = useRef<ScrollView>(null);
-
-useEffect(() => {
-  scrollViewRef.current?.scrollToEnd({ animated: true });
-}, [logs.length]);
-```
-
 ---
 
-## 11. 戦闘UIレイアウト
+## 13. 戦闘UIレイアウト
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ ダンジョン名                              3/5階        │
+│ ダンジョン名 - 3/5階 (2周目)                            │
+│ 自動周回中                                              │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
-│   [プレイヤー画像]              [敵画像]               │
-│   ████████████ 80/100         ██████░░░░ 30/50        │
+│   [プレイヤー画像]              [敵画像]                │
+│   ████████████ 80/100          ██████░░░░ 30/50        │
 │   Lv.5                                                  │
+│   ████████░░░░ 80%             ██████░░░░ 60%          │  ← 行動ゲージ
 │                                                         │
 ├─────────────────────────────────────────────────────────┤
 │ 戦闘ログ                                                │
 │ ┌─────────────────────────────────────────────────────┐ │
 │ │ スライムが現れた！                                  │ │
-│ │ プレイヤーの攻撃！スライムに8ダメージ！            │ │
-│ │ スライムの攻撃！プレイヤーに3ダメージ！            │ │
-│ │ クリティカルヒット！16ダメージ！                   │ │
+│ │ プレイヤーの攻撃！ スライムに8ダメージ！            │ │
+│ │ スライムの攻撃！ 3ダメージを受けた！                │ │
+│ │ クリティカルヒット！ スライムに24ダメージ！         │ │
 │ └─────────────────────────────────────────────────────┘ │
 ├─────────────────────────────────────────────────────────┤
-│ HP 80  │  ATK 25  │  DEF 10  │  SP 2                   │
-│ EXP ████████░░░░░░░░░░░░░░░░ 45%                       │
+│ [武器] [防具] [手袋] [靴] [アクセ]                      │
 ├─────────────────────────────────────────────────────────┤
-│ [武器] [防具] [手袋] [靴] [アクセ]                     │
-├─────────────────────────────────────────────────────────┤
-│              [撤退する]                                 │
+│      [一時停止/再開]    [自動周回/周回停止]             │
+│                   [撤退する]（一時停止時のみ）          │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 12. 結果画面への遷移
-
-### 自動遷移（2秒後）
-
-```typescript
-useEffect(() => {
-  if (state.phase === 'cleared' || state.phase === 'defeat') {
-    const timer = setTimeout(() => {
-      router.replace({
-        pathname: '/result',
-        params: {
-          dungeonId: dungeonId,
-          dungeonName: dungeon?.name || '',
-          result: state.phase === 'cleared' ? 'cleared' : 'defeat',
-          floorsCleared: state.currentFloor.toString(),
-          maxFloor: state.maxFloor.toString(),
-          expGained: state.totalExpGained.toString(),
-          itemsGained: JSON.stringify(state.droppedItems),
-        },
-      });
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }
-}, [state.phase]);
-```
-
-### 結果画面の表示内容
-
-```
-┌─────────────────────────────────────────────────────────┐
-│            ダンジョン踏破！ / 敗北...                   │
-│                                                         │
-│            始まりの草原                                 │
-│            5/5 階クリア                                 │
-│                                                         │
-│            ─── 獲得報酬 ───                             │
-│            経験値  +500 EXP                             │
-│                                                         │
-│            獲得アイテム                                 │
-│            ・朽ちた剣  ATK+2                           │
-│            ・布の服    DEF+2                           │
-│            ・革の手袋  DEF+1 MOD x1                    │
-│                                                         │
-│            [ダンジョン選択に戻る]                       │
-└─────────────────────────────────────────────────────────┘
-```
-
----
-
-## 13. Reducerアクション一覧
+## 14. Reducerアクション一覧
 
 | アクション | 説明 |
 |-----------|------|
@@ -608,13 +680,17 @@ useEffect(() => {
 | NEXT_FLOOR | 次階層へ、新しい敵を設定 |
 | DUNGEON_CLEARED | ダンジョンクリア |
 | ADD_LOG | ログエントリ追加 |
-| APPLY_POISON | 敵に毒を付与 |
+| APPLY_POISON | 敵に毒を付与（スタック追加） |
 | POISON_DAMAGE | 毒ダメージ処理 |
 | HP_REGEN | HP回復処理 |
+| UPDATE_GAUGES | ゲージ値の更新 |
+| RESET_PLAYER_GAUGE | プレイヤーゲージリセット |
+| RESET_ENEMY_GAUGE | 敵ゲージリセット |
+| RESET_DUNGEON | 自動周回時のダンジョンリセット |
 
 ---
 
-## 14. ゲームバランス設定
+## 15. ゲームバランス設定
 
 ### プレイヤー初期ステータス
 
@@ -636,17 +712,18 @@ export const LEVEL_UP_BONUS = {
 ### 戦闘定数
 
 ```typescript
-const POISON_DAMAGE_RATIO = 0.5;  // 攻撃ダメージの50%
-const POISON_DURATION = 5;        // 5ターン持続
-const TURN_INTERVAL = 1000;       // 1秒ごと
-const ENEMY_ATTACK_DELAY = 500;   // 敵攻撃の遅延
-const NEXT_FLOOR_DELAY = 500;     // 次階層への遅延
-const RESULT_TRANSITION_DELAY = 2000;  // 結果画面への遷移
+const TICK_INTERVAL = 33;             // ゲームループ間隔（ms）
+const POISON_DAMAGE_RATIO = 0.5;      // 攻撃ダメージの50%
+const POISON_DURATION = 5;            // 5ターン持続
+const BASE_POISON_MAX_STACKS = 1;     // 基礎毒スタック上限
+const NEXT_FLOOR_DELAY = 500;         // 次階層への遅延（ms）
+const RESULT_TRANSITION_DELAY = 2000; // 結果画面への遷移（ms）
+const AUTO_RUN_DELAY = 1500;          // 自動周回時の次周回開始遅延（ms）
 ```
 
 ---
 
-## 15. パフォーマンス最適化
+## 16. パフォーマンス最適化
 
 ### 二重実行防止
 
@@ -666,12 +743,16 @@ const executeTurn = useCallback(() => {
 ### タイマー管理
 
 ```typescript
-const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+const gameLoopRef = useRef<ReturnType<typeof setInterval> | null>(null);
+const regenTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
 useEffect(() => {
   return () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
+    if (gameLoopRef.current) {
+      clearInterval(gameLoopRef.current);
+    }
+    if (regenTimerRef.current) {
+      clearInterval(regenTimerRef.current);
     }
   };
 }, []);
@@ -679,22 +760,29 @@ useEffect(() => {
 
 ---
 
-## 16. 戦闘システムの特徴
+## 17. 戦闘システムの特徴
 
 | 特徴 | 説明 |
 |------|------|
-| 完全自動戦闘 | プレイヤー操作不要（一時停止・撤退のみ可能） |
+| ゲージ制戦闘 | ATB風の独立したゲージシステム |
+| 攻撃速度 | PoE式のincreased%/more%計算 |
+| 完全自動戦闘 | プレイヤー操作不要（一時停止・撤退・自動周回のみ可能） |
+| 自動周回 | クリア時に自動で次の周回を開始 |
 | MOD効果 | 装備のランダムMODで戦闘に変化 |
-| 複数階層 | 同一ダンジョン内で連続戦闘 |
+| パッシブ効果 | スキルツリーで戦闘能力をカスタマイズ |
+| 毒スタック | 複数の毒を同時に付与可能 |
+| ドロップフィルター | 不要なアイテムを自動除外 |
+| ボスシステム | 特定フロアでボス出現 |
 | 詳細ログ | 毒、クリティカル、回復など色分け表示 |
 | 敗北時も報酬 | 敗北階数までの経験値・アイテム獲得 |
 | レベルアップ連鎖 | 多くの敵を倒すと複数レベルアップ可能 |
 
 ---
 
-## 17. 関連ドキュメント
+## 18. 関連ドキュメント
 
 - [ダンジョンシステム](./dungeon-system.md) - ダンジョン・敵の詳細
 - [ドロップ率システム](./drop-rate-system.md) - アイテムドロップの仕組み
 - [MODシステム](./mod-system.md) - 戦闘中のMOD効果
 - [インベントリ・倉庫システム](./inventory-storage-system.md) - 獲得アイテムの管理
+- [パッシブツリー](./passive-tree.md) - パッシブスキルの詳細
