@@ -186,3 +186,158 @@ export interface LevelUpResult {
     def: number;
   };
 }
+
+// ========================================
+// ゲージ制戦闘用型定義
+// ========================================
+
+/**
+ * MOD効果（戦闘時）
+ * 装備MODとパッシブ効果を統合した戦闘用ステータス
+ */
+export interface CombinedModEffects {
+  // HP回復
+  hpRegen: number;           // フラット回復量
+  hpRegenPct: number;        // %回復量
+
+  // 毒
+  poisonChance: number;      // 付与率%
+  poisonDamagePct: number;   // increased%（加算）
+  poisonDamageMorePct: number[];  // more%（配列）
+  poisonMaxStacks: number;   // スタック上限追加
+  poisonDamageReduction: number;  // 敵毒時の被ダメ軽減%
+  noDirectDamage: boolean;   // 通常ダメージ無効（キーストーン）
+
+  // クリティカル
+  criticalChance: number;    // 発生率%
+  criticalDamage: number;    // ダメージ+%
+  criticalLifesteal: number; // クリ時吸収%
+
+  // 防御・吸収
+  damageReductionPct: number;  // ダメージ軽減%
+  lifesteal: number;           // ライフスティール%
+
+  // 攻撃速度
+  attackSpeedPct: number;        // increased%
+  attackSpeedMorePct: number[];  // more%（配列）
+}
+
+/**
+ * ゲージ制戦闘の参加者
+ */
+export interface GaugeCombatant {
+  currentHp: number;
+  maxHp: number;
+  atk: number;
+  def: number;
+  attackSpeed: number;  // 最終計算済みAS
+  gauge: number;        // 0-100
+}
+
+/**
+ * 毒スタック
+ */
+export interface PoisonStack {
+  damagePerTick: number;   // 1ティックあたりのダメージ
+  remainingTicks: number;  // 残りティック数
+}
+
+/**
+ * ゲージ制戦闘状態
+ */
+export interface GaugeBattleState {
+  player: GaugeCombatant;
+  enemy: GaugeCombatant;
+  enemyPoisonStacks: PoisonStack[];
+  elapsedTicks: number;  // 経過ティック数
+  isFinished: boolean;
+  winner: 'player' | 'enemy' | null;
+}
+
+/**
+ * 戦闘イベントタイプ
+ */
+export type BattleEventType =
+  | 'player_attack'
+  | 'enemy_attack'
+  | 'critical_hit'
+  | 'poison_applied'
+  | 'poison_damage'
+  | 'poison_expired'
+  | 'hp_regen'
+  | 'lifesteal'
+  | 'player_defeated'
+  | 'enemy_defeated';
+
+/**
+ * 戦闘イベント（ログ用）
+ */
+export interface BattleEvent {
+  type: BattleEventType;
+  tick: number;
+  data: Record<string, unknown>;
+}
+
+/**
+ * ゲージ制戦闘結果
+ */
+export interface GaugeBattleResult {
+  victory: boolean;
+  totalTicks: number;
+  playerHpRemaining: number;
+  expGained: number;
+  events: BattleEvent[];
+}
+
+/**
+ * ゲージ制ダンジョン結果
+ */
+export interface GaugeDungeonResult {
+  dungeonId: string;
+  cleared: boolean;
+  floorsCleared: number;
+  maxFloor: number;
+  totalExp: number;
+  totalTicks: number;
+  playerHpRemaining: number;
+  floorResults: GaugeFloorResult[];
+  events: BattleEvent[];
+}
+
+/**
+ * ゲージ制フロア結果
+ */
+export interface GaugeFloorResult {
+  floor: number;
+  enemyId: string;
+  battle: GaugeBattleResult;
+}
+
+/**
+ * 戦闘設定（定数をカスタマイズ可能）
+ */
+export interface BattleConfig {
+  // 毒設定
+  poisonDamageRatio: number;   // 基本ダメージ比率（デフォルト: 0.5）
+  poisonDuration: number;       // 持続ティック数（デフォルト: 5）
+  basePoisonMaxStacks: number;  // 基本スタック上限（デフォルト: 1）
+
+  // クリティカル設定
+  baseCriticalMultiplier: number;  // 基礎倍率（デフォルト: 1.5）
+
+  // ゲージ設定
+  ticksPerSecond: number;  // 1秒あたりのティック数（デフォルト: 30）
+  baseGaugePerSecond: number;  // AS 1.0時の1秒あたりのゲージ増加（デフォルト: 200）
+}
+
+/**
+ * デフォルト戦闘設定
+ */
+export const DEFAULT_BATTLE_CONFIG: BattleConfig = {
+  poisonDamageRatio: 0.5,
+  poisonDuration: 5,
+  basePoisonMaxStacks: 1,
+  baseCriticalMultiplier: 1.5,
+  ticksPerSecond: 30,
+  baseGaugePerSecond: 200,
+};

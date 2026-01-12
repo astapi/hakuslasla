@@ -310,3 +310,391 @@ export const PASSIVE_PRESETS: Record<string, PassivePreset> = {
 };
 
 export type PassivePresetKey = keyof typeof PASSIVE_PRESETS;
+
+// ========================================
+// レベル別パッシブプリセット（シミュレーション用）
+// ========================================
+
+/**
+ * レベル別パッシブプリセット
+ * - LV5: 4スキルポイント
+ * - LV10: 9スキルポイント
+ * - LV15: 14スキルポイント
+ * - LV20: 19スキルポイント
+ * - LV25: 24スキルポイント
+ * - LV30: 29スキルポイント
+ * - LV35: 34スキルポイント
+ */
+export const LEVEL_BASED_PRESETS: Record<string, Record<number, PassivePreset>> = {
+  // ========================================
+  // 特化ルート
+  // ========================================
+
+  /** 毒特化 */
+  POISON: {
+    5: {
+      name: '毒特化LV5',
+      nodes: ['start', 'poison_1', 'poison_2', 'poison_3'],
+    },
+    10: {
+      name: '毒特化LV10',
+      nodes: ['start', 'poison_1', 'poison_2', 'poison_3', 'poison_4', 'poison_5', 'poison_6', 'poison_7', 'poison_key1'],
+    },
+    15: {
+      name: '毒特化LV15',
+      nodes: ['start', 'poison_1', 'poison_2', 'poison_3', 'poison_4', 'poison_5', 'poison_6', 'poison_7', 'poison_key1', 'poison_8', 'poison_9', 'poison_10', 'poison_11', 'poison_12'],
+    },
+    20: {
+      name: '毒特化LV20',
+      nodes: ['start', 'poison_1', 'poison_2', 'poison_3', 'poison_4', 'poison_5', 'poison_6', 'poison_7', 'poison_key1', 'poison_8', 'poison_9', 'poison_10', 'poison_11', 'poison_12', 'poison_13', 'poison_a1', 'poison_a2', 'poison_14'],
+    },
+    25: {
+      name: '毒特化LV25',
+      nodes: ['start', 'poison_1', 'poison_2', 'poison_3', 'poison_4', 'poison_5', 'poison_6', 'poison_7', 'poison_key1', 'poison_8', 'poison_9', 'poison_10', 'poison_11', 'poison_12', 'poison_13', 'poison_a1', 'poison_a2', 'poison_b1', 'poison_b2', 'poison_14', 'poison_15', 'poison_16', 'poison_17'],
+    },
+    30: {
+      name: '毒特化LV30',
+      nodes: ['start', 'poison_1', 'poison_2', 'poison_3', 'poison_4', 'poison_5', 'poison_6', 'poison_7', 'poison_key1', 'poison_8', 'poison_9', 'poison_10', 'poison_11', 'poison_12', 'poison_13', 'poison_a1', 'poison_a2', 'poison_b1', 'poison_b2', 'poison_14', 'poison_15', 'poison_16', 'poison_17', 'poison_final1', 'poison_final2', 'regen_1', 'regen_2', 'regen_3'],
+    },
+    35: {
+      name: '毒特化LV35',
+      nodes: ['start', 'poison_1', 'poison_2', 'poison_3', 'poison_4', 'poison_5', 'poison_6', 'poison_7', 'poison_key1', 'poison_8', 'poison_9', 'poison_10', 'poison_11', 'poison_12', 'poison_13', 'poison_a1', 'poison_a2', 'poison_b1', 'poison_b2', 'poison_14', 'poison_15', 'poison_16', 'poison_17', 'poison_final1', 'poison_final2', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1'],
+    },
+  },
+
+  /** クリティカル特化 */
+  CRIT: {
+    5: {
+      name: 'クリ特化LV5',
+      nodes: ['start', 'crit_1', 'crit_2', 'crit_3'],
+    },
+    10: {
+      name: 'クリ特化LV10',
+      nodes: ['start', 'crit_1', 'crit_2', 'crit_3', 'crit_4', 'crit_5', 'crit_6', 'crit_7', 'crit_key1'],
+    },
+    15: {
+      name: 'クリ特化LV15',
+      nodes: ['start', 'crit_1', 'crit_2', 'crit_3', 'crit_4', 'crit_5', 'crit_6', 'crit_7', 'crit_key1', 'crit_8', 'crit_9', 'crit_10', 'crit_11', 'crit_12'],
+    },
+    20: {
+      name: 'クリ特化LV20',
+      nodes: ['start', 'crit_1', 'crit_2', 'crit_3', 'crit_4', 'crit_5', 'crit_6', 'crit_7', 'crit_key1', 'crit_8', 'crit_9', 'crit_10', 'crit_11', 'crit_12', 'crit_13', 'crit_a1', 'crit_a2', 'crit_14'],
+    },
+    25: {
+      name: 'クリ特化LV25',
+      nodes: ['start', 'crit_1', 'crit_2', 'crit_3', 'crit_4', 'crit_5', 'crit_6', 'crit_7', 'crit_key1', 'crit_8', 'crit_9', 'crit_10', 'crit_11', 'crit_12', 'crit_13', 'crit_a1', 'crit_a2', 'crit_b1', 'crit_b2', 'crit_14', 'crit_15', 'crit_16', 'crit_17'],
+    },
+    30: {
+      name: 'クリ特化LV30',
+      nodes: ['start', 'crit_1', 'crit_2', 'crit_3', 'crit_4', 'crit_5', 'crit_6', 'crit_7', 'crit_key1', 'crit_8', 'crit_9', 'crit_10', 'crit_11', 'crit_12', 'crit_13', 'crit_a1', 'crit_a2', 'crit_b1', 'crit_b2', 'crit_14', 'crit_15', 'crit_16', 'crit_17', 'crit_final1', 'crit_final2', 'speed_1', 'speed_2', 'speed_3'],
+    },
+    35: {
+      name: 'クリ特化LV35',
+      nodes: ['start', 'crit_1', 'crit_2', 'crit_3', 'crit_4', 'crit_5', 'crit_6', 'crit_7', 'crit_key1', 'crit_8', 'crit_9', 'crit_10', 'crit_11', 'crit_12', 'crit_13', 'crit_a1', 'crit_a2', 'crit_b1', 'crit_b2', 'crit_14', 'crit_15', 'crit_16', 'crit_17', 'crit_final1', 'crit_final2', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1'],
+    },
+  },
+
+  /** HP回復特化 */
+  REGEN: {
+    5: {
+      name: '回復特化LV5',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3'],
+    },
+    10: {
+      name: '回復特化LV10',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1'],
+    },
+    15: {
+      name: '回復特化LV15',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12'],
+    },
+    20: {
+      name: '回復特化LV20',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13', 'regen_a1', 'regen_a2', 'regen_14'],
+    },
+    25: {
+      name: '回復特化LV25',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13', 'regen_a1', 'regen_a2', 'regen_b1', 'regen_b2', 'regen_14', 'regen_15', 'regen_16', 'regen_17'],
+    },
+    30: {
+      name: '回復特化LV30',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13', 'regen_a1', 'regen_a2', 'regen_b1', 'regen_b2', 'regen_14', 'regen_15', 'regen_16', 'regen_17', 'regen_final1', 'regen_final2', 'guard_1', 'guard_2', 'guard_3'],
+    },
+    35: {
+      name: '回復特化LV35',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13', 'regen_a1', 'regen_a2', 'regen_b1', 'regen_b2', 'regen_14', 'regen_15', 'regen_16', 'regen_17', 'regen_final1', 'regen_final2', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1'],
+    },
+  },
+
+  /** ライフスティール特化 */
+  VAMP: {
+    5: {
+      name: '吸血特化LV5',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3'],
+    },
+    10: {
+      name: '吸血特化LV10',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1'],
+    },
+    15: {
+      name: '吸血特化LV15',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12'],
+    },
+    20: {
+      name: '吸血特化LV20',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12', 'vamp_13', 'vamp_a1', 'vamp_a2', 'vamp_14'],
+    },
+    25: {
+      name: '吸血特化LV25',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12', 'vamp_13', 'vamp_a1', 'vamp_a2', 'vamp_b1', 'vamp_b2', 'vamp_14', 'vamp_15', 'vamp_16', 'vamp_17'],
+    },
+    30: {
+      name: '吸血特化LV30',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12', 'vamp_13', 'vamp_a1', 'vamp_a2', 'vamp_b1', 'vamp_b2', 'vamp_14', 'vamp_15', 'vamp_16', 'vamp_17', 'vamp_final1', 'vamp_final2', 'speed_1', 'speed_2', 'speed_3'],
+    },
+    35: {
+      name: '吸血特化LV35',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12', 'vamp_13', 'vamp_a1', 'vamp_a2', 'vamp_b1', 'vamp_b2', 'vamp_14', 'vamp_15', 'vamp_16', 'vamp_17', 'vamp_final1', 'vamp_final2', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1'],
+    },
+  },
+
+  /** 防御特化 */
+  GUARD: {
+    5: {
+      name: '防御特化LV5',
+      nodes: ['start', 'guard_1', 'guard_2', 'guard_3'],
+    },
+    10: {
+      name: '防御特化LV10',
+      nodes: ['start', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1'],
+    },
+    15: {
+      name: '防御特化LV15',
+      nodes: ['start', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10', 'guard_11', 'guard_12'],
+    },
+    20: {
+      name: '防御特化LV20',
+      nodes: ['start', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10', 'guard_11', 'guard_12', 'guard_13', 'guard_a1', 'guard_a2', 'guard_14'],
+    },
+    25: {
+      name: '防御特化LV25',
+      nodes: ['start', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10', 'guard_11', 'guard_12', 'guard_13', 'guard_a1', 'guard_a2', 'guard_b1', 'guard_b2', 'guard_14', 'guard_15', 'guard_16', 'guard_17'],
+    },
+    30: {
+      name: '防御特化LV30',
+      nodes: ['start', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10', 'guard_11', 'guard_12', 'guard_13', 'guard_a1', 'guard_a2', 'guard_b1', 'guard_b2', 'guard_14', 'guard_15', 'guard_16', 'guard_17', 'guard_final1', 'guard_final2', 'regen_1', 'regen_2', 'regen_3'],
+    },
+    35: {
+      name: '防御特化LV35',
+      nodes: ['start', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10', 'guard_11', 'guard_12', 'guard_13', 'guard_a1', 'guard_a2', 'guard_b1', 'guard_b2', 'guard_14', 'guard_15', 'guard_16', 'guard_17', 'guard_final1', 'guard_final2', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1'],
+    },
+  },
+
+  /** 攻撃速度特化 */
+  SPEED: {
+    5: {
+      name: '速度特化LV5',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3'],
+    },
+    10: {
+      name: '速度特化LV10',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1'],
+    },
+    15: {
+      name: '速度特化LV15',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12'],
+    },
+    20: {
+      name: '速度特化LV20',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13', 'speed_final1', 'speed_final2'],
+    },
+    25: {
+      name: '速度特化LV25',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13', 'speed_final1', 'speed_final2', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6'],
+    },
+    30: {
+      name: '速度特化LV30',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13', 'speed_final1', 'speed_final2', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10'],
+    },
+    35: {
+      name: '速度特化LV35',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13', 'speed_final1', 'speed_final2', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12', 'vamp_13', 'vamp_a1', 'vamp_a2'],
+    },
+  },
+
+  // ========================================
+  // バランスルート（クリ・毒は混ぜない）
+  // ========================================
+
+  /** 回復+防御バランス */
+  REGEN_GUARD: {
+    5: {
+      name: '回復防御LV5',
+      nodes: ['start', 'regen_1', 'guard_1', 'regen_2'],
+    },
+    10: {
+      name: '回復防御LV10',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'guard_1', 'guard_2', 'guard_3', 'guard_4'],
+    },
+    15: {
+      name: '回復防御LV15',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7'],
+    },
+    20: {
+      name: '回復防御LV20',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8'],
+    },
+    25: {
+      name: '回復防御LV25',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10'],
+    },
+    30: {
+      name: '回復防御LV30',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10', 'guard_11', 'guard_12', 'guard_13'],
+    },
+    35: {
+      name: '回復防御LV35',
+      nodes: ['start', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13', 'regen_a1', 'regen_a2', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10', 'guard_11', 'guard_12', 'guard_13', 'guard_a1', 'guard_a2'],
+    },
+  },
+
+  /** 速度+回復バランス */
+  SPEED_REGEN: {
+    5: {
+      name: '速度回復LV5',
+      nodes: ['start', 'speed_1', 'regen_1', 'speed_2'],
+    },
+    10: {
+      name: '速度回復LV10',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'regen_1', 'regen_2', 'regen_3', 'regen_4'],
+    },
+    15: {
+      name: '速度回復LV15',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7'],
+    },
+    20: {
+      name: '速度回復LV20',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8'],
+    },
+    25: {
+      name: '速度回復LV25',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10'],
+    },
+    30: {
+      name: '速度回復LV30',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13'],
+    },
+    35: {
+      name: '速度回復LV35',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13', 'speed_final1', 'speed_final2', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13', 'regen_a1', 'regen_a2'],
+    },
+  },
+
+  /** 吸血+速度バランス */
+  VAMP_SPEED: {
+    5: {
+      name: '吸血速度LV5',
+      nodes: ['start', 'vamp_1', 'speed_1', 'vamp_2'],
+    },
+    10: {
+      name: '吸血速度LV10',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'speed_1', 'speed_2', 'speed_3', 'speed_4'],
+    },
+    15: {
+      name: '吸血速度LV15',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7'],
+    },
+    20: {
+      name: '吸血速度LV20',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8'],
+    },
+    25: {
+      name: '吸血速度LV25',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10'],
+    },
+    30: {
+      name: '吸血速度LV30',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12', 'vamp_13', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13'],
+    },
+    35: {
+      name: '吸血速度LV35',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12', 'vamp_13', 'vamp_a1', 'vamp_a2', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13', 'speed_final1', 'speed_final2'],
+    },
+  },
+
+  /** 吸血+回復バランス（生存重視） */
+  VAMP_REGEN: {
+    5: {
+      name: '吸血回復LV5',
+      nodes: ['start', 'vamp_1', 'regen_1', 'vamp_2'],
+    },
+    10: {
+      name: '吸血回復LV10',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'regen_1', 'regen_2', 'regen_3', 'regen_4'],
+    },
+    15: {
+      name: '吸血回復LV15',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7'],
+    },
+    20: {
+      name: '吸血回復LV20',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8'],
+    },
+    25: {
+      name: '吸血回復LV25',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10'],
+    },
+    30: {
+      name: '吸血回復LV30',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12', 'vamp_13', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13'],
+    },
+    35: {
+      name: '吸血回復LV35',
+      nodes: ['start', 'vamp_1', 'vamp_2', 'vamp_3', 'vamp_4', 'vamp_5', 'vamp_6', 'vamp_7', 'vamp_key1', 'vamp_8', 'vamp_9', 'vamp_10', 'vamp_11', 'vamp_12', 'vamp_13', 'vamp_a1', 'vamp_a2', 'regen_1', 'regen_2', 'regen_3', 'regen_4', 'regen_5', 'regen_6', 'regen_7', 'regen_key1', 'regen_8', 'regen_9', 'regen_10', 'regen_11', 'regen_12', 'regen_13', 'regen_a1', 'regen_a2'],
+    },
+  },
+
+  /** 速度+防御バランス */
+  SPEED_GUARD: {
+    5: {
+      name: '速度防御LV5',
+      nodes: ['start', 'speed_1', 'guard_1', 'speed_2'],
+    },
+    10: {
+      name: '速度防御LV10',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'guard_1', 'guard_2', 'guard_3', 'guard_4'],
+    },
+    15: {
+      name: '速度防御LV15',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7'],
+    },
+    20: {
+      name: '速度防御LV20',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8'],
+    },
+    25: {
+      name: '速度防御LV25',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10'],
+    },
+    30: {
+      name: '速度防御LV30',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10', 'guard_11', 'guard_12', 'guard_13'],
+    },
+    35: {
+      name: '速度防御LV35',
+      nodes: ['start', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'speed_6', 'speed_7', 'speed_key1', 'speed_8', 'speed_9', 'speed_10', 'speed_11', 'speed_12', 'speed_13', 'speed_final1', 'speed_final2', 'guard_1', 'guard_2', 'guard_3', 'guard_4', 'guard_5', 'guard_6', 'guard_7', 'guard_key1', 'guard_8', 'guard_9', 'guard_10', 'guard_11', 'guard_12', 'guard_13', 'guard_a1', 'guard_a2'],
+    },
+  },
+};
+
+/**
+ * レベル別プリセットを取得
+ * @param presetType プリセットタイプ（POISON, CRIT, REGEN, VAMP, GUARD, SPEED, またはバランス系）
+ * @param level レベル（5, 10, 15, 20, 25, 30, 35）
+ */
+export function getLevelBasedPreset(
+  presetType: keyof typeof LEVEL_BASED_PRESETS,
+  level: 5 | 10 | 15 | 20 | 25 | 30 | 35
+): PassivePreset {
+  return LEVEL_BASED_PRESETS[presetType][level];
+}
