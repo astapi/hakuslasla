@@ -168,6 +168,7 @@ export interface PassiveEffect {
   poison_damage_more_pct?: number; // 毒ダメージ倍率 X% more
   poison_max_stacks?: number;  // 毒スタック上限増加
   poison_damage_reduction?: number; // 敵が毒状態時のダメージ軽減 +X%
+  poison_lifesteal?: number;   // 毒ダメージ吸収 +X%
   no_direct_damage?: boolean;  // 通常ダメージを与えられなくなる（キーストーン）
   // クリティカル系
   critical_chance?: number;    // クリティカル率（%）
