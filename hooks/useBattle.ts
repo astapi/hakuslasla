@@ -694,6 +694,13 @@ export const useBattle = (dungeonId: string) => {
   const regenTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const playerGaugeRef = useRef(0);
   const enemyGaugeRef = useRef(0);
+  // HP回復タイマー用のref（stateが変わってもタイマーをリセットしないため）
+  const playerHpRef = useRef({ current: state.playerCurrentHp, max: state.playerMaxHp });
+
+  // playerHpRefを常に最新のstateで更新
+  useEffect(() => {
+    playerHpRef.current = { current: state.playerCurrentHp, max: state.playerMaxHp };
+  }, [state.playerCurrentHp, state.playerMaxHp]);
 
   // ゲームループ本体
   useEffect(() => {
@@ -765,12 +772,10 @@ export const useBattle = (dungeonId: string) => {
 
     regenTimerRef.current = setInterval(() => {
       const modEffects = getCombinedModEffects();
+      // refから最新のHP値を取得（依存配列でタイマーリセットを防ぐため）
+      const { current: currentHp, max: maxHp } = playerHpRef.current;
       // Core関数でHP回復量を計算
-      const regenAmount = calculateHpRegen(
-        state.playerCurrentHp,
-        state.playerMaxHp,
-        modEffects
-      );
+      const regenAmount = calculateHpRegen(currentHp, maxHp, modEffects);
       if (regenAmount > 0) {
         dispatch({ type: 'HP_REGEN', amount: regenAmount });
       }
@@ -782,7 +787,7 @@ export const useBattle = (dungeonId: string) => {
         regenTimerRef.current = null;
       }
     };
-  }, [state.phase, isPaused, state.playerCurrentHp, state.playerMaxHp, getCombinedModEffects]);
+  }, [state.phase, isPaused, getCombinedModEffects]);
 
   // 戦闘終了時に経験値を付与
   useEffect(() => {
