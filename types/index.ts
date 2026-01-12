@@ -137,7 +137,8 @@ export interface Item extends ItemBase {
   mods: ItemMod[];     // 付与されたMOD（固有MOD + ランダムMOD）
 }
 
-// 毒状態
+// 毒状態（後方互換性のため残す、新規コードはPoisonStackを使用）
+// @deprecated core/types.ts の PoisonStack を使用してください
 export interface PoisonState {
   damagePerTurn: number;
   remainingTurns: number;
@@ -336,7 +337,17 @@ export interface PlayerState extends PlayerStats {
 // 戦闘フェーズ
 export type BattlePhase = 'fighting' | 'victory' | 'defeat' | 'cleared';
 
-// 戦闘中の敵情報
+// 敵の表示情報（UI用）
+export interface EnemyDisplayInfo {
+  id: string;
+  name: string;
+  image: string;
+  exp: number;
+  uniqueDrop: UniqueDrop | null;
+}
+
+// 戦闘中の敵情報（後方互換性のため残す）
+// @deprecated 新規コードではEnemyDisplayInfo + GaugeCombatantを使用
 export interface BattleEnemy {
   id: string;
   name: string;
@@ -357,7 +368,8 @@ export interface BattleLogEntry {
   type: 'player_attack' | 'enemy_attack' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'critical' | 'heal';
 }
 
-// 戦闘状態（useReducer用）
+// 戦闘状態（useReducer用）- 後方互換性のため残す
+// @deprecated 新規コードでは DungeonBattleState を使用
 export interface BattleState {
   dungeonId: string;
   currentFloor: number;
@@ -374,7 +386,50 @@ export interface BattleState {
   enemyGauge: number;  // 敵の行動ゲージ (0-100)
 }
 
-// 戦闘アクション
+// ダンジョン戦闘状態（Core型を内包する新しい型）
+// GaugeBattleState は core/types.ts からインポートして使用
+export interface DungeonBattleState {
+  // ダンジョン進行
+  dungeonId: string;
+  currentFloor: number;
+  maxFloor: number;
+
+  // 敵の表示情報
+  enemyInfo: EnemyDisplayInfo | null;
+
+  // UI状態
+  phase: BattlePhase;
+  battleLog: BattleLogEntry[];
+  droppedItems: Item[];
+  totalExpGained: number;
+
+  // Core戦闘状態のプロパティ（フラットに展開）
+  // player, enemy はGaugeCombatantだが、UI用にプロパティを展開
+  playerCurrentHp: number;
+  playerMaxHp: number;
+  playerAtk: number;
+  playerDef: number;
+  playerAttackSpeed: number;
+  playerGauge: number;
+
+  enemyCurrentHp: number;
+  enemyMaxHp: number;
+  enemyAtk: number;
+  enemyDef: number;
+  enemyAttackSpeed: number;
+  enemyGauge: number;
+
+  // 毒スタック（PoisonStack[]）
+  enemyPoisonStacks: Array<{
+    damagePerTick: number;
+    remainingTicks: number;
+  }>;
+
+  elapsedTicks: number;
+}
+
+// 戦闘アクション - 後方互換性のため残す
+// @deprecated 新規コードでは DungeonBattleAction を使用
 export type BattleAction =
   | { type: 'START_BATTLE'; enemy: BattleEnemy }
   | { type: 'PLAYER_ATTACK'; damage: number; isCritical?: boolean }
@@ -390,6 +445,23 @@ export type BattleAction =
   | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number }
   | { type: 'RESET_PLAYER_GAUGE' }
   | { type: 'RESET_ENEMY_GAUGE' };
+
+// ダンジョン戦闘アクション（Core関数の結果を適用）
+export type DungeonBattleAction =
+  | { type: 'START_BATTLE'; enemyInfo: EnemyDisplayInfo; enemyStats: { maxHp: number; atk: number; def: number; attackSpeed: number } }
+  | { type: 'APPLY_PLAYER_ATTACK'; damage: number; isCritical: boolean; newEnemyHp: number }
+  | { type: 'APPLY_ENEMY_ATTACK'; damage: number; newPlayerHp: number }
+  | { type: 'APPLY_POISON'; damagePerTick: number; remainingTicks: number }
+  | { type: 'APPLY_POISON_DAMAGE'; damage: number; healAmount: number; updatedStacks: Array<{ damagePerTick: number; remainingTicks: number }> }
+  | { type: 'APPLY_HP_REGEN'; amount: number }
+  | { type: 'APPLY_LIFESTEAL'; amount: number }
+  | { type: 'ENEMY_DEFEATED'; exp: number; droppedItems: Item[] }
+  | { type: 'PLAYER_DEFEATED' }
+  | { type: 'NEXT_FLOOR'; enemyInfo: EnemyDisplayInfo; enemyStats: { maxHp: number; atk: number; def: number; attackSpeed: number } }
+  | { type: 'DUNGEON_CLEARED' }
+  | { type: 'ADD_LOG'; entry: Omit<BattleLogEntry, 'id'> }
+  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number }
+  | { type: 'RESET_DUNGEON'; playerMaxHp: number; playerAtk: number; playerDef: number; playerAttackSpeed: number };
 
 // 結果画面用のパラメータ
 export interface BattleResult {

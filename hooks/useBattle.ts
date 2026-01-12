@@ -12,15 +12,55 @@ import {
   getAttackSpeedFromMods,
   getPoisonDamageFromMods,
   DEFAULT_BATTLE_CONFIG,
+  // Core関数（戦闘効果）
+  processPoisonDamage,
+  calculateHpRegen,
+  calculateLifesteal,
+  calculateEnemyDamage,
+  GaugeBattleState,
+  PoisonStack,
 } from '@/core';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 
-// 毒ダメージ計算（攻撃ダメージの50%）
-const POISON_DAMAGE_RATIO = 0.5;
-// 毒の持続ターン数
-const POISON_DURATION = 5;
-// 基本毒スタック上限
-const BASE_POISON_MAX_STACKS = 1;
+// Core設定の定数を使用
+const POISON_DAMAGE_RATIO = DEFAULT_BATTLE_CONFIG.poisonDamageRatio;
+const POISON_DURATION = DEFAULT_BATTLE_CONFIG.poisonDuration;
+const BASE_POISON_MAX_STACKS = DEFAULT_BATTLE_CONFIG.basePoisonMaxStacks;
+
+// UIの状態からCore関数用のGaugeBattleState形式に変換するヘルパー
+const createCoreStateForPoisonDamage = (
+  playerCurrentHp: number,
+  playerMaxHp: number,
+  enemyCurrentHp: number,
+  enemyMaxHp: number,
+  enemyPoison: PoisonState[],
+  elapsedTicks: number = 0
+): GaugeBattleState => ({
+  player: {
+    currentHp: playerCurrentHp,
+    maxHp: playerMaxHp,
+    atk: 0, // 毒ダメージ計算には不要
+    def: 0,
+    attackSpeed: 1,
+    gauge: 0,
+  },
+  enemy: {
+    currentHp: enemyCurrentHp,
+    maxHp: enemyMaxHp,
+    atk: 0,
+    def: 0,
+    attackSpeed: 1,
+    gauge: 0,
+  },
+  // PoisonState[] → PoisonStack[] の変換
+  enemyPoisonStacks: enemyPoison.map(p => ({
+    damagePerTick: p.damagePerTurn,
+    remainingTicks: p.remainingTurns,
+  })),
+  elapsedTicks,
+  isFinished: false,
+  winner: null,
+});
 
 // 敵をBattleEnemy形式に変換
 const createBattleEnemy = (enemy: Enemy): BattleEnemy => ({
@@ -457,20 +497,27 @@ export const useBattle = (dungeonId: string) => {
 
     // HP回復は別タイマーで処理するため削除
 
-    // 毒ダメージ処理（敵に毒が付与されている場合）
+    // 毒ダメージ処理（敵に毒が付与されている場合）- Core関数使用
     let currentEnemyHp = state.enemy.currentHp;
     if (state.enemyPoison.length > 0) {
-      // 全スタックのダメージを合計
-      const totalPoisonDamage = state.enemyPoison.reduce((sum, p) => sum + p.damagePerTurn, 0);
-      dispatch({ type: 'POISON_DAMAGE', damage: totalPoisonDamage });
-      currentEnemyHp -= totalPoisonDamage;
+      // Core関数用の状態を作成
+      const coreState = createCoreStateForPoisonDamage(
+        state.playerCurrentHp,
+        state.playerMaxHp,
+        state.enemy.currentHp,
+        state.enemy.maxHp,
+        state.enemyPoison
+      );
 
-      // 毒ダメージ吸収による回復（poison_lifesteal）
-      if (modEffects.poisonLifesteal > 0 && state.playerCurrentHp < state.playerMaxHp) {
-        const poisonHealAmount = Math.floor(totalPoisonDamage * modEffects.poisonLifesteal / 100);
-        if (poisonHealAmount > 0) {
-          dispatch({ type: 'HP_REGEN', amount: poisonHealAmount });
-        }
+      // Core関数で毒ダメージ処理
+      const poisonResult = processPoisonDamage(coreState, 0, modEffects);
+
+      dispatch({ type: 'POISON_DAMAGE', damage: poisonResult.totalDamage });
+      currentEnemyHp -= poisonResult.totalDamage;
+
+      // 毒ダメージ吸収による回復（poison_lifesteal）- Core関数の結果を使用
+      if (poisonResult.healAmount > 0 && state.playerCurrentHp < state.playerMaxHp) {
+        dispatch({ type: 'HP_REGEN', amount: poisonResult.healAmount });
       }
       // 毒で倒れた場合
       if (currentEnemyHp <= 0) {
@@ -537,15 +584,12 @@ export const useBattle = (dungeonId: string) => {
       dispatch({ type: 'PLAYER_ATTACK', damage: playerDamage, isCritical });
     }
 
-    // ライフスティール処理
-    let totalLifesteal = modEffects.lifesteal;
-    // クリティカル時の追加ライフスティール
-    if (isCritical && modEffects.criticalLifesteal > 0) {
-      totalLifesteal += modEffects.criticalLifesteal;
-    }
-    if (totalLifesteal > 0 && playerDamage > 0 && state.playerCurrentHp < state.playerMaxHp) {
-      const lifestealAmount = Math.max(1, Math.floor(playerDamage * totalLifesteal / 100));
-      dispatch({ type: 'HP_REGEN', amount: lifestealAmount });
+    // ライフスティール処理 - Core関数使用
+    if (playerDamage > 0 && state.playerCurrentHp < state.playerMaxHp) {
+      const lifestealAmount = calculateLifesteal(playerDamage, isCritical, modEffects);
+      if (lifestealAmount > 0) {
+        dispatch({ type: 'HP_REGEN', amount: lifestealAmount });
+      }
     }
 
     const enemyHpAfterPlayerAttack = currentEnemyHp - playerDamage;
@@ -613,20 +657,22 @@ export const useBattle = (dungeonId: string) => {
     isProcessingRef.current = false;
   }, [state, getTotalStats, dungeonId, getCombinedModEffects, calculatePoisonDamageLocal, getEnemyForFloor, dropFilter]);
 
-  // 敵の攻撃実行（敵ゲージ100%時に呼ばれる）
+  // 敵の攻撃実行（敵ゲージ100%時に呼ばれる）- Core関数使用
   const executeEnemyAttack = useCallback(() => {
     if (state.phase !== 'fighting' || !state.enemy) return;
 
     const stats = getTotalStats();
     const modEffects = getCombinedModEffects();
 
-    // 敵が毒状態時の追加ダメージ軽減
-    let totalDamageReduction = modEffects.damageReductionPct;
-    if (state.enemyPoison.length > 0) {
-      totalDamageReduction += modEffects.poisonDamageReduction;
-    }
+    // Core関数で敵のダメージを計算（毒状態時の軽減も含む）
+    const isEnemyPoisoned = state.enemyPoison.length > 0;
+    const enemyDamage = calculateEnemyDamage(
+      state.enemy.atk,
+      stats.def,
+      modEffects,
+      isEnemyPoisoned
+    );
 
-    const enemyDamage = calculateDamage(state.enemy.atk, stats.def, totalDamageReduction);
     dispatch({ type: 'ENEMY_ATTACK', damage: enemyDamage });
 
     const playerHpAfterEnemyAttack = state.playerCurrentHp - enemyDamage;
@@ -719,11 +765,14 @@ export const useBattle = (dungeonId: string) => {
 
     regenTimerRef.current = setInterval(() => {
       const modEffects = getCombinedModEffects();
-      const flatRegen = modEffects.hpRegen;
-      const pctRegen = Math.floor(state.playerMaxHp * modEffects.hpRegenPct / 100);
-      const totalRegen = flatRegen + pctRegen;
-      if (totalRegen > 0 && state.playerCurrentHp < state.playerMaxHp) {
-        dispatch({ type: 'HP_REGEN', amount: totalRegen });
+      // Core関数でHP回復量を計算
+      const regenAmount = calculateHpRegen(
+        state.playerCurrentHp,
+        state.playerMaxHp,
+        modEffects
+      );
+      if (regenAmount > 0) {
+        dispatch({ type: 'HP_REGEN', amount: regenAmount });
       }
     }, 1000);
 
