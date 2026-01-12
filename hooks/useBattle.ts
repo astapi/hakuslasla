@@ -1,11 +1,18 @@
-import { useReducer, useCallback, useEffect, useRef, useState } from 'react';
+import { useReducer, useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState, DropFilterSettings, DEFAULT_DROP_FILTER } from '@/types';
 import { getDungeon } from '@/data/dungeons';
 import { getRandomEnemy, getEnemy } from '@/data/enemies';
 import { tryUniqueDrop, rollDropCount, rollDropItems, ModEffects } from '@/data/items';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-import { calculateDamage } from '@/core';
+import {
+  calculateDamage,
+  CombinedModEffects,
+  combineMods,
+  getAttackSpeedFromMods,
+  getPoisonDamageFromMods,
+  DEFAULT_BATTLE_CONFIG,
+} from '@/core';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 
 // 毒ダメージ計算（攻撃ダメージの50%）
@@ -333,25 +340,6 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
   }
 };
 
-// 拡張されたMOD効果の型
-interface CombinedModEffects {
-  hpRegen: number;
-  hpRegenPct: number;
-  poisonChance: number;
-  poisonDamagePct: number;
-  poisonDamageMorePct: number[];
-  poisonMaxStacks: number;
-  poisonDamageReduction: number;
-  noDirectDamage: boolean;
-  criticalChance: number;
-  criticalDamage: number;
-  criticalLifesteal: number;
-  damageReductionPct: number;
-  lifesteal: number;
-  attackSpeedPct: number;        // 攻撃速度 increased%
-  attackSpeedMorePct: number[];  // 攻撃速度 more%
-}
-
 // ドロップフィルタリング関数
 const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] => {
   return items.filter((item) => {
@@ -394,65 +382,16 @@ export const useBattle = (dungeonId: string) => {
     loadFilter();
   }, []);
 
-  // 装備品+パッシブから戦闘時MOD効果を取得（ATK/DEFはgetTotalStats()で反映済み）
-  const getCombinedModEffects = useCallback((): CombinedModEffects => {
-    const combined: CombinedModEffects = {
-      hpRegen: 0,
-      hpRegenPct: 0,
-      poisonChance: 0,
-      poisonDamagePct: 0,
-      poisonDamageMorePct: [],
-      poisonMaxStacks: 0,
-      poisonDamageReduction: 0,
-      noDirectDamage: false,
-      criticalChance: 0,
-      criticalDamage: 0,
-      criticalLifesteal: 0,
-      damageReductionPct: 0,
-      lifesteal: 0,
-      attackSpeedPct: 0,
-      attackSpeedMorePct: [],
-    };
-
-    // 装備MODからの効果
-    Object.values(equipment).forEach((item) => {
-      if (item && item.mods) {
-        for (const mod of item.mods) {
-          switch (mod.type) {
-            case 'hp_regen': combined.hpRegen += mod.value; break;
-            case 'hp_regen_pct': combined.hpRegenPct += mod.value; break;
-            case 'poison_chance': combined.poisonChance += mod.value; break;
-            case 'critical_chance': combined.criticalChance += mod.value; break;
-            case 'critical_damage': combined.criticalDamage += mod.value; break;
-            case 'damage_reduction_pct': combined.damageReductionPct += mod.value; break;
-            case 'lifesteal': combined.lifesteal += mod.value; break;
-            case 'attack_speed_pct': combined.attackSpeedPct += mod.value; break;
-            case 'attack_speed_more_pct': combined.attackSpeedMorePct.push(mod.value); break;
-          }
-        }
-      }
-    });
-
-    // パッシブツリーからの効果を加算
+  // 装備品+パッシブから戦闘時MOD効果を取得（coreロジック使用）
+  const modEffects = useMemo((): CombinedModEffects => {
     const passiveEffects = calculatePassiveEffects(unlockedSkills);
-    combined.hpRegen += passiveEffects.hp_regen;
-    combined.hpRegenPct += passiveEffects.hp_regen_pct;
-    combined.poisonChance += passiveEffects.poison_chance;
-    combined.poisonDamagePct += passiveEffects.poison_damage_pct;
-    combined.poisonDamageMorePct.push(...passiveEffects.poison_damage_more_pct);
-    combined.poisonMaxStacks += passiveEffects.poison_max_stacks;
-    combined.poisonDamageReduction += passiveEffects.poison_damage_reduction;
-    combined.noDirectDamage = passiveEffects.no_direct_damage;
-    combined.criticalChance += passiveEffects.critical_chance;
-    combined.criticalDamage += passiveEffects.critical_damage;
-    combined.criticalLifesteal += passiveEffects.critical_lifesteal;
-    combined.damageReductionPct += passiveEffects.damage_reduction_pct;
-    combined.lifesteal += passiveEffects.lifesteal;
-    combined.attackSpeedPct += passiveEffects.attack_speed_pct;
-    combined.attackSpeedMorePct.push(...passiveEffects.attack_speed_more_pct);
-
-    return combined;
+    return combineMods(Object.values(equipment), passiveEffects);
   }, [equipment, unlockedSkills]);
+
+  // 後方互換性のためのラッパー（将来的に直接modEffectsを使用するよう移行）
+  const getCombinedModEffects = useCallback((): CombinedModEffects => {
+    return modEffects;
+  }, [modEffects]);
 
   const [state, dispatch] = useReducer(
     battleReducer,
@@ -502,14 +441,9 @@ export const useBattle = (dungeonId: string) => {
     dispatch({ type: 'START_BATTLE', enemy: createBattleEnemy(enemy) });
   }, [getEnemyForFloor]);
 
-  // 毒ダメージを計算（increased%とmore%を適用）
-  const calculatePoisonDamage = useCallback((baseDamage: number, modEffects: CombinedModEffects): number => {
-    // PoE式: base × (1 + increased%) × more1 × more2 × ...
-    let damage = baseDamage * (1 + modEffects.poisonDamagePct / 100);
-    for (const more of modEffects.poisonDamageMorePct) {
-      damage *= (1 + more / 100);
-    }
-    return Math.floor(damage);
+  // 毒ダメージを計算（coreロジック使用）
+  const calculatePoisonDamageLocal = useCallback((baseDamage: number, mods: CombinedModEffects): number => {
+    return getPoisonDamageFromMods(baseDamage, mods);
   }, []);
 
   // プレイヤーの攻撃実行（ゲージ100%時に呼ばれる）
@@ -612,7 +546,7 @@ export const useBattle = (dungeonId: string) => {
     const maxPoisonStacks = BASE_POISON_MAX_STACKS + modEffects.poisonMaxStacks;
     if (state.enemyPoison.length < maxPoisonStacks && modEffects.poisonChance > 0 && Math.random() * 100 < modEffects.poisonChance) {
       const rawPoisonDamage = Math.max(1, Math.floor(baseDamage * POISON_DAMAGE_RATIO));
-      const poisonDamage = calculatePoisonDamage(rawPoisonDamage, modEffects);
+      const poisonDamage = calculatePoisonDamageLocal(rawPoisonDamage, modEffects);
       dispatch({ type: 'APPLY_POISON', damagePerTurn: poisonDamage, turns: POISON_DURATION });
     }
 
@@ -669,7 +603,7 @@ export const useBattle = (dungeonId: string) => {
 
     // 敵の攻撃はゲージ制で独立して実行されるため削除
     isProcessingRef.current = false;
-  }, [state, getTotalStats, dungeonId, getCombinedModEffects, calculatePoisonDamage, getEnemyForFloor, dropFilter]);
+  }, [state, getTotalStats, dungeonId, getCombinedModEffects, calculatePoisonDamageLocal, getEnemyForFloor, dropFilter]);
 
   // 敵の攻撃実行（敵ゲージ100%時に呼ばれる）
   const executeEnemyAttack = useCallback(() => {
@@ -695,17 +629,10 @@ export const useBattle = (dungeonId: string) => {
     }
   }, [state, getTotalStats, getCombinedModEffects]);
 
-  // プレイヤーの攻撃速度を計算（PoE式）
+  // プレイヤーの攻撃速度を計算（coreロジック使用）
   const getPlayerAttackSpeed = useCallback((): number => {
-    const baseAS = 1.0;
-    const modEffects = getCombinedModEffects();
-    // PoE式: base × (1 + increased%) × more1 × more2 × ...
-    let finalAS = baseAS * (1 + modEffects.attackSpeedPct / 100);
-    for (const more of modEffects.attackSpeedMorePct) {
-      finalAS *= (1 + more / 100);
-    }
-    return finalAS;
-  }, [getCombinedModEffects]);
+    return getAttackSpeedFromMods(modEffects);
+  }, [modEffects]);
 
   // ゲージ制ゲームループ（33msごとに更新 = 約30fps）
   const TICK_INTERVAL = 33;

@@ -20,11 +20,13 @@ export {
   createDefaultPlayerConfig,
   PASSIVE_ROUTES,
   PASSIVE_PRESETS,
+  LEVEL_BASED_PRESETS,
+  getLevelBasedPreset,
 } from './player';
 
-export type { PassivePresetKey } from './player';
+export type { PassivePresetKey, PassivePreset } from './player';
 
-// 戦闘関連
+// 戦闘関連（ターン制）
 export {
   applyPercentageScaling,
   calculateFinalStats,
@@ -35,7 +37,52 @@ export {
   estimateWinChance,
 } from './battle';
 
-// シミュレーション関連
+// MOD効果関連
+export {
+  createEmptyModEffects,
+  combineMods,
+  calculateAttackSpeed,
+  getAttackSpeedFromMods,
+  calculatePoisonDamage,
+  getPoisonDamageFromMods,
+} from './modEffects';
+
+export type {
+  ItemModData,
+  EquipmentItemData,
+  PassiveEffectsData,
+} from './modEffects';
+
+// 戦闘効果関連
+export {
+  executePlayerAttack,
+  tryApplyPoison,
+  processPoisonDamage,
+  calculateHpRegen,
+  createHpRegenEvent,
+  calculateLifesteal,
+  createLifestealEvent,
+  calculateEnemyDamage,
+  createEnemyAttackEvent,
+} from './combatEffects';
+
+export type {
+  PlayerAttackResult,
+  PoisonApplyResult,
+  PoisonDamageResult,
+} from './combatEffects';
+
+// ゲージ制戦闘関連
+export {
+  createGaugeBattleState,
+  createGaugeBattleStateWithHp,
+  runGaugeBattle,
+  runGaugeDungeon,
+  ticksToSeconds,
+  formatBattleTime,
+} from './gaugeBattle';
+
+// シミュレーション関連（ターン制）
 export {
   createRng,
   pickRandom,
@@ -47,3 +94,34 @@ export {
 } from './simulation';
 
 export type { BalanceTestConfig, BalanceTestResult } from './simulation';
+
+// シミュレーション関連（ゲージ制）
+export {
+  runGaugeSimulation,
+  calculateGaugeSimulationStats,
+  runGaugeBalanceTest,
+  generateGaugeSimulationReport,
+  generateGaugeBalanceReport,
+} from './simulation';
+
+export type {
+  GaugeSimulationConfig,
+  GaugeSimulationStats,
+  GaugeSimulationResult,
+  GaugeBalanceTestConfig,
+  GaugeBalanceTestResult,
+} from './simulation';
+
+// 装備セット（シミュレーション用）
+export {
+  DUNGEON_EQUIPMENT_SETS,
+  getDungeonEquipmentSet,
+  getEquipmentSetForLevel,
+  extractModsFromEquipmentSet,
+} from './equipmentSets';
+
+export type {
+  EquipmentSet,
+  DungeonEquipmentSets,
+  EquipmentSetType,
+} from './equipmentSets';
