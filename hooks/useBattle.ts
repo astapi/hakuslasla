@@ -464,6 +464,14 @@ export const useBattle = (dungeonId: string) => {
       const totalPoisonDamage = state.enemyPoison.reduce((sum, p) => sum + p.damagePerTurn, 0);
       dispatch({ type: 'POISON_DAMAGE', damage: totalPoisonDamage });
       currentEnemyHp -= totalPoisonDamage;
+
+      // 毒ダメージ吸収による回復（poison_lifesteal）
+      if (modEffects.poisonLifesteal > 0 && state.playerCurrentHp < state.playerMaxHp) {
+        const poisonHealAmount = Math.floor(totalPoisonDamage * modEffects.poisonLifesteal / 100);
+        if (poisonHealAmount > 0) {
+          dispatch({ type: 'HP_REGEN', amount: poisonHealAmount });
+        }
+      }
       // 毒で倒れた場合
       if (currentEnemyHp <= 0) {
         // ドロップアイテム収集

@@ -17,7 +17,7 @@
     {"id": "poison_5", "name": "毒の知識 II", "description": "毒付与率 +3%", "effect": { "poison_chance": 3 }, "requiredNodes": [["poison_3", "poison_4"]], "position": { "x": 0, "y": -3 }},
     {"id": "poison_6", "name": "体力強化 II", "description": "HP +25", "effect": { "hp": 25 }, "requiredNodes": ["poison_5"], "position": { "x": 0, "y": -4 }},
     {"id": "poison_7", "name": "防御強化 II", "description": "DEF +4", "effect": { "def": 4 }, "requiredNodes": ["poison_6"], "position": { "x": 0, "y": -5 }},
-    {"id": "poison_key1", "name": "猛毒使い", "description": "毒付与率 +10%, 毒ダメージ +20%", "effect": { "poison_chance": 10, "poison_damage_pct": 20 }, "requiredNodes": ["poison_7"], "position": { "x": 0, "y": -6 }},
+    {"id": "poison_key1", "name": "猛毒使い", "description": "毒付与率 +10%, 毒ダメージ +20%, 毒ダメージ吸収 +30%", "effect": { "poison_chance": 10, "poison_damage_pct": 20, "poison_lifesteal": 30 }, "requiredNodes": ["poison_7"], "position": { "x": 0, "y": -6 }},
     {"id": "poison_8", "name": "毒の知識 III", "description": "毒付与率 +5%", "effect": { "poison_chance": 5 }, "requiredNodes": ["poison_key1"], "position": { "x": 0, "y": -7 }},
     {"id": "poison_9", "name": "毒ダメージ強化 I", "description": "毒ダメージ +15%", "effect": { "poison_damage_pct": 15 }, "requiredNodes": ["poison_8"], "position": { "x": -1, "y": -7.5 }},
     {"id": "poison_10", "name": "毒耐性", "description": "敵が毒状態時、被ダメージ -3%", "effect": { "poison_damage_reduction": 3 }, "requiredNodes": ["poison_8"], "position": { "x": 1, "y": -7.5 }},

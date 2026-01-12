@@ -42,4 +42,25 @@ export const skillRepository = {
       characterId
     );
   },
+
+  /**
+   * プリセットのスキルを一括適用（デバッグ用）
+   * 既存のスキルをクリアしてから適用
+   */
+  async applyPreset(characterId: number, nodeIds: string[]): Promise<void> {
+    const db = await getDatabase();
+    // 既存スキルをクリア
+    await db.runAsync(
+      'DELETE FROM character_skills WHERE character_id = ?',
+      characterId
+    );
+    // 新しいスキルを一括追加
+    for (const nodeId of nodeIds) {
+      await db.runAsync(
+        'INSERT INTO character_skills (character_id, skill_id) VALUES (?, ?)',
+        characterId,
+        nodeId
+      );
+    }
+  },
 };

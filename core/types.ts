@@ -206,6 +206,7 @@ export interface CombinedModEffects {
   poisonDamageMorePct: number[];  // more%（配列）
   poisonMaxStacks: number;   // スタック上限追加
   poisonDamageReduction: number;  // 敵毒時の被ダメ軽減%
+  poisonLifesteal: number;   // 毒ダメージ吸収%（毒ダメージの一定割合を回復）
   noDirectDamage: boolean;   // 通常ダメージ無効（キーストーン）
 
   // クリティカル
@@ -334,7 +335,7 @@ export interface BattleConfig {
  * デフォルト戦闘設定
  */
 export const DEFAULT_BATTLE_CONFIG: BattleConfig = {
-  poisonDamageRatio: 0.5,
+  poisonDamageRatio: 1.2,
   poisonDuration: 5,
   basePoisonMaxStacks: 1,
   baseCriticalMultiplier: 1.5,

@@ -146,6 +146,7 @@ export function tryApplyPoison(
  */
 export interface PoisonDamageResult {
   totalDamage: number;
+  healAmount: number;
   updatedStacks: PoisonStack[];
   events: BattleEvent[];
 }
@@ -154,14 +155,16 @@ export interface PoisonDamageResult {
  * 毒ダメージを処理
  * @param state 現在の戦闘状態
  * @param tick 現在のティック
+ * @param mods MOD効果（毒ダメージ吸収用）
  * @returns 処理結果
  */
 export function processPoisonDamage(
   state: GaugeBattleState,
-  tick: number
+  tick: number,
+  mods: CombinedModEffects
 ): PoisonDamageResult {
   if (state.enemyPoisonStacks.length === 0) {
-    return { totalDamage: 0, updatedStacks: [], events: [] };
+    return { totalDamage: 0, healAmount: 0, updatedStacks: [], events: [] };
   }
 
   const events: BattleEvent[] = [];
@@ -171,6 +174,11 @@ export function processPoisonDamage(
     (sum, p) => sum + p.damagePerTick,
     0
   );
+
+  // 毒ダメージ吸収による回復量計算
+  const healAmount = mods.poisonLifesteal > 0
+    ? Math.floor(totalDamage * mods.poisonLifesteal / 100)
+    : 0;
 
   // 各スタックの残りティックを減らし、0以下になったものを除去
   const updatedStacks = state.enemyPoisonStacks
@@ -187,6 +195,7 @@ export function processPoisonDamage(
       data: {
         damage: totalDamage,
         remainingStacks: updatedStacks.length,
+        healAmount,
       },
     });
   }
@@ -200,7 +209,7 @@ export function processPoisonDamage(
     });
   }
 
-  return { totalDamage, updatedStacks, events };
+  return { totalDamage, healAmount, updatedStacks, events };
 }
 
 // ========================================

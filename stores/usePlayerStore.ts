@@ -14,6 +14,7 @@ import {
   calculateLevelUp,
   calculateFinalStats,
 } from '@/core';
+import { EquipmentSet } from '@/core/equipmentSets';
 
 // 初期装備
 const initialEquipment: Equipment = {
@@ -66,6 +67,12 @@ interface PlayerActions {
   refresh: () => Promise<void>;
   // クリア
   clear: () => void;
+  // デバッグ: パッシブプリセットを適用
+  applyPassivePreset: (nodeIds: string[]) => Promise<void>;
+  // デバッグ: レベルとSPを設定
+  setDebugLevel: (level: number) => Promise<void>;
+  // デバッグ: 装備プリセットを適用
+  applyEquipmentPreset: (equipmentSet: EquipmentSet) => Promise<void>;
 }
 
 const initialState: PlayerState = {
@@ -359,5 +366,112 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
 
   clear: () => {
     set(initialState);
+  },
+
+  // デバッグ: パッシブプリセットを適用（既存スキルをクリアして適用）
+  applyPassivePreset: async (nodeIds: string[]) => {
+    const state = get();
+    if (!state.characterId) return;
+
+    // DBにプリセットを適用
+    await skillRepository.applyPreset(state.characterId, nodeIds);
+
+    // パッシブ効果を計算してステータスを更新
+    const passiveEffects = calculatePassiveEffects(nodeIds);
+    const baseStats = {
+      maxHp: INITIAL_STATS.maxHp + (state.level - 1) * 5, // レベルアップ分
+      atk: INITIAL_STATS.atk,
+      def: INITIAL_STATS.def,
+    };
+
+    // フラット加算
+    const newMaxHp = baseStats.maxHp + passiveEffects.hp;
+    const newAtk = baseStats.atk + passiveEffects.atk;
+    const newDef = baseStats.def + passiveEffects.def;
+
+    // DBに保存
+    await characterRepository.updateStats(state.characterId, {
+      maxHp: newMaxHp,
+      atk: newAtk,
+      def: newDef,
+    });
+
+    set({
+      unlockedSkills: nodeIds,
+      maxHp: newMaxHp,
+      atk: newAtk,
+      def: newDef,
+    });
+  },
+
+  // デバッグ: レベルとSPを設定
+  setDebugLevel: async (level: number) => {
+    const state = get();
+    if (!state.characterId) return;
+
+    const skillPoints = level - 1; // レベル-1のSP
+    const maxHp = INITIAL_STATS.maxHp + (level - 1) * 5;
+    const atk = INITIAL_STATS.atk;
+    const def = INITIAL_STATS.def;
+
+    await characterRepository.updateStats(state.characterId, {
+      level,
+      exp: 0,
+      skillPoints,
+      maxHp,
+      atk,
+      def,
+    });
+
+    // スキルもクリア
+    await skillRepository.clear(state.characterId);
+
+    set({
+      level,
+      exp: 0,
+      expToNextLevel: getExpToNextLevel(level),
+      skillPoints,
+      maxHp,
+      atk,
+      def,
+      unlockedSkills: [],
+    });
+  },
+
+  // デバッグ: 装備プリセットを適用（既存装備をクリアして適用）
+  applyEquipmentPreset: async (equipmentSet: EquipmentSet) => {
+    const state = get();
+    if (!state.characterId) return;
+
+    // 既存装備をすべて解除
+    for (const slot of ['weapon', 'armor', 'gloves', 'boots', 'accessory'] as const) {
+      await equipmentRepository.unequip(state.characterId, slot);
+    }
+
+    // インベントリをクリア（装備プリセット用）
+    await inventoryRepository.clear(state.characterId);
+
+    // 新しい装備を適用
+    const newEquipment: Equipment = {
+      weapon: null,
+      armor: null,
+      gloves: null,
+      boots: null,
+      accessory: null,
+    };
+
+    const slots: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
+    for (const slot of slots) {
+      const item = equipmentSet[slot];
+      if (item) {
+        await equipmentRepository.equip(state.characterId, slot, item);
+        newEquipment[slot] = item;
+      }
+    }
+
+    set({
+      equipment: newEquipment,
+      inventory: [],
+    });
   },
 }));
