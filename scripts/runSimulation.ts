@@ -99,7 +99,10 @@ const dungeonInfo: Record<string, {
 };
 
 // レベルとパッシブレベルのマッピング
-function getPassiveLevel(level: number): 5 | 10 | 15 | 20 | 25 | 30 | 35 {
+function getPassiveLevel(level: number): 5 | 10 | 15 | 20 | 25 | 30 | 35 | 40 | 45 | 50 {
+  if (level >= 50) return 50;
+  if (level >= 45) return 45;
+  if (level >= 40) return 40;
   if (level >= 35) return 35;
   if (level >= 30) return 30;
   if (level >= 25) return 25;
@@ -199,7 +202,7 @@ const EQUIPMENT_SET_TYPES: EquipmentSetType[] = ['ATK', 'DEF', 'CRIT', 'POISON']
 const PASSIVE_PRESET_TYPES = ['POISON', 'CRIT', 'REGEN', 'VAMP', 'GUARD', 'SPEED'] as const;
 
 // バランスパッシブプリセットタイプ
-const BALANCE_PASSIVE_TYPES = ['REGEN_GUARD', 'SPEED_REGEN', 'VAMP_SPEED', 'VAMP_REGEN', 'SPEED_GUARD'] as const;
+const BALANCE_PASSIVE_TYPES = ['REGEN_GUARD', 'SPEED_REGEN', 'VAMP_SPEED', 'VAMP_REGEN', 'SPEED_GUARD', 'POISON_GUARD', 'POISON_REGEN'] as const;
 
 // ========================================
 // 1. 各ダンジョン × 装備セット × パッシブプリセット
@@ -336,6 +339,8 @@ for (const dungeonId of dungeonOrder) {
 
   const recommendedCombinations: { equipType: EquipmentSetType; passiveType: string }[] = [
     { equipType: 'POISON', passiveType: 'POISON' },
+    { equipType: 'POISON', passiveType: 'POISON_GUARD' },
+    { equipType: 'POISON', passiveType: 'POISON_REGEN' },
     { equipType: 'CRIT', passiveType: 'CRIT' },
     { equipType: 'DEF', passiveType: 'GUARD' },
     { equipType: 'DEF', passiveType: 'REGEN' },
@@ -593,7 +598,7 @@ for (const dungeonId of highLevelTestDungeons) {
   console.log('パッシブLV | 速度特化   | 吸血特化   | 回復特化   | 防御特化');
   console.log('-----------|------------|------------|------------|----------');
 
-  for (const passiveLv of [5, 10, 15, 20, 25, 30, 35] as const) {
+  for (const passiveLv of [5, 10, 15, 20, 25, 30, 35, 40, 45, 50] as const) {
     const results: string[] = [];
 
     for (const passiveType of ['SPEED', 'VAMP', 'REGEN', 'GUARD'] as const) {

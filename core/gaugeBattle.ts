@@ -222,9 +222,19 @@ export function runGaugeBattle(
     if (state.player.gauge >= 100) {
       // 毒ダメージ処理（プレイヤー行動時）
       if (state.enemyPoisonStacks.length > 0) {
-        const poisonResult = processPoisonDamage(state, state.elapsedTicks);
+        const poisonResult = processPoisonDamage(state, state.elapsedTicks, playerMods);
+
+        // 毒ダメージ吸収による回復（最大HPを超えない）
+        const newPlayerHp = poisonResult.healAmount > 0
+          ? Math.min(state.player.maxHp, state.player.currentHp + poisonResult.healAmount)
+          : state.player.currentHp;
+
         state = {
           ...state,
+          player: {
+            ...state.player,
+            currentHp: newPlayerHp,
+          },
           enemy: {
             ...state.enemy,
             currentHp: Math.max(0, state.enemy.currentHp - poisonResult.totalDamage),

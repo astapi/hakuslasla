@@ -46,6 +46,10 @@ export default function HomeScreen() {
     router.replace('/');
   };
 
+  const handleOpenDebug = () => {
+    router.push('/debug' as '/home');
+  };
+
   if (!isLoaded) {
     return (
       <View style={styles.container}>
@@ -66,9 +70,14 @@ export default function HomeScreen() {
           <View style={styles.characterInfo}>
             <View style={styles.characterHeader}>
               <Text style={styles.characterName}>{characterName}</Text>
-              <Pressable style={styles.changeButton} onPress={handleChangeCharacter}>
-                <Text style={styles.changeButtonText}>変更</Text>
-              </Pressable>
+              <View style={styles.headerButtons}>
+                <Pressable style={styles.debugButton} onPress={handleOpenDebug}>
+                  <MaterialCommunityIcons name="flask" size={16} color="#FFA500" />
+                </Pressable>
+                <Pressable style={styles.changeButton} onPress={handleChangeCharacter}>
+                  <Text style={styles.changeButtonText}>変更</Text>
+                </Pressable>
+              </View>
             </View>
             <StatusPanel key={`status-${focusKey}`} />
           </View>
@@ -172,6 +181,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  debugButton: {
+    padding: 6,
+    backgroundColor: 'rgba(255, 165, 0, 0.15)',
+    borderRadius: 6,
   },
   changeButton: {
     paddingHorizontal: 12,
