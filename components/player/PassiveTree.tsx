@@ -52,8 +52,8 @@ const getIconType = (effect: PassiveEffect): IconType => {
   if (effect.damage_reduction_pct) {
     return 'guard';
   }
-  // ライフスティール系
-  if (effect.lifesteal) {
+  // HIT時HP回復系
+  if (effect.hp_on_hit) {
     return 'vamp';
   }
   // ATK系

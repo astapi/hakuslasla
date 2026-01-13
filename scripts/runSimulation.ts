@@ -17,7 +17,6 @@ import {
   applyPercentageScaling,
   LEVEL_BASED_PRESETS,
   DUNGEON_EQUIPMENT_SETS,
-  extractModsFromEquipmentSet,
   EquipmentSet,
   EquipmentSetType,
   combineMods,
@@ -177,10 +176,9 @@ function createPlayerStatsWithEquipmentAndPassives(
   // Step 2: PoE式で%効果を適用
   const finalStats = calculateFinalStatsWithPassives(flatStats, passiveEffects);
 
-  // Step 3: 装備MODを抽出してパッシブ効果と合成
-  // combineMods はPassiveEffectsData形式を期待するので、calculatePassiveEffectsの戻り値を直接渡す
-  const equipmentMods = extractModsFromEquipmentSet(equipmentSet);
-  const combinedModEffects = combineMods(equipmentMods, passiveEffects);
+  // Step 3: 装備アイテムとパッシブ効果を合成
+  const equipmentItems = [equipmentSet.weapon, equipmentSet.armor, equipmentSet.gloves, equipmentSet.boots, equipmentSet.accessory];
+  const combinedModEffects = combineMods(equipmentItems, passiveEffects);
 
   return { stats: finalStats, modEffects: combinedModEffects };
 }
