@@ -1,13 +1,12 @@
-import { useEffect, useState, useRef } from 'react';
-import { View, Text, StyleSheet, Modal, Pressable, ImageBackground, ImageSourcePropType } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { CharacterDisplay } from '@/components/battle/CharacterDisplay';
 import { BattleLog } from '@/components/battle/BattleLog';
-import { EquipmentSlots } from '@/components/player/EquipmentSlots';
+import { CharacterDisplay } from '@/components/battle/CharacterDisplay';
 import { Button } from '@/components/common/Button';
+import { getDungeon } from '@/data/dungeons';
 import { useBattle } from '@/hooks/useBattle';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-import { getDungeon } from '@/data/dungeons';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect, useRef, useState } from 'react';
+import { ImageBackground, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
 // ダンジョン背景画像マッピング
 const backgroundImages: Record<string, ImageSourcePropType> = {
@@ -115,42 +114,42 @@ export default function BattleScreen() {
         )}
       </View>
 
-      <View style={styles.charactersContainer}>
-        <CharacterDisplay
-          name="プレイヤー"
-          currentHp={state.playerCurrentHp}
-          maxHp={state.playerMaxHp}
-          level={level}
-          isPlayer
-          isAttacking={playerAttacking}
-          actionGauge={state.playerGauge}
-        />
-        {state.enemy && (
+      {/* 上部2/3のスペーサー */}
+      <View style={styles.battleFieldSpacer} />
+
+      {/* 下部1/3: キャラクターエリア（バトルフィールド） */}
+      <View style={styles.battleField}>
+        <View style={styles.charactersContainer}>
           <CharacterDisplay
-            name={state.enemy.name}
-            currentHp={state.enemy.currentHp}
-            maxHp={state.enemy.maxHp}
-            imageId={state.enemy.image}
-            isAttacking={enemyAttacking}
-            actionGauge={state.enemyGauge}
+            name="プレイヤー"
+            currentHp={state.playerCurrentHp}
+            maxHp={state.playerMaxHp}
+            level={level}
+            isPlayer
+            isAttacking={playerAttacking}
+            actionGauge={state.playerGauge}
           />
+          {state.enemy && (
+            <CharacterDisplay
+              name={state.enemy.name}
+              currentHp={state.enemy.currentHp}
+              maxHp={state.enemy.maxHp}
+              imageId={state.enemy.image}
+              isAttacking={enemyAttacking}
+              actionGauge={state.enemyGauge}
+            />
+          )}
+        </View>
+        {state.phase === 'victory' && (
+          <Text style={styles.victoryText}>勝利！</Text>
+        )}
+        {state.phase === 'defeat' && (
+          <Text style={styles.defeatText}>敗北...</Text>
+        )}
+        {state.phase === 'cleared' && (
+          <Text style={styles.clearedText}>ダンジョン踏破！</Text>
         )}
       </View>
-
-      {state.phase === 'fighting' && (
-        <Text style={styles.fightingText}>
-          {isPaused ? '一時停止中' : '戦闘中...'}
-        </Text>
-      )}
-      {state.phase === 'victory' && (
-        <Text style={styles.victoryText}>勝利！</Text>
-      )}
-      {state.phase === 'defeat' && (
-        <Text style={styles.defeatText}>敗北...</Text>
-      )}
-      {state.phase === 'cleared' && (
-        <Text style={styles.clearedText}>ダンジョン踏破！</Text>
-      )}
     </>
   );
 
@@ -180,11 +179,9 @@ export default function BattleScreen() {
         <BattleLog logs={state.battleLog} />
       </View>
 
-      {/* 下部: 装備 */}
-      <View style={styles.infoArea}>
-        <EquipmentSlots />
-
-        {state.phase === 'fighting' && (
+      {/* 下部: アクションボタン */}
+      {state.phase === 'fighting' && (
+        <View style={styles.actionArea}>
           <View style={styles.actionButtons}>
             <View style={styles.buttonWrapper}>
               <Button
@@ -216,8 +213,8 @@ export default function BattleScreen() {
               </View>
             )}
           </View>
-        )}
-      </View>
+        </View>
+      )}
 
       {/* 撤退確認モーダル */}
       <Modal
@@ -260,31 +257,50 @@ const styles = StyleSheet.create({
     backgroundColor: '#1a1a2e',
   },
   battleArea: {
+    height: 280,
     overflow: 'hidden',
   },
   battleAreaImage: {
     resizeMode: 'cover',
   },
   battleAreaOverlay: {
-    padding: 16,
-    backgroundColor: 'rgba(22, 33, 62, 0.7)',
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 8,
   },
   battleAreaFallback: {
     backgroundColor: '#16213e',
   },
   floorInfo: {
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   floorText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   autoRunText: {
     fontSize: 12,
     color: '#4CAF50',
     marginTop: 4,
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  battleFieldSpacer: {
+    flex: 1,
+  },
+  battleField: {
+    paddingBottom: 6,
+    backgroundColor: 'rgba(22, 33, 62, 0.6)',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingHorizontal: 8,
+    paddingTop: 8,
   },
   charactersContainer: {
     flexDirection: 'row',
@@ -294,44 +310,44 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontSize: 14,
-    marginTop: 12,
+    marginTop: 8,
   },
   victoryText: {
     textAlign: 'center',
     color: '#4CAF50',
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 12,
+    marginTop: 8,
   },
   defeatText: {
     textAlign: 'center',
     color: '#F44336',
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 12,
+    marginTop: 8,
   },
   clearedText: {
     textAlign: 'center',
     color: '#FFD700',
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 12,
+    marginTop: 8,
   },
-  logArea: {
-    flex: 1,
-    padding: 16,
-    maxHeight: 200,
-  },
-  infoArea: {
-    padding: 16,
+  actionArea: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
   },
   actionButtons: {
     flexDirection: 'row',
     gap: 12,
-    marginTop: 16,
   },
   buttonWrapper: {
     flex: 1,
+  },
+  logArea: {
+    flex: 1,
+    padding: 16,
+    maxHeight: 300,
   },
   // モーダル
   modalOverlay: {
