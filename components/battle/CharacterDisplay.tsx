@@ -1,15 +1,15 @@
+import { getMonsterImage, playerImages } from '@/data/images';
 import { useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ImageSourcePropType } from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import Animated, {
-  useSharedValue,
+  Easing,
   useAnimatedStyle,
+  useSharedValue,
   withSequence,
   withTiming,
-  Easing,
 } from 'react-native-reanimated';
-import { HPBar } from './HPBar';
 import { ActionGauge } from './ActionGauge';
-import { playerImages, getMonsterImage } from '@/data/images';
+import { HPBar } from './HPBar';
 
 interface CharacterDisplayProps {
   name: string;
@@ -81,13 +81,15 @@ export const CharacterDisplay = ({
         )}
       </Animated.View>
       <View style={styles.infoContainer}>
+        <ActionGauge value={actionGauge} color={isPlayer ? '#FFD700' : '#FF6B6B'} />
         <View style={styles.nameRow}>
           <Text style={styles.name}>{name}</Text>
           {level !== undefined && <Text style={styles.level}>Lv.{level}</Text>}
         </View>
         <HPBar current={currentHp} max={maxHp} color={isPlayer ? '#4CAF50' : '#F44336'} />
-        <ActionGauge value={actionGauge} color={isPlayer ? '#FFD700' : '#FF6B6B'} />
+        
       </View>
+      
     </View>
   );
 };
@@ -110,12 +112,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   avatar: {
-    width: 64,
-    height: 64,
+    width: 68,
+    height: 68,
   },
   avatarPlaceholder: {
-    width: 64,
-    height: 64,
+    width: 68,
+    height: 68,
     borderRadius: 32,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
