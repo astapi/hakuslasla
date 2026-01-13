@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { View, Text, StyleSheet, Modal, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Modal, Pressable, ImageBackground, ImageSourcePropType } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { CharacterDisplay } from '@/components/battle/CharacterDisplay';
 import { BattleLog } from '@/components/battle/BattleLog';
@@ -8,6 +8,24 @@ import { Button } from '@/components/common/Button';
 import { useBattle } from '@/hooks/useBattle';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { getDungeon } from '@/data/dungeons';
+
+// ダンジョン背景画像マッピング
+const backgroundImages: Record<string, ImageSourcePropType> = {
+  grassland: require('@/assets/images/backgrounds/grassland.jpg'),
+  cave: require('@/assets/images/backgrounds/cave.jpg'),
+  ruins: require('@/assets/images/backgrounds/ruins.jpg'),
+  goblin_fort: require('@/assets/images/backgrounds/goblin_fort.jpg'),
+  demon_castle: require('@/assets/images/backgrounds/demon_castle.jpg'),
+  ice_cave: require('@/assets/images/backgrounds/ice_cave.jpg'),
+  volcano: require('@/assets/images/backgrounds/volcano.jpg'),
+  dark_forest: require('@/assets/images/backgrounds/dark_forest.jpg'),
+  sky_tower: require('@/assets/images/backgrounds/sky_tower.jpg'),
+  hell_gate: require('@/assets/images/backgrounds/hell_gate.jpg'),
+  dragon_nest: require('@/assets/images/backgrounds/dragon_nest.jpg'),
+  sacred_temple: require('@/assets/images/backgrounds/sacred_temple.jpg'),
+  chaos_realm: require('@/assets/images/backgrounds/chaos_realm.jpg'),
+  final_land: require('@/assets/images/backgrounds/final_land.jpg'),
+};
 
 export default function BattleScreen() {
   const { dungeonId } = useLocalSearchParams<{ dungeonId: string }>();
@@ -82,57 +100,80 @@ export default function BattleScreen() {
     router.replace('/home');
   };
 
+  const backgroundImage = dungeonId ? backgroundImages[dungeonId] : undefined;
+
+  // バトルエリアの内容
+  const battleAreaContent = (
+    <>
+      <View style={styles.floorInfo}>
+        <Text style={styles.floorText}>
+          {dungeon?.name} - {state.currentFloor}/{state.maxFloor}階
+          {state.runCount > 1 && ` (${state.runCount}周目)`}
+        </Text>
+        {isAutoRunning && (
+          <Text style={styles.autoRunText}>自動周回中</Text>
+        )}
+      </View>
+
+      <View style={styles.charactersContainer}>
+        <CharacterDisplay
+          name="プレイヤー"
+          currentHp={state.playerCurrentHp}
+          maxHp={state.playerMaxHp}
+          level={level}
+          isPlayer
+          isAttacking={playerAttacking}
+          actionGauge={state.playerGauge}
+        />
+        {state.enemy && (
+          <CharacterDisplay
+            name={state.enemy.name}
+            currentHp={state.enemy.currentHp}
+            maxHp={state.enemy.maxHp}
+            imageId={state.enemy.image}
+            isAttacking={enemyAttacking}
+            actionGauge={state.enemyGauge}
+          />
+        )}
+      </View>
+
+      {state.phase === 'fighting' && (
+        <Text style={styles.fightingText}>
+          {isPaused ? '一時停止中' : '戦闘中...'}
+        </Text>
+      )}
+      {state.phase === 'victory' && (
+        <Text style={styles.victoryText}>勝利！</Text>
+      )}
+      {state.phase === 'defeat' && (
+        <Text style={styles.defeatText}>敗北...</Text>
+      )}
+      {state.phase === 'cleared' && (
+        <Text style={styles.clearedText}>ダンジョン踏破！</Text>
+      )}
+    </>
+  );
+
   return (
     <View style={styles.container}>
       {/* 上部: バトルエリア */}
-      <View style={styles.battleArea}>
-        <View style={styles.floorInfo}>
-          <Text style={styles.floorText}>
-            {dungeon?.name} - {state.currentFloor}/{state.maxFloor}階
-            {state.runCount > 1 && ` (${state.runCount}周目)`}
-          </Text>
-          {isAutoRunning && (
-            <Text style={styles.autoRunText}>自動周回中</Text>
-          )}
+      {backgroundImage ? (
+        <ImageBackground
+          source={backgroundImage}
+          style={styles.battleArea}
+          imageStyle={styles.battleAreaImage}
+        >
+          <View style={styles.battleAreaOverlay}>
+            {battleAreaContent}
+          </View>
+        </ImageBackground>
+      ) : (
+        <View style={[styles.battleArea, styles.battleAreaFallback]}>
+          <View style={styles.battleAreaOverlay}>
+            {battleAreaContent}
+          </View>
         </View>
-
-        <View style={styles.charactersContainer}>
-          <CharacterDisplay
-            name="プレイヤー"
-            currentHp={state.playerCurrentHp}
-            maxHp={state.playerMaxHp}
-            level={level}
-            isPlayer
-            isAttacking={playerAttacking}
-            actionGauge={state.playerGauge}
-          />
-          {state.enemy && (
-            <CharacterDisplay
-              name={state.enemy.name}
-              currentHp={state.enemy.currentHp}
-              maxHp={state.enemy.maxHp}
-              imageId={state.enemy.image}
-              isAttacking={enemyAttacking}
-              actionGauge={state.enemyGauge}
-            />
-          )}
-        </View>
-
-        {state.phase === 'fighting' && (
-          <Text style={styles.fightingText}>
-            {isPaused ? '一時停止中' : '戦闘中...'}
-          </Text>
-        )}
-        {state.phase === 'victory' && (
-          <Text style={styles.victoryText}>勝利！</Text>
-        )}
-        {state.phase === 'defeat' && (
-          <Text style={styles.defeatText}>敗北...</Text>
-        )}
-        {state.phase === 'cleared' && (
-          <Text style={styles.clearedText}>ダンジョン踏破！</Text>
-        )}
-      </View>
+      )}
 
       {/* 中部: 戦闘ログ */}
       <View style={styles.logArea}>
@@ -219,7 +260,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#1a1a2e',
   },
   battleArea: {
+    overflow: 'hidden',
+  },
+  battleAreaImage: {
+    resizeMode: 'cover',
+  },
+  battleAreaOverlay: {
     padding: 16,
+    backgroundColor: 'rgba(22, 33, 62, 0.7)',
+  },
+  battleAreaFallback: {
     backgroundColor: '#16213e',
   },
   floorInfo: {
