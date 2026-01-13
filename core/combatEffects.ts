@@ -253,15 +253,15 @@ export function createHpRegenEvent(
 }
 
 // ========================================
-// ライフスティール
+// HIT時HP回復
 // ========================================
 
 /**
- * ライフスティール量を計算
- * @param damage 与えたダメージ
+ * HIT時HP回復量を計算（固定値）
+ * @param damage 与えたダメージ（0以上でないと回復しない）
  * @param isCritical クリティカルかどうか
  * @param mods MOD効果
- * @returns 吸収量
+ * @returns 回復量
  */
 export function calculateLifesteal(
   damage: number,
@@ -270,16 +270,15 @@ export function calculateLifesteal(
 ): number {
   if (damage <= 0) return 0;
 
-  let totalLifesteal = mods.lifesteal;
+  // HIT時HP回復（固定値）
+  let totalRecovery = mods.hpOnHit;
 
-  // クリティカル時の追加ライフスティール
-  if (isCritical && mods.criticalLifesteal > 0) {
-    totalLifesteal += mods.criticalLifesteal;
+  // クリティカル時の追加HP回復（固定値）
+  if (isCritical && mods.hpOnCrit > 0) {
+    totalRecovery += mods.hpOnCrit;
   }
 
-  if (totalLifesteal <= 0) return 0;
-
-  return Math.max(1, Math.floor(damage * totalLifesteal / 100));
+  return totalRecovery;
 }
 
 /**

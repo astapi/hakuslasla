@@ -173,11 +173,11 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   no_direct_damage: boolean;
   critical_chance: number;
   critical_damage: number;
-  critical_lifesteal: number;
+  hp_on_crit: number;
   hp_regen: number;
   hp_regen_pct: number;
   damage_reduction_pct: number;
-  lifesteal: number;
+  hp_on_hit: number;
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
 } {
@@ -204,12 +204,12 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   // クリティカル系
   let critical_chance = 0;
   let critical_damage = 0;
-  let critical_lifesteal = 0;
+  let hp_on_crit = 0;
   // 回復・防御系
   let hp_regen = 0;
   let hp_regen_pct = 0;
   let damage_reduction_pct = 0;
-  let lifesteal = 0;
+  let hp_on_hit = 0;
   // 攻撃速度系
   let attack_speed_pct = 0;
   const attack_speed_more_pct: number[] = [];
@@ -240,12 +240,12 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       // クリティカル系
       critical_chance += node.effect.critical_chance || 0;
       critical_damage += node.effect.critical_damage || 0;
-      critical_lifesteal += node.effect.critical_lifesteal || 0;
+      hp_on_crit += node.effect.hp_on_crit || 0;
       // 回復・防御系
       hp_regen += node.effect.hp_regen || 0;
       hp_regen_pct += node.effect.hp_regen_pct || 0;
       damage_reduction_pct += node.effect.damage_reduction_pct || 0;
-      lifesteal += node.effect.lifesteal || 0;
+      hp_on_hit += node.effect.hp_on_hit || 0;
       // 攻撃速度系
       attack_speed_pct += node.effect.attack_speed_pct || 0;
       if (node.effect.attack_speed_more_pct) attack_speed_more_pct.push(node.effect.attack_speed_more_pct);
@@ -258,9 +258,9 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     hp_more_pct, atk_more_pct, def_more_pct,
     poison_chance, poison_damage_pct, poison_damage_more_pct,
     poison_max_stacks, poison_damage_reduction, poison_lifesteal, no_direct_damage,
-    critical_chance, critical_damage, critical_lifesteal,
+    critical_chance, critical_damage, hp_on_crit,
     hp_regen, hp_regen_pct,
-    damage_reduction_pct, lifesteal,
+    damage_reduction_pct, hp_on_hit,
     attack_speed_pct, attack_speed_more_pct,
   };
 }

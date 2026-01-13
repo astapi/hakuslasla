@@ -111,14 +111,16 @@ const GRASSLAND_SETS: DungeonEquipmentSets = {
     },
     POISON: {
       name: '草原毒型',
-      weapon: createItem('grassland_sword', '草原の剣', 'weapon', 5, 0, []),
+      weapon: createItem('grassland_sword', '草原の剣', 'weapon', 5, 0, [
+        createMod('def_bonus', 2, 10),
+      ]),
       armor: createItem('light_leather', '軽量レザー', 'armor', 0, 4, [
         createMod('hp_regen', 1, 10),
       ]),
       gloves: createItem('leather_gloves', '革の手袋', 'gloves', 1, 1, []),
       boots: createItem('rabbit_boots', 'うさぎのブーツ', 'boots', 1, 3, []),
-      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 4, 0, [
-        createMod('poison_chance', 60, 10),
+      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 0, 2, [
+        createMod('poison_chance', 38, 10),
       ]),
     },
   },
@@ -175,15 +177,15 @@ const CAVE_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '洞窟毒型',
       weapon: createItem('cave_iron_sword', '洞窟の鉄剣', 'weapon', 8, 0, [
-        createMod('poison_chance', 10, 9),
+        createMod('def_bonus', 3, 9),
       ]),
       armor: createItem('bone_shield', '骨の盾', 'armor', 0, 6, [
-        createMod('hp_regen', 2, 9),
+        createMod('hp_regen', 3, 9),
       ]),
       gloves: createItem('leather_gloves', '革の手袋', 'gloves', 1, 1, []),
       boots: createItem('rabbit_boots', 'うさぎのブーツ', 'boots', 1, 3, []),
-      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 4, 0, [
-        createMod('poison_chance', 60, 9),
+      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 0, 3, [
+        createMod('poison_chance', 38, 9),
       ]),
     },
   },
@@ -244,17 +246,17 @@ const RUINS_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '遺跡毒型',
       weapon: createItem('ruins_magic_sword', '遺跡の魔剣', 'weapon', 12, 0, [
-        createMod('poison_chance', 15, 8),
+        createMod('def_bonus', 4, 8),
       ]),
       armor: createItem('cursed_robe', '呪われたローブ', 'armor', 3, 8, [
-        createMod('hp_regen', 3, 8),
+        createMod('hp_regen', 5, 8),
       ]),
-      gloves: createItem('curse_bandage', '呪縛の包帯', 'gloves', 5, 4, [
-        createMod('poison_chance', 30, 8),
+      gloves: createItem('curse_bandage', '呪縛の包帯', 'gloves', 0, 6, [
+        createMod('hp_bonus', 20, 8),
       ]),
       boots: createItem('gargoyle_boots', 'ガーゴイルブーツ', 'boots', 2, 6, []),
-      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 4, 0, [
-        createMod('poison_chance', 60, 8),
+      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 0, 4, [
+        createMod('poison_chance', 38, 8),
       ]),
     },
   },
@@ -321,17 +323,19 @@ const GOBLIN_FORT_SETS: DungeonEquipmentSets = {
     POISON: {
       name: 'ゴブリン砦毒型',
       weapon: createItem('shaman_staff', 'シャーマンの杖', 'weapon', 10, 0, [
-        createMod('poison_chance', 40, 7),
+        createMod('def_bonus', 5, 7), createMod('hp_regen', 5, 7),
       ]),
       armor: createItem('goblin_mail', 'ゴブリンメイル', 'armor', 0, 10, [
-        createMod('hp_regen', 5, 7), createMod('hp_regen_pct', 1, 7),
+        createMod('hp_regen', 8, 7), createMod('hp_bonus', 30, 7),
       ]),
-      gloves: createItem('curse_bandage', '呪縛の包帯', 'gloves', 5, 4, [
-        createMod('poison_chance', 30, 7),
+      gloves: createItem('curse_bandage', '呪縛の包帯', 'gloves', 0, 8, [
+        createMod('def_bonus', 4, 7), createMod('hp_regen', 4, 7),
       ]),
-      boots: createItem('raider_boots', '略奪者のブーツ', 'boots', 2, 7, []),
-      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 4, 0, [
-        createMod('poison_chance', 60, 7),
+      boots: createItem('raider_boots', '略奪者のブーツ', 'boots', 2, 7, [
+        createMod('hp_bonus', 20, 7),
+      ]),
+      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 0, 5, [
+        createMod('poison_chance', 38, 7), createMod('hp_regen', 5, 7),
       ]),
     },
   },
@@ -398,17 +402,19 @@ const DEMON_CASTLE_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '魔王城毒型',
       weapon: createItem('demon_blade', '魔剣デモンブレイド', 'weapon', 18, 0, [
-        createMod('poison_chance', 25, 6),
+        createMod('def_bonus', 8, 6), createMod('hp_regen', 8, 6),
       ]),
       armor: createItem('dark_plate', '闇騎士の鎧', 'armor', 0, 14, [
-        createMod('hp_regen', 8, 6), createMod('hp_regen_pct', 2, 6),
+        createMod('hp_regen', 12, 6), createMod('hp_bonus', 50, 6),
       ]),
-      gloves: createItem('curse_bandage', '呪縛の包帯', 'gloves', 5, 4, [
-        createMod('poison_chance', 30, 6),
+      gloves: createItem('curse_bandage', '呪縛の包帯', 'gloves', 0, 10, [
+        createMod('def_bonus', 6, 6), createMod('hp_regen', 6, 6),
       ]),
-      boots: createItem('inferno_boots', '業火のブーツ', 'boots', 3, 10, []),
-      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 4, 0, [
-        createMod('poison_chance', 60, 6),
+      boots: createItem('inferno_boots', '業火のブーツ', 'boots', 3, 10, [
+        createMod('hp_bonus', 30, 6),
+      ]),
+      accessory: createItem('poison_needle_ring', '毒針の指輪', 'accessory', 0, 8, [
+        createMod('poison_chance', 38, 6), createMod('hp_regen', 8, 6),
       ]),
     },
   },
@@ -475,17 +481,19 @@ const ICE_CAVE_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '氷結洞窟毒型',
       weapon: createItem('frozen_staff', '凍結の杖', 'weapon', 20, 0, [
-        createMod('poison_chance', 50, 5),
+        createMod('def_bonus', 10, 5), createMod('hp_regen', 10, 5),
       ]),
       armor: createItem('ice_armor', 'アイスアーマー', 'armor', 0, 18, [
-        createMod('hp_regen', 10, 5), createMod('hp_regen_pct', 2, 5),
+        createMod('hp_regen', 15, 5), createMod('hp_bonus', 60, 5),
       ]),
-      gloves: createItem('curse_bandage', '呪縛の包帯', 'gloves', 5, 4, [
-        createMod('poison_chance', 30, 5),
+      gloves: createItem('curse_bandage', '呪縛の包帯', 'gloves', 0, 12, [
+        createMod('def_bonus', 8, 5), createMod('hp_regen', 8, 5),
       ]),
-      boots: createItem('blizzard_boots', 'ブリザードブーツ', 'boots', 4, 12, []),
-      accessory: createItem('ice_crystal_ring', '氷晶の指輪', 'accessory', 8, 8, [
-        createMod('poison_chance', 20, 5),
+      boots: createItem('blizzard_boots', 'ブリザードブーツ', 'boots', 4, 12, [
+        createMod('hp_bonus', 40, 5),
+      ]),
+      accessory: createItem('ice_crystal_ring', '氷晶の指輪', 'accessory', 0, 10, [
+        createMod('poison_chance', 38, 5), createMod('hp_regen', 10, 5),
       ]),
     },
   },
@@ -522,7 +530,7 @@ const VOLCANO_SETS: DungeonEquipmentSets = {
     DEF: {
       name: '火山DEF型',
       weapon: createItem('magma_blade', 'マグマブレイド', 'weapon', 28, 0, [
-        createMod('lifesteal', 5, 4),
+        createMod('hp_on_hit', 5, 4),
       ]),
       armor: createItem('volcano_armor', '火山の鎧', 'armor', 0, 24, [
         createMod('hp_regen', 15, 4), createMod('def_bonus', 12, 4), createMod('damage_reduction_pct', 5, 4),
@@ -556,17 +564,19 @@ const VOLCANO_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '火山毒型',
       weapon: createItem('magma_blade', 'マグマブレイド', 'weapon', 28, 0, [
-        createMod('poison_chance', 35, 4),
+        createMod('def_bonus', 12, 4), createMod('hp_regen', 12, 4),
       ]),
       armor: createItem('volcano_armor', '火山の鎧', 'armor', 0, 24, [
-        createMod('hp_regen', 15, 4), createMod('hp_regen_pct', 3, 4),
+        createMod('hp_regen', 20, 4), createMod('hp_bonus', 80, 4), createMod('hp_regen_pct', 2, 4),
       ]),
-      gloves: createItem('flame_gauntlets', '炎の篭手', 'gloves', 7, 10, [
-        createMod('poison_chance', 20, 4),
+      gloves: createItem('flame_gauntlets', '炎の篭手', 'gloves', 0, 14, [
+        createMod('def_bonus', 10, 4), createMod('hp_regen', 10, 4),
       ]),
-      boots: createItem('ember_boots', '灼熱のブーツ', 'boots', 5, 15, []),
-      accessory: createItem('fire_ruby_ring', '炎のルビー指輪', 'accessory', 10, 10, [
-        createMod('poison_chance', 25, 4),
+      boots: createItem('ember_boots', '灼熱のブーツ', 'boots', 5, 15, [
+        createMod('hp_bonus', 50, 4),
+      ]),
+      accessory: createItem('fire_ruby_ring', '炎のルビー指輪', 'accessory', 0, 12, [
+        createMod('poison_chance', 38, 4), createMod('hp_regen', 12, 4),
       ]),
     },
   },
@@ -603,7 +613,7 @@ const DARK_FOREST_SETS: DungeonEquipmentSets = {
     DEF: {
       name: '深淵の森DEF型',
       weapon: createItem('shadow_blade', 'シャドウブレイド', 'weapon', 38, 0, [
-        createMod('lifesteal', 8, 3),
+        createMod('hp_on_hit', 8, 3),
       ]),
       armor: createItem('dark_bark_armor', '暗黒樹皮の鎧', 'armor', 0, 32, [
         createMod('hp_regen', 25, 3), createMod('def_bonus', 18, 3), createMod('damage_reduction_pct', 8, 3),
@@ -637,17 +647,19 @@ const DARK_FOREST_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '深淵の森毒型',
       weapon: createItem('cursed_branch', '呪いの枝', 'weapon', 35, 0, [
-        createMod('poison_chance', 70, 3),
+        createMod('def_bonus', 15, 3), createMod('hp_regen', 15, 3),
       ]),
       armor: createItem('dark_bark_armor', '暗黒樹皮の鎧', 'armor', 0, 32, [
-        createMod('hp_regen', 25, 3), createMod('hp_regen_pct', 4, 3),
+        createMod('hp_regen', 25, 3), createMod('hp_bonus', 100, 3), createMod('hp_regen_pct', 3, 3),
       ]),
-      gloves: createItem('nightmare_gauntlets', '悪夢の篭手', 'gloves', 10, 14, [
-        createMod('poison_chance', 25, 3),
+      gloves: createItem('nightmare_gauntlets', '悪夢の篭手', 'gloves', 0, 18, [
+        createMod('def_bonus', 12, 3), createMod('hp_regen', 12, 3),
       ]),
-      boots: createItem('forest_walker_boots', '森歩きのブーツ', 'boots', 7, 20, []),
-      accessory: createItem('cursed_eye_ring', '呪眼の指輪', 'accessory', 14, 14, [
-        createMod('poison_chance', 30, 3),
+      boots: createItem('forest_walker_boots', '森歩きのブーツ', 'boots', 7, 20, [
+        createMod('hp_bonus', 60, 3),
+      ]),
+      accessory: createItem('cursed_eye_ring', '呪眼の指輪', 'accessory', 0, 16, [
+        createMod('poison_chance', 38, 3), createMod('hp_regen', 15, 3),
       ]),
     },
   },
@@ -684,7 +696,7 @@ const SKY_TOWER_SETS: DungeonEquipmentSets = {
     DEF: {
       name: '天空の塔DEF型',
       weapon: createItem('sky_blade', '天空剣', 'weapon', 50, 0, [
-        createMod('lifesteal', 10, 2),
+        createMod('hp_on_hit', 10, 2),
       ]),
       armor: createItem('cloud_armor', '雲海の鎧', 'armor', 0, 42, [
         createMod('hp_regen', 35, 2), createMod('def_bonus', 25, 2), createMod('damage_reduction_pct', 10, 2),
@@ -718,17 +730,19 @@ const SKY_TOWER_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '天空の塔毒型',
       weapon: createItem('sky_blade', '天空剣', 'weapon', 50, 0, [
-        createMod('poison_chance', 45, 2),
+        createMod('def_bonus', 20, 2), createMod('hp_regen', 20, 2),
       ]),
       armor: createItem('cloud_armor', '雲海の鎧', 'armor', 0, 42, [
-        createMod('hp_regen', 35, 2), createMod('hp_regen_pct', 5, 2),
+        createMod('hp_regen', 35, 2), createMod('hp_bonus', 120, 2), createMod('hp_regen_pct', 4, 2),
       ]),
-      gloves: createItem('storm_gauntlets', '嵐の篭手', 'gloves', 14, 18, [
-        createMod('poison_chance', 35, 2),
+      gloves: createItem('storm_gauntlets', '嵐の篭手', 'gloves', 0, 24, [
+        createMod('def_bonus', 16, 2), createMod('hp_regen', 16, 2),
       ]),
-      boots: createItem('wind_walker_boots', '風渡りのブーツ', 'boots', 10, 26, []),
-      accessory: createItem('sky_sapphire_ring', '蒼空のサファイア指輪', 'accessory', 18, 18, [
-        createMod('poison_chance', 40, 2),
+      boots: createItem('wind_walker_boots', '風渡りのブーツ', 'boots', 10, 26, [
+        createMod('hp_bonus', 80, 2),
+      ]),
+      accessory: createItem('sky_sapphire_ring', '蒼空のサファイア指輪', 'accessory', 0, 20, [
+        createMod('poison_chance', 38, 2), createMod('hp_regen', 20, 2),
       ]),
     },
   },
@@ -765,7 +779,7 @@ const HELL_GATE_SETS: DungeonEquipmentSets = {
     DEF: {
       name: '地獄の門DEF型',
       weapon: createItem('hellfire_blade', '獄炎剣', 'weapon', 68, 0, [
-        createMod('lifesteal', 12, 1),
+        createMod('hp_on_hit', 12, 1),
       ]),
       armor: createItem('infernal_armor', 'インファーナルアーマー', 'armor', 10, 65, [
         createMod('def_bonus', 40, 1), createMod('hp_regen', 50, 1),
@@ -799,17 +813,19 @@ const HELL_GATE_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '地獄の門毒型',
       weapon: createItem('hellfire_blade', '獄炎剣', 'weapon', 68, 0, [
-        createMod('poison_chance', 55, 1),
+        createMod('def_bonus', 25, 1), createMod('hp_regen', 25, 1),
       ]),
       armor: createItem('infernal_plate', '煉獄の鎧', 'armor', 0, 56, [
-        createMod('hp_regen', 50, 1), createMod('hp_regen_pct', 6, 1),
+        createMod('hp_regen', 50, 1), createMod('hp_bonus', 150, 1), createMod('hp_regen_pct', 5, 1),
       ]),
-      gloves: createItem('demon_gauntlets', '魔人の篭手', 'gloves', 20, 24, [
-        createMod('poison_chance', 45, 1),
+      gloves: createItem('demon_gauntlets', '魔人の篭手', 'gloves', 0, 30, [
+        createMod('def_bonus', 20, 1), createMod('hp_regen', 20, 1),
       ]),
-      boots: createItem('hellwalker_boots', '地獄歩きのブーツ', 'boots', 14, 35, []),
-      accessory: createItem('infernal_ruby_ring', '煉獄のルビー指輪', 'accessory', 25, 25, [
-        createMod('poison_chance', 50, 1),
+      boots: createItem('hellwalker_boots', '地獄歩きのブーツ', 'boots', 14, 35, [
+        createMod('hp_bonus', 100, 1),
+      ]),
+      accessory: createItem('infernal_ruby_ring', '煉獄のルビー指輪', 'accessory', 0, 28, [
+        createMod('poison_chance', 38, 1), createMod('hp_regen', 25, 1),
       ]),
     },
   },
@@ -846,7 +862,7 @@ const DRAGON_NEST_SETS: DungeonEquipmentSets = {
     DEF: {
       name: '竜の巣穴DEF型',
       weapon: createItem('dragon_slayer', '竜殺しの剣', 'weapon', 90, 0, [
-        createMod('lifesteal', 15, 1),
+        createMod('hp_on_hit', 15, 1),
       ]),
       armor: createItem('ice_dragon_scale', '氷竜の鱗', 'armor', 10, 90, [
         createMod('def_bonus', 60, 1), createMod('hp_regen', 60, 1),
@@ -880,17 +896,19 @@ const DRAGON_NEST_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '竜の巣穴毒型',
       weapon: createItem('dragon_slayer', '竜殺しの剣', 'weapon', 90, 0, [
-        createMod('poison_chance', 65, 1),
+        createMod('def_bonus', 35, 1), createMod('hp_regen', 35, 1),
       ]),
       armor: createItem('dragon_scale_armor', '竜鱗の鎧', 'armor', 0, 75, [
-        createMod('hp_regen', 60, 1), createMod('hp_regen_pct', 8, 1),
+        createMod('hp_regen', 60, 1), createMod('hp_bonus', 200, 1), createMod('hp_regen_pct', 6, 1),
       ]),
-      gloves: createItem('dragon_claw_gauntlets', '竜爪の篭手', 'gloves', 28, 32, [
-        createMod('poison_chance', 55, 1),
+      gloves: createItem('dragon_claw_gauntlets', '竜爪の篭手', 'gloves', 0, 40, [
+        createMod('def_bonus', 28, 1), createMod('hp_regen', 28, 1),
       ]),
-      boots: createItem('dragon_hide_boots', '竜皮のブーツ', 'boots', 18, 48, []),
-      accessory: createItem('dragon_eye_ring', '竜眼の指輪', 'accessory', 35, 35, [
-        createMod('poison_chance', 60, 1),
+      boots: createItem('dragon_hide_boots', '竜皮のブーツ', 'boots', 18, 48, [
+        createMod('hp_bonus', 130, 1),
+      ]),
+      accessory: createItem('dragon_eye_ring', '竜眼の指輪', 'accessory', 0, 38, [
+        createMod('poison_chance', 38, 1), createMod('hp_regen', 35, 1),
       ]),
     },
   },
@@ -927,7 +945,7 @@ const SACRED_TEMPLE_SETS: DungeonEquipmentSets = {
     DEF: {
       name: '神域の神殿DEF型',
       weapon: createItem('holy_blade', '聖剣', 'weapon', 120, 0, [
-        createMod('lifesteal', 18, 1),
+        createMod('hp_on_hit', 18, 1),
       ]),
       armor: createItem('holy_dragon_scale', '聖竜の鱗', 'armor', 20, 120, [
         createMod('def_bonus', 80, 1), createMod('hp_regen', 80, 1),
@@ -961,17 +979,19 @@ const SACRED_TEMPLE_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '神域の神殿毒型',
       weapon: createItem('holy_blade', '聖剣', 'weapon', 120, 0, [
-        createMod('poison_chance', 75, 1),
+        createMod('def_bonus', 45, 1), createMod('hp_regen', 45, 1),
       ]),
       armor: createItem('divine_armor', '神聖なる鎧', 'armor', 0, 100, [
-        createMod('hp_regen', 80, 1), createMod('hp_regen_pct', 10, 1),
+        createMod('hp_regen', 80, 1), createMod('hp_bonus', 250, 1), createMod('hp_regen_pct', 8, 1),
       ]),
-      gloves: createItem('seraph_gauntlets', '熾天使の篭手', 'gloves', 38, 44, [
-        createMod('poison_chance', 65, 1),
+      gloves: createItem('seraph_gauntlets', '熾天使の篭手', 'gloves', 0, 55, [
+        createMod('def_bonus', 35, 1), createMod('hp_regen', 35, 1),
       ]),
-      boots: createItem('divine_boots', '神のブーツ', 'boots', 25, 65, []),
-      accessory: createItem('holy_diamond_ring', '聖なるダイヤ指輪', 'accessory', 48, 48, [
-        createMod('poison_chance', 70, 1),
+      boots: createItem('divine_boots', '神のブーツ', 'boots', 25, 65, [
+        createMod('hp_bonus', 160, 1),
+      ]),
+      accessory: createItem('holy_diamond_ring', '聖なるダイヤ指輪', 'accessory', 0, 50, [
+        createMod('poison_chance', 38, 1), createMod('hp_regen', 45, 1),
       ]),
     },
   },
@@ -1008,7 +1028,7 @@ const CHAOS_REALM_SETS: DungeonEquipmentSets = {
     DEF: {
       name: '混沌の領域DEF型',
       weapon: createItem('chaos_blade', '混沌の剣', 'weapon', 160, 0, [
-        createMod('lifesteal', 20, 1),
+        createMod('hp_on_hit', 20, 1),
       ]),
       armor: createItem('chaos_scale', 'カオスドラゴンの鱗', 'armor', 30, 150, [
         createMod('def_bonus', 100, 1), createMod('hp_regen', 100, 1),
@@ -1042,17 +1062,19 @@ const CHAOS_REALM_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '混沌の領域毒型',
       weapon: createItem('chaos_blade', '混沌の剣', 'weapon', 160, 0, [
-        createMod('poison_chance', 85, 1),
+        createMod('def_bonus', 60, 1), createMod('hp_regen', 60, 1),
       ]),
       armor: createItem('void_armor', '虚無の鎧', 'armor', 0, 135, [
-        createMod('hp_regen', 100, 1), createMod('hp_regen_pct', 12, 1),
+        createMod('hp_regen', 100, 1), createMod('hp_bonus', 320, 1), createMod('hp_regen_pct', 10, 1),
       ]),
-      gloves: createItem('chaos_gauntlets', '混沌の篭手', 'gloves', 52, 60, [
-        createMod('poison_chance', 75, 1),
+      gloves: createItem('chaos_gauntlets', '混沌の篭手', 'gloves', 0, 75, [
+        createMod('def_bonus', 48, 1), createMod('hp_regen', 48, 1),
       ]),
-      boots: createItem('void_boots', '虚無のブーツ', 'boots', 35, 88, []),
-      accessory: createItem('chaos_crystal_ring', '混沌水晶の指輪', 'accessory', 65, 65, [
-        createMod('poison_chance', 80, 1),
+      boots: createItem('void_boots', '虚無のブーツ', 'boots', 35, 88, [
+        createMod('hp_bonus', 200, 1),
+      ]),
+      accessory: createItem('chaos_crystal_ring', '混沌水晶の指輪', 'accessory', 0, 68, [
+        createMod('poison_chance', 38, 1), createMod('hp_regen', 60, 1),
       ]),
     },
   },
@@ -1089,7 +1111,7 @@ const FINAL_LAND_SETS: DungeonEquipmentSets = {
     DEF: {
       name: '終焉の地DEF型',
       weapon: createItem('apocalypse_blade', '終焉の剣', 'weapon', 220, 0, [
-        createMod('lifesteal', 25, 1),
+        createMod('hp_on_hit', 25, 1),
       ]),
       armor: createItem('end_armor', '終末の鎧', 'armor', 0, 180, [
         createMod('hp_regen', 120, 1), createMod('def_bonus', 120, 1), createMod('damage_reduction_pct', 25, 1),
@@ -1123,17 +1145,19 @@ const FINAL_LAND_SETS: DungeonEquipmentSets = {
     POISON: {
       name: '終焉の地毒型',
       weapon: createItem('apocalypse_blade', '終焉の剣', 'weapon', 220, 0, [
-        createMod('poison_chance', 95, 1),
+        createMod('def_bonus', 80, 1), createMod('hp_regen', 80, 1),
       ]),
       armor: createItem('end_armor', '終末の鎧', 'armor', 0, 180, [
-        createMod('hp_regen', 130, 1), createMod('hp_regen_pct', 15, 1),
+        createMod('hp_regen', 130, 1), createMod('hp_bonus', 400, 1), createMod('hp_regen_pct', 12, 1),
       ]),
-      gloves: createItem('titan_gauntlets', '泰坦の篭手', 'gloves', 70, 80, [
-        createMod('poison_chance', 85, 1),
+      gloves: createItem('titan_gauntlets', '泰坦の篭手', 'gloves', 0, 100, [
+        createMod('def_bonus', 65, 1), createMod('hp_regen', 65, 1),
       ]),
-      boots: createItem('end_walker_boots', '終末を歩む者のブーツ', 'boots', 48, 120, []),
-      accessory: createItem('oblivion_ring', '忘却の指輪', 'accessory', 88, 88, [
-        createMod('poison_chance', 90, 1),
+      boots: createItem('end_walker_boots', '終末を歩む者のブーツ', 'boots', 48, 120, [
+        createMod('hp_bonus', 280, 1),
+      ]),
+      accessory: createItem('oblivion_ring', '忘却の指輪', 'accessory', 0, 95, [
+        createMod('poison_chance', 38, 1), createMod('hp_regen', 80, 1),
       ]),
     },
   },

@@ -46,11 +46,11 @@ export interface PassiveEffectsData {
   no_direct_damage: boolean;
   critical_chance: number;
   critical_damage: number;
-  critical_lifesteal: number;
+  hp_on_crit: number;
   hp_regen: number;
   hp_regen_pct: number;
   damage_reduction_pct: number;
-  lifesteal: number;
+  hp_on_hit: number;
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
 }
@@ -75,9 +75,9 @@ export function createEmptyModEffects(): CombinedModEffects {
     noDirectDamage: false,
     criticalChance: 0,
     criticalDamage: 0,
-    criticalLifesteal: 0,
+    hpOnCrit: 0,
     damageReductionPct: 0,
-    lifesteal: 0,
+    hpOnHit: 0,
     attackSpeedPct: 0,
     attackSpeedMorePct: [],
   };
@@ -110,8 +110,8 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
     case 'damage_reduction_pct':
       effects.damageReductionPct += mod.value;
       break;
-    case 'lifesteal':
-      effects.lifesteal += mod.value;
+    case 'hp_on_hit':
+      effects.hpOnHit += mod.value;
       break;
     case 'attack_speed_pct':
       effects.attackSpeedPct += mod.value;
@@ -155,9 +155,9 @@ export function combineMods(
   combined.noDirectDamage = passiveEffects.no_direct_damage;
   combined.criticalChance += passiveEffects.critical_chance;
   combined.criticalDamage += passiveEffects.critical_damage;
-  combined.criticalLifesteal += passiveEffects.critical_lifesteal;
+  combined.hpOnCrit += passiveEffects.hp_on_crit;
   combined.damageReductionPct += passiveEffects.damage_reduction_pct;
-  combined.lifesteal += passiveEffects.lifesteal;
+  combined.hpOnHit += passiveEffects.hp_on_hit;
   combined.attackSpeedPct += passiveEffects.attack_speed_pct;
   combined.attackSpeedMorePct.push(...passiveEffects.attack_speed_more_pct);
 
