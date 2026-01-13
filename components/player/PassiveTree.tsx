@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useState, useMemo } from 'react';
+import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { getAllPassiveNodes, canUnlockNode } from '@/data/passiveTree';
 import { PassiveNode, PassiveEffect } from '@/types';
@@ -13,20 +13,47 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
+import Svg, {
+  Path,
+  Circle,
+  Defs,
+  RadialGradient,
+  Stop,
+  G,
+  LinearGradient,
+} from 'react-native-svg';
 
 // ノードのサイズ設定
-const NODE_SIZE_SMALL = 40;
-const NODE_SIZE_MEDIUM = 50;
-const NODE_SIZE_LARGE = 62;
+const NODE_SIZE_SMALL = 28;
+const NODE_SIZE_MEDIUM = 36;
+const NODE_SIZE_LARGE = 46;
+const NODE_SIZE_KEYSTONE = 56;
 const GRID_SIZE = 56;
 
 // ズーム設定
-const MIN_SCALE = 0.4;
-const MAX_SCALE = 2.0;
-const INITIAL_SCALE = 0.6;
+const MIN_SCALE = 0.3;
+const MAX_SCALE = 2.5;
+const INITIAL_SCALE = 0.55;
+
+// カラーテーマ（PoE風）
+const COLORS = {
+  background: '#0c0c14',
+  lineDefault: '#3d3d4a',
+  lineUnlocked: '#8b7355',
+  lineCanUnlock: '#6b5b45',
+  nodeDefault: '#1a1a24',
+  nodeUnlocked: '#2d4a2d',
+  nodeCanUnlock: '#3d3520',
+  borderDefault: '#4a4a5a',
+  borderUnlocked: '#7cb342',
+  borderCanUnlock: '#c9a227',
+  borderSelected: '#ffffff',
+  glowUnlocked: '#4CAF50',
+  glowCanUnlock: '#FFD700',
+};
 
 // アイコンタイプ
-type IconType = 'atk' | 'hp' | 'def' | 'poison' | 'crit' | 'regen' | 'guard' | 'vamp' | 'special' | 'legendary';
+type IconType = 'atk' | 'hp' | 'def' | 'poison' | 'crit' | 'regen' | 'guard' | 'vamp' | 'special' | 'legendary' | 'speed';
 
 // 仮アイコンテキスト
 const ICON_FALLBACK: Record<IconType, string> = {
@@ -40,6 +67,7 @@ const ICON_FALLBACK: Record<IconType, string> = {
   vamp: '🩸',
   special: '◆',
   legendary: '👑',
+  speed: '⚡',
 };
 
 // ノードのアイコンタイプを判定
@@ -47,6 +75,10 @@ const getIconType = (effect: PassiveEffect): IconType => {
   // 伝説ノード（全more%）
   if (effect.atk_more_pct && effect.hp_more_pct && effect.def_more_pct) {
     return 'legendary';
+  }
+  // 攻撃速度系
+  if (effect.attack_speed_pct || effect.attack_speed_more_pct) {
+    return 'speed';
   }
   // ダメージ軽減系
   if (effect.damage_reduction_pct) {
@@ -87,7 +119,12 @@ const getIconType = (effect: PassiveEffect): IconType => {
 // ノードの強さを判定
 const getNodeSize = (node: PassiveNode): number => {
   const effect = node.effect;
-  if (effect.atk_more_pct || effect.hp_more_pct || effect.def_more_pct) {
+  // キーストーン判定
+  if (node.id.includes('final') || node.id.includes('key') || effect.no_direct_damage) {
+    return NODE_SIZE_KEYSTONE;
+  }
+  if (effect.atk_more_pct || effect.hp_more_pct || effect.def_more_pct ||
+      effect.attack_speed_more_pct || effect.poison_damage_more_pct) {
     return NODE_SIZE_LARGE;
   }
   if (effect.atk_increased_pct || effect.hp_increased_pct || effect.def_increased_pct) {
@@ -101,6 +138,51 @@ const getNodeSize = (node: PassiveNode): number => {
     return NODE_SIZE_MEDIUM;
   }
   return NODE_SIZE_SMALL;
+};
+
+// 2点間のベジェ曲線パスを生成
+const generateBezierPath = (
+  startX: number,
+  startY: number,
+  endX: number,
+  endY: number
+): string => {
+  const dx = endX - startX;
+  const dy = endY - startY;
+
+  // 縦方向優先の場合
+  if (Math.abs(dy) > Math.abs(dx)) {
+    const controlY = startY + dy * 0.5;
+    return `M ${startX} ${startY} Q ${startX} ${controlY} ${(startX + endX) / 2} ${controlY} Q ${endX} ${controlY} ${endX} ${endY}`;
+  }
+
+  // 横方向優先の場合
+  const controlX = startX + dx * 0.5;
+  return `M ${startX} ${startY} Q ${controlX} ${startY} ${controlX} ${(startY + endY) / 2} Q ${controlX} ${endY} ${endX} ${endY}`;
+};
+
+// S字カーブのベジェ曲線パスを生成（PoE風）
+const generateSmoothPath = (
+  startX: number,
+  startY: number,
+  endX: number,
+  endY: number
+): string => {
+  const dx = endX - startX;
+  const dy = endY - startY;
+
+  // 直線に近い場合はシンプルなカーブ
+  if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+    return `M ${startX} ${startY} L ${endX} ${endY}`;
+  }
+
+  // S字カーブ用のコントロールポイント
+  const ctrl1X = startX + dx * 0.3;
+  const ctrl1Y = startY + dy * 0.1;
+  const ctrl2X = startX + dx * 0.7;
+  const ctrl2Y = startY + dy * 0.9;
+
+  return `M ${startX} ${startY} C ${ctrl1X} ${ctrl1Y} ${ctrl2X} ${ctrl2Y} ${endX} ${endY}`;
 };
 
 export const PassiveTree = () => {
@@ -121,28 +203,85 @@ export const PassiveTree = () => {
   };
 
   // 座標範囲を取得
-  const xPositions = nodes.map(n => n.position.x);
-  const minX = Math.min(...xPositions);
-  const maxX = Math.max(...xPositions);
-  const xRange = maxX - minX + 1;
+  const { minX, minY, xRange, yRange, contentWidth, contentHeight } = useMemo(() => {
+    const xPositions = nodes.map(n => n.position.x);
+    const yPositions = nodes.map(n => n.position.y);
+    const minX = Math.min(...xPositions);
+    const maxX = Math.max(...xPositions);
+    const minY = Math.min(...yPositions);
+    const maxY = Math.max(...yPositions);
+    const xRange = maxX - minX + 1;
+    const yRange = maxY - minY + 1;
+    const padding = GRID_SIZE * 2;
+    return {
+      minX,
+      minY,
+      xRange,
+      yRange,
+      contentWidth: xRange * GRID_SIZE + padding,
+      contentHeight: yRange * GRID_SIZE + padding,
+    };
+  }, [nodes]);
 
-  const yPositions = nodes.map(n => n.position.y);
-  const minY = Math.min(...yPositions);
-  const maxY = Math.max(...yPositions);
-  const yRange = maxY - minY + 1;
-
-  const getNodePosition = (node: PassiveNode) => {
+  const getNodeCenter = (node: PassiveNode) => {
     const xIndex = node.position.x - minX;
     const yIndex = node.position.y - minY;
-    const size = getNodeSize(node);
+    const padding = GRID_SIZE;
     return {
-      left: xIndex * GRID_SIZE + (GRID_SIZE - size) / 2,
-      top: yIndex * GRID_SIZE + (GRID_SIZE - size) / 2,
+      x: xIndex * GRID_SIZE + padding + GRID_SIZE / 2,
+      y: yIndex * GRID_SIZE + padding + GRID_SIZE / 2,
     };
   };
 
-  const contentWidth = xRange * GRID_SIZE;
-  const contentHeight = yRange * GRID_SIZE;
+  const getNodePosition = (node: PassiveNode) => {
+    const center = getNodeCenter(node);
+    const size = getNodeSize(node);
+    return {
+      left: center.x - size / 2,
+      top: center.y - size / 2,
+    };
+  };
+
+  // 接続線データを生成
+  const connections = useMemo(() => {
+    const result: Array<{
+      id: string;
+      path: string;
+      isUnlocked: boolean;
+      canUnlock: boolean;
+    }> = [];
+
+    nodes.forEach((node) => {
+      const nodeCenter = getNodeCenter(node);
+      node.requiredNodes.forEach((req, reqIndex) => {
+        const parentIds = Array.isArray(req) ? req : [req];
+        parentIds.forEach((parentId) => {
+          const parentNode = nodes.find(n => n.id === parentId);
+          if (!parentNode) return;
+
+          const parentCenter = getNodeCenter(parentNode);
+          const isUnlocked = unlockedSkills.includes(node.id) && unlockedSkills.includes(parentId);
+          const canUnlockThis = canUnlockNode(node.id, unlockedSkills) && skillPoints > 0;
+
+          const path = generateSmoothPath(
+            parentCenter.x,
+            parentCenter.y,
+            nodeCenter.x,
+            nodeCenter.y
+          );
+
+          result.push({
+            id: `${parentId}-${node.id}-${reqIndex}`,
+            path,
+            isUnlocked,
+            canUnlock: canUnlockThis && unlockedSkills.includes(parentId),
+          });
+        });
+      });
+    });
+
+    return result;
+  }, [nodes, unlockedSkills, skillPoints, minX, minY]);
 
   const handleNodePress = (node: PassiveNode) => {
     setSelectedNode(node);
@@ -228,44 +367,42 @@ export const PassiveTree = () => {
               animatedStyle,
             ]}
           >
-            {/* 接続線 */}
-            {nodes.map((node) => {
-              const nodePos = getNodePosition(node);
-              const nodeSize = getNodeSize(node);
-              return node.requiredNodes.map((req, reqIndex) => {
-                const parentIds = Array.isArray(req) ? req : [req];
-                return parentIds.map((parentId) => {
-                  const parentNode = nodes.find(n => n.id === parentId);
-                  if (!parentNode) return null;
-                  const parentPos = getNodePosition(parentNode);
-                  const parentSize = getNodeSize(parentNode);
-                  const isUnlocked = unlockedSkills.includes(node.id) && unlockedSkills.includes(parentId);
+            {/* SVG接続線 */}
+            <Svg
+              width={contentWidth}
+              height={contentHeight}
+              style={StyleSheet.absoluteFill}
+            >
+              <Defs>
+                {/* 接続線のグラデーション */}
+                <LinearGradient id="lineGradientUnlocked" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <Stop offset="0%" stopColor="#8b7355" stopOpacity="1" />
+                  <Stop offset="100%" stopColor="#a08060" stopOpacity="1" />
+                </LinearGradient>
+                <LinearGradient id="lineGradientCanUnlock" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <Stop offset="0%" stopColor="#6b5b45" stopOpacity="0.8" />
+                  <Stop offset="100%" stopColor="#8b7b55" stopOpacity="0.8" />
+                </LinearGradient>
+              </Defs>
 
-                  const startX = parentPos.left + parentSize / 2;
-                  const startY = parentPos.top + parentSize;
-                  const endX = nodePos.left + nodeSize / 2;
-                  const endY = nodePos.top;
-
-                  return (
-                    <View
-                      key={`line-${parentId}-${node.id}-${reqIndex}`}
-                      style={[
-                        styles.connectionLine,
-                        {
-                          left: Math.min(startX, endX),
-                          top: startY,
-                          width: Math.abs(endX - startX) + 2,
-                          height: endY - startY,
-                          borderLeftWidth: 2,
-                          borderBottomWidth: startX !== endX ? 2 : 0,
-                          borderColor: isUnlocked ? '#4CAF50' : 'rgba(255, 255, 255, 0.15)',
-                        },
-                      ]}
-                    />
-                  );
-                });
-              });
-            })}
+              {/* 接続線を描画 */}
+              {connections.map((conn) => (
+                <Path
+                  key={conn.id}
+                  d={conn.path}
+                  stroke={
+                    conn.isUnlocked
+                      ? "url(#lineGradientUnlocked)"
+                      : conn.canUnlock
+                        ? "url(#lineGradientCanUnlock)"
+                        : COLORS.lineDefault
+                  }
+                  strokeWidth={conn.isUnlocked ? 3 : 2}
+                  fill="none"
+                  strokeLinecap="round"
+                />
+              ))}
+            </Svg>
 
             {/* ノード */}
             {nodes.map((node) => {
@@ -274,40 +411,123 @@ export const PassiveTree = () => {
               const position = getNodePosition(node);
               const size = getNodeSize(node);
               const iconType = getIconType(node.effect);
-              const iconSize = size * 0.5;
+              const iconSize = size * 0.45;
+              const isKeystone = size === NODE_SIZE_KEYSTONE;
 
               return (
                 <Pressable
                   key={node.id}
                   style={({ pressed }) => [
-                    styles.nodeCircle,
+                    styles.nodeContainer,
                     {
                       left: position.left,
                       top: position.top,
                       width: size,
                       height: size,
-                      borderRadius: size / 2,
-                      borderWidth: isSelected(node) ? 3 : 2,
-                      borderColor: isSelected(node)
-                        ? '#fff'
-                        : isUnlocked
-                          ? '#4CAF50'
-                          : canUnlock
-                            ? '#FFD700'
-                            : 'rgba(255, 255, 255, 0.25)',
-                      backgroundColor: isUnlocked
-                        ? 'rgba(76, 175, 80, 0.5)'
-                        : canUnlock
-                          ? 'rgba(255, 215, 0, 0.25)'
-                          : 'rgba(40, 40, 60, 0.9)',
                     },
                     pressed && styles.nodePressed,
                   ]}
                   onPress={() => handleNodePress(node)}
                 >
-                  <Text style={[styles.nodeIcon, { fontSize: iconSize }]}>
-                    {ICON_FALLBACK[iconType]}
-                  </Text>
+                  <Svg width={size} height={size}>
+                    <Defs>
+                      {/* ノード背景グラデーション */}
+                      <RadialGradient id={`nodeGrad-${node.id}`} cx="50%" cy="50%" r="50%">
+                        <Stop
+                          offset="0%"
+                          stopColor={
+                            isUnlocked
+                              ? '#3d5a3d'
+                              : canUnlock
+                                ? '#4d4520'
+                                : '#2a2a34'
+                          }
+                        />
+                        <Stop
+                          offset="100%"
+                          stopColor={
+                            isUnlocked
+                              ? '#1d3a1d'
+                              : canUnlock
+                                ? '#2d2510'
+                                : '#1a1a24'
+                          }
+                        />
+                      </RadialGradient>
+
+                      {/* グロー効果 */}
+                      <RadialGradient id={`glow-${node.id}`} cx="50%" cy="50%" r="50%">
+                        <Stop
+                          offset="60%"
+                          stopColor={
+                            isUnlocked
+                              ? COLORS.glowUnlocked
+                              : canUnlock
+                                ? COLORS.glowCanUnlock
+                                : 'transparent'
+                          }
+                          stopOpacity="0.3"
+                        />
+                        <Stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                      </RadialGradient>
+                    </Defs>
+
+                    {/* グロー円（選択時やアクティブ時） */}
+                    {(isSelected(node) || canUnlock) && (
+                      <Circle
+                        cx={size / 2}
+                        cy={size / 2}
+                        r={size / 2}
+                        fill={`url(#glow-${node.id})`}
+                      />
+                    )}
+
+                    {/* 外枠（装飾リング） */}
+                    {isKeystone && (
+                      <Circle
+                        cx={size / 2}
+                        cy={size / 2}
+                        r={size / 2 - 2}
+                        stroke={isUnlocked ? '#7cb342' : canUnlock ? '#c9a227' : '#4a4a5a'}
+                        strokeWidth={1.5}
+                        fill="none"
+                        strokeDasharray="4 2"
+                      />
+                    )}
+
+                    {/* メイン円 */}
+                    <Circle
+                      cx={size / 2}
+                      cy={size / 2}
+                      r={size / 2 - (isKeystone ? 6 : 3)}
+                      fill={`url(#nodeGrad-${node.id})`}
+                      stroke={
+                        isSelected(node)
+                          ? COLORS.borderSelected
+                          : isUnlocked
+                            ? COLORS.borderUnlocked
+                            : canUnlock
+                              ? COLORS.borderCanUnlock
+                              : COLORS.borderDefault
+                      }
+                      strokeWidth={isSelected(node) ? 3 : 2}
+                    />
+
+                    {/* 内側のハイライト */}
+                    <Circle
+                      cx={size / 2}
+                      cy={size / 2 - size * 0.1}
+                      r={size / 4}
+                      fill="rgba(255, 255, 255, 0.05)"
+                    />
+                  </Svg>
+
+                  {/* アイコン */}
+                  <View style={[styles.iconOverlay, { width: size, height: size }]}>
+                    <Text style={[styles.nodeIcon, { fontSize: iconSize }]}>
+                      {ICON_FALLBACK[iconType]}
+                    </Text>
+                  </View>
                 </Pressable>
               );
             })}
@@ -354,7 +574,7 @@ export const PassiveTree = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: COLORS.background,
     borderRadius: 12,
   },
   header: {
@@ -378,11 +598,11 @@ const styles = StyleSheet.create({
   zoomHint: {
     paddingHorizontal: 12,
     paddingVertical: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: 'rgba(255, 255, 255, 0.03)',
   },
   zoomHintText: {
     fontSize: 11,
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: 'rgba(255, 255, 255, 0.4)',
     textAlign: 'center',
   },
   treeArea: {
@@ -394,25 +614,30 @@ const styles = StyleSheet.create({
   treeContent: {
     position: 'relative',
   },
-  connectionLine: {
-    position: 'absolute',
-  },
-  nodeCircle: {
+  nodeContainer: {
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
   },
   nodePressed: {
-    opacity: 0.7,
+    opacity: 0.8,
+  },
+  iconOverlay: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   nodeIcon: {
     color: '#fff',
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   // 下部情報パネル
   infoPanel: {
-    backgroundColor: 'rgba(20, 20, 35, 0.95)',
+    backgroundColor: 'rgba(15, 15, 25, 0.95)',
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+    borderTopColor: 'rgba(139, 115, 85, 0.3)',
     padding: 12,
     minHeight: 100,
   },
@@ -424,21 +649,21 @@ const styles = StyleSheet.create({
   infoPanelTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#e0d0b0',
     flex: 1,
   },
   unlockedBadge: {
     fontSize: 12,
-    color: '#4CAF50',
+    color: '#7cb342',
     fontWeight: 'bold',
-    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+    backgroundColor: 'rgba(124, 179, 66, 0.2)',
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 4,
   },
   infoPanelDescription: {
     fontSize: 14,
-    color: '#ccc',
+    color: '#a0a0a0',
     lineHeight: 20,
   },
   infoPanelActions: {
@@ -447,15 +672,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   unlockButton: {
-    backgroundColor: '#FFD700',
+    backgroundColor: '#c9a227',
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#e0c040',
   },
   unlockButtonText: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#1a1a2e',
+    color: '#1a1a1a',
   },
   noSpText: {
     fontSize: 13,
@@ -467,7 +694,7 @@ const styles = StyleSheet.create({
   },
   infoPanelPlaceholder: {
     fontSize: 14,
-    color: '#666',
+    color: '#555',
     textAlign: 'center',
     paddingVertical: 20,
   },
