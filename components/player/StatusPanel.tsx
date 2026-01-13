@@ -49,7 +49,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
     let modPoisonChance = 0;
     let modHpRegen = 0;
     let modHpRegenPct = 0;
-    let modLifesteal = 0;
+    let modHpOnHit = 0;
 
     // 装備ステータス加算
     Object.values(state.equipment).forEach((item) => {
@@ -65,7 +65,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
             if (mod.type === 'poison_chance') modPoisonChance += mod.value;
             if (mod.type === 'hp_regen') modHpRegen += mod.value;
             if (mod.type === 'hp_regen_pct') modHpRegenPct += mod.value;
-            if (mod.type === 'lifesteal') modLifesteal += mod.value;
+            if (mod.type === 'hp_on_hit') modHpOnHit += mod.value;
           }
         }
       }
@@ -80,8 +80,8 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
     const totalPoisonChance = passiveEffects.poison_chance + modPoisonChance;
     const totalHpRegen = passiveEffects.hp_regen + modHpRegen;
     const totalHpRegenPct = passiveEffects.hp_regen_pct + modHpRegenPct;
-    const totalLifesteal = passiveEffects.lifesteal + modLifesteal;
-    const totalCriticalLifesteal = passiveEffects.critical_lifesteal;
+    const totalHpOnHit = passiveEffects.hp_on_hit + modHpOnHit;
+    const totalHpOnCrit = passiveEffects.hp_on_crit;
 
     // 毎秒HP回復量を計算（フラット + %回復）
     // 最終HPを取得（getTotalStats()の結果を使用）
@@ -108,8 +108,8 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
       criticalDamage: totalCriticalDamage,
       poisonChance: totalPoisonChance,
       hpRegenPerSecond,
-      lifesteal: totalLifesteal,
-      criticalLifesteal: totalCriticalLifesteal,
+      hpOnHit: totalHpOnHit,
+      hpOnCrit: totalHpOnCrit,
     };
   };
 
@@ -204,18 +204,18 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
               </Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>吸収</Text>
+              <Text style={styles.detailLabel}>HIT回復</Text>
               <Text style={styles.detailValue}>
-                <Text style={breakdown.lifesteal > 0 ? styles.healText : undefined}>
-                  {breakdown.lifesteal}%
+                <Text style={breakdown.hpOnHit > 0 ? styles.healText : undefined}>
+                  {breakdown.hpOnHit}
                 </Text>
               </Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>クリ吸収</Text>
+              <Text style={styles.detailLabel}>クリ回復</Text>
               <Text style={styles.detailValue}>
-                <Text style={breakdown.criticalLifesteal > 0 ? styles.critHealText : undefined}>
-                  +{breakdown.criticalLifesteal}%
+                <Text style={breakdown.hpOnCrit > 0 ? styles.critHealText : undefined}>
+                  +{breakdown.hpOnCrit}
                 </Text>
               </Text>
             </View>

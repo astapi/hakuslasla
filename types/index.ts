@@ -95,7 +95,7 @@ export type ModType =
   | 'critical_chance'    // クリティカル確率+X%
   | 'critical_damage'    // クリティカルダメージ+X%
   | 'damage_reduction_pct'  // ダメージ軽減+X%（鎧専用）
-  | 'lifesteal'          // ダメージ吸収+X%（武器専用）
+  | 'hp_on_hit'          // HIT時HP回復（武器専用）
   | 'attack_speed_pct'   // AS +X% (increased、加算)
   | 'attack_speed_more_pct'; // AS X% more (乗算)
 
@@ -174,12 +174,12 @@ export interface PassiveEffect {
   // クリティカル系
   critical_chance?: number;    // クリティカル率（%）
   critical_damage?: number;    // クリティカルダメージ+X%
-  critical_lifesteal?: number; // クリティカル発生時のみダメージ吸収 +X%
+  hp_on_crit?: number;         // クリティカル時HP回復（固定値）
   // 回復・防御系
   hp_regen?: number;           // 毎ターンHP回復
   hp_regen_pct?: number;       // 毎ターンHP X%回復
   damage_reduction_pct?: number; // ダメージ軽減+X%
-  lifesteal?: number;          // ライフスティール+X%（与ダメージ吸収）
+  hp_on_hit?: number;          // HIT時HP回復（固定値）
   // 攻撃速度系
   attack_speed_pct?: number;       // AS +X% increased
   attack_speed_more_pct?: number;  // AS X% more

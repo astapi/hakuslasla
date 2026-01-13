@@ -212,11 +212,11 @@ export interface CombinedModEffects {
   // クリティカル
   criticalChance: number;    // 発生率%
   criticalDamage: number;    // ダメージ+%
-  criticalLifesteal: number; // クリ時吸収%
+  hpOnCrit: number;          // クリティカル時HP回復（固定値）
 
   // 防御・吸収
   damageReductionPct: number;  // ダメージ軽減%
-  lifesteal: number;           // ライフスティール%
+  hpOnHit: number;             // HIT時HP回復（固定値）
 
   // 攻撃速度
   attackSpeedPct: number;        // increased%
