@@ -183,9 +183,12 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
     case 'PLAYER_ATTACK':
       if (!state.enemy) return state;
       const newEnemyHp = state.enemy.currentHp - action.damage;
-      const attackMessage = action.isCritical
-        ? `クリティカルヒット！ ${state.enemy.name}に${action.damage}ダメージ！`
-        : `プレイヤーの攻撃！ ${state.enemy.name}に${action.damage}ダメージ！`;
+      // ダメージ0の場合（純粋毒キーストーン）は空メッセージでログ追加（モーション用）
+      const attackMessage = action.damage === 0
+        ? ''
+        : action.isCritical
+          ? `クリティカルヒット！ ${state.enemy.name}に${action.damage}ダメージ！`
+          : `プレイヤーの攻撃！ ${state.enemy.name}に${action.damage}ダメージ！`;
       return {
         ...state,
         enemy: {
@@ -583,9 +586,8 @@ export const useBattle = (dungeonId: string) => {
     // 通常ダメージ無効化チェック（キーストーン効果）
     const playerDamage = modEffects.noDirectDamage ? 0 : Math.floor(baseDamage * criticalMultiplier);
 
-    if (playerDamage > 0) {
-      dispatch({ type: 'PLAYER_ATTACK', damage: playerDamage, isCritical });
-    }
+    // noDirectDamageでもダメージ0で攻撃を行う（毒付与のため）
+    dispatch({ type: 'PLAYER_ATTACK', damage: playerDamage, isCritical });
 
     // ライフスティール処理 - Core関数使用
     if (playerDamage > 0 && state.playerCurrentHp < state.playerMaxHp) {
@@ -738,9 +740,9 @@ export const useBattle = (dungeonId: string) => {
     gameLoopRef.current = setInterval(() => {
       if (isProcessingRef.current) return;
 
-      // ゲージ増加量 = AS × 200 / ticks/sec × 速度倍率 (AS 1.0 = 0.5秒で1回攻撃)
-      const playerGaugeIncrease = (playerAS * 200 * battleSpeed) / ticksPerSecond;
-      const enemyGaugeIncrease = (enemyAS * 200 * battleSpeed) / ticksPerSecond;
+      // ゲージ増加量 = AS × 100 / ticks/sec × 速度倍率 (AS 1.0 = 1秒で1回攻撃)
+      const playerGaugeIncrease = (playerAS * 100 * battleSpeed) / ticksPerSecond;
+      const enemyGaugeIncrease = (enemyAS * 100 * battleSpeed) / ticksPerSecond;
 
       playerGaugeRef.current += playerGaugeIncrease;
       enemyGaugeRef.current += enemyGaugeIncrease;
