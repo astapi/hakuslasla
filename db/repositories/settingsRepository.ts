@@ -2,6 +2,11 @@ import { getDatabase } from '../database';
 import { DropFilterSettings, DEFAULT_DROP_FILTER } from '@/types';
 
 const DROP_FILTER_KEY = 'drop_filter_settings';
+const BATTLE_SPEED_KEY = 'battle_speed';
+
+export type BattleSpeedMultiplier = 1 | 2 | 3 | 5 | 10;
+export const BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [1, 2, 3, 5, 10];
+export const DEFAULT_BATTLE_SPEED: BattleSpeedMultiplier = 1;
 
 export const settingsRepository = {
   async get(key: string): Promise<string | null> {
@@ -57,5 +62,22 @@ export const settingsRepository = {
 
   async setDropFilter(settings: DropFilterSettings): Promise<void> {
     await this.set(DROP_FILTER_KEY, JSON.stringify(settings));
+  },
+
+  // 戦闘速度設定
+  async getBattleSpeed(): Promise<BattleSpeedMultiplier> {
+    const value = await this.get(BATTLE_SPEED_KEY);
+    if (!value) {
+      return DEFAULT_BATTLE_SPEED;
+    }
+    const parsed = parseInt(value, 10) as BattleSpeedMultiplier;
+    if (BATTLE_SPEED_OPTIONS.includes(parsed)) {
+      return parsed;
+    }
+    return DEFAULT_BATTLE_SPEED;
+  },
+
+  async setBattleSpeed(speed: BattleSpeedMultiplier): Promise<void> {
+    await this.set(BATTLE_SPEED_KEY, speed.toString());
   },
 };
