@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,12 @@ import {
   EquipmentSetType,
   applyEquipmentPresetToCharacter,
 } from '@/utils/debugPresets';
+import {
+  settingsRepository,
+  BattleSpeedMultiplier,
+  BATTLE_SPEED_OPTIONS,
+  DEFAULT_BATTLE_SPEED,
+} from '@/db/repositories/settingsRepository';
 
 const LEVELS: PresetLevel[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
@@ -38,6 +44,23 @@ export default function DebugScreen() {
   const [selectedDungeon, setSelectedDungeon] = useState<string>('volcano');
   const [selectedEquipType, setSelectedEquipType] = useState<EquipmentSetType>('DEF');
   const [isApplyingEquip, setIsApplyingEquip] = useState(false);
+
+  // 戦闘速度設定
+  const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
+
+  // 戦闘速度設定の読み込み
+  useEffect(() => {
+    const loadBattleSpeed = async () => {
+      const speed = await settingsRepository.getBattleSpeed();
+      setBattleSpeed(speed);
+    };
+    loadBattleSpeed();
+  }, []);
+
+  const handleBattleSpeedChange = async (speed: BattleSpeedMultiplier) => {
+    setBattleSpeed(speed);
+    await settingsRepository.setBattleSpeed(speed);
+  };
 
   const handleApplyPassivePreset = async () => {
     Alert.alert(
@@ -295,6 +318,44 @@ export default function DebugScreen() {
           </Pressable>
         </View>
 
+        {/* ========================================
+            戦闘速度設定
+           ======================================== */}
+        <View style={styles.sectionHeader}>
+          <MaterialCommunityIcons name="fast-forward" size={20} color="#2196F3" />
+          <Text style={styles.sectionHeaderText}>戦闘速度設定</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>速度倍率</Text>
+          <View style={styles.speedGrid}>
+            {BATTLE_SPEED_OPTIONS.map((speed) => (
+              <Pressable
+                key={speed}
+                style={[
+                  styles.speedButton,
+                  battleSpeed === speed && styles.speedButtonSelected,
+                ]}
+                onPress={() => handleBattleSpeedChange(speed)}
+              >
+                <Text
+                  style={[
+                    styles.speedButtonText,
+                    battleSpeed === speed && styles.speedButtonTextSelected,
+                  ]}
+                >
+                  {speed}x
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+          <Text style={styles.speedHint}>
+            {battleSpeed === 1
+              ? '通常速度'
+              : `戦闘が${battleSpeed}倍速で進行します`}
+          </Text>
+        </View>
+
         {/* 注意書き */}
         <View style={styles.warningBox}>
           <MaterialCommunityIcons name="alert" size={16} color="#FFA500" />
@@ -510,6 +571,39 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  speedGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  speedButton: {
+    flex: 1,
+    minWidth: 50,
+    paddingVertical: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 6,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  speedButtonSelected: {
+    backgroundColor: 'rgba(33, 150, 243, 0.2)',
+    borderColor: '#2196F3',
+  },
+  speedButtonText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#aaa',
+  },
+  speedButtonTextSelected: {
+    color: '#2196F3',
+  },
+  speedHint: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 12,
   },
   warningBox: {
     flexDirection: 'row',
