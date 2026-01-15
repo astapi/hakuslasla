@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
   },
   // 詳細表示エリア
   detailArea: {
-    minHeight: 180,
+    minHeight: 225,
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',

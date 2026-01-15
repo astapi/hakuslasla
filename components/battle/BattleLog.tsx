@@ -40,7 +40,7 @@ export const BattleLog = ({ logs }: BattleLogProps) => {
     <View style={styles.container}>
       <Text style={styles.title}>戦闘ログ</Text>
       <ScrollView ref={scrollViewRef} style={styles.scrollView}>
-        {logs.map((log) => (
+        {logs.filter(log => log.message).map((log) => (
           <Text key={log.id} style={[styles.logEntry, { color: getLogColor(log.type) }]}>
             {log.message}
           </Text>
