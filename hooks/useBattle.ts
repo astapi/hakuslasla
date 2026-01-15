@@ -20,7 +20,7 @@ import {
   GaugeBattleState,
   PoisonStack,
 } from '@/core';
-import { settingsRepository } from '@/db/repositories/settingsRepository';
+import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
 
 // Core設定の定数を使用
 const POISON_DAMAGE_RATIO = DEFAULT_BATTLE_CONFIG.poisonDamageRatio;
@@ -99,6 +99,19 @@ const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState
 // ログIDカウンター
 let logIdCounter = 0;
 
+// battleLogの最大件数（パフォーマンス対策）
+const MAX_BATTLE_LOG_SIZE = 50;
+
+// ログ追加時に上限を超えたら古いログを削除するヘルパー
+const addToLog = (currentLog: BattleState['battleLog'], newEntries: BattleState['battleLog'][number] | BattleState['battleLog']): BattleState['battleLog'] => {
+  const entries = Array.isArray(newEntries) ? newEntries : [newEntries];
+  const combined = [...currentLog, ...entries];
+  if (combined.length > MAX_BATTLE_LOG_SIZE) {
+    return combined.slice(-MAX_BATTLE_LOG_SIZE);
+  }
+  return combined;
+};
+
 // 周回状態を含む拡張State
 interface ExtendedBattleState extends BattleState {
   runCount: number; // 周回回数
@@ -160,14 +173,11 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         ...state,
         enemy: action.enemy,
         phase: 'fighting',
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            message: `${action.enemy.name}が現れた！`,
-            type: 'info',
-          },
-        ],
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: `${action.enemy.name}が現れた！`,
+          type: 'info',
+        }),
       };
 
     case 'PLAYER_ATTACK':
@@ -182,14 +192,11 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
           ...state.enemy,
           currentHp: Math.max(0, newEnemyHp),
         },
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            message: attackMessage,
-            type: action.isCritical ? 'critical' : 'player_attack',
-          },
-        ],
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: attackMessage,
+          type: action.isCritical ? 'critical' : 'player_attack',
+        }),
       };
 
     case 'ENEMY_ATTACK':
@@ -197,14 +204,11 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       return {
         ...state,
         playerCurrentHp: Math.max(0, newPlayerHp),
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            message: `${state.enemy?.name}の攻撃！ ${action.damage}ダメージを受けた！`,
-            type: 'enemy_attack',
-          },
-        ],
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: `${state.enemy?.name}の攻撃！ ${action.damage}ダメージを受けた！`,
+          type: 'enemy_attack',
+        }),
       };
 
     case 'ENEMY_DEFEATED':
@@ -227,21 +231,18 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         ...state,
         totalExpGained: state.totalExpGained + action.exp,
         droppedItems: [...state.droppedItems, ...action.droppedItems],
-        battleLog: [...state.battleLog, ...defeatLogs],
+        battleLog: addToLog(state.battleLog, defeatLogs),
       };
 
     case 'PLAYER_DEFEATED':
       return {
         ...state,
         phase: 'defeat',
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            message: 'プレイヤーは倒れた...',
-            type: 'defeat',
-          },
-        ],
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: 'プレイヤーは倒れた...',
+          type: 'defeat',
+        }),
       };
 
     case 'NEXT_FLOOR':
@@ -253,45 +254,38 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         playerGauge: 0,  // ゲージリセット
         enemyGauge: 0,   // ゲージリセット
         phase: 'fighting',
-        battleLog: [
-          ...state.battleLog,
+        battleLog: addToLog(state.battleLog, [
           {
             id: logIdCounter++,
             message: `--- ${state.currentFloor + 1}階へ進む ---`,
-            type: 'floor_clear',
+            type: 'floor_clear' as const,
           },
           {
             id: logIdCounter++,
             message: `${action.enemy.name}が現れた！`,
-            type: 'info',
+            type: 'info' as const,
           },
-        ],
+        ]),
       };
 
     case 'DUNGEON_CLEARED':
       return {
         ...state,
         phase: 'cleared',
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            message: 'ダンジョンを踏破した！',
-            type: 'victory',
-          },
-        ],
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: 'ダンジョンを踏破した！',
+          type: 'victory',
+        }),
       };
 
     case 'ADD_LOG':
       return {
         ...state,
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            ...action.entry,
-          },
-        ],
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          ...action.entry,
+        }),
       };
 
     case 'APPLY_POISON':
@@ -304,14 +298,11 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       return {
         ...state,
         enemyPoison: [...state.enemyPoison, newPoisonStack],
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            message: `${state.enemy?.name}に毒を付与した！（${action.damagePerTurn}ダメージ x ${action.turns}ターン）${currentStacks > 0 ? ` [${currentStacks + 1}スタック]` : ''}`,
-            type: 'poison',
-          },
-        ],
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: `${state.enemy?.name}に毒を付与した！（${action.damagePerTurn}ダメージ x ${action.turns}ターン）${currentStacks > 0 ? ` [${currentStacks + 1}スタック]` : ''}`,
+          type: 'poison',
+        }),
       };
 
     case 'POISON_DAMAGE':
@@ -329,14 +320,11 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
           currentHp: poisonedEnemyHp,
         },
         enemyPoison: updatedPoisonStacks,
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            message: `毒ダメージ！ ${state.enemy.name}に${action.damage}ダメージ！${updatedPoisonStacks.length > 0 ? `（${updatedPoisonStacks.length}スタック継続）` : '（毒が切れた）'}${stacksRemoved > 0 ? `（${stacksRemoved}スタック消失）` : ''}`,
-            type: 'poison',
-          },
-        ],
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: `毒ダメージ！ ${state.enemy.name}に${action.damage}ダメージ！${updatedPoisonStacks.length > 0 ? `（${updatedPoisonStacks.length}スタック継続）` : '（毒が切れた）'}${stacksRemoved > 0 ? `（${stacksRemoved}スタック消失）` : ''}`,
+          type: 'poison',
+        }),
       };
 
     case 'HP_REGEN':
@@ -346,14 +334,11 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       return {
         ...state,
         playerCurrentHp: healedHp,
-        battleLog: [
-          ...state.battleLog,
-          {
-            id: logIdCounter++,
-            message: `HP回復！ HPが${actualHeal}回復した！`,
-            type: 'heal',
-          },
-        ],
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: `HP回復！ HPが${actualHeal}回復した！`,
+          type: 'heal',
+        }),
       };
 
     case 'UPDATE_GAUGES':
@@ -413,14 +398,26 @@ export const useBattle = (dungeonId: string) => {
   // フィルター設定
   const [dropFilter, setDropFilter] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
 
-  // フィルター設定の読み込み
+  // 戦闘速度設定
+  const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
+  const battleSpeedRef = useRef<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
+
+  // 設定の読み込み
   useEffect(() => {
-    const loadFilter = async () => {
+    const loadSettings = async () => {
       const filter = await settingsRepository.getDropFilter();
+      const speed = await settingsRepository.getBattleSpeed();
+      setBattleSpeed(speed);
+      battleSpeedRef.current = speed;
       setDropFilter(filter);
     };
-    loadFilter();
+    loadSettings();
   }, []);
+
+  // battleSpeedの変更をrefに反映
+  useEffect(() => {
+    battleSpeedRef.current = battleSpeed;
+  }, [battleSpeed]);
 
   // 装備品+パッシブから戦闘時MOD効果を取得（coreロジック使用）
   const modEffects = useMemo((): CombinedModEffects => {
@@ -442,6 +439,10 @@ export const useBattle = (dungeonId: string) => {
   const [isAutoRunning, setIsAutoRunning] = useState(false); // 自動周回モード
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isProcessingRef = useRef(false);
+
+  // executeTurnとexecuteEnemyAttackをrefで保持（ゲームループの依存配列から外すため）
+  const executeTurnRef = useRef<() => void>(() => {});
+  const executeEnemyAttackRef = useRef<() => void>(() => {});
 
   // 一時停止の切り替え
   const togglePause = useCallback(() => {
@@ -557,10 +558,12 @@ export const useBattle = (dungeonId: string) => {
           const nextFloor = state.currentFloor + 1;
           const nextEnemy = getEnemyForFloor(nextFloor);
           if (nextEnemy) {
+            // 敵切り替わり待機時間も戦闘速度に合わせて調整
+            const transitionDelay = 500 / battleSpeedRef.current;
             setTimeout(() => {
               dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy) });
               isProcessingRef.current = false;
-            }, 500);
+            }, transitionDelay);
             return;
           }
         }
@@ -642,10 +645,12 @@ export const useBattle = (dungeonId: string) => {
         const nextFloor = state.currentFloor + 1;
         const nextEnemy = getEnemyForFloor(nextFloor);
         if (nextEnemy) {
+          // 敵切り替わり待機時間も戦闘速度に合わせて調整
+          const transitionDelay = 500 / battleSpeedRef.current;
           setTimeout(() => {
             dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy) });
             isProcessingRef.current = false;
-          }, 500);
+          }, transitionDelay);
           return;
         }
       }
@@ -682,6 +687,15 @@ export const useBattle = (dungeonId: string) => {
       dispatch({ type: 'PLAYER_DEFEATED' });
     }
   }, [state, getTotalStats, getCombinedModEffects]);
+
+  // executeTurnとexecuteEnemyAttackをrefに保持（常に最新の関数を参照するため）
+  useEffect(() => {
+    executeTurnRef.current = executeTurn;
+  }, [executeTurn]);
+
+  useEffect(() => {
+    executeEnemyAttackRef.current = executeEnemyAttack;
+  }, [executeEnemyAttack]);
 
   // プレイヤーの攻撃速度を計算（coreロジック使用）
   const getPlayerAttackSpeed = useCallback((): number => {
@@ -724,9 +738,9 @@ export const useBattle = (dungeonId: string) => {
     gameLoopRef.current = setInterval(() => {
       if (isProcessingRef.current) return;
 
-      // ゲージ増加量 = AS × 200 / ticks/sec (AS 1.0 = 0.5秒で1回攻撃)
-      const playerGaugeIncrease = (playerAS * 200) / ticksPerSecond;
-      const enemyGaugeIncrease = (enemyAS * 200) / ticksPerSecond;
+      // ゲージ増加量 = AS × 200 / ticks/sec × 速度倍率 (AS 1.0 = 0.5秒で1回攻撃)
+      const playerGaugeIncrease = (playerAS * 200 * battleSpeed) / ticksPerSecond;
+      const enemyGaugeIncrease = (enemyAS * 200 * battleSpeed) / ticksPerSecond;
 
       playerGaugeRef.current += playerGaugeIncrease;
       enemyGaugeRef.current += enemyGaugeIncrease;
@@ -734,13 +748,13 @@ export const useBattle = (dungeonId: string) => {
       // プレイヤーゲージが100に達したら攻撃
       if (playerGaugeRef.current >= 100) {
         playerGaugeRef.current = 0;
-        executeTurn();
+        executeTurnRef.current();
       }
 
       // 敵ゲージが100に達したら攻撃
       if (enemyGaugeRef.current >= 100) {
         enemyGaugeRef.current = 0;
-        executeEnemyAttack();
+        executeEnemyAttackRef.current();
       }
 
       // UIのゲージ表示を更新
@@ -757,9 +771,12 @@ export const useBattle = (dungeonId: string) => {
         gameLoopRef.current = null;
       }
     };
-  }, [state.phase, state.enemy, isPaused, getPlayerAttackSpeed, executeTurn, executeEnemyAttack, state.playerGauge, state.enemyGauge]);
+  // 注意: executeTurn, executeEnemyAttackはrefで参照するため依存配列に含めない
+  // （含めるとstate更新のたびにタイマーがリセットされ、ゲージが進まなくなる）
+  }, [state.phase, state.enemy, isPaused, getPlayerAttackSpeed, battleSpeed]);
 
-  // HP回復タイマー（1秒ごと、ダンジョン滞在中は常時）
+  // HP回復タイマー（ゲーム内1秒ごと、ダンジョン滞在中は常時）
+  // 戦闘速度に合わせて間隔を調整（10倍速なら100msごと = ゲーム内1秒）
   useEffect(() => {
     // 敗北時・一時停止時は回復停止
     if (state.phase === 'defeat' || isPaused) {
@@ -770,6 +787,8 @@ export const useBattle = (dungeonId: string) => {
       return;
     }
 
+    const regenInterval = 1000 / battleSpeed;
+
     regenTimerRef.current = setInterval(() => {
       const modEffects = getCombinedModEffects();
       // refから最新のHP値を取得（依存配列でタイマーリセットを防ぐため）
@@ -779,7 +798,7 @@ export const useBattle = (dungeonId: string) => {
       if (regenAmount > 0) {
         dispatch({ type: 'HP_REGEN', amount: regenAmount });
       }
-    }, 1000);
+    }, regenInterval);
 
     return () => {
       if (regenTimerRef.current) {
@@ -787,7 +806,7 @@ export const useBattle = (dungeonId: string) => {
         regenTimerRef.current = null;
       }
     };
-  }, [state.phase, isPaused, getCombinedModEffects]);
+  }, [state.phase, isPaused, getCombinedModEffects, battleSpeed]);
 
   // 戦闘終了時に経験値を付与
   useEffect(() => {
