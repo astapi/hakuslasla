@@ -822,8 +822,8 @@
       "atk": 10,
       "def": 90,
       "fixedMods": [
-        { "type": "def_bonus", "value": 60 },
-        { "type": "hp_regen", "value": 60 }
+        { "type": "def_bonus", "value": 55 },
+        { "type": "hp_regen", "value": 55 }
       ]
     },
     "dragon_heart": {
@@ -833,7 +833,7 @@
       "atk": 40,
       "def": 40,
       "fixedMods": [
-        { "type": "hp_regen", "value": 80 },
+        { "type": "hp_regen", "value": 55 },
         { "type": "atk_bonus", "value": 30 },
         { "type": "def_bonus", "value": 30 }
       ]
@@ -886,7 +886,7 @@
       "atk": 50,
       "def": 50,
       "fixedMods": [
-        { "type": "hp_regen", "value": 100 },
+        { "type": "hp_regen", "value": 60 },
         { "type": "critical_chance", "value": 40 }
       ]
     },
@@ -897,8 +897,8 @@
       "atk": 20,
       "def": 120,
       "fixedMods": [
-        { "type": "def_bonus", "value": 80 },
-        { "type": "hp_regen", "value": 80 }
+        { "type": "def_bonus", "value": 60 },
+        { "type": "hp_regen", "value": 60 }
       ]
     },
 
@@ -960,8 +960,8 @@
       "atk": 30,
       "def": 150,
       "fixedMods": [
-        { "type": "def_bonus", "value": 100 },
-        { "type": "hp_regen", "value": 100 }
+        { "type": "def_bonus", "value": 60 },
+        { "type": "hp_regen", "value": 60 }
       ]
     },
 
@@ -1012,9 +1012,9 @@
       "atk": 100,
       "def": 100,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 80 },
-        { "type": "def_bonus", "value": 80 },
-        { "type": "hp_regen", "value": 120 }
+        { "type": "atk_bonus", "value": 65 },
+        { "type": "def_bonus", "value": 65 },
+        { "type": "hp_regen", "value": 65 }
       ]
     },
     "divine_blade": {
@@ -1024,8 +1024,8 @@
       "atk": 250,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 100 },
-        { "type": "critical_chance", "value": 50 }
+        { "type": "atk_bonus", "value": 70 },
+        { "type": "critical_chance", "value": 45 }
       ]
     },
     "crown_of_end": {
@@ -1035,10 +1035,10 @@
       "atk": 120,
       "def": 120,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 100 },
-        { "type": "def_bonus", "value": 100 },
-        { "type": "hp_regen", "value": 150 },
-        { "type": "critical_chance", "value": 50 }
+        { "type": "atk_bonus", "value": 70 },
+        { "type": "def_bonus", "value": 70 },
+        { "type": "hp_regen", "value": 70 },
+        { "type": "critical_chance", "value": 45 }
       ]
     }
   },
