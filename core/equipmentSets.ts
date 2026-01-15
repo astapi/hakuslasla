@@ -1010,71 +1010,73 @@ const CHAOS_REALM_SETS: DungeonEquipmentSets = {
     ATK: {
       name: '混沌の領域ATK型',
       weapon: createItem('chaos_blade', '混沌の剣', 'weapon', 160, 0, [
-        createMod('atk_bonus', 80, 1), createMod('atk_increased_pct', 50, 1),
+        createMod('atk_bonus', 75, 1), createMod('atk_increased_pct', 45, 1),
       ]),
       armor: createItem('void_armor', '虚無の鎧', 'armor', 0, 135, [
-        createMod('hp_regen', 80, 1), createMod('def_bonus', 70, 1),
+        createMod('hp_regen', 50, 1), createMod('def_bonus', 50, 1),
       ]),
       gloves: createItem('chaos_gauntlets', '混沌の篭手', 'gloves', 52, 60, [
-        createMod('atk_bonus', 55, 1), createMod('atk_increased_pct', 40, 1),
+        createMod('atk_bonus', 50, 1), createMod('attack_speed_pct', 30, 1),
       ]),
       boots: createItem('void_boots', '虚無のブーツ', 'boots', 35, 88, [
-        createMod('atk_bonus', 40, 1), createMod('hp_regen', 50, 1),
+        createMod('atk_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
-      accessory: createItem('void_essence', '虚無のエッセンス', 'accessory', 70, 70, [
-        createMod('atk_bonus', 60, 1), createMod('def_bonus', 60, 1),
+      accessory: createItem('chaos_crystal_ring', '混沌水晶の指輪', 'accessory', 70, 70, [
+        createMod('atk_bonus', 50, 1), createMod('critical_chance', 30, 1),
       ]),
     },
     DEF: {
       name: '混沌の領域DEF型',
       weapon: createItem('chaos_blade', '混沌の剣', 'weapon', 160, 0, [
-        createMod('hp_on_hit', 20, 1),
+        createMod('def_bonus', 50, 1),
       ]),
-      armor: createItem('chaos_scale', 'カオスドラゴンの鱗', 'armor', 30, 150, [
-        createMod('def_bonus', 100, 1), createMod('hp_regen', 100, 1),
+      armor: createItem('void_armor', '虚無の鎧', 'armor', 0, 135, [
+        createMod('def_bonus', 75, 1), createMod('hp_regen', 50, 1),
       ]),
       gloves: createItem('chaos_gauntlets', '混沌の篭手', 'gloves', 52, 60, [
-        createMod('def_bonus', 60, 1), createMod('hp_regen', 60, 1),
+        createMod('def_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
       boots: createItem('void_boots', '虚無のブーツ', 'boots', 35, 88, [
-        createMod('def_bonus', 60, 1), createMod('damage_reduction_pct', 20, 1),
+        createMod('def_bonus', 50, 1), createMod('damage_reduction_pct', 5, 1),
       ]),
       accessory: createItem('chaos_crystal_ring', '混沌水晶の指輪', 'accessory', 65, 65, [
-        createMod('hp_regen', 70, 1), createMod('def_bonus', 55, 1),
+        createMod('hp_regen', 50, 1), createMod('def_bonus', 50, 1),
       ]),
     },
     CRIT: {
       name: '混沌の領域クリ型',
       weapon: createItem('chaos_blade', '混沌の剣', 'weapon', 160, 0, [
-        createMod('critical_chance', 45, 1), createMod('critical_damage', 120, 1),
+        createMod('critical_chance', 30, 1), createMod('critical_damage', 100, 1),
       ]),
       armor: createItem('void_armor', '虚無の鎧', 'armor', 0, 135, [
-        createMod('hp_regen', 80, 1),
+        createMod('hp_regen', 50, 1),
       ]),
       gloves: createItem('chaos_gauntlets', '混沌の篭手', 'gloves', 52, 60, [
-        createMod('critical_chance', 42, 1), createMod('critical_damage', 110, 1),
+        createMod('critical_chance', 30, 1), createMod('critical_damage', 100, 1),
       ]),
-      boots: createItem('void_boots', '虚無のブーツ', 'boots', 35, 88, []),
+      boots: createItem('void_boots', '虚無のブーツ', 'boots', 35, 88, [
+        createMod('hp_regen', 50, 1),
+      ]),
       accessory: createItem('chaos_crystal_ring', '混沌水晶の指輪', 'accessory', 65, 65, [
-        createMod('critical_chance', 40, 1), createMod('critical_damage', 100, 1),
+        createMod('critical_chance', 30, 1), createMod('critical_damage', 100, 1),
       ]),
     },
     POISON: {
       name: '混沌の領域毒型',
       weapon: createItem('chaos_blade', '混沌の剣', 'weapon', 160, 0, [
-        createMod('def_bonus', 60, 1), createMod('hp_regen', 60, 1),
+        createMod('def_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
       armor: createItem('void_armor', '虚無の鎧', 'armor', 0, 135, [
-        createMod('hp_regen', 100, 1), createMod('hp_bonus', 320, 1), createMod('hp_regen_pct', 10, 1),
+        createMod('hp_regen', 50, 1), createMod('hp_bonus', 300, 1), createMod('hp_regen_pct', 5, 1),
       ]),
       gloves: createItem('chaos_gauntlets', '混沌の篭手', 'gloves', 0, 75, [
-        createMod('def_bonus', 48, 1), createMod('hp_regen', 48, 1),
+        createMod('def_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
       boots: createItem('void_boots', '虚無のブーツ', 'boots', 35, 88, [
-        createMod('hp_bonus', 200, 1),
+        createMod('hp_bonus', 300, 1),
       ]),
       accessory: createItem('chaos_crystal_ring', '混沌水晶の指輪', 'accessory', 0, 68, [
-        createMod('poison_chance', 38, 1), createMod('hp_regen', 60, 1),
+        createMod('poison_chance', 50, 1), createMod('hp_regen', 50, 1),
       ]),
     },
   },
@@ -1092,72 +1094,74 @@ const FINAL_LAND_SETS: DungeonEquipmentSets = {
   sets: {
     ATK: {
       name: '終焉の地ATK型',
-      weapon: createItem('divine_blade', '神殺しの剣', 'weapon', 250, 0, [
-        createMod('atk_bonus', 100, 1), createMod('critical_chance', 50, 1),
+      weapon: createItem('apocalypse_blade', '終焉の剣', 'weapon', 220, 0, [
+        createMod('atk_bonus', 75, 1), createMod('atk_increased_pct', 45, 1),
       ]),
       armor: createItem('end_armor', '終末の鎧', 'armor', 0, 180, [
-        createMod('hp_regen', 100, 1), createMod('def_bonus', 100, 1),
+        createMod('hp_regen', 50, 1), createMod('def_bonus', 50, 1),
       ]),
       gloves: createItem('titan_gauntlets', '泰坦の篭手', 'gloves', 70, 80, [
-        createMod('atk_bonus', 75, 1), createMod('atk_increased_pct', 50, 1),
+        createMod('atk_bonus', 50, 1), createMod('attack_speed_pct', 30, 1),
       ]),
       boots: createItem('end_walker_boots', '終末を歩む者のブーツ', 'boots', 48, 120, [
-        createMod('atk_bonus', 55, 1), createMod('hp_regen', 70, 1),
+        createMod('atk_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
-      accessory: createItem('crown_of_end', '終焉の王冠', 'accessory', 120, 120, [
-        createMod('atk_bonus', 100, 1), createMod('def_bonus', 100, 1), createMod('hp_regen', 150, 1), createMod('critical_chance', 50, 1),
+      accessory: createItem('oblivion_ring', '忘却の指輪', 'accessory', 88, 88, [
+        createMod('atk_bonus', 50, 1), createMod('critical_chance', 30, 1),
       ]),
     },
     DEF: {
       name: '終焉の地DEF型',
       weapon: createItem('apocalypse_blade', '終焉の剣', 'weapon', 220, 0, [
-        createMod('hp_on_hit', 25, 1),
+        createMod('def_bonus', 50, 1),
       ]),
       armor: createItem('end_armor', '終末の鎧', 'armor', 0, 180, [
-        createMod('hp_regen', 120, 1), createMod('def_bonus', 120, 1), createMod('damage_reduction_pct', 25, 1),
+        createMod('def_bonus', 75, 1), createMod('hp_regen', 50, 1), createMod('damage_reduction_pct', 5, 1),
       ]),
       gloves: createItem('titan_gauntlets', '泰坦の篭手', 'gloves', 70, 80, [
-        createMod('def_bonus', 80, 1), createMod('hp_regen', 80, 1),
+        createMod('def_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
       boots: createItem('end_walker_boots', '終末を歩む者のブーツ', 'boots', 48, 120, [
-        createMod('def_bonus', 80, 1), createMod('damage_reduction_pct', 20, 1),
+        createMod('def_bonus', 50, 1), createMod('damage_reduction_pct', 5, 1),
       ]),
-      accessory: createItem('world_fragment', '世界の欠片', 'accessory', 100, 100, [
-        createMod('atk_bonus', 80, 1), createMod('def_bonus', 80, 1), createMod('hp_regen', 120, 1),
+      accessory: createItem('oblivion_ring', '忘却の指輪', 'accessory', 88, 88, [
+        createMod('hp_regen', 50, 1), createMod('def_bonus', 50, 1),
       ]),
     },
     CRIT: {
       name: '終焉の地クリ型',
-      weapon: createItem('divine_blade', '神殺しの剣', 'weapon', 250, 0, [
-        createMod('atk_bonus', 100, 1), createMod('critical_chance', 50, 1),
+      weapon: createItem('apocalypse_blade', '終焉の剣', 'weapon', 220, 0, [
+        createMod('critical_chance', 30, 1), createMod('critical_damage', 100, 1),
       ]),
       armor: createItem('end_armor', '終末の鎧', 'armor', 0, 180, [
-        createMod('hp_regen', 100, 1),
+        createMod('hp_regen', 50, 1),
       ]),
       gloves: createItem('titan_gauntlets', '泰坦の篭手', 'gloves', 70, 80, [
-        createMod('critical_chance', 48, 1), createMod('critical_damage', 140, 1),
+        createMod('critical_chance', 30, 1), createMod('critical_damage', 100, 1),
       ]),
-      boots: createItem('end_walker_boots', '終末を歩む者のブーツ', 'boots', 48, 120, []),
-      accessory: createItem('crown_of_end', '終焉の王冠', 'accessory', 120, 120, [
-        createMod('atk_bonus', 100, 1), createMod('def_bonus', 100, 1), createMod('hp_regen', 150, 1), createMod('critical_chance', 50, 1),
+      boots: createItem('end_walker_boots', '終末を歩む者のブーツ', 'boots', 48, 120, [
+        createMod('hp_regen', 50, 1),
+      ]),
+      accessory: createItem('oblivion_ring', '忘却の指輪', 'accessory', 88, 88, [
+        createMod('critical_chance', 30, 1), createMod('critical_damage', 100, 1),
       ]),
     },
     POISON: {
       name: '終焉の地毒型',
       weapon: createItem('apocalypse_blade', '終焉の剣', 'weapon', 220, 0, [
-        createMod('def_bonus', 80, 1), createMod('hp_regen', 80, 1),
+        createMod('def_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
       armor: createItem('end_armor', '終末の鎧', 'armor', 0, 180, [
-        createMod('hp_regen', 130, 1), createMod('hp_bonus', 400, 1), createMod('hp_regen_pct', 12, 1),
+        createMod('hp_regen', 50, 1), createMod('hp_bonus', 300, 1), createMod('hp_regen_pct', 5, 1),
       ]),
-      gloves: createItem('titan_gauntlets', '泰坦の篭手', 'gloves', 0, 100, [
-        createMod('def_bonus', 65, 1), createMod('hp_regen', 65, 1),
+      gloves: createItem('titan_gauntlets', '泰坦の篭手', 'gloves', 70, 80, [
+        createMod('def_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
       boots: createItem('end_walker_boots', '終末を歩む者のブーツ', 'boots', 48, 120, [
-        createMod('hp_bonus', 280, 1),
+        createMod('hp_bonus', 300, 1),
       ]),
-      accessory: createItem('oblivion_ring', '忘却の指輪', 'accessory', 0, 95, [
-        createMod('poison_chance', 38, 1), createMod('hp_regen', 80, 1),
+      accessory: createItem('oblivion_ring', '忘却の指輪', 'accessory', 88, 88, [
+        createMod('poison_chance', 50, 1), createMod('hp_regen', 50, 1),
       ]),
     },
   },
@@ -1235,4 +1239,277 @@ export function extractModsFromEquipmentSet(set: EquipmentSet): ItemMod[] {
   }
 
   return mods;
+}
+
+// ========================================
+// ランダムMOD生成（シミュレーション用）
+// ========================================
+
+import modsData from '../data/json/mods.json';
+import dungeonsData from '../data/json/dungeons.json';
+import { ModConfig, ModTierRange, ModCountRange } from '../types';
+
+const modConfigs: ModConfig[] = modsData.modConfigs as ModConfig[];
+
+interface DungeonModSettings {
+  modTierRange: ModTierRange;
+  modCountRange: ModCountRange;
+}
+
+/**
+ * ダンジョンのMOD設定を取得
+ */
+function getDungeonModSettings(dungeonId: string): DungeonModSettings {
+  const dungeon = (dungeonsData.dungeons as Record<string, {
+    modTierRange?: ModTierRange;
+    modCountRange?: ModCountRange;
+  }>)[dungeonId];
+
+  return {
+    modTierRange: dungeon?.modTierRange ?? { minTier: 10, maxTier: 1 },
+    modCountRange: dungeon?.modCountRange ?? { min: 2, max: 4 },
+  };
+}
+
+/**
+ * MOD設定から利用可能なtierリストを取得（スロット考慮）
+ */
+function getAvailableTiersForSlot(config: ModConfig, slot?: EquipmentSlot): number[] {
+  const tiers = (slot && config.slotTiers?.[slot]) || config.tiers;
+  return Object.keys(tiers).map(t => parseInt(t, 10));
+}
+
+/**
+ * スロットに応じたtier設定を取得
+ */
+function getTierConfigForSlot(config: ModConfig, slot?: EquipmentSlot): Record<string, { min: number; max: number }> {
+  return (slot && config.slotTiers?.[slot]) || config.tiers;
+}
+
+/**
+ * tier範囲内でランダムに値を取得
+ */
+function randomValueInRange(min: number, max: number): number {
+  if (min === max) return min;
+  return min + Math.floor(Math.random() * (max - min + 1));
+}
+
+/**
+ * シミュレーション用：ランダムMODを生成
+ * @param count 生成するMOD数
+ * @param dungeonId ダンジョンID（tier範囲取得用）
+ * @param slot アイテムスロット（スロット制限MOD用）
+ */
+export function generateSimulationMods(
+  count: number,
+  dungeonId: string,
+  slot: EquipmentSlot
+): ItemMod[] {
+  const mods: ItemMod[] = [];
+  const { modTierRange } = getDungeonModSettings(dungeonId);
+
+  // このスロットとダンジョンで出現可能なMODをフィルタリング
+  const availableConfigs = modConfigs.filter(config => {
+    // スロット制限チェック
+    if (config.slots && !config.slots.includes(slot)) {
+      return false;
+    }
+    // tier範囲チェック
+    const modTiers = getAvailableTiersForSlot(config, slot);
+    return modTiers.some(t => t <= modTierRange.minTier && t >= modTierRange.maxTier);
+  });
+
+  if (availableConfigs.length === 0) {
+    return mods;
+  }
+
+  const totalWeight = availableConfigs.reduce((sum, config) => sum + config.weight, 0);
+  const usedTypes = new Set<string>();
+
+  for (let i = 0; i < count; i++) {
+    // 重み付きランダム選択
+    let random = Math.random() * totalWeight;
+    let selectedConfig: ModConfig | null = null;
+
+    for (const config of availableConfigs) {
+      random -= config.weight;
+      if (random <= 0) {
+        selectedConfig = config;
+        break;
+      }
+    }
+
+    if (!selectedConfig || usedTypes.has(selectedConfig.type)) {
+      continue; // 同じタイプのMODは1つまで
+    }
+
+    usedTypes.add(selectedConfig.type);
+
+    // 有効なtierリストを取得
+    const modTiers = getAvailableTiersForSlot(selectedConfig, slot);
+    const validTiers = modTiers.filter(t => t <= modTierRange.minTier && t >= modTierRange.maxTier);
+
+    if (validTiers.length === 0) continue;
+
+    // 均等確率でtierを選択
+    const tier = validTiers[Math.floor(Math.random() * validTiers.length)];
+
+    // tierの値範囲から値を取得
+    const tierConfigs = getTierConfigForSlot(selectedConfig, slot);
+    const tierConfig = tierConfigs[tier.toString()];
+    const value = randomValueInRange(tierConfig.min, tierConfig.max);
+
+    mods.push({
+      type: selectedConfig.type as ItemMod['type'],
+      value,
+      tier,
+    });
+  }
+
+  return mods;
+}
+
+/**
+ * シミュレーション用：ランダムMOD付きアイテムを生成
+ */
+function createRandomModItem(
+  id: string,
+  name: string,
+  slot: EquipmentSlot,
+  atk: number,
+  def: number,
+  dungeonId: string
+): Item {
+  const { modCountRange } = getDungeonModSettings(dungeonId);
+  const modCount = randomValueInRange(modCountRange.min, modCountRange.max);
+  const mods = generateSimulationMods(modCount, dungeonId, slot);
+
+  instanceCounter++;
+  return {
+    id,
+    instanceId: `sim_random_${id}_${instanceCounter}`,
+    name,
+    slot,
+    atk,
+    def,
+    mods,
+  };
+}
+
+/**
+ * ランダムMOD装備セットの基本ステータス定義
+ */
+interface BaseEquipmentStats {
+  weapon: { id: string; name: string; atk: number; def: number };
+  armor: { id: string; name: string; atk: number; def: number };
+  gloves: { id: string; name: string; atk: number; def: number };
+  boots: { id: string; name: string; atk: number; def: number };
+  accessory: { id: string; name: string; atk: number; def: number };
+}
+
+/**
+ * ダンジョン別の基本装備ステータス
+ */
+const DUNGEON_BASE_EQUIPMENT: Record<string, BaseEquipmentStats> = {
+  chaos_realm: {
+    weapon: { id: 'chaos_blade', name: '混沌の剣', atk: 160, def: 0 },
+    armor: { id: 'void_armor', name: '虚無の鎧', atk: 0, def: 135 },
+    gloves: { id: 'chaos_gauntlets', name: '混沌の篭手', atk: 52, def: 60 },
+    boots: { id: 'void_boots', name: '虚無のブーツ', atk: 35, def: 88 },
+    accessory: { id: 'chaos_crystal_ring', name: '混沌水晶の指輪', atk: 65, def: 65 },
+  },
+  final_land: {
+    weapon: { id: 'apocalypse_blade', name: '終焉の剣', atk: 220, def: 0 },
+    armor: { id: 'end_armor', name: '終末の鎧', atk: 0, def: 180 },
+    gloves: { id: 'titan_gauntlets', name: '泰坦の篭手', atk: 70, def: 80 },
+    boots: { id: 'end_walker_boots', name: '終末を歩む者のブーツ', atk: 48, def: 120 },
+    accessory: { id: 'oblivion_ring', name: '忘却の指輪', atk: 88, def: 88 },
+  },
+  dragon_nest: {
+    weapon: { id: 'dragon_slayer', name: '竜殺しの剣', atk: 90, def: 0 },
+    armor: { id: 'dragon_scale_armor', name: '竜鱗の鎧', atk: 0, def: 75 },
+    gloves: { id: 'dragon_claw_gauntlets', name: '竜爪の篭手', atk: 28, def: 32 },
+    boots: { id: 'dragon_hide_boots', name: '竜皮のブーツ', atk: 18, def: 48 },
+    accessory: { id: 'dragon_eye_ring', name: '竜眼の指輪', atk: 35, def: 35 },
+  },
+  sacred_temple: {
+    weapon: { id: 'holy_blade', name: '聖剣', atk: 120, def: 0 },
+    armor: { id: 'divine_armor', name: '神聖なる鎧', atk: 0, def: 100 },
+    gloves: { id: 'seraph_gauntlets', name: '熾天使の篭手', atk: 38, def: 44 },
+    boots: { id: 'divine_boots', name: '神のブーツ', atk: 25, def: 65 },
+    accessory: { id: 'holy_diamond_ring', name: '聖なるダイヤ指輪', atk: 48, def: 48 },
+  },
+  hell_gate: {
+    weapon: { id: 'hellfire_blade', name: '獄炎剣', atk: 68, def: 0 },
+    armor: { id: 'infernal_plate', name: '煉獄の鎧', atk: 0, def: 56 },
+    gloves: { id: 'demon_gauntlets', name: '魔人の篭手', atk: 20, def: 24 },
+    boots: { id: 'hellwalker_boots', name: '地獄歩きのブーツ', atk: 14, def: 35 },
+    accessory: { id: 'infernal_ruby_ring', name: '煉獄のルビー指輪', atk: 25, def: 25 },
+  },
+  sky_tower: {
+    weapon: { id: 'sky_blade', name: '天空剣', atk: 50, def: 0 },
+    armor: { id: 'cloud_armor', name: '雲海の鎧', atk: 0, def: 42 },
+    gloves: { id: 'storm_gauntlets', name: '嵐の篭手', atk: 14, def: 18 },
+    boots: { id: 'wind_walker_boots', name: '風渡りのブーツ', atk: 10, def: 26 },
+    accessory: { id: 'sky_sapphire_ring', name: '蒼空のサファイア指輪', atk: 25, def: 15 },
+  },
+};
+
+/**
+ * シミュレーション用：ランダムMOD装備セットを生成
+ * @param setName セット名
+ * @param equipmentDungeonId 装備のダンジョンID（基本ステータス決定用）
+ * @param modDungeonId MODのダンジョンID（tier範囲決定用、省略時はequipmentDungeonIdと同じ）
+ */
+export function generateRandomEquipmentSet(
+  setName: string,
+  equipmentDungeonId: string,
+  modDungeonId?: string
+): EquipmentSet {
+  const baseDungeon = modDungeonId ?? equipmentDungeonId;
+  const baseStats = DUNGEON_BASE_EQUIPMENT[equipmentDungeonId] ?? DUNGEON_BASE_EQUIPMENT.chaos_realm;
+
+  return {
+    name: setName,
+    weapon: createRandomModItem(
+      baseStats.weapon.id,
+      baseStats.weapon.name,
+      'weapon',
+      baseStats.weapon.atk,
+      baseStats.weapon.def,
+      baseDungeon
+    ),
+    armor: createRandomModItem(
+      baseStats.armor.id,
+      baseStats.armor.name,
+      'armor',
+      baseStats.armor.atk,
+      baseStats.armor.def,
+      baseDungeon
+    ),
+    gloves: createRandomModItem(
+      baseStats.gloves.id,
+      baseStats.gloves.name,
+      'gloves',
+      baseStats.gloves.atk,
+      baseStats.gloves.def,
+      baseDungeon
+    ),
+    boots: createRandomModItem(
+      baseStats.boots.id,
+      baseStats.boots.name,
+      'boots',
+      baseStats.boots.atk,
+      baseStats.boots.def,
+      baseDungeon
+    ),
+    accessory: createRandomModItem(
+      baseStats.accessory.id,
+      baseStats.accessory.name,
+      'accessory',
+      baseStats.accessory.atk,
+      baseStats.accessory.def,
+      baseDungeon
+    ),
+  };
 }

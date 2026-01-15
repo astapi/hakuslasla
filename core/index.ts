@@ -118,6 +118,8 @@ export {
   getDungeonEquipmentSet,
   getEquipmentSetForLevel,
   extractModsFromEquipmentSet,
+  generateRandomEquipmentSet,
+  generateSimulationMods,
 } from './equipmentSets';
 
 export type {
