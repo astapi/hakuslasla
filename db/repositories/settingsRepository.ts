@@ -3,6 +3,11 @@ import { DropFilterSettings, DEFAULT_DROP_FILTER } from '@/types';
 
 const DROP_FILTER_KEY = 'drop_filter_settings';
 const BATTLE_SPEED_KEY = 'battle_speed';
+const LANGUAGE_KEY = 'app_language';
+
+export type AppLanguage = 'ja' | 'en' | 'system';
+export const LANGUAGE_OPTIONS: AppLanguage[] = ['system', 'ja', 'en'];
+export const DEFAULT_LANGUAGE: AppLanguage = 'system';
 
 export type BattleSpeedMultiplier = 1 | 2 | 3 | 5 | 10;
 export const BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [1, 2, 3, 5, 10];
@@ -79,5 +84,21 @@ export const settingsRepository = {
 
   async setBattleSpeed(speed: BattleSpeedMultiplier): Promise<void> {
     await this.set(BATTLE_SPEED_KEY, speed.toString());
+  },
+
+  // 言語設定
+  async getLanguage(): Promise<AppLanguage> {
+    const value = await this.get(LANGUAGE_KEY);
+    if (!value) {
+      return DEFAULT_LANGUAGE;
+    }
+    if (LANGUAGE_OPTIONS.includes(value as AppLanguage)) {
+      return value as AppLanguage;
+    }
+    return DEFAULT_LANGUAGE;
+  },
+
+  async setLanguage(language: AppLanguage): Promise<void> {
+    await this.set(LANGUAGE_KEY, language);
   },
 };

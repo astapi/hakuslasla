@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { characterRepository } from '@/db';
 
 export default function CharacterCreateScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [name, setName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
@@ -28,19 +30,19 @@ export default function CharacterCreateScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.label}>キャラクター名</Text>
+        <Text style={styles.label}>{t('characterCreate.nameLabel')}</Text>
         <TextInput
           style={styles.input}
           value={name}
           onChangeText={setName}
-          placeholder="名前を入力"
+          placeholder={t('characterCreate.namePlaceholder')}
           placeholderTextColor="#666"
           maxLength={20}
           autoFocus
         />
 
         <View style={styles.previewSection}>
-          <Text style={styles.previewTitle}>初期ステータス</Text>
+          <Text style={styles.previewTitle}>{t('characterCreate.initialStats')}</Text>
           <View style={styles.statsRow}>
             <View style={styles.statItem}>
               <Text style={styles.statLabel}>Level</Text>
@@ -64,13 +66,13 @@ export default function CharacterCreateScreen() {
 
       <View style={styles.footer}>
         <Button
-          title="キャンセル"
+          title={t('common.cancel')}
           onPress={handleCancel}
           variant="secondary"
           style={styles.cancelButton}
         />
         <Button
-          title={isCreating ? '作成中...' : '作成'}
+          title={isCreating ? t('common.creating') : t('common.create')}
           onPress={handleCreate}
           variant="primary"
           disabled={!name.trim() || isCreating}

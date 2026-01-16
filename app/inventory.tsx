@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot, Item } from '@/types';
@@ -81,6 +82,7 @@ function calculateItemStats(item: Item) {
 }
 
 export default function InventoryScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { inventory, equipment, equipItem, removeFromInventory } = usePlayerStore();
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
@@ -181,7 +183,7 @@ export default function InventoryScreen() {
     <View style={styles.container}>
       {/* ヘッダー */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>インベントリ</Text>
+        <Text style={styles.headerTitle}>{t('inventory.title')}</Text>
         <Text style={[styles.headerCount, isFull && styles.headerCountFull]}>
           {inventory.length}/{INVENTORY_MAX_SIZE}
         </Text>
@@ -196,10 +198,11 @@ export default function InventoryScreen() {
             onEquip={() => handleEquip(selectedItem.instanceId)}
             onStorage={() => handleStorage(selectedItem)}
             onSell={() => handleSell(selectedItem.instanceId)}
+            t={t}
           />
         ) : (
           <View style={styles.emptyDetail}>
-            <Text style={styles.emptyDetailText}>アイテムを選択してください</Text>
+            <Text style={styles.emptyDetailText}>{t('inventory.selectItem')}</Text>
           </View>
         )}
       </View>
@@ -236,7 +239,7 @@ export default function InventoryScreen() {
         {currentItems.length === 0 ? (
           <View style={styles.emptyGrid}>
             <Text style={styles.emptyGridText}>
-              {getSlotLabel(selectedSlot)}がありません
+              {t('inventory.noItemsInSlot', { slot: t(`slots.${selectedSlot}`) })}
             </Text>
           </View>
         ) : (
@@ -283,7 +286,7 @@ export default function InventoryScreen() {
 
       {/* フッター */}
       <View style={styles.footer}>
-        <Button title="戻る" onPress={handleBack} variant="secondary" />
+        <Button title={t('common.back')} onPress={handleBack} variant="secondary" />
       </View>
     </View>
   );
@@ -309,12 +312,14 @@ function ItemDetail({
   onEquip,
   onStorage,
   onSell,
+  t,
 }: {
   item: Item;
   equippedItem: Item | null;
   onEquip: () => void;
   onStorage: () => void;
   onSell: () => void;
+  t: (key: string) => string;
 }) {
   const stats = calculateItemStats(item);
   const equippedStats = equippedItem ? calculateItemStats(equippedItem) : null;
@@ -325,7 +330,7 @@ function ItemDetail({
       <View style={styles.comparisonContainer}>
         {/* 選択中のアイテム */}
         <View style={styles.comparisonItem}>
-          <Text style={styles.comparisonLabel}>選択中</Text>
+          <Text style={styles.comparisonLabel}>{t('inventory.selected')}</Text>
           <View style={styles.comparisonHeader}>
             <Image
               source={getItemIcon(item.id, item.slot)}
@@ -363,7 +368,7 @@ function ItemDetail({
 
         {/* 装備中のアイテム */}
         <View style={styles.comparisonItem}>
-          <Text style={styles.comparisonLabel}>装備中</Text>
+          <Text style={styles.comparisonLabel}>{t('inventory.equipped')}</Text>
           {equippedItem && equippedStats ? (
             <>
               <View style={styles.comparisonHeader}>
@@ -393,7 +398,7 @@ function ItemDetail({
             </>
           ) : (
             <View style={styles.emptyEquipped}>
-              <Text style={styles.emptyEquippedText}>未装備</Text>
+              <Text style={styles.emptyEquippedText}>{t('common.unequipped')}</Text>
             </View>
           )}
         </View>
@@ -402,15 +407,15 @@ function ItemDetail({
       {/* アクションボタン（案4: メインボタン + アイコンボタン） */}
       <View style={styles.detailActions}>
         <Pressable style={styles.equipButton} onPress={onEquip}>
-          <Text style={styles.equipButtonText}>装備</Text>
+          <Text style={styles.equipButtonText}>{t('common.equip')}</Text>
         </Pressable>
         <Pressable style={styles.iconButton} onPress={onStorage}>
           <MaterialCommunityIcons name="warehouse" size={20} color="#4ECDC4" />
-          <Text style={styles.iconButtonText}>倉庫</Text>
+          <Text style={styles.iconButtonText}>{t('inventory.storage')}</Text>
         </Pressable>
         <Pressable style={styles.iconButton} onPress={onSell}>
           <MaterialCommunityIcons name="cash" size={20} color="#FFD700" />
-          <Text style={styles.iconButtonText}>売却</Text>
+          <Text style={styles.iconButtonText}>{t('common.sell')}</Text>
         </Pressable>
       </View>
     </View>

@@ -1,9 +1,11 @@
 import { View, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { PassiveTree } from '@/components/player/PassiveTree';
 import { Button } from '@/components/common/Button';
 
 export default function SkillsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const handleClose = () => {
@@ -16,7 +18,7 @@ export default function SkillsScreen() {
         <PassiveTree />
       </View>
       <View style={styles.footer}>
-        <Button title="閉じる" onPress={handleClose} variant="secondary" />
+        <Button title={t('common.close')} onPress={handleClose} variant="secondary" />
       </View>
     </View>
   );
