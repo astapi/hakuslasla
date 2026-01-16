@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "hakuslaDungeon",
-    "slug": "hakuslaDungeon",
+    "name": "LootDive",
+    "slug": "LootDive",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "hakusladungeon",
+    "scheme": "lootdive",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.astapi.hakuslaDungeon",
+      "bundleIdentifier": "com.astapi.LootDive",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -24,7 +24,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.astapi.hakuslaDungeon"
+      "package": "com.astapi.LootDive"
     },
     "web": {
       "output": "static",
