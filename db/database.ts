@@ -2,7 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import { CREATE_TABLES_SQL, SCHEMA_VERSION, EQUIPMENT_SLOTS } from './schema';
 import { getCurrentVersion, runMigrations } from './migrations';
 
-const DATABASE_NAME = 'hakusla_dungeon.db';
+const DATABASE_NAME = 'loot_dive.db';
 
 let db: SQLite.SQLiteDatabase | null = null;
 
