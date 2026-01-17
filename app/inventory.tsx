@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot, Item } from '@/types';
-import { getItemIcon, getSlotIcon, getSlotLabel } from '@/data/itemIcons';
+import { getItemIcon, getSlotIcon } from '@/data/itemIcons';
 import { INVENTORY_MAX_SIZE } from '@/core';
 import { storageRepository } from '@/db/repositories/storageRepository';
 import { getTierColor, getTierDisplayName } from '@/data/items';
@@ -225,7 +225,7 @@ export default function InventoryScreen() {
               styles.categoryLabel,
               selectedSlot === slot && styles.categoryLabelActive,
             ]}>
-              {getSlotLabel(slot)}
+              {t(`slots.${slot}`)}
             </Text>
             {slotCounts[slot] > 0 && (
               <View style={styles.countBadge}>

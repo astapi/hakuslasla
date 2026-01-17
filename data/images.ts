@@ -39,6 +39,26 @@ export const monsterImages: Record<string, ImageSourcePropType> = {
   gargoyle: require('@/assets/images/monsters/gargoyle.png'),
   skeleton_knight: require('@/assets/images/monsters/skeleton_knight.png'),
   goblin_warrior: require('@/assets/images/monsters/goblin_warrior.png'),
+  // ゴブリンの砦
+  goblin_archer: require('@/assets/images/monsters/goblin_archer.png'),
+  goblin_shaman: require('@/assets/images/monsters/goblin_shaman.png'),
+  goblin_knight: require('@/assets/images/monsters/goblin_knight.png'),
+  goblin_champion: require('@/assets/images/monsters/goblin_champion.png'),
+  goblin_king: require('@/assets/images/monsters/goblin_king.png'),
+  // 魔王城
+  wyvern: require('@/assets/images/monsters/wyvern.png'),
+  // 氷結の洞窟
+  yeti: require('@/assets/images/monsters/yeti.png'),
+  // 竜の巣穴
+  drake: require('@/assets/images/monsters/drake.png'),
+  fire_dragon: require('@/assets/images/monsters/fire_dragon.png'),
+  ice_dragon: require('@/assets/images/monsters/ice_dragon.png'),
+  thunder_dragon: require('@/assets/images/monsters/thunder_dragon.png'),
+  elder_dragon: require('@/assets/images/monsters/elder_dragon.png'),
+  // 神域の神殿
+  holy_dragon: require('@/assets/images/monsters/holy_dragon.png'),
+  // 混沌の領域
+  chaos_dragon: require('@/assets/images/monsters/chaos_dragon.png'),
 };
 
 /**

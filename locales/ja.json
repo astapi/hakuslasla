@@ -163,5 +163,67 @@
     "hp_more_pct": "HP more",
     "everyTurnHpRegen": "毎ターンHP{{value}}回復",
     "everyTurnHpRegenPct": "毎ターンHP{{value}}%回復"
+  },
+  "dungeon": {
+    "floors": "全{{count}}階",
+    "recommendedLevel": "推奨Lv.{{level}}"
+  },
+  "dungeons": {
+    "grassland": {
+      "name": "始まりの草原",
+      "description": "冒険者が最初に訪れる穏やかな草原。弱いモンスターが生息している。"
+    },
+    "cave": {
+      "name": "地底洞窟",
+      "description": "地下深くに広がる暗い洞窟。中級のモンスターが潜んでいる。"
+    },
+    "ruins": {
+      "name": "忘却の遺跡",
+      "description": "古代文明の遺跡。強力なモンスターが徘徊する危険な場所。"
+    },
+    "goblin_fort": {
+      "name": "ゴブリンの砦",
+      "description": "ゴブリンたちが築いた巨大な砦。奥深くにはゴブリンキングが君臨している。"
+    },
+    "demon_castle": {
+      "name": "魔王城",
+      "description": "闇の力が渦巻く魔王の居城。強力な魔物たちが主を守護している。"
+    },
+    "ice_cave": {
+      "name": "氷結の洞窟",
+      "description": "永久凍土の奥深くに眠る氷の洞窟。極寒の魔物が生息する。"
+    },
+    "volcano": {
+      "name": "灼熱の火山",
+      "description": "活火山の内部に広がる灼熱の迷宮。炎の魔物が棲みついている。"
+    },
+    "dark_forest": {
+      "name": "深淵の森",
+      "description": "光の届かない暗黒の森。古代の魔獣が潜んでいる。"
+    },
+    "sky_tower": {
+      "name": "天空の塔",
+      "description": "雲を突き抜けてそびえ立つ神秘の塔。天界の守護者が待ち受ける。"
+    },
+    "hell_gate": {
+      "name": "地獄の門",
+      "description": "冥界へと通じる禁断の門。地獄の番人たちが侵入者を阻む。"
+    },
+    "dragon_nest": {
+      "name": "竜の巣穴",
+      "description": "古龍たちが眠る伝説の巣穴。最強の竜種が生息する。"
+    },
+    "sacred_temple": {
+      "name": "神域の神殿",
+      "description": "神々に仕える守護者たちが守る聖なる神殿。"
+    },
+    "chaos_realm": {
+      "name": "混沌の領域",
+      "description": "現実と虚無の狭間に存在する混沌の世界。あらゆる法則が歪む。"
+    },
+    "final_land": {
+      "name": "終焉の地",
+      "description": "世界の果てに存在する最後の地。最強の存在が待ち構える。"
+    }
   }
 }

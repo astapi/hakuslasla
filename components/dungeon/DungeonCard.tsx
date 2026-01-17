@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { DungeonListItem } from '@/types';
 
 interface DungeonCardProps {
@@ -7,6 +8,8 @@ interface DungeonCardProps {
 }
 
 export const DungeonCard = ({ dungeon, onPress }: DungeonCardProps) => {
+  const { t } = useTranslation();
+
   return (
     <Pressable
       style={({ pressed }) => [styles.container, pressed && styles.pressed]}
@@ -16,13 +19,13 @@ export const DungeonCard = ({ dungeon, onPress }: DungeonCardProps) => {
         <Text style={styles.icon}>{dungeon.maxFloor}F</Text>
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.name}>{dungeon.name}</Text>
+        <Text style={styles.name}>{t(`dungeons.${dungeon.id}.name`)}</Text>
         <Text style={styles.description} numberOfLines={2}>
-          {dungeon.description}
+          {t(`dungeons.${dungeon.id}.description`)}
         </Text>
         <View style={styles.metaRow}>
-          <Text style={styles.floors}>全{dungeon.maxFloor}階</Text>
-          <Text style={styles.level}>推奨Lv.{dungeon.recommendedLevel}</Text>
+          <Text style={styles.floors}>{t('dungeon.floors', { count: dungeon.maxFloor })}</Text>
+          <Text style={styles.level}>{t('dungeon.recommendedLevel', { level: dungeon.recommendedLevel })}</Text>
         </View>
       </View>
       <View style={styles.arrowContainer}>
