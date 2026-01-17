@@ -3,9 +3,13 @@ import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
-import { initializeDatabase } from '@/db';
+import { useTranslation } from 'react-i18next';
+import { initializeDatabase, settingsRepository } from '@/db';
+import { changeLanguage } from '@/lib/i18n';
+import '@/lib/i18n';
 
 export default function RootLayout() {
+  const { t } = useTranslation();
   const [isDbReady, setIsDbReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -13,9 +17,12 @@ export default function RootLayout() {
     const init = async () => {
       try {
         await initializeDatabase();
+        // 保存された言語設定を読み込んで適用
+        const savedLanguage = await settingsRepository.getLanguage();
+        changeLanguage(savedLanguage);
         setIsDbReady(true);
       } catch (e) {
-        setError(e instanceof Error ? e.message : 'DB初期化エラー');
+        setError(e instanceof Error ? e.message : 'DB initialization error');
       }
     };
     init();
@@ -24,7 +31,7 @@ export default function RootLayout() {
   if (error) {
     return (
       <View style={styles.loadingContainer}>
-        <Text style={styles.errorText}>エラー: {error}</Text>
+        <Text style={styles.errorText}>{error}</Text>
         <StatusBar style="light" />
       </View>
     );
@@ -34,7 +41,7 @@ export default function RootLayout() {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#4CAF50" />
-        <Text style={styles.loadingText}>読み込み中...</Text>
+        <Text style={styles.loadingText}>{t('common.loading')}</Text>
         <StatusBar style="light" />
       </View>
     );
@@ -59,21 +66,21 @@ export default function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            title: 'キャラクター選択',
+            title: t('characterSelect.subtitle'),
             headerShown: false,
           }}
         />
         <Stack.Screen
           name="character-create"
           options={{
-            title: 'キャラクター作成',
+            title: t('characterCreate.nameLabel'),
             presentation: 'modal',
           }}
         />
         <Stack.Screen
           name="home"
           options={{
-            title: 'ホーム',
+            title: t('characterSelect.title'),
             headerBackVisible: false,
             gestureEnabled: false,
           }}
@@ -81,19 +88,19 @@ export default function RootLayout() {
         <Stack.Screen
           name="dungeon-select"
           options={{
-            title: 'ダンジョン選択',
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="inventory"
           options={{
-            title: 'インベントリ',
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="storage"
           options={{
-            title: '倉庫',
+            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -105,7 +112,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="result"
           options={{
-            title: '結果',
+            title: t('result.rewards'),
             headerBackVisible: false,
             gestureEnabled: false,
           }}
@@ -113,8 +120,14 @@ export default function RootLayout() {
         <Stack.Screen
           name="skills"
           options={{
-            title: 'スキルツリー',
+            headerShown: false,
             presentation: 'modal',
+          }}
+        />
+        <Stack.Screen
+          name="settings"
+          options={{
+            headerShown: false,
           }}
         />
       </Stack>

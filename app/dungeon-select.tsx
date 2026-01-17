@@ -1,11 +1,15 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { DungeonCard } from '@/components/dungeon/DungeonCard';
 import { Button } from '@/components/common/Button';
 import { getDungeonList } from '@/data/dungeons';
 
 export default function DungeonSelectScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const dungeons = getDungeonList();
 
   const handleDungeonSelect = (dungeonId: string) => {
@@ -19,9 +23,9 @@ export default function DungeonSelectScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>ダンジョン選択</Text>
-        <Text style={styles.subtitle}>挑戦するダンジョンを選んでください</Text>
+      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 16 }]}>
+        <Text style={styles.title}>{t('dungeonSelect.title')}</Text>
+        <Text style={styles.subtitle}>{t('dungeonSelect.subtitle')}</Text>
 
         <View style={styles.dungeonList}>
           {dungeons.map((dungeon) => (
@@ -35,7 +39,7 @@ export default function DungeonSelectScreen() {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Button title="戻る" onPress={handleBack} variant="secondary" />
+        <Button title={t('common.back')} onPress={handleBack} variant="secondary" />
       </View>
     </View>
   );

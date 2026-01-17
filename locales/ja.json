@@ -1,0 +1,167 @@
+{
+  "common": {
+    "loading": "読み込み中...",
+    "back": "戻る",
+    "close": "閉じる",
+    "cancel": "キャンセル",
+    "change": "変更",
+    "delete": "削除",
+    "reset": "リセット",
+    "create": "作成",
+    "creating": "作成中...",
+    "equip": "装備",
+    "sell": "売却",
+    "none": "なし",
+    "unequipped": "未装備",
+    "items": "個"
+  },
+  "characterSelect": {
+    "title": "LootDive",
+    "subtitle": "キャラクターを選択",
+    "empty": "キャラクターがいません",
+    "emptyHint": "新しいキャラクターを作成してください",
+    "createNew": "新しいキャラクターを作成"
+  },
+  "characterCreate": {
+    "nameLabel": "キャラクター名",
+    "namePlaceholder": "名前を入力",
+    "initialStats": "初期ステータス"
+  },
+  "home": {
+    "menu": {
+      "skills": "スキル",
+      "inventory": "持ち物",
+      "storage": "倉庫",
+      "settings": "設定",
+      "adventure": "冒険"
+    }
+  },
+  "dungeonSelect": {
+    "title": "ダンジョン選択",
+    "subtitle": "挑戦するダンジョンを選んでください"
+  },
+  "battle": {
+    "floor": "階",
+    "round": "周目",
+    "autoRunning": "自動周回中",
+    "pause": "一時停止",
+    "resume": "再開",
+    "autoRun": "自動周回",
+    "stopAutoRun": "周回停止",
+    "retreat": "撤退",
+    "retreatConfirm": {
+      "title": "撤退確認",
+      "message": "本当に撤退しますか？\n獲得した経験値とアイテムは失われます。",
+      "confirm": "撤退する"
+    },
+    "victory": "勝利！",
+    "defeat": "敗北...",
+    "cleared": "ダンジョン踏破！",
+    "player": "プレイヤー"
+  },
+  "result": {
+    "cleared": "ダンジョン踏破！",
+    "defeat": "敗北...",
+    "runsCompleted": "{{count}}周完了",
+    "floorsCleared": "{{current}}/{{max}} 階クリア",
+    "rewards": "獲得報酬",
+    "exp": "経験値",
+    "totalExp": "累計経験値",
+    "items": "獲得アイテム",
+    "totalItems": "累計アイテム ({{count}}個)",
+    "noItems": "アイテムなし",
+    "returnButton": "ダンジョン選択に戻る"
+  },
+  "inventory": {
+    "title": "インベントリ",
+    "selectItem": "アイテムを選択してください",
+    "selected": "選択中",
+    "equipped": "装備中",
+    "storage": "倉庫",
+    "noItemsInSlot": "{{slot}}がありません"
+  },
+  "storage": {
+    "title": "倉庫",
+    "selectItem": "アイテムを選択してください",
+    "toInventory": "インベントリへ",
+    "inventoryFull": "インベントリ満杯",
+    "noItemsInSlot": "{{slot}}がありません"
+  },
+  "settings": {
+    "title": "設定",
+    "dropFilterTitle": "ドロップフィルター設定",
+    "language": {
+      "title": "言語設定",
+      "description": "アプリの表示言語を選択します",
+      "japanese": "日本語",
+      "english": "English",
+      "system": "システム設定に従う"
+    },
+    "categoryFilter": {
+      "title": "カテゴリフィルター",
+      "description": "ONのカテゴリのみドロップを取得します"
+    },
+    "modCountFilter": {
+      "title": "最小MOD数フィルター",
+      "description": "指定した数以上のMODを持つアイテムのみ取得します（0で無効）",
+      "disabled": "無効",
+      "value": "{{count}}個以上"
+    },
+    "tierFilter": {
+      "title": "MOD Tierフィルター",
+      "description": "指定したTier以下のMODを1つ以上持つアイテムのみ取得します（Tier1が最高品質）",
+      "disabled": "無効",
+      "value": "Tier {{tier}} 以下",
+      "hint": "Tier 1 = 最高品質, Tier 10 = 最低品質"
+    },
+    "currentFilter": {
+      "title": "現在のフィルター",
+      "modCount": "MOD {{count}}個以上",
+      "tierBelow": "Tier {{tier}} 以下のMODを含む",
+      "noFilter": "フィルタリングなし（すべて取得）"
+    }
+  },
+  "status": {
+    "title": "ステータス",
+    "tapForDetails": "タップで詳細表示",
+    "critRate": "クリ率",
+    "critDamage": "クリダメ",
+    "poisonChance": "毒付与",
+    "hpRegen": "HP回復",
+    "hpOnHit": "HIT回復",
+    "hpOnCrit": "クリ回復",
+    "perSecond": "/秒",
+    "max": "MAX"
+  },
+  "equipment": {
+    "title": "装備",
+    "slot": "スロット",
+    "item": "アイテム",
+    "mod": "MOD"
+  },
+  "slots": {
+    "weapon": "武器",
+    "armor": "防具",
+    "gloves": "手袋",
+    "boots": "靴",
+    "accessory": "アクセ"
+  },
+  "mods": {
+    "atk_bonus": "ATK",
+    "def_bonus": "DEF",
+    "hp_regen": "回復",
+    "hp_regen_pct": "HP回復",
+    "poison_chance": "毒",
+    "critical_chance": "クリ",
+    "critical_damage": "クリダメ",
+    "atk_increased_pct": "ATK",
+    "def_increased_pct": "DEF",
+    "hp_increased_pct": "HP",
+    "hp_bonus": "HP",
+    "atk_more_pct": "ATK more",
+    "def_more_pct": "DEF more",
+    "hp_more_pct": "HP more",
+    "everyTurnHpRegen": "毎ターンHP{{value}}回復",
+    "everyTurnHpRegenPct": "毎ターンHP{{value}}%回復"
+  }
+}

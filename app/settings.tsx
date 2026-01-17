@@ -1,9 +1,13 @@
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/common/Button';
 import { DropFilterSettings, DEFAULT_DROP_FILTER, EquipmentSlot } from '@/types';
-import { settingsRepository } from '@/db/repositories/settingsRepository';
+import { settingsRepository, AppLanguage, LANGUAGE_OPTIONS, DEFAULT_LANGUAGE } from '@/db/repositories/settingsRepository';
+import { changeLanguage } from '@/lib/i18n';
 
 const SLOT_LABELS: Record<EquipmentSlot, string> = {
   weapon: '武器',
@@ -22,8 +26,11 @@ const SLOT_ICONS: Record<EquipmentSlot, string> = {
 };
 
 export default function SettingsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
+  const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -32,11 +39,21 @@ export default function SettingsScreen() {
 
   const loadSettings = async () => {
     try {
-      const loaded = await settingsRepository.getDropFilter();
+      const [loaded, savedLanguage] = await Promise.all([
+        settingsRepository.getDropFilter(),
+        settingsRepository.getLanguage(),
+      ]);
       setSettings(loaded);
+      setLanguage(savedLanguage);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleLanguageChange = async (newLanguage: AppLanguage) => {
+    setLanguage(newLanguage);
+    await settingsRepository.setLanguage(newLanguage);
+    changeLanguage(newLanguage);
   };
 
   const saveSettings = async (newSettings: DropFilterSettings) => {
@@ -77,29 +94,62 @@ export default function SettingsScreen() {
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <Text style={styles.loadingText}>読み込み中...</Text>
+        <Text style={styles.loadingText}>{t('common.loading')}</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={handleBack}>
-          <MaterialCommunityIcons name="arrow-left" size={24} color="#fff" />
-        </Pressable>
-        <Text style={styles.headerTitle}>ドロップフィルター設定</Text>
-        <Pressable style={styles.resetButton} onPress={resetToDefault}>
-          <Text style={styles.resetButtonText}>リセット</Text>
-        </Pressable>
+      {/* ヘッダー */}
+      <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+        <Text style={styles.headerTitle}>{t('settings.title')}</Text>
       </View>
 
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+        {/* 言語設定 */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.language.title')}</Text>
+          <Text style={styles.sectionDescription}>
+            {t('settings.language.description')}
+          </Text>
+          <View style={styles.languageOptions}>
+            {LANGUAGE_OPTIONS.map((option) => (
+              <Pressable
+                key={option}
+                style={[
+                  styles.languageOption,
+                  language === option && styles.languageOptionSelected,
+                ]}
+                onPress={() => handleLanguageChange(option)}
+              >
+                <MaterialCommunityIcons
+                  name={language === option ? 'radiobox-marked' : 'radiobox-blank'}
+                  size={20}
+                  color={language === option ? '#4CAF50' : '#666'}
+                />
+                <Text
+                  style={[
+                    styles.languageOptionText,
+                    language === option && styles.languageOptionTextSelected,
+                  ]}
+                >
+                  {option === 'system'
+                    ? t('settings.language.system')
+                    : option === 'ja'
+                    ? t('settings.language.japanese')
+                    : t('settings.language.english')}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+
         {/* カテゴリフィルター */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>カテゴリフィルター</Text>
+          <Text style={styles.sectionTitle}>{t('settings.categoryFilter.title')}</Text>
           <Text style={styles.sectionDescription}>
-            ONのカテゴリのみドロップを取得します
+            {t('settings.categoryFilter.description')}
           </Text>
           {(Object.keys(SLOT_LABELS) as EquipmentSlot[]).map((slot) => (
             <View key={slot} style={styles.filterRow}>
@@ -109,7 +159,7 @@ export default function SettingsScreen() {
                   size={20}
                   color="#aaa"
                 />
-                <Text style={styles.filterLabelText}>{SLOT_LABELS[slot]}</Text>
+                <Text style={styles.filterLabelText}>{t(`slots.${slot}`)}</Text>
               </View>
               <Switch
                 value={settings.categories[slot]}
@@ -123,9 +173,9 @@ export default function SettingsScreen() {
 
         {/* MOD数フィルター */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>最小MOD数フィルター</Text>
+          <Text style={styles.sectionTitle}>{t('settings.modCountFilter.title')}</Text>
           <Text style={styles.sectionDescription}>
-            指定した数以上のMODを持つアイテムのみ取得します（0で無効）
+            {t('settings.modCountFilter.description')}
           </Text>
           <View style={styles.numberInputRow}>
             <Pressable
@@ -137,7 +187,7 @@ export default function SettingsScreen() {
             </Pressable>
             <View style={styles.numberDisplay}>
               <Text style={styles.numberValue}>
-                {settings.minModCount === 0 ? '無効' : `${settings.minModCount}個以上`}
+                {settings.minModCount === 0 ? t('settings.modCountFilter.disabled') : t('settings.modCountFilter.value', { count: settings.minModCount })}
               </Text>
             </View>
             <Pressable
@@ -152,9 +202,9 @@ export default function SettingsScreen() {
 
         {/* MOD Tierフィルター */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>MOD Tierフィルター</Text>
+          <Text style={styles.sectionTitle}>{t('settings.tierFilter.title')}</Text>
           <Text style={styles.sectionDescription}>
-            指定したTier以下のMODを1つ以上持つアイテムのみ取得します（Tier1が最高品質）
+            {t('settings.tierFilter.description')}
           </Text>
           <View style={styles.numberInputRow}>
             <Pressable
@@ -166,7 +216,7 @@ export default function SettingsScreen() {
             </Pressable>
             <View style={styles.numberDisplay}>
               <Text style={styles.numberValue}>
-                {settings.maxTier === 0 ? '無効' : `Tier ${settings.maxTier} 以下`}
+                {settings.maxTier === 0 ? t('settings.tierFilter.disabled') : t('settings.tierFilter.value', { tier: settings.maxTier })}
               </Text>
             </View>
             <Pressable
@@ -179,40 +229,48 @@ export default function SettingsScreen() {
           </View>
           {settings.maxTier > 0 && (
             <Text style={styles.tierHint}>
-              Tier 1 = 最高品質, Tier 10 = 最低品質
+              {t('settings.tierFilter.hint')}
             </Text>
           )}
         </View>
 
         {/* 現在の設定サマリー */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>現在のフィルター</Text>
+          <Text style={styles.sectionTitle}>{t('settings.currentFilter.title')}</Text>
           <View style={styles.summaryBox}>
             <Text style={styles.summaryText}>
               {Object.entries(settings.categories)
                 .filter(([, enabled]) => enabled)
-                .map(([slot]) => SLOT_LABELS[slot as EquipmentSlot])
-                .join('、') || 'なし'}
+                .map(([slot]) => t(`slots.${slot}`))
+                .join('、') || t('common.none')}
             </Text>
             {settings.minModCount > 0 && (
               <Text style={styles.summaryText}>
-                MOD {settings.minModCount}個以上
+                {t('settings.currentFilter.modCount', { count: settings.minModCount })}
               </Text>
             )}
             {settings.maxTier > 0 && (
               <Text style={styles.summaryText}>
-                Tier {settings.maxTier} 以下のMODを含む
+                {t('settings.currentFilter.tierBelow', { tier: settings.maxTier })}
               </Text>
             )}
             {settings.minModCount === 0 && settings.maxTier === 0 &&
               Object.values(settings.categories).every(v => v) && (
               <Text style={styles.summaryTextDisabled}>
-                フィルタリングなし（すべて取得）
+                {t('settings.currentFilter.noFilter')}
               </Text>
             )}
           </View>
         </View>
       </ScrollView>
+
+      {/* フッター */}
+      <View style={styles.footer}>
+        <Button title={t('common.back')} onPress={handleBack} variant="secondary" />
+        <Pressable style={styles.resetButton} onPress={resetToDefault}>
+          <Text style={styles.resetButtonText}>{t('common.reset')}</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -228,24 +286,21 @@ const styles = StyleSheet.create({
     marginTop: 32,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
     paddingHorizontal: 16,
-    paddingTop: 48,
-    paddingBottom: 16,
-    backgroundColor: '#16213e',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
-  },
-  backButton: {
-    padding: 8,
-    marginRight: 8,
+    paddingTop: 16,
+    paddingBottom: 8,
   },
   headerTitle: {
-    flex: 1,
     fontSize: 18,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    padding: 16,
+    paddingBottom: 32,
   },
   resetButton: {
     paddingHorizontal: 12,
@@ -343,5 +398,30 @@ const styles = StyleSheet.create({
   summaryTextDisabled: {
     fontSize: 13,
     color: '#666',
+  },
+  languageOptions: {
+    gap: 8,
+  },
+  languageOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    borderRadius: 8,
+    gap: 12,
+  },
+  languageOptionSelected: {
+    backgroundColor: 'rgba(76, 175, 80, 0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(76, 175, 80, 0.3)',
+  },
+  languageOptionText: {
+    fontSize: 15,
+    color: '#aaa',
+  },
+  languageOptionTextSelected: {
+    color: '#fff',
+    fontWeight: '600',
   },
 });
