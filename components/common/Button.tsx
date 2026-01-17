@@ -1,4 +1,5 @@
 import { Pressable, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { ms, fs } from '@/utils/scaling';
 
 interface ButtonProps {
   title: string;
@@ -51,9 +52,9 @@ export const Button = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 8,
+    paddingVertical: ms(14),
+    paddingHorizontal: ms(24),
+    borderRadius: ms(8),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: fs(16),
     fontWeight: 'bold',
     color: '#fff',
   },

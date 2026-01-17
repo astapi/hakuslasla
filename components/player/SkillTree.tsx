@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { skillNodes, canUnlockSkill } from '@/data/skills';
+import { ms, fs } from '@/utils/scaling';
 
 export const SkillTree = () => {
   const { skillPoints, unlockedSkills, unlockSkill } = usePlayerStore();
@@ -58,23 +59,23 @@ export const SkillTree = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 12,
-    padding: 12,
+    borderRadius: ms(12),
+    padding: ms(12),
     flex: 1,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: ms(16),
   },
   title: {
-    fontSize: 16,
+    fontSize: fs(16),
     fontWeight: 'bold',
     color: '#fff',
   },
   skillPoints: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#FFD700',
     fontWeight: 'bold',
   },
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   },
   connector: {
     alignItems: 'center',
-    height: 20,
+    height: ms(20),
   },
   connectorLine: {
     width: 2,
@@ -92,8 +93,8 @@ const styles = StyleSheet.create({
   },
   skillNode: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
-    padding: 12,
+    borderRadius: ms(8),
+    padding: ms(12),
     borderWidth: 2,
     borderColor: 'rgba(255, 255, 255, 0.2)',
   },
@@ -106,28 +107,28 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 215, 0, 0.1)',
   },
   skillName: {
-    fontSize: 14,
+    fontSize: fs(14),
     fontWeight: 'bold',
     color: '#aaa',
-    marginBottom: 4,
+    marginBottom: ms(4),
   },
   skillNameUnlocked: {
     color: '#fff',
   },
   skillDescription: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#888',
   },
   unlockedBadge: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#4CAF50',
-    marginTop: 4,
+    marginTop: ms(4),
     fontWeight: 'bold',
   },
   availableBadge: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#FFD700',
-    marginTop: 4,
+    marginTop: ms(4),
     fontWeight: 'bold',
   },
   skillNodePressed: {

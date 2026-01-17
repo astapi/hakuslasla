@@ -1,13 +1,14 @@
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
+import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { DropFilterSettings, DEFAULT_DROP_FILTER, EquipmentSlot } from '@/types';
 import { settingsRepository, AppLanguage, LANGUAGE_OPTIONS, DEFAULT_LANGUAGE } from '@/db/repositories/settingsRepository';
 import { changeLanguage } from '@/lib/i18n';
+import { ms, fs } from '@/utils/scaling';
 
 const SLOT_LABELS: Record<EquipmentSlot, string> = {
   weapon: '武器',
@@ -28,7 +29,6 @@ const SLOT_ICONS: Record<EquipmentSlot, string> = {
 export default function SettingsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
   const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
   const [isLoading, setIsLoading] = useState(true);
@@ -93,16 +93,16 @@ export default function SettingsScreen() {
 
   if (isLoading) {
     return (
-      <View style={styles.container}>
+      <ScreenWrapper>
         <Text style={styles.loadingText}>{t('common.loading')}</Text>
-      </View>
+      </ScreenWrapper>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
       {/* ヘッダー */}
-      <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+      <View style={styles.header}>
         <Text style={styles.headerTitle}>{t('settings.title')}</Text>
       </View>
 
@@ -271,7 +271,7 @@ export default function SettingsScreen() {
           <Text style={styles.resetButtonText}>{t('common.reset')}</Text>
         </Pressable>
       </View>
-    </View>
+    </ScreenWrapper>
   );
 }
 
@@ -283,87 +283,87 @@ const styles = StyleSheet.create({
   loadingText: {
     color: '#aaa',
     textAlign: 'center',
-    marginTop: 32,
+    marginTop: ms(32),
   },
   header: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
+    paddingHorizontal: ms(16),
+    paddingTop: ms(16),
+    paddingBottom: ms(8),
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
   },
   footer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    padding: 16,
-    paddingBottom: 32,
+    gap: ms(12),
+    padding: ms(16),
+    paddingBottom: ms(32),
   },
   resetButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingHorizontal: ms(12),
+    paddingVertical: ms(6),
     backgroundColor: 'rgba(244, 67, 54, 0.2)',
-    borderRadius: 6,
+    borderRadius: ms(6),
   },
   resetButtonText: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#F44336',
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
-    padding: 16,
-    paddingBottom: 32,
+    padding: ms(16),
+    paddingBottom: ms(32),
   },
   section: {
-    marginBottom: 24,
+    marginBottom: ms(24),
     backgroundColor: '#16213e',
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: ms(12),
+    padding: ms(16),
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: fs(16),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 4,
+    marginBottom: ms(4),
   },
   sectionDescription: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#888',
-    marginBottom: 16,
+    marginBottom: ms(16),
   },
   filterRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: ms(12),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',
   },
   filterLabel: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: ms(12),
   },
   filterLabelText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#fff',
   },
   numberInputRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16,
+    gap: ms(16),
   },
   numberButton: {
-    width: 48,
-    height: 48,
+    width: ms(48),
+    height: ms(48),
     backgroundColor: '#4CAF50',
-    borderRadius: 24,
+    borderRadius: ms(24),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -371,45 +371,45 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
   },
   numberDisplay: {
-    minWidth: 120,
+    minWidth: ms(120),
     alignItems: 'center',
   },
   numberValue: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
   },
   tierHint: {
-    fontSize: 11,
+    fontSize: fs(11),
     color: '#666',
     textAlign: 'center',
-    marginTop: 12,
+    marginTop: ms(12),
   },
   summaryBox: {
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    borderRadius: 8,
-    padding: 12,
-    gap: 4,
+    borderRadius: ms(8),
+    padding: ms(12),
+    gap: ms(4),
   },
   summaryText: {
-    fontSize: 13,
+    fontSize: fs(13),
     color: '#4CAF50',
   },
   summaryTextDisabled: {
-    fontSize: 13,
+    fontSize: fs(13),
     color: '#666',
   },
   languageOptions: {
-    gap: 8,
+    gap: ms(8),
   },
   languageOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
+    paddingVertical: ms(12),
+    paddingHorizontal: ms(12),
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    borderRadius: 8,
-    gap: 12,
+    borderRadius: ms(8),
+    gap: ms(12),
   },
   languageOptionSelected: {
     backgroundColor: 'rgba(76, 175, 80, 0.15)',
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(76, 175, 80, 0.3)',
   },
   languageOptionText: {
-    fontSize: 15,
+    fontSize: fs(15),
     color: '#aaa',
   },
   languageOptionTextSelected: {

@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot } from '@/types';
 import { getSlotIcon, getSlotLabel } from '@/data/itemIcons';
+import { ms, fs, s } from '@/utils/scaling';
 
 export const EquipmentSlots = () => {
   const { equipment } = usePlayerStore();
@@ -63,14 +64,14 @@ export const EquipmentSlots = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 12,
-    padding: 12,
+    borderRadius: ms(12),
+    padding: ms(12),
   },
   title: {
-    fontSize: 16,
+    fontSize: fs(16),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 12,
+    marginBottom: ms(12),
   },
   slotsContainer: {
     flexDirection: 'row',
@@ -79,37 +80,37 @@ const styles = StyleSheet.create({
   slotItem: {
     alignItems: 'center',
     flex: 1,
-    paddingHorizontal: 4,
+    paddingHorizontal: ms(4),
   },
   slotIcon: {
-    width: 28,
-    height: 28,
-    marginBottom: 4,
+    width: s(28),
+    height: s(28),
+    marginBottom: ms(4),
   },
   slotLabel: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#aaa',
-    marginBottom: 2,
+    marginBottom: ms(2),
   },
   itemName: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#fff',
     textAlign: 'center',
   },
   itemStats: {
-    fontSize: 8,
+    fontSize: fs(8),
     color: '#4CAF50',
     textAlign: 'center',
   },
   modBadge: {
     backgroundColor: 'rgba(255, 215, 0, 0.3)',
-    borderRadius: 4,
-    paddingHorizontal: 4,
-    paddingVertical: 1,
-    marginTop: 2,
+    borderRadius: ms(4),
+    paddingHorizontal: ms(4),
+    paddingVertical: ms(1),
+    marginTop: ms(2),
   },
   modBadgeText: {
-    fontSize: 7,
+    fontSize: fs(7),
     color: '#FFD700',
     fontWeight: 'bold',
   },

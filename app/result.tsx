@@ -2,7 +2,9 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
+import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { Item } from '@/types';
+import { ms, fs } from '@/utils/scaling';
 
 export default function ResultScreen() {
   const { t } = useTranslation();
@@ -37,7 +39,7 @@ export default function ResultScreen() {
   const isMultiRun = runCount > 1;
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
         <View style={styles.resultHeader}>
           <Text style={[styles.resultText, isCleared ? styles.clearedText : styles.defeatText]}>
@@ -100,7 +102,7 @@ export default function ResultScreen() {
       <View style={styles.footer}>
         <Button title={t('result.returnButton')} onPress={handleReturn} />
       </View>
-    </View>
+    </ScreenWrapper>
   );
 }
 
@@ -113,15 +115,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: 24,
+    padding: ms(24),
     alignItems: 'center',
   },
   resultHeader: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: ms(24),
   },
   resultText: {
-    fontSize: 28,
+    fontSize: fs(28),
     fontWeight: 'bold',
   },
   clearedText: {
@@ -131,95 +133,95 @@ const styles = StyleSheet.create({
     color: '#F44336',
   },
   runCountText: {
-    fontSize: 18,
+    fontSize: fs(18),
     color: '#4CAF50',
-    marginTop: 8,
+    marginTop: ms(8),
     fontWeight: 'bold',
   },
   dungeonInfo: {
     alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: ms(32),
   },
   dungeonName: {
-    fontSize: 20,
+    fontSize: fs(20),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 8,
+    marginBottom: ms(8),
   },
   floorProgress: {
-    fontSize: 16,
+    fontSize: fs(16),
     color: '#aaa',
   },
   rewardsSection: {
     width: '100%',
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: ms(12),
+    padding: ms(16),
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 16,
+    marginBottom: ms(16),
     textAlign: 'center',
   },
   rewardItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: ms(8),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
   rewardLabel: {
-    fontSize: 16,
+    fontSize: fs(16),
     color: '#aaa',
   },
   rewardValue: {
-    fontSize: 16,
+    fontSize: fs(16),
     fontWeight: 'bold',
     color: '#4CAF50',
   },
   itemsSection: {
-    marginTop: 16,
+    marginTop: ms(16),
   },
   itemsTitle: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#aaa',
-    marginBottom: 8,
+    marginBottom: ms(8),
   },
   itemsScrollView: {
-    maxHeight: 300,
+    maxHeight: ms(300),
   },
   itemRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: ms(8),
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    marginBottom: 4,
+    borderRadius: ms(8),
+    paddingHorizontal: ms(12),
+    marginBottom: ms(4),
   },
   itemName: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#fff',
     fontWeight: 'bold',
   },
   itemStats: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#4CAF50',
   },
   noItems: {
-    paddingVertical: 16,
+    paddingVertical: ms(16),
     alignItems: 'center',
   },
   noItemsText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#666',
   },
   footer: {
-    padding: 16,
-    paddingBottom: 32,
+    padding: ms(16),
+    paddingBottom: ms(32),
   },
 });

@@ -5,8 +5,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { StatusPanel } from '@/components/player/StatusPanel';
 import { EquipmentList } from '@/components/player/EquipmentList';
+import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { playerImages } from '@/data/images';
+import { ms, fs } from '@/utils/scaling';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
@@ -54,14 +56,14 @@ export default function HomeScreen() {
 
   if (!isLoaded) {
     return (
-      <View style={styles.container}>
+      <ScreenWrapper>
         <Text style={styles.loadingText}>{t('common.loading')}</Text>
-      </View>
+      </ScreenWrapper>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper edges={['top', 'left', 'right']}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <View style={styles.characterSection}>
           <Image
@@ -139,7 +141,7 @@ export default function HomeScreen() {
           <Text style={styles.menuLabel}>{t('home.menu.adventure')}</Text>
         </Pressable>
       </View>
-    </View>
+    </ScreenWrapper>
   );
 }
 
@@ -151,23 +153,23 @@ const styles = StyleSheet.create({
   loadingText: {
     color: '#aaa',
     textAlign: 'center',
-    marginTop: 32,
+    marginTop: ms(32),
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
-    padding: 16,
-    paddingBottom: 80,
+    padding: ms(16),
+    paddingBottom: ms(80),
   },
   characterSection: {
     flexDirection: 'row',
-    marginBottom: 16,
+    marginBottom: ms(16),
   },
   characterImage: {
-    width: 120,
-    height: 160,
-    marginRight: 16,
+    width: ms(120),
+    height: ms(160),
+    marginRight: ms(16),
   },
   characterInfo: {
     flex: 1,
@@ -177,49 +179,49 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: ms(12),
   },
   characterName: {
-    fontSize: 20,
+    fontSize: fs(20),
     fontWeight: 'bold',
     color: '#fff',
   },
   headerButtons: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: ms(8),
   },
   debugButton: {
-    padding: 6,
+    padding: ms(6),
     backgroundColor: 'rgba(255, 165, 0, 0.15)',
-    borderRadius: 6,
+    borderRadius: ms(6),
   },
   changeButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingHorizontal: ms(12),
+    paddingVertical: ms(6),
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 6,
+    borderRadius: ms(6),
   },
   changeButtonText: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#aaa',
   },
   section: {
-    marginTop: 16,
+    marginTop: ms(16),
   },
   bottomMenu: {
     flexDirection: 'row',
     backgroundColor: '#16213e',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    paddingBottom: 24,
+    paddingVertical: ms(8),
+    paddingHorizontal: ms(16),
+    paddingBottom: ms(24),
     borderTopWidth: 1,
     borderTopColor: 'rgba(255, 255, 255, 0.1)',
   },
   menuItem: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: ms(8),
   },
   menuItemPressed: {
     opacity: 0.6,
@@ -229,25 +231,25 @@ const styles = StyleSheet.create({
   },
   badge: {
     position: 'absolute',
-    top: -4,
-    right: -8,
+    top: ms(-4),
+    right: ms(-8),
     backgroundColor: '#F44336',
-    borderRadius: 8,
-    minWidth: 16,
-    height: 16,
+    borderRadius: ms(8),
+    minWidth: ms(16),
+    height: ms(16),
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 4,
+    paddingHorizontal: ms(4),
   },
   badgeText: {
-    fontSize: 10,
+    fontSize: fs(10),
     fontWeight: 'bold',
     color: '#fff',
   },
   menuLabel: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#aaa',
-    marginTop: 4,
+    marginTop: ms(4),
   },
   menuLabelHighlight: {
     color: '#FFD700',

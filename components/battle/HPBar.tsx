@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { ms, fs } from '@/utils/scaling';
 
 interface HPBarProps {
   current: number;
@@ -32,19 +33,19 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   barBackground: {
-    height: 16,
+    height: ms(16),
     backgroundColor: '#333',
-    borderRadius: 8,
+    borderRadius: ms(8),
     overflow: 'hidden',
   },
   barFill: {
     height: '100%',
-    borderRadius: 8,
+    borderRadius: ms(8),
   },
   text: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#fff',
     textAlign: 'center',
-    marginTop: 2,
+    marginTop: ms(2),
   },
 });

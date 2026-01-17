@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DungeonListItem } from '@/types';
+import { ms, fs, s } from '@/utils/scaling';
 
 interface DungeonCardProps {
   dungeon: DungeonListItem;
@@ -39,22 +40,22 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: ms(12),
+    padding: ms(16),
+    marginBottom: ms(12),
     alignItems: 'center',
   },
   iconContainer: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: s(60),
+    height: s(60),
+    borderRadius: s(30),
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: ms(16),
   },
   icon: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
   },
@@ -62,35 +63,35 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 4,
+    marginBottom: ms(4),
   },
   description: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#aaa',
-    marginBottom: 4,
+    marginBottom: ms(4),
   },
   metaRow: {
     flexDirection: 'row',
-    gap: 12,
+    gap: ms(12),
   },
   floors: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#4CAF50',
     fontWeight: 'bold',
   },
   level: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#FFD700',
     fontWeight: 'bold',
   },
   arrowContainer: {
-    paddingLeft: 12,
+    paddingLeft: ms(12),
   },
   arrow: {
-    fontSize: 24,
+    fontSize: fs(24),
     color: '#fff',
   },
   pressed: {

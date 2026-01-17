@@ -1,16 +1,17 @@
 import { useState, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
+import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { storageRepository } from '@/db';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { getItemIcon, getSlotIcon } from '@/data/itemIcons';
 import { Item, EquipmentSlot } from '@/types';
 import { getTierColor, getTierDisplayName } from '@/data/items';
+import { ms, fs } from '@/utils/scaling';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -85,7 +86,6 @@ function calculateItemStats(item: Item) {
 export default function StorageScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const { addToInventory, isInventoryFull } = usePlayerStore();
   const [storageItems, setStorageItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -171,9 +171,9 @@ export default function StorageScreen() {
   const inventoryFull = isInventoryFull();
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
       {/* ヘッダー */}
-      <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+      <View style={styles.header}>
         <Text style={styles.headerTitle}>{t('storage.title')}</Text>
         <Text style={styles.headerCount}>{storageItems.length}{t('common.items')}</Text>
       </View>
@@ -276,7 +276,7 @@ export default function StorageScreen() {
       <View style={styles.footer}>
         <Button title={t('common.back')} onPress={handleBack} variant="secondary" />
       </View>
-    </View>
+    </ScreenWrapper>
   );
 }
 
@@ -361,24 +361,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
+    paddingHorizontal: ms(16),
+    paddingTop: ms(16),
+    paddingBottom: ms(8),
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
   },
   headerCount: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#4ECDC4',
     fontWeight: 'bold',
   },
   // 詳細表示エリア
   detailArea: {
-    minHeight: 225,
-    padding: 12,
+    minHeight: ms(225),
+    padding: ms(12),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyDetailText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#666',
   },
   detailContent: {
@@ -397,53 +397,53 @@ const styles = StyleSheet.create({
   detailHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: ms(12),
   },
   detailIcon: {
-    width: 48,
-    height: 48,
-    marginRight: 12,
+    width: ms(48),
+    height: ms(48),
+    marginRight: ms(12),
   },
   detailTitleArea: {
     flex: 1,
   },
   detailName: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
   },
   detailSlot: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#aaa',
-    marginTop: 2,
+    marginTop: ms(2),
   },
   detailStats: {
     flexDirection: 'row',
-    gap: 16,
-    marginBottom: 8,
+    gap: ms(16),
+    marginBottom: ms(8),
   },
   atkText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#FF6B6B',
     fontWeight: 'bold',
   },
   defText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#4ECDC4',
     fontWeight: 'bold',
   },
   detailMods: {
-    marginBottom: 12,
+    marginBottom: ms(12),
   },
   modText: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#FFD700',
-    marginTop: 2,
+    marginTop: ms(2),
   },
   detailActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: ms(8),
     marginTop: 'auto',
   },
   withdrawButton: {
@@ -451,13 +451,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 6,
-    paddingVertical: 10,
+    gap: ms(6),
+    paddingVertical: ms(10),
     backgroundColor: 'rgba(76, 175, 80, 0.3)',
-    borderRadius: 8,
+    borderRadius: ms(8),
   },
   withdrawButtonText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#4CAF50',
     fontWeight: 'bold',
   },
@@ -468,61 +468,61 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   iconButton: {
-    width: 50,
-    paddingVertical: 6,
+    width: ms(50),
+    paddingVertical: ms(6),
     backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderRadius: 8,
+    borderRadius: ms(8),
     alignItems: 'center',
   },
   iconButtonText: {
-    fontSize: 9,
+    fontSize: fs(9),
     color: '#aaa',
-    marginTop: 2,
+    marginTop: ms(2),
   },
   // カテゴリタブ
   categoryTabs: {
     flexDirection: 'row',
-    paddingHorizontal: 8,
-    paddingVertical: 8,
+    paddingHorizontal: ms(8),
+    paddingVertical: ms(8),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
   categoryTab: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 8,
-    borderRadius: 8,
+    paddingVertical: ms(8),
+    borderRadius: ms(8),
     position: 'relative',
   },
   categoryTabActive: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   categoryIcon: {
-    width: 28,
-    height: 28,
+    width: ms(28),
+    height: ms(28),
   },
   categoryLabel: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#888',
-    marginTop: 2,
+    marginTop: ms(2),
   },
   categoryLabelActive: {
     color: '#fff',
   },
   countBadge: {
     position: 'absolute',
-    top: 2,
-    right: 8,
+    top: ms(2),
+    right: ms(8),
     backgroundColor: '#4ECDC4',
-    borderRadius: 8,
-    minWidth: 16,
-    height: 16,
+    borderRadius: ms(8),
+    minWidth: ms(16),
+    height: ms(16),
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 4,
+    paddingHorizontal: ms(4),
   },
   countText: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#fff',
     fontWeight: 'bold',
   },
@@ -536,23 +536,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyGridText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#666',
   },
   gridContent: {
-    padding: 12,
+    padding: ms(12),
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    gap: ms(8),
   },
   gridItem: {
-    width: 72,
-    height: 88,
+    width: ms(72),
+    height: ms(88),
     backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderRadius: 8,
-    padding: 6,
+    borderRadius: ms(8),
+    padding: ms(6),
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -564,32 +564,32 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(78, 205, 196, 0.15)',
   },
   gridItemIcon: {
-    width: 32,
-    height: 32,
-    marginBottom: 4,
+    width: ms(32),
+    height: ms(32),
+    marginBottom: ms(4),
   },
   modIndicator: {
     position: 'absolute',
-    top: 4,
-    right: 4,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    top: ms(4),
+    right: ms(4),
+    width: ms(8),
+    height: ms(8),
+    borderRadius: ms(4),
     backgroundColor: '#FFD700',
   },
   gridItemName: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#fff',
     textAlign: 'center',
   },
   gridItemStats: {
-    fontSize: 9,
+    fontSize: fs(9),
     color: '#4ECDC4',
-    marginTop: 2,
+    marginTop: ms(2),
   },
   // フッター
   footer: {
-    padding: 16,
-    paddingBottom: 32,
+    padding: ms(16),
+    paddingBottom: ms(32),
   },
 });
