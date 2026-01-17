@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { useEffect, useState, useCallback } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { initializeDatabase, settingsRepository } from '@/db';
 import { changeLanguage } from '@/lib/i18n';
 import '@/lib/i18n';
+
+// スプラッシュ画面を自動で非表示にしない
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const { t } = useTranslation();
@@ -28,27 +32,29 @@ export default function RootLayout() {
     init();
   }, []);
 
+  // DB準備完了後にスプラッシュを非表示
+  const onLayoutRootView = useCallback(async () => {
+    if (isDbReady || error) {
+      await SplashScreen.hideAsync();
+    }
+  }, [isDbReady, error]);
+
   if (error) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={styles.loadingContainer} onLayout={onLayoutRootView}>
         <Text style={styles.errorText}>{error}</Text>
         <StatusBar style="light" />
       </View>
     );
   }
 
+  // DB準備中はスプラッシュ画面が表示されているので何も描画しない
   if (!isDbReady) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#4CAF50" />
-        <Text style={styles.loadingText}>{t('common.loading')}</Text>
-        <StatusBar style="light" />
-      </View>
-    );
+    return null;
   }
 
   return (
-    <>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Stack
         screenOptions={{
           headerStyle: {
@@ -132,7 +138,7 @@ export default function RootLayout() {
         />
       </Stack>
       <StatusBar style="light" />
-    </>
+    </View>
   );
 }
 
