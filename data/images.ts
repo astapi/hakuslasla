@@ -46,6 +46,8 @@ export const monsterImages: Record<string, ImageSourcePropType> = {
   goblin_champion: require('@/assets/images/monsters/goblin_champion.png'),
   goblin_king: require('@/assets/images/monsters/goblin_king.png'),
   // 魔王城
+  death_knight: require('@/assets/images/monsters/death_knight.png'),
+  demon: require('@/assets/images/monsters/daemon.png'),
   wyvern: require('@/assets/images/monsters/wyvern.png'),
   // 氷結の洞窟
   yeti: require('@/assets/images/monsters/yeti.png'),
