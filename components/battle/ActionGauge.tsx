@@ -1,4 +1,5 @@
 import { View, StyleSheet } from 'react-native';
+import { ms } from '@/utils/scaling';
 
 interface ActionGaugeProps {
   value: number;        // 0-100
@@ -31,16 +32,16 @@ export const ActionGauge = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    marginTop: 4,
+    marginTop: ms(4),
   },
   background: {
-    height: 6,
+    height: ms(6),
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 3,
+    borderRadius: ms(3),
     overflow: 'hidden',
   },
   fill: {
     height: '100%',
-    borderRadius: 3,
+    borderRadius: ms(3),
   },
 });
