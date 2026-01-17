@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot, Item, ItemMod } from '@/types';
 import { getSlotIcon } from '@/data/itemIcons';
+import { ms, fs, s } from '@/utils/scaling';
 
 const MOD_COLORS: Record<string, string> = {
   atk_bonus: '#FF6B6B',
@@ -120,102 +121,102 @@ export const EquipmentList = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 12,
-    padding: 12,
+    borderRadius: ms(12),
+    padding: ms(12),
   },
   title: {
-    fontSize: 16,
+    fontSize: fs(16),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 12,
+    marginBottom: ms(12),
   },
   header: {
     flexDirection: 'row',
-    paddingBottom: 8,
+    paddingBottom: ms(8),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
-    marginBottom: 4,
+    marginBottom: ms(4),
   },
   headerSlot: {
-    width: 60,
-    fontSize: 10,
+    width: ms(60),
+    fontSize: fs(10),
     color: '#888',
   },
   headerItem: {
     flex: 1,
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#888',
   },
   headerMod: {
-    width: 80,
-    fontSize: 10,
+    width: ms(80),
+    fontSize: fs(10),
     color: '#888',
     textAlign: 'right',
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: ms(8),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',
   },
   slotInfo: {
-    width: 60,
+    width: ms(60),
     flexDirection: 'row',
     alignItems: 'center',
   },
   slotIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 4,
+    width: s(20),
+    height: s(20),
+    marginRight: ms(4),
   },
   slotLabel: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#aaa',
   },
   itemInfo: {
     flex: 1,
-    paddingHorizontal: 8,
+    paddingHorizontal: ms(8),
   },
   itemName: {
-    fontSize: 13,
+    fontSize: fs(13),
     fontWeight: '600',
     color: '#fff',
-    marginBottom: 2,
+    marginBottom: ms(2),
   },
   statsRow: {
     flexDirection: 'row',
-    gap: 8,
+    gap: ms(8),
   },
   atkText: {
-    fontSize: 11,
+    fontSize: fs(11),
     color: '#FF6B6B',
   },
   defText: {
-    fontSize: 11,
+    fontSize: fs(11),
     color: '#4ECDC4',
   },
   emptyText: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#666',
     fontStyle: 'italic',
   },
   modInfo: {
-    width: 80,
+    width: ms(80),
     alignItems: 'flex-end',
-    gap: 2,
+    gap: ms(2),
   },
   modTag: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
+    paddingHorizontal: ms(6),
+    paddingVertical: ms(2),
+    borderRadius: ms(4),
   },
   modTagText: {
-    fontSize: 9,
+    fontSize: fs(9),
     fontWeight: 'bold',
   },
   noModText: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#555',
   },
 });

@@ -8,6 +8,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ImageBackground, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { ms, fs, s } from '@/utils/scaling';
 
 // ダンジョン背景画像マッピング
 const backgroundImages: Record<string, ImageSourcePropType> = {
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1a1a2e',
   },
   battleArea: {
-    height: 280,
+    height: s(280),
     overflow: 'hidden',
   },
   battleAreaImage: {
@@ -266,18 +267,18 @@ const styles = StyleSheet.create({
   },
   battleAreaOverlay: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 8,
+    paddingHorizontal: ms(16),
+    paddingTop: ms(8),
   },
   battleAreaFallback: {
     backgroundColor: '#16213e',
   },
   floorInfo: {
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: ms(8),
   },
   floorText: {
-    fontSize: 16,
+    fontSize: fs(16),
     fontWeight: 'bold',
     color: '#fff',
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
@@ -285,9 +286,9 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   autoRunText: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#4CAF50',
-    marginTop: 4,
+    marginTop: ms(4),
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
@@ -296,12 +297,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   battleField: {
-    paddingBottom: 6,
+    paddingBottom: ms(6),
     backgroundColor: 'rgba(22, 33, 62, 0.6)',
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    paddingHorizontal: 8,
-    paddingTop: 8,
+    borderTopLeftRadius: ms(16),
+    borderTopRightRadius: ms(16),
+    paddingHorizontal: ms(8),
+    paddingTop: ms(8),
   },
   charactersContainer: {
     flexDirection: 'row',
@@ -310,45 +311,45 @@ const styles = StyleSheet.create({
   fightingText: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 14,
-    marginTop: 8,
+    fontSize: fs(14),
+    marginTop: ms(8),
   },
   victoryText: {
     textAlign: 'center',
     color: '#4CAF50',
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
-    marginTop: 8,
+    marginTop: ms(8),
   },
   defeatText: {
     textAlign: 'center',
     color: '#F44336',
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
-    marginTop: 8,
+    marginTop: ms(8),
   },
   clearedText: {
     textAlign: 'center',
     color: '#FFD700',
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
-    marginTop: 8,
+    marginTop: ms(8),
   },
   actionArea: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ms(16),
+    paddingVertical: ms(12),
   },
   actionButtons: {
     flexDirection: 'row',
-    gap: 12,
+    gap: ms(12),
   },
   buttonWrapper: {
     flex: 1,
   },
   logArea: {
     flex: 1,
-    padding: 16,
-    maxHeight: 300,
+    padding: ms(16),
+    maxHeight: s(300),
   },
   // モーダル
   modalOverlay: {
@@ -359,42 +360,42 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: '#1a1a2e',
-    borderRadius: 16,
-    padding: 24,
+    borderRadius: ms(16),
+    padding: ms(24),
     width: '80%',
-    maxWidth: 320,
+    maxWidth: ms(320),
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
-    marginBottom: 16,
+    marginBottom: ms(16),
   },
   modalMessage: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#aaa',
     textAlign: 'center',
-    marginBottom: 24,
-    lineHeight: 22,
+    marginBottom: ms(24),
+    lineHeight: ms(22),
   },
   modalButtons: {
     flexDirection: 'row',
-    gap: 12,
+    gap: ms(12),
   },
   modalButton: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: ms(12),
+    borderRadius: ms(8),
     alignItems: 'center',
   },
   modalCancelButton: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   modalCancelText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#aaa',
     fontWeight: 'bold',
   },
@@ -402,7 +403,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(244, 67, 54, 0.3)',
   },
   modalConfirmText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#F44336',
     fontWeight: 'bold',
   },

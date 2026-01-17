@@ -10,6 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ActionGauge } from './ActionGauge';
 import { HPBar } from './HPBar';
+import { ms, fs, s } from '@/utils/scaling';
 
 interface CharacterDisplayProps {
   name: string;
@@ -97,34 +98,34 @@ export const CharacterDisplay = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 12,
-    borderRadius: 12,
+    padding: ms(12),
+    borderRadius: ms(12),
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   playerContainer: {
-    marginRight: 8,
+    marginRight: ms(8),
   },
   enemyContainer: {
-    marginLeft: 8,
+    marginLeft: ms(8),
   },
   avatarContainer: {
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: ms(8),
   },
   avatar: {
-    width: 68,
-    height: 68,
+    width: s(68),
+    height: s(68),
   },
   avatarPlaceholder: {
-    width: 68,
-    height: 68,
-    borderRadius: 32,
+    width: s(68),
+    height: s(68),
+    borderRadius: s(32),
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   avatarPlaceholderText: {
-    fontSize: 24,
+    fontSize: fs(24),
     color: '#aaa',
   },
   infoContainer: {
@@ -134,15 +135,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: ms(4),
   },
   name: {
-    fontSize: 14,
+    fontSize: fs(14),
     fontWeight: 'bold',
     color: '#fff',
   },
   level: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#aaa',
   },
 });

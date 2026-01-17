@@ -1,15 +1,15 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { DungeonCard } from '@/components/dungeon/DungeonCard';
 import { Button } from '@/components/common/Button';
+import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { getDungeonList } from '@/data/dungeons';
+import { ms, fs } from '@/utils/scaling';
 
 export default function DungeonSelectScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const dungeons = getDungeonList();
 
   const handleDungeonSelect = (dungeonId: string) => {
@@ -22,8 +22,8 @@ export default function DungeonSelectScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 16 }]}>
+    <ScreenWrapper>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <Text style={styles.title}>{t('dungeonSelect.title')}</Text>
         <Text style={styles.subtitle}>{t('dungeonSelect.subtitle')}</Text>
 
@@ -41,7 +41,7 @@ export default function DungeonSelectScreen() {
       <View style={styles.footer}>
         <Button title={t('common.back')} onPress={handleBack} variant="secondary" />
       </View>
-    </View>
+    </ScreenWrapper>
   );
 }
 
@@ -54,26 +54,26 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: 16,
+    padding: ms(16),
   },
   title: {
-    fontSize: 24,
+    fontSize: fs(24),
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: ms(8),
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#aaa',
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: ms(24),
   },
   dungeonList: {
-    gap: 12,
+    gap: ms(12),
   },
   footer: {
-    padding: 16,
-    paddingBottom: 32,
+    padding: ms(16),
+    paddingBottom: ms(32),
   },
 });

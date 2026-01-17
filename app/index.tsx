@@ -2,12 +2,13 @@ import { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
+import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { characterRepository, settingsRepository } from '@/db';
 import { Character } from '@/types';
 import { usePlayerStore } from '@/stores/usePlayerStore';
+import { ms, fs } from '@/utils/scaling';
 
 export default function CharacterSelectScreen() {
   const { t } = useTranslation();
@@ -48,7 +49,7 @@ export default function CharacterSelectScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScreenWrapper>
       <View style={styles.header}>
         <Text style={styles.title}>{t('characterSelect.title')}</Text>
         <Text style={styles.subtitle}>{t('characterSelect.subtitle')}</Text>
@@ -104,7 +105,7 @@ export default function CharacterSelectScreen() {
           variant="primary"
         />
       </View>
-    </SafeAreaView>
+    </ScreenWrapper>
   );
 }
 
@@ -114,54 +115,54 @@ const styles = StyleSheet.create({
     backgroundColor: '#1a1a2e',
   },
   header: {
-    padding: 24,
+    padding: ms(24),
     alignItems: 'center',
   },
   title: {
-    fontSize: 28,
+    fontSize: fs(28),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 8,
+    marginBottom: ms(8),
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: fs(16),
     color: '#aaa',
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
-    padding: 16,
+    padding: ms(16),
     flexGrow: 1,
   },
   loadingText: {
     color: '#aaa',
     textAlign: 'center',
-    marginTop: 32,
+    marginTop: ms(32),
   },
   emptyState: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 48,
+    paddingVertical: ms(48),
   },
   emptyText: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 8,
+    marginBottom: ms(8),
   },
   emptySubtext: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#aaa',
   },
   characterList: {
-    gap: 12,
+    gap: ms(12),
   },
   characterCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: ms(12),
+    padding: ms(16),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -172,36 +173,36 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   characterName: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 4,
+    marginBottom: ms(4),
   },
   characterLevel: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#4CAF50',
     fontWeight: 'bold',
   },
   characterStats: {
     flexDirection: 'row',
-    gap: 12,
-    marginRight: 12,
+    gap: ms(12),
+    marginRight: ms(12),
   },
   statText: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#aaa',
   },
   deleteButton: {
-    padding: 8,
+    padding: ms(8),
     backgroundColor: 'rgba(244, 67, 54, 0.3)',
-    borderRadius: 6,
+    borderRadius: ms(6),
   },
   deleteButtonText: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#F44336',
   },
   footer: {
-    padding: 16,
-    paddingBottom: 32,
+    padding: ms(16),
+    paddingBottom: ms(32),
   },
 });

@@ -1,16 +1,17 @@
 import { useState, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
+import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot, Item } from '@/types';
 import { getItemIcon, getSlotIcon } from '@/data/itemIcons';
 import { INVENTORY_MAX_SIZE } from '@/core';
 import { storageRepository } from '@/db/repositories/storageRepository';
 import { getTierColor, getTierDisplayName } from '@/data/items';
+import { ms, fs } from '@/utils/scaling';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -85,7 +86,6 @@ function calculateItemStats(item: Item) {
 export default function InventoryScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const { inventory, equipment, equipItem, removeFromInventory } = usePlayerStore();
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
@@ -182,9 +182,9 @@ export default function InventoryScreen() {
   const isFull = inventory.length >= INVENTORY_MAX_SIZE;
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
       {/* ヘッダー */}
-      <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+      <View style={styles.header}>
         <Text style={styles.headerTitle}>{t('inventory.title')}</Text>
         <Text style={[styles.headerCount, isFull && styles.headerCountFull]}>
           {inventory.length}/{INVENTORY_MAX_SIZE}
@@ -290,7 +290,7 @@ export default function InventoryScreen() {
       <View style={styles.footer}>
         <Button title={t('common.back')} onPress={handleBack} variant="secondary" />
       </View>
-    </View>
+    </ScreenWrapper>
   );
 }
 
@@ -434,17 +434,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
+    paddingHorizontal: ms(16),
+    paddingTop: ms(16),
+    paddingBottom: ms(8),
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
   },
   headerCount: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#4CAF50',
     fontWeight: 'bold',
   },
@@ -453,8 +453,8 @@ const styles = StyleSheet.create({
   },
   // 詳細表示エリア
   detailArea: {
-    minHeight: 225,
-    padding: 12,
+    minHeight: ms(225),
+    padding: ms(12),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyDetailText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#666',
   },
   detailContent: {
@@ -474,76 +474,76 @@ const styles = StyleSheet.create({
   comparisonContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 12,
+    marginBottom: ms(12),
   },
   comparisonItem: {
     flex: 1,
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: 8,
-    padding: 8,
+    borderRadius: ms(8),
+    padding: ms(8),
   },
   comparisonLabel: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#888',
-    marginBottom: 6,
+    marginBottom: ms(6),
   },
   comparisonHeader: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   comparisonIcon: {
-    width: 36,
-    height: 36,
-    marginRight: 8,
+    width: ms(36),
+    height: ms(36),
+    marginRight: ms(8),
   },
   comparisonInfo: {
     flex: 1,
   },
   comparisonName: {
-    fontSize: 12,
+    fontSize: fs(12),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 2,
+    marginBottom: ms(2),
   },
   comparisonStats: {
     flexDirection: 'row',
-    gap: 8,
+    gap: ms(8),
   },
   atkText: {
-    fontSize: 11,
+    fontSize: fs(11),
     color: '#FF6B6B',
   },
   defText: {
-    fontSize: 11,
+    fontSize: fs(11),
     color: '#4ECDC4',
   },
   comparisonMods: {
-    marginTop: 6,
-    paddingTop: 6,
+    marginTop: ms(6),
+    paddingTop: ms(6),
     borderTopWidth: 1,
     borderTopColor: 'rgba(255, 255, 255, 0.1)',
   },
   modText: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#FFD700',
   },
   // 矢印と差分
   comparisonArrow: {
-    width: 50,
+    width: ms(50),
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 20,
+    paddingTop: ms(20),
   },
   arrowText: {
-    fontSize: 18,
+    fontSize: fs(18),
     color: '#666',
-    marginBottom: 4,
+    marginBottom: ms(4),
   },
   diffContainer: {
     alignItems: 'center',
   },
   diffText: {
-    fontSize: 11,
+    fontSize: fs(11),
     fontWeight: 'bold',
   },
   diffPositive: {
@@ -557,87 +557,87 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 16,
+    paddingVertical: ms(16),
   },
   emptyEquippedText: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#666',
     fontStyle: 'italic',
   },
   detailActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: ms(8),
     marginTop: 'auto',
   },
   equipButton: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: ms(10),
     backgroundColor: 'rgba(76, 175, 80, 0.3)',
-    borderRadius: 8,
+    borderRadius: ms(8),
     alignItems: 'center',
   },
   equipButtonText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#4CAF50',
     fontWeight: 'bold',
   },
   iconButton: {
-    width: 50,
-    paddingVertical: 6,
+    width: ms(50),
+    paddingVertical: ms(6),
     backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderRadius: 8,
+    borderRadius: ms(8),
     alignItems: 'center',
   },
   iconButtonText: {
-    fontSize: 9,
+    fontSize: fs(9),
     color: '#aaa',
-    marginTop: 2,
+    marginTop: ms(2),
   },
   // カテゴリタブ
   categoryTabs: {
     flexDirection: 'row',
-    paddingHorizontal: 8,
-    paddingVertical: 8,
+    paddingHorizontal: ms(8),
+    paddingVertical: ms(8),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
   categoryTab: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 8,
-    borderRadius: 8,
+    paddingVertical: ms(8),
+    borderRadius: ms(8),
     position: 'relative',
   },
   categoryTabActive: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   categoryIcon: {
-    width: 28,
-    height: 28,
+    width: ms(28),
+    height: ms(28),
   },
   categoryLabel: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#888',
-    marginTop: 2,
+    marginTop: ms(2),
   },
   categoryLabelActive: {
     color: '#fff',
   },
   countBadge: {
     position: 'absolute',
-    top: 2,
-    right: 8,
+    top: ms(2),
+    right: ms(8),
     backgroundColor: '#4CAF50',
-    borderRadius: 8,
-    minWidth: 16,
-    height: 16,
+    borderRadius: ms(8),
+    minWidth: ms(16),
+    height: ms(16),
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 4,
+    paddingHorizontal: ms(4),
   },
   countText: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#fff',
     fontWeight: 'bold',
   },
@@ -651,23 +651,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyGridText: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#666',
   },
   gridContent: {
-    padding: 12,
+    padding: ms(12),
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    gap: ms(8),
   },
   gridItem: {
-    width: 72,
-    height: 88,
+    width: ms(72),
+    height: ms(88),
     backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderRadius: 8,
-    padding: 6,
+    borderRadius: ms(8),
+    padding: ms(6),
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -679,40 +679,40 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(76, 175, 80, 0.15)',
   },
   gridItemIcon: {
-    width: 32,
-    height: 32,
-    marginBottom: 4,
+    width: ms(32),
+    height: ms(32),
+    marginBottom: ms(4),
   },
   modIndicator: {
     position: 'absolute',
-    top: 2,
-    right: 2,
-    minWidth: 16,
-    height: 16,
-    borderRadius: 8,
+    top: ms(2),
+    right: ms(2),
+    minWidth: ms(16),
+    height: ms(16),
+    borderRadius: ms(8),
     backgroundColor: '#FFD700',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 4,
+    paddingHorizontal: ms(4),
   },
   modIndicatorText: {
-    fontSize: 10,
+    fontSize: fs(10),
     fontWeight: 'bold',
     color: '#1a1a2e',
   },
   gridItemName: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#fff',
     textAlign: 'center',
   },
   gridItemStats: {
-    fontSize: 9,
+    fontSize: fs(9),
     color: '#4CAF50',
-    marginTop: 2,
+    marginTop: ms(2),
   },
   // フッター
   footer: {
-    padding: 16,
-    paddingBottom: 32,
+    padding: ms(16),
+    paddingBottom: ms(32),
   },
 });

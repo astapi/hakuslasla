@@ -3,7 +3,9 @@ import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
+import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { characterRepository } from '@/db';
+import { ms, fs } from '@/utils/scaling';
 
 export default function CharacterCreateScreen() {
   const { t } = useTranslation();
@@ -28,7 +30,7 @@ export default function CharacterCreateScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
       <View style={styles.content}>
         <Text style={styles.label}>{t('characterCreate.nameLabel')}</Text>
         <TextInput
@@ -79,7 +81,7 @@ export default function CharacterCreateScreen() {
           style={styles.createButton}
         />
       </View>
-    </View>
+    </ScreenWrapper>
   );
 }
 
@@ -90,30 +92,30 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 16,
+    padding: ms(16),
   },
   label: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#aaa',
-    marginBottom: 8,
+    marginBottom: ms(8),
   },
   input: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
-    padding: 16,
-    fontSize: 18,
+    borderRadius: ms(8),
+    padding: ms(16),
+    fontSize: fs(18),
     color: '#fff',
-    marginBottom: 24,
+    marginBottom: ms(24),
   },
   previewSection: {
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: ms(12),
+    padding: ms(16),
   },
   previewTitle: {
-    fontSize: 14,
+    fontSize: fs(14),
     color: '#aaa',
-    marginBottom: 12,
+    marginBottom: ms(12),
     textAlign: 'center',
   },
   statsRow: {
@@ -124,20 +126,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statLabel: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#666',
-    marginBottom: 4,
+    marginBottom: ms(4),
   },
   statValue: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
   },
   footer: {
     flexDirection: 'row',
-    padding: 16,
-    paddingBottom: 32,
-    gap: 12,
+    padding: ms(16),
+    paddingBottom: ms(32),
+    gap: ms(12),
   },
   cancelButton: {
     flex: 1,

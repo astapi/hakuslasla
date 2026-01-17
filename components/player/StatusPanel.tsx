@@ -5,6 +5,7 @@ import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { MAX_LEVEL } from '@/core';
 import { HPBar } from '../battle/HPBar';
+import { ms, fs } from '@/utils/scaling';
 
 interface StatusPanelProps {
   currentHp?: number;
@@ -246,64 +247,64 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 12,
-    padding: 12,
+    borderRadius: ms(12),
+    padding: ms(12),
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: ms(12),
   },
   title: {
-    fontSize: 16,
+    fontSize: fs(16),
     fontWeight: 'bold',
     color: '#fff',
   },
   level: {
-    fontSize: 16,
+    fontSize: fs(16),
     color: '#FFD700',
     fontWeight: 'bold',
   },
   statsGrid: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 12,
+    marginBottom: ms(12),
   },
   statItem: {
     alignItems: 'center',
     flex: 1,
   },
   statLabel: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#aaa',
-    marginBottom: 2,
+    marginBottom: ms(2),
   },
   statValue: {
-    fontSize: 18,
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
   },
   // 詳細表示
   detailsContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 12,
+    borderRadius: ms(8),
+    padding: ms(10),
+    marginBottom: ms(12),
   },
   detailRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 4,
+    paddingVertical: ms(4),
   },
   detailLabel: {
-    fontSize: 13,
+    fontSize: fs(13),
     color: '#aaa',
-    width: 40,
+    width: ms(40),
   },
   detailValue: {
-    fontSize: 13,
+    fontSize: fs(13),
     color: '#fff',
     flex: 1,
     textAlign: 'right',
@@ -317,7 +318,7 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    marginVertical: 8,
+    marginVertical: ms(8),
   },
   critText: {
     color: '#FF6B6B',
@@ -332,26 +333,26 @@ const styles = StyleSheet.create({
     color: '#FF9800',
   },
   tapHint: {
-    fontSize: 10,
+    fontSize: fs(10),
     color: '#666',
     textAlign: 'center',
-    marginTop: 4,
+    marginTop: ms(4),
   },
   expContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   expLabel: {
-    fontSize: 12,
+    fontSize: fs(12),
     color: '#aaa',
-    marginRight: 8,
-    width: 30,
+    marginRight: ms(8),
+    width: ms(30),
   },
   expBarContainer: {
     flex: 1,
   },
   maxLevelText: {
-    fontSize: 14,
+    fontSize: fs(14),
     fontWeight: 'bold',
     color: '#FFD700',
   },

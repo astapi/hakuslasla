@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { BattleLogEntry } from '@/types';
+import { ms, fs } from '@/utils/scaling';
 
 interface BattleLogProps {
   logs: BattleLogEntry[];
@@ -54,20 +55,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 8,
-    padding: 12,
+    borderRadius: ms(8),
+    padding: ms(12),
   },
   title: {
-    fontSize: 14,
+    fontSize: fs(14),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 8,
+    marginBottom: ms(8),
   },
   scrollView: {
     flex: 1,
   },
   logEntry: {
-    fontSize: 12,
-    marginBottom: 4,
+    fontSize: fs(12),
+    marginBottom: ms(4),
   },
 });
