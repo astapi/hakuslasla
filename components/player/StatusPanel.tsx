@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { MAX_LEVEL } from '@/core';
@@ -10,6 +11,7 @@ interface StatusPanelProps {
 }
 
 export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
+  const { t } = useTranslation();
   const [showDetails, setShowDetails] = useState(false);
 
   // 装備・スキル変更時に再レンダリングするため、関連する state を購読
@@ -119,7 +121,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
     <Pressable onPress={() => setShowDetails(!showDetails)}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>ステータス</Text>
+          <Text style={styles.title}>{t('status.title')}</Text>
           <Text style={styles.level}>Lv.{level}</Text>
         </View>
 
@@ -171,7 +173,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
             </View>
             <View style={styles.separator} />
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>クリ率</Text>
+              <Text style={styles.detailLabel}>{t('status.critRate')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.criticalChance > 0 ? styles.critText : undefined}>
                   {breakdown.criticalChance}%
@@ -179,7 +181,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
               </Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>クリダメ</Text>
+              <Text style={styles.detailLabel}>{t('status.critDamage')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.criticalDamage > 150 ? styles.critText : undefined}>
                   {breakdown.criticalDamage}%
@@ -187,7 +189,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
               </Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>毒付与</Text>
+              <Text style={styles.detailLabel}>{t('status.poisonChance')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.poisonChance > 0 ? styles.poisonText : undefined}>
                   {breakdown.poisonChance}%
@@ -196,15 +198,15 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
             </View>
             <View style={styles.separator} />
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>HP回復</Text>
+              <Text style={styles.detailLabel}>{t('status.hpRegen')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.hpRegenPerSecond > 0 ? styles.healText : undefined}>
-                  {breakdown.hpRegenPerSecond}/秒
+                  {breakdown.hpRegenPerSecond}{t('status.perSecond')}
                 </Text>
               </Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>HIT回復</Text>
+              <Text style={styles.detailLabel}>{t('status.hpOnHit')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.hpOnHit > 0 ? styles.healText : undefined}>
                   {breakdown.hpOnHit}
@@ -212,7 +214,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
               </Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>クリ回復</Text>
+              <Text style={styles.detailLabel}>{t('status.hpOnCrit')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.hpOnCrit > 0 ? styles.critHealText : undefined}>
                   +{breakdown.hpOnCrit}
@@ -226,7 +228,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
           <Text style={styles.expLabel}>EXP</Text>
           <View style={styles.expBarContainer}>
             {level >= MAX_LEVEL ? (
-              <Text style={styles.maxLevelText}>MAX</Text>
+              <Text style={styles.maxLevelText}>{t('status.max')}</Text>
             ) : (
               <HPBar current={exp} max={expToNextLevel} color="#9C27B0" />
             )}
@@ -234,7 +236,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
         </View>
 
         {!showDetails && (
-          <Text style={styles.tapHint}>タップで詳細表示</Text>
+          <Text style={styles.tapHint}>{t('status.tapForDetails')}</Text>
         )}
       </View>
     </Pressable>
