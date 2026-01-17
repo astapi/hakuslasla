@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { DungeonCard } from '@/components/dungeon/DungeonCard';
@@ -8,6 +9,7 @@ import { getDungeonList } from '@/data/dungeons';
 export default function DungeonSelectScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const dungeons = getDungeonList();
 
   const handleDungeonSelect = (dungeonId: string) => {
@@ -21,7 +23,7 @@ export default function DungeonSelectScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 16 }]}>
         <Text style={styles.title}>{t('dungeonSelect.title')}</Text>
         <Text style={styles.subtitle}>{t('dungeonSelect.subtitle')}</Text>
 

@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
@@ -27,6 +28,7 @@ const SLOT_ICONS: Record<EquipmentSlot, string> = {
 export default function SettingsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
   const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,7 +102,7 @@ export default function SettingsScreen() {
   return (
     <View style={styles.container}>
       {/* ヘッダー */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
         <Text style={styles.headerTitle}>{t('settings.title')}</Text>
       </View>
 

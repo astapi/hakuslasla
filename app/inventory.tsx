@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -84,6 +85,7 @@ function calculateItemStats(item: Item) {
 export default function InventoryScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { inventory, equipment, equipItem, removeFromInventory } = usePlayerStore();
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
@@ -182,7 +184,7 @@ export default function InventoryScreen() {
   return (
     <View style={styles.container}>
       {/* ヘッダー */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
         <Text style={styles.headerTitle}>{t('inventory.title')}</Text>
         <Text style={[styles.headerCount, isFull && styles.headerCountFull]}>
           {inventory.length}/{INVENTORY_MAX_SIZE}

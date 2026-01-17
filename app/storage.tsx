@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -84,6 +85,7 @@ function calculateItemStats(item: Item) {
 export default function StorageScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { addToInventory, isInventoryFull } = usePlayerStore();
   const [storageItems, setStorageItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -171,7 +173,7 @@ export default function StorageScreen() {
   return (
     <View style={styles.container}>
       {/* ヘッダー */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
         <Text style={styles.headerTitle}>{t('storage.title')}</Text>
         <Text style={styles.headerCount}>{storageItems.length}{t('common.items')}</Text>
       </View>
