@@ -2,12 +2,14 @@ import { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { StatusPanel } from '@/components/player/StatusPanel';
 import { EquipmentList } from '@/components/player/EquipmentList';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { playerImages } from '@/data/images';
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { skillPoints, characterName, isLoaded, clear } = usePlayerStore();
 
@@ -53,7 +55,7 @@ export default function HomeScreen() {
   if (!isLoaded) {
     return (
       <View style={styles.container}>
-        <Text style={styles.loadingText}>読み込み中...</Text>
+        <Text style={styles.loadingText}>{t('common.loading')}</Text>
       </View>
     );
   }
@@ -75,7 +77,7 @@ export default function HomeScreen() {
                   <MaterialCommunityIcons name="flask" size={16} color="#FFA500" />
                 </Pressable>
                 <Pressable style={styles.changeButton} onPress={handleChangeCharacter}>
-                  <Text style={styles.changeButtonText}>変更</Text>
+                  <Text style={styles.changeButtonText}>{t('common.change')}</Text>
                 </Pressable>
               </View>
             </View>
@@ -102,7 +104,7 @@ export default function HomeScreen() {
               </View>
             )}
           </View>
-          <Text style={[styles.menuLabel, skillPoints > 0 && styles.menuLabelHighlight]}>スキル</Text>
+          <Text style={[styles.menuLabel, skillPoints > 0 && styles.menuLabelHighlight]}>{t('home.menu.skills')}</Text>
         </Pressable>
 
         <Pressable
@@ -110,7 +112,7 @@ export default function HomeScreen() {
           onPress={handleOpenInventory}
         >
           <MaterialCommunityIcons name="bag-personal" size={24} color="#fff" />
-          <Text style={styles.menuLabel}>持ち物</Text>
+          <Text style={styles.menuLabel}>{t('home.menu.inventory')}</Text>
         </Pressable>
 
         <Pressable
@@ -118,7 +120,7 @@ export default function HomeScreen() {
           onPress={handleOpenStorage}
         >
           <MaterialCommunityIcons name="treasure-chest" size={24} color="#fff" />
-          <Text style={styles.menuLabel}>倉庫</Text>
+          <Text style={styles.menuLabel}>{t('home.menu.storage')}</Text>
         </Pressable>
 
         <Pressable
@@ -126,7 +128,7 @@ export default function HomeScreen() {
           onPress={handleOpenSettings}
         >
           <MaterialCommunityIcons name="filter-cog" size={24} color="#fff" />
-          <Text style={styles.menuLabel}>設定</Text>
+          <Text style={styles.menuLabel}>{t('home.menu.settings')}</Text>
         </Pressable>
 
         <Pressable
@@ -134,7 +136,7 @@ export default function HomeScreen() {
           onPress={handleOpenDungeonSelect}
         >
           <MaterialCommunityIcons name="castle" size={24} color="#fff" />
-          <Text style={styles.menuLabel}>冒険</Text>
+          <Text style={styles.menuLabel}>{t('home.menu.adventure')}</Text>
         </Pressable>
       </View>
     </View>

@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { Item } from '@/types';
 
 export default function ResultScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const params = useLocalSearchParams<{
     dungeonId: string;
@@ -39,27 +41,27 @@ export default function ResultScreen() {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
         <View style={styles.resultHeader}>
           <Text style={[styles.resultText, isCleared ? styles.clearedText : styles.defeatText]}>
-            {isCleared ? 'ダンジョン踏破！' : '敗北...'}
+            {isCleared ? t('result.cleared') : t('result.defeat')}
           </Text>
           {isMultiRun && (
-            <Text style={styles.runCountText}>{runCount}周完了</Text>
+            <Text style={styles.runCountText}>{t('result.runsCompleted', { count: runCount })}</Text>
           )}
         </View>
 
         <View style={styles.dungeonInfo}>
           <Text style={styles.dungeonName}>{params.dungeonName}</Text>
           <Text style={styles.floorProgress}>
-            {floorsCleared}/{maxFloor} 階クリア
+            {t('result.floorsCleared', { current: floorsCleared, max: maxFloor })}
           </Text>
         </View>
 
         <View style={styles.rewardsSection}>
-          <Text style={styles.sectionTitle}>獲得報酬</Text>
+          <Text style={styles.sectionTitle}>{t('result.rewards')}</Text>
 
           {/* 累計経験値 */}
           <View style={styles.rewardItem}>
             <Text style={styles.rewardLabel}>
-              {isMultiRun ? '累計経験値' : '経験値'}
+              {isMultiRun ? t('result.totalExp') : t('result.exp')}
             </Text>
             <Text style={styles.rewardValue}>+{grandTotalExp} EXP</Text>
           </View>
@@ -68,7 +70,7 @@ export default function ResultScreen() {
           {grandTotalItems.length > 0 && (
             <View style={styles.itemsSection}>
               <Text style={styles.itemsTitle}>
-                {isMultiRun ? `累計アイテム (${grandTotalItems.length}個)` : '獲得アイテム'}
+                {isMultiRun ? t('result.totalItems', { count: grandTotalItems.length }) : t('result.items')}
               </Text>
               <ScrollView
                 style={styles.itemsScrollView}
@@ -89,14 +91,14 @@ export default function ResultScreen() {
 
           {grandTotalItems.length === 0 && (
             <View style={styles.noItems}>
-              <Text style={styles.noItemsText}>アイテムなし</Text>
+              <Text style={styles.noItemsText}>{t('result.noItems')}</Text>
             </View>
           )}
         </View>
       </ScrollView>
 
       <View style={styles.footer}>
-        <Button title="ダンジョン選択に戻る" onPress={handleReturn} />
+        <Button title={t('result.returnButton')} onPress={handleReturn} />
       </View>
     </View>
   );

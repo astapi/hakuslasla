@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { characterRepository, settingsRepository } from '@/db';
 import { Character } from '@/types';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 
 export default function CharacterSelectScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [characters, setCharacters] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,17 +50,17 @@ export default function CharacterSelectScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>ハクスラダンジョン</Text>
-        <Text style={styles.subtitle}>キャラクターを選択</Text>
+        <Text style={styles.title}>{t('characterSelect.title')}</Text>
+        <Text style={styles.subtitle}>{t('characterSelect.subtitle')}</Text>
       </View>
 
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {isLoading ? (
-          <Text style={styles.loadingText}>読み込み中...</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         ) : characters.length === 0 ? (
           <View style={styles.emptyState}>
-            <Text style={styles.emptyText}>キャラクターがいません</Text>
-            <Text style={styles.emptySubtext}>新しいキャラクターを作成してください</Text>
+            <Text style={styles.emptyText}>{t('characterSelect.empty')}</Text>
+            <Text style={styles.emptySubtext}>{t('characterSelect.emptyHint')}</Text>
           </View>
         ) : (
           <View style={styles.characterList}>
@@ -87,7 +89,7 @@ export default function CharacterSelectScreen() {
                     handleDeleteCharacter(character.id);
                   }}
                 >
-                  <Text style={styles.deleteButtonText}>削除</Text>
+                  <Text style={styles.deleteButtonText}>{t('common.delete')}</Text>
                 </Pressable>
               </Pressable>
             ))}
@@ -97,7 +99,7 @@ export default function CharacterSelectScreen() {
 
       <View style={styles.footer}>
         <Button
-          title="新しいキャラクターを作成"
+          title={t('characterSelect.createNew')}
           onPress={handleCreateCharacter}
           variant="primary"
         />

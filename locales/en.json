@@ -1,0 +1,167 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "back": "Back",
+    "close": "Close",
+    "cancel": "Cancel",
+    "change": "Change",
+    "delete": "Delete",
+    "reset": "Reset",
+    "create": "Create",
+    "creating": "Creating...",
+    "equip": "Equip",
+    "sell": "Sell",
+    "none": "None",
+    "unequipped": "Empty",
+    "items": "items"
+  },
+  "characterSelect": {
+    "title": "LootDive",
+    "subtitle": "Select Character",
+    "empty": "No Characters",
+    "emptyHint": "Create a new character to begin",
+    "createNew": "Create New Character"
+  },
+  "characterCreate": {
+    "nameLabel": "Character Name",
+    "namePlaceholder": "Enter name",
+    "initialStats": "Initial Stats"
+  },
+  "home": {
+    "menu": {
+      "skills": "Skills",
+      "inventory": "Items",
+      "storage": "Storage",
+      "settings": "Settings",
+      "adventure": "Adventure"
+    }
+  },
+  "dungeonSelect": {
+    "title": "Select Dungeon",
+    "subtitle": "Choose a dungeon to challenge"
+  },
+  "battle": {
+    "floor": "F",
+    "round": "Run",
+    "autoRunning": "Auto Running",
+    "pause": "Pause",
+    "resume": "Resume",
+    "autoRun": "Auto Run",
+    "stopAutoRun": "Stop Auto",
+    "retreat": "Retreat",
+    "retreatConfirm": {
+      "title": "Confirm Retreat",
+      "message": "Are you sure you want to retreat?\nAll gained EXP and items will be lost.",
+      "confirm": "Retreat"
+    },
+    "victory": "Victory!",
+    "defeat": "Defeat...",
+    "cleared": "Dungeon Cleared!",
+    "player": "Player"
+  },
+  "result": {
+    "cleared": "Dungeon Cleared!",
+    "defeat": "Defeat...",
+    "runsCompleted": "{{count}} Runs Completed",
+    "floorsCleared": "{{current}}/{{max}} Floors Cleared",
+    "rewards": "Rewards",
+    "exp": "EXP",
+    "totalExp": "Total EXP",
+    "items": "Items Obtained",
+    "totalItems": "Total Items ({{count}})",
+    "noItems": "No Items",
+    "returnButton": "Return to Dungeon Select"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "selectItem": "Select an item",
+    "selected": "Selected",
+    "equipped": "Equipped",
+    "storage": "Storage",
+    "noItemsInSlot": "No {{slot}}"
+  },
+  "storage": {
+    "title": "Storage",
+    "selectItem": "Select an item",
+    "toInventory": "To Inventory",
+    "inventoryFull": "Inventory Full",
+    "noItemsInSlot": "No {{slot}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "dropFilterTitle": "Drop Filter Settings",
+    "language": {
+      "title": "Language",
+      "description": "Select the app display language",
+      "japanese": "日本語",
+      "english": "English",
+      "system": "Follow System Settings"
+    },
+    "categoryFilter": {
+      "title": "Category Filter",
+      "description": "Only collect drops from enabled categories"
+    },
+    "modCountFilter": {
+      "title": "Minimum MOD Count",
+      "description": "Only collect items with this many MODs or more (0 to disable)",
+      "disabled": "Disabled",
+      "value": "{{count}}+ MODs"
+    },
+    "tierFilter": {
+      "title": "MOD Tier Filter",
+      "description": "Only collect items with at least one MOD at or below this tier (Tier 1 is highest quality)",
+      "disabled": "Disabled",
+      "value": "Tier {{tier}} or below",
+      "hint": "Tier 1 = Best, Tier 10 = Lowest"
+    },
+    "currentFilter": {
+      "title": "Current Filter",
+      "modCount": "{{count}}+ MODs",
+      "tierBelow": "Contains Tier {{tier}} or below MOD",
+      "noFilter": "No filtering (collect all)"
+    }
+  },
+  "status": {
+    "title": "Status",
+    "tapForDetails": "Tap for details",
+    "critRate": "Crit Rate",
+    "critDamage": "Crit DMG",
+    "poisonChance": "Poison",
+    "hpRegen": "HP Regen",
+    "hpOnHit": "HP on Hit",
+    "hpOnCrit": "HP on Crit",
+    "perSecond": "/s",
+    "max": "MAX"
+  },
+  "equipment": {
+    "title": "Equipment",
+    "slot": "Slot",
+    "item": "Item",
+    "mod": "MOD"
+  },
+  "slots": {
+    "weapon": "Weapon",
+    "armor": "Armor",
+    "gloves": "Gloves",
+    "boots": "Boots",
+    "accessory": "Accessory"
+  },
+  "mods": {
+    "atk_bonus": "ATK",
+    "def_bonus": "DEF",
+    "hp_regen": "Regen",
+    "hp_regen_pct": "HP Regen",
+    "poison_chance": "Poison",
+    "critical_chance": "Crit",
+    "critical_damage": "Crit DMG",
+    "atk_increased_pct": "ATK",
+    "def_increased_pct": "DEF",
+    "hp_increased_pct": "HP",
+    "hp_bonus": "HP",
+    "atk_more_pct": "ATK more",
+    "def_more_pct": "DEF more",
+    "hp_more_pct": "HP more",
+    "everyTurnHpRegen": "+{{value}} HP per turn",
+    "everyTurnHpRegenPct": "+{{value}}% HP per turn"
+  }
+}

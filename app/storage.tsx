@@ -1,8 +1,10 @@
 import { useState, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { storageRepository } from '@/db';
 import { usePlayerStore } from '@/stores/usePlayerStore';
@@ -81,7 +83,9 @@ function calculateItemStats(item: Item) {
 }
 
 export default function StorageScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { addToInventory, isInventoryFull } = usePlayerStore();
   const [storageItems, setStorageItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -169,9 +173,9 @@ export default function StorageScreen() {
   return (
     <View style={styles.container}>
       {/* ヘッダー */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>倉庫</Text>
-        <Text style={styles.headerCount}>{storageItems.length}個</Text>
+      <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+        <Text style={styles.headerTitle}>{t('storage.title')}</Text>
+        <Text style={styles.headerCount}>{storageItems.length}{t('common.items')}</Text>
       </View>
 
       {/* 詳細表示エリア */}
@@ -182,10 +186,11 @@ export default function StorageScreen() {
             inventoryFull={inventoryFull}
             onWithdraw={() => handleWithdraw(selectedItem)}
             onSell={() => handleSell(selectedItem.instanceId)}
+            t={t}
           />
         ) : (
           <View style={styles.emptyDetail}>
-            <Text style={styles.emptyDetailText}>アイテムを選択してください</Text>
+            <Text style={styles.emptyDetailText}>{t('storage.selectItem')}</Text>
           </View>
         )}
       </View>
@@ -221,12 +226,12 @@ export default function StorageScreen() {
       <View style={styles.gridContainer}>
         {isLoading ? (
           <View style={styles.emptyGrid}>
-            <Text style={styles.emptyGridText}>読み込み中...</Text>
+            <Text style={styles.emptyGridText}>{t('common.loading')}</Text>
           </View>
         ) : currentItems.length === 0 ? (
           <View style={styles.emptyGrid}>
             <Text style={styles.emptyGridText}>
-              {getSlotLabel(selectedSlot)}がありません
+              {t('storage.noItemsInSlot', { slot: t(`slots.${selectedSlot}`) })}
             </Text>
           </View>
         ) : (
@@ -269,7 +274,7 @@ export default function StorageScreen() {
 
       {/* フッター */}
       <View style={styles.footer}>
-        <Button title="戻る" onPress={handleBack} variant="secondary" />
+        <Button title={t('common.back')} onPress={handleBack} variant="secondary" />
       </View>
     </View>
   );
@@ -281,11 +286,13 @@ function StorageItemDetail({
   inventoryFull,
   onWithdraw,
   onSell,
+  t,
 }: {
   item: Item;
   inventoryFull: boolean;
   onWithdraw: () => void;
   onSell: () => void;
+  t: (key: string) => string;
 }) {
   const stats = calculateItemStats(item);
 
@@ -332,12 +339,12 @@ function StorageItemDetail({
             color={inventoryFull ? '#666' : '#4CAF50'}
           />
           <Text style={[styles.withdrawButtonText, inventoryFull && styles.buttonTextDisabled]}>
-            {inventoryFull ? 'インベントリ満杯' : 'インベントリへ'}
+            {inventoryFull ? t('storage.inventoryFull') : t('storage.toInventory')}
           </Text>
         </Pressable>
         <Pressable style={styles.iconButton} onPress={onSell}>
           <MaterialCommunityIcons name="cash" size={20} color="#FFD700" />
-          <Text style={styles.iconButtonText}>売却</Text>
+          <Text style={styles.iconButtonText}>{t('common.sell')}</Text>
         </Pressable>
       </View>
     </View>

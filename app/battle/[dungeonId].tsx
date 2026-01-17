@@ -7,6 +7,7 @@ import { usePlayerStore } from '@/stores/usePlayerStore';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ImageBackground, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 // ダンジョン背景画像マッピング
 const backgroundImages: Record<string, ImageSourcePropType> = {
@@ -27,6 +28,7 @@ const backgroundImages: Record<string, ImageSourcePropType> = {
 };
 
 export default function BattleScreen() {
+  const { t } = useTranslation();
   const { dungeonId } = useLocalSearchParams<{ dungeonId: string }>();
   const router = useRouter();
   const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun } = useBattle(dungeonId || '');
@@ -106,11 +108,11 @@ export default function BattleScreen() {
     <>
       <View style={styles.floorInfo}>
         <Text style={styles.floorText}>
-          {dungeon?.name} - {state.currentFloor}/{state.maxFloor}階
-          {state.runCount > 1 && ` (${state.runCount}周目)`}
+          {dungeon?.name} - {state.currentFloor}/{state.maxFloor}{t('battle.floor')}
+          {state.runCount > 1 && ` (${state.runCount}${t('battle.round')})`}
         </Text>
         {isAutoRunning && (
-          <Text style={styles.autoRunText}>自動周回中</Text>
+          <Text style={styles.autoRunText}>{t('battle.autoRunning')}</Text>
         )}
       </View>
 
@@ -121,7 +123,7 @@ export default function BattleScreen() {
       <View style={styles.battleField}>
         <View style={styles.charactersContainer}>
           <CharacterDisplay
-            name="プレイヤー"
+            name={t('battle.player')}
             currentHp={state.playerCurrentHp}
             maxHp={state.playerMaxHp}
             level={level}
@@ -141,13 +143,13 @@ export default function BattleScreen() {
           )}
         </View>
         {state.phase === 'victory' && (
-          <Text style={styles.victoryText}>勝利！</Text>
+          <Text style={styles.victoryText}>{t('battle.victory')}</Text>
         )}
         {state.phase === 'defeat' && (
-          <Text style={styles.defeatText}>敗北...</Text>
+          <Text style={styles.defeatText}>{t('battle.defeat')}</Text>
         )}
         {state.phase === 'cleared' && (
-          <Text style={styles.clearedText}>ダンジョン踏破！</Text>
+          <Text style={styles.clearedText}>{t('battle.cleared')}</Text>
         )}
       </View>
     </>
@@ -185,7 +187,7 @@ export default function BattleScreen() {
           <View style={styles.actionButtons}>
             <View style={styles.buttonWrapper}>
               <Button
-                title={isPaused ? '再開' : '一時停止'}
+                title={isPaused ? t('battle.resume') : t('battle.pause')}
                 onPress={togglePause}
                 variant="secondary"
               />
@@ -194,13 +196,13 @@ export default function BattleScreen() {
               <View style={styles.buttonWrapper}>
                 {isAutoRunning ? (
                   <Button
-                    title="周回停止"
+                    title={t('battle.stopAutoRun')}
                     onPress={stopAutoRun}
                     variant="warning"
                   />
                 ) : (
                   <Button
-                    title="自動周回"
+                    title={t('battle.autoRun')}
                     onPress={startAutoRun}
                     variant="primary"
                   />
@@ -209,7 +211,7 @@ export default function BattleScreen() {
             )}
             {isPaused && (
               <View style={styles.buttonWrapper}>
-                <Button title="撤退" onPress={() => setShowRetreatModal(true)} variant="danger" />
+                <Button title={t('battle.retreat')} onPress={() => setShowRetreatModal(true)} variant="danger" />
               </View>
             )}
           </View>
@@ -225,23 +227,22 @@ export default function BattleScreen() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>撤退確認</Text>
+            <Text style={styles.modalTitle}>{t('battle.retreatConfirm.title')}</Text>
             <Text style={styles.modalMessage}>
-              本当に撤退しますか？{'\n'}
-              獲得した経験値とアイテムは失われます。
+              {t('battle.retreatConfirm.message')}
             </Text>
             <View style={styles.modalButtons}>
               <Pressable
                 style={[styles.modalButton, styles.modalCancelButton]}
                 onPress={() => setShowRetreatModal(false)}
               >
-                <Text style={styles.modalCancelText}>キャンセル</Text>
+                <Text style={styles.modalCancelText}>{t('common.cancel')}</Text>
               </Pressable>
               <Pressable
                 style={[styles.modalButton, styles.modalConfirmButton]}
                 onPress={handleRetreatConfirm}
               >
-                <Text style={styles.modalConfirmText}>撤退する</Text>
+                <Text style={styles.modalConfirmText}>{t('battle.retreatConfirm.confirm')}</Text>
               </Pressable>
             </View>
           </View>
