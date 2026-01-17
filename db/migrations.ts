@@ -125,8 +125,6 @@ export const migrations: Migration[] = [
           ALTER TABLE character_equipment_new RENAME TO character_equipment;
         `);
       }
-
-      console.log('[Migration] V1 → V2 completed');
     },
   },
   {
@@ -173,8 +171,6 @@ export const migrations: Migration[] = [
         DROP TABLE storage;
         ALTER TABLE storage_new RENAME TO storage;
       `);
-
-      console.log('[Migration] V2 → V3 completed');
     },
   },
 ];
@@ -213,11 +209,8 @@ export async function runMigrations(
   const currentVersion = await getCurrentVersion(db);
 
   if (currentVersion >= targetVersion) {
-    console.log(`[Migration] Already at version ${currentVersion}, no migration needed`);
     return;
   }
-
-  console.log(`[Migration] Migrating from version ${currentVersion} to ${targetVersion}`);
 
   // 現在のバージョンより大きく、ターゲット以下のマイグレーションを実行
   const pendingMigrations = migrations.filter(
@@ -225,8 +218,6 @@ export async function runMigrations(
   );
 
   for (const migration of pendingMigrations) {
-    console.log(`[Migration] Running migration to version ${migration.version}...`);
-
     try {
       await migration.migrate(db);
 
@@ -235,13 +226,9 @@ export async function runMigrations(
         'INSERT OR REPLACE INTO schema_version (version) VALUES (?)',
         migration.version
       );
-
-      console.log(`[Migration] Migration to version ${migration.version} completed`);
     } catch (error) {
       console.error(`[Migration] Failed to migrate to version ${migration.version}:`, error);
       throw error;
     }
   }
-
-  console.log(`[Migration] All migrations completed. Current version: ${targetVersion}`);
 }
