@@ -824,12 +824,6 @@ export const useBattle = (dungeonId: string) => {
         for (const item of itemsToAdd) {
           await addToInventory(item);
         }
-
-        // 追加できなかったアイテム数（ログは結果画面で表示）
-        const discardedCount = state.droppedItems.length - itemsToAdd.length;
-        if (discardedCount > 0) {
-          console.log(`[Battle] ${discardedCount}個のアイテムがインベントリ満杯で破棄されました`);
-        }
       }
     };
     saveResults();

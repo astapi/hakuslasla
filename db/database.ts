@@ -23,19 +23,14 @@ export const initializeDatabase = async (): Promise<void> => {
 
   if (currentVersion === 0) {
     // 新規インストール: テーブル作成して最新バージョンを設定
-    console.log('[DB] Fresh install, creating tables...');
     await database.execAsync(CREATE_TABLES_SQL);
     await database.runAsync(
       'INSERT INTO schema_version (version) VALUES (?)',
       SCHEMA_VERSION
     );
-    console.log(`[DB] Initialized at version ${SCHEMA_VERSION}`);
   } else if (currentVersion < SCHEMA_VERSION) {
     // アップグレード: マイグレーション実行
-    console.log(`[DB] Upgrading from version ${currentVersion} to ${SCHEMA_VERSION}...`);
     await runMigrations(database, SCHEMA_VERSION);
-  } else {
-    console.log(`[DB] Already at version ${currentVersion}`);
   }
 };
 
