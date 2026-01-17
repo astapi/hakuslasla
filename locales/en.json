@@ -163,5 +163,67 @@
     "hp_more_pct": "HP more",
     "everyTurnHpRegen": "+{{value}} HP per turn",
     "everyTurnHpRegenPct": "+{{value}}% HP per turn"
+  },
+  "dungeon": {
+    "floors": "{{count}} Floors",
+    "recommendedLevel": "Rec. Lv.{{level}}"
+  },
+  "dungeons": {
+    "grassland": {
+      "name": "Beginner's Meadow",
+      "description": "A peaceful grassland where adventurers begin their journey. Home to weak monsters."
+    },
+    "cave": {
+      "name": "Underground Cave",
+      "description": "A dark cave deep underground. Intermediate monsters lurk within."
+    },
+    "ruins": {
+      "name": "Forgotten Ruins",
+      "description": "Ancient civilization ruins. A dangerous place where powerful monsters roam."
+    },
+    "goblin_fort": {
+      "name": "Goblin Fortress",
+      "description": "A massive fortress built by goblins. The Goblin King rules in its depths."
+    },
+    "demon_castle": {
+      "name": "Demon Castle",
+      "description": "The dark lord's castle where shadows swirl. Powerful demons guard their master."
+    },
+    "ice_cave": {
+      "name": "Frozen Cavern",
+      "description": "An icy cave deep within the permafrost. Frigid monsters dwell here."
+    },
+    "volcano": {
+      "name": "Blazing Volcano",
+      "description": "A scorching labyrinth inside an active volcano. Fire creatures inhabit it."
+    },
+    "dark_forest": {
+      "name": "Abyssal Forest",
+      "description": "A lightless dark forest. Ancient beasts lurk within."
+    },
+    "sky_tower": {
+      "name": "Sky Tower",
+      "description": "A mystical tower piercing the clouds. Celestial guardians await."
+    },
+    "hell_gate": {
+      "name": "Hell's Gate",
+      "description": "A forbidden gate leading to the underworld. Hell's gatekeepers block intruders."
+    },
+    "dragon_nest": {
+      "name": "Dragon's Lair",
+      "description": "A legendary nest where ancient dragons sleep. The mightiest dragon species dwell here."
+    },
+    "sacred_temple": {
+      "name": "Divine Temple",
+      "description": "A sacred temple protected by servants of the gods."
+    },
+    "chaos_realm": {
+      "name": "Chaos Realm",
+      "description": "A chaotic world between reality and void. All laws are distorted here."
+    },
+    "final_land": {
+      "name": "Land of Endings",
+      "description": "The final frontier at world's end. The ultimate being awaits."
+    }
   }
 }

@@ -1,15 +1,8 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot, Item, ItemMod } from '@/types';
-import { getSlotIcon, getSlotLabel } from '@/data/itemIcons';
-
-const MOD_LABELS: Record<string, string> = {
-  atk_bonus: 'ATK',
-  def_bonus: 'DEF',
-  hp_regen: '回復',
-  poison_chance: '毒',
-  critical_chance: 'クリ',
-};
+import { getSlotIcon } from '@/data/itemIcons';
 
 const MOD_COLORS: Record<string, string> = {
   atk_bonus: '#FF6B6B',
@@ -22,9 +15,10 @@ const MOD_COLORS: Record<string, string> = {
 interface EquipmentRowProps {
   slot: EquipmentSlot;
   item: Item | null;
+  t: (key: string) => string;
 }
 
-const EquipmentRow = ({ slot, item }: EquipmentRowProps) => {
+const EquipmentRow = ({ slot, item, t }: EquipmentRowProps) => {
   // ATK/DEF MODを加算した合計値を計算
   let totalAtk = item?.atk || 0;
   let totalDef = item?.def || 0;
@@ -47,7 +41,7 @@ const EquipmentRow = ({ slot, item }: EquipmentRowProps) => {
       {/* 左: スロットアイコンとラベル */}
       <View style={styles.slotInfo}>
         <Image source={getSlotIcon(slot)} style={styles.slotIcon} />
-        <Text style={styles.slotLabel}>{getSlotLabel(slot)}</Text>
+        <Text style={styles.slotLabel}>{t(`slots.${slot}`)}</Text>
       </View>
 
       {/* 中央: アイテム情報 */}
@@ -67,7 +61,7 @@ const EquipmentRow = ({ slot, item }: EquipmentRowProps) => {
             </View>
           </>
         ) : (
-          <Text style={styles.emptyText}>未装備</Text>
+          <Text style={styles.emptyText}>{t('common.unequipped')}</Text>
         )}
       </View>
 
@@ -88,7 +82,7 @@ const EquipmentRow = ({ slot, item }: EquipmentRowProps) => {
                   { color: MOD_COLORS[mod.type] || '#fff' },
                 ]}
               >
-                {MOD_LABELS[mod.type] || mod.type} +{mod.value}
+                {t(`mods.${mod.type}`)} +{mod.value}
                 {mod.type.includes('chance') ? '%' : ''}
               </Text>
             </View>
@@ -102,21 +96,22 @@ const EquipmentRow = ({ slot, item }: EquipmentRowProps) => {
 };
 
 export const EquipmentList = () => {
+  const { t } = useTranslation();
   const { equipment } = usePlayerStore();
   const slots: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>装備</Text>
+      <Text style={styles.title}>{t('equipment.title')}</Text>
 
       <View style={styles.header}>
-        <Text style={styles.headerSlot}>スロット</Text>
-        <Text style={styles.headerItem}>アイテム</Text>
-        <Text style={styles.headerMod}>MOD</Text>
+        <Text style={styles.headerSlot}>{t('equipment.slot')}</Text>
+        <Text style={styles.headerItem}>{t('equipment.item')}</Text>
+        <Text style={styles.headerMod}>{t('equipment.mod')}</Text>
       </View>
 
       {slots.map((slot) => (
-        <EquipmentRow key={slot} slot={slot} item={equipment[slot]} />
+        <EquipmentRow key={slot} slot={slot} item={equipment[slot]} t={t} />
       ))}
     </View>
   );
