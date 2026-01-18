@@ -61,6 +61,23 @@ export const monsterImages: Record<string, ImageSourcePropType> = {
   holy_dragon: require('@/assets/images/monsters/holy_dragon.png'),
   // 混沌の領域
   chaos_dragon: require('@/assets/images/monsters/chaos_dragon.png'),
+  // 盗賊のアジト
+  bandit: require('@/assets/images/monsters/bandit.png'),
+  bandit_archer: require('@/assets/images/monsters/bandit_archer.png'),
+  bandit_swordsman: require('@/assets/images/monsters/bandit_swordsman.png'),
+  bandit_leader: require('@/assets/images/monsters/bandit_leader.png'),
+  // オークの要塞
+  orc_mage: require('@/assets/images/monsters/orc_mage.png'),
+  uruk_hai: require('@/assets/images/monsters/Uruk-hai.png'),
+  // 海底洞窟
+  giant_crab: require('@/assets/images/monsters/giant_crab.png'),
+  // 灼熱の火山
+  lava_slime: require('@/assets/images/monsters/larva_slime.png'),
+  // 天空の塔
+  griffon: require('@/assets/images/monsters/griffin.png'),
+  // 地獄の門
+  succubus: require('@/assets/images/monsters/succubus.png'),
+  balrog: require('@/assets/images/monsters/balrog.png'),
 };
 
 /**
