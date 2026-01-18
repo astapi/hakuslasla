@@ -24,10 +24,7 @@ export const DungeonCard = ({ dungeon, onPress }: DungeonCardProps) => {
         <Text style={styles.description} numberOfLines={2}>
           {t(`dungeons.${dungeon.id}.description`)}
         </Text>
-        <View style={styles.metaRow}>
-          <Text style={styles.floors}>{t('dungeon.floors', { count: dungeon.maxFloor })}</Text>
-          <Text style={styles.level}>{t('dungeon.recommendedLevel', { level: dungeon.recommendedLevel })}</Text>
-        </View>
+        <Text style={styles.floors}>{t('dungeon.floors', { count: dungeon.maxFloor })}</Text>
       </View>
       <View style={styles.arrowContainer}>
         <Text style={styles.arrow}>→</Text>
@@ -73,18 +70,9 @@ const styles = StyleSheet.create({
     color: '#aaa',
     marginBottom: ms(4),
   },
-  metaRow: {
-    flexDirection: 'row',
-    gap: ms(12),
-  },
   floors: {
     fontSize: fs(12),
     color: '#4CAF50',
-    fontWeight: 'bold',
-  },
-  level: {
-    fontSize: fs(12),
-    color: '#FFD700',
     fontWeight: 'bold',
   },
   arrowContainer: {

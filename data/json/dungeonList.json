@@ -4,98 +4,108 @@
       "id": "grassland",
       "name": "始まりの草原",
       "description": "冒険者が最初に訪れる穏やかな草原。弱いモンスターが生息している。",
-      "recommendedLevel": 1,
       "maxFloor": 5
     },
     {
       "id": "cave",
       "name": "地底洞窟",
       "description": "地下深くに広がる暗い洞窟。中級のモンスターが潜んでいる。",
-      "recommendedLevel": 5,
       "maxFloor": 7
     },
     {
       "id": "ruins",
       "name": "忘却の遺跡",
       "description": "古代文明の遺跡。強力なモンスターが徘徊する危険な場所。",
-      "recommendedLevel": 10,
       "maxFloor": 10
     },
     {
       "id": "goblin_fort",
       "name": "ゴブリンの砦",
       "description": "ゴブリンたちが築いた巨大な砦。奥深くにはゴブリンキングが君臨している。",
-      "recommendedLevel": 15,
       "maxFloor": 20
+    },
+    {
+      "id": "bandit_hideout",
+      "name": "盗賊のアジト",
+      "description": "山賊たちが根城にする隠れ家。略奪品が山と積まれている。",
+      "maxFloor": 15
+    },
+    {
+      "id": "vampire_mansion",
+      "name": "ヴァンパイアの館",
+      "description": "夜の闇に佇む不気味な館。不死の貴族が支配している。",
+      "maxFloor": 12
+    },
+    {
+      "id": "underwater_cave",
+      "name": "海底洞窟",
+      "description": "深海に広がる神秘的な洞窟。水棲の魔物が縄張りを守っている。",
+      "maxFloor": 15
+    },
+    {
+      "id": "orc_fortress",
+      "name": "オークの要塞",
+      "description": "オークとトロルが支配する巨大な要塞。凶暴な戦士たちが待ち構える。",
+      "maxFloor": 18
+    },
+    {
+      "id": "volcano",
+      "name": "灼熱の火山",
+      "description": "活火山の内部に広がる灼熱の迷宮。炎の魔物が棲みついている。",
+      "maxFloor": 15
     },
     {
       "id": "demon_castle",
       "name": "魔王城",
       "description": "闇の力が渦巻く魔王の居城。強力な魔物たちが主を守護している。",
-      "recommendedLevel": 20,
       "maxFloor": 15
     },
     {
       "id": "ice_cave",
       "name": "氷結の洞窟",
       "description": "永久凍土の奥深くに眠る氷の洞窟。極寒の魔物が生息する。",
-      "recommendedLevel": 25,
-      "maxFloor": 15
-    },
-    {
-      "id": "volcano",
-      "name": "灼熱の火山",
-      "description": "活火山の内部に広がる灼熱の迷宮。炎の魔物が棲みついている。",
-      "recommendedLevel": 30,
       "maxFloor": 15
     },
     {
       "id": "dark_forest",
       "name": "深淵の森",
       "description": "光の届かない暗黒の森。古代の魔獣が潜んでいる。",
-      "recommendedLevel": 35,
       "maxFloor": 18
     },
     {
       "id": "sky_tower",
       "name": "天空の塔",
       "description": "雲を突き抜けてそびえ立つ神秘の塔。天界の守護者が待ち受ける。",
-      "recommendedLevel": 40,
       "maxFloor": 18
     },
     {
       "id": "hell_gate",
       "name": "地獄の門",
       "description": "冥界へと通じる禁断の門。地獄の番人たちが侵入者を阻む。",
-      "recommendedLevel": 50,
       "maxFloor": 20
     },
     {
       "id": "dragon_nest",
       "name": "竜の巣穴",
       "description": "古龍たちが眠る伝説の巣穴。最強の竜種が生息する。",
-      "recommendedLevel": 60,
       "maxFloor": 20
     },
     {
       "id": "sacred_temple",
       "name": "神域の神殿",
       "description": "神々に仕える守護者たちが守る聖なる神殿。",
-      "recommendedLevel": 70,
       "maxFloor": 25
     },
     {
       "id": "chaos_realm",
       "name": "混沌の領域",
       "description": "現実と虚無の狭間に存在する混沌の世界。あらゆる法則が歪む。",
-      "recommendedLevel": 80,
       "maxFloor": 25
     },
     {
       "id": "final_land",
       "name": "終焉の地",
       "description": "世界の果てに存在する最後の地。最強の存在が待ち構える。",
-      "recommendedLevel": 99,
       "maxFloor": 30
     }
   ]

@@ -267,16 +267,70 @@
       }
     },
 
-    "_comment_castle": "=== 魔王城 (×1.5) HP100 ATK49 DEF24 EXP85 ===",
+    "_comment_bandit_hideout": "=== 盗賊のアジト (Lv17) ===",
+
+    "bandit": {
+      "id": "bandit",
+      "name": "盗賊",
+      "image": "bandit",
+      "maxHp": 55,
+      "atk": 28,
+      "def": 12,
+      "exp": 45,
+      "attackSpeed": 1.2,
+      "uniqueDrop": null
+    },
+    "bandit_archer": {
+      "id": "bandit_archer",
+      "name": "盗賊アーチャー",
+      "image": "bandit_archer",
+      "maxHp": 50,
+      "atk": 35,
+      "def": 10,
+      "exp": 50,
+      "attackSpeed": 1.3,
+      "uniqueDrop": null
+    },
+    "bandit_swordsman": {
+      "id": "bandit_swordsman",
+      "name": "盗賊剣士",
+      "image": "bandit_swordsman",
+      "maxHp": 70,
+      "atk": 32,
+      "def": 15,
+      "exp": 55,
+      "attackSpeed": 1.1,
+      "uniqueDrop": {
+        "itemId": "thieves_dagger",
+        "dropRate": 3
+      }
+    },
+    "bandit_leader": {
+      "id": "bandit_leader",
+      "name": "盗賊の頭",
+      "image": "bandit_leader",
+      "maxHp": 500,
+      "atk": 42,
+      "def": 20,
+      "exp": 400,
+      "attackSpeed": 0.9,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "bandit_crown",
+        "dropRate": 10
+      }
+    },
+
+    "_comment_castle": "=== 魔王城 (Lv30) ===",
 
     "death_knight": {
       "id": "death_knight",
       "name": "デスナイト",
       "image": "death_knight",
-      "maxHp": 110,
-      "atk": 45,
-      "def": 28,
-      "exp": 80,
+      "maxHp": 180,
+      "atk": 78,
+      "def": 42,
+      "exp": 150,
       "attackSpeed": 0.9,
       "uniqueDrop": null
     },
@@ -284,10 +338,10 @@
       "id": "dark_mage",
       "name": "ダークメイジ",
       "image": "dark_mage",
-      "maxHp": 75,
-      "atk": 58,
-      "def": 18,
-      "exp": 90,
+      "maxHp": 140,
+      "atk": 92,
+      "def": 32,
+      "exp": 160,
       "attackSpeed": 1.1,
       "uniqueDrop": {
         "itemId": "dark_grimoire",
@@ -298,10 +352,10 @@
       "id": "demon",
       "name": "デーモン",
       "image": "demon",
-      "maxHp": 120,
-      "atk": 48,
-      "def": 26,
-      "exp": 95,
+      "maxHp": 200,
+      "atk": 82,
+      "def": 45,
+      "exp": 165,
       "attackSpeed": 0.9,
       "uniqueDrop": {
         "itemId": "demon_horn",
@@ -312,10 +366,10 @@
       "id": "wyvern",
       "name": "ワイバーン",
       "image": "wyvern",
-      "maxHp": 95,
-      "atk": 52,
-      "def": 22,
-      "exp": 85,
+      "maxHp": 165,
+      "atk": 88,
+      "def": 38,
+      "exp": 155,
       "attackSpeed": 1.1,
       "uniqueDrop": {
         "itemId": "wyvern_scale",
@@ -326,10 +380,10 @@
       "id": "demon_lord",
       "name": "魔王",
       "image": "demon_lord",
-      "maxHp": 800,
-      "atk": 60,
-      "def": 35,
-      "exp": 600,
+      "maxHp": 1200,
+      "atk": 98,
+      "def": 55,
+      "exp": 800,
       "attackSpeed": 0.5,
       "isBoss": true,
       "uniqueDrop": {
@@ -338,16 +392,84 @@
       }
     },
 
-    "_comment_ice_cave": "=== 氷結の洞窟 (×2.25) HP150 ATK73 DEF36 EXP127 ===",
+    "_comment_vampire_mansion": "=== ヴァンパイアの館 (Lv19) ===",
+
+    "zombie": {
+      "id": "zombie",
+      "name": "ゾンビ",
+      "image": "zombie",
+      "maxHp": 75,
+      "atk": 32,
+      "def": 14,
+      "exp": 55,
+      "attackSpeed": 0.6,
+      "uniqueDrop": null
+    },
+    "ghoul": {
+      "id": "ghoul",
+      "name": "グール",
+      "image": "ghoul",
+      "maxHp": 65,
+      "atk": 38,
+      "def": 16,
+      "exp": 60,
+      "attackSpeed": 1.0,
+      "uniqueDrop": null
+    },
+    "banshee": {
+      "id": "banshee",
+      "name": "バンシー",
+      "image": "banshee",
+      "maxHp": 55,
+      "atk": 45,
+      "def": 12,
+      "exp": 65,
+      "attackSpeed": 1.2,
+      "uniqueDrop": {
+        "itemId": "banshee_veil",
+        "dropRate": 2
+      }
+    },
+    "wraith": {
+      "id": "wraith",
+      "name": "レイス",
+      "image": "wraith",
+      "maxHp": 70,
+      "atk": 42,
+      "def": 18,
+      "exp": 70,
+      "attackSpeed": 1.1,
+      "uniqueDrop": {
+        "itemId": "wraith_cloak",
+        "dropRate": 2
+      }
+    },
+    "vampire": {
+      "id": "vampire",
+      "name": "ヴァンパイア",
+      "image": "vampire",
+      "maxHp": 550,
+      "atk": 48,
+      "def": 25,
+      "exp": 450,
+      "attackSpeed": 1.0,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "vampire_fang",
+        "dropRate": 10
+      }
+    },
+
+    "_comment_ice_cave": "=== 氷結の洞窟 (Lv34) ===",
 
     "ice_golem": {
       "id": "ice_golem",
       "name": "アイスゴーレム",
       "image": "ice_golem",
-      "maxHp": 180,
-      "atk": 65,
-      "def": 45,
-      "exp": 120,
+      "maxHp": 260,
+      "atk": 95,
+      "def": 60,
+      "exp": 190,
       "attackSpeed": 0.6,
       "uniqueDrop": null
     },
@@ -355,10 +477,10 @@
       "id": "frost_wolf",
       "name": "フロストウルフ",
       "image": "frost_wolf",
-      "maxHp": 130,
-      "atk": 78,
-      "def": 30,
-      "exp": 125,
+      "maxHp": 200,
+      "atk": 115,
+      "def": 45,
+      "exp": 195,
       "attackSpeed": 1.3,
       "uniqueDrop": null
     },
@@ -366,10 +488,10 @@
       "id": "ice_witch",
       "name": "アイスウィッチ",
       "image": "ice_witch",
-      "maxHp": 110,
-      "atk": 85,
-      "def": 28,
-      "exp": 135,
+      "maxHp": 175,
+      "atk": 125,
+      "def": 40,
+      "exp": 205,
       "attackSpeed": 1.0,
       "uniqueDrop": {
         "itemId": "frozen_staff",
@@ -380,10 +502,10 @@
       "id": "yeti",
       "name": "イエティ",
       "image": "yeti",
-      "maxHp": 170,
-      "atk": 70,
-      "def": 38,
-      "exp": 130,
+      "maxHp": 250,
+      "atk": 102,
+      "def": 55,
+      "exp": 200,
       "attackSpeed": 0.7,
       "uniqueDrop": {
         "itemId": "yeti_fur",
@@ -394,24 +516,89 @@
       "id": "frost_wyrm",
       "name": "フロストワーム",
       "image": "frost_wyrm",
-      "maxHp": 160,
-      "atk": 68,
-      "def": 40,
-      "exp": 125,
+      "maxHp": 235,
+      "atk": 98,
+      "def": 52,
+      "exp": 195,
       "attackSpeed": 0.8,
       "uniqueDrop": null
     },
 
-    "_comment_volcano": "=== 灼熱の火山 (×3.38) HP225 ATK110 DEF54 EXP191 ===",
+    "_comment_underwater_cave": "=== 海底洞窟 (Lv21) ===",
 
-    "fire_elemental": {
-      "id": "fire_elemental",
-      "name": "ファイアエレメンタル",
-      "image": "fire_elemental",
-      "maxHp": 200,
-      "atk": 120,
-      "def": 45,
-      "exp": 185,
+    "sahuagin": {
+      "id": "sahuagin",
+      "name": "サハギン",
+      "image": "sahuagin",
+      "maxHp": 85,
+      "atk": 42,
+      "def": 18,
+      "exp": 75,
+      "attackSpeed": 1.1,
+      "uniqueDrop": null
+    },
+    "merman": {
+      "id": "merman",
+      "name": "マーマン",
+      "image": "merman",
+      "maxHp": 95,
+      "atk": 48,
+      "def": 22,
+      "exp": 80,
+      "attackSpeed": 1.0,
+      "uniqueDrop": {
+        "itemId": "merman_trident",
+        "dropRate": 2
+      }
+    },
+    "sea_serpent": {
+      "id": "sea_serpent",
+      "name": "シーサーペント",
+      "image": "sea_serpent",
+      "maxHp": 100,
+      "atk": 52,
+      "def": 20,
+      "exp": 85,
+      "attackSpeed": 1.2,
+      "uniqueDrop": null
+    },
+    "giant_crab": {
+      "id": "giant_crab",
+      "name": "ジャイアントクラブ",
+      "image": "giant_crab",
+      "maxHp": 110,
+      "atk": 48,
+      "def": 35,
+      "exp": 90,
+      "attackSpeed": 0.7,
+      "uniqueDrop": null
+    },
+    "kraken": {
+      "id": "kraken",
+      "name": "クラーケン",
+      "image": "kraken",
+      "maxHp": 600,
+      "atk": 55,
+      "def": 28,
+      "exp": 480,
+      "attackSpeed": 0.7,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "kraken_tentacle",
+        "dropRate": 10
+      }
+    },
+
+    "_comment_volcano": "=== 灼熱の火山 (Lv26) ===",
+
+    "lava_slime": {
+      "id": "lava_slime",
+      "name": "ラーバスライム",
+      "image": "lava_slime",
+      "maxHp": 130,
+      "atk": 65,
+      "def": 30,
+      "exp": 115,
       "attackSpeed": 1.1,
       "uniqueDrop": null
     },
@@ -419,10 +606,10 @@
       "id": "magma_golem",
       "name": "マグマゴーレム",
       "image": "magma_golem",
-      "maxHp": 280,
-      "atk": 95,
-      "def": 70,
-      "exp": 200,
+      "maxHp": 170,
+      "atk": 58,
+      "def": 42,
+      "exp": 125,
       "attackSpeed": 0.6,
       "uniqueDrop": {
         "itemId": "magma_core",
@@ -433,10 +620,10 @@
       "id": "salamander",
       "name": "サラマンダー",
       "image": "salamander",
-      "maxHp": 210,
-      "atk": 115,
-      "def": 50,
-      "exp": 190,
+      "maxHp": 140,
+      "atk": 68,
+      "def": 32,
+      "exp": 120,
       "attackSpeed": 1.2,
       "uniqueDrop": null
     },
@@ -444,10 +631,10 @@
       "id": "flame_knight",
       "name": "フレイムナイト",
       "image": "flame_knight",
-      "maxHp": 240,
-      "atk": 105,
-      "def": 60,
-      "exp": 195,
+      "maxHp": 155,
+      "atk": 62,
+      "def": 38,
+      "exp": 130,
       "attackSpeed": 0.9,
       "uniqueDrop": {
         "itemId": "flame_sword",
@@ -458,12 +645,80 @@
       "id": "phoenix",
       "name": "フェニックス",
       "image": "phoenix",
-      "maxHp": 195,
-      "atk": 115,
-      "def": 45,
-      "exp": 185,
+      "maxHp": 125,
+      "atk": 72,
+      "def": 28,
+      "exp": 125,
       "attackSpeed": 1.3,
       "uniqueDrop": null
+    },
+
+    "_comment_orc_fortress": "=== オークの要塞 (Lv23) ===",
+
+    "orc_warrior": {
+      "id": "orc_warrior",
+      "name": "オーク戦士",
+      "image": "orc",
+      "maxHp": 100,
+      "atk": 50,
+      "def": 24,
+      "exp": 90,
+      "attackSpeed": 0.9,
+      "uniqueDrop": null
+    },
+    "orc_mage": {
+      "id": "orc_mage",
+      "name": "オークメイジ",
+      "image": "orc_mage",
+      "maxHp": 80,
+      "atk": 60,
+      "def": 18,
+      "exp": 95,
+      "attackSpeed": 1.0,
+      "uniqueDrop": {
+        "itemId": "orc_staff",
+        "dropRate": 2
+      }
+    },
+    "troll": {
+      "id": "troll",
+      "name": "トロル",
+      "image": "troll",
+      "maxHp": 130,
+      "atk": 52,
+      "def": 30,
+      "exp": 100,
+      "attackSpeed": 0.7,
+      "uniqueDrop": null
+    },
+    "cyclops": {
+      "id": "cyclops",
+      "name": "サイクロプス",
+      "image": "cyclops",
+      "maxHp": 140,
+      "atk": 55,
+      "def": 26,
+      "exp": 105,
+      "attackSpeed": 0.6,
+      "uniqueDrop": {
+        "itemId": "cyclops_eye",
+        "dropRate": 2
+      }
+    },
+    "uruk_hai": {
+      "id": "uruk_hai",
+      "name": "ウルクハイ",
+      "image": "uruk_hai",
+      "maxHp": 700,
+      "atk": 58,
+      "def": 32,
+      "exp": 520,
+      "attackSpeed": 0.8,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "uruk_blade",
+        "dropRate": 10
+      }
     },
 
     "_comment_dark_forest": "=== 深淵の森 (×5.06) HP337 ATK164 DEF82 EXP286 ===",
@@ -582,10 +837,10 @@
         "dropRate": 2
       }
     },
-    "wind_elemental": {
-      "id": "wind_elemental",
-      "name": "ウィンドエレメンタル",
-      "image": "wind_elemental",
+    "griffon": {
+      "id": "griffon",
+      "name": "グリフォン",
+      "image": "griffon",
       "maxHp": 480,
       "atk": 245,
       "def": 115,
