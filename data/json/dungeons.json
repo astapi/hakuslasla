@@ -5,7 +5,6 @@
       "name": "始まりの草原",
       "description": "冒険者が最初に訪れる穏やかな草原。弱いモンスターが生息している。",
       "maxFloor": 5,
-      "recommendedLevel": 1,
       "monsters": [
         { "monsterId": "slime", "spawnRate": 30 },
         { "monsterId": "wild_rabbit", "spawnRate": 25 },
@@ -40,7 +39,6 @@
       "name": "地底洞窟",
       "description": "地下深くに広がる暗い洞窟。中級のモンスターが潜んでいる。",
       "maxFloor": 7,
-      "recommendedLevel": 5,
       "monsters": [
         { "monsterId": "bat", "spawnRate": 25 },
         { "monsterId": "goblin_warrior", "spawnRate": 20 },
@@ -77,7 +75,6 @@
       "name": "忘却の遺跡",
       "description": "古代文明の遺跡。強力なモンスターが徘徊する危険な場所。",
       "maxFloor": 10,
-      "recommendedLevel": 10,
       "monsters": [
         { "monsterId": "skeleton_knight", "spawnRate": 25 },
         { "monsterId": "golem", "spawnRate": 15 },
@@ -110,7 +107,6 @@
       "name": "ゴブリンの砦",
       "description": "ゴブリンたちが築いた巨大な砦。奥深くにはゴブリンキングが君臨している。",
       "maxFloor": 20,
-      "recommendedLevel": 15,
       "monsters": [
         { "monsterId": "goblin_warrior", "spawnRate": 25 },
         { "monsterId": "goblin_archer", "spawnRate": 25 },
@@ -141,12 +137,45 @@
       "modTierRange": { "minTier": 10, "maxTier": 7 },
       "modCountRange": { "min": 0, "max": 3 }
     },
+    "bandit_hideout": {
+      "id": "bandit_hideout",
+      "name": "盗賊のアジト",
+      "description": "山賊たちが根城にする隠れ家。略奪品が山と積まれている。",
+      "maxFloor": 15,
+      "monsters": [
+        { "monsterId": "bandit", "spawnRate": 30 },
+        { "monsterId": "bandit_archer", "spawnRate": 25 },
+        { "monsterId": "bandit_swordsman", "spawnRate": 25 },
+        { "monsterId": "goblin_warrior", "spawnRate": 20 }
+      ],
+      "boss": {
+        "monsterId": "bandit_leader",
+        "floor": 15
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "ruins_magic_sword", "dropRate": 5 },
+          { "itemId": "cursed_robe", "dropRate": 5 },
+          { "itemId": "gargoyle_boots", "dropRate": 5 },
+          { "itemId": "ancient_ring", "dropRate": 5 },
+          { "itemId": "oblivion_amulet", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "thieves_blade", "dropRate": 15 },
+          { "itemId": "bandit_leather", "dropRate": 12 },
+          { "itemId": "thieves_gloves", "dropRate": 12 },
+          { "itemId": "shadow_boots", "dropRate": 10 },
+          { "itemId": "thieves_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 7 },
+      "modCountRange": { "min": 0, "max": 3 }
+    },
     "demon_castle": {
       "id": "demon_castle",
       "name": "魔王城",
       "description": "闇の力が渦巻く魔王の居城。強力な魔物たちが主を守護している。",
       "maxFloor": 15,
-      "recommendedLevel": 20,
       "monsters": [
         { "monsterId": "death_knight", "spawnRate": 25 },
         { "monsterId": "dark_mage", "spawnRate": 25 },
@@ -176,12 +205,45 @@
       "modTierRange": { "minTier": 10, "maxTier": 6 },
       "modCountRange": { "min": 0, "max": 3 }
     },
+    "vampire_mansion": {
+      "id": "vampire_mansion",
+      "name": "ヴァンパイアの館",
+      "description": "夜の闇に佇む不気味な館。不死の貴族が支配している。",
+      "maxFloor": 12,
+      "monsters": [
+        { "monsterId": "zombie", "spawnRate": 30 },
+        { "monsterId": "ghoul", "spawnRate": 25 },
+        { "monsterId": "banshee", "spawnRate": 20 },
+        { "monsterId": "wraith", "spawnRate": 25 }
+      ],
+      "boss": {
+        "monsterId": "vampire",
+        "floor": 12
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "demon_blade", "dropRate": 5 },
+          { "itemId": "dark_plate", "dropRate": 5 },
+          { "itemId": "dragon_gauntlets", "dropRate": 5 },
+          { "itemId": "inferno_boots", "dropRate": 5 },
+          { "itemId": "dark_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "vampire_blade", "dropRate": 15 },
+          { "itemId": "night_cloak", "dropRate": 12 },
+          { "itemId": "undead_gauntlets", "dropRate": 12 },
+          { "itemId": "phantom_boots", "dropRate": 10 },
+          { "itemId": "blood_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 6 },
+      "modCountRange": { "min": 0, "max": 3 }
+    },
     "ice_cave": {
       "id": "ice_cave",
       "name": "氷結の洞窟",
       "description": "永久凍土の奥深くに眠る氷の洞窟。極寒の魔物が生息する。",
       "maxFloor": 15,
-      "recommendedLevel": 25,
       "monsters": [
         { "monsterId": "ice_golem", "spawnRate": 20 },
         { "monsterId": "frost_wolf", "spawnRate": 25 },
@@ -208,14 +270,47 @@
       "modTierRange": { "minTier": 10, "maxTier": 5 },
       "modCountRange": { "min": 0, "max": 3 }
     },
+    "underwater_cave": {
+      "id": "underwater_cave",
+      "name": "海底洞窟",
+      "description": "深海に広がる神秘的な洞窟。水棲の魔物が縄張りを守っている。",
+      "maxFloor": 15,
+      "monsters": [
+        { "monsterId": "sahuagin", "spawnRate": 30 },
+        { "monsterId": "merman", "spawnRate": 25 },
+        { "monsterId": "sea_serpent", "spawnRate": 20 },
+        { "monsterId": "giant_crab", "spawnRate": 25 }
+      ],
+      "boss": {
+        "monsterId": "kraken",
+        "floor": 15
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "frost_blade", "dropRate": 5 },
+          { "itemId": "ice_armor", "dropRate": 5 },
+          { "itemId": "frozen_gauntlets", "dropRate": 5 },
+          { "itemId": "blizzard_boots", "dropRate": 5 },
+          { "itemId": "ice_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "trident", "dropRate": 15 },
+          { "itemId": "sea_scale_armor", "dropRate": 12 },
+          { "itemId": "coral_gauntlets", "dropRate": 12 },
+          { "itemId": "tide_boots", "dropRate": 10 },
+          { "itemId": "ocean_pearl_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 5 },
+      "modCountRange": { "min": 0, "max": 3 }
+    },
     "volcano": {
       "id": "volcano",
       "name": "灼熱の火山",
       "description": "活火山の内部に広がる灼熱の迷宮。炎の魔物が棲みついている。",
       "maxFloor": 15,
-      "recommendedLevel": 30,
       "monsters": [
-        { "monsterId": "fire_elemental", "spawnRate": 20 },
+        { "monsterId": "lava_slime", "spawnRate": 20 },
         { "monsterId": "magma_golem", "spawnRate": 20 },
         { "monsterId": "salamander", "spawnRate": 25 },
         { "monsterId": "flame_knight", "spawnRate": 20 },
@@ -240,12 +335,45 @@
       "modTierRange": { "minTier": 10, "maxTier": 4 },
       "modCountRange": { "min": 1, "max": 4 }
     },
+    "orc_fortress": {
+      "id": "orc_fortress",
+      "name": "オークの要塞",
+      "description": "オークとトロルが支配する巨大な要塞。凶暴な戦士たちが待ち構える。",
+      "maxFloor": 18,
+      "monsters": [
+        { "monsterId": "orc_warrior", "spawnRate": 25 },
+        { "monsterId": "orc_mage", "spawnRate": 20 },
+        { "monsterId": "troll", "spawnRate": 25 },
+        { "monsterId": "cyclops", "spawnRate": 30 }
+      ],
+      "boss": {
+        "monsterId": "uruk_hai",
+        "floor": 18
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "magma_blade", "dropRate": 5 },
+          { "itemId": "volcano_armor", "dropRate": 5 },
+          { "itemId": "flame_gauntlets", "dropRate": 5 },
+          { "itemId": "ember_boots", "dropRate": 5 },
+          { "itemId": "fire_ruby_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "orc_cleaver", "dropRate": 15 },
+          { "itemId": "war_plate", "dropRate": 12 },
+          { "itemId": "beast_gauntlets", "dropRate": 12 },
+          { "itemId": "warlord_boots", "dropRate": 10 },
+          { "itemId": "berserker_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 4 },
+      "modCountRange": { "min": 1, "max": 4 }
+    },
     "dark_forest": {
       "id": "dark_forest",
       "name": "深淵の森",
       "description": "光の届かない暗黒の森。古代の魔獣が潜んでいる。",
       "maxFloor": 18,
-      "recommendedLevel": 35,
       "monsters": [
         { "monsterId": "dark_treant", "spawnRate": 20 },
         { "monsterId": "shadow_wolf", "spawnRate": 25 },
@@ -277,13 +405,12 @@
       "name": "天空の塔",
       "description": "雲を突き抜けてそびえ立つ神秘の塔。天界の守護者が待ち受ける。",
       "maxFloor": 18,
-      "recommendedLevel": 40,
       "monsters": [
         { "monsterId": "sky_knight", "spawnRate": 20 },
         { "monsterId": "storm_harpy", "spawnRate": 25 },
         { "monsterId": "thunder_bird", "spawnRate": 20 },
         { "monsterId": "cloud_giant", "spawnRate": 15 },
-        { "monsterId": "wind_elemental", "spawnRate": 20 }
+        { "monsterId": "griffon", "spawnRate": 20 }
       ],
       "dropTable": {
         "common": [
@@ -309,7 +436,6 @@
       "name": "地獄の門",
       "description": "冥界へと通じる禁断の門。地獄の番人たちが侵入者を阻む。",
       "maxFloor": 20,
-      "recommendedLevel": 50,
       "monsters": [
         { "monsterId": "hell_hound", "spawnRate": 20 },
         { "monsterId": "infernal_knight", "spawnRate": 20 },
@@ -341,7 +467,6 @@
       "name": "竜の巣穴",
       "description": "古龍たちが眠る伝説の巣穴。最強の竜種が生息する。",
       "maxFloor": 20,
-      "recommendedLevel": 60,
       "monsters": [
         { "monsterId": "drake", "spawnRate": 25 },
         { "monsterId": "fire_dragon", "spawnRate": 20 },
@@ -373,7 +498,6 @@
       "name": "神域の神殿",
       "description": "神々に仕える守護者たちが守る聖なる神殿。",
       "maxFloor": 25,
-      "recommendedLevel": 70,
       "monsters": [
         { "monsterId": "divine_knight", "spawnRate": 20 },
         { "monsterId": "seraph", "spawnRate": 20 },
@@ -405,7 +529,6 @@
       "name": "混沌の領域",
       "description": "現実と虚無の狭間に存在する混沌の世界。あらゆる法則が歪む。",
       "maxFloor": 25,
-      "recommendedLevel": 80,
       "monsters": [
         { "monsterId": "chaos_knight", "spawnRate": 20 },
         { "monsterId": "void_walker", "spawnRate": 20 },
@@ -437,7 +560,6 @@
       "name": "終焉の地",
       "description": "世界の果てに存在する最後の地。最強の存在が待ち構える。",
       "maxFloor": 30,
-      "recommendedLevel": 99,
       "monsters": [
         { "monsterId": "apocalypse_knight", "spawnRate": 20 },
         { "monsterId": "world_eater", "spawnRate": 20 },

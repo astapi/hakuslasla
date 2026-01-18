@@ -299,7 +299,6 @@ export interface Dungeon {
   name: string;
   description: string;
   maxFloor: number;
-  recommendedLevel: number;
   monsters: MonsterSpawn[];
   dropTable: DungeonDropTable;
   boss?: DungeonBoss;           // ボス設定
@@ -312,7 +311,6 @@ export interface DungeonListItem {
   id: string;
   name: string;
   description: string;
-  recommendedLevel: number;
   maxFloor: number;
 }
 
