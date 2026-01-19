@@ -29,7 +29,7 @@ export default function SkillsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#15191E',
     padding: ms(16),
   },
   passiveTreeContainer: {

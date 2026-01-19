@@ -63,32 +63,40 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScreenWrapper edges={['top', 'left', 'right']}>
+    <ScreenWrapper
+      edges={['top', 'left', 'right']}
+      style={styles.container}
+      backgroundColor={colors.bg}
+    >
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        <View style={styles.characterSection}>
-          <Image
-            source={playerImages.standing}
-            style={styles.characterImage}
-            resizeMode="contain"
-          />
-          <View style={styles.characterInfo}>
-            <View style={styles.characterHeader}>
-              <Text style={styles.characterName}>{characterName}</Text>
-              <View style={styles.headerButtons}>
-                <Pressable style={styles.debugButton} onPress={handleOpenDebug}>
-                  <MaterialCommunityIcons name="flask" size={16} color="#FFA500" />
-                </Pressable>
-                <Pressable style={styles.changeButton} onPress={handleChangeCharacter}>
-                  <Text style={styles.changeButtonText}>{t('common.change')}</Text>
-                </Pressable>
+        <View style={styles.characterCard}>
+          <View style={styles.characterSection}>
+            <Image
+              source={playerImages.standing}
+              style={styles.characterImage}
+              resizeMode="contain"
+            />
+            <View style={styles.characterInfo}>
+              <View style={styles.characterHeader}>
+                <Text style={styles.characterName}>{characterName}</Text>
+                <View style={styles.headerButtons}>
+                  <Pressable style={styles.debugButton} onPress={handleOpenDebug}>
+                    <MaterialCommunityIcons name="flask" size={16} color={colors.iconMuted} />
+                  </Pressable>
+                  <Pressable style={styles.changeButton} onPress={handleChangeCharacter}>
+                    <Text style={styles.changeButtonText}>{t('common.change')}</Text>
+                  </Pressable>
+                </View>
               </View>
+              <StatusPanel key={`status-${focusKey}`} />
             </View>
-            <StatusPanel key={`status-${focusKey}`} />
           </View>
         </View>
 
         <View style={styles.section}>
-          <EquipmentList key={`equipment-${focusKey}`} />
+          <View style={styles.sectionCard}>
+            <EquipmentList key={`equipment-${focusKey}`} />
+          </View>
         </View>
       </ScrollView>
 
@@ -99,7 +107,12 @@ export default function HomeScreen() {
           onPress={handleOpenSkills}
         >
           <View style={styles.menuIconContainer}>
-            <MaterialCommunityIcons name="star-four-points" size={24} color={skillPoints > 0 ? '#FFD700' : '#fff'} />
+            {skillPoints > 0 && <View style={styles.menuIconRing} />}
+            <MaterialCommunityIcons
+              name="star-four-points"
+              size={24}
+              color={skillPoints > 0 ? colors.icon : colors.iconMuted}
+            />
             {skillPoints > 0 && (
               <View style={styles.badge}>
                 <Text style={styles.badgeText}>{skillPoints}</Text>
@@ -113,7 +126,7 @@ export default function HomeScreen() {
           style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenInventory}
         >
-          <MaterialCommunityIcons name="bag-personal" size={24} color="#fff" />
+          <MaterialCommunityIcons name="bag-personal" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.inventory')}</Text>
         </Pressable>
 
@@ -121,7 +134,7 @@ export default function HomeScreen() {
           style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenStorage}
         >
-          <MaterialCommunityIcons name="treasure-chest" size={24} color="#fff" />
+          <MaterialCommunityIcons name="treasure-chest" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.storage')}</Text>
         </Pressable>
 
@@ -129,7 +142,7 @@ export default function HomeScreen() {
           style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenSettings}
         >
-          <MaterialCommunityIcons name="filter-cog" size={24} color="#fff" />
+          <MaterialCommunityIcons name="filter-cog" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.settings')}</Text>
         </Pressable>
 
@@ -137,7 +150,7 @@ export default function HomeScreen() {
           style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenDungeonSelect}
         >
-          <MaterialCommunityIcons name="castle" size={24} color="#fff" />
+          <MaterialCommunityIcons name="castle" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.adventure')}</Text>
         </Pressable>
       </View>
@@ -145,13 +158,25 @@ export default function HomeScreen() {
   );
 }
 
+const colors = {
+  bg: '#15191E',
+  bgDeep: '#101418',
+  slab: '#1B2026',
+  slabEdge: '#2A3037',
+  accent: '#232833',
+  text: '#C9CDD3',
+  textMuted: '#8C929A',
+  icon: '#AEB5BE',
+  iconMuted: '#8C929A',
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    position: 'relative',
   },
   loadingText: {
-    color: '#aaa',
+    color: colors.textMuted,
     textAlign: 'center',
     marginTop: ms(32),
   },
@@ -160,11 +185,22 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: ms(16),
-    paddingBottom: ms(80),
+    paddingBottom: ms(88),
+  },
+  characterCard: {
+    backgroundColor: colors.slab,
+    borderRadius: ms(16),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+    padding: ms(12),
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    shadowRadius: ms(10),
+    shadowOffset: { width: 0, height: ms(6) },
+    elevation: 3,
   },
   characterSection: {
     flexDirection: 'row',
-    marginBottom: ms(16),
   },
   characterImage: {
     width: ms(120),
@@ -184,7 +220,7 @@ const styles = StyleSheet.create({
   characterName: {
     fontSize: fs(20),
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
   },
   headerButtons: {
     flexDirection: 'row',
@@ -193,65 +229,94 @@ const styles = StyleSheet.create({
   },
   debugButton: {
     padding: ms(6),
-    backgroundColor: 'rgba(255, 165, 0, 0.15)',
+    backgroundColor: 'rgba(35, 40, 51, 0.5)',
     borderRadius: ms(6),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
   },
   changeButton: {
     paddingHorizontal: ms(12),
     paddingVertical: ms(6),
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(22, 26, 32, 0.6)',
     borderRadius: ms(6),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
   },
   changeButtonText: {
     fontSize: fs(12),
-    color: '#aaa',
+    color: colors.textMuted,
   },
   section: {
     marginTop: ms(16),
   },
+  sectionCard: {
+    backgroundColor: colors.slab,
+    borderRadius: ms(16),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+    padding: ms(12),
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: ms(10),
+    shadowOffset: { width: 0, height: ms(6) },
+    elevation: 2,
+  },
   bottomMenu: {
     flexDirection: 'row',
-    backgroundColor: '#16213e',
-    paddingVertical: ms(8),
+    backgroundColor: colors.slab,
+    paddingVertical: ms(10),
     paddingHorizontal: ms(16),
     paddingBottom: ms(24),
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+    borderTopColor: colors.slabEdge,
   },
   menuItem: {
     flex: 1,
     alignItems: 'center',
     paddingVertical: ms(8),
+    borderRadius: ms(10),
   },
   menuItemPressed: {
-    opacity: 0.6,
+    backgroundColor: 'rgba(35, 40, 51, 0.6)',
   },
   menuIconContainer: {
     position: 'relative',
+    width: ms(32),
+    height: ms(32),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  menuIconRing: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: ms(16),
+    borderWidth: 1,
+    borderColor: colors.accent,
   },
   badge: {
     position: 'absolute',
     top: ms(-4),
     right: ms(-8),
-    backgroundColor: '#F44336',
+    backgroundColor: '#2B2F36',
     borderRadius: ms(8),
     minWidth: ms(16),
     height: ms(16),
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: ms(4),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
   },
   badgeText: {
     fontSize: fs(10),
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
   },
   menuLabel: {
     fontSize: fs(10),
-    color: '#aaa',
+    color: colors.textMuted,
     marginTop: ms(4),
   },
   menuLabelHighlight: {
-    color: '#FFD700',
+    color: colors.text,
   },
 });

@@ -438,7 +438,7 @@ function ItemDetail({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#15191E',
   },
   // ヘッダー
   header: {
@@ -708,7 +708,7 @@ const styles = StyleSheet.create({
   uniqueBadgeText: {
     fontSize: fs(8),
     fontWeight: 'bold',
-    color: '#1a1a2e',
+    color: '#15191E',
   },
   modIndicator: {
     position: 'absolute',
@@ -725,7 +725,7 @@ const styles = StyleSheet.create({
   modIndicatorText: {
     fontSize: fs(10),
     fontWeight: 'bold',
-    color: '#1a1a2e',
+    color: '#15191E',
   },
   gridItemName: {
     fontSize: fs(10),
