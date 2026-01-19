@@ -19,6 +19,18 @@ import {
 } from './types';
 import { getAttackSpeedFromMods } from './modEffects';
 import {
+  getEnemyAtkMultiplier,
+  getEnemyAttackSpeedMultiplier,
+  getEnemyDamageReductionPct,
+  getEnemyHpOnHit,
+  getEnemyRegenPerSecond,
+  getPlayerAttackSpeedMultiplier,
+  getPlayerAtkMultiplier,
+  getPlayerDefMultiplier,
+  getPlayerPoisonFromBoss,
+  isEndContentDungeon,
+} from './endContent';
+import {
   executePlayerAttack,
   tryApplyPoison,
   processPoisonDamage,
@@ -74,6 +86,7 @@ export function createGaugeBattleState(
     player,
     enemy: enemyCombatant,
     enemyPoisonStacks: [],
+    playerPoisonStacks: [],
     elapsedTicks: 0,
     isFinished: false,
     winner: null,
@@ -147,7 +160,8 @@ export function runGaugeBattle(
   playerMods: CombinedModEffects,
   enemy: EnemyConfig,
   config: BattleConfig = DEFAULT_BATTLE_CONFIG,
-  rng: () => number = Math.random
+  rng: () => number = Math.random,
+  dungeonId?: string
 ): GaugeBattleResult {
   let state = createGaugeBattleStateWithHp(
     playerStats,
@@ -162,6 +176,48 @@ export function runGaugeBattle(
 
   // HP回復用カウンター（ticksPerSecondティック = 1秒ごと）
   let regenCounter = 0;
+  let enemyRegenCounter = 0;
+
+  const isEndContent = dungeonId ? isEndContentDungeon(dungeonId) : false;
+  const enemyDamageReduction = isEndContent ? getEnemyDamageReductionPct(enemy.id) : 0;
+  const enemyRegenPerSecond = isEndContent ? getEnemyRegenPerSecond(enemy.id) : 0;
+  const enemyHpOnHit = isEndContent ? getEnemyHpOnHit(enemy.id) : 0;
+
+  if (isEndContent) {
+    const playerAtkMultiplier = getPlayerAtkMultiplier(enemy.id);
+    const playerDefMultiplier = getPlayerDefMultiplier(enemy.id);
+    const playerSpeedMultiplier = getPlayerAttackSpeedMultiplier(enemy.id);
+    const enemyAtkMultiplier = getEnemyAtkMultiplier(enemy.id);
+    const enemySpeedMultiplier = getEnemyAttackSpeedMultiplier(enemy.id);
+
+    state = {
+      ...state,
+      player: {
+        ...state.player,
+        atk: Math.max(1, Math.floor(state.player.atk * playerAtkMultiplier)),
+        def: Math.max(0, Math.floor(state.player.def * playerDefMultiplier)),
+        attackSpeed: state.player.attackSpeed * playerSpeedMultiplier,
+      },
+      enemy: {
+        ...state.enemy,
+        atk: Math.max(1, Math.floor(state.enemy.atk * enemyAtkMultiplier)),
+        attackSpeed: state.enemy.attackSpeed * enemySpeedMultiplier,
+      },
+    };
+
+    const playerPoison = getPlayerPoisonFromBoss(enemy.id);
+    if (playerPoison) {
+      state = {
+        ...state,
+        playerPoisonStacks: [
+          {
+            damagePerTick: playerPoison.damage,
+            remainingTicks: playerPoison.turns,
+          },
+        ],
+      };
+    }
+  }
 
   while (!state.isFinished && state.elapsedTicks < MAX_TICKS) {
     // 次のアクションまでのティック数を計算
@@ -218,6 +274,25 @@ export function runGaugeBattle(
       }
     }
 
+    // 敵HP回復処理（エンドコンテンツ）
+    if (enemyRegenPerSecond > 0) {
+      enemyRegenCounter += ticksElapsed;
+      while (enemyRegenCounter >= config.ticksPerSecond) {
+        enemyRegenCounter -= config.ticksPerSecond;
+        const nextEnemyHp = Math.min(
+          state.enemy.maxHp,
+          state.enemy.currentHp + enemyRegenPerSecond
+        );
+        state = {
+          ...state,
+          enemy: {
+            ...state.enemy,
+            currentHp: nextEnemyHp,
+          },
+        };
+      }
+    }
+
     // プレイヤー行動
     if (state.player.gauge >= 100) {
       // 毒ダメージ処理（プレイヤー行動時）
@@ -261,7 +336,8 @@ export function runGaugeBattle(
         state.player.atk,
         playerMods,
         config,
-        rng
+        rng,
+        enemyDamageReduction
       );
       events.push(...attackResult.events);
 
@@ -326,6 +402,36 @@ export function runGaugeBattle(
 
     // 敵行動
     if (state.enemy.gauge >= 100) {
+      // プレイヤー毒ダメージ（敵行動時に処理）
+      if (state.playerPoisonStacks.length > 0) {
+        const poisonDamage = state.playerPoisonStacks.reduce(
+          (sum, stack) => sum + stack.damagePerTick,
+          0
+        );
+        const updatedStacks = state.playerPoisonStacks
+          .map((stack) => ({ ...stack, remainingTicks: stack.remainingTicks - 1 }))
+          .filter((stack) => stack.remainingTicks > 0);
+
+        state = {
+          ...state,
+          player: {
+            ...state.player,
+            currentHp: Math.max(0, state.player.currentHp - poisonDamage),
+          },
+          playerPoisonStacks: updatedStacks,
+        };
+
+        if (state.player.currentHp <= 0) {
+          state = { ...state, isFinished: true, winner: 'enemy' };
+          events.push({
+            type: 'player_defeated',
+            tick: state.elapsedTicks,
+            data: { byPoison: true },
+          });
+          break;
+        }
+      }
+
       const damage = calculateEnemyDamage(
         state.enemy.atk,
         state.player.def,
@@ -346,6 +452,16 @@ export function runGaugeBattle(
       };
 
       events.push(createEnemyAttackEvent(state.elapsedTicks, damage));
+
+      if (enemyHpOnHit > 0) {
+        state = {
+          ...state,
+          enemy: {
+            ...state.enemy,
+            currentHp: Math.min(state.enemy.maxHp, state.enemy.currentHp + enemyHpOnHit),
+          },
+        };
+      }
 
       // プレイヤー撃破チェック
       if (state.player.currentHp <= 0) {
@@ -390,6 +506,7 @@ export function runGaugeDungeon(
   dungeon: DungeonConfig,
   getEnemy: (id: string) => EnemyConfig | undefined,
   getRandomEnemyId: (enemyIds: string[]) => string,
+  resolveEnemyForFloor?: (floor: number, rng: () => number) => EnemyConfig | undefined,
   config: BattleConfig = DEFAULT_BATTLE_CONFIG,
   rng: () => number = Math.random
 ): GaugeDungeonResult {
@@ -401,11 +518,14 @@ export function runGaugeDungeon(
 
   for (let floor = 1; floor <= dungeon.maxFloor; floor++) {
     // ボス階層かどうかチェック
+    const enemyFromResolver = resolveEnemyForFloor
+      ? resolveEnemyForFloor(floor, rng)
+      : undefined;
     const isBossFloor = dungeon.boss && dungeon.boss.floor === floor;
     const enemyId = isBossFloor
       ? dungeon.boss!.monsterId
       : getRandomEnemyId(dungeon.enemies);
-    const enemy = getEnemy(enemyId);
+    const enemy = enemyFromResolver ?? getEnemy(enemyId);
 
     if (!enemy) {
       // 敵が見つからない場合はスキップ（エラー状態）
@@ -419,7 +539,8 @@ export function runGaugeDungeon(
       playerMods,
       enemy,
       config,
-      rng
+      rng,
+      dungeon.id
     );
 
     floorResults.push({

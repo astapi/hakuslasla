@@ -1040,6 +1040,110 @@
         { "type": "hp_regen", "value": 70 },
         { "type": "critical_chance", "value": 45 }
       ]
+    },
+    "_comment_endcontents": "=== エンドコンテンツ ユニークドロップ ===",
+    "bandit_crown": {
+      "id": "bandit_crown",
+      "name": "盗賊の王冠",
+      "slot": "accessory",
+      "atk": 14,
+      "def": 8,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 20 },
+        { "type": "atk_bonus", "value": 8 }
+      ]
+    },
+    "vampire_fang": {
+      "id": "vampire_fang",
+      "name": "ヴァンパイアの牙",
+      "slot": "weapon",
+      "atk": 34,
+      "def": 0,
+      "fixedMods": [
+        { "type": "hp_on_hit", "value": 40 },
+        { "type": "critical_chance", "value": 18 }
+      ]
+    },
+    "kraken_tentacle": {
+      "id": "kraken_tentacle",
+      "name": "クラーケンの触腕",
+      "slot": "weapon",
+      "atk": 36,
+      "def": 0,
+      "fixedMods": [
+        { "type": "attack_speed_pct", "value": 12 },
+        { "type": "hp_regen", "value": 30 }
+      ]
+    },
+    "uber_kings_crown": {
+      "id": "uber_kings_crown",
+      "name": "Uber ゴブリンキングの王冠",
+      "slot": "accessory",
+      "atk": 40,
+      "def": 40,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 35 },
+        { "type": "def_bonus", "value": 35 },
+        { "type": "hp_regen", "value": 80 }
+      ]
+    },
+    "uber_bandit_crown": {
+      "id": "uber_bandit_crown",
+      "name": "Uber 盗賊王の王冠",
+      "slot": "accessory",
+      "atk": 42,
+      "def": 24,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 35 },
+        { "type": "atk_bonus", "value": 20 }
+      ]
+    },
+    "uber_vampire_fang": {
+      "id": "uber_vampire_fang",
+      "name": "Uber ヴァンパイアの牙",
+      "slot": "weapon",
+      "atk": 80,
+      "def": 0,
+      "fixedMods": [
+        { "type": "hp_on_hit", "value": 120 },
+        { "type": "critical_chance", "value": 30 }
+      ]
+    },
+    "uber_kraken_tentacle": {
+      "id": "uber_kraken_tentacle",
+      "name": "Uber クラーケンの触腕",
+      "slot": "weapon",
+      "atk": 85,
+      "def": 0,
+      "fixedMods": [
+        { "type": "attack_speed_pct", "value": 25 },
+        { "type": "hp_regen", "value": 80 }
+      ]
+    },
+    "uber_demon_crown": {
+      "id": "uber_demon_crown",
+      "name": "Uber 魔王の冠",
+      "slot": "accessory",
+      "atk": 70,
+      "def": 70,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 60 },
+        { "type": "def_bonus", "value": 60 },
+        { "type": "hp_regen", "value": 120 }
+      ]
+    },
+    "uber_crown_of_end": {
+      "id": "uber_crown_of_end",
+      "name": "Uber 終焉の王冠",
+      "slot": "accessory",
+      "atk": 200,
+      "def": 200,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 120 },
+        { "type": "def_bonus", "value": 120 },
+        { "type": "hp_regen", "value": 200 },
+        { "type": "critical_chance", "value": 60 }
+      ]
     }
   },
 

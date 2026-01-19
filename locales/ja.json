@@ -224,6 +224,34 @@
     "final_land": {
       "name": "終焉の地",
       "description": "世界の果てに存在する最後の地。最強の存在が待ち構える。"
+    },
+    "dimensional_rush": {
+      "name": "異次元ラッシュ",
+      "description": "終焉の地を超えた先に広がる異次元の迷宮。200階の終焉の王を討ち倒せ。"
+    },
+    "uber_goblin_king": {
+      "name": "Uber ゴブリンキング",
+      "description": "異次元で覚醒したゴブリンキング。"
+    },
+    "uber_bandit_leader": {
+      "name": "Uber 盗賊の頭",
+      "description": "異次元で強化された盗賊の頭。"
+    },
+    "uber_vampire": {
+      "name": "Uber ヴァンパイア",
+      "description": "血に飢えた異次元のヴァンパイア。"
+    },
+    "uber_kraken": {
+      "name": "Uber クラーケン",
+      "description": "異次元の海を支配する巨大生物。"
+    },
+    "uber_demon_lord": {
+      "name": "Uber 魔王",
+      "description": "異次元の力で蘇った魔王。"
+    },
+    "uber_true_final_boss": {
+      "name": "Uber 終焉の王",
+      "description": "真の終焉をもたらす存在。"
     }
   }
 }

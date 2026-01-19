@@ -82,6 +82,9 @@ export {
   formatBattleTime,
 } from './gaugeBattle';
 
+// エンドコンテンツ関連
+export * from './endContent';
+
 // シミュレーション関連（ターン制）
 export {
   createRng,

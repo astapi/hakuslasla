@@ -73,6 +73,8 @@ export function runSimulation(
       dungeonData,
       (id) => enemyData.get(id),
       (enemyIds) => pickRandom(enemyIds, rng),
+      config.resolveEnemyForFloor,
+      rng,
       (dropTable) => dropTable.length > 0 ? pickRandom(dropTable, rng) : undefined
     );
     results.push(result);
@@ -255,6 +257,7 @@ export interface GaugeSimulationConfig {
   runs: number;
   seed?: number;
   battleConfig?: BattleConfig;
+  resolveEnemyForFloor?: (floor: number, rng: () => number) => EnemyConfig | undefined;
 }
 
 /**
@@ -359,6 +362,7 @@ export function runGaugeSimulation(
       dungeonData,
       (id) => enemyData.get(id),
       (enemyIds) => pickRandom(enemyIds, rng),
+      config.resolveEnemyForFloor,
       battleConfig,
       rng
     );

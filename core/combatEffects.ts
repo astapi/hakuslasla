@@ -41,7 +41,8 @@ export function executePlayerAttack(
   playerAtk: number,
   mods: CombinedModEffects,
   config: BattleConfig = DEFAULT_BATTLE_CONFIG,
-  rng: () => number = Math.random
+  rng: () => number = Math.random,
+  enemyDamageReductionPct: number = 0
 ): PlayerAttackResult {
   const events: BattleEvent[] = [];
 
@@ -52,7 +53,7 @@ export function executePlayerAttack(
     : 1;
 
   // 基本ダメージ計算（DEF減衰式）
-  const baseDamage = calculateDamage(playerAtk, state.enemy.def);
+  const baseDamage = calculateDamage(playerAtk, state.enemy.def, enemyDamageReductionPct);
 
   // 通常ダメージ無効化チェック（キーストーン効果）
   const finalDamage = mods.noDirectDamage

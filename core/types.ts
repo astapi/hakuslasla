@@ -150,6 +150,7 @@ export interface SimulationConfig {
   dungeonId: string;
   runs: number;
   seed?: number; // 再現性のため
+  resolveEnemyForFloor?: (floor: number, rng: () => number) => EnemyConfig | undefined;
 }
 
 export interface SimulationStats {
@@ -250,6 +251,7 @@ export interface GaugeBattleState {
   player: GaugeCombatant;
   enemy: GaugeCombatant;
   enemyPoisonStacks: PoisonStack[];
+  playerPoisonStacks: PoisonStack[];
   elapsedTicks: number;  // 経過ティック数
   isFinished: boolean;
   winner: 'player' | 'enemy' | null;
