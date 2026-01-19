@@ -293,10 +293,10 @@ export function createItemInstance(itemId: string, modCount: number = 0, dungeon
   const base = getItemBase(itemId);
   if (!base) return undefined;
 
-  // 固有MOD（tierを値から逆算）
+  // 固有MODは常にT0で表示
   const fixedMods: ItemMod[] = (base.fixedMods || []).map(mod => ({
     ...mod,
-    tier: mod.tier ?? calculateTierFromValue(mod.type, mod.value),
+    tier: 0,
   }));
 
   // ランダムMOD（ダンジョンのtier範囲とスロットを考慮）
@@ -517,10 +517,10 @@ export function createItemFromBase(itemId: string): Item | undefined {
   const base = getItemBase(itemId);
   if (!base) return undefined;
 
-  // 固有MODにtierを追加（値から逆算）
+  // 固有MODは常にT0で表示
   const modsWithTier: ItemMod[] = (base.fixedMods || []).map(mod => ({
     ...mod,
-    tier: mod.tier ?? calculateTierFromValue(mod.type, mod.value),
+    tier: 0,
   }));
 
   return {
@@ -535,11 +535,17 @@ export function createItemFromBase(itemId: string): Item | undefined {
  * DBから読み込んだアイテムに対して使用
  */
 export function ensureModTiers(item: Item): Item {
+  const base = getItemBase(item.id);
+  const fixedMods = base?.fixedMods ?? [];
+
+  const isFixedMod = (mod: ItemMod): boolean =>
+    fixedMods.some(fixed => fixed.type === mod.type && fixed.value === mod.value);
+
   return {
     ...item,
     mods: item.mods.map(mod => ({
       ...mod,
-      tier: mod.tier ?? calculateTierFromValue(mod.type, mod.value),
+      tier: mod.tier ?? (isFixedMod(mod) ? 0 : calculateTierFromValue(mod.type, mod.value)),
     })),
   };
 }

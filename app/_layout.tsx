@@ -54,7 +54,7 @@ export default function RootLayout() {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+    <View style={styles.appRoot} onLayout={onLayoutRootView}>
       <Stack
         screenOptions={{
           headerStyle: {
@@ -143,6 +143,10 @@ export default function RootLayout() {
 }
 
 const styles = StyleSheet.create({
+  appRoot: {
+    flex: 1,
+    backgroundColor: '#1a1a2e',
+  },
   loadingContainer: {
     flex: 1,
     backgroundColor: '#1a1a2e',

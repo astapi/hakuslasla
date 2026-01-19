@@ -153,9 +153,6 @@ interface ItemDrop {
 | アイテム | ID | 重み |
 |---------|-----|------|
 | 朽ちた剣 | rusted_sword | 10 |
-| 木製クラブ | wooden_club | 10 |
-| ハンターダガー | hunter_dagger | 8 |
-| 古びた弓 | worn_bow | 8 |
 | 布の服 | cloth_clothes | 10 |
 | 革の帽子 | leather_hat | 10 |
 | 革の手袋 | leather_gloves | 10 |
@@ -180,9 +177,6 @@ interface ItemDrop {
 | アイテム | ID | 重み |
 |---------|-----|------|
 | 朽ちた剣 | rusted_sword | 5 |
-| 木製クラブ | wooden_club | 5 |
-| ハンターダガー | hunter_dagger | 8 |
-| 古びた弓 | worn_bow | 8 |
 | 布の服 | cloth_clothes | 5 |
 | 革の帽子 | leather_hat | 5 |
 | 革の手袋 | leather_gloves | 8 |
@@ -208,8 +202,6 @@ interface ItemDrop {
 
 | アイテム | ID | 重み |
 |---------|-----|------|
-| ハンターダガー | hunter_dagger | 5 |
-| 古びた弓 | worn_bow | 5 |
 | 革の手袋 | leather_gloves | 5 |
 | 革のブーツ | leather_boots | 5 |
 | 銅の指輪 | copper_ring | 5 |
