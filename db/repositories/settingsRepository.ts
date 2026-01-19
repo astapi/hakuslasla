@@ -7,6 +7,14 @@ const LANGUAGE_KEY = 'app_language';
 const END_CONTENT_UNLOCK_KEY = 'end_content_unlocked';
 const UBER_UNLOCKS_KEY = 'uber_boss_unlocks';
 const UBER_TICKETS_KEY = 'uber_boss_tickets';
+const DUNGEON_CLEAR_RECORDS_KEY = 'dungeon_clear_records';
+
+// ダンジョンクリア記録の型
+export type DungeonClearRecord = {
+  clearedAt: string;
+  bestFloor: number;
+};
+export type DungeonClearRecords = Record<string, DungeonClearRecord>;
 
 export type AppLanguage = 'ja' | 'en' | 'system';
 export const LANGUAGE_OPTIONS: AppLanguage[] = ['system', 'ja', 'en'];
@@ -166,5 +174,41 @@ export const settingsRepository = {
     }
     await this.set(UBER_TICKETS_KEY, JSON.stringify(current));
     return true;
+  },
+
+  // ダンジョンクリア記録
+  async getDungeonClearRecords(): Promise<DungeonClearRecords> {
+    const value = await this.get(DUNGEON_CLEAR_RECORDS_KEY);
+    if (!value) return {};
+    try {
+      return JSON.parse(value) as DungeonClearRecords;
+    } catch {
+      return {};
+    }
+  },
+
+  async saveDungeonClearRecord(dungeonId: string, bestFloor: number): Promise<void> {
+    const current = await this.getDungeonClearRecords();
+    const existing = current[dungeonId];
+
+    // 既にクリア済みの場合、最高到達階層を更新
+    if (existing) {
+      current[dungeonId] = {
+        ...existing,
+        bestFloor: Math.max(existing.bestFloor, bestFloor),
+      };
+    } else {
+      current[dungeonId] = {
+        clearedAt: new Date().toISOString(),
+        bestFloor,
+      };
+    }
+
+    await this.set(DUNGEON_CLEAR_RECORDS_KEY, JSON.stringify(current));
+  },
+
+  async isDungeonCleared(dungeonId: string): Promise<boolean> {
+    const records = await this.getDungeonClearRecords();
+    return records[dungeonId] !== undefined;
   },
 };
