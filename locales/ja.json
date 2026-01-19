@@ -38,7 +38,8 @@
   },
   "dungeonSelect": {
     "title": "ダンジョン選択",
-    "subtitle": "挑戦するダンジョンを選んでください"
+    "subtitle": "挑戦するダンジョンを選んでください",
+    "unlockRequirement": "{{dungeonName}}をクリアで解放"
   },
   "battle": {
     "floor": "階",

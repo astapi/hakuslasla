@@ -38,7 +38,8 @@
   },
   "dungeonSelect": {
     "title": "Select Dungeon",
-    "subtitle": "Choose a dungeon to challenge"
+    "subtitle": "Choose a dungeon to challenge",
+    "unlockRequirement": "Clear {{dungeonName}} to unlock"
   },
   "battle": {
     "floor": "F",

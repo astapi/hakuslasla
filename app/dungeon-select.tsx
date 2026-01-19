@@ -1,47 +1,108 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { DungeonCard } from '@/components/dungeon/DungeonCard';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
-import { getDungeonList } from '@/data/dungeons';
+import { getDungeonList, DUNGEON_UNLOCK_ORDER } from '@/data/dungeons';
 import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_ID, UBER_DUNGEON_IDS } from '@/data/endContents';
-import { settingsRepository } from '@/db';
+import { settingsRepository, DungeonClearRecords } from '@/db';
 import { DungeonListItem } from '@/types';
 import { ms, fs } from '@/utils/scaling';
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
+
+// ダンジョンが解放されているか判定
+function isDungeonUnlocked(
+  dungeonId: string,
+  clearRecords: DungeonClearRecords
+): boolean {
+  const index = DUNGEON_UNLOCK_ORDER.indexOf(dungeonId);
+
+  // 解放順序に含まれない（エンドコンテンツ等）
+  if (index === -1) return false;
+
+  // 最初のダンジョンは常に解放
+  if (index === 0) return true;
+
+  // 前のダンジョンがクリアされていれば解放
+  const prevDungeonId = DUNGEON_UNLOCK_ORDER[index - 1];
+  return clearRecords[prevDungeonId] !== undefined;
+}
+
+interface DungeonWithStatus extends DungeonListItem {
+  isLocked: boolean;
+  isCleared: boolean;
+}
 
 export default function DungeonSelectScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const [dungeons, setDungeons] = useState<DungeonListItem[]>([]);
+  const [dungeons, setDungeons] = useState<DungeonWithStatus[]>([]);
 
-  useEffect(() => {
-    const loadDungeons = async () => {
-      const all = getDungeonList();
-      const endContentUnlocked = await settingsRepository.getEndContentUnlocked();
-      const uberUnlocks = await settingsRepository.getUberBossUnlocks();
-      const uberTickets = await settingsRepository.getUberTickets();
+  const loadDungeons = useCallback(async () => {
+    const all = getDungeonList();
+    const endContentUnlocked = await settingsRepository.getEndContentUnlocked();
+    const uberUnlocks = await settingsRepository.getUberBossUnlocks();
+    const uberTickets = await settingsRepository.getUberTickets();
+    const clearRecords = await settingsRepository.getDungeonClearRecords();
 
-      const filtered = all.filter((dungeon) => {
-        if (dungeon.id === DIMENSIONAL_RUSH_ID) {
-          return endContentUnlocked;
+    const result: DungeonWithStatus[] = [];
+
+    for (const dungeon of all) {
+      // エンドコンテンツの処理（従来通り）
+      if (dungeon.id === DIMENSIONAL_RUSH_ID) {
+        if (endContentUnlocked) {
+          result.push({
+            ...dungeon,
+            isLocked: false,
+            isCleared: clearRecords[dungeon.id] !== undefined,
+          });
         }
-        if (UBER_DUNGEON_IDS.includes(dungeon.id)) {
-          const baseBossId = BASE_BOSS_BY_UBER[dungeon.id];
-          if (!baseBossId) return false;
-          const isUnlocked = uberUnlocks[baseBossId];
-          const ticketCount = uberTickets[baseBossId] ?? 0;
-          return Boolean(isUnlocked) && ticketCount > 0;
+        continue;
+      }
+
+      if (UBER_DUNGEON_IDS.includes(dungeon.id)) {
+        const baseBossId = BASE_BOSS_BY_UBER[dungeon.id];
+        if (!baseBossId) continue;
+        const isUnlocked = uberUnlocks[baseBossId];
+        const ticketCount = uberTickets[baseBossId] ?? 0;
+        if (Boolean(isUnlocked) && ticketCount > 0) {
+          result.push({
+            ...dungeon,
+            isLocked: false,
+            isCleared: clearRecords[dungeon.id] !== undefined,
+          });
         }
-        return true;
+        continue;
+      }
+
+      // 通常ダンジョンの処理
+      const isInOrder = DUNGEON_UNLOCK_ORDER.includes(dungeon.id);
+      if (!isInOrder) continue;
+
+      const isUnlocked = isDungeonUnlocked(dungeon.id, clearRecords);
+
+      // 未解放ダンジョンは非表示
+      if (!isUnlocked) continue;
+
+      const isCleared = clearRecords[dungeon.id] !== undefined;
+
+      result.push({
+        ...dungeon,
+        isLocked: false,
+        isCleared,
       });
+    }
 
-      setDungeons(filtered);
-    };
+    setDungeons(result);
+  }, [t]);
 
-    loadDungeons();
-  }, []);
+  // 画面がフォーカスされた時にダンジョンリストを再読み込み
+  useFocusEffect(
+    useCallback(() => {
+      loadDungeons();
+    }, [loadDungeons])
+  );
 
   const handleDungeonSelect = async (dungeonId: string) => {
     if (UBER_DUNGEON_IDS.includes(dungeonId)) {
@@ -70,6 +131,7 @@ export default function DungeonSelectScreen() {
               key={dungeon.id}
               dungeon={dungeon}
               onPress={() => handleDungeonSelect(dungeon.id)}
+              isCleared={dungeon.isCleared}
             />
           ))}
         </View>
