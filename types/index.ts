@@ -376,6 +376,7 @@ export interface BattleState {
   playerMaxHp: number;
   enemy: BattleEnemy | null;
   enemyPoison: PoisonState[]; // 敵の毒状態（複数スタック対応）
+  playerPoison: PoisonState[]; // プレイヤーの毒状態（複数スタック対応）
   phase: BattlePhase;
   battleLog: BattleLogEntry[];
   droppedItems: Item[];
@@ -432,6 +433,7 @@ export type BattleAction =
   | { type: 'START_BATTLE'; enemy: BattleEnemy }
   | { type: 'PLAYER_ATTACK'; damage: number; isCritical?: boolean }
   | { type: 'ENEMY_ATTACK'; damage: number }
+  | { type: 'ENEMY_HEAL'; amount: number }
   | { type: 'ENEMY_DEFEATED'; exp: number; droppedItems: Item[] } // 複数アイテム対応
   | { type: 'PLAYER_DEFEATED' }
   | { type: 'NEXT_FLOOR'; enemy: BattleEnemy }
@@ -439,6 +441,8 @@ export type BattleAction =
   | { type: 'ADD_LOG'; entry: Omit<BattleLogEntry, 'id'> }
   | { type: 'APPLY_POISON'; damagePerTurn: number; turns: number }
   | { type: 'POISON_DAMAGE'; damage: number }
+  | { type: 'APPLY_PLAYER_POISON'; damagePerTurn: number; turns: number }
+  | { type: 'PLAYER_POISON_DAMAGE'; damage: number }
   | { type: 'HP_REGEN'; amount: number }
   | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number }
   | { type: 'RESET_PLAYER_GAUGE' }

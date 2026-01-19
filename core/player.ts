@@ -61,7 +61,8 @@ export function getExpToNextLevel(level: number): number {
 export function calculateLevelUp(
   currentLevel: number,
   currentExp: number,
-  expGained: number
+  expGained: number,
+  maxLevel: number = MAX_LEVEL
 ): LevelUpResult {
   let level = currentLevel;
   let exp = currentExp + expGained;
@@ -72,9 +73,9 @@ export function calculateLevelUp(
   let skillPointsGained = 0;
 
   // レベル上限チェック
-  if (level >= MAX_LEVEL) {
+  if (level >= maxLevel) {
     return {
-      newLevel: MAX_LEVEL,
+      newLevel: maxLevel,
       newExp: 0, // 上限時は経験値を貯めない
       expToNextLevel: 0,
       skillPointsGained: 0,
@@ -83,7 +84,7 @@ export function calculateLevelUp(
   }
 
   // レベルアップ処理（複数回レベルアップ対応）
-  while (exp >= expToNext && level < MAX_LEVEL) {
+  while (exp >= expToNext && level < maxLevel) {
     exp -= expToNext;
     level += 1;
     expToNext = getExpToNextLevel(level);
@@ -95,7 +96,7 @@ export function calculateLevelUp(
   }
 
   // 上限到達時は経験値をリセット
-  if (level >= MAX_LEVEL) {
+  if (level >= maxLevel) {
     exp = 0;
     expToNext = 0;
   }

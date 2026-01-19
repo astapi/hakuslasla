@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
-import { MAX_LEVEL } from '@/core';
 import { HPBar } from '../battle/HPBar';
 import { ms, fs } from '@/utils/scaling';
 
@@ -20,6 +19,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
     level,
     exp,
     expToNextLevel,
+    levelCap,
     skillPoints,
     maxHp,
     atk,
@@ -228,7 +228,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
         <View style={styles.expContainer}>
           <Text style={styles.expLabel}>EXP</Text>
           <View style={styles.expBarContainer}>
-            {level >= MAX_LEVEL ? (
+            {level >= levelCap ? (
               <Text style={styles.maxLevelText}>{t('status.max')}</Text>
             ) : (
               <HPBar current={exp} max={expToNextLevel} color="#9C27B0" />
