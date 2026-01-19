@@ -396,7 +396,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         remainingTurns: action.turns,
       };
       const currentPlayerStacks = state.playerPoison.length;
-      const stackText = currentPlayerStacks > 0
+      const playerStackText = currentPlayerStacks > 0
         ? i18n.t('battleLog.poisonStacks', { count: currentPlayerStacks + 1 })
         : '';
       return {
@@ -407,7 +407,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
           message: i18n.t('battleLog.poisonAppliedPlayer', {
             damage: action.damagePerTurn,
             turns: action.turns,
-            stacks: stackText,
+            stacks: playerStackText,
           }),
           type: 'poison',
         }),
@@ -420,13 +420,13 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         .map(p => ({ ...p, remainingTurns: p.remainingTurns - 1 }))
         .filter(p => p.remainingTurns > 0);
       const playerStacksRemoved = state.playerPoison.length - updatedPlayerStacks.length;
-      const remainingText = updatedPlayerStacks.length > 0
+      const playerRemainingText = updatedPlayerStacks.length > 0
         ? i18n.t('battleLog.poisonRemaining', { count: updatedPlayerStacks.length })
         : '';
-      const endedText = updatedPlayerStacks.length > 0
+      const playerEndedText = updatedPlayerStacks.length > 0
         ? ''
         : i18n.t('battleLog.poisonEnded');
-      const lostText = playerStacksRemoved > 0
+      const playerLostText = playerStacksRemoved > 0
         ? i18n.t('battleLog.poisonStacksLost', { count: playerStacksRemoved })
         : '';
       return {
@@ -437,9 +437,9 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
           id: logIdCounter++,
           message: i18n.t('battleLog.poisonDamagePlayer', {
             damage: action.damage,
-            remaining: remainingText,
-            ended: endedText,
-            lost: lostText,
+            remaining: playerRemainingText,
+            ended: playerEndedText,
+            lost: playerLostText,
           }),
           type: 'poison',
         }),
