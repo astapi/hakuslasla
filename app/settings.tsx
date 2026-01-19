@@ -10,13 +10,7 @@ import { settingsRepository, AppLanguage, LANGUAGE_OPTIONS, DEFAULT_LANGUAGE } f
 import { changeLanguage } from '@/lib/i18n';
 import { ms, fs } from '@/utils/scaling';
 
-const SLOT_LABELS: Record<EquipmentSlot, string> = {
-  weapon: '武器',
-  armor: '鎧',
-  gloves: '手袋',
-  boots: '靴',
-  accessory: 'アクセサリー',
-};
+const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
 const SLOT_ICONS: Record<EquipmentSlot, string> = {
   weapon: 'sword',
@@ -151,7 +145,7 @@ export default function SettingsScreen() {
           <Text style={styles.sectionDescription}>
             {t('settings.categoryFilter.description')}
           </Text>
-          {(Object.keys(SLOT_LABELS) as EquipmentSlot[]).map((slot) => (
+          {SLOT_ORDER.map((slot) => (
             <View key={slot} style={styles.filterRow}>
               <View style={styles.filterLabel}>
                 <MaterialCommunityIcons

@@ -1,16 +1,18 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot } from '@/types';
-import { getSlotIcon, getSlotLabel } from '@/data/itemIcons';
+import { getSlotIcon } from '@/data/itemIcons';
 import { ms, fs, s } from '@/utils/scaling';
 
 export const EquipmentSlots = () => {
+  const { t } = useTranslation();
   const { equipment } = usePlayerStore();
   const slots: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>装備</Text>
+      <Text style={styles.title}>{t('equipment.title')}</Text>
 
       <View style={styles.slotsContainer}>
         {slots.map((slot) => {
@@ -18,9 +20,11 @@ export const EquipmentSlots = () => {
           return (
             <View key={slot} style={styles.slotItem}>
               <Image source={getSlotIcon(slot)} style={styles.slotIcon} />
-              <Text style={styles.slotLabel}>{getSlotLabel(slot)}</Text>
+              <Text style={styles.slotLabel}>{t(`slots.${slot}`)}</Text>
               <Text style={styles.itemName} numberOfLines={1}>
-                {item?.name || '-'}
+                {item
+                  ? t(`items.${item.id}.name`, { defaultValue: item.name })
+                  : '-'}
               </Text>
               {item && (
                 <>
@@ -44,7 +48,9 @@ export const EquipmentSlots = () => {
                         </Text>
                         {otherModCount > 0 && (
                           <View style={styles.modBadge}>
-                            <Text style={styles.modBadgeText}>MOD x{otherModCount}</Text>
+                            <Text style={styles.modBadgeText}>
+                              {t('equipment.modCount', { count: otherModCount })}
+                            </Text>
                           </View>
                         )}
                       </>
