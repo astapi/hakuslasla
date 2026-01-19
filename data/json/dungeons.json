@@ -589,6 +589,217 @@
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
       "modCountRange": { "min": 2, "max": 4 }
+    },
+    "dimensional_rush": {
+      "id": "dimensional_rush",
+      "name": "異次元ラッシュ",
+      "description": "終焉の地を超えた先に広がる異次元の迷宮。200階の終焉の王を討ち倒せ。",
+      "maxFloor": 200,
+      "monsters": [],
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "uber_goblin_king": {
+      "id": "uber_goblin_king",
+      "name": "Uber ゴブリンキング",
+      "description": "異次元で覚醒したゴブリンキング。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_goblin_king", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_goblin_king",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "uber_bandit_leader": {
+      "id": "uber_bandit_leader",
+      "name": "Uber 盗賊の頭",
+      "description": "異次元で強化された盗賊の頭。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_bandit_leader", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_bandit_leader",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "uber_vampire": {
+      "id": "uber_vampire",
+      "name": "Uber ヴァンパイア",
+      "description": "血に飢えた異次元のヴァンパイア。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_vampire", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_vampire",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "uber_kraken": {
+      "id": "uber_kraken",
+      "name": "Uber クラーケン",
+      "description": "異次元の海を支配する巨大生物。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_kraken", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_kraken",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "uber_demon_lord": {
+      "id": "uber_demon_lord",
+      "name": "Uber 魔王",
+      "description": "異次元の力で蘇った魔王。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_demon_lord", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_demon_lord",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "uber_true_final_boss": {
+      "id": "uber_true_final_boss",
+      "name": "Uber 終焉の王",
+      "description": "真の終焉をもたらす存在。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_true_final_boss", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_true_final_boss",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
     }
   }
 }

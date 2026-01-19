@@ -6,10 +6,12 @@ import {
   inventoryRepository,
   equipmentRepository,
   skillRepository,
+  settingsRepository,
 } from '@/db';
 import {
   INITIAL_STATS,
   INVENTORY_MAX_SIZE,
+  MAX_LEVEL,
   getExpToNextLevel,
   calculateLevelUp,
   calculateFinalStats,
@@ -32,6 +34,7 @@ interface PlayerState {
   level: number;
   exp: number;
   expToNextLevel: number;
+  levelCap: number;
   skillPoints: number;
   maxHp: number;
   atk: number;
@@ -47,6 +50,8 @@ interface PlayerActions {
   loadCharacter: (characterId: number) => Promise<void>;
   // 経験値を獲得
   gainExp: (amount: number) => Promise<void>;
+  // レベル上限を更新
+  setLevelCap: (levelCap: number) => void;
   // スキルを取得
   unlockSkill: (skillId: string) => Promise<boolean>;
   // 装備を変更（インベントリから、instanceIdで指定）
@@ -81,6 +86,7 @@ const initialState: PlayerState = {
   level: 1,
   exp: 0,
   expToNextLevel: getExpToNextLevel(1),
+  levelCap: MAX_LEVEL,
   skillPoints: 0,
   maxHp: INITIAL_STATS.maxHp,
   atk: INITIAL_STATS.atk,
@@ -113,12 +119,16 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     // スキルを読み込み
     const unlockedSkills = await skillRepository.getAll(characterId);
 
+    const endContentUnlocked = await settingsRepository.getEndContentUnlocked();
+    const levelCap = endContentUnlocked ? 60 : MAX_LEVEL;
+
     set({
       characterId: character.id,
       characterName: character.name,
       level: character.level,
       exp: character.exp,
       expToNextLevel: getExpToNextLevel(character.level),
+      levelCap,
       skillPoints: character.skillPoints,
       maxHp: character.maxHp,
       atk: character.atk,
@@ -135,7 +145,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     if (!state.characterId) return;
 
     // coreのcalculateLevelUpを使用
-    const levelUpResult = calculateLevelUp(state.level, state.exp, amount);
+    const levelUpResult = calculateLevelUp(state.level, state.exp, amount, state.levelCap);
 
     const newLevel = levelUpResult.newLevel;
     const newExp = levelUpResult.newExp;
@@ -163,6 +173,14 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       maxHp: newMaxHp,
       atk: newAtk,
       def: newDef,
+    });
+  },
+
+  setLevelCap: (levelCap: number) => {
+    const state = get();
+    set({
+      levelCap,
+      expToNextLevel: state.level >= levelCap ? 0 : getExpToNextLevel(state.level),
     });
   },
 

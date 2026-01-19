@@ -4,6 +4,9 @@ import { DropFilterSettings, DEFAULT_DROP_FILTER } from '@/types';
 const DROP_FILTER_KEY = 'drop_filter_settings';
 const BATTLE_SPEED_KEY = 'battle_speed';
 const LANGUAGE_KEY = 'app_language';
+const END_CONTENT_UNLOCK_KEY = 'end_content_unlocked';
+const UBER_UNLOCKS_KEY = 'uber_boss_unlocks';
+const UBER_TICKETS_KEY = 'uber_boss_tickets';
 
 export type AppLanguage = 'ja' | 'en' | 'system';
 export const LANGUAGE_OPTIONS: AppLanguage[] = ['system', 'ja', 'en'];
@@ -100,5 +103,68 @@ export const settingsRepository = {
 
   async setLanguage(language: AppLanguage): Promise<void> {
     await this.set(LANGUAGE_KEY, language);
+  },
+
+  async getEndContentUnlocked(): Promise<boolean> {
+    const value = await this.get(END_CONTENT_UNLOCK_KEY);
+    return value === '1';
+  },
+
+  async setEndContentUnlocked(unlocked: boolean): Promise<void> {
+    await this.set(END_CONTENT_UNLOCK_KEY, unlocked ? '1' : '0');
+  },
+
+  async getUberBossUnlocks(): Promise<Record<string, boolean>> {
+    const value = await this.get(UBER_UNLOCKS_KEY);
+    if (!value) return {};
+    try {
+      return JSON.parse(value) as Record<string, boolean>;
+    } catch {
+      return {};
+    }
+  },
+
+  async unlockUberBoss(bossId: string): Promise<void> {
+    const current = await this.getUberBossUnlocks();
+    if (current[bossId]) return;
+    current[bossId] = true;
+    await this.set(UBER_UNLOCKS_KEY, JSON.stringify(current));
+  },
+
+  async getUberTickets(): Promise<Record<string, number>> {
+    const value = await this.get(UBER_TICKETS_KEY);
+    if (!value) return {};
+    try {
+      return JSON.parse(value) as Record<string, number>;
+    } catch {
+      return {};
+    }
+  },
+
+  async getUberTicketCount(bossId: string): Promise<number> {
+    const current = await this.getUberTickets();
+    return current[bossId] ?? 0;
+  },
+
+  async addUberTicket(bossId: string, count: number = 1): Promise<number> {
+    const current = await this.getUberTickets();
+    const nextCount = (current[bossId] ?? 0) + count;
+    current[bossId] = nextCount;
+    await this.set(UBER_TICKETS_KEY, JSON.stringify(current));
+    return nextCount;
+  },
+
+  async consumeUberTicket(bossId: string, count: number = 1): Promise<boolean> {
+    const current = await this.getUberTickets();
+    const available = current[bossId] ?? 0;
+    if (available < count) return false;
+    const nextCount = available - count;
+    if (nextCount <= 0) {
+      delete current[bossId];
+    } else {
+      current[bossId] = nextCount;
+    }
+    await this.set(UBER_TICKETS_KEY, JSON.stringify(current));
+    return true;
   },
 };

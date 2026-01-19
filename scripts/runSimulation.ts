@@ -22,6 +22,7 @@ import {
   combineMods,
 } from '../core';
 import { calculatePassiveEffects } from '../data/passiveTree';
+import { DIMENSIONAL_RUSH_ID, getDimensionalRushEnemy } from '../data/endContents';
 
 // JSONファイルを直接読み込み
 import monstersData from '../data/json/monsters.json';
@@ -32,6 +33,21 @@ const enemyMap = new Map<string, EnemyConfig>();
 for (const [id, monster] of Object.entries(monstersData.monsters)) {
   enemyMap.set(id, monster as EnemyConfig);
 }
+
+const runGaugeSimulationWithEndContent = (
+  config: Parameters<typeof runGaugeSimulation>[0],
+  dungeonConfig: DungeonConfig
+) => {
+  const resolveEnemyForFloor = config.dungeonId === DIMENSIONAL_RUSH_ID
+    ? (floor: number, rng: () => number) => getDimensionalRushEnemy(floor, rng) as EnemyConfig
+    : undefined;
+
+  return runGaugeSimulation(
+    { ...config, resolveEnemyForFloor },
+    dungeonConfig,
+    enemyMap
+  );
+};
 
 // DungeonConfigに変換（core用の形式に）
 function toDungeonConfig(dungeon: typeof dungeonsData.dungeons.grassland): DungeonConfig {
@@ -73,6 +89,7 @@ const dungeonConfigs = {
   sacred_temple: toDungeonConfig(dungeonsData.dungeons.sacred_temple),
   chaos_realm: toDungeonConfig(dungeonsData.dungeons.chaos_realm),
   final_land: toDungeonConfig(dungeonsData.dungeons.final_land),
+  dimensional_rush: toDungeonConfig(dungeonsData.dungeons.dimensional_rush),
 };
 
 // ダンジョン情報（推奨レベル、前ダンジョン）
@@ -95,6 +112,7 @@ const dungeonInfo: Record<string, {
   sacred_temple: { name: '神域の神殿', recommendedLevel: 70, previousDungeon: 'dragon_nest' },
   chaos_realm: { name: '混沌の領域', recommendedLevel: 80, previousDungeon: 'sacred_temple' },
   final_land: { name: '終焉の地', recommendedLevel: 99, previousDungeon: 'chaos_realm' },
+  dimensional_rush: { name: '異次元ラッシュ', recommendedLevel: 60, previousDungeon: 'final_land' },
 };
 
 // レベルとパッシブレベルのマッピング
@@ -258,7 +276,7 @@ for (const dungeonId of dungeonOrder) {
         passivePreset.nodes
       );
 
-      const result = runGaugeSimulation(
+      const result = runGaugeSimulationWithEndContent(
         {
           playerStats: stats,
           modEffects,
@@ -266,8 +284,7 @@ for (const dungeonId of dungeonOrder) {
           runs: 300,
           seed: 12345,
         },
-        dungeonConfig,
-        enemyMap
+        dungeonConfig
       );
 
       console.log(
@@ -304,7 +321,7 @@ for (const dungeonId of dungeonOrder) {
         passivePreset.nodes
       );
 
-      const result = runGaugeSimulation(
+      const result = runGaugeSimulationWithEndContent(
         {
           playerStats: stats,
           modEffects,
@@ -312,8 +329,7 @@ for (const dungeonId of dungeonOrder) {
           runs: 300,
           seed: 12345,
         },
-        dungeonConfig,
-        enemyMap
+        dungeonConfig
       );
 
       console.log(
@@ -360,7 +376,7 @@ for (const dungeonId of dungeonOrder) {
       passivePreset.nodes
     );
 
-    const result = runGaugeSimulation(
+    const result = runGaugeSimulationWithEndContent(
       {
         playerStats: stats,
         modEffects,
@@ -368,8 +384,7 @@ for (const dungeonId of dungeonOrder) {
         runs: 300,
         seed: 12345,
       },
-      dungeonConfig,
-      enemyMap
+      dungeonConfig
     );
 
     console.log(
@@ -437,7 +452,7 @@ for (const dungeonId of dungeonOrder) {
       passivePreset.nodes
     );
 
-    const result = runGaugeSimulation(
+    const result = runGaugeSimulationWithEndContent(
       {
         playerStats: stats,
         modEffects,
@@ -445,8 +460,7 @@ for (const dungeonId of dungeonOrder) {
         runs: 300,
         seed: 12345,
       },
-      dungeonConfig,
-      enemyMap
+      dungeonConfig
     );
 
     winRates.push(`${(result.stats.winRate * 100).toFixed(0).padStart(4)}%   `);
@@ -508,7 +522,7 @@ for (const dungeonId of comparisonDungeons) {
       passivePreset.nodes
     );
 
-    const result = runGaugeSimulation(
+    const result = runGaugeSimulationWithEndContent(
       {
         playerStats: stats,
         modEffects,
@@ -516,8 +530,7 @@ for (const dungeonId of comparisonDungeons) {
         runs: 300,
         seed: 12345,
       },
-      dungeonConfig,
-      enemyMap
+      dungeonConfig
     );
 
     console.log(
@@ -542,7 +555,7 @@ for (const dungeonId of comparisonDungeons) {
       passivePreset.nodes
     );
 
-    const result = runGaugeSimulation(
+    const result = runGaugeSimulationWithEndContent(
       {
         playerStats: stats,
         modEffects,
@@ -550,8 +563,7 @@ for (const dungeonId of comparisonDungeons) {
         runs: 300,
         seed: 12345,
       },
-      dungeonConfig,
-      enemyMap
+      dungeonConfig
     );
 
     console.log(
@@ -612,7 +624,7 @@ for (const dungeonId of highLevelTestDungeons) {
         passivePreset.nodes
       );
 
-      const result = runGaugeSimulation(
+      const result = runGaugeSimulationWithEndContent(
         {
           playerStats: stats,
           modEffects,
@@ -620,8 +632,7 @@ for (const dungeonId of highLevelTestDungeons) {
           runs: 300,
           seed: 12345,
         },
-        dungeonConfig,
-        enemyMap
+        dungeonConfig
       );
 
       results.push(`${(result.stats.winRate * 100).toFixed(0).padStart(5)}%    `);
@@ -676,10 +687,9 @@ for (const dungeonId of specializedTestDungeons) {
         passivePreset.nodes
       );
 
-      const result = runGaugeSimulation(
+      const result = runGaugeSimulationWithEndContent(
         { playerStats: stats, modEffects, dungeonId, runs: 300, seed: 12345 },
-        dungeonConfig,
-        enemyMap
+        dungeonConfig
       );
 
       console.log(
@@ -703,10 +713,9 @@ for (const dungeonId of specializedTestDungeons) {
         passivePreset.nodes
       );
 
-      const result = runGaugeSimulation(
+      const result = runGaugeSimulationWithEndContent(
         { playerStats: stats, modEffects, dungeonId, runs: 300, seed: 12345 },
-        dungeonConfig,
-        enemyMap
+        dungeonConfig
       );
 
       console.log(
@@ -730,10 +739,9 @@ for (const dungeonId of specializedTestDungeons) {
         passivePreset.nodes
       );
 
-      const result = runGaugeSimulation(
+      const result = runGaugeSimulationWithEndContent(
         { playerStats: stats, modEffects, dungeonId, runs: 300, seed: 12345 },
-        dungeonConfig,
-        enemyMap
+        dungeonConfig
       );
 
       console.log(
@@ -757,10 +765,9 @@ for (const dungeonId of specializedTestDungeons) {
         passivePreset.nodes
       );
 
-      const result = runGaugeSimulation(
+      const result = runGaugeSimulationWithEndContent(
         { playerStats: stats, modEffects, dungeonId, runs: 300, seed: 12345 },
-        dungeonConfig,
-        enemyMap
+        dungeonConfig
       );
 
       console.log(

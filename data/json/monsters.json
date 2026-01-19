@@ -1185,6 +1185,96 @@
         "itemId": "crown_of_end",
         "dropRate": 15
       }
+    },
+    "uber_goblin_king": {
+      "id": "uber_goblin_king",
+      "name": "Uber ゴブリンキング",
+      "image": "goblin_king",
+      "maxHp": 8000,
+      "atk": 2800,
+      "def": 1200,
+      "exp": 5000,
+      "attackSpeed": 0.7,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "uber_kings_crown",
+        "dropRate": 20
+      }
+    },
+    "uber_bandit_leader": {
+      "id": "uber_bandit_leader",
+      "name": "Uber 盗賊の頭",
+      "image": "bandit_leader",
+      "maxHp": 10000,
+      "atk": 3000,
+      "def": 1300,
+      "exp": 6000,
+      "attackSpeed": 1.0,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "uber_bandit_crown",
+        "dropRate": 20
+      }
+    },
+    "uber_vampire": {
+      "id": "uber_vampire",
+      "name": "Uber ヴァンパイア",
+      "image": "vampire",
+      "maxHp": 12000,
+      "atk": 3200,
+      "def": 1400,
+      "exp": 7000,
+      "attackSpeed": 1.1,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "uber_vampire_fang",
+        "dropRate": 20
+      }
+    },
+    "uber_kraken": {
+      "id": "uber_kraken",
+      "name": "Uber クラーケン",
+      "image": "kraken",
+      "maxHp": 15000,
+      "atk": 3400,
+      "def": 1500,
+      "exp": 8000,
+      "attackSpeed": 0.9,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "uber_kraken_tentacle",
+        "dropRate": 20
+      }
+    },
+    "uber_demon_lord": {
+      "id": "uber_demon_lord",
+      "name": "Uber 魔王",
+      "image": "demon_lord",
+      "maxHp": 20000,
+      "atk": 3600,
+      "def": 1600,
+      "exp": 10000,
+      "attackSpeed": 0.6,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "uber_demon_crown",
+        "dropRate": 20
+      }
+    },
+    "uber_true_final_boss": {
+      "id": "uber_true_final_boss",
+      "name": "Uber 終焉の王",
+      "image": "true_final_boss",
+      "maxHp": 60000,
+      "atk": 4000,
+      "def": 1800,
+      "exp": 20000,
+      "attackSpeed": 0.45,
+      "isBoss": true,
+      "uniqueDrop": {
+        "itemId": "uber_crown_of_end",
+        "dropRate": 25
+      }
     }
   }
 }

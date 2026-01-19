@@ -14,6 +14,16 @@ import {
   DungeonResult,
   FloorResult,
 } from './types';
+import {
+  getEnemyAtkMultiplier,
+  getEnemyDamageReductionPct,
+  getEnemyHpOnHit,
+  getEnemyRegenPerSecond,
+  getPlayerAtkMultiplier,
+  getPlayerDefMultiplier,
+  getPlayerPoisonFromBoss,
+  isEndContentDungeon,
+} from './endContent';
 
 // ========================================
 // PoE式ステータス計算
@@ -103,10 +113,11 @@ export function calculateDamage(atk: number, def: number, additionalReduction: n
 export function executeTurn(
   playerStats: Stats,
   enemyStats: EnemyConfig,
-  state: BattleState
+  state: BattleState,
+  enemyDamageReductionPct: number = 0
 ): TurnResult {
   // プレイヤーの攻撃
-  const playerDamage = calculateDamage(playerStats.atk, enemyStats.def);
+  const playerDamage = calculateDamage(playerStats.atk, enemyStats.def, enemyDamageReductionPct);
   const enemyHpAfter = Math.max(0, state.enemyHp - playerDamage);
   const enemyDefeated = enemyHpAfter <= 0;
 
@@ -147,7 +158,16 @@ export function executeTurn(
 export function runBattle(
   playerStats: Stats,
   playerCurrentHp: number,
-  enemy: EnemyConfig
+  enemy: EnemyConfig,
+  options?: {
+    playerAtkMultiplier?: number;
+    playerDefMultiplier?: number;
+    enemyAtkMultiplier?: number;
+    enemyDamageReductionPct?: number;
+    enemyHpOnHit?: number;
+    enemyRegenPerTurn?: number;
+    playerPoison?: { damage: number; turns: number } | null;
+  }
 ): BattleResult {
   let state: BattleState = {
     playerHp: playerCurrentHp,
@@ -158,11 +178,50 @@ export function runBattle(
   };
 
   const MAX_TURNS = 1000; // 無限ループ防止
+  let playerPoisonRemaining = options?.playerPoison?.turns ?? 0;
 
   while (state.turn < MAX_TURNS) {
     state.turn++;
 
-    const result = executeTurn(playerStats, enemy, state);
+    if (options?.enemyRegenPerTurn && options.enemyRegenPerTurn > 0) {
+      state = {
+        ...state,
+        enemyHp: Math.min(state.enemyMaxHp, state.enemyHp + options.enemyRegenPerTurn),
+      };
+    }
+
+    if (playerPoisonRemaining > 0 && options?.playerPoison) {
+      state = {
+        ...state,
+        playerHp: Math.max(0, state.playerHp - options.playerPoison.damage),
+      };
+      playerPoisonRemaining -= 1;
+      if (state.playerHp <= 0) {
+        return {
+          victory: false,
+          turns: state.turn,
+          expGained: 0,
+          playerHpRemaining: 0,
+        };
+      }
+    }
+
+    const effectivePlayerStats: Stats = {
+      ...playerStats,
+      atk: Math.max(1, Math.floor(playerStats.atk * (options?.playerAtkMultiplier ?? 1))),
+      def: Math.max(0, Math.floor(playerStats.def * (options?.playerDefMultiplier ?? 1))),
+    };
+    const effectiveEnemyStats: EnemyConfig = {
+      ...enemy,
+      atk: Math.max(1, Math.floor(enemy.atk * (options?.enemyAtkMultiplier ?? 1))),
+    };
+
+    const result = executeTurn(
+      effectivePlayerStats,
+      effectiveEnemyStats,
+      state,
+      options?.enemyDamageReductionPct ?? 0
+    );
 
     state = {
       ...state,
@@ -185,6 +244,13 @@ export function runBattle(
         turns: state.turn,
         expGained: 0,
         playerHpRemaining: 0,
+      };
+    }
+
+    if (options?.enemyHpOnHit && result.enemyDamageDealt > 0) {
+      state = {
+        ...state,
+        enemyHp: Math.min(state.enemyMaxHp, state.enemyHp + options.enemyHpOnHit),
       };
     }
   }
@@ -215,6 +281,8 @@ export function runDungeon(
   dungeon: DungeonConfig,
   getEnemy: (id: string) => EnemyConfig | undefined,
   getRandomEnemyId: (enemyIds: string[]) => string,
+  resolveEnemyForFloor?: (floor: number, rng: () => number) => EnemyConfig | undefined,
+  rng: () => number = Math.random,
   getDropItem?: (dropTable: string[]) => string | undefined
 ): DungeonResult {
   let currentHp = playerStats.maxHp;
@@ -225,11 +293,14 @@ export function runDungeon(
 
   for (let floor = 1; floor <= dungeon.maxFloor; floor++) {
     // ボス階層かどうかチェック
+    const enemyFromResolver = resolveEnemyForFloor
+      ? resolveEnemyForFloor(floor, rng)
+      : undefined;
     const isBossFloor = dungeon.boss && dungeon.boss.floor === floor;
     const enemyId = isBossFloor
       ? dungeon.boss!.monsterId
       : getRandomEnemyId(dungeon.enemies);
-    const enemy = getEnemy(enemyId);
+    const enemy = enemyFromResolver ?? getEnemy(enemyId);
 
     if (!enemy) {
       // 敵が見つからない場合はスキップ（エラー状態）
@@ -237,7 +308,18 @@ export function runDungeon(
     }
 
     // 戦闘実行
-    const battleResult = runBattle(playerStats, currentHp, enemy);
+    const isEndContent = isEndContentDungeon(dungeon.id);
+    const battleResult = runBattle(playerStats, currentHp, enemy, isEndContent
+      ? {
+        playerAtkMultiplier: getPlayerAtkMultiplier(enemy.id),
+        playerDefMultiplier: getPlayerDefMultiplier(enemy.id),
+        enemyAtkMultiplier: getEnemyAtkMultiplier(enemy.id),
+        enemyDamageReductionPct: getEnemyDamageReductionPct(enemy.id),
+        enemyHpOnHit: getEnemyHpOnHit(enemy.id),
+        enemyRegenPerTurn: getEnemyRegenPerSecond(enemy.id),
+        playerPoison: getPlayerPoisonFromBoss(enemy.id),
+      }
+      : undefined);
 
     floorResults.push({
       floor,

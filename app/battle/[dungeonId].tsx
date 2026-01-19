@@ -26,6 +26,13 @@ const backgroundImages: Record<string, ImageSourcePropType> = {
   sacred_temple: require('@/assets/images/backgrounds/sacred_temple.jpg'),
   chaos_realm: require('@/assets/images/backgrounds/chaos_realm.jpg'),
   final_land: require('@/assets/images/backgrounds/final_land.jpg'),
+  dimensional_rush: require('@/assets/images/backgrounds/final_land.jpg'),
+  uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
+  uber_bandit_leader: require('@/assets/images/backgrounds/ruins.jpg'),
+  uber_vampire: require('@/assets/images/backgrounds/dark_forest.jpg'),
+  uber_kraken: require('@/assets/images/backgrounds/cave.jpg'),
+  uber_demon_lord: require('@/assets/images/backgrounds/demon_castle.jpg'),
+  uber_true_final_boss: require('@/assets/images/backgrounds/final_land.jpg'),
 };
 
 export default function BattleScreen() {
