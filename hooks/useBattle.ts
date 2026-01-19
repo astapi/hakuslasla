@@ -1075,11 +1075,19 @@ export const useBattle = (dungeonId: string) => {
   useEffect(() => {
     const saveResults = async () => {
       if (state.phase === 'cleared' || state.phase === 'defeat') {
-        if (state.phase === 'cleared' && state.dungeonId === 'final_land') {
-          const alreadyUnlocked = await settingsRepository.getEndContentUnlocked();
-          if (!alreadyUnlocked) {
-            await settingsRepository.setEndContentUnlocked(true);
-            setLevelCap(60);
+        if (state.phase === 'cleared') {
+          // ダンジョンクリア記録を保存
+          await settingsRepository.saveDungeonClearRecord(
+            state.dungeonId,
+            state.maxFloor
+          );
+
+          if (state.dungeonId === 'final_land') {
+            const alreadyUnlocked = await settingsRepository.getEndContentUnlocked();
+            if (!alreadyUnlocked) {
+              await settingsRepository.setEndContentUnlocked(true);
+              setLevelCap(60);
+            }
           }
         }
 
