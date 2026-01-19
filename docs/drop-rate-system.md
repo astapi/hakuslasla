@@ -91,7 +91,6 @@ interface ItemDrop {
   "dropTable": {
     "common": [
       { "itemId": "rusted_sword", "dropRate": 10 },
-      { "itemId": "wooden_club", "dropRate": 10 },
       { "itemId": "cloth_armor", "dropRate": 10 },
       { "itemId": "leather_boots", "dropRate": 10 },
       { "itemId": "leather_cap", "dropRate": 10 },

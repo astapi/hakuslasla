@@ -181,6 +181,8 @@ export default function InventoryScreen() {
 
   const isFull = inventory.length >= INVENTORY_MAX_SIZE;
 
+  const isUniqueItem = (item: Item) => item.mods?.some((mod) => mod.tier === 0);
+
   return (
     <ScreenWrapper>
       {/* ヘッダー */}
@@ -251,6 +253,7 @@ export default function InventoryScreen() {
                 const isSelected = selectedItem?.instanceId === item.instanceId;
                 const stats = calculateItemStats(item);
                 const hasMods = item.mods && item.mods.length > 0;
+                const isUnique = isUniqueItem(item);
 
                 return (
                   <Pressable
@@ -265,6 +268,11 @@ export default function InventoryScreen() {
                       source={getItemIcon(item.id, item.slot)}
                       style={styles.gridItemIcon}
                     />
+                    {isUnique && (
+                      <View style={styles.uniqueBadge}>
+                        <Text style={styles.uniqueBadgeText}>UNIQUE</Text>
+                      </View>
+                    )}
                     {hasMods && (
                       <View style={styles.modIndicator}>
                         <Text style={styles.modIndicatorText}>{item.mods.length}</Text>
@@ -682,6 +690,22 @@ const styles = StyleSheet.create({
     width: ms(32),
     height: ms(32),
     marginBottom: ms(4),
+  },
+  uniqueBadge: {
+    position: 'absolute',
+    top: ms(2),
+    left: ms(2),
+    paddingHorizontal: ms(4),
+    height: ms(14),
+    borderRadius: ms(7),
+    backgroundColor: '#FFD700',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  uniqueBadgeText: {
+    fontSize: fs(8),
+    fontWeight: 'bold',
+    color: '#1a1a2e',
   },
   modIndicator: {
     position: 'absolute',

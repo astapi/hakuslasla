@@ -15,9 +15,6 @@
       "dropTable": {
         "common": [
           { "itemId": "rusted_sword", "dropRate": 10 },
-          { "itemId": "wooden_club", "dropRate": 10 },
-          { "itemId": "hunter_dagger", "dropRate": 8 },
-          { "itemId": "worn_bow", "dropRate": 8 },
           { "itemId": "cloth_clothes", "dropRate": 10 },
           { "itemId": "leather_hat", "dropRate": 10 },
           { "itemId": "leather_gloves", "dropRate": 10 },
@@ -49,9 +46,6 @@
       "dropTable": {
         "common": [
           { "itemId": "rusted_sword", "dropRate": 5 },
-          { "itemId": "wooden_club", "dropRate": 5 },
-          { "itemId": "hunter_dagger", "dropRate": 8 },
-          { "itemId": "worn_bow", "dropRate": 8 },
           { "itemId": "cloth_clothes", "dropRate": 5 },
           { "itemId": "leather_hat", "dropRate": 5 },
           { "itemId": "leather_gloves", "dropRate": 8 },
@@ -84,8 +78,6 @@
       ],
       "dropTable": {
         "common": [
-          { "itemId": "hunter_dagger", "dropRate": 5 },
-          { "itemId": "worn_bow", "dropRate": 5 },
           { "itemId": "leather_gloves", "dropRate": 5 },
           { "itemId": "leather_boots", "dropRate": 5 },
           { "itemId": "copper_ring", "dropRate": 5 },
