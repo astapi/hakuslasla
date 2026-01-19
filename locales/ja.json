@@ -57,7 +57,8 @@
     "victory": "勝利！",
     "defeat": "敗北...",
     "cleared": "ダンジョン踏破！",
-    "player": "プレイヤー"
+    "player": "プレイヤー",
+    "inProgress": "戦闘中"
   },
   "result": {
     "cleared": "ダンジョン踏破！",
@@ -137,7 +138,8 @@
     "title": "装備",
     "slot": "スロット",
     "item": "アイテム",
-    "mod": "MOD"
+    "mod": "MOD",
+    "modCount": "MOD x{{count}}"
   },
   "slots": {
     "weapon": "武器",
@@ -253,5 +255,1300 @@
       "name": "Uber 終焉の王",
       "description": "真の終焉をもたらす存在。"
     }
+  },
+  "items": {
+    "rusted_sword": {
+      "name": "朽ちた剣"
+    },
+    "cloth_clothes": {
+      "name": "布の服"
+    },
+    "leather_hat": {
+      "name": "革の帽子"
+    },
+    "leather_gloves": {
+      "name": "革の手袋"
+    },
+    "leather_boots": {
+      "name": "革のブーツ"
+    },
+    "copper_ring": {
+      "name": "銅の指輪"
+    },
+    "traveler_amulet": {
+      "name": "旅人の護符"
+    },
+    "grassland_sword": {
+      "name": "草原の剣"
+    },
+    "light_leather": {
+      "name": "軽量レザー"
+    },
+    "rabbit_boots": {
+      "name": "うさぎのブーツ"
+    },
+    "division_core": {
+      "name": "分裂核"
+    },
+    "wolf_fang": {
+      "name": "狼の牙"
+    },
+    "poison_needle_ring": {
+      "name": "毒針の指輪"
+    },
+    "cave_iron_sword": {
+      "name": "洞窟の鉄剣"
+    },
+    "bone_shield": {
+      "name": "骨の盾"
+    },
+    "bat_mantle": {
+      "name": "バットマント"
+    },
+    "underground_charm": {
+      "name": "地底のお守り"
+    },
+    "warrior_ring": {
+      "name": "戦士の指輪"
+    },
+    "bone_sword": {
+      "name": "骨の剣"
+    },
+    "war_ogre_belt": {
+      "name": "戦鬼の腰帯"
+    },
+    "dark_night_mantle": {
+      "name": "闇夜のマント"
+    },
+    "ruins_magic_sword": {
+      "name": "遺跡の魔剣"
+    },
+    "cursed_robe": {
+      "name": "呪われたローブ"
+    },
+    "gargoyle_boots": {
+      "name": "ガーゴイルブーツ"
+    },
+    "ancient_ring": {
+      "name": "古代の指輪"
+    },
+    "oblivion_amulet": {
+      "name": "忘却の護符"
+    },
+    "core_stone": {
+      "name": "心核石"
+    },
+    "curse_bandage": {
+      "name": "呪縛の包帯"
+    },
+    "lost_grimoire": {
+      "name": "失われた魔導書"
+    },
+    "stone_wing_boots": {
+      "name": "石翼のブーツ"
+    },
+    "goblin_blade": {
+      "name": "ゴブリンの蛮刀"
+    },
+    "goblin_mail": {
+      "name": "ゴブリンメイル"
+    },
+    "spiked_gauntlets": {
+      "name": "棘付きの篭手"
+    },
+    "raider_boots": {
+      "name": "略奪者のブーツ"
+    },
+    "tribal_ring": {
+      "name": "蛮族の指輪"
+    },
+    "shaman_staff": {
+      "name": "シャーマンの杖"
+    },
+    "goblin_shield": {
+      "name": "ゴブリンの大盾"
+    },
+    "champion_axe": {
+      "name": "チャンピオンアクス"
+    },
+    "kings_crown": {
+      "name": "ゴブリンキングの王冠"
+    },
+    "demon_blade": {
+      "name": "魔剣デモンブレイド"
+    },
+    "dark_plate": {
+      "name": "闇騎士の鎧"
+    },
+    "dragon_gauntlets": {
+      "name": "竜鱗の篭手"
+    },
+    "inferno_boots": {
+      "name": "業火のブーツ"
+    },
+    "dark_ring": {
+      "name": "闇の指輪"
+    },
+    "dark_grimoire": {
+      "name": "闇の魔導書"
+    },
+    "demon_horn": {
+      "name": "デーモンホーン"
+    },
+    "wyvern_scale": {
+      "name": "飛竜の鱗鎧"
+    },
+    "demon_crown": {
+      "name": "魔王の冠"
+    },
+    "frost_blade": {
+      "name": "氷結の剣"
+    },
+    "ice_armor": {
+      "name": "アイスアーマー"
+    },
+    "frozen_gauntlets": {
+      "name": "凍てつく篭手"
+    },
+    "blizzard_boots": {
+      "name": "ブリザードブーツ"
+    },
+    "ice_crystal_ring": {
+      "name": "氷晶の指輪"
+    },
+    "frozen_staff": {
+      "name": "凍結の杖"
+    },
+    "yeti_fur": {
+      "name": "イエティの毛皮"
+    },
+    "magma_blade": {
+      "name": "マグマブレイド"
+    },
+    "volcano_armor": {
+      "name": "火山の鎧"
+    },
+    "flame_gauntlets": {
+      "name": "炎の篭手"
+    },
+    "ember_boots": {
+      "name": "灼熱のブーツ"
+    },
+    "fire_ruby_ring": {
+      "name": "炎のルビー指輪"
+    },
+    "magma_core": {
+      "name": "マグマコア"
+    },
+    "flame_sword": {
+      "name": "炎剣フレイムソード"
+    },
+    "shadow_blade": {
+      "name": "シャドウブレイド"
+    },
+    "dark_bark_armor": {
+      "name": "暗黒樹皮の鎧"
+    },
+    "nightmare_gauntlets": {
+      "name": "悪夢の篭手"
+    },
+    "forest_walker_boots": {
+      "name": "森歩きのブーツ"
+    },
+    "cursed_eye_ring": {
+      "name": "呪眼の指輪"
+    },
+    "cursed_branch": {
+      "name": "呪いの枝"
+    },
+    "chimera_fang": {
+      "name": "キメラの牙"
+    },
+    "sky_blade": {
+      "name": "天空剣"
+    },
+    "cloud_armor": {
+      "name": "雲海の鎧"
+    },
+    "storm_gauntlets": {
+      "name": "嵐の篭手"
+    },
+    "wind_walker_boots": {
+      "name": "風渡りのブーツ"
+    },
+    "sky_sapphire_ring": {
+      "name": "蒼空のサファイア指輪"
+    },
+    "thunder_feather": {
+      "name": "雷鳥の羽"
+    },
+    "giant_belt": {
+      "name": "巨人の帯"
+    },
+    "hellfire_blade": {
+      "name": "獄炎剣"
+    },
+    "infernal_plate": {
+      "name": "煉獄の鎧"
+    },
+    "demon_gauntlets": {
+      "name": "魔人の篭手"
+    },
+    "hellwalker_boots": {
+      "name": "地獄歩きのブーツ"
+    },
+    "infernal_ruby_ring": {
+      "name": "煉獄のルビー指輪"
+    },
+    "infernal_armor": {
+      "name": "インファーナルアーマー"
+    },
+    "balrog_whip": {
+      "name": "バルログの鞭"
+    },
+    "dragon_slayer": {
+      "name": "竜殺しの剣"
+    },
+    "dragon_scale_armor": {
+      "name": "竜鱗の鎧"
+    },
+    "dragon_claw_gauntlets": {
+      "name": "竜爪の篭手"
+    },
+    "dragon_hide_boots": {
+      "name": "竜皮のブーツ"
+    },
+    "dragon_eye_ring": {
+      "name": "竜眼の指輪"
+    },
+    "fire_dragon_scale": {
+      "name": "炎竜の鱗"
+    },
+    "ice_dragon_scale": {
+      "name": "氷竜の鱗"
+    },
+    "dragon_heart": {
+      "name": "竜の心臓"
+    },
+    "holy_blade": {
+      "name": "聖剣"
+    },
+    "divine_armor": {
+      "name": "神聖なる鎧"
+    },
+    "seraph_gauntlets": {
+      "name": "熾天使の篭手"
+    },
+    "divine_boots": {
+      "name": "神のブーツ"
+    },
+    "holy_diamond_ring": {
+      "name": "聖なるダイヤ指輪"
+    },
+    "holy_feather": {
+      "name": "熾天使の羽"
+    },
+    "holy_dragon_scale": {
+      "name": "聖竜の鱗"
+    },
+    "chaos_blade": {
+      "name": "混沌の剣"
+    },
+    "void_armor": {
+      "name": "虚無の鎧"
+    },
+    "chaos_gauntlets": {
+      "name": "混沌の篭手"
+    },
+    "void_boots": {
+      "name": "虚無のブーツ"
+    },
+    "chaos_crystal_ring": {
+      "name": "混沌水晶の指輪"
+    },
+    "void_essence": {
+      "name": "虚無のエッセンス"
+    },
+    "chaos_scale": {
+      "name": "カオスドラゴンの鱗"
+    },
+    "apocalypse_blade": {
+      "name": "終焉の剣"
+    },
+    "end_armor": {
+      "name": "終末の鎧"
+    },
+    "titan_gauntlets": {
+      "name": "泰坦の篭手"
+    },
+    "end_walker_boots": {
+      "name": "終末を歩む者のブーツ"
+    },
+    "oblivion_ring": {
+      "name": "忘却の指輪"
+    },
+    "world_fragment": {
+      "name": "世界の欠片"
+    },
+    "divine_blade": {
+      "name": "神殺しの剣"
+    },
+    "crown_of_end": {
+      "name": "終焉の王冠"
+    },
+    "bandit_crown": {
+      "name": "盗賊の王冠"
+    },
+    "vampire_fang": {
+      "name": "ヴァンパイアの牙"
+    },
+    "kraken_tentacle": {
+      "name": "クラーケンの触腕"
+    },
+    "uber_kings_crown": {
+      "name": "Uber ゴブリンキングの王冠"
+    },
+    "uber_bandit_crown": {
+      "name": "Uber 盗賊王の王冠"
+    },
+    "uber_vampire_fang": {
+      "name": "Uber ヴァンパイアの牙"
+    },
+    "uber_kraken_tentacle": {
+      "name": "Uber クラーケンの触腕"
+    },
+    "uber_demon_crown": {
+      "name": "Uber 魔王の冠"
+    },
+    "uber_crown_of_end": {
+      "name": "Uber 終焉の王冠"
+    }
+  },
+  "monsters": {
+    "slime": {
+      "name": "スライム"
+    },
+    "wild_rabbit": {
+      "name": "キラーラビット"
+    },
+    "goblin": {
+      "name": "ゴブリン"
+    },
+    "bee": {
+      "name": "キラービー"
+    },
+    "wolf": {
+      "name": "オオカミ"
+    },
+    "bat": {
+      "name": "ジャイアントバット"
+    },
+    "goblin_warrior": {
+      "name": "ゴブリンウォリアー"
+    },
+    "skeleton": {
+      "name": "スケルトン"
+    },
+    "rock_lizard": {
+      "name": "岩トカゲ"
+    },
+    "orc": {
+      "name": "オーク"
+    },
+    "skeleton_knight": {
+      "name": "スケルトンナイト"
+    },
+    "golem": {
+      "name": "ゴーレム"
+    },
+    "mummy": {
+      "name": "ミイラ"
+    },
+    "lich": {
+      "name": "リッチ"
+    },
+    "gargoyle": {
+      "name": "ガーゴイル"
+    },
+    "goblin_archer": {
+      "name": "ゴブリンアーチャー"
+    },
+    "goblin_shaman": {
+      "name": "ゴブリンシャーマン"
+    },
+    "goblin_knight": {
+      "name": "ゴブリンナイト"
+    },
+    "goblin_champion": {
+      "name": "ゴブリンチャンピオン"
+    },
+    "goblin_king": {
+      "name": "ゴブリンキング"
+    },
+    "bandit": {
+      "name": "盗賊"
+    },
+    "bandit_archer": {
+      "name": "盗賊アーチャー"
+    },
+    "bandit_swordsman": {
+      "name": "盗賊剣士"
+    },
+    "bandit_leader": {
+      "name": "盗賊の頭"
+    },
+    "death_knight": {
+      "name": "デスナイト"
+    },
+    "dark_mage": {
+      "name": "ダークメイジ"
+    },
+    "demon": {
+      "name": "デーモン"
+    },
+    "wyvern": {
+      "name": "ワイバーン"
+    },
+    "demon_lord": {
+      "name": "魔王"
+    },
+    "zombie": {
+      "name": "ゾンビ"
+    },
+    "ghoul": {
+      "name": "グール"
+    },
+    "banshee": {
+      "name": "バンシー"
+    },
+    "wraith": {
+      "name": "レイス"
+    },
+    "vampire": {
+      "name": "ヴァンパイア"
+    },
+    "ice_golem": {
+      "name": "アイスゴーレム"
+    },
+    "frost_wolf": {
+      "name": "フロストウルフ"
+    },
+    "ice_witch": {
+      "name": "アイスウィッチ"
+    },
+    "yeti": {
+      "name": "イエティ"
+    },
+    "frost_wyrm": {
+      "name": "フロストワーム"
+    },
+    "sahuagin": {
+      "name": "サハギン"
+    },
+    "merman": {
+      "name": "マーマン"
+    },
+    "sea_serpent": {
+      "name": "シーサーペント"
+    },
+    "giant_crab": {
+      "name": "ジャイアントクラブ"
+    },
+    "kraken": {
+      "name": "クラーケン"
+    },
+    "lava_slime": {
+      "name": "ラーバスライム"
+    },
+    "magma_golem": {
+      "name": "マグマゴーレム"
+    },
+    "salamander": {
+      "name": "サラマンダー"
+    },
+    "flame_knight": {
+      "name": "フレイムナイト"
+    },
+    "phoenix": {
+      "name": "フェニックス"
+    },
+    "orc_warrior": {
+      "name": "オーク戦士"
+    },
+    "orc_mage": {
+      "name": "オークメイジ"
+    },
+    "troll": {
+      "name": "トロル"
+    },
+    "cyclops": {
+      "name": "サイクロプス"
+    },
+    "uruk_hai": {
+      "name": "ウルクハイ"
+    },
+    "dark_treant": {
+      "name": "ダークトレント"
+    },
+    "shadow_wolf": {
+      "name": "シャドウウルフ"
+    },
+    "forest_witch": {
+      "name": "フォレストウィッチ"
+    },
+    "chimera": {
+      "name": "キメラ"
+    },
+    "nightmare": {
+      "name": "ナイトメア"
+    },
+    "sky_knight": {
+      "name": "スカイナイト"
+    },
+    "storm_harpy": {
+      "name": "ストームハーピー"
+    },
+    "thunder_bird": {
+      "name": "サンダーバード"
+    },
+    "cloud_giant": {
+      "name": "クラウドジャイアント"
+    },
+    "griffon": {
+      "name": "グリフォン"
+    },
+    "hell_hound": {
+      "name": "ヘルハウンド"
+    },
+    "infernal_knight": {
+      "name": "インファーナルナイト"
+    },
+    "succubus": {
+      "name": "サキュバス"
+    },
+    "balrog": {
+      "name": "バルログ"
+    },
+    "cerberus": {
+      "name": "ケルベロス"
+    },
+    "drake": {
+      "name": "ドレイク"
+    },
+    "fire_dragon": {
+      "name": "ファイアドラゴン"
+    },
+    "ice_dragon": {
+      "name": "アイスドラゴン"
+    },
+    "thunder_dragon": {
+      "name": "サンダードラゴン"
+    },
+    "elder_dragon": {
+      "name": "エルダードラゴン"
+    },
+    "divine_knight": {
+      "name": "ディバインナイト"
+    },
+    "seraph": {
+      "name": "セラフ"
+    },
+    "temple_guardian": {
+      "name": "テンプルガーディアン"
+    },
+    "holy_dragon": {
+      "name": "ホーリードラゴン"
+    },
+    "valkyrie": {
+      "name": "ヴァルキリー"
+    },
+    "chaos_knight": {
+      "name": "カオスナイト"
+    },
+    "void_walker": {
+      "name": "ヴォイドウォーカー"
+    },
+    "abomination": {
+      "name": "アボミネーション"
+    },
+    "chaos_dragon": {
+      "name": "カオスドラゴン"
+    },
+    "elder_thing": {
+      "name": "エルダーシング"
+    },
+    "apocalypse_knight": {
+      "name": "アポカリプスナイト"
+    },
+    "world_eater": {
+      "name": "ワールドイーター"
+    },
+    "primordial_titan": {
+      "name": "プライモーディアルタイタン"
+    },
+    "god_slayer": {
+      "name": "ゴッドスレイヤー"
+    },
+    "end_bringer": {
+      "name": "エンドブリンガー"
+    },
+    "true_final_boss": {
+      "name": "終焉の王"
+    },
+    "uber_goblin_king": {
+      "name": "Uber ゴブリンキング"
+    },
+    "uber_bandit_leader": {
+      "name": "Uber 盗賊の頭"
+    },
+    "uber_vampire": {
+      "name": "Uber ヴァンパイア"
+    },
+    "uber_kraken": {
+      "name": "Uber クラーケン"
+    },
+    "uber_demon_lord": {
+      "name": "Uber 魔王"
+    },
+    "uber_true_final_boss": {
+      "name": "Uber 終焉の王"
+    }
+  },
+  "skills": {
+    "skill_atk_1": {
+      "name": "攻撃力強化 I",
+      "description": "攻撃力 +5"
+    },
+    "skill_hp_1": {
+      "name": "HP強化 I",
+      "description": "HP +20"
+    },
+    "skill_atk_2": {
+      "name": "攻撃力強化 II",
+      "description": "攻撃力 +10"
+    },
+    "skill_def_1": {
+      "name": "防御力強化 I",
+      "description": "防御力 +5"
+    },
+    "skill_hp_2": {
+      "name": "HP強化 II",
+      "description": "HP +50"
+    }
+  },
+  "skillTree": {
+    "title": "スキルツリー",
+    "skillPoints": "SP: {{count}}",
+    "unlocked": "習得済み",
+    "available": "習得可能"
+  },
+  "bossSkills": {
+    "goblin_king": {
+      "name": "ゴブリンたちの咆哮"
+    },
+    "bandit_leader": {
+      "name": "ベアトラップ"
+    },
+    "vampire": {
+      "name": "血の狂宴"
+    },
+    "kraken": {
+      "name": "津波"
+    },
+    "demon_lord": {
+      "name": "デスハンド"
+    },
+    "true_final_boss": {
+      "name": "終焉"
+    }
+  },
+  "battleLog": {
+    "title": "戦闘ログ",
+    "runStart": "=== {{count}}周目開始 ===",
+    "enemyAppeared": "{{enemy}}が現れた！",
+    "playerAttack": "プレイヤーの攻撃！ {{enemy}}に{{damage}}ダメージ！",
+    "criticalHit": "クリティカルヒット！ {{enemy}}に{{damage}}ダメージ！",
+    "enemyAttack": "{{enemy}}の攻撃！ {{damage}}ダメージを受けた！",
+    "enemyDefeated": "{{enemy}}を倒した！ 経験値{{exp}}を獲得！",
+    "itemDropped": "{{item}}をドロップした！",
+    "playerDefeated": "プレイヤーは倒れた...",
+    "nextFloor": "--- {{floor}}階へ進む ---",
+    "dungeonCleared": "ダンジョンを踏破した！",
+    "poisonAppliedEnemy": "{{enemy}}に毒を付与した！（{{damage}}ダメージ x {{turns}}ターン）{{stacks}}",
+    "poisonDamageEnemy": "毒ダメージ！ {{enemy}}に{{damage}}ダメージ！{{remaining}}{{ended}}{{lost}}",
+    "poisonAppliedPlayer": "毒付与！ プレイヤーが{{damage}}ダメージ x {{turns}}ターンの毒を受けた！{{stacks}}",
+    "poisonDamagePlayer": "毒ダメージ！ プレイヤーに{{damage}}ダメージ！{{remaining}}{{ended}}{{lost}}",
+    "poisonStacks": " [{{count}}スタック]",
+    "poisonRemaining": "（{{count}}スタック継続）",
+    "poisonEnded": "（毒が切れた）",
+    "poisonStacksLost": "（{{count}}スタック消失）",
+    "bossSkillUsed": "{{enemy}}が{{skill}}を使用した！",
+    "uberUnlocked": "{{enemy}}のUber版が解放された！",
+    "uberTicket": "Uber入場券を入手！ ({{count}}枚)"
+  },
+  "passiveTree": {
+    "title": "パッシブツリー",
+    "skillPoints": "SP: {{count}}",
+    "zoomHint": "ピンチで拡大縮小 / ダブルタップでリセット",
+    "unlocked": "習得済",
+    "unlockButton": "習得 (SP: {{count}})",
+    "noSp": "SPが足りません",
+    "locked": "前提スキルが必要",
+    "placeholder": "ノードをタップして詳細を表示"
+  },
+  "passiveNodes": {
+    "start": {
+      "name": "冒険者の素質",
+      "description": "HP +30, ATK +5, DEF +3"
+    },
+    "poison_1": {
+      "name": "毒の心得",
+      "description": "HP +20, 毒付与率 +3%"
+    },
+    "poison_2": {
+      "name": "毒の知識 I",
+      "description": "毒付与率 +3%"
+    },
+    "poison_3": {
+      "name": "体力強化",
+      "description": "HP +20"
+    },
+    "poison_4": {
+      "name": "防御強化",
+      "description": "DEF +3"
+    },
+    "poison_5": {
+      "name": "毒の知識 II",
+      "description": "毒付与率 +3%"
+    },
+    "poison_6": {
+      "name": "体力強化 II",
+      "description": "HP +25"
+    },
+    "poison_7": {
+      "name": "防御強化 II",
+      "description": "DEF +4"
+    },
+    "poison_key1": {
+      "name": "猛毒使い",
+      "description": "毒付与率 +10%, 毒ダメージ +20%, 毒ダメージ吸収 +30%"
+    },
+    "poison_8": {
+      "name": "毒の知識 III",
+      "description": "毒付与率 +5%"
+    },
+    "poison_9": {
+      "name": "毒ダメージ強化 I",
+      "description": "毒ダメージ +15%"
+    },
+    "poison_10": {
+      "name": "毒耐性",
+      "description": "敵が毒状態時、被ダメージ -3%"
+    },
+    "poison_11": {
+      "name": "毒の知識 IV",
+      "description": "毒付与率 +5%"
+    },
+    "poison_12": {
+      "name": "毒ダメージ強化 II",
+      "description": "毒ダメージ +20%"
+    },
+    "poison_13": {
+      "name": "毒スタック強化",
+      "description": "毒が2スタックまで重複可能"
+    },
+    "poison_a1": {
+      "name": "深淵の毒",
+      "description": "毒ダメージ +25%"
+    },
+    "poison_a2": {
+      "name": "毒の極致",
+      "description": "毒スタック +3（計5スタック可能）"
+    },
+    "poison_b1": {
+      "name": "毒の護り",
+      "description": "敵が毒状態時、被ダメージ -5%"
+    },
+    "poison_b2": {
+      "name": "毒龍の鱗",
+      "description": "敵が毒状態時、被ダメージ -7%, HP +30"
+    },
+    "poison_14": {
+      "name": "毒の知識 V",
+      "description": "毒付与率 +8%"
+    },
+    "poison_15": {
+      "name": "致死毒",
+      "description": "毒ダメージ +30%"
+    },
+    "poison_16": {
+      "name": "毒の極意",
+      "description": "毒付与率 +10%"
+    },
+    "poison_17": {
+      "name": "猛毒の守護",
+      "description": "敵が毒状態時、被ダメージ -5%"
+    },
+    "poison_final1": {
+      "name": "毒蛇の化身",
+      "description": "毒付与率 +15%, 毒ダメージ 20% more"
+    },
+    "poison_final2": {
+      "name": "純粋毒【キーストーン】",
+      "description": "通常ダメージを与えられなくなる。毒ダメージ 50% more"
+    },
+    "crit_1": {
+      "name": "急所の心得",
+      "description": "ATK +5, クリティカル率 +3%"
+    },
+    "crit_2": {
+      "name": "急所狙い I",
+      "description": "クリティカル率 +3%"
+    },
+    "crit_3": {
+      "name": "攻撃強化",
+      "description": "ATK +5"
+    },
+    "crit_4": {
+      "name": "致命打 I",
+      "description": "クリティカルダメージ +15%"
+    },
+    "crit_5": {
+      "name": "急所狙い II",
+      "description": "クリティカル率 +3%"
+    },
+    "crit_6": {
+      "name": "攻撃強化 II",
+      "description": "ATK +8"
+    },
+    "crit_7": {
+      "name": "致命打 II",
+      "description": "クリティカルダメージ +20%"
+    },
+    "crit_key1": {
+      "name": "必殺の一撃",
+      "description": "クリティカルダメージ +30%"
+    },
+    "crit_8": {
+      "name": "急所狙い III",
+      "description": "クリティカル率 +5%"
+    },
+    "crit_9": {
+      "name": "攻撃増幅",
+      "description": "ATK +15% increased"
+    },
+    "crit_10": {
+      "name": "致命打 III",
+      "description": "クリティカルダメージ +20%"
+    },
+    "crit_11": {
+      "name": "急所狙い IV",
+      "description": "クリティカル率 +5%"
+    },
+    "crit_12": {
+      "name": "攻撃強化 III",
+      "description": "ATK +10"
+    },
+    "crit_13": {
+      "name": "致命打 IV",
+      "description": "クリティカルダメージ +25%"
+    },
+    "crit_a1": {
+      "name": "精密打撃",
+      "description": "クリティカル率 +8%"
+    },
+    "crit_a2": {
+      "name": "確実な急所",
+      "description": "クリティカル率 +10%"
+    },
+    "crit_b1": {
+      "name": "破壊的一撃",
+      "description": "クリティカルダメージ +30%"
+    },
+    "crit_b2": {
+      "name": "壊滅の刃",
+      "description": "クリティカルダメージ +40%"
+    },
+    "crit_14": {
+      "name": "急所狙い V",
+      "description": "クリティカル率 +5%"
+    },
+    "crit_15": {
+      "name": "血の刃",
+      "description": "クリティカル時HP +80回復"
+    },
+    "crit_16": {
+      "name": "致命打 V",
+      "description": "クリティカルダメージ +30%"
+    },
+    "crit_17": {
+      "name": "血の渇望",
+      "description": "クリティカル時HP +100回復"
+    },
+    "crit_final1": {
+      "name": "必殺の刃",
+      "description": "クリティカル率 +10%, クリティカルダメージ +50%"
+    },
+    "crit_final2": {
+      "name": "処刑人",
+      "description": "クリティカル時HP +150回復, ATK 15% more"
+    },
+    "guard_1": {
+      "name": "守りの心得",
+      "description": "DEF +5, ダメージ軽減 +2%"
+    },
+    "guard_2": {
+      "name": "堅守 I",
+      "description": "ダメージ軽減 +2%"
+    },
+    "guard_3": {
+      "name": "防御強化",
+      "description": "DEF +4"
+    },
+    "guard_4": {
+      "name": "体力強化",
+      "description": "HP +25"
+    },
+    "guard_5": {
+      "name": "堅守 II",
+      "description": "ダメージ軽減 +2%"
+    },
+    "guard_6": {
+      "name": "防御強化 II",
+      "description": "DEF +5"
+    },
+    "guard_7": {
+      "name": "体力強化 II",
+      "description": "HP +30"
+    },
+    "guard_key1": {
+      "name": "鉄壁の盾",
+      "description": "ダメージ軽減 +8%"
+    },
+    "guard_8": {
+      "name": "堅守 III",
+      "description": "ダメージ軽減 +3%"
+    },
+    "guard_9": {
+      "name": "防御増幅",
+      "description": "DEF +20% increased"
+    },
+    "guard_10": {
+      "name": "生命力増幅",
+      "description": "HP +20% increased"
+    },
+    "guard_11": {
+      "name": "堅守 IV",
+      "description": "ダメージ軽減 +3%"
+    },
+    "guard_12": {
+      "name": "防御強化 III",
+      "description": "DEF +8"
+    },
+    "guard_13": {
+      "name": "体力強化 III",
+      "description": "HP +40"
+    },
+    "guard_a1": {
+      "name": "鋼の肉体",
+      "description": "DEF +25% increased"
+    },
+    "guard_a2": {
+      "name": "不動の砦",
+      "description": "DEF +12"
+    },
+    "guard_b1": {
+      "name": "豊かな生命",
+      "description": "HP +25% increased"
+    },
+    "guard_b2": {
+      "name": "生命の護り",
+      "description": "HP +60"
+    },
+    "guard_14": {
+      "name": "堅守 V",
+      "description": "ダメージ軽減 +4%"
+    },
+    "guard_15": {
+      "name": "防御の極み",
+      "description": "DEF +15"
+    },
+    "guard_16": {
+      "name": "堅守 VI",
+      "description": "ダメージ軽減 +5%"
+    },
+    "guard_17": {
+      "name": "生命の極み",
+      "description": "HP +80"
+    },
+    "guard_final1": {
+      "name": "鉄壁の守護者",
+      "description": "ダメージ軽減 +10%, DEF 20% more"
+    },
+    "guard_final2": {
+      "name": "不滅の城壁",
+      "description": "HP 20% more"
+    },
+    "vamp_1": {
+      "name": "吸血の心得",
+      "description": "ATK +5, HIT時HP +10回復"
+    },
+    "vamp_2": {
+      "name": "吸血 I",
+      "description": "HIT時HP +10回復"
+    },
+    "vamp_3": {
+      "name": "攻撃強化",
+      "description": "ATK +5"
+    },
+    "vamp_4": {
+      "name": "生命回復",
+      "description": "毎ターンHP +8回復"
+    },
+    "vamp_5": {
+      "name": "吸血 II",
+      "description": "HIT時HP +10回復"
+    },
+    "vamp_6": {
+      "name": "攻撃強化 II",
+      "description": "ATK +8"
+    },
+    "vamp_7": {
+      "name": "生命回復 II",
+      "description": "毎ターンHP +10回復"
+    },
+    "vamp_key1": {
+      "name": "血の渇望",
+      "description": "HIT時HP +20回復"
+    },
+    "vamp_8": {
+      "name": "吸血 III",
+      "description": "HIT時HP +10回復"
+    },
+    "vamp_9": {
+      "name": "攻撃増幅",
+      "description": "ATK +15% increased"
+    },
+    "vamp_10": {
+      "name": "持続回復",
+      "description": "毎ターンHP 1%回復"
+    },
+    "vamp_11": {
+      "name": "吸血 IV",
+      "description": "HIT時HP +10回復"
+    },
+    "vamp_12": {
+      "name": "攻撃強化 III",
+      "description": "ATK +10"
+    },
+    "vamp_13": {
+      "name": "生命回復 III",
+      "description": "毎ターンHP +12回復"
+    },
+    "vamp_a1": {
+      "name": "猛攻",
+      "description": "ATK +20% increased"
+    },
+    "vamp_a2": {
+      "name": "破壊の拳",
+      "description": "ATK +15"
+    },
+    "vamp_b1": {
+      "name": "治癒の力",
+      "description": "毎ターンHP 1.5%回復"
+    },
+    "vamp_b2": {
+      "name": "生命の奔流",
+      "description": "毎ターンHP +20回復"
+    },
+    "vamp_14": {
+      "name": "吸血 V",
+      "description": "HIT時HP +10回復"
+    },
+    "vamp_15": {
+      "name": "攻撃増幅 II",
+      "description": "ATK +20% increased"
+    },
+    "vamp_16": {
+      "name": "吸血 VI",
+      "description": "HIT時HP +10回復"
+    },
+    "vamp_17": {
+      "name": "攻撃の極み",
+      "description": "ATK +20"
+    },
+    "vamp_final1": {
+      "name": "血の支配者",
+      "description": "HIT時HP +30回復, ATK 15% more"
+    },
+    "vamp_final2": {
+      "name": "永遠の吸血鬼",
+      "description": "毎ターンHP 3%回復"
+    },
+    "regen_1": {
+      "name": "回復の心得",
+      "description": "HP +30, 毎ターンHP +5回復"
+    },
+    "regen_2": {
+      "name": "生命力 I",
+      "description": "毎ターンHP +5回復"
+    },
+    "regen_3": {
+      "name": "体力強化",
+      "description": "HP +25"
+    },
+    "regen_4": {
+      "name": "回復強化",
+      "description": "毎ターンHP +8回復"
+    },
+    "regen_5": {
+      "name": "生命力 II",
+      "description": "HP +20% increased"
+    },
+    "regen_6": {
+      "name": "体力強化 II",
+      "description": "HP +30"
+    },
+    "regen_7": {
+      "name": "回復強化 II",
+      "description": "毎ターンHP +10回復"
+    },
+    "regen_key1": {
+      "name": "生命の泉",
+      "description": "毎ターンHP 2%回復"
+    },
+    "regen_8": {
+      "name": "生命力 III",
+      "description": "HP +25% increased"
+    },
+    "regen_9": {
+      "name": "体力増幅",
+      "description": "HP +40"
+    },
+    "regen_10": {
+      "name": "回復増幅",
+      "description": "毎ターンHP +12回復"
+    },
+    "regen_11": {
+      "name": "生命力 IV",
+      "description": "HP +20% increased"
+    },
+    "regen_12": {
+      "name": "体力強化 III",
+      "description": "HP +50"
+    },
+    "regen_13": {
+      "name": "回復強化 III",
+      "description": "毎ターンHP +15回復"
+    },
+    "regen_a1": {
+      "name": "強靭な生命",
+      "description": "HP +30% increased"
+    },
+    "regen_a2": {
+      "name": "不屈の体",
+      "description": "HP +70"
+    },
+    "regen_b1": {
+      "name": "超回復",
+      "description": "毎ターンHP 1.5%回復"
+    },
+    "regen_b2": {
+      "name": "治癒の極み",
+      "description": "毎ターンHP +25回復"
+    },
+    "regen_14": {
+      "name": "生命力 V",
+      "description": "HP +25% increased"
+    },
+    "regen_15": {
+      "name": "体力強化 IV",
+      "description": "HP +60"
+    },
+    "regen_16": {
+      "name": "回復強化 IV",
+      "description": "毎ターンHP +20回復"
+    },
+    "regen_17": {
+      "name": "生命の加護",
+      "description": "毎ターンHP 2%回復"
+    },
+    "regen_final1": {
+      "name": "不死鳥の祝福",
+      "description": "HP 25% more, 毎ターンHP +25回復"
+    },
+    "regen_final2": {
+      "name": "永遠の生命",
+      "description": "毎ターンHP 4%回復"
+    },
+    "speed_1": {
+      "name": "迅速の心得",
+      "description": "ATK +3, 攻撃速度 +5%"
+    },
+    "speed_2": {
+      "name": "俊敏 I",
+      "description": "攻撃速度 +5%"
+    },
+    "speed_3": {
+      "name": "素早い一撃",
+      "description": "ATK +5"
+    },
+    "speed_4": {
+      "name": "軽快な動き",
+      "description": "攻撃速度 +5%"
+    },
+    "speed_5": {
+      "name": "俊敏 II",
+      "description": "攻撃速度 +5%"
+    },
+    "speed_6": {
+      "name": "攻撃強化",
+      "description": "ATK +8"
+    },
+    "speed_7": {
+      "name": "俊敏 III",
+      "description": "攻撃速度 +8%"
+    },
+    "speed_key1": {
+      "name": "疾風",
+      "description": "攻撃速度 +15%"
+    },
+    "speed_8": {
+      "name": "俊敏 IV",
+      "description": "攻撃速度 +8%"
+    },
+    "speed_9": {
+      "name": "連撃",
+      "description": "ATK +10, 攻撃速度 +5%"
+    },
+    "speed_10": {
+      "name": "瞬撃",
+      "description": "攻撃速度 +10%"
+    },
+    "speed_11": {
+      "name": "俊敏 V",
+      "description": "攻撃速度 +10%"
+    },
+    "speed_12": {
+      "name": "攻撃増幅",
+      "description": "ATK +15% increased"
+    },
+    "speed_13": {
+      "name": "加速",
+      "description": "攻撃速度 +12%"
+    },
+    "speed_final1": {
+      "name": "電光石火",
+      "description": "攻撃速度 15% more"
+    },
+    "speed_final2": {
+      "name": "神速",
+      "description": "攻撃速度 20% more, ATK 10% more"
+    }
+  },
+  "modDescriptions": {
+    "poisonChance": "毒付与+{{value}}%",
+    "criticalChance": "クリティカル+{{value}}%",
+    "criticalDamage": "クリダメ+{{value}}%"
   }
 }

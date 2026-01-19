@@ -50,7 +50,7 @@ const EquipmentRow = ({ slot, item, t }: EquipmentRowProps) => {
         {item ? (
           <>
             <Text style={styles.itemName} numberOfLines={1}>
-              {item.name}
+              {t(`items.${item.id}.name`)}
             </Text>
             <View style={styles.statsRow}>
               {totalAtk > 0 && (

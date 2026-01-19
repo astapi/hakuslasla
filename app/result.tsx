@@ -80,7 +80,7 @@ export default function ResultScreen() {
               >
                 {grandTotalItems.map((item, index) => (
                   <View key={`${item.id}-${index}`} style={styles.itemRow}>
-                    <Text style={styles.itemName}>{item.name}</Text>
+                    <Text style={styles.itemName}>{t(`items.${item.id}.name`)}</Text>
                     <Text style={styles.itemStats}>
                       {item.atk > 0 ? `ATK+${item.atk} ` : ''}
                       {item.def > 0 ? `DEF+${item.def}` : ''}

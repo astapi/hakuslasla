@@ -1,3 +1,4 @@
+import i18n from '@/lib/i18n';
 import { EnemyConfig } from './types';
 
 export const DIMENSIONAL_RUSH_ID = 'dimensional_rush';
@@ -39,22 +40,10 @@ export const isUberBoss = (enemyId: string): boolean => {
 };
 
 export const getBossSkillName = (enemyId: string): string | null => {
-  switch (getBaseBossId(enemyId)) {
-    case 'goblin_king':
-      return 'ゴブリンたちの咆哮';
-    case 'bandit_leader':
-      return 'ベアトラップ';
-    case 'vampire':
-      return '血の狂宴';
-    case 'kraken':
-      return '津波';
-    case 'demon_lord':
-      return 'デスハンド';
-    case 'true_final_boss':
-      return '終焉';
-    default:
-      return null;
-  }
+  const baseId = getBaseBossId(enemyId);
+  const key = `bossSkills.${baseId}.name`;
+  if (!i18n.exists(key)) return null;
+  return i18n.t(key);
 };
 
 export const getPlayerAtkMultiplier = (enemyId: string): number => {

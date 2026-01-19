@@ -16,7 +16,10 @@ import { ms, fs } from '@/utils/scaling';
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
 // アイテムのステータス計算
-function calculateItemStats(item: Item) {
+function calculateItemStats(
+  item: Item,
+  t: (key: string, options?: Record<string, unknown>) => string
+) {
   let totalAtk = item.atk;
   let totalDef = item.def;
   const allMods: { type: string; value: number; tier: number; desc: string; color: string }[] = [];
@@ -41,19 +44,19 @@ function calculateItemStats(item: Item) {
           desc = `[${tierLabel}] HP+${mod.value}`;
           break;
         case 'hp_regen':
-          desc = `[${tierLabel}] 毎ターンHP${mod.value}回復`;
+          desc = `[${tierLabel}] ${t('mods.everyTurnHpRegen', { value: mod.value })}`;
           break;
         case 'hp_regen_pct':
-          desc = `[${tierLabel}] 毎ターンHP${mod.value}%回復`;
+          desc = `[${tierLabel}] ${t('mods.everyTurnHpRegenPct', { value: mod.value })}`;
           break;
         case 'poison_chance':
-          desc = `[${tierLabel}] 毒付与+${mod.value}%`;
+          desc = `[${tierLabel}] ${t('modDescriptions.poisonChance', { value: mod.value })}`;
           break;
         case 'critical_chance':
-          desc = `[${tierLabel}] クリティカル+${mod.value}%`;
+          desc = `[${tierLabel}] ${t('modDescriptions.criticalChance', { value: mod.value })}`;
           break;
         case 'critical_damage':
-          desc = `[${tierLabel}] クリダメ+${mod.value}%`;
+          desc = `[${tierLabel}] ${t('modDescriptions.criticalDamage', { value: mod.value })}`;
           break;
         case 'atk_increased_pct':
           desc = `[${tierLabel}] ATK+${mod.value}%`;
@@ -251,7 +254,7 @@ export default function InventoryScreen() {
             <View style={styles.grid}>
               {currentItems.map((item) => {
                 const isSelected = selectedItem?.instanceId === item.instanceId;
-                const stats = calculateItemStats(item);
+                const stats = calculateItemStats(item, t);
                 const hasMods = item.mods && item.mods.length > 0;
                 const isUnique = isUniqueItem(item);
 
@@ -279,7 +282,7 @@ export default function InventoryScreen() {
                       </View>
                     )}
                     <Text style={styles.gridItemName} numberOfLines={1}>
-                      {item.name}
+                      {t(`items.${item.id}.name`)}
                     </Text>
                     <Text style={styles.gridItemStats}>
                       {stats.totalAtk > 0 && `A${stats.totalAtk}`}
@@ -331,8 +334,8 @@ function ItemDetail({
   onSell: () => void;
   t: (key: string) => string;
 }) {
-  const stats = calculateItemStats(item);
-  const equippedStats = equippedItem ? calculateItemStats(equippedItem) : null;
+  const stats = calculateItemStats(item, t);
+  const equippedStats = equippedItem ? calculateItemStats(equippedItem, t) : null;
 
   return (
     <View style={styles.detailContent}>
@@ -347,7 +350,7 @@ function ItemDetail({
               style={styles.comparisonIcon}
             />
             <View style={styles.comparisonInfo}>
-              <Text style={styles.comparisonName} numberOfLines={1}>{item.name}</Text>
+              <Text style={styles.comparisonName} numberOfLines={1}>{t(`items.${item.id}.name`)}</Text>
               <View style={styles.comparisonStats}>
                 {stats.totalAtk > 0 && (
                   <Text style={styles.atkText}>ATK {stats.totalAtk}</Text>
@@ -387,7 +390,7 @@ function ItemDetail({
                   style={styles.comparisonIcon}
                 />
                 <View style={styles.comparisonInfo}>
-                  <Text style={styles.comparisonName} numberOfLines={1}>{equippedItem.name}</Text>
+                  <Text style={styles.comparisonName} numberOfLines={1}>{t(`items.${equippedItem.id}.name`)}</Text>
                   <View style={styles.comparisonStats}>
                     {equippedStats.totalAtk > 0 && (
                       <Text style={styles.atkText}>ATK {equippedStats.totalAtk}</Text>

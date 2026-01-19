@@ -16,7 +16,10 @@ import { ms, fs } from '@/utils/scaling';
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
 // アイテムのステータス計算（インベントリと同じ）
-function calculateItemStats(item: Item) {
+function calculateItemStats(
+  item: Item,
+  t: (key: string, options?: Record<string, unknown>) => string
+) {
   let totalAtk = item.atk;
   let totalDef = item.def;
   const otherMods: { type: string; value: number; tier: number; desc: string; color: string }[] = [];
@@ -41,19 +44,19 @@ function calculateItemStats(item: Item) {
           desc = `[${tierLabel}] HP+${mod.value}`;
           break;
         case 'hp_regen':
-          desc = `[${tierLabel}] HP回復+${mod.value}`;
+          desc = `[${tierLabel}] ${t('mods.everyTurnHpRegen', { value: mod.value })}`;
           break;
         case 'hp_regen_pct':
-          desc = `[${tierLabel}] HP回復+${mod.value}%`;
+          desc = `[${tierLabel}] ${t('mods.everyTurnHpRegenPct', { value: mod.value })}`;
           break;
         case 'poison_chance':
-          desc = `[${tierLabel}] 毒+${mod.value}%`;
+          desc = `[${tierLabel}] ${t('modDescriptions.poisonChance', { value: mod.value })}`;
           break;
         case 'critical_chance':
-          desc = `[${tierLabel}] クリ+${mod.value}%`;
+          desc = `[${tierLabel}] ${t('modDescriptions.criticalChance', { value: mod.value })}`;
           break;
         case 'critical_damage':
-          desc = `[${tierLabel}] クリダメ+${mod.value}%`;
+          desc = `[${tierLabel}] ${t('modDescriptions.criticalDamage', { value: mod.value })}`;
           break;
         case 'atk_increased_pct':
           desc = `[${tierLabel}] ATK+${mod.value}%`;
@@ -239,7 +242,7 @@ export default function StorageScreen() {
             <View style={styles.grid}>
               {currentItems.map((item) => {
                 const isSelected = selectedItem?.instanceId === item.instanceId;
-                const stats = calculateItemStats(item);
+                const stats = calculateItemStats(item, t);
                 const hasMods = item.mods && item.mods.length > 0;
 
                 return (
@@ -257,7 +260,7 @@ export default function StorageScreen() {
                     />
                     {hasMods && <View style={styles.modIndicator} />}
                     <Text style={styles.gridItemName} numberOfLines={1}>
-                      {item.name}
+                      {t(`items.${item.id}.name`)}
                     </Text>
                     <Text style={styles.gridItemStats}>
                       {stats.totalAtk > 0 && `A${stats.totalAtk}`}
@@ -294,7 +297,7 @@ function StorageItemDetail({
   onSell: () => void;
   t: (key: string) => string;
 }) {
-  const stats = calculateItemStats(item);
+  const stats = calculateItemStats(item, t);
 
   return (
     <View style={styles.detailContent}>
@@ -304,7 +307,7 @@ function StorageItemDetail({
           style={styles.detailIcon}
         />
         <View style={styles.detailTitleArea}>
-          <Text style={styles.detailName}>{item.name}</Text>
+          <Text style={styles.detailName}>{t(`items.${item.id}.name`)}</Text>
           <Text style={styles.detailSlot}>{t(`slots.${item.slot}`)}</Text>
         </View>
       </View>

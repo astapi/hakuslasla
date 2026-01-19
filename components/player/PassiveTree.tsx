@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { getAllPassiveNodes, canUnlockNode } from '@/data/passiveTree';
 import { PassiveNode, PassiveEffect } from '@/types';
@@ -187,6 +188,7 @@ const generateSmoothPath = (
 };
 
 export const PassiveTree = () => {
+  const { t } = useTranslation();
   const { skillPoints, unlockedSkills, unlockSkill } = usePlayerStore();
   const nodes = getAllPassiveNodes();
   const [selectedNode, setSelectedNode] = useState<PassiveNode | null>(null);
@@ -349,13 +351,13 @@ export const PassiveTree = () => {
     <GestureHandlerRootView style={styles.container}>
       {/* ヘッダー */}
       <View style={styles.header}>
-        <Text style={styles.title}>パッシブツリー</Text>
-        <Text style={styles.skillPoints}>SP: {skillPoints}</Text>
+        <Text style={styles.title}>{t('passiveTree.title')}</Text>
+        <Text style={styles.skillPoints}>{t('passiveTree.skillPoints', { count: skillPoints })}</Text>
       </View>
 
       {/* ズームヒント */}
       <View style={styles.zoomHint}>
-        <Text style={styles.zoomHintText}>ピンチで拡大縮小 / ダブルタップでリセット</Text>
+        <Text style={styles.zoomHintText}>{t('passiveTree.zoomHint')}</Text>
       </View>
 
       {/* ツリー表示エリア */}
@@ -541,31 +543,37 @@ export const PassiveTree = () => {
         {selectedNode ? (
           <>
             <View style={styles.infoPanelHeader}>
-              <Text style={styles.infoPanelTitle}>{selectedNode.name}</Text>
+              <Text style={styles.infoPanelTitle}>
+                {t(`passiveNodes.${selectedNode.id}.name`, { defaultValue: selectedNode.name })}
+              </Text>
               {unlockedSkills.includes(selectedNode.id) && (
-                <Text style={styles.unlockedBadge}>習得済</Text>
+                <Text style={styles.unlockedBadge}>{t('passiveTree.unlocked')}</Text>
               )}
             </View>
-            <Text style={styles.infoPanelDescription}>{selectedNode.description}</Text>
+            <Text style={styles.infoPanelDescription}>
+              {t(`passiveNodes.${selectedNode.id}.description`, { defaultValue: selectedNode.description })}
+            </Text>
 
             {!unlockedSkills.includes(selectedNode.id) && (
               <View style={styles.infoPanelActions}>
                 {canUnlockNode(selectedNode.id, unlockedSkills) ? (
                   skillPoints > 0 ? (
                     <Pressable style={styles.unlockButton} onPress={handleUnlockFromPanel}>
-                      <Text style={styles.unlockButtonText}>習得 (SP: 1)</Text>
+                      <Text style={styles.unlockButtonText}>
+                        {t('passiveTree.unlockButton', { count: 1 })}
+                      </Text>
                     </Pressable>
                   ) : (
-                    <Text style={styles.noSpText}>SPが足りません</Text>
+                    <Text style={styles.noSpText}>{t('passiveTree.noSp')}</Text>
                   )
                 ) : (
-                  <Text style={styles.lockedText}>前提スキルが必要</Text>
+                  <Text style={styles.lockedText}>{t('passiveTree.locked')}</Text>
                 )}
               </View>
             )}
           </>
         ) : (
-          <Text style={styles.infoPanelPlaceholder}>ノードをタップして詳細を表示</Text>
+          <Text style={styles.infoPanelPlaceholder}>{t('passiveTree.placeholder')}</Text>
         )}
       </View>
     </GestureHandlerRootView>

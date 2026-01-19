@@ -39,6 +39,7 @@ import {
   getPlayerPoisonFromBoss,
   isEndContentDungeon,
 } from '@/core/endContent';
+import i18n from '@/lib/i18n';
 
 // Core設定の定数を使用
 const POISON_DAMAGE_RATIO = DEFAULT_BATTLE_CONFIG.poisonDamageRatio;
@@ -85,7 +86,7 @@ const createCoreStateForPoisonDamage = (
 // 敵をBattleEnemy形式に変換
 const createBattleEnemy = (enemy: Enemy, dungeonId: string): BattleEnemy => ({
   id: enemy.id,
-  name: enemy.name,
+  name: i18n.t(`monsters.${enemy.id}.name`, { defaultValue: enemy.name }),
   image: enemy.image,
   currentHp: enemy.maxHp,
   maxHp: enemy.maxHp,
@@ -161,7 +162,7 @@ const createExtendedInitialState = (
     phase: 'fighting',
     battleLog: runCount > 1 ? [{
       id: logIdCounter++,
-      message: `=== ${runCount}周目開始 ===`,
+      message: i18n.t('battleLog.runStart', { count: runCount }),
       type: 'info',
     }] : [],
     droppedItems: [],
@@ -197,7 +198,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         phase: 'fighting',
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
-          message: `${action.enemy.name}が現れた！`,
+          message: i18n.t('battleLog.enemyAppeared', { enemy: action.enemy.name }),
           type: 'info',
         }),
       };
@@ -209,8 +210,8 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       const attackMessage = action.damage === 0
         ? ''
         : action.isCritical
-          ? `クリティカルヒット！ ${state.enemy.name}に${action.damage}ダメージ！`
-          : `プレイヤーの攻撃！ ${state.enemy.name}に${action.damage}ダメージ！`;
+          ? i18n.t('battleLog.criticalHit', { enemy: state.enemy.name, damage: action.damage })
+          : i18n.t('battleLog.playerAttack', { enemy: state.enemy.name, damage: action.damage });
       return {
         ...state,
         enemy: {
@@ -231,7 +232,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         playerCurrentHp: Math.max(0, newPlayerHp),
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
-          message: `${state.enemy?.name}の攻撃！ ${action.damage}ダメージを受けた！`,
+          message: i18n.t('battleLog.enemyAttack', { enemy: state.enemy?.name ?? '', damage: action.damage }),
           type: 'enemy_attack',
         }),
       };
@@ -250,7 +251,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       const defeatLogs = [
         {
           id: logIdCounter++,
-          message: `${state.enemy?.name}を倒した！ 経験値${action.exp}を獲得！`,
+          message: i18n.t('battleLog.enemyDefeated', { enemy: state.enemy?.name ?? '', exp: action.exp }),
           type: 'victory' as const,
         },
       ];
@@ -258,7 +259,9 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       for (const item of action.droppedItems) {
         defeatLogs.push({
           id: logIdCounter++,
-          message: `${item.name}をドロップした！`,
+          message: i18n.t('battleLog.itemDropped', {
+            item: i18n.t(`items.${item.id}.name`, { defaultValue: item.name }),
+          }),
           type: 'victory' as const,
         });
       }
@@ -275,7 +278,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         phase: 'defeat',
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
-          message: 'プレイヤーは倒れた...',
+          message: i18n.t('battleLog.playerDefeated'),
           type: 'defeat',
         }),
       };
@@ -293,12 +296,12 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         battleLog: addToLog(state.battleLog, [
           {
             id: logIdCounter++,
-            message: `--- ${state.currentFloor + 1}階へ進む ---`,
+            message: i18n.t('battleLog.nextFloor', { floor: state.currentFloor + 1 }),
             type: 'floor_clear' as const,
           },
           {
             id: logIdCounter++,
-            message: `${action.enemy.name}が現れた！`,
+            message: i18n.t('battleLog.enemyAppeared', { enemy: action.enemy.name }),
             type: 'info' as const,
           },
         ]),
@@ -310,7 +313,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         phase: 'cleared',
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
-          message: 'ダンジョンを踏破した！',
+          message: i18n.t('battleLog.dungeonCleared'),
           type: 'victory',
         }),
       };
@@ -331,12 +334,20 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         remainingTurns: action.turns,
       };
       const currentStacks = state.enemyPoison.length;
+      const stackText = currentStacks > 0
+        ? i18n.t('battleLog.poisonStacks', { count: currentStacks + 1 })
+        : '';
       return {
         ...state,
         enemyPoison: [...state.enemyPoison, newPoisonStack],
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
-          message: `${state.enemy?.name}に毒を付与した！（${action.damagePerTurn}ダメージ x ${action.turns}ターン）${currentStacks > 0 ? ` [${currentStacks + 1}スタック]` : ''}`,
+          message: i18n.t('battleLog.poisonAppliedEnemy', {
+            enemy: state.enemy?.name ?? '',
+            damage: action.damagePerTurn,
+            turns: action.turns,
+            stacks: stackText,
+          }),
           type: 'poison',
         }),
       };
@@ -349,6 +360,15 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         .map(p => ({ ...p, remainingTurns: p.remainingTurns - 1 }))
         .filter(p => p.remainingTurns > 0);
       const stacksRemoved = state.enemyPoison.length - updatedPoisonStacks.length;
+      const remainingText = updatedPoisonStacks.length > 0
+        ? i18n.t('battleLog.poisonRemaining', { count: updatedPoisonStacks.length })
+        : '';
+      const endedText = updatedPoisonStacks.length > 0
+        ? ''
+        : i18n.t('battleLog.poisonEnded');
+      const lostText = stacksRemoved > 0
+        ? i18n.t('battleLog.poisonStacksLost', { count: stacksRemoved })
+        : '';
       return {
         ...state,
         enemy: {
@@ -358,7 +378,13 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         enemyPoison: updatedPoisonStacks,
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
-          message: `毒ダメージ！ ${state.enemy.name}に${action.damage}ダメージ！${updatedPoisonStacks.length > 0 ? `（${updatedPoisonStacks.length}スタック継続）` : '（毒が切れた）'}${stacksRemoved > 0 ? `（${stacksRemoved}スタック消失）` : ''}`,
+          message: i18n.t('battleLog.poisonDamageEnemy', {
+            enemy: state.enemy.name,
+            damage: action.damage,
+            remaining: remainingText,
+            ended: endedText,
+            lost: lostText,
+          }),
           type: 'poison',
         }),
       };
@@ -370,12 +396,19 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         remainingTurns: action.turns,
       };
       const currentPlayerStacks = state.playerPoison.length;
+      const stackText = currentPlayerStacks > 0
+        ? i18n.t('battleLog.poisonStacks', { count: currentPlayerStacks + 1 })
+        : '';
       return {
         ...state,
         playerPoison: [...state.playerPoison, newPlayerPoison],
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
-          message: `毒付与！ プレイヤーが${action.damagePerTurn}ダメージ x ${action.turns}ターンの毒を受けた！${currentPlayerStacks > 0 ? ` [${currentPlayerStacks + 1}スタック]` : ''}`,
+          message: i18n.t('battleLog.poisonAppliedPlayer', {
+            damage: action.damagePerTurn,
+            turns: action.turns,
+            stacks: stackText,
+          }),
           type: 'poison',
         }),
       };
@@ -387,13 +420,27 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         .map(p => ({ ...p, remainingTurns: p.remainingTurns - 1 }))
         .filter(p => p.remainingTurns > 0);
       const playerStacksRemoved = state.playerPoison.length - updatedPlayerStacks.length;
+      const remainingText = updatedPlayerStacks.length > 0
+        ? i18n.t('battleLog.poisonRemaining', { count: updatedPlayerStacks.length })
+        : '';
+      const endedText = updatedPlayerStacks.length > 0
+        ? ''
+        : i18n.t('battleLog.poisonEnded');
+      const lostText = playerStacksRemoved > 0
+        ? i18n.t('battleLog.poisonStacksLost', { count: playerStacksRemoved })
+        : '';
       return {
         ...state,
         playerCurrentHp: poisonedPlayerHp,
         playerPoison: updatedPlayerStacks,
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
-          message: `毒ダメージ！ プレイヤーに${action.damage}ダメージ！${updatedPlayerStacks.length > 0 ? `（${updatedPlayerStacks.length}スタック継続）` : '（毒が切れた）'}${playerStacksRemoved > 0 ? `（${playerStacksRemoved}スタック消失）` : ''}`,
+          message: i18n.t('battleLog.poisonDamagePlayer', {
+            damage: action.damage,
+            remaining: remainingText,
+            ended: endedText,
+            lost: lostText,
+          }),
           type: 'poison',
         }),
       };
@@ -575,7 +622,7 @@ export const useBattle = (dungeonId: string) => {
     dispatch({
       type: 'ADD_LOG',
       entry: {
-        message: `${state.enemy.name}が${skillName}を使用した！`,
+        message: i18n.t('battleLog.bossSkillUsed', { enemy: state.enemy.name, skill: skillName }),
         type: 'info',
       },
     });
@@ -601,7 +648,7 @@ export const useBattle = (dungeonId: string) => {
       dispatch({
         type: 'ADD_LOG',
         entry: {
-          message: `${enemyName}のUber版が解放された！`,
+          message: i18n.t('battleLog.uberUnlocked', { enemy: enemyName }),
           type: 'info',
         },
       });
@@ -612,7 +659,7 @@ export const useBattle = (dungeonId: string) => {
         dispatch({
           type: 'ADD_LOG',
           entry: {
-            message: `Uber入場券を入手！ (${count}枚)`,
+            message: i18n.t('battleLog.uberTicket', { count }),
             type: 'victory',
           },
         });
