@@ -9,27 +9,6 @@
       "atk": 2,
       "def": 0
     },
-    "wooden_club": {
-      "id": "wooden_club",
-      "name": "木製クラブ",
-      "slot": "weapon",
-      "atk": 3,
-      "def": 0
-    },
-    "hunter_dagger": {
-      "id": "hunter_dagger",
-      "name": "狩人の短剣",
-      "slot": "weapon",
-      "atk": 4,
-      "def": 0
-    },
-    "worn_bow": {
-      "id": "worn_bow",
-      "name": "使い古しの弓",
-      "slot": "weapon",
-      "atk": 3,
-      "def": 1
-    },
     "cloth_clothes": {
       "id": "cloth_clothes",
       "name": "布の服",
@@ -1149,9 +1128,6 @@
 
   "commonDrops": [
     "rusted_sword",
-    "wooden_club",
-    "hunter_dagger",
-    "worn_bow",
     "cloth_clothes",
     "leather_hat",
     "leather_gloves",

@@ -195,9 +195,7 @@
         "dropRate": 2
       }
     },
-
     "_comment_goblin_fort": "=== ゴブリンの砦 ===",
-
     "goblin_archer": {
       "id": "goblin_archer",
       "name": "ゴブリンアーチャー",
@@ -263,12 +261,10 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "kings_crown",
-        "dropRate": 10
+        "dropRate": 5
       }
     },
-
     "_comment_bandit_hideout": "=== 盗賊のアジト (Lv17) ===",
-
     "bandit": {
       "id": "bandit",
       "name": "盗賊",
@@ -300,10 +296,7 @@
       "def": 15,
       "exp": 55,
       "attackSpeed": 1.1,
-      "uniqueDrop": {
-        "itemId": "thieves_dagger",
-        "dropRate": 3
-      }
+      "uniqueDrop": null
     },
     "bandit_leader": {
       "id": "bandit_leader",
@@ -317,12 +310,10 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "bandit_crown",
-        "dropRate": 10
+        "dropRate": 5
       }
     },
-
     "_comment_castle": "=== 魔王城 (Lv30) ===",
-
     "death_knight": {
       "id": "death_knight",
       "name": "デスナイト",
@@ -388,12 +379,10 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "demon_crown",
-        "dropRate": 10
+        "dropRate": 5
       }
     },
-
     "_comment_vampire_mansion": "=== ヴァンパイアの館 (Lv19) ===",
-
     "zombie": {
       "id": "zombie",
       "name": "ゾンビ",
@@ -456,12 +445,10 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "vampire_fang",
-        "dropRate": 10
+        "dropRate": 5
       }
     },
-
     "_comment_ice_cave": "=== 氷結の洞窟 (Lv34) ===",
-
     "ice_golem": {
       "id": "ice_golem",
       "name": "アイスゴーレム",
@@ -523,9 +510,7 @@
       "attackSpeed": 0.8,
       "uniqueDrop": null
     },
-
     "_comment_underwater_cave": "=== 海底洞窟 (Lv21) ===",
-
     "sahuagin": {
       "id": "sahuagin",
       "name": "サハギン",
@@ -585,12 +570,10 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "kraken_tentacle",
-        "dropRate": 10
+        "dropRate": 5
       }
     },
-
     "_comment_volcano": "=== 灼熱の火山 (Lv26) ===",
-
     "lava_slime": {
       "id": "lava_slime",
       "name": "ラーバスライム",
@@ -652,9 +635,7 @@
       "attackSpeed": 1.3,
       "uniqueDrop": null
     },
-
     "_comment_orc_fortress": "=== オークの要塞 (Lv23) ===",
-
     "orc_warrior": {
       "id": "orc_warrior",
       "name": "オーク戦士",
@@ -717,12 +698,10 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "uruk_blade",
-        "dropRate": 10
+        "dropRate": 5
       }
     },
-
     "_comment_dark_forest": "=== 深淵の森 (×5.06) HP337 ATK164 DEF82 EXP286 ===",
-
     "dark_treant": {
       "id": "dark_treant",
       "name": "ダークトレント",
@@ -784,9 +763,7 @@
       "attackSpeed": 1.2,
       "uniqueDrop": null
     },
-
     "_comment_sky_tower": "=== 天空の塔 (×7.59) HP506 ATK247 DEF122 EXP429 ===",
-
     "sky_knight": {
       "id": "sky_knight",
       "name": "スカイナイト",
@@ -848,9 +825,7 @@
       "attackSpeed": 1.2,
       "uniqueDrop": null
     },
-
     "_comment_hell_gate": "=== 地獄の門 (×11.39) HP759 ATK370 DEF184 EXP643 ===",
-
     "hell_hound": {
       "id": "hell_hound",
       "name": "ヘルハウンド",
@@ -912,9 +887,7 @@
       "attackSpeed": 1.3,
       "uniqueDrop": null
     },
-
     "_comment_dragon_nest": "=== 竜の巣穴 (×17.09) HP1139 ATK555 DEF275 EXP965 ===",
-
     "drake": {
       "id": "drake",
       "name": "ドレイク",
@@ -979,9 +952,7 @@
         "dropRate": 1
       }
     },
-
     "_comment_sacred_temple": "=== 神域の神殿 (×25.63) HP1708 ATK832 DEF413 EXP1447 ===",
-
     "divine_knight": {
       "id": "divine_knight",
       "name": "ディバインナイト",
@@ -1043,9 +1014,7 @@
       "attackSpeed": 1.3,
       "uniqueDrop": null
     },
-
     "_comment_chaos_realm": "=== 混沌の領域 (×38.44) HP2562 ATK1249 DEF619 EXP2171 ===",
-
     "chaos_knight": {
       "id": "chaos_knight",
       "name": "カオスナイト",
@@ -1107,9 +1076,7 @@
       "attackSpeed": 1.0,
       "uniqueDrop": null
     },
-
     "_comment_final_land": "=== 終焉の地 (×57.67) HP3844 ATK1873 DEF929 EXP3257 ===",
-
     "apocalypse_knight": {
       "id": "apocalypse_knight",
       "name": "アポカリプスナイト",
@@ -1183,7 +1150,7 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "crown_of_end",
-        "dropRate": 15
+        "dropRate": 5
       }
     },
     "uber_goblin_king": {
@@ -1198,7 +1165,7 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "uber_kings_crown",
-        "dropRate": 20
+        "dropRate": 5
       }
     },
     "uber_bandit_leader": {
@@ -1213,7 +1180,7 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "uber_bandit_crown",
-        "dropRate": 20
+        "dropRate": 5
       }
     },
     "uber_vampire": {
@@ -1228,7 +1195,7 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "uber_vampire_fang",
-        "dropRate": 20
+        "dropRate": 5
       }
     },
     "uber_kraken": {
@@ -1243,7 +1210,7 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "uber_kraken_tentacle",
-        "dropRate": 20
+        "dropRate": 5
       }
     },
     "uber_demon_lord": {
@@ -1258,7 +1225,7 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "uber_demon_crown",
-        "dropRate": 20
+        "dropRate": 5
       }
     },
     "uber_true_final_boss": {
@@ -1273,7 +1240,7 @@
       "isBoss": true,
       "uniqueDrop": {
         "itemId": "uber_crown_of_end",
-        "dropRate": 25
+        "dropRate": 5
       }
     }
   }
