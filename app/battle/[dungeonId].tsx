@@ -263,7 +263,7 @@ export default function BattleScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#15191E',
   },
   battleArea: {
     height: s(280),
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#15191E',
     borderRadius: ms(16),
     padding: ms(24),
     width: '80%',

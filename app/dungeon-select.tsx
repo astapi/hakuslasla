@@ -147,7 +147,7 @@ export default function DungeonSelectScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#15191E',
   },
   scrollView: {
     flex: 1,

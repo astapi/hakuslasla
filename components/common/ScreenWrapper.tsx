@@ -13,7 +13,7 @@ interface ScreenWrapperProps {
   edges?: ('top' | 'bottom' | 'left' | 'right')[];
 }
 
-const DEFAULT_BACKGROUND = '#1a1a2e';
+const DEFAULT_BACKGROUND = '#15191E';
 
 export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   children,

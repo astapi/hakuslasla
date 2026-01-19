@@ -58,14 +58,14 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#1a1a2e',
+            backgroundColor: '#15191E',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           contentStyle: {
-            backgroundColor: '#1a1a2e',
+            backgroundColor: '#15191E',
           },
         }}
       >
@@ -145,11 +145,11 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   appRoot: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#15191E',
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#15191E',
     justifyContent: 'center',
     alignItems: 'center',
   },

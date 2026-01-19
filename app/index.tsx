@@ -112,7 +112,7 @@ export default function CharacterSelectScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#15191E',
   },
   header: {
     padding: ms(24),
