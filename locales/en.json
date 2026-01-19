@@ -57,7 +57,8 @@
     "victory": "Victory!",
     "defeat": "Defeat...",
     "cleared": "Dungeon Cleared!",
-    "player": "Player"
+    "player": "Player",
+    "inProgress": "In Battle"
   },
   "result": {
     "cleared": "Dungeon Cleared!",
@@ -137,7 +138,8 @@
     "title": "Equipment",
     "slot": "Slot",
     "item": "Item",
-    "mod": "MOD"
+    "mod": "MOD",
+    "modCount": "MOD x{{count}}"
   },
   "slots": {
     "weapon": "Weapon",
@@ -225,5 +227,1300 @@
       "name": "Land of Endings",
       "description": "The final frontier at world's end. The ultimate being awaits."
     }
+  },
+  "items": {
+    "rusted_sword": {
+      "name": "Rusted Sword"
+    },
+    "cloth_clothes": {
+      "name": "Cloth Clothes"
+    },
+    "leather_hat": {
+      "name": "Leather Hat"
+    },
+    "leather_gloves": {
+      "name": "Leather Gloves"
+    },
+    "leather_boots": {
+      "name": "Leather Boots"
+    },
+    "copper_ring": {
+      "name": "Copper Ring"
+    },
+    "traveler_amulet": {
+      "name": "Traveler Amulet"
+    },
+    "grassland_sword": {
+      "name": "Grassland Sword"
+    },
+    "light_leather": {
+      "name": "Light Leather"
+    },
+    "rabbit_boots": {
+      "name": "Rabbit Boots"
+    },
+    "division_core": {
+      "name": "Division Core"
+    },
+    "wolf_fang": {
+      "name": "Wolf Fang"
+    },
+    "poison_needle_ring": {
+      "name": "Poison Needle Ring"
+    },
+    "cave_iron_sword": {
+      "name": "Cave Iron Sword"
+    },
+    "bone_shield": {
+      "name": "Bone Shield"
+    },
+    "bat_mantle": {
+      "name": "Bat Mantle"
+    },
+    "underground_charm": {
+      "name": "Underground Charm"
+    },
+    "warrior_ring": {
+      "name": "Warrior Ring"
+    },
+    "bone_sword": {
+      "name": "Bone Sword"
+    },
+    "war_ogre_belt": {
+      "name": "War Ogre Belt"
+    },
+    "dark_night_mantle": {
+      "name": "Dark Night Mantle"
+    },
+    "ruins_magic_sword": {
+      "name": "Ruins Magic Sword"
+    },
+    "cursed_robe": {
+      "name": "Cursed Robe"
+    },
+    "gargoyle_boots": {
+      "name": "Gargoyle Boots"
+    },
+    "ancient_ring": {
+      "name": "Ancient Ring"
+    },
+    "oblivion_amulet": {
+      "name": "Oblivion Amulet"
+    },
+    "core_stone": {
+      "name": "Core Stone"
+    },
+    "curse_bandage": {
+      "name": "Curse Bandage"
+    },
+    "lost_grimoire": {
+      "name": "Lost Grimoire"
+    },
+    "stone_wing_boots": {
+      "name": "Stone Wing Boots"
+    },
+    "goblin_blade": {
+      "name": "Goblin Blade"
+    },
+    "goblin_mail": {
+      "name": "Goblin Mail"
+    },
+    "spiked_gauntlets": {
+      "name": "Spiked Gauntlets"
+    },
+    "raider_boots": {
+      "name": "Raider Boots"
+    },
+    "tribal_ring": {
+      "name": "Tribal Ring"
+    },
+    "shaman_staff": {
+      "name": "Shaman Staff"
+    },
+    "goblin_shield": {
+      "name": "Goblin Shield"
+    },
+    "champion_axe": {
+      "name": "Champion Axe"
+    },
+    "kings_crown": {
+      "name": "Kings Crown"
+    },
+    "demon_blade": {
+      "name": "Demon Blade"
+    },
+    "dark_plate": {
+      "name": "Dark Plate"
+    },
+    "dragon_gauntlets": {
+      "name": "Dragon Gauntlets"
+    },
+    "inferno_boots": {
+      "name": "Inferno Boots"
+    },
+    "dark_ring": {
+      "name": "Dark Ring"
+    },
+    "dark_grimoire": {
+      "name": "Dark Grimoire"
+    },
+    "demon_horn": {
+      "name": "Demon Horn"
+    },
+    "wyvern_scale": {
+      "name": "Wyvern Scale"
+    },
+    "demon_crown": {
+      "name": "Demon Crown"
+    },
+    "frost_blade": {
+      "name": "Frost Blade"
+    },
+    "ice_armor": {
+      "name": "Ice Armor"
+    },
+    "frozen_gauntlets": {
+      "name": "Frozen Gauntlets"
+    },
+    "blizzard_boots": {
+      "name": "Blizzard Boots"
+    },
+    "ice_crystal_ring": {
+      "name": "Ice Crystal Ring"
+    },
+    "frozen_staff": {
+      "name": "Frozen Staff"
+    },
+    "yeti_fur": {
+      "name": "Yeti Fur"
+    },
+    "magma_blade": {
+      "name": "Magma Blade"
+    },
+    "volcano_armor": {
+      "name": "Volcano Armor"
+    },
+    "flame_gauntlets": {
+      "name": "Flame Gauntlets"
+    },
+    "ember_boots": {
+      "name": "Ember Boots"
+    },
+    "fire_ruby_ring": {
+      "name": "Fire Ruby Ring"
+    },
+    "magma_core": {
+      "name": "Magma Core"
+    },
+    "flame_sword": {
+      "name": "Flame Sword"
+    },
+    "shadow_blade": {
+      "name": "Shadow Blade"
+    },
+    "dark_bark_armor": {
+      "name": "Dark Bark Armor"
+    },
+    "nightmare_gauntlets": {
+      "name": "Nightmare Gauntlets"
+    },
+    "forest_walker_boots": {
+      "name": "Forest Walker Boots"
+    },
+    "cursed_eye_ring": {
+      "name": "Cursed Eye Ring"
+    },
+    "cursed_branch": {
+      "name": "Cursed Branch"
+    },
+    "chimera_fang": {
+      "name": "Chimera Fang"
+    },
+    "sky_blade": {
+      "name": "Sky Blade"
+    },
+    "cloud_armor": {
+      "name": "Cloud Armor"
+    },
+    "storm_gauntlets": {
+      "name": "Storm Gauntlets"
+    },
+    "wind_walker_boots": {
+      "name": "Wind Walker Boots"
+    },
+    "sky_sapphire_ring": {
+      "name": "Sky Sapphire Ring"
+    },
+    "thunder_feather": {
+      "name": "Thunder Feather"
+    },
+    "giant_belt": {
+      "name": "Giant Belt"
+    },
+    "hellfire_blade": {
+      "name": "Hellfire Blade"
+    },
+    "infernal_plate": {
+      "name": "Infernal Plate"
+    },
+    "demon_gauntlets": {
+      "name": "Demon Gauntlets"
+    },
+    "hellwalker_boots": {
+      "name": "Hellwalker Boots"
+    },
+    "infernal_ruby_ring": {
+      "name": "Infernal Ruby Ring"
+    },
+    "infernal_armor": {
+      "name": "Infernal Armor"
+    },
+    "balrog_whip": {
+      "name": "Balrog Whip"
+    },
+    "dragon_slayer": {
+      "name": "Dragon Slayer"
+    },
+    "dragon_scale_armor": {
+      "name": "Dragon Scale Armor"
+    },
+    "dragon_claw_gauntlets": {
+      "name": "Dragon Claw Gauntlets"
+    },
+    "dragon_hide_boots": {
+      "name": "Dragon Hide Boots"
+    },
+    "dragon_eye_ring": {
+      "name": "Dragon Eye Ring"
+    },
+    "fire_dragon_scale": {
+      "name": "Fire Dragon Scale"
+    },
+    "ice_dragon_scale": {
+      "name": "Ice Dragon Scale"
+    },
+    "dragon_heart": {
+      "name": "Dragon Heart"
+    },
+    "holy_blade": {
+      "name": "Holy Blade"
+    },
+    "divine_armor": {
+      "name": "Divine Armor"
+    },
+    "seraph_gauntlets": {
+      "name": "Seraph Gauntlets"
+    },
+    "divine_boots": {
+      "name": "Divine Boots"
+    },
+    "holy_diamond_ring": {
+      "name": "Holy Diamond Ring"
+    },
+    "holy_feather": {
+      "name": "Holy Feather"
+    },
+    "holy_dragon_scale": {
+      "name": "Holy Dragon Scale"
+    },
+    "chaos_blade": {
+      "name": "Chaos Blade"
+    },
+    "void_armor": {
+      "name": "Void Armor"
+    },
+    "chaos_gauntlets": {
+      "name": "Chaos Gauntlets"
+    },
+    "void_boots": {
+      "name": "Void Boots"
+    },
+    "chaos_crystal_ring": {
+      "name": "Chaos Crystal Ring"
+    },
+    "void_essence": {
+      "name": "Void Essence"
+    },
+    "chaos_scale": {
+      "name": "Chaos Scale"
+    },
+    "apocalypse_blade": {
+      "name": "Apocalypse Blade"
+    },
+    "end_armor": {
+      "name": "End Armor"
+    },
+    "titan_gauntlets": {
+      "name": "Titan Gauntlets"
+    },
+    "end_walker_boots": {
+      "name": "End Walker Boots"
+    },
+    "oblivion_ring": {
+      "name": "Oblivion Ring"
+    },
+    "world_fragment": {
+      "name": "World Fragment"
+    },
+    "divine_blade": {
+      "name": "Divine Blade"
+    },
+    "crown_of_end": {
+      "name": "Crown of End"
+    },
+    "bandit_crown": {
+      "name": "Bandit Crown"
+    },
+    "vampire_fang": {
+      "name": "Vampire Fang"
+    },
+    "kraken_tentacle": {
+      "name": "Kraken Tentacle"
+    },
+    "uber_kings_crown": {
+      "name": "Uber Kings Crown"
+    },
+    "uber_bandit_crown": {
+      "name": "Uber Bandit Crown"
+    },
+    "uber_vampire_fang": {
+      "name": "Uber Vampire Fang"
+    },
+    "uber_kraken_tentacle": {
+      "name": "Uber Kraken Tentacle"
+    },
+    "uber_demon_crown": {
+      "name": "Uber Demon Crown"
+    },
+    "uber_crown_of_end": {
+      "name": "Uber Crown of End"
+    }
+  },
+  "monsters": {
+    "slime": {
+      "name": "Slime"
+    },
+    "wild_rabbit": {
+      "name": "Killer Rabbit"
+    },
+    "goblin": {
+      "name": "Goblin"
+    },
+    "bee": {
+      "name": "Killer Bee"
+    },
+    "wolf": {
+      "name": "Wolf"
+    },
+    "bat": {
+      "name": "Giant Bat"
+    },
+    "goblin_warrior": {
+      "name": "Goblin Warrior"
+    },
+    "skeleton": {
+      "name": "Skeleton"
+    },
+    "rock_lizard": {
+      "name": "Rock Lizard"
+    },
+    "orc": {
+      "name": "Orc"
+    },
+    "skeleton_knight": {
+      "name": "Skeleton Knight"
+    },
+    "golem": {
+      "name": "Golem"
+    },
+    "mummy": {
+      "name": "Mummy"
+    },
+    "lich": {
+      "name": "Lich"
+    },
+    "gargoyle": {
+      "name": "Gargoyle"
+    },
+    "goblin_archer": {
+      "name": "Goblin Archer"
+    },
+    "goblin_shaman": {
+      "name": "Goblin Shaman"
+    },
+    "goblin_knight": {
+      "name": "Goblin Knight"
+    },
+    "goblin_champion": {
+      "name": "Goblin Champion"
+    },
+    "goblin_king": {
+      "name": "Goblin King"
+    },
+    "bandit": {
+      "name": "Bandit"
+    },
+    "bandit_archer": {
+      "name": "Bandit Archer"
+    },
+    "bandit_swordsman": {
+      "name": "Bandit Swordsman"
+    },
+    "bandit_leader": {
+      "name": "Bandit Leader"
+    },
+    "death_knight": {
+      "name": "Death Knight"
+    },
+    "dark_mage": {
+      "name": "Dark Mage"
+    },
+    "demon": {
+      "name": "Demon"
+    },
+    "wyvern": {
+      "name": "Wyvern"
+    },
+    "demon_lord": {
+      "name": "Demon Lord"
+    },
+    "zombie": {
+      "name": "Zombie"
+    },
+    "ghoul": {
+      "name": "Ghoul"
+    },
+    "banshee": {
+      "name": "Banshee"
+    },
+    "wraith": {
+      "name": "Wraith"
+    },
+    "vampire": {
+      "name": "Vampire"
+    },
+    "ice_golem": {
+      "name": "Ice Golem"
+    },
+    "frost_wolf": {
+      "name": "Frost Wolf"
+    },
+    "ice_witch": {
+      "name": "Ice Witch"
+    },
+    "yeti": {
+      "name": "Yeti"
+    },
+    "frost_wyrm": {
+      "name": "Frost Wyrm"
+    },
+    "sahuagin": {
+      "name": "Sahuagin"
+    },
+    "merman": {
+      "name": "Merman"
+    },
+    "sea_serpent": {
+      "name": "Sea Serpent"
+    },
+    "giant_crab": {
+      "name": "Giant Crab"
+    },
+    "kraken": {
+      "name": "Kraken"
+    },
+    "lava_slime": {
+      "name": "Lava Slime"
+    },
+    "magma_golem": {
+      "name": "Magma Golem"
+    },
+    "salamander": {
+      "name": "Salamander"
+    },
+    "flame_knight": {
+      "name": "Flame Knight"
+    },
+    "phoenix": {
+      "name": "Phoenix"
+    },
+    "orc_warrior": {
+      "name": "Orc Warrior"
+    },
+    "orc_mage": {
+      "name": "Orc Mage"
+    },
+    "troll": {
+      "name": "Troll"
+    },
+    "cyclops": {
+      "name": "Cyclops"
+    },
+    "uruk_hai": {
+      "name": "Uruk Hai"
+    },
+    "dark_treant": {
+      "name": "Dark Treant"
+    },
+    "shadow_wolf": {
+      "name": "Shadow Wolf"
+    },
+    "forest_witch": {
+      "name": "Forest Witch"
+    },
+    "chimera": {
+      "name": "Chimera"
+    },
+    "nightmare": {
+      "name": "Nightmare"
+    },
+    "sky_knight": {
+      "name": "Sky Knight"
+    },
+    "storm_harpy": {
+      "name": "Storm Harpy"
+    },
+    "thunder_bird": {
+      "name": "Thunder Bird"
+    },
+    "cloud_giant": {
+      "name": "Cloud Giant"
+    },
+    "griffon": {
+      "name": "Griffon"
+    },
+    "hell_hound": {
+      "name": "Hell Hound"
+    },
+    "infernal_knight": {
+      "name": "Infernal Knight"
+    },
+    "succubus": {
+      "name": "Succubus"
+    },
+    "balrog": {
+      "name": "Balrog"
+    },
+    "cerberus": {
+      "name": "Cerberus"
+    },
+    "drake": {
+      "name": "Drake"
+    },
+    "fire_dragon": {
+      "name": "Fire Dragon"
+    },
+    "ice_dragon": {
+      "name": "Ice Dragon"
+    },
+    "thunder_dragon": {
+      "name": "Thunder Dragon"
+    },
+    "elder_dragon": {
+      "name": "Elder Dragon"
+    },
+    "divine_knight": {
+      "name": "Divine Knight"
+    },
+    "seraph": {
+      "name": "Seraph"
+    },
+    "temple_guardian": {
+      "name": "Temple Guardian"
+    },
+    "holy_dragon": {
+      "name": "Holy Dragon"
+    },
+    "valkyrie": {
+      "name": "Valkyrie"
+    },
+    "chaos_knight": {
+      "name": "Chaos Knight"
+    },
+    "void_walker": {
+      "name": "Void Walker"
+    },
+    "abomination": {
+      "name": "Abomination"
+    },
+    "chaos_dragon": {
+      "name": "Chaos Dragon"
+    },
+    "elder_thing": {
+      "name": "Elder Thing"
+    },
+    "apocalypse_knight": {
+      "name": "Apocalypse Knight"
+    },
+    "world_eater": {
+      "name": "World Eater"
+    },
+    "primordial_titan": {
+      "name": "Primordial Titan"
+    },
+    "god_slayer": {
+      "name": "God Slayer"
+    },
+    "end_bringer": {
+      "name": "End Bringer"
+    },
+    "true_final_boss": {
+      "name": "True Final Boss"
+    },
+    "uber_goblin_king": {
+      "name": "Uber Goblin King"
+    },
+    "uber_bandit_leader": {
+      "name": "Uber Bandit Leader"
+    },
+    "uber_vampire": {
+      "name": "Uber Vampire"
+    },
+    "uber_kraken": {
+      "name": "Uber Kraken"
+    },
+    "uber_demon_lord": {
+      "name": "Uber Demon Lord"
+    },
+    "uber_true_final_boss": {
+      "name": "Uber True Final Boss"
+    }
+  },
+  "skills": {
+    "skill_atk_1": {
+      "name": "Attack Up I",
+      "description": "Attack +5"
+    },
+    "skill_hp_1": {
+      "name": "HP Up I",
+      "description": "HP +20"
+    },
+    "skill_atk_2": {
+      "name": "Attack Up II",
+      "description": "Attack +10"
+    },
+    "skill_def_1": {
+      "name": "Defense Up I",
+      "description": "Defense +5"
+    },
+    "skill_hp_2": {
+      "name": "HP Up II",
+      "description": "HP +50"
+    }
+  },
+  "skillTree": {
+    "title": "Skill Tree",
+    "skillPoints": "SP: {{count}}",
+    "unlocked": "Unlocked",
+    "available": "Available"
+  },
+  "bossSkills": {
+    "goblin_king": {
+      "name": "Goblin Roar"
+    },
+    "bandit_leader": {
+      "name": "Bear Trap"
+    },
+    "vampire": {
+      "name": "Blood Feast"
+    },
+    "kraken": {
+      "name": "Tsunami"
+    },
+    "demon_lord": {
+      "name": "Death Hand"
+    },
+    "true_final_boss": {
+      "name": "End"
+    }
+  },
+  "battleLog": {
+    "title": "Battle Log",
+    "runStart": "=== Run {{count}} Start ===",
+    "enemyAppeared": "{{enemy}} appeared!",
+    "playerAttack": "Player attacks! {{enemy}} takes {{damage}} damage!",
+    "criticalHit": "Critical hit! {{enemy}} takes {{damage}} damage!",
+    "enemyAttack": "{{enemy}} attacks! You take {{damage}} damage!",
+    "enemyDefeated": "Defeated {{enemy}}! Gained {{exp}} EXP!",
+    "itemDropped": "{{item}} dropped!",
+    "playerDefeated": "You were defeated...",
+    "nextFloor": "--- Proceed to Floor {{floor}} ---",
+    "dungeonCleared": "Dungeon cleared!",
+    "poisonAppliedEnemy": "Applied poison to {{enemy}}! ({{damage}} damage x {{turns}} turns){{stacks}}",
+    "poisonDamageEnemy": "Poison damage! {{enemy}} takes {{damage}} damage!{{remaining}}{{ended}}{{lost}}",
+    "poisonAppliedPlayer": "Poison applied! Player takes {{damage}} damage x {{turns}} turns!{{stacks}}",
+    "poisonDamagePlayer": "Poison damage! Player takes {{damage}} damage!{{remaining}}{{ended}}{{lost}}",
+    "poisonStacks": " [{{count}} stacks]",
+    "poisonRemaining": " ({{count}} stacks remaining)",
+    "poisonEnded": " (poison ended)",
+    "poisonStacksLost": " ({{count}} stacks lost)",
+    "bossSkillUsed": "{{enemy}} used {{skill}}!",
+    "uberUnlocked": "Uber version of {{enemy}} unlocked!",
+    "uberTicket": "Obtained an Uber ticket! ({{count}})"
+  },
+  "passiveTree": {
+    "title": "Passive Tree",
+    "skillPoints": "SP: {{count}}",
+    "zoomHint": "Pinch to zoom / Double tap to reset",
+    "unlocked": "Unlocked",
+    "unlockButton": "Unlock (SP: {{count}})",
+    "noSp": "Not enough SP",
+    "locked": "Prerequisite skill required",
+    "placeholder": "Tap a node to view details"
+  },
+  "passiveNodes": {
+    "start": {
+      "name": "Adventurer's Aptitude",
+      "description": "HP +30, ATK +5, DEF +3"
+    },
+    "poison_1": {
+      "name": "Poison Basics",
+      "description": "HP +20, Poison Chance +3%"
+    },
+    "poison_2": {
+      "name": "Poison Knowledge I",
+      "description": "Poison Chance +3%"
+    },
+    "poison_3": {
+      "name": "HP Up",
+      "description": "HP +20"
+    },
+    "poison_4": {
+      "name": "Defense Up",
+      "description": "DEF +3"
+    },
+    "poison_5": {
+      "name": "Poison Knowledge II",
+      "description": "Poison Chance +3%"
+    },
+    "poison_6": {
+      "name": "HP Up II",
+      "description": "HP +25"
+    },
+    "poison_7": {
+      "name": "Defense Up II",
+      "description": "DEF +4"
+    },
+    "poison_key1": {
+      "name": "Venom Wielder",
+      "description": "Poison Chance +10%, Poison Damage +20%, Poison Lifesteal +30%"
+    },
+    "poison_8": {
+      "name": "Poison Knowledge III",
+      "description": "Poison Chance +5%"
+    },
+    "poison_9": {
+      "name": "Poison Damage Up I",
+      "description": "Poison Damage +15%"
+    },
+    "poison_10": {
+      "name": "Poison Resistance",
+      "description": "Damage Taken -3% while Enemy is Poisoned"
+    },
+    "poison_11": {
+      "name": "Poison Knowledge IV",
+      "description": "Poison Chance +5%"
+    },
+    "poison_12": {
+      "name": "Poison Damage Up II",
+      "description": "Poison Damage +20%"
+    },
+    "poison_13": {
+      "name": "Poison Stack Boost",
+      "description": "Poison can stack up to 2"
+    },
+    "poison_a1": {
+      "name": "Abyssal Poison",
+      "description": "Poison Damage +25%"
+    },
+    "poison_a2": {
+      "name": "Poison Apex",
+      "description": "Poison Stacks +3 (up to 5 total)"
+    },
+    "poison_b1": {
+      "name": "Poison Guard",
+      "description": "Damage Taken -5% while Enemy is Poisoned"
+    },
+    "poison_b2": {
+      "name": "Poison Dragon Scales",
+      "description": "Damage Taken -7% while Enemy is Poisoned, HP +30"
+    },
+    "poison_14": {
+      "name": "Poison Knowledge V",
+      "description": "Poison Chance +8%"
+    },
+    "poison_15": {
+      "name": "Lethal Poison",
+      "description": "Poison Damage +30%"
+    },
+    "poison_16": {
+      "name": "Poison Mastery",
+      "description": "Poison Chance +10%"
+    },
+    "poison_17": {
+      "name": "Venom Ward",
+      "description": "Damage Taken -5% while Enemy is Poisoned"
+    },
+    "poison_final1": {
+      "name": "Serpent Incarnate",
+      "description": "Poison Chance +15%, Poison Damage 20% more"
+    },
+    "poison_final2": {
+      "name": "Pure Poison [Keystone]",
+      "description": "No longer deal direct damage. Poison Damage 50% more"
+    },
+    "crit_1": {
+      "name": "Critical Basics",
+      "description": "ATK +5, Critical Chance +3%"
+    },
+    "crit_2": {
+      "name": "Critical Aim I",
+      "description": "Critical Chance +3%"
+    },
+    "crit_3": {
+      "name": "Attack Up",
+      "description": "ATK +5"
+    },
+    "crit_4": {
+      "name": "Deadly Blow I",
+      "description": "Critical Damage +15%"
+    },
+    "crit_5": {
+      "name": "Critical Aim II",
+      "description": "Critical Chance +3%"
+    },
+    "crit_6": {
+      "name": "Attack Up II",
+      "description": "ATK +8"
+    },
+    "crit_7": {
+      "name": "Deadly Blow II",
+      "description": "Critical Damage +20%"
+    },
+    "crit_key1": {
+      "name": "Lethal Blow",
+      "description": "Critical Damage +30%"
+    },
+    "crit_8": {
+      "name": "Critical Aim III",
+      "description": "Critical Chance +5%"
+    },
+    "crit_9": {
+      "name": "Attack Amplify",
+      "description": "ATK +15% increased"
+    },
+    "crit_10": {
+      "name": "Deadly Blow III",
+      "description": "Critical Damage +20%"
+    },
+    "crit_11": {
+      "name": "Critical Aim IV",
+      "description": "Critical Chance +5%"
+    },
+    "crit_12": {
+      "name": "Attack Up III",
+      "description": "ATK +10"
+    },
+    "crit_13": {
+      "name": "Deadly Blow IV",
+      "description": "Critical Damage +25%"
+    },
+    "crit_a1": {
+      "name": "Precision Strike",
+      "description": "Critical Chance +8%"
+    },
+    "crit_a2": {
+      "name": "Sure Critical",
+      "description": "Critical Chance +10%"
+    },
+    "crit_b1": {
+      "name": "Devastating Blow",
+      "description": "Critical Damage +30%"
+    },
+    "crit_b2": {
+      "name": "Blade of Annihilation",
+      "description": "Critical Damage +40%"
+    },
+    "crit_14": {
+      "name": "Critical Aim V",
+      "description": "Critical Chance +5%"
+    },
+    "crit_15": {
+      "name": "Blood Blade",
+      "description": "HP on Crit +80"
+    },
+    "crit_16": {
+      "name": "Deadly Blow V",
+      "description": "Critical Damage +30%"
+    },
+    "crit_17": {
+      "name": "Blood Thirst",
+      "description": "HP on Crit +100"
+    },
+    "crit_final1": {
+      "name": "Lethal Blade",
+      "description": "Critical Chance +10%, Critical Damage +50%"
+    },
+    "crit_final2": {
+      "name": "Executioner",
+      "description": "HP on Crit +150, ATK 15% more"
+    },
+    "guard_1": {
+      "name": "Guard Basics",
+      "description": "DEF +5, Damage Reduction +2%"
+    },
+    "guard_2": {
+      "name": "Stalwart Guard I",
+      "description": "Damage Reduction +2%"
+    },
+    "guard_3": {
+      "name": "Defense Up",
+      "description": "DEF +4"
+    },
+    "guard_4": {
+      "name": "HP Up",
+      "description": "HP +25"
+    },
+    "guard_5": {
+      "name": "Stalwart Guard II",
+      "description": "Damage Reduction +2%"
+    },
+    "guard_6": {
+      "name": "Defense Up II",
+      "description": "DEF +5"
+    },
+    "guard_7": {
+      "name": "HP Up II",
+      "description": "HP +30"
+    },
+    "guard_key1": {
+      "name": "Ironwall Shield",
+      "description": "Damage Reduction +8%"
+    },
+    "guard_8": {
+      "name": "Stalwart Guard III",
+      "description": "Damage Reduction +3%"
+    },
+    "guard_9": {
+      "name": "Defense Amplify",
+      "description": "DEF +20% increased"
+    },
+    "guard_10": {
+      "name": "Vitality Amplify",
+      "description": "HP +20% increased"
+    },
+    "guard_11": {
+      "name": "Stalwart Guard IV",
+      "description": "Damage Reduction +3%"
+    },
+    "guard_12": {
+      "name": "Defense Up III",
+      "description": "DEF +8"
+    },
+    "guard_13": {
+      "name": "HP Up III",
+      "description": "HP +40"
+    },
+    "guard_a1": {
+      "name": "Steel Body",
+      "description": "DEF +25% increased"
+    },
+    "guard_a2": {
+      "name": "Immovable Fortress",
+      "description": "DEF +12"
+    },
+    "guard_b1": {
+      "name": "Abundant Life",
+      "description": "HP +25% increased"
+    },
+    "guard_b2": {
+      "name": "Life's Guard",
+      "description": "HP +60"
+    },
+    "guard_14": {
+      "name": "Stalwart Guard V",
+      "description": "Damage Reduction +4%"
+    },
+    "guard_15": {
+      "name": "Defense Pinnacle",
+      "description": "DEF +15"
+    },
+    "guard_16": {
+      "name": "Stalwart Guard VI",
+      "description": "Damage Reduction +5%"
+    },
+    "guard_17": {
+      "name": "Life Pinnacle",
+      "description": "HP +80"
+    },
+    "guard_final1": {
+      "name": "Ironwall Guardian",
+      "description": "Damage Reduction +10%, DEF 20% more"
+    },
+    "guard_final2": {
+      "name": "Indestructible Wall",
+      "description": "HP 20% more"
+    },
+    "vamp_1": {
+      "name": "Lifesteal Basics",
+      "description": "ATK +5, HP on Hit +10"
+    },
+    "vamp_2": {
+      "name": "Lifesteal I",
+      "description": "HP on Hit +10"
+    },
+    "vamp_3": {
+      "name": "Attack Up",
+      "description": "ATK +5"
+    },
+    "vamp_4": {
+      "name": "Life Recovery",
+      "description": "HP Regen per Turn +8"
+    },
+    "vamp_5": {
+      "name": "Lifesteal II",
+      "description": "HP on Hit +10"
+    },
+    "vamp_6": {
+      "name": "Attack Up II",
+      "description": "ATK +8"
+    },
+    "vamp_7": {
+      "name": "Life Recovery II",
+      "description": "HP Regen per Turn +10"
+    },
+    "vamp_key1": {
+      "name": "Blood Thirst",
+      "description": "HP on Hit +20"
+    },
+    "vamp_8": {
+      "name": "Lifesteal III",
+      "description": "HP on Hit +10"
+    },
+    "vamp_9": {
+      "name": "Attack Amplify",
+      "description": "ATK +15% increased"
+    },
+    "vamp_10": {
+      "name": "Sustained Recovery",
+      "description": "HP Regen per Turn 1%"
+    },
+    "vamp_11": {
+      "name": "Lifesteal IV",
+      "description": "HP on Hit +10"
+    },
+    "vamp_12": {
+      "name": "Attack Up III",
+      "description": "ATK +10"
+    },
+    "vamp_13": {
+      "name": "Life Recovery III",
+      "description": "HP Regen per Turn +12"
+    },
+    "vamp_a1": {
+      "name": "Onslaught",
+      "description": "ATK +20% increased"
+    },
+    "vamp_a2": {
+      "name": "Fists of Destruction",
+      "description": "ATK +15"
+    },
+    "vamp_b1": {
+      "name": "Healing Power",
+      "description": "HP Regen per Turn 1.5%"
+    },
+    "vamp_b2": {
+      "name": "Life Surge",
+      "description": "HP Regen per Turn +20"
+    },
+    "vamp_14": {
+      "name": "Lifesteal V",
+      "description": "HP on Hit +10"
+    },
+    "vamp_15": {
+      "name": "Attack Amplify II",
+      "description": "ATK +20% increased"
+    },
+    "vamp_16": {
+      "name": "Lifesteal VI",
+      "description": "HP on Hit +10"
+    },
+    "vamp_17": {
+      "name": "Attack Pinnacle",
+      "description": "ATK +20"
+    },
+    "vamp_final1": {
+      "name": "Blood Lord",
+      "description": "HP on Hit +30, ATK 15% more"
+    },
+    "vamp_final2": {
+      "name": "Eternal Vampire",
+      "description": "HP Regen per Turn 3%"
+    },
+    "regen_1": {
+      "name": "Recovery Basics",
+      "description": "HP +30, HP Regen per Turn +5"
+    },
+    "regen_2": {
+      "name": "Vitality I",
+      "description": "HP Regen per Turn +5"
+    },
+    "regen_3": {
+      "name": "HP Up",
+      "description": "HP +25"
+    },
+    "regen_4": {
+      "name": "Recovery Up",
+      "description": "HP Regen per Turn +8"
+    },
+    "regen_5": {
+      "name": "Vitality II",
+      "description": "HP +20% increased"
+    },
+    "regen_6": {
+      "name": "HP Up II",
+      "description": "HP +30"
+    },
+    "regen_7": {
+      "name": "Recovery Up II",
+      "description": "HP Regen per Turn +10"
+    },
+    "regen_key1": {
+      "name": "Fountain of Life",
+      "description": "HP Regen per Turn 2%"
+    },
+    "regen_8": {
+      "name": "Vitality III",
+      "description": "HP +25% increased"
+    },
+    "regen_9": {
+      "name": "HP Amplify",
+      "description": "HP +40"
+    },
+    "regen_10": {
+      "name": "Recovery Amplify",
+      "description": "HP Regen per Turn +12"
+    },
+    "regen_11": {
+      "name": "Vitality IV",
+      "description": "HP +20% increased"
+    },
+    "regen_12": {
+      "name": "HP Up III",
+      "description": "HP +50"
+    },
+    "regen_13": {
+      "name": "Recovery Up III",
+      "description": "HP Regen per Turn +15"
+    },
+    "regen_a1": {
+      "name": "Resilient Life",
+      "description": "HP +30% increased"
+    },
+    "regen_a2": {
+      "name": "Unyielding Body",
+      "description": "HP +70"
+    },
+    "regen_b1": {
+      "name": "Super Recovery",
+      "description": "HP Regen per Turn 1.5%"
+    },
+    "regen_b2": {
+      "name": "Healing Pinnacle",
+      "description": "HP Regen per Turn +25"
+    },
+    "regen_14": {
+      "name": "Vitality V",
+      "description": "HP +25% increased"
+    },
+    "regen_15": {
+      "name": "HP Up IV",
+      "description": "HP +60"
+    },
+    "regen_16": {
+      "name": "Recovery Up IV",
+      "description": "HP Regen per Turn +20"
+    },
+    "regen_17": {
+      "name": "Life's Blessing",
+      "description": "HP Regen per Turn 2%"
+    },
+    "regen_final1": {
+      "name": "Phoenix Blessing",
+      "description": "HP 25% more, HP Regen per Turn +25"
+    },
+    "regen_final2": {
+      "name": "Eternal Life",
+      "description": "HP Regen per Turn 4%"
+    },
+    "speed_1": {
+      "name": "Speed Basics",
+      "description": "ATK +3, Attack Speed +5%"
+    },
+    "speed_2": {
+      "name": "Agility I",
+      "description": "Attack Speed +5%"
+    },
+    "speed_3": {
+      "name": "Quick Strike",
+      "description": "ATK +5"
+    },
+    "speed_4": {
+      "name": "Agile Movement",
+      "description": "Attack Speed +5%"
+    },
+    "speed_5": {
+      "name": "Agility II",
+      "description": "Attack Speed +5%"
+    },
+    "speed_6": {
+      "name": "Attack Up",
+      "description": "ATK +8"
+    },
+    "speed_7": {
+      "name": "Agility III",
+      "description": "Attack Speed +8%"
+    },
+    "speed_key1": {
+      "name": "Gale",
+      "description": "Attack Speed +15%"
+    },
+    "speed_8": {
+      "name": "Agility IV",
+      "description": "Attack Speed +8%"
+    },
+    "speed_9": {
+      "name": "Rapid Strikes",
+      "description": "ATK +10, Attack Speed +5%"
+    },
+    "speed_10": {
+      "name": "Instant Strike",
+      "description": "Attack Speed +10%"
+    },
+    "speed_11": {
+      "name": "Agility V",
+      "description": "Attack Speed +10%"
+    },
+    "speed_12": {
+      "name": "Attack Amplify",
+      "description": "ATK +15% increased"
+    },
+    "speed_13": {
+      "name": "Acceleration",
+      "description": "Attack Speed +12%"
+    },
+    "speed_final1": {
+      "name": "Lightning Flash",
+      "description": "Attack Speed 15% more"
+    },
+    "speed_final2": {
+      "name": "Godspeed",
+      "description": "Attack Speed 20% more, ATK 10% more"
+    }
+  },
+  "modDescriptions": {
+    "poisonChance": "Poison Chance +{{value}}%",
+    "criticalChance": "Critical Chance +{{value}}%",
+    "criticalDamage": "Critical Damage +{{value}}%"
   }
 }

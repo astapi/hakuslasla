@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { BattleLogEntry } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 
@@ -31,6 +32,7 @@ const getLogColor = (type: BattleLogEntry['type']): string => {
 };
 
 export const BattleLog = ({ logs }: BattleLogProps) => {
+  const { t } = useTranslation();
   const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export const BattleLog = ({ logs }: BattleLogProps) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>戦闘ログ</Text>
+      <Text style={styles.title}>{t('battleLog.title')}</Text>
       <ScrollView ref={scrollViewRef} style={styles.scrollView}>
         {logs.filter(log => log.message).map((log) => (
           <Text key={log.id} style={[styles.logEntry, { color: getLogColor(log.type) }]}>

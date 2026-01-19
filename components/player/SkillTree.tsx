@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { skillNodes, canUnlockSkill } from '@/data/skills';
 import { ms, fs } from '@/utils/scaling';
 
 export const SkillTree = () => {
+  const { t } = useTranslation();
   const { skillPoints, unlockedSkills, unlockSkill } = usePlayerStore();
 
   const handleUnlockSkill = (skillId: string) => {
@@ -13,8 +15,8 @@ export const SkillTree = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>スキルツリー</Text>
-        <Text style={styles.skillPoints}>SP: {skillPoints}</Text>
+        <Text style={styles.title}>{t('skillTree.title')}</Text>
+        <Text style={styles.skillPoints}>{t('skillTree.skillPoints', { count: skillPoints })}</Text>
       </View>
 
       <ScrollView style={styles.skillList}>
@@ -42,11 +44,11 @@ export const SkillTree = () => {
                 <Text
                   style={[styles.skillName, isUnlocked && styles.skillNameUnlocked]}
                 >
-                  {skill.name}
+                  {t(`skills.${skill.id}.name`)}
                 </Text>
-                <Text style={styles.skillDescription}>{skill.description}</Text>
-                {isUnlocked && <Text style={styles.unlockedBadge}>習得済み</Text>}
-                {canUnlock && !isUnlocked && <Text style={styles.availableBadge}>習得可能</Text>}
+                <Text style={styles.skillDescription}>{t(`skills.${skill.id}.description`)}</Text>
+                {isUnlocked && <Text style={styles.unlockedBadge}>{t('skillTree.unlocked')}</Text>}
+                {canUnlock && !isUnlocked && <Text style={styles.availableBadge}>{t('skillTree.available')}</Text>}
               </Pressable>
             </View>
           );

@@ -1,6 +1,8 @@
 import { Stack } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 export default function BattleLayout() {
+  const { t } = useTranslation();
   return (
     <Stack
       screenOptions={{
@@ -14,7 +16,7 @@ export default function BattleLayout() {
         contentStyle: {
           backgroundColor: '#1a1a2e',
         },
-        title: '戦闘中',
+        title: t('battle.inProgress'),
         headerBackVisible: false,
         gestureEnabled: false,
       }}

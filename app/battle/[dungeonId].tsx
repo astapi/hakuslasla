@@ -141,7 +141,7 @@ export default function BattleScreen() {
           />
           {state.enemy && (
             <CharacterDisplay
-              name={state.enemy.name}
+              name={t(`monsters.${state.enemy.id}.name`, { defaultValue: state.enemy.name })}
               currentHp={state.enemy.currentHp}
               maxHp={state.enemy.maxHp}
               imageId={state.enemy.image}
