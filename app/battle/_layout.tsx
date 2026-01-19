@@ -7,14 +7,14 @@ export default function BattleLayout() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#1a1a2e',
+          backgroundColor: '#15191E',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
         contentStyle: {
-          backgroundColor: '#1a1a2e',
+          backgroundColor: '#15191E',
         },
         title: t('battle.inProgress'),
         headerBackVisible: false,

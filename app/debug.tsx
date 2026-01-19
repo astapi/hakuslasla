@@ -373,7 +373,7 @@ export default function DebugScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#15191E',
   },
   header: {
     flexDirection: 'row',

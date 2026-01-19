@@ -269,13 +269,23 @@ export default function SettingsScreen() {
   );
 }
 
+const colors = {
+  bg: '#15191E',
+  bgDeep: '#101418',
+  slab: '#1B2026',
+  slabEdge: '#2A3037',
+  accent: '#232833',
+  text: '#C9CDD3',
+  textMuted: '#8C929A',
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: colors.bg,
   },
   loadingText: {
-    color: '#aaa',
+    color: colors.textMuted,
     textAlign: 'center',
     marginTop: ms(32),
   },
@@ -287,7 +297,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: fs(18),
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
   },
   footer: {
     flexDirection: 'row',
@@ -315,19 +325,26 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: ms(24),
-    backgroundColor: '#16213e',
+    backgroundColor: colors.slab,
     borderRadius: ms(12),
     padding: ms(16),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: ms(10),
+    shadowOffset: { width: 0, height: ms(6) },
+    elevation: 2,
   },
   sectionTitle: {
     fontSize: fs(16),
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
     marginBottom: ms(4),
   },
   sectionDescription: {
     fontSize: fs(12),
-    color: '#888',
+    color: colors.textMuted,
     marginBottom: ms(16),
   },
   filterRow: {
@@ -345,7 +362,7 @@ const styles = StyleSheet.create({
   },
   filterLabelText: {
     fontSize: fs(14),
-    color: '#fff',
+    color: colors.text,
   },
   numberInputRow: {
     flexDirection: 'row',
@@ -371,27 +388,29 @@ const styles = StyleSheet.create({
   numberValue: {
     fontSize: fs(18),
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
   },
   tierHint: {
     fontSize: fs(11),
-    color: '#666',
+    color: colors.textMuted,
     textAlign: 'center',
     marginTop: ms(12),
   },
   summaryBox: {
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    backgroundColor: colors.bgDeep,
     borderRadius: ms(8),
     padding: ms(12),
     gap: ms(4),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
   },
   summaryText: {
     fontSize: fs(13),
-    color: '#4CAF50',
+    color: colors.text,
   },
   summaryTextDisabled: {
     fontSize: fs(13),
-    color: '#666',
+    color: colors.textMuted,
   },
   languageOptions: {
     gap: ms(8),
@@ -401,21 +420,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: ms(12),
     paddingHorizontal: ms(12),
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    backgroundColor: colors.slab,
     borderRadius: ms(8),
     gap: ms(12),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
   },
   languageOptionSelected: {
-    backgroundColor: 'rgba(76, 175, 80, 0.15)',
+    backgroundColor: colors.accent,
     borderWidth: 1,
-    borderColor: 'rgba(76, 175, 80, 0.3)',
+    borderColor: colors.slabEdge,
   },
   languageOptionText: {
     fontSize: fs(15),
-    color: '#aaa',
+    color: colors.textMuted,
   },
   languageOptionTextSelected: {
-    color: '#fff',
+    color: colors.text,
     fontWeight: '600',
   },
 });
