@@ -595,13 +595,7 @@
       "name": "異次元ラッシュ",
       "description": "終焉の地を超えた先に広がる異次元の迷宮。200階の終焉の王を討ち倒せ。",
       "maxFloor": 200,
-      "monsters": [
-        { "monsterId": "apocalypse_knight", "spawnRate": 20 },
-        { "monsterId": "world_eater", "spawnRate": 20 },
-        { "monsterId": "primordial_titan", "spawnRate": 20 },
-        { "monsterId": "god_slayer", "spawnRate": 20 },
-        { "monsterId": "end_bringer", "spawnRate": 20 }
-      ],
+      "monsters": [],
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
