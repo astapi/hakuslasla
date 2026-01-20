@@ -248,40 +248,40 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: ms(12),
-    padding: ms(12),
+    padding: ms(10),
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: ms(12),
+    marginBottom: ms(8),
   },
   title: {
-    fontSize: fs(16),
+    fontSize: fs(14),
     fontWeight: 'bold',
     color: '#fff',
   },
   level: {
-    fontSize: fs(16),
+    fontSize: fs(14),
     color: '#FFD700',
     fontWeight: 'bold',
   },
   statsGrid: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: ms(12),
+    marginBottom: ms(8),
   },
   statItem: {
     alignItems: 'center',
     flex: 1,
   },
   statLabel: {
-    fontSize: fs(12),
+    fontSize: fs(11),
     color: '#aaa',
-    marginBottom: ms(2),
+    marginBottom: ms(1),
   },
   statValue: {
-    fontSize: fs(18),
+    fontSize: fs(16),
     fontWeight: 'bold',
     color: '#fff',
   },
@@ -289,8 +289,8 @@ const styles = StyleSheet.create({
   detailsContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     borderRadius: ms(8),
-    padding: ms(10),
-    marginBottom: ms(12),
+    padding: ms(8),
+    marginBottom: ms(8),
   },
   detailRow: {
     flexDirection: 'row',
@@ -299,12 +299,12 @@ const styles = StyleSheet.create({
     paddingVertical: ms(4),
   },
   detailLabel: {
-    fontSize: fs(13),
+    fontSize: fs(12),
     color: '#aaa',
     width: ms(40),
   },
   detailValue: {
-    fontSize: fs(13),
+    fontSize: fs(12),
     color: '#fff',
     flex: 1,
     textAlign: 'right',
@@ -333,17 +333,17 @@ const styles = StyleSheet.create({
     color: '#FF9800',
   },
   tapHint: {
-    fontSize: fs(10),
+    fontSize: fs(9),
     color: '#666',
     textAlign: 'center',
-    marginTop: ms(4),
+    marginTop: ms(3),
   },
   expContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   expLabel: {
-    fontSize: fs(12),
+    fontSize: fs(11),
     color: '#aaa',
     marginRight: ms(8),
     width: ms(30),
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   maxLevelText: {
-    fontSize: fs(14),
+    fontSize: fs(12),
     fontWeight: 'bold',
     color: '#FFD700',
   },
