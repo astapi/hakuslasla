@@ -64,7 +64,7 @@ export default function HomeScreen() {
 
   return (
     <ScreenWrapper
-      edges={['top', 'left', 'right']}
+      edges={['left', 'right']}
       style={styles.container}
       backgroundColor={colors.bg}
     >
@@ -99,6 +99,16 @@ export default function HomeScreen() {
           </View>
         </View>
       </ScrollView>
+
+      <View style={styles.adventureCta}>
+        <Pressable
+          style={({ pressed }) => [styles.adventureButton, pressed && styles.adventureButtonPressed]}
+          onPress={handleOpenDungeonSelect}
+        >
+          <MaterialCommunityIcons name="castle" size={20} color={colors.text} />
+          <Text style={styles.adventureLabel}>{t('home.menu.adventure')}</Text>
+        </Pressable>
+      </View>
 
       {/* 下部メニューバー */}
       <View style={styles.bottomMenu}>
@@ -145,14 +155,6 @@ export default function HomeScreen() {
           <MaterialCommunityIcons name="filter-cog" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.settings')}</Text>
         </Pressable>
-
-        <Pressable
-          style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
-          onPress={handleOpenDungeonSelect}
-        >
-          <MaterialCommunityIcons name="castle" size={24} color={colors.iconMuted} />
-          <Text style={styles.menuLabel}>{t('home.menu.adventure')}</Text>
-        </Pressable>
       </View>
     </ScreenWrapper>
   );
@@ -184,15 +186,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: ms(16),
-    paddingBottom: ms(88),
+    paddingHorizontal: ms(16),
+    paddingTop: ms(0),
+    paddingBottom: ms(144),
   },
   characterCard: {
     backgroundColor: colors.slab,
     borderRadius: ms(16),
     borderWidth: 1,
     borderColor: colors.slabEdge,
-    padding: ms(12),
+    padding: ms(10),
     shadowColor: '#000',
     shadowOpacity: 0.25,
     shadowRadius: ms(10),
@@ -203,9 +206,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   characterImage: {
-    width: ms(120),
-    height: ms(160),
-    marginRight: ms(16),
+    width: ms(104),
+    height: ms(140),
+    marginRight: ms(12),
   },
   characterInfo: {
     flex: 1,
@@ -215,10 +218,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: ms(12),
+    marginBottom: ms(8),
   },
   characterName: {
-    fontSize: fs(20),
+    fontSize: fs(18),
     fontWeight: 'bold',
     color: colors.text,
   },
@@ -260,6 +263,30 @@ const styles = StyleSheet.create({
     shadowRadius: ms(10),
     shadowOffset: { width: 0, height: ms(6) },
     elevation: 2,
+  },
+  adventureCta: {
+    paddingHorizontal: ms(16),
+    paddingBottom: ms(8),
+  },
+  adventureButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: ms(8),
+    backgroundColor: colors.accent,
+    borderRadius: ms(12),
+    paddingVertical: ms(12),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+  },
+  adventureButtonPressed: {
+    backgroundColor: 'rgba(35, 40, 51, 0.8)',
+  },
+  adventureLabel: {
+    fontSize: fs(14),
+    color: colors.text,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
   },
   bottomMenu: {
     flexDirection: 'row',
