@@ -84,7 +84,9 @@ export const CharacterDisplay = ({
       <View style={styles.infoContainer}>
         <ActionGauge value={actionGauge} color={isPlayer ? '#FFD700' : '#FF6B6B'} />
         <View style={styles.nameRow}>
-          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.name} numberOfLines={2}>
+            {name}
+          </Text>
           {level !== undefined && <Text style={styles.level}>Lv.{level}</Text>}
         </View>
         <HPBar current={currentHp} max={maxHp} color={isPlayer ? '#4CAF50' : '#F44336'} />
@@ -134,13 +136,15 @@ const styles = StyleSheet.create({
   nameRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: ms(4),
   },
   name: {
     fontSize: fs(14),
     fontWeight: 'bold',
     color: '#fff',
+    flex: 1,
+    marginRight: ms(6),
   },
   level: {
     fontSize: fs(12),

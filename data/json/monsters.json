@@ -298,6 +298,17 @@
       "attackSpeed": 1.1,
       "uniqueDrop": null
     },
+    "bandit_brute": {
+      "id": "bandit_brute",
+      "name": "盗賊ブルート",
+      "image": "bandit_brute",
+      "maxHp": 95,
+      "atk": 36,
+      "def": 16,
+      "exp": 60,
+      "attackSpeed": 0.9,
+      "uniqueDrop": null
+    },
     "bandit_leader": {
       "id": "bandit_leader",
       "name": "盗賊の頭",
@@ -556,6 +567,17 @@
       "def": 35,
       "exp": 90,
       "attackSpeed": 0.7,
+      "uniqueDrop": null
+    },
+    "kelpy": {
+      "id": "kelpy",
+      "name": "ケルピー",
+      "image": "kelpy",
+      "maxHp": 90,
+      "atk": 46,
+      "def": 20,
+      "exp": 78,
+      "attackSpeed": 1.15,
       "uniqueDrop": null
     },
     "kraken": {

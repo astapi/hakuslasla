@@ -188,6 +188,22 @@
       "name": "ゴブリンの砦",
       "description": "ゴブリンたちが築いた巨大な砦。奥深くにはゴブリンキングが君臨している。"
     },
+    "bandit_hideout": {
+      "name": "盗賊のアジト",
+      "description": "山賊たちが根城にする隠れ家。略奪品が山と積まれている。"
+    },
+    "vampire_mansion": {
+      "name": "ヴァンパイアの館",
+      "description": "夜の闇に佇む不気味な館。不死の貴族が支配している。"
+    },
+    "underwater_cave": {
+      "name": "海底洞窟",
+      "description": "深海に広がる神秘的な洞窟。水棲の魔物が縄張りを守っている。"
+    },
+    "orc_fortress": {
+      "name": "オークの要塞",
+      "description": "オークとトロルが支配する巨大な要塞。凶暴な戦士たちが待ち構える。"
+    },
     "demon_castle": {
       "name": "魔王城",
       "description": "闇の力が渦巻く魔王の居城。強力な魔物たちが主を守護している。"
