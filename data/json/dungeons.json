@@ -138,7 +138,7 @@
         { "monsterId": "bandit", "spawnRate": 30 },
         { "monsterId": "bandit_archer", "spawnRate": 25 },
         { "monsterId": "bandit_swordsman", "spawnRate": 25 },
-        { "monsterId": "goblin_warrior", "spawnRate": 20 }
+        { "monsterId": "bandit_brute", "spawnRate": 20 }
       ],
       "boss": {
         "monsterId": "bandit_leader",
@@ -269,9 +269,10 @@
       "maxFloor": 15,
       "monsters": [
         { "monsterId": "sahuagin", "spawnRate": 30 },
-        { "monsterId": "merman", "spawnRate": 25 },
+        { "monsterId": "merman", "spawnRate": 20 },
         { "monsterId": "sea_serpent", "spawnRate": 20 },
-        { "monsterId": "giant_crab", "spawnRate": 25 }
+        { "monsterId": "giant_crab", "spawnRate": 25 },
+        { "monsterId": "kelpy", "spawnRate": 5 }
       ],
       "boss": {
         "monsterId": "kraken",
