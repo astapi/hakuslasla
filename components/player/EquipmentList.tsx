@@ -42,7 +42,9 @@ const EquipmentRow = ({ slot, item, t }: EquipmentRowProps) => {
       {/* 左: スロットアイコンとラベル */}
       <View style={styles.slotInfo}>
         <Image source={getSlotIcon(slot)} style={styles.slotIcon} />
-        <Text style={styles.slotLabel}>{t(`slots.${slot}`)}</Text>
+        <Text style={styles.slotLabel} numberOfLines={1} ellipsizeMode="tail">
+          {t(`slots.${slot}`)}
+        </Text>
       </View>
 
       {/* 中央: アイテム情報 */}
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
     marginBottom: ms(4),
   },
   headerSlot: {
-    width: ms(60),
+    width: ms(72),
     fontSize: fs(10),
     color: '#888',
   },
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(255, 255, 255, 0.05)',
   },
   slotInfo: {
-    width: ms(60),
+    width: ms(72),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -173,6 +175,7 @@ const styles = StyleSheet.create({
   slotLabel: {
     fontSize: fs(10),
     color: '#aaa',
+    flexShrink: 1,
   },
   itemInfo: {
     flex: 1,

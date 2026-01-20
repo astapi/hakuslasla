@@ -188,6 +188,22 @@
       "name": "Goblin Fortress",
       "description": "A massive fortress built by goblins. The Goblin King rules in its depths."
     },
+    "bandit_hideout": {
+      "name": "Bandit Hideout",
+      "description": "A hideout for mountain bandits, piled high with stolen goods."
+    },
+    "vampire_mansion": {
+      "name": "Vampire Mansion",
+      "description": "An eerie mansion in the night. Ruled by an immortal noble."
+    },
+    "underwater_cave": {
+      "name": "Underwater Cave",
+      "description": "A mysterious cave in the deep sea. Aquatic monsters guard their territory."
+    },
+    "orc_fortress": {
+      "name": "Orc Fortress",
+      "description": "A massive fortress ruled by orcs and trolls. Savage warriors await."
+    },
     "demon_castle": {
       "name": "Demon Castle",
       "description": "The dark lord's castle where shadows swirl. Powerful demons guard their master."
