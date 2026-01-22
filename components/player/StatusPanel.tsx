@@ -20,7 +20,6 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
     exp,
     expToNextLevel,
     levelCap,
-    skillPoints,
     maxHp,
     atk,
     def,
@@ -138,10 +137,6 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
           <View style={styles.statItem}>
             <Text style={styles.statLabel}>DEF</Text>
             <Text style={styles.statValue}>{stats.def}</Text>
-          </View>
-          <View style={styles.statItem}>
-            <Text style={styles.statLabel}>SP</Text>
-            <Text style={styles.statValue}>{skillPoints}</Text>
           </View>
         </View>
 
