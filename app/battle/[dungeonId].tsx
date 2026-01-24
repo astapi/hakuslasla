@@ -6,9 +6,11 @@ import { useBattle } from '@/hooks/useBattle';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ImageBackground, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { ms, fs, s } from '@/utils/scaling';
+import { getChestImageForItem, getChestRarityForItem } from '@/data/images';
 
 // ダンジョン背景画像マッピング
 const backgroundImages: Record<string, ImageSourcePropType> = {
@@ -33,6 +35,134 @@ const backgroundImages: Record<string, ImageSourcePropType> = {
   uber_kraken: require('@/assets/images/backgrounds/cave.jpg'),
   uber_demon_lord: require('@/assets/images/backgrounds/demon_castle.jpg'),
   uber_true_final_boss: require('@/assets/images/backgrounds/final_land.jpg'),
+};
+
+type ChestRarity = 'normal' | 'magic' | 'rare' | 'unique';
+
+const chestEffectConfig: Record<ChestRarity, {
+  dropHeight: number;
+  bounceHeight: number;
+  swayDeg: number;
+  glowOpacity: number;
+  pulseScale: number;
+}> = {
+  normal: { dropHeight: 16, bounceHeight: 2, swayDeg: 5, glowOpacity: 0, pulseScale: 1.0 },
+  magic: { dropHeight: 22, bounceHeight: 3, swayDeg: 7, glowOpacity: 0.18, pulseScale: 1.03 },
+  rare: { dropHeight: 28, bounceHeight: 4, swayDeg: 9, glowOpacity: 0.3, pulseScale: 1.05 },
+  unique: { dropHeight: 34, bounceHeight: 5, swayDeg: 12, glowOpacity: 0.45, pulseScale: 1.08 },
+};
+
+const CHEST_SIZE = s(92);
+
+const getChestOffsets = (count: number) => {
+  const hGap = s(68);
+  const vGap = s(60);
+  if (count <= 1) return [{ x: 0, y: 0 }];
+  if (count === 2) return [{ x: -hGap / 2, y: 0 }, { x: hGap / 2, y: 0 }];
+  if (count === 3) return [
+    { x: 0, y: -vGap / 2 },
+    { x: -hGap / 2, y: vGap / 2 },
+    { x: hGap / 2, y: vGap / 2 },
+  ];
+  return [
+    { x: -hGap / 2, y: -vGap / 2 },
+    { x: hGap / 2, y: -vGap / 2 },
+    { x: -hGap / 2, y: vGap / 2 },
+    { x: hGap / 2, y: vGap / 2 },
+  ];
+};
+
+const ChestDrop = ({
+  itemIndex,
+  image,
+  rarity,
+  offsetX,
+  offsetY,
+}: {
+  itemIndex: number;
+  image: ImageSourcePropType;
+  rarity: ChestRarity;
+  offsetX: number;
+  offsetY: number;
+}) => {
+  const { dropHeight, bounceHeight, swayDeg, glowOpacity, pulseScale } = chestEffectConfig[rarity];
+  const translateY = useSharedValue(-s(dropHeight));
+  const rotateZ = useSharedValue(0);
+  const scale = useSharedValue(1);
+  const glow = useSharedValue(0);
+
+  useEffect(() => {
+    const dropDelay = itemIndex * 80;
+    translateY.value = withDelay(
+      dropDelay,
+      withSequence(
+        withTiming(0, { duration: 320, easing: Easing.out(Easing.quad) }),
+        withTiming(-s(bounceHeight), { duration: 140, easing: Easing.out(Easing.quad) }),
+        withTiming(0, { duration: 140, easing: Easing.out(Easing.quad) })
+      )
+    );
+
+    rotateZ.value = withDelay(
+      dropDelay + 380,
+      withRepeat(
+        withSequence(
+          withTiming(swayDeg, { duration: 200, easing: Easing.inOut(Easing.sin) }),
+          withTiming(-swayDeg, { duration: 200, easing: Easing.inOut(Easing.sin) })
+        ),
+        -1,
+        true
+      )
+    );
+
+    if (pulseScale > 1) {
+      scale.value = withDelay(
+        dropDelay + 420,
+        withRepeat(
+          withSequence(
+            withTiming(pulseScale, { duration: 520, easing: Easing.inOut(Easing.sin) }),
+            withTiming(1, { duration: 520, easing: Easing.inOut(Easing.sin) })
+          ),
+          -1,
+          true
+        )
+      );
+    }
+
+    if (glowOpacity > 0) {
+      glow.value = withDelay(
+        dropDelay + 420,
+        withRepeat(
+          withSequence(
+            withTiming(glowOpacity, { duration: 520, easing: Easing.inOut(Easing.sin) }),
+            withTiming(glowOpacity * 0.6, { duration: 520, easing: Easing.inOut(Easing.sin) })
+          ),
+          -1,
+          true
+        )
+      );
+    }
+  }, [itemIndex, rotateZ, translateY]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: -CHEST_SIZE / 2 + offsetX },
+      { translateY: -CHEST_SIZE / 2 + offsetY },
+      { translateY: translateY.value },
+      { rotateZ: `${rotateZ.value}deg` },
+      { scale: scale.value },
+    ],
+  }));
+
+  const glowStyle = useAnimatedStyle(() => ({
+    opacity: glow.value,
+  }));
+
+  return (
+    <Animated.View style={[styles.chestDrop, animatedStyle]}>
+      <Animated.View style={[styles.chestGlow, glowStyle]} />
+      <Image source={image} style={styles.chestImage} resizeMode="contain" />
+    </Animated.View>
+  );
 };
 
 export default function BattleScreen() {
@@ -110,6 +240,7 @@ export default function BattleScreen() {
   };
 
   const backgroundImage = dungeonId ? backgroundImages[dungeonId] : undefined;
+  const showChest = Boolean(state.enemy && state.enemy.currentHp <= 0 && state.lastDroppedItems.length > 0);
 
   // バトルエリアの内容
   const battleAreaContent = (
@@ -139,7 +270,7 @@ export default function BattleScreen() {
             isAttacking={playerAttacking}
             actionGauge={state.playerGauge}
           />
-          {state.enemy && (
+          {state.enemy && !showChest && (
             <CharacterDisplay
               name={t(`monsters.${state.enemy.id}.name`, { defaultValue: state.enemy.name })}
               currentHp={state.enemy.currentHp}
@@ -148,6 +279,26 @@ export default function BattleScreen() {
               isAttacking={enemyAttacking}
               actionGauge={state.enemyGauge}
             />
+          )}
+          {state.enemy && showChest && (
+            <View style={styles.chestSlot}>
+              <View style={styles.chestRow}>
+                {state.lastDroppedItems.map((item, index) => {
+                  const offsets = getChestOffsets(state.lastDroppedItems.length);
+                  const { x, y } = offsets[index] || { x: 0, y: 0 };
+                  return (
+                    <ChestDrop
+                      key={`${item.instanceId}-${index}`}
+                      itemIndex={index}
+                      image={getChestImageForItem(item)}
+                      rarity={getChestRarityForItem(item)}
+                      offsetX={x}
+                      offsetY={y}
+                    />
+                  );
+                })}
+              </View>
+            </View>
           )}
         </View>
         {state.phase === 'victory' && (
@@ -314,6 +465,44 @@ const styles = StyleSheet.create({
   charactersContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  chestSlot: {
+    flex: 1,
+    padding: ms(12),
+    borderRadius: ms(12),
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    marginLeft: ms(8),
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  chestRow: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
+  chestDrop: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+  },
+  chestGlow: {
+    position: 'absolute',
+    width: s(108),
+    height: s(108),
+    borderRadius: s(54),
+    backgroundColor: 'rgba(255, 215, 0, 0.6)',
+  },
+  chestImage: {
+    width: CHEST_SIZE,
+    height: CHEST_SIZE,
   },
   fightingText: {
     textAlign: 'center',

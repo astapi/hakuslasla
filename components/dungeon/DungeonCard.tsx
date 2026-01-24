@@ -9,6 +9,9 @@ interface DungeonCardProps {
   isLocked?: boolean;
   isCleared?: boolean;
   unlockRequirement?: string;
+  requiresTicket?: boolean;
+  ticketCount?: number;
+  isDisabled?: boolean;
 }
 
 export const DungeonCard = ({
@@ -17,18 +20,24 @@ export const DungeonCard = ({
   isLocked = false,
   isCleared = false,
   unlockRequirement,
+  requiresTicket = false,
+  ticketCount = 0,
+  isDisabled = false,
 }: DungeonCardProps) => {
   const { t } = useTranslation();
+  const isTicketMissing = requiresTicket && ticketCount <= 0;
+  const isPressable = !isLocked && !isDisabled;
 
   return (
     <Pressable
       style={({ pressed }) => [
         styles.container,
-        pressed && !isLocked && styles.pressed,
+        pressed && isPressable && styles.pressed,
         isLocked && styles.locked,
+        !isLocked && isDisabled && styles.disabled,
       ]}
-      onPress={isLocked ? undefined : onPress}
-      disabled={isLocked}
+      onPress={isPressable ? onPress : undefined}
+      disabled={!isPressable}
     >
       <View style={[styles.iconContainer, isLocked && styles.lockedIcon]}>
         {isLocked ? (
@@ -43,6 +52,13 @@ export const DungeonCard = ({
             {t(`dungeons.${dungeon.id}.name`)}
           </Text>
           {isCleared && <Text style={styles.clearMark}>✓</Text>}
+          {requiresTicket && (
+            <View style={[styles.ticketBadge, isTicketMissing && styles.ticketBadgeMissing]}>
+              <Text style={styles.ticketBadgeText}>
+                {t('common.ticket')} {ticketCount}
+              </Text>
+            </View>
+          )}
         </View>
         {isLocked && unlockRequirement ? (
           <Text style={styles.unlockRequirement}>{unlockRequirement}</Text>
@@ -51,6 +67,9 @@ export const DungeonCard = ({
             <Text style={[styles.description, isLocked && styles.lockedText]} numberOfLines={2}>
               {t(`dungeons.${dungeon.id}.description`)}
             </Text>
+            {isTicketMissing && (
+              <Text style={styles.ticketRequirementText}>{t('dungeon.ticketRequired')}</Text>
+            )}
             <Text style={[styles.floors, isLocked && styles.lockedText]}>
               {t('dungeon.floors', { count: dungeon.maxFloor })}
             </Text>
@@ -76,6 +95,9 @@ const styles = StyleSheet.create({
   locked: {
     backgroundColor: 'rgba(50, 50, 50, 0.5)',
     opacity: 0.6,
+  },
+  disabled: {
+    opacity: 0.7,
   },
   iconContainer: {
     width: s(60),
@@ -104,6 +126,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: ms(4),
+    gap: ms(6),
   },
   name: {
     fontSize: fs(18),
@@ -130,6 +153,28 @@ const styles = StyleSheet.create({
     fontSize: fs(12),
     color: '#888',
     fontStyle: 'italic',
+  },
+  ticketBadge: {
+    paddingHorizontal: ms(6),
+    paddingVertical: ms(2),
+    borderRadius: ms(8),
+    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+    borderWidth: 1,
+    borderColor: 'rgba(76, 175, 80, 0.6)',
+  },
+  ticketBadgeMissing: {
+    backgroundColor: 'rgba(244, 67, 54, 0.2)',
+    borderColor: 'rgba(244, 67, 54, 0.6)',
+  },
+  ticketBadgeText: {
+    fontSize: fs(10),
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  ticketRequirementText: {
+    fontSize: fs(11),
+    color: '#F44336',
+    marginBottom: ms(4),
   },
   lockedText: {
     color: '#666',

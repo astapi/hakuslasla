@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
   },
   adventureCta: {
     paddingHorizontal: ms(16),
-    paddingBottom: ms(8),
+    paddingBottom: ms(16),
   },
   adventureButton: {
     flexDirection: 'row',

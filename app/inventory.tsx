@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,10 +10,14 @@ import { EquipmentSlot, Item } from '@/types';
 import { getItemIcon, getSlotIcon } from '@/data/itemIcons';
 import { INVENTORY_MAX_SIZE } from '@/core';
 import { storageRepository } from '@/db/repositories/storageRepository';
+import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { getTierColor, getTierDisplayName } from '@/data/items';
 import { ms, fs } from '@/utils/scaling';
+import { useFocusEffect } from 'expo-router';
+import { UBER_BOSS_BY_BASE } from '@/data/endContents';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
+type InventoryTab = 'equipment' | 'misc';
 
 // アイテムのステータス計算
 function calculateItemStats(
@@ -90,8 +94,10 @@ export default function InventoryScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { inventory, equipment, equipItem, removeFromInventory } = usePlayerStore();
+  const [activeTab, setActiveTab] = useState<InventoryTab>('equipment');
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [uberTickets, setUberTickets] = useState<Record<string, number>>({});
 
   // 選択中アイテムのスロットに対応する装備中アイテム
   const equippedItem = selectedItem ? equipment[selectedItem.slot] : null;
@@ -135,6 +141,16 @@ export default function InventoryScreen() {
       setSelectedItem(null);
     }
   }, [selectedSlot, itemsBySlot]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const loadTickets = async () => {
+        const tickets = await settingsRepository.getUberTickets();
+        setUberTickets(tickets);
+      };
+      void loadTickets();
+    }, [])
+  );
 
   const handleBack = () => {
     router.back();
@@ -186,6 +202,16 @@ export default function InventoryScreen() {
 
   const isUniqueItem = (item: Item) => item.mods?.some((mod) => mod.tier === 0);
 
+  const ticketEntries = useMemo(() => {
+    return Object.entries(UBER_BOSS_BY_BASE)
+      .map(([baseBossId, uberDungeonId]) => ({
+        baseBossId,
+        uberDungeonId,
+        count: uberTickets[baseBossId] ?? 0,
+      }))
+      .filter((entry) => entry.count > 0);
+  }, [uberTickets]);
+
   return (
     <ScreenWrapper>
       {/* ヘッダー */}
@@ -196,106 +222,156 @@ export default function InventoryScreen() {
         </Text>
       </View>
 
-      {/* 詳細表示エリア */}
-      <View style={styles.detailArea}>
-        {selectedItem ? (
-          <ItemDetail
-            item={selectedItem}
-            equippedItem={equippedItem}
-            onEquip={() => handleEquip(selectedItem.instanceId)}
-            onStorage={() => handleStorage(selectedItem)}
-            onSell={() => handleSell(selectedItem.instanceId)}
-            t={t}
-          />
-        ) : (
-          <View style={styles.emptyDetail}>
-            <Text style={styles.emptyDetailText}>{t('inventory.selectItem')}</Text>
-          </View>
-        )}
+      {/* タブ */}
+      <View style={styles.inventoryTabs}>
+        <Pressable
+          style={[styles.inventoryTab, activeTab === 'equipment' && styles.inventoryTabActive]}
+          onPress={() => setActiveTab('equipment')}
+        >
+          <MaterialCommunityIcons name="sword-cross" size={16} color={activeTab === 'equipment' ? '#fff' : '#888'} />
+          <Text style={[styles.inventoryTabLabel, activeTab === 'equipment' && styles.inventoryTabLabelActive]}>
+            {t('inventory.tabs.equipment')}
+          </Text>
+        </Pressable>
+        <Pressable
+          style={[styles.inventoryTab, activeTab === 'misc' && styles.inventoryTabActive]}
+          onPress={() => setActiveTab('misc')}
+        >
+          <MaterialCommunityIcons name="ticket-confirmation-outline" size={16} color={activeTab === 'misc' ? '#fff' : '#888'} />
+          <Text style={[styles.inventoryTabLabel, activeTab === 'misc' && styles.inventoryTabLabelActive]}>
+            {t('inventory.tabs.misc')}
+          </Text>
+        </Pressable>
       </View>
 
-      {/* カテゴリタブ */}
-      <View style={styles.categoryTabs}>
-        {SLOT_ORDER.map((slot) => (
-          <Pressable
-            key={slot}
-            style={[
-              styles.categoryTab,
-              selectedSlot === slot && styles.categoryTabActive,
-            ]}
-            onPress={() => setSelectedSlot(slot)}
-          >
-            <Image source={getSlotIcon(slot)} style={styles.categoryIcon} />
-            <Text style={[
-              styles.categoryLabel,
-              selectedSlot === slot && styles.categoryLabelActive,
-            ]}>
-              {t(`slots.${slot}`)}
-            </Text>
-            {slotCounts[slot] > 0 && (
-              <View style={styles.countBadge}>
-                <Text style={styles.countText}>{slotCounts[slot]}</Text>
+      {activeTab === 'equipment' && (
+        <>
+          {/* 詳細表示エリア */}
+          <View style={styles.detailArea}>
+            {selectedItem ? (
+              <ItemDetail
+                item={selectedItem}
+                equippedItem={equippedItem}
+                onEquip={() => handleEquip(selectedItem.instanceId)}
+                onStorage={() => handleStorage(selectedItem)}
+                onSell={() => handleSell(selectedItem.instanceId)}
+                t={t}
+              />
+            ) : (
+              <View style={styles.emptyDetail}>
+                <Text style={styles.emptyDetailText}>{t('inventory.selectItem')}</Text>
               </View>
             )}
-          </Pressable>
-        ))}
-      </View>
-
-      {/* アイテムグリッド */}
-      <View style={styles.gridContainer}>
-        {currentItems.length === 0 ? (
-          <View style={styles.emptyGrid}>
-            <Text style={styles.emptyGridText}>
-              {t('inventory.noItemsInSlot', { slot: t(`slots.${selectedSlot}`) })}
-            </Text>
           </View>
-        ) : (
-          <ScrollView contentContainerStyle={styles.gridContent}>
-            <View style={styles.grid}>
-              {currentItems.map((item) => {
-                const isSelected = selectedItem?.instanceId === item.instanceId;
-                const stats = calculateItemStats(item, t);
-                const hasMods = item.mods && item.mods.length > 0;
-                const isUnique = isUniqueItem(item);
 
-                return (
-                  <Pressable
-                    key={item.instanceId}
-                    style={[
-                      styles.gridItem,
-                      isSelected && styles.gridItemSelected,
-                    ]}
-                    onPress={() => handleSelectItem(item)}
-                  >
-                    <Image
-                      source={getItemIcon(item.id, item.slot)}
-                      style={styles.gridItemIcon}
-                    />
-                    {isUnique && (
-                      <View style={styles.uniqueBadge}>
-                        <Text style={styles.uniqueBadgeText}>UNIQUE</Text>
-                      </View>
-                    )}
-                    {hasMods && (
-                      <View style={styles.modIndicator}>
-                        <Text style={styles.modIndicatorText}>{item.mods.length}</Text>
-                      </View>
-                    )}
-                    <Text style={styles.gridItemName} numberOfLines={1}>
-                      {t(`items.${item.id}.name`)}
-                    </Text>
-                    <Text style={styles.gridItemStats}>
-                      {stats.totalAtk > 0 && `A${stats.totalAtk}`}
-                      {stats.totalAtk > 0 && stats.totalDef > 0 && ' '}
-                      {stats.totalDef > 0 && `D${stats.totalDef}`}
-                    </Text>
-                  </Pressable>
-                );
-              })}
+          {/* カテゴリタブ */}
+          <View style={styles.categoryTabs}>
+            {SLOT_ORDER.map((slot) => (
+              <Pressable
+                key={slot}
+                style={[
+                  styles.categoryTab,
+                  selectedSlot === slot && styles.categoryTabActive,
+                ]}
+                onPress={() => setSelectedSlot(slot)}
+              >
+                <Image source={getSlotIcon(slot)} style={styles.categoryIcon} />
+                <Text style={[
+                  styles.categoryLabel,
+                  selectedSlot === slot && styles.categoryLabelActive,
+                ]}>
+                  {t(`slots.${slot}`)}
+                </Text>
+                {slotCounts[slot] > 0 && (
+                  <View style={styles.countBadge}>
+                    <Text style={styles.countText}>{slotCounts[slot]}</Text>
+                  </View>
+                )}
+              </Pressable>
+            ))}
+          </View>
+
+          {/* アイテムグリッド */}
+          <View style={styles.gridContainer}>
+            {currentItems.length === 0 ? (
+              <View style={styles.emptyGrid}>
+                <Text style={styles.emptyGridText}>
+                  {t('inventory.noItemsInSlot', { slot: t(`slots.${selectedSlot}`) })}
+                </Text>
+              </View>
+            ) : (
+              <ScrollView contentContainerStyle={styles.gridContent}>
+                <View style={styles.grid}>
+                  {currentItems.map((item) => {
+                    const isSelected = selectedItem?.instanceId === item.instanceId;
+                    const stats = calculateItemStats(item, t);
+                    const hasMods = item.mods && item.mods.length > 0;
+                    const isUnique = isUniqueItem(item);
+
+                    return (
+                      <Pressable
+                        key={item.instanceId}
+                        style={[
+                          styles.gridItem,
+                          isSelected && styles.gridItemSelected,
+                        ]}
+                        onPress={() => handleSelectItem(item)}
+                      >
+                        <Image
+                          source={getItemIcon(item.id, item.slot)}
+                          style={styles.gridItemIcon}
+                        />
+                        {isUnique && (
+                          <View style={styles.uniqueBadge}>
+                            <Text style={styles.uniqueBadgeText}>UNIQUE</Text>
+                          </View>
+                        )}
+                        {hasMods && (
+                          <View style={styles.modIndicator}>
+                            <Text style={styles.modIndicatorText}>{item.mods.length}</Text>
+                          </View>
+                        )}
+                        <Text style={styles.gridItemName} numberOfLines={1}>
+                          {t(`items.${item.id}.name`)}
+                        </Text>
+                        <Text style={styles.gridItemStats}>
+                          {stats.totalAtk > 0 && `A${stats.totalAtk}`}
+                          {stats.totalAtk > 0 && stats.totalDef > 0 && ' '}
+                          {stats.totalDef > 0 && `D${stats.totalDef}`}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              </ScrollView>
+            )}
+          </View>
+        </>
+      )}
+
+      {activeTab === 'misc' && (
+        <View style={styles.miscContainer}>
+          <Text style={styles.miscTitle}>{t('inventory.tickets.title')}</Text>
+          {ticketEntries.length === 0 ? (
+            <View style={styles.miscEmpty}>
+              <Text style={styles.miscEmptyText}>{t('inventory.tickets.empty')}</Text>
             </View>
-          </ScrollView>
-        )}
-      </View>
+          ) : (
+            <View style={styles.ticketList}>
+              {ticketEntries.map((entry) => (
+                <View key={entry.baseBossId} style={styles.ticketRow}>
+                  <Text style={styles.ticketName}>
+                    {t('inventory.tickets.item', { name: t(`dungeons.${entry.uberDungeonId}.name`) })}
+                  </Text>
+                  <View style={styles.ticketCountBadge}>
+                    <Text style={styles.ticketCountText}>{entry.count}</Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
+      )}
 
       {/* フッター */}
       <View style={styles.footer}>
@@ -461,6 +537,36 @@ const styles = StyleSheet.create({
   },
   headerCountFull: {
     color: '#F44336',
+  },
+  inventoryTabs: {
+    flexDirection: 'row',
+    gap: ms(8),
+    paddingHorizontal: ms(16),
+    paddingBottom: ms(8),
+  },
+  inventoryTab: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: ms(6),
+    paddingVertical: ms(10),
+    borderRadius: ms(10),
+    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+  },
+  inventoryTabActive: {
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  inventoryTabLabel: {
+    fontSize: fs(12),
+    color: '#888',
+    fontWeight: 'bold',
+  },
+  inventoryTabLabelActive: {
+    color: '#fff',
   },
   // 詳細表示エリア
   detailArea: {
@@ -664,6 +770,62 @@ const styles = StyleSheet.create({
   emptyGridText: {
     fontSize: fs(14),
     color: '#666',
+  },
+  miscContainer: {
+    flex: 1,
+    paddingHorizontal: ms(16),
+    paddingTop: ms(8),
+  },
+  miscTitle: {
+    fontSize: fs(14),
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: ms(12),
+  },
+  miscEmpty: {
+    padding: ms(16),
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: ms(10),
+  },
+  miscEmptyText: {
+    fontSize: fs(12),
+    color: '#888',
+    textAlign: 'center',
+  },
+  ticketList: {
+    gap: ms(10),
+  },
+  ticketRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: ms(12),
+    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    borderRadius: ms(10),
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+  },
+  ticketName: {
+    fontSize: fs(12),
+    color: '#fff',
+    fontWeight: 'bold',
+    flex: 1,
+    marginRight: ms(8),
+  },
+  ticketCountBadge: {
+    minWidth: ms(28),
+    paddingHorizontal: ms(8),
+    paddingVertical: ms(4),
+    borderRadius: ms(12),
+    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+    borderWidth: 1,
+    borderColor: 'rgba(76, 175, 80, 0.6)',
+    alignItems: 'center',
+  },
+  ticketCountText: {
+    fontSize: fs(12),
+    color: '#fff',
+    fontWeight: 'bold',
   },
   gridContent: {
     padding: ms(12),
