@@ -1,4 +1,7 @@
 import { ImageSourcePropType } from 'react-native';
+import { Item } from '@/types';
+
+export type ChestRarity = 'normal' | 'magic' | 'rare' | 'unique';
 
 // プレイヤー画像
 export const playerImages = {
@@ -6,6 +9,27 @@ export const playerImages = {
   standing: require('@/assets/images/characters/warrior.png') as ImageSourcePropType,
   // 戦闘画面用（戦闘ポーズ）
   battle: require('@/assets/images/characters/warrior_battle.png') as ImageSourcePropType,
+};
+
+export const chestImages: Record<ChestRarity, ImageSourcePropType> = {
+  normal: require('@/assets/images/chests/normal.png'),
+  magic: require('@/assets/images/chests/magic.png'),
+  rare: require('@/assets/images/chests/rare.png'),
+  unique: require('@/assets/images/chests/unique.png'),
+};
+
+export const getChestRarityForItem = (item: Item): ChestRarity => {
+  if (item.mods?.some((mod) => mod.tier === 0)) {
+    return 'unique';
+  }
+  const modCount = item.mods?.length ?? 0;
+  if (modCount <= 0) return 'normal';
+  if (modCount <= 2) return 'magic';
+  return 'rare';
+};
+
+export const getChestImageForItem = (item: Item): ImageSourcePropType => {
+  return chestImages[getChestRarityForItem(item)];
 };
 
 // デフォルトモンスター画像（未設定時のフォールバック）

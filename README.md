@@ -2,6 +2,12 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## ストア用短文
+
+完全自動戦闘のハクスラRPG。  
+装備とパッシブでビルドを組み、ダンジョン周回で戦利品を厳選しよう。  
+オート周回×ATB風ゲージ制で、短時間でも育成が進む。
+
 ## Get started
 
 1. Install dependencies
