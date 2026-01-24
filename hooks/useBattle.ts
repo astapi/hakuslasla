@@ -1,5 +1,5 @@
 import { useReducer, useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState, DropFilterSettings, DEFAULT_DROP_FILTER } from '@/types';
+import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState, DropFilterSettings, DEFAULT_DROP_FILTER, Dungeon } from '@/types';
 import { getDungeon } from '@/data/dungeons';
 import {
   DIMENSIONAL_RUSH_BOSS_FLOORS,
@@ -96,6 +96,39 @@ const createBattleEnemy = (enemy: Enemy, dungeonId: string): BattleEnemy => ({
   attackSpeed: (enemy.attackSpeed ?? 1.0) * (isEndContentDungeon(dungeonId) ? getEnemyAttackSpeedMultiplier(enemy.id) : 1),
   uniqueDrop: enemy.uniqueDrop,
 });
+
+const buildMimicForDungeon = (dungeon: Dungeon): Enemy | undefined => {
+  const baseMimic = getEnemy('mimic');
+  if (!baseMimic) return undefined;
+
+  const spawns = dungeon.monsters.filter((spawn) => spawn.monsterId !== 'mimic');
+  if (spawns.length === 0) return baseMimic;
+
+  const totals = spawns.reduce(
+    (acc, spawn) => {
+      const enemy = getEnemy(spawn.monsterId);
+      if (!enemy) return acc;
+      acc.totalWeight += spawn.spawnRate;
+      acc.hp += enemy.maxHp * spawn.spawnRate;
+      acc.atk += enemy.atk * spawn.spawnRate;
+      acc.def += enemy.def * spawn.spawnRate;
+      acc.exp += enemy.exp * spawn.spawnRate;
+      acc.attackSpeed += (enemy.attackSpeed ?? 1) * spawn.spawnRate;
+      return acc;
+    },
+    { totalWeight: 0, hp: 0, atk: 0, def: 0, exp: 0, attackSpeed: 0 }
+  );
+
+  const weight = totals.totalWeight || 1;
+  return {
+    ...baseMimic,
+    maxHp: Math.max(1, Math.round(totals.hp / weight)),
+    atk: Math.max(1, Math.round(totals.atk / weight)),
+    def: Math.max(0, Math.round(totals.def / weight)),
+    exp: Math.max(1, Math.round(totals.exp / weight)),
+    attackSpeed: Math.max(0.1, totals.attackSpeed / weight),
+  };
+};
 
 // 初期状態を作成
 const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState => {
@@ -598,7 +631,11 @@ export const useBattle = (dungeonId: string) => {
     }
 
     // 通常の敵をランダム選択
-    return getRandomEnemy(dungeon.monsters);
+    const enemy = getRandomEnemy(dungeon.monsters);
+    if (enemy?.id === 'mimic') {
+      return buildMimicForDungeon(dungeon) ?? enemy;
+    }
+    return enemy;
   }, [dungeonId]);
 
   // 戦闘開始
@@ -672,6 +709,20 @@ export const useBattle = (dungeonId: string) => {
     })();
   }, [dungeonId]);
 
+  const handleMimicDefeat = useCallback((enemyId: string) => {
+    if (enemyId !== 'mimic') return;
+    void (async () => {
+      const count = await settingsRepository.addRespecTokens(1);
+      dispatch({
+        type: 'ADD_LOG',
+        entry: {
+          message: i18n.t('battleLog.respecToken', { count }),
+          type: 'victory',
+        },
+      });
+    })();
+  }, []);
+
   // プレイヤーの攻撃実行（ゲージ100%時に呼ばれる）
   const executeTurn = useCallback(() => {
     if (state.phase !== 'fighting' || !state.enemy || isProcessingRef.current) return;
@@ -730,6 +781,8 @@ export const useBattle = (dungeonId: string) => {
 
         // フィルタリングを適用
         const filteredItems = filterDroppedItems(droppedItems, dropFilter);
+
+        handleMimicDefeat(state.enemy.id);
 
         dispatch({
           type: 'ENEMY_DEFEATED',
@@ -823,6 +876,8 @@ export const useBattle = (dungeonId: string) => {
       // フィルタリングを適用
       const filteredItems = filterDroppedItems(droppedItems, dropFilter);
 
+      handleMimicDefeat(state.enemy.id);
+
       dispatch({
         type: 'ENEMY_DEFEATED',
         exp: state.enemy.exp,
@@ -854,7 +909,7 @@ export const useBattle = (dungeonId: string) => {
 
     // 敵の攻撃はゲージ制で独立して実行されるため削除
     isProcessingRef.current = false;
-  }, [state, getTotalStats, dungeonId, getCombinedModEffects, calculatePoisonDamageLocal, getEnemyForFloor, dropFilter, handleDimensionalRushBossDefeat]);
+  }, [state, getTotalStats, dungeonId, getCombinedModEffects, calculatePoisonDamageLocal, getEnemyForFloor, dropFilter, handleDimensionalRushBossDefeat, handleMimicDefeat]);
 
   // 敵の攻撃実行（敵ゲージ100%時に呼ばれる）- Core関数使用
   const executeEnemyAttack = useCallback(() => {

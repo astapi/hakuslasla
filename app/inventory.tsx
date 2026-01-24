@@ -98,6 +98,7 @@ export default function InventoryScreen() {
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [uberTickets, setUberTickets] = useState<Record<string, number>>({});
+  const [respecTokens, setRespecTokens] = useState(0);
 
   // 選択中アイテムのスロットに対応する装備中アイテム
   const equippedItem = selectedItem ? equipment[selectedItem.slot] : null;
@@ -144,11 +145,13 @@ export default function InventoryScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      const loadTickets = async () => {
+      const loadMisc = async () => {
         const tickets = await settingsRepository.getUberTickets();
+        const tokens = await settingsRepository.getRespecTokens();
         setUberTickets(tickets);
+        setRespecTokens(tokens);
       };
-      void loadTickets();
+      void loadMisc();
     }, [])
   );
 
@@ -368,6 +371,24 @@ export default function InventoryScreen() {
                   </View>
                 </View>
               ))}
+            </View>
+          )}
+
+          <Text style={[styles.miscTitle, styles.miscSectionSpacing]}>
+            {t('inventory.respec.title')}
+          </Text>
+          {respecTokens <= 0 ? (
+            <View style={styles.miscEmpty}>
+              <Text style={styles.miscEmptyText}>{t('inventory.respec.empty')}</Text>
+            </View>
+          ) : (
+            <View style={styles.ticketList}>
+              <View style={styles.ticketRow}>
+                <Text style={styles.ticketName}>{t('inventory.respec.item')}</Text>
+                <View style={styles.ticketCountBadge}>
+                  <Text style={styles.ticketCountText}>{respecTokens}</Text>
+                </View>
+              </View>
             </View>
           )}
         </View>
@@ -781,6 +802,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: ms(12),
+  },
+  miscSectionSpacing: {
+    marginTop: ms(16),
   },
   miscEmpty: {
     padding: ms(16),

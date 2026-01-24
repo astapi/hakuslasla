@@ -7,6 +7,7 @@ const LANGUAGE_KEY = 'app_language';
 const END_CONTENT_UNLOCK_KEY = 'end_content_unlocked';
 const UBER_UNLOCKS_KEY = 'uber_boss_unlocks';
 const UBER_TICKETS_KEY = 'uber_boss_tickets';
+const RESPEC_TOKENS_KEY = 'respec_tokens';
 const DUNGEON_CLEAR_RECORDS_KEY = 'dungeon_clear_records';
 
 // ダンジョンクリア記録の型
@@ -173,6 +174,29 @@ export const settingsRepository = {
       current[bossId] = nextCount;
     }
     await this.set(UBER_TICKETS_KEY, JSON.stringify(current));
+    return true;
+  },
+
+  // リスペックトークン
+  async getRespecTokens(): Promise<number> {
+    const value = await this.get(RESPEC_TOKENS_KEY);
+    if (!value) return 0;
+    const parsed = parseInt(value, 10);
+    return Number.isFinite(parsed) ? parsed : 0;
+  },
+
+  async addRespecTokens(count: number = 1): Promise<number> {
+    const current = await this.getRespecTokens();
+    const nextCount = current + count;
+    await this.set(RESPEC_TOKENS_KEY, nextCount.toString());
+    return nextCount;
+  },
+
+  async consumeRespecTokens(count: number = 1): Promise<boolean> {
+    const current = await this.getRespecTokens();
+    if (current < count) return false;
+    const nextCount = current - count;
+    await this.set(RESPEC_TOKENS_KEY, nextCount.toString());
     return true;
   },
 

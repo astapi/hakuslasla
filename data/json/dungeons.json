@@ -10,7 +10,8 @@
         { "monsterId": "wild_rabbit", "spawnRate": 25 },
         { "monsterId": "goblin", "spawnRate": 20 },
         { "monsterId": "bee", "spawnRate": 15 },
-        { "monsterId": "wolf", "spawnRate": 10 }
+        { "monsterId": "wolf", "spawnRate": 10 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -41,7 +42,8 @@
         { "monsterId": "goblin_warrior", "spawnRate": 20 },
         { "monsterId": "skeleton", "spawnRate": 25 },
         { "monsterId": "rock_lizard", "spawnRate": 15 },
-        { "monsterId": "orc", "spawnRate": 15 }
+        { "monsterId": "orc", "spawnRate": 15 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -74,7 +76,8 @@
         { "monsterId": "golem", "spawnRate": 15 },
         { "monsterId": "mummy", "spawnRate": 25 },
         { "monsterId": "lich", "spawnRate": 15 },
-        { "monsterId": "gargoyle", "spawnRate": 20 }
+        { "monsterId": "gargoyle", "spawnRate": 20 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -104,7 +107,8 @@
         { "monsterId": "goblin_archer", "spawnRate": 25 },
         { "monsterId": "goblin_shaman", "spawnRate": 20 },
         { "monsterId": "goblin_knight", "spawnRate": 18 },
-        { "monsterId": "goblin_champion", "spawnRate": 12 }
+        { "monsterId": "goblin_champion", "spawnRate": 12 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "boss": {
         "monsterId": "goblin_king",
@@ -138,7 +142,8 @@
         { "monsterId": "bandit", "spawnRate": 30 },
         { "monsterId": "bandit_archer", "spawnRate": 25 },
         { "monsterId": "bandit_swordsman", "spawnRate": 25 },
-        { "monsterId": "bandit_brute", "spawnRate": 20 }
+        { "monsterId": "bandit_brute", "spawnRate": 20 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "boss": {
         "monsterId": "bandit_leader",
@@ -172,7 +177,8 @@
         { "monsterId": "death_knight", "spawnRate": 25 },
         { "monsterId": "dark_mage", "spawnRate": 25 },
         { "monsterId": "demon", "spawnRate": 25 },
-        { "monsterId": "wyvern", "spawnRate": 25 }
+        { "monsterId": "wyvern", "spawnRate": 25 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "boss": {
         "monsterId": "demon_lord",
@@ -206,7 +212,8 @@
         { "monsterId": "zombie", "spawnRate": 30 },
         { "monsterId": "ghoul", "spawnRate": 25 },
         { "monsterId": "banshee", "spawnRate": 20 },
-        { "monsterId": "wraith", "spawnRate": 25 }
+        { "monsterId": "wraith", "spawnRate": 25 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "boss": {
         "monsterId": "vampire",
@@ -241,7 +248,8 @@
         { "monsterId": "frost_wolf", "spawnRate": 25 },
         { "monsterId": "ice_witch", "spawnRate": 20 },
         { "monsterId": "yeti", "spawnRate": 20 },
-        { "monsterId": "frost_wyrm", "spawnRate": 15 }
+        { "monsterId": "frost_wyrm", "spawnRate": 15 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -272,7 +280,8 @@
         { "monsterId": "merman", "spawnRate": 20 },
         { "monsterId": "sea_serpent", "spawnRate": 20 },
         { "monsterId": "giant_crab", "spawnRate": 25 },
-        { "monsterId": "kelpy", "spawnRate": 5 }
+        { "monsterId": "kelpy", "spawnRate": 5 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "boss": {
         "monsterId": "kraken",
@@ -307,7 +316,8 @@
         { "monsterId": "magma_golem", "spawnRate": 20 },
         { "monsterId": "salamander", "spawnRate": 25 },
         { "monsterId": "flame_knight", "spawnRate": 20 },
-        { "monsterId": "phoenix", "spawnRate": 15 }
+        { "monsterId": "phoenix", "spawnRate": 15 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -337,7 +347,8 @@
         { "monsterId": "orc_warrior", "spawnRate": 25 },
         { "monsterId": "orc_mage", "spawnRate": 20 },
         { "monsterId": "troll", "spawnRate": 25 },
-        { "monsterId": "cyclops", "spawnRate": 30 }
+        { "monsterId": "cyclops", "spawnRate": 30 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "boss": {
         "monsterId": "uruk_hai",
@@ -372,7 +383,8 @@
         { "monsterId": "shadow_wolf", "spawnRate": 25 },
         { "monsterId": "forest_witch", "spawnRate": 20 },
         { "monsterId": "chimera", "spawnRate": 20 },
-        { "monsterId": "nightmare", "spawnRate": 15 }
+        { "monsterId": "nightmare", "spawnRate": 15 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -403,7 +415,8 @@
         { "monsterId": "storm_harpy", "spawnRate": 25 },
         { "monsterId": "thunder_bird", "spawnRate": 20 },
         { "monsterId": "cloud_giant", "spawnRate": 15 },
-        { "monsterId": "griffon", "spawnRate": 20 }
+        { "monsterId": "griffon", "spawnRate": 20 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -434,7 +447,8 @@
         { "monsterId": "infernal_knight", "spawnRate": 20 },
         { "monsterId": "succubus", "spawnRate": 20 },
         { "monsterId": "balrog", "spawnRate": 20 },
-        { "monsterId": "cerberus", "spawnRate": 20 }
+        { "monsterId": "cerberus", "spawnRate": 20 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -465,7 +479,8 @@
         { "monsterId": "fire_dragon", "spawnRate": 20 },
         { "monsterId": "ice_dragon", "spawnRate": 20 },
         { "monsterId": "thunder_dragon", "spawnRate": 20 },
-        { "monsterId": "elder_dragon", "spawnRate": 15 }
+        { "monsterId": "elder_dragon", "spawnRate": 15 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -496,7 +511,8 @@
         { "monsterId": "seraph", "spawnRate": 20 },
         { "monsterId": "temple_guardian", "spawnRate": 20 },
         { "monsterId": "holy_dragon", "spawnRate": 20 },
-        { "monsterId": "valkyrie", "spawnRate": 20 }
+        { "monsterId": "valkyrie", "spawnRate": 20 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -527,7 +543,8 @@
         { "monsterId": "void_walker", "spawnRate": 20 },
         { "monsterId": "abomination", "spawnRate": 20 },
         { "monsterId": "chaos_dragon", "spawnRate": 20 },
-        { "monsterId": "elder_thing", "spawnRate": 20 }
+        { "monsterId": "elder_thing", "spawnRate": 20 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "dropTable": {
         "common": [
@@ -558,7 +575,8 @@
         { "monsterId": "world_eater", "spawnRate": 20 },
         { "monsterId": "primordial_titan", "spawnRate": 20 },
         { "monsterId": "god_slayer", "spawnRate": 20 },
-        { "monsterId": "end_bringer", "spawnRate": 20 }
+        { "monsterId": "end_bringer", "spawnRate": 20 },
+        { "monsterId": "mimic", "spawnRate": 1 }
       ],
       "boss": {
         "monsterId": "true_final_boss",
