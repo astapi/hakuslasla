@@ -90,6 +90,11 @@
       "title": "入場券",
       "empty": "入場券がありません",
       "item": "{{name}} 入場券"
+    },
+    "respec": {
+      "title": "リスペックアイテム",
+      "empty": "リスペックアイテムがありません",
+      "item": "リスペックオーブ"
     }
   },
   "storage": {
@@ -665,6 +670,9 @@
     "bee": {
       "name": "キラービー"
     },
+    "mimic": {
+      "name": "ミミック"
+    },
     "wolf": {
       "name": "オオカミ"
     },
@@ -1012,7 +1020,8 @@
     "poisonStacksLost": "（{{count}}スタック消失）",
     "bossSkillUsed": "{{enemy}}が{{skill}}を使用した！",
     "uberUnlocked": "{{enemy}}のUber版が解放された！",
-    "uberTicket": "Uber入場券を入手！ ({{count}}枚)"
+    "uberTicket": "Uber入場券を入手！ ({{count}}枚)",
+    "respecToken": "リスペックアイテムを入手！ ({{count}}個)"
   },
   "passiveTree": {
     "title": "パッシブツリー",
@@ -1022,7 +1031,10 @@
     "unlockButton": "習得 (SP: {{count}})",
     "noSp": "SPが足りません",
     "locked": "前提スキルが必要",
-    "placeholder": "ノードをタップして詳細を表示"
+    "placeholder": "ノードをタップして詳細を表示",
+    "respecButton": "リスペック (消費: {{count}})",
+    "noRespecToken": "リスペックアイテムがありません",
+    "cannotRespec": "他のノードが依存しています"
   },
   "passiveNodes": {
     "start": {

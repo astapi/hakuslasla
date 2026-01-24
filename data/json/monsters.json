@@ -50,6 +50,17 @@
         "dropRate": 5
       }
     },
+    "mimic": {
+      "id": "mimic",
+      "name": "ミミック",
+      "image": "mimic",
+      "maxHp": 30,
+      "atk": 8,
+      "def": 3,
+      "exp": 15,
+      "attackSpeed": 1.0,
+      "uniqueDrop": null
+    },
     "wolf": {
       "id": "wolf",
       "name": "オオカミ",

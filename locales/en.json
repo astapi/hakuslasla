@@ -90,6 +90,11 @@
       "title": "Tickets",
       "empty": "No tickets",
       "item": "{{name}} Ticket"
+    },
+    "respec": {
+      "title": "Respec Items",
+      "empty": "No respec items",
+      "item": "Respec Orb"
     }
   },
   "storage": {
@@ -637,6 +642,9 @@
     "bee": {
       "name": "Killer Bee"
     },
+    "mimic": {
+      "name": "Mimic"
+    },
     "wolf": {
       "name": "Wolf"
     },
@@ -984,7 +992,8 @@
     "poisonStacksLost": " ({{count}} stacks lost)",
     "bossSkillUsed": "{{enemy}} used {{skill}}!",
     "uberUnlocked": "Uber version of {{enemy}} unlocked!",
-    "uberTicket": "Obtained an Uber ticket! ({{count}})"
+    "uberTicket": "Obtained an Uber ticket! ({{count}})",
+    "respecToken": "Obtained a respec item! ({{count}})"
   },
   "passiveTree": {
     "title": "Passive Tree",
@@ -994,7 +1003,10 @@
     "unlockButton": "Unlock (SP: {{count}})",
     "noSp": "Not enough SP",
     "locked": "Prerequisite skill required",
-    "placeholder": "Tap a node to view details"
+    "placeholder": "Tap a node to view details",
+    "respecButton": "Respec (Cost: {{count}})",
+    "noRespecToken": "No respec items",
+    "cannotRespec": "Other nodes depend on this"
   },
   "passiveNodes": {
     "start": {

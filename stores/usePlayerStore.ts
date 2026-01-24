@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Equipment, EquipmentSlot, Item } from '@/types';
-import { getPassiveNode, canUnlockNode, calculatePassiveEffects } from '@/data/passiveTree';
+import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects } from '@/data/passiveTree';
 import {
   characterRepository,
   inventoryRepository,
@@ -54,6 +54,8 @@ interface PlayerActions {
   setLevelCap: (levelCap: number) => void;
   // スキルを取得
   unlockSkill: (skillId: string) => Promise<boolean>;
+  // スキルを返却（リスペック）
+  refundSkill: (skillId: string) => Promise<boolean>;
   // 装備を変更（インベントリから、instanceIdで指定）
   equipItem: (instanceId: string) => Promise<void>;
   // 装備を解除（インベントリへ）
@@ -217,6 +219,51 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     set({
       skillPoints: newSkillPoints,
       unlockedSkills: [...state.unlockedSkills, nodeId],
+      maxHp: newMaxHp,
+      atk: newAtk,
+      def: newDef,
+    });
+
+    return true;
+  },
+
+  refundSkill: async (nodeId: string): Promise<boolean> => {
+    const state = get();
+    if (!state.characterId) return false;
+
+    const node = getPassiveNode(nodeId);
+    if (!node) return false;
+
+    if (!canRefundNode(nodeId, state.unlockedSkills)) return false;
+
+    const tokenConsumed = await settingsRepository.consumeRespecTokens(1);
+    if (!tokenConsumed) return false;
+
+    await skillRepository.remove(state.characterId, nodeId);
+
+    const newUnlocked = state.unlockedSkills.filter((id) => id !== nodeId);
+    const passiveEffects = calculatePassiveEffects(newUnlocked);
+    const baseStats = {
+      maxHp: INITIAL_STATS.maxHp + (state.level - 1) * 5,
+      atk: INITIAL_STATS.atk,
+      def: INITIAL_STATS.def,
+    };
+
+    const newMaxHp = baseStats.maxHp + passiveEffects.hp;
+    const newAtk = baseStats.atk + passiveEffects.atk;
+    const newDef = baseStats.def + passiveEffects.def;
+    const newSkillPoints = state.skillPoints + 1;
+
+    await characterRepository.updateStats(state.characterId, {
+      skillPoints: newSkillPoints,
+      maxHp: newMaxHp,
+      atk: newAtk,
+      def: newDef,
+    });
+
+    set({
+      skillPoints: newSkillPoints,
+      unlockedSkills: newUnlocked,
       maxHp: newMaxHp,
       atk: newAtk,
       def: newDef,

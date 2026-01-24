@@ -1,8 +1,8 @@
-import { useState, useMemo } from 'react';
-import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { useState, useMemo, useCallback } from 'react';
+import { View, Text, StyleSheet, Pressable, Dimensions, Image, ImageSourcePropType } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-import { getAllPassiveNodes, canUnlockNode } from '@/data/passiveTree';
+import { getAllPassiveNodes, canUnlockNode, canRefundNode } from '@/data/passiveTree';
 import { PassiveNode, PassiveEffect } from '@/types';
 import {
   GestureDetector,
@@ -24,6 +24,8 @@ import Svg, {
   LinearGradient,
 } from 'react-native-svg';
 import { ms, fs } from '@/utils/scaling';
+import { settingsRepository } from '@/db';
+import { useFocusEffect } from 'expo-router';
 
 // ノードのサイズ設定
 const NODE_SIZE_SMALL = 28;
@@ -57,19 +59,34 @@ const COLORS = {
 // アイコンタイプ
 type IconType = 'atk' | 'hp' | 'def' | 'poison' | 'crit' | 'regen' | 'guard' | 'vamp' | 'special' | 'legendary' | 'speed';
 
-// 仮アイコンテキスト
-const ICON_FALLBACK: Record<IconType, string> = {
-  atk: '⚔',
-  hp: '♥',
-  def: '🛡',
-  poison: '☠',
-  crit: '★',
-  regen: '✚',
-  guard: '🔰',
-  vamp: '🩸',
-  special: '◆',
-  legendary: '👑',
-  speed: '⚡',
+// パッシブアイコン画像
+const ICON_IMAGES: Record<IconType, ImageSourcePropType> = {
+  atk: require('../../assets/images/passive/attack_power.png'),
+  hp: require('../../assets/images/passive/max_health.png'),
+  def: require('../../assets/images/passive/defense.png'),
+  poison: require('../../assets/images/passive/poison.png'),
+  crit: require('../../assets/images/passive/critical_strike.png'),
+  regen: require('../../assets/images/passive/health_regeneration.png'),
+  guard: require('../../assets/images/passive/defense.png'),
+  vamp: require('../../assets/images/passive/life_steal.png'),
+  special: require('../../assets/images/passive/attack_power.png'),
+  legendary: require('../../assets/images/passive/attack_power.png'),
+  speed: require('../../assets/images/passive/attack_speed.png'),
+};
+
+// アイコン背景色（タイプ別）
+const ICON_BG_COLORS: Record<IconType, string> = {
+  atk: '#5b1e1e',
+  hp: '#3f1f2a',
+  def: '#1f3b46',
+  poison: '#2e4a1c',
+  crit: '#4a2b5a',
+  regen: '#1f4a2e',
+  guard: '#2a3e4a',
+  vamp: '#4a1f2e',
+  special: '#3a3a3a',
+  legendary: '#5a4324',
+  speed: '#2a3b5a',
 };
 
 // ノードのアイコンタイプを判定
@@ -189,9 +206,20 @@ const generateSmoothPath = (
 
 export const PassiveTree = () => {
   const { t } = useTranslation();
-  const { skillPoints, unlockedSkills, unlockSkill } = usePlayerStore();
+  const { skillPoints, unlockedSkills, unlockSkill, refundSkill } = usePlayerStore();
   const nodes = getAllPassiveNodes();
   const [selectedNode, setSelectedNode] = useState<PassiveNode | null>(null);
+  const [respecTokens, setRespecTokens] = useState(0);
+
+  useFocusEffect(
+    useCallback(() => {
+      const loadTokens = async () => {
+        const count = await settingsRepository.getRespecTokens();
+        setRespecTokens(count);
+      };
+      void loadTokens();
+    }, [])
+  );
 
   // ズーム・パン用のshared values
   const scale = useSharedValue(INITIAL_SCALE);
@@ -203,6 +231,13 @@ export const PassiveTree = () => {
 
   const handleUnlockNode = (nodeId: string) => {
     unlockSkill(nodeId);
+  };
+
+  const handleRefundNode = async (nodeId: string) => {
+    const success = await refundSkill(nodeId);
+    if (!success) return;
+    const count = await settingsRepository.getRespecTokens();
+    setRespecTokens(count);
   };
 
   // 座標範囲を取得
@@ -414,8 +449,8 @@ export const PassiveTree = () => {
               const position = getNodePosition(node);
               const size = getNodeSize(node);
               const iconType = getIconType(node.effect);
-              const iconSize = size * 0.45;
               const isKeystone = size === NODE_SIZE_KEYSTONE;
+              const iconSize = size * (isKeystone ? 1 : 0.55);
 
               return (
                 <Pressable
@@ -526,10 +561,18 @@ export const PassiveTree = () => {
                   </Svg>
 
                   {/* アイコン */}
-                  <View style={[styles.iconOverlay, { width: size, height: size }]}>
-                    <Text style={[styles.nodeIcon, { fontSize: iconSize }]}>
-                      {ICON_FALLBACK[iconType]}
-                    </Text>
+                  <View
+                    style={[
+                      styles.iconOverlay,
+                      { width: size, height: size, backgroundColor: ICON_BG_COLORS[iconType] },
+                      { borderRadius: size / 2 },
+                    ]}
+                  >
+                    <Image
+                      source={ICON_IMAGES[iconType]}
+                      style={[styles.nodeIconImage, { width: iconSize, height: iconSize }]}
+                      resizeMode="contain"
+                    />
                   </View>
                 </Pressable>
               );
@@ -568,6 +611,24 @@ export const PassiveTree = () => {
                   )
                 ) : (
                   <Text style={styles.lockedText}>{t('passiveTree.locked')}</Text>
+                )}
+              </View>
+            )}
+
+            {unlockedSkills.includes(selectedNode.id) && (
+              <View style={styles.infoPanelActions}>
+                {canRefundNode(selectedNode.id, unlockedSkills) ? (
+                  respecTokens > 0 ? (
+                    <Pressable style={styles.respecButton} onPress={() => handleRefundNode(selectedNode.id)}>
+                      <Text style={styles.respecButtonText}>
+                        {t('passiveTree.respecButton', { count: 1 })}
+                      </Text>
+                    </Pressable>
+                  ) : (
+                    <Text style={styles.noRespecText}>{t('passiveTree.noRespecToken')}</Text>
+                  )
+                ) : (
+                  <Text style={styles.lockedText}>{t('passiveTree.cannotRespec')}</Text>
                 )}
               </View>
             )}
@@ -636,11 +697,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  nodeIcon: {
-    color: '#fff',
-    textShadowColor: 'rgba(0, 0, 0, 0.8)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
+  nodeIconImage: {
+    opacity: 0.95,
   },
   // 下部情報パネル
   infoPanel: {
@@ -693,7 +751,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#1a1a1a',
   },
+  respecButton: {
+    backgroundColor: '#4a7a9b',
+    paddingVertical: ms(8),
+    paddingHorizontal: ms(16),
+    borderRadius: ms(6),
+    borderWidth: 1,
+    borderColor: '#6ea2c2',
+  },
+  respecButtonText: {
+    fontSize: fs(14),
+    fontWeight: 'bold',
+    color: '#0f1b23',
+  },
   noSpText: {
+    fontSize: fs(13),
+    color: '#F44336',
+  },
+  noRespecText: {
     fontSize: fs(13),
     color: '#F44336',
   },
