@@ -13,7 +13,8 @@
     "sell": "売却",
     "none": "なし",
     "unequipped": "未装備",
-    "items": "個"
+    "items": "個",
+    "ticket": "入場券"
   },
   "characterSelect": {
     "title": "LootDive",
@@ -80,7 +81,16 @@
     "selected": "選択中",
     "equipped": "装備中",
     "storage": "倉庫",
-    "noItemsInSlot": "{{slot}}がありません"
+    "noItemsInSlot": "{{slot}}がありません",
+    "tabs": {
+      "equipment": "装備",
+      "misc": "その他"
+    },
+    "tickets": {
+      "title": "入場券",
+      "empty": "入場券がありません",
+      "item": "{{name}} 入場券"
+    }
   },
   "storage": {
     "title": "倉庫",
@@ -169,7 +179,8 @@
   },
   "dungeon": {
     "floors": "全{{count}}階",
-    "recommendedLevel": "推奨Lv.{{level}}"
+    "recommendedLevel": "推奨Lv.{{level}}",
+    "ticketRequired": "入場券が必要"
   },
   "dungeons": {
     "grassland": {

@@ -13,7 +13,8 @@
     "sell": "Sell",
     "none": "None",
     "unequipped": "Empty",
-    "items": "items"
+    "items": "items",
+    "ticket": "Ticket"
   },
   "characterSelect": {
     "title": "LootDive",
@@ -80,7 +81,16 @@
     "selected": "Selected",
     "equipped": "Equipped",
     "storage": "Storage",
-    "noItemsInSlot": "No {{slot}}"
+    "noItemsInSlot": "No {{slot}}",
+    "tabs": {
+      "equipment": "Equipment",
+      "misc": "Misc"
+    },
+    "tickets": {
+      "title": "Tickets",
+      "empty": "No tickets",
+      "item": "{{name}} Ticket"
+    }
   },
   "storage": {
     "title": "Storage",
@@ -169,7 +179,8 @@
   },
   "dungeon": {
     "floors": "{{count}} Floors",
-    "recommendedLevel": "Rec. Lv.{{level}}"
+    "recommendedLevel": "Rec. Lv.{{level}}",
+    "ticketRequired": "Ticket required"
   },
   "dungeons": {
     "grassland": {

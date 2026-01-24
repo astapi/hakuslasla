@@ -112,6 +112,7 @@ const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState
     phase: 'fighting',
     battleLog: [],
     droppedItems: [],
+    lastDroppedItems: [],
     totalExpGained: 0,
     playerGauge: 0,
     enemyGauge: 0,
@@ -166,6 +167,7 @@ const createExtendedInitialState = (
       type: 'info',
     }] : [],
     droppedItems: [],
+    lastDroppedItems: [],
     totalExpGained: 0,
     playerGauge: 0,
     enemyGauge: 0,
@@ -196,6 +198,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         ...state,
         enemy: action.enemy,
         phase: 'fighting',
+        lastDroppedItems: [],
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
           message: i18n.t('battleLog.enemyAppeared', { enemy: action.enemy.name }),
@@ -269,6 +272,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         ...state,
         totalExpGained: state.totalExpGained + action.exp,
         droppedItems: [...state.droppedItems, ...action.droppedItems],
+        lastDroppedItems: action.droppedItems,
         battleLog: addToLog(state.battleLog, defeatLogs),
       };
 
@@ -293,6 +297,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         playerGauge: 0,  // ゲージリセット
         enemyGauge: 0,   // ゲージリセット
         phase: 'fighting',
+        lastDroppedItems: [],
         battleLog: addToLog(state.battleLog, [
           {
             id: logIdCounter++,

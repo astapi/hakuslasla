@@ -380,6 +380,7 @@ export interface BattleState {
   phase: BattlePhase;
   battleLog: BattleLogEntry[];
   droppedItems: Item[];
+  lastDroppedItems: Item[]; // 直近の撃破でドロップしたアイテム
   totalExpGained: number;
   playerGauge: number; // プレイヤーの行動ゲージ (0-100)
   enemyGauge: number;  // 敵の行動ゲージ (0-100)

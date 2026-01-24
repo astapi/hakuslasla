@@ -32,6 +32,9 @@ function isDungeonUnlocked(
 interface DungeonWithStatus extends DungeonListItem {
   isLocked: boolean;
   isCleared: boolean;
+  requiresTicket?: boolean;
+  ticketCount?: number;
+  isDisabled?: boolean;
 }
 
 export default function DungeonSelectScreen() {
@@ -66,11 +69,14 @@ export default function DungeonSelectScreen() {
         if (!baseBossId) continue;
         const isUnlocked = uberUnlocks[baseBossId];
         const ticketCount = uberTickets[baseBossId] ?? 0;
-        if (Boolean(isUnlocked) && ticketCount > 0) {
+        if (Boolean(isUnlocked)) {
           result.push({
             ...dungeon,
             isLocked: false,
             isCleared: clearRecords[dungeon.id] !== undefined,
+            requiresTicket: true,
+            ticketCount,
+            isDisabled: ticketCount <= 0,
           });
         }
         continue;
@@ -132,6 +138,9 @@ export default function DungeonSelectScreen() {
               dungeon={dungeon}
               onPress={() => handleDungeonSelect(dungeon.id)}
               isCleared={dungeon.isCleared}
+              requiresTicket={dungeon.requiresTicket}
+              ticketCount={dungeon.ticketCount}
+              isDisabled={dungeon.isDisabled}
             />
           ))}
         </View>
