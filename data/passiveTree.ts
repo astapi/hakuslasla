@@ -104,6 +104,16 @@ function evaluateRequirement(requirement: NodeRequirement, unlockedNodes: string
 }
 
 /**
+ * ノードの前提条件が満たされているか判定
+ */
+function areRequirementsMet(node: PassiveNode, unlockedNodes: string[]): boolean {
+  if (node.requiredNodes.length === 0) return true;
+  return node.requiredNodes.every((requirement) =>
+    evaluateRequirement(requirement, unlockedNodes)
+  );
+}
+
+/**
  * ノードが取得可能かどうかを判定
  * @param nodeId 判定対象のノードID
  * @param unlockedNodes 既に取得済みのノードID配列
@@ -123,6 +133,30 @@ export function canUnlockNode(nodeId: string, unlockedNodes: string[]): boolean 
   return node.requiredNodes.every((requirement) =>
     evaluateRequirement(requirement, unlockedNodes)
   );
+}
+
+/**
+ * ノードがリスペック（返却）可能か判定
+ * - スタートノードは返却不可
+ * - 依存している取得済みノードがある場合は返却不可
+ */
+export function canRefundNode(nodeId: string, unlockedNodes: string[]): boolean {
+  const node = getPassiveNode(nodeId);
+  if (!node) return false;
+  if (nodeId === passiveTree.startNodeId) return false;
+  if (!unlockedNodes.includes(nodeId)) return false;
+
+  const remaining = unlockedNodes.filter((id) => id !== nodeId);
+  for (const childId of node.childNodes) {
+    if (!remaining.includes(childId)) continue;
+    const childNode = getPassiveNode(childId);
+    if (!childNode) continue;
+    if (!areRequirementsMet(childNode, remaining)) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**

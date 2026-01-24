@@ -55,6 +55,7 @@ export const monsterImages: Record<string, ImageSourcePropType> = {
   troll: require('@/assets/images/monsters/troll.png'),
   killer_rabbit: require('@/assets/images/monsters/killer_rabbit.png'),
   killer_bee: require('@/assets/images/monsters/killer_bee.png'),
+  mimic: require('@/assets/images/monsters/mimic.png'),
   giant_bat: require('@/assets/images/monsters/giant_bat.png'),
   rock_lizard: require('@/assets/images/monsters/rock_lizard.png'),
   golem: require('@/assets/images/monsters/golem.png'),
