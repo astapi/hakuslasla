@@ -7,6 +7,10 @@ import {
   DIMENSIONAL_RUSH_ID,
   UBER_BOSS_BY_BASE,
   UBER_DUNGEON_IDS,
+  DIMENSIONAL_RUSH_BOSS_HP_MULT,
+  DIMENSIONAL_RUSH_BOSS_STAT_MULT,
+  DIMENSIONAL_RUSH_NORMAL_HP_MULT,
+  DIMENSIONAL_RUSH_NORMALIZE_ALPHA,
   getDimensionalRushFloorMultiplier,
   scaleEnemyStats,
 } from '@/core/endContent';
@@ -59,9 +63,10 @@ const computeWeightedAverage = (spawns: MonsterSpawn[]) => {
       acc.atk += enemy.atk * spawn.spawnRate;
       acc.def += enemy.def * spawn.spawnRate;
       acc.exp += enemy.exp * spawn.spawnRate;
+      acc.attackSpeed += (enemy.attackSpeed ?? 1) * spawn.spawnRate;
       return acc;
     },
-    { totalWeight: 0, hp: 0, atk: 0, def: 0, exp: 0 }
+    { totalWeight: 0, hp: 0, atk: 0, def: 0, exp: 0, attackSpeed: 0 }
   );
 
   const weight = totals.totalWeight || 1;
@@ -70,6 +75,7 @@ const computeWeightedAverage = (spawns: MonsterSpawn[]) => {
     atk: totals.atk / weight,
     def: totals.def / weight,
     exp: totals.exp / weight,
+    attackSpeed: totals.attackSpeed / weight,
   };
 };
 
@@ -79,18 +85,20 @@ const finalLandAverage = computeWeightedAverage(finalLandSpawns);
 const earlySpawns = collectSpawns(EARLY_DUNGEON_IDS);
 const lateSpawns = collectSpawns(LATE_DUNGEON_IDS);
 
-const earlyAverage = computeWeightedAverage(earlySpawns);
-const lateAverage = computeWeightedAverage(lateSpawns);
-
-const toNormalization = (source: typeof earlyAverage) => ({
-  hp: finalLandAverage.hp / source.hp,
-  atk: finalLandAverage.atk / source.atk,
-  def: finalLandAverage.def / source.def,
-  exp: finalLandAverage.exp / source.exp,
-});
-
-const earlyNormalization = toNormalization(earlyAverage);
-const lateNormalization = toNormalization(lateAverage);
+const toNormalization = (enemy: Enemy) => {
+  const hpRatio = finalLandAverage.hp / Math.max(1, enemy.maxHp);
+  const atkRatio = finalLandAverage.atk / Math.max(1, enemy.atk);
+  const defRatio = finalLandAverage.def / Math.max(1, enemy.def);
+  const expRatio = finalLandAverage.exp / Math.max(1, enemy.exp);
+  const speedRatio = finalLandAverage.attackSpeed / Math.max(0.1, enemy.attackSpeed ?? 1);
+  return {
+    hp: Math.max(1, Math.pow(hpRatio, DIMENSIONAL_RUSH_NORMALIZE_ALPHA)),
+    atk: Math.max(1, Math.pow(atkRatio, DIMENSIONAL_RUSH_NORMALIZE_ALPHA)),
+    def: Math.max(1, Math.pow(defRatio, DIMENSIONAL_RUSH_NORMALIZE_ALPHA)),
+    exp: Math.max(1, Math.pow(expRatio, DIMENSIONAL_RUSH_NORMALIZE_ALPHA)),
+    attackSpeed: Math.max(1, Math.pow(speedRatio, DIMENSIONAL_RUSH_NORMALIZE_ALPHA)),
+  };
+};
 
 const pickEnemyByRng = (spawns: MonsterSpawn[], rng: () => number): Enemy | undefined => {
   if (spawns.length === 0) return undefined;
@@ -115,24 +123,30 @@ export const getDimensionalRushEnemy = (
   if (bossId) {
     const boss = getEnemy(bossId);
     if (!boss) return undefined;
-    const normalization = floor <= 120 ? earlyNormalization : lateNormalization;
-    return scaleEnemyStats(boss, {
-      hp: normalization.hp * multiplier * 1.5,
-      atk: normalization.atk * multiplier * 1.5,
-      def: normalization.def * multiplier * 1.5,
-      exp: normalization.exp * multiplier * 1.5,
-    });
+    const normalization = toNormalization(boss);
+    return {
+      ...scaleEnemyStats(boss, {
+        hp: normalization.hp * multiplier * DIMENSIONAL_RUSH_BOSS_HP_MULT,
+        atk: normalization.atk * multiplier * DIMENSIONAL_RUSH_BOSS_STAT_MULT,
+        def: normalization.def * multiplier * DIMENSIONAL_RUSH_BOSS_STAT_MULT,
+        exp: normalization.exp * multiplier * DIMENSIONAL_RUSH_BOSS_STAT_MULT,
+      }),
+      attackSpeed: Math.max(0.1, (boss.attackSpeed ?? 1) * normalization.attackSpeed),
+    };
   }
 
   const isEarly = floor <= 120;
   const spawns = isEarly ? earlySpawns : lateSpawns;
   const baseEnemy = pickEnemyByRng(spawns, rng);
   if (!baseEnemy) return undefined;
-  const normalization = isEarly ? earlyNormalization : lateNormalization;
-  return scaleEnemyStats(baseEnemy, {
-    hp: normalization.hp * multiplier,
-    atk: normalization.atk * multiplier,
-    def: normalization.def * multiplier,
-    exp: normalization.exp * multiplier,
-  });
+  const normalization = toNormalization(baseEnemy);
+  return {
+    ...scaleEnemyStats(baseEnemy, {
+      hp: normalization.hp * multiplier * DIMENSIONAL_RUSH_NORMAL_HP_MULT,
+      atk: normalization.atk * multiplier,
+      def: normalization.def * multiplier,
+      exp: normalization.exp * multiplier,
+    }),
+    attackSpeed: Math.max(0.1, (baseEnemy.attackSpeed ?? 1) * normalization.attackSpeed),
+  };
 };

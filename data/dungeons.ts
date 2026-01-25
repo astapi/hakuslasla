@@ -24,6 +24,16 @@ export const DUNGEON_UNLOCK_ORDER: string[] = [
   'final_land',      // 終焉の地
 ];
 
+// デバッグ用ダンジョン
+export const DEBUG_DUNGEON_IDS: string[] = [
+  'debug_dimensional_goblin_king',
+  'debug_dimensional_bandit_leader',
+  'debug_dimensional_vampire',
+  'debug_dimensional_kraken',
+  'debug_dimensional_demon_lord',
+  'debug_dimensional_true_final_boss',
+];
+
 // ダンジョンリスト（選択画面用）
 export const dungeonList: DungeonListItem[] = dungeonListData.dungeons;
 

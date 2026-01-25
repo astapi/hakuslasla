@@ -333,7 +333,7 @@ export interface PlayerState extends PlayerStats {
 }
 
 // 戦闘フェーズ
-export type BattlePhase = 'fighting' | 'victory' | 'defeat' | 'cleared';
+export type BattlePhase = 'fighting' | 'victory' | 'defeat' | 'cleared' | 'retreat';
 
 // 敵の表示情報（UI用）
 export interface EnemyDisplayInfo {
@@ -434,9 +434,11 @@ export type BattleAction =
   | { type: 'START_BATTLE'; enemy: BattleEnemy }
   | { type: 'PLAYER_ATTACK'; damage: number; isCritical?: boolean }
   | { type: 'ENEMY_ATTACK'; damage: number }
-  | { type: 'ENEMY_HEAL'; amount: number }
+  | { type: 'PLAYER_DAMAGE'; damage: number; message: string; logType?: BattleLogEntry['type'] }
+  | { type: 'ENEMY_HEAL'; amount: number; source?: 'regen' | 'on_hit' }
   | { type: 'ENEMY_DEFEATED'; exp: number; droppedItems: Item[] } // 複数アイテム対応
   | { type: 'PLAYER_DEFEATED' }
+  | { type: 'RETREAT' }
   | { type: 'NEXT_FLOOR'; enemy: BattleEnemy }
   | { type: 'DUNGEON_CLEARED' }
   | { type: 'ADD_LOG'; entry: Omit<BattleLogEntry, 'id'> }
