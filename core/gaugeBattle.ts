@@ -242,6 +242,25 @@ export function runGaugeDungeon(
     // 勝利
     totalExp += battleResult.expGained;
     currentHp = battleResult.playerHpRemaining;
+
+    // 次の階層がある場合、遷移時間（500ms = 5 ticks）分のHP回復を反映
+    if (floor < dungeon.maxFloor) {
+      const transitionTicks = Math.floor((config.ticksPerSecond * 500) / 1000);
+      const { engine } = createBattleEngine({
+        playerStats,
+        playerCurrentHp: currentHp,
+        playerMods,
+        enemy: { ...enemy, maxHp: 1, atk: 0, def: 0, exp: 0 }, // ダミー敵
+        config,
+        rng,
+        dungeonId: dungeon.id,
+      });
+      engine.setTransitioning(true);
+      const transitionEvents = engine.advanceTicks(transitionTicks);
+      currentHp = engine.getState().player.currentHp;
+      totalTicks += transitionTicks;
+      allEvents.push(...transitionEvents);
+    }
   }
 
   // ダンジョンクリア

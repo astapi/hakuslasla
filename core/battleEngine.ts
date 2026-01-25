@@ -62,6 +62,7 @@ export interface BattleEngine {
   getBossEffects: () => BossEffectState;
   advanceTicks: (ticks: number) => BattleEvent[];
   isFinished: () => boolean;
+  setTransitioning: (value: boolean) => void;
 }
 
 interface BattleEngineState {
@@ -77,6 +78,7 @@ interface BattleEngineState {
   enemyRegenCounter: number;
   playerAttackSpeedBase: number;
   enemyAttackSpeedBase: number;
+  isTransitioning: boolean;
 }
 
 const createBossSkillEvent = (tick: number, skillId: BossSkillId): BattleEvent => ({
@@ -166,6 +168,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     enemyRegenCounter: 0,
     playerAttackSpeedBase,
     enemyAttackSpeedBase,
+    isTransitioning: false,
   };
 
   const engine: BattleEngine = {
@@ -173,6 +176,9 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     getBossEffects: () => engineState.bossEffects,
     isFinished: () => engineState.state.isFinished,
     advanceTicks: (ticks: number) => advanceBattleEngineTicks(engineState, ticks),
+    setTransitioning: (value: boolean) => {
+      engineState.isTransitioning = value;
+    },
   };
 
   return { engine, events };
@@ -211,8 +217,11 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
     const enemyAS = engine.enemyAttackSpeedBase * engine.bossEffects.enemyAttackSpeedMult;
     const gaugePerTick = engine.config.baseGaugePerSecond / engine.config.ticksPerSecond;
 
-    engine.state.player.gauge += playerAS * gaugePerTick;
-    engine.state.enemy.gauge += enemyAS * gaugePerTick;
+    // 遷移中はゲージを進めない
+    if (!engine.isTransitioning) {
+      engine.state.player.gauge += playerAS * gaugePerTick;
+      engine.state.enemy.gauge += enemyAS * gaugePerTick;
+    }
 
     // HP回復（1秒ごと）
     engine.regenCounter += 1;
@@ -267,8 +276,9 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
     }
 
     // プレイヤー行動（多重行動対応）
+    // 遷移中は攻撃処理をスキップ
     let playerActions = 0;
-    while (engine.state.player.gauge >= 100 && playerActions < 5) {
+    while (!engine.isTransitioning && engine.state.player.gauge >= 100 && playerActions < 5) {
       playerActions += 1;
 
       // 毒ダメージ処理（プレイヤー行動時）
@@ -405,8 +415,9 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
     }
 
     // 敵行動（多重行動対応）
+    // 遷移中は攻撃処理をスキップ
     let enemyActions = 0;
-    while (engine.state.enemy.gauge >= 100 && enemyActions < 5) {
+    while (!engine.isTransitioning && engine.state.enemy.gauge >= 100 && enemyActions < 5) {
       enemyActions += 1;
       const pre = applyEnemyAttackPreEffects(
         {

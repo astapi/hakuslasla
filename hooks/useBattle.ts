@@ -792,22 +792,22 @@ export const useBattle = (dungeonId: string) => {
 
     if (state.currentFloor >= state.maxFloor) {
       dispatch({ type: 'DUNGEON_CLEARED' });
-      isTransitioningRef.current = false;
       return;
     }
 
     const nextFloor = state.currentFloor + 1;
     const nextEnemy = getEnemyForFloor(nextFloor);
     if (!nextEnemy) {
-      isTransitioningRef.current = false;
       return;
     }
 
-    isTransitioningRef.current = true;
+    // 遷移モードを有効化（戦闘エンジンがHP回復のみ継続）
+    battleEngineRef.current?.setTransitioning(true);
     const transitionDelay = 500 / battleSpeedRef.current;
     setTimeout(() => {
       dispatch({ type: 'NEXT_FLOOR', enemy: createBattleEnemy(nextEnemy, dungeonId) });
-      isTransitioningRef.current = false;
+      // 新しい敵が出現したら遷移モードを解除
+      battleEngineRef.current?.setTransitioning(false);
     }, transitionDelay);
   }, [state, dungeonId, dropFilter, handleDimensionalRushBossDefeat, handleMimicDefeat, getEnemyForFloor]);
 
@@ -909,9 +909,7 @@ export const useBattle = (dungeonId: string) => {
           break;
         }
         case 'enemy_defeated': {
-          if (!isTransitioningRef.current) {
-            handleEnemyDefeated();
-          }
+          handleEnemyDefeated();
           break;
         }
         case 'player_defeated': {
@@ -976,7 +974,7 @@ export const useBattle = (dungeonId: string) => {
     }
 
     gameLoopRef.current = setInterval(() => {
-      if (isProcessingRef.current || isTransitioningRef.current) return;
+      if (isProcessingRef.current) return;
       const engine = battleEngineRef.current;
       if (!engine) return;
 
