@@ -14,6 +14,7 @@ export default function HomeScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { skillPoints, characterName, isLoaded, clear } = usePlayerStore();
+  const [statusExpanded, setStatusExpanded] = useState(false);
 
   // 画面フォーカス時に再レンダリングをトリガーするためのキー
   const [focusKey, setFocusKey] = useState(0);
@@ -71,12 +72,14 @@ export default function HomeScreen() {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <View style={styles.characterCard}>
           <View style={styles.characterSection}>
-            <Image
-              source={playerImages.standing}
-              style={styles.characterImage}
-              resizeMode="contain"
-            />
-            <View style={styles.characterInfo}>
+            {!statusExpanded && (
+              <Image
+                source={playerImages.standing}
+                style={styles.characterImage}
+                resizeMode="contain"
+              />
+            )}
+            <View style={[styles.characterInfo, statusExpanded && styles.characterInfoExpanded]}>
               <View style={styles.characterHeader}>
                 <Text style={styles.characterName}>{characterName}</Text>
                 <View style={styles.headerButtons}>
@@ -88,7 +91,10 @@ export default function HomeScreen() {
                   </Pressable>
                 </View>
               </View>
-              <StatusPanel key={`status-${focusKey}`} />
+              <StatusPanel
+                key={`status-${focusKey}`}
+                onDetailsChange={setStatusExpanded}
+              />
             </View>
           </View>
         </View>
@@ -213,6 +219,9 @@ const styles = StyleSheet.create({
   characterInfo: {
     flex: 1,
     justifyContent: 'center',
+  },
+  characterInfoExpanded: {
+    width: '100%',
   },
   characterHeader: {
     flexDirection: 'row',

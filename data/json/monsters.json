@@ -1196,10 +1196,14 @@
       "exp": 5000,
       "attackSpeed": 0.7,
       "isBoss": true,
-      "uniqueDrop": {
-        "itemId": "uber_kings_crown",
-        "dropRate": 5
-      }
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "uber_goblin_blade", "dropRate": 5 },
+        { "itemId": "uber_goblin_plate", "dropRate": 5 },
+        { "itemId": "uber_goblin_grip", "dropRate": 5 },
+        { "itemId": "uber_goblin_stomp", "dropRate": 5 },
+        { "itemId": "uber_kings_crown", "dropRate": 5 }
+      ]
     },
     "uber_bandit_leader": {
       "id": "uber_bandit_leader",
@@ -1211,10 +1215,14 @@
       "exp": 6000,
       "attackSpeed": 1.0,
       "isBoss": true,
-      "uniqueDrop": {
-        "itemId": "uber_bandit_crown",
-        "dropRate": 5
-      }
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "uber_bandit_dagger", "dropRate": 5 },
+        { "itemId": "uber_bandit_coat", "dropRate": 5 },
+        { "itemId": "uber_bandit_grip", "dropRate": 5 },
+        { "itemId": "uber_bandit_steps", "dropRate": 5 },
+        { "itemId": "uber_bandit_crown", "dropRate": 5 }
+      ]
     },
     "uber_vampire": {
       "id": "uber_vampire",
@@ -1226,10 +1234,14 @@
       "exp": 7000,
       "attackSpeed": 1.1,
       "isBoss": true,
-      "uniqueDrop": {
-        "itemId": "uber_vampire_fang",
-        "dropRate": 5
-      }
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "uber_vampire_fang", "dropRate": 5 },
+        { "itemId": "uber_vampire_plate", "dropRate": 5 },
+        { "itemId": "uber_vampire_grip", "dropRate": 5 },
+        { "itemId": "uber_vampire_stride", "dropRate": 5 },
+        { "itemId": "uber_vampire_heart", "dropRate": 5 }
+      ]
     },
     "uber_kraken": {
       "id": "uber_kraken",
@@ -1241,10 +1253,14 @@
       "exp": 8000,
       "attackSpeed": 0.9,
       "isBoss": true,
-      "uniqueDrop": {
-        "itemId": "uber_kraken_tentacle",
-        "dropRate": 5
-      }
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "uber_kraken_tentacle", "dropRate": 5 },
+        { "itemId": "uber_kraken_shell", "dropRate": 5 },
+        { "itemId": "uber_kraken_claw", "dropRate": 5 },
+        { "itemId": "uber_kraken_fin", "dropRate": 5 },
+        { "itemId": "uber_kraken_eye", "dropRate": 5 }
+      ]
     },
     "uber_demon_lord": {
       "id": "uber_demon_lord",
@@ -1256,10 +1272,14 @@
       "exp": 10000,
       "attackSpeed": 0.6,
       "isBoss": true,
-      "uniqueDrop": {
-        "itemId": "uber_demon_crown",
-        "dropRate": 5
-      }
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "uber_demon_blade", "dropRate": 5 },
+        { "itemId": "uber_demon_armor", "dropRate": 5 },
+        { "itemId": "uber_demon_grip", "dropRate": 5 },
+        { "itemId": "uber_demon_steps", "dropRate": 5 },
+        { "itemId": "uber_demon_crown", "dropRate": 5 }
+      ]
     },
     "uber_true_final_boss": {
       "id": "uber_true_final_boss",
@@ -1271,10 +1291,14 @@
       "exp": 20000,
       "attackSpeed": 0.45,
       "isBoss": true,
-      "uniqueDrop": {
-        "itemId": "uber_crown_of_end",
-        "dropRate": 5
-      }
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "uber_endblade", "dropRate": 5 },
+        { "itemId": "uber_endplate", "dropRate": 5 },
+        { "itemId": "uber_endgrasp", "dropRate": 5 },
+        { "itemId": "uber_endstride", "dropRate": 5 },
+        { "itemId": "uber_crown_of_end", "dropRate": 5 }
+      ]
     }
   }
 }

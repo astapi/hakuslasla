@@ -71,6 +71,7 @@ export interface EnemyConfig {
   atk: number;
   def: number;
   exp: number;
+  attackSpeed?: number;
 }
 
 // ========================================
@@ -222,6 +223,11 @@ export interface CombinedModEffects {
   // 攻撃速度
   attackSpeedPct: number;        // increased%
   attackSpeedMorePct: number[];  // more%（配列）
+
+  // 戦闘経過で増える効果
+  timeAtkIncPct: number;   // 5秒ごとにATK increased%加算
+  timeDefIncPct: number;   // 5秒ごとにDEF increased%加算
+  timeHpRegen: number;     // 5秒ごとにHP回復量加算
 }
 
 /**
@@ -269,6 +275,13 @@ export type BattleEventType =
   | 'poison_expired'
   | 'hp_regen'
   | 'lifesteal'
+  | 'enemy_heal'
+  | 'player_damage'
+  | 'player_poison_applied'
+  | 'player_poison_damage'
+  | 'reset_player_gauge'
+  | 'boss_skill'
+  | 'boss_intro'
   | 'player_defeated'
   | 'enemy_defeated';
 

@@ -3,16 +3,25 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
+import { combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
 import { HPBar } from '../battle/HPBar';
 import { ms, fs } from '@/utils/scaling';
 
 interface StatusPanelProps {
   currentHp?: number;
+  onDetailsChange?: (open: boolean) => void;
 }
 
-export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
+export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) => {
   const { t } = useTranslation();
   const [showDetails, setShowDetails] = useState(false);
+  const toggleDetails = () => {
+    setShowDetails((prev) => {
+      const next = !prev;
+      if (onDetailsChange) onDetailsChange(next);
+      return next;
+    });
+  };
 
   // 装備・スキル変更時に再レンダリングするため、関連する state を購読
   const {
@@ -45,13 +54,10 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
     let baseDef = state.def;
     let baseMaxHp = state.maxHp;
 
-    // 装備MODからの戦闘効果を集計
-    let modCriticalChance = 0;
-    let modCriticalDamage = 0;
-    let modPoisonChance = 0;
-    let modHpRegen = 0;
-    let modHpRegenPct = 0;
-    let modHpOnHit = 0;
+    // 装備MODからのincreased%を集計
+    let equipHpIncPct = 0;
+    let equipAtkIncPct = 0;
+    let equipDefIncPct = 0;
 
     // 装備ステータス加算
     Object.values(state.equipment).forEach((item) => {
@@ -62,12 +68,10 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
           for (const mod of item.mods) {
             if (mod.type === 'atk_bonus') baseAtk += mod.value;
             if (mod.type === 'def_bonus') baseDef += mod.value;
-            if (mod.type === 'critical_chance') modCriticalChance += mod.value;
-            if (mod.type === 'critical_damage') modCriticalDamage += mod.value;
-            if (mod.type === 'poison_chance') modPoisonChance += mod.value;
-            if (mod.type === 'hp_regen') modHpRegen += mod.value;
-            if (mod.type === 'hp_regen_pct') modHpRegenPct += mod.value;
-            if (mod.type === 'hp_on_hit') modHpOnHit += mod.value;
+            if (mod.type === 'hp_bonus') baseMaxHp += mod.value;
+            if (mod.type === 'hp_increased_pct') equipHpIncPct += mod.value;
+            if (mod.type === 'atk_increased_pct') equipAtkIncPct += mod.value;
+            if (mod.type === 'def_increased_pct') equipDefIncPct += mod.value;
           }
         }
       }
@@ -75,40 +79,55 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
 
     // パッシブ効果を取得
     const passiveEffects = calculatePassiveEffects(state.unlockedSkills);
+    const equipmentItems = Object.values(state.equipment);
+    const combinedMods = combineMods(equipmentItems, passiveEffects);
 
     // 合計値を計算
-    const totalCriticalChance = passiveEffects.critical_chance + modCriticalChance;
-    const totalCriticalDamage = 150 + passiveEffects.critical_damage + modCriticalDamage; // 基礎150%
-    const totalPoisonChance = passiveEffects.poison_chance + modPoisonChance;
-    const totalHpRegen = passiveEffects.hp_regen + modHpRegen;
-    const totalHpRegenPct = passiveEffects.hp_regen_pct + modHpRegenPct;
-    const totalHpOnHit = passiveEffects.hp_on_hit + modHpOnHit;
-    const totalHpOnCrit = passiveEffects.hp_on_crit;
+    const totalCriticalChance = combinedMods.criticalChance;
+    const totalCriticalDamage = 150 + combinedMods.criticalDamage; // 基礎150%
+    const totalPoisonChance = combinedMods.poisonChance;
+    const totalHpRegen = combinedMods.hpRegen;
+    const totalHpRegenPct = combinedMods.hpRegenPct;
+    const totalHpOnHit = combinedMods.hpOnHit;
+    const totalHpOnCrit = combinedMods.hpOnCrit;
 
     // 毎秒HP回復量を計算（フラット + %回復）
     // 最終HPを取得（getTotalStats()の結果を使用）
     const finalMaxHp = state.getTotalStats().maxHp;
     const hpRegenPerSecond = totalHpRegen + Math.floor(finalMaxHp * totalHpRegenPct / 100);
+    const poisonDamageMoreTotal = combinedMods.poisonDamageMorePct.reduce((sum, v) => sum + v, 0);
+    const attackSpeedMoreTotal = combinedMods.attackSpeedMorePct.reduce((sum, v) => sum + v, 0);
+    const finalAttackSpeed = getAttackSpeedFromMods(combinedMods);
 
     return {
       hp: {
         base: baseMaxHp,
-        inc: passiveEffects.hp_increased_pct,
+        inc: passiveEffects.hp_increased_pct + equipHpIncPct,
         more: passiveEffects.hp_more_pct.reduce((sum, v) => sum + v, 0),
       },
       atk: {
         base: baseAtk,
-        inc: passiveEffects.atk_increased_pct,
+        inc: passiveEffects.atk_increased_pct + equipAtkIncPct,
         more: passiveEffects.atk_more_pct.reduce((sum, v) => sum + v, 0),
       },
       def: {
         base: baseDef,
-        inc: passiveEffects.def_increased_pct,
+        inc: passiveEffects.def_increased_pct + equipDefIncPct,
         more: passiveEffects.def_more_pct.reduce((sum, v) => sum + v, 0),
       },
       criticalChance: totalCriticalChance,
       criticalDamage: totalCriticalDamage,
       poisonChance: totalPoisonChance,
+      poisonDamagePct: combinedMods.poisonDamagePct,
+      poisonDamageMore: poisonDamageMoreTotal,
+      poisonMaxStacks: combinedMods.poisonMaxStacks,
+      poisonDamageReduction: combinedMods.poisonDamageReduction,
+      poisonLifesteal: combinedMods.poisonLifesteal,
+      noDirectDamage: combinedMods.noDirectDamage,
+      damageReductionPct: combinedMods.damageReductionPct,
+      attackSpeedPct: combinedMods.attackSpeedPct,
+      attackSpeedMore: attackSpeedMoreTotal,
+      finalAttackSpeed,
       hpRegenPerSecond,
       hpOnHit: totalHpOnHit,
       hpOnCrit: totalHpOnCrit,
@@ -118,7 +137,7 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
   const breakdown = showDetails ? getStatsBreakdown() : null;
 
   return (
-    <Pressable onPress={() => setShowDetails(!showDetails)}>
+    <Pressable onPress={toggleDetails}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>{t('status.title')}</Text>
@@ -192,6 +211,54 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
                 </Text>
               </Text>
             </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.poisonDamage')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.poisonDamagePct > 0 ? styles.poisonText : undefined}>
+                  +{breakdown.poisonDamagePct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.poisonDamageMore')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.poisonDamageMore > 0 ? styles.poisonText : undefined}>
+                  +{breakdown.poisonDamageMore}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.poisonMaxStacks')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.poisonMaxStacks > 0 ? styles.poisonText : undefined}>
+                  {breakdown.poisonMaxStacks}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.poisonDamageReduction')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.poisonDamageReduction > 0 ? styles.poisonText : undefined}>
+                  {breakdown.poisonDamageReduction}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.poisonLifesteal')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.poisonLifesteal > 0 ? styles.poisonText : undefined}>
+                  {breakdown.poisonLifesteal}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.noDirectDamage')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.noDirectDamage ? styles.poisonText : undefined}>
+                  {breakdown.noDirectDamage ? t('status.on') : t('status.off')}
+                </Text>
+              </Text>
+            </View>
             <View style={styles.separator} />
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>{t('status.hpRegen')}</Text>
@@ -214,6 +281,38 @@ export const StatusPanel = ({ currentHp }: StatusPanelProps) => {
               <Text style={styles.detailValue}>
                 <Text style={breakdown.hpOnCrit > 0 ? styles.critHealText : undefined}>
                   +{breakdown.hpOnCrit}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.damageReduction')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.damageReductionPct > 0 ? styles.healText : undefined}>
+                  {breakdown.damageReductionPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.attackSpeed')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.attackSpeedPct > 0 ? styles.critText : undefined}>
+                  +{breakdown.attackSpeedPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.attackSpeedMore')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.attackSpeedMore > 0 ? styles.critText : undefined}>
+                  +{breakdown.attackSpeedMore}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.finalAttackSpeed')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.finalAttackSpeed > 1 ? styles.critText : undefined}>
+                  {breakdown.finalAttackSpeed.toFixed(2)}
                 </Text>
               </Text>
             </View>
@@ -286,17 +385,22 @@ const styles = StyleSheet.create({
     borderRadius: ms(8),
     padding: ms(8),
     marginBottom: ms(8),
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   detailRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: ms(4),
+    width: '48%',
   },
   detailLabel: {
     fontSize: fs(12),
     color: '#aaa',
-    width: ms(40),
+    flex: 1,
+    marginRight: ms(6),
   },
   detailValue: {
     fontSize: fs(12),
@@ -314,6 +418,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     marginVertical: ms(8),
+    width: '100%',
   },
   critText: {
     color: '#FF6B6B',
