@@ -1,5 +1,25 @@
-import i18n from '@/lib/i18n';
 import { EnemyConfig } from './types';
+
+type I18nLike = {
+  exists: (key: string) => boolean;
+  t: (key: string) => string;
+};
+
+let cachedI18n: I18nLike | null | undefined;
+
+const getI18n = (): I18nLike | null => {
+  if (cachedI18n !== undefined) return cachedI18n ?? null;
+  try {
+    // Lazy load to avoid pulling React Native deps in scripts.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const mod = require('@/lib/i18n');
+    cachedI18n = (mod?.default ?? mod) as I18nLike;
+    return cachedI18n ?? null;
+  } catch {
+    cachedI18n = null;
+    return null;
+  }
+};
 
 export const DIMENSIONAL_RUSH_ID = 'dimensional_rush';
 
@@ -64,6 +84,8 @@ export const isUberBoss = (enemyId: string): boolean => {
 export const getBossSkillName = (enemyId: string): string | null => {
   const baseId = getBaseBossId(enemyId);
   const key = `bossSkills.${baseId}.name`;
+  const i18n = getI18n();
+  if (!i18n) return null;
   if (!i18n.exists(key)) return null;
   return i18n.t(key);
 };

@@ -60,21 +60,19 @@ export function executePlayerAttack(
     ? 0
     : Math.floor(baseDamage * criticalMultiplier);
 
-  // イベント生成
-  if (finalDamage > 0) {
-    if (isCritical) {
-      events.push({
-        type: 'critical_hit',
-        tick: state.elapsedTicks,
-        data: { damage: finalDamage, target: 'enemy' },
-      });
-    } else {
-      events.push({
-        type: 'player_attack',
-        tick: state.elapsedTicks,
-        data: { damage: finalDamage },
-      });
-    }
+  // イベント生成（ダメージ0でも攻撃イベントは発火）
+  if (isCritical && finalDamage > 0) {
+    events.push({
+      type: 'critical_hit',
+      tick: state.elapsedTicks,
+      data: { damage: finalDamage, target: 'enemy' },
+    });
+  } else {
+    events.push({
+      type: 'player_attack',
+      tick: state.elapsedTicks,
+      data: { damage: finalDamage },
+    });
   }
 
   return { damage: finalDamage, isCritical, events };

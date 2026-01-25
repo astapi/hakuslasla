@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Share } from 'react-native';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import {
   PRESET_TYPES,
@@ -21,6 +22,8 @@ import {
   DUNGEON_INFO,
   EquipmentSetType,
   applyEquipmentPresetToCharacter,
+  BUILD_PRESETS,
+  applyBuildPresetToCharacter,
 } from '@/utils/debugPresets';
 import {
   settingsRepository,
@@ -34,6 +37,7 @@ const LEVELS: PresetLevel[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 export default function DebugScreen() {
   const router = useRouter();
   const { level, unlockedSkills, equipment, refresh } = usePlayerStore();
+  const [showBuildJson, setShowBuildJson] = useState(false);
 
   // パッシブプリセット
   const [selectedType, setSelectedType] = useState<PresetType>('REGEN');
@@ -44,6 +48,8 @@ export default function DebugScreen() {
   const [selectedDungeon, setSelectedDungeon] = useState<string>('volcano');
   const [selectedEquipType, setSelectedEquipType] = useState<EquipmentSetType>('DEF');
   const [isApplyingEquip, setIsApplyingEquip] = useState(false);
+  const [selectedBuildId, setSelectedBuildId] = useState<string>(BUILD_PRESETS[0]?.id ?? '');
+  const [isApplyingBuild, setIsApplyingBuild] = useState(false);
 
   // 戦闘速度設定
   const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
@@ -125,8 +131,61 @@ export default function DebugScreen() {
     );
   };
 
+  const handleApplyBuildPreset = async () => {
+    if (!selectedBuildId) return;
+    Alert.alert(
+      'ビルドプリセット適用',
+      '現在の装備・パッシブはリセットされます。適用しますか？',
+      [
+        { text: 'キャンセル', style: 'cancel' },
+        {
+          text: '適用',
+          style: 'destructive',
+          onPress: async () => {
+            setIsApplyingBuild(true);
+            try {
+              const success = await applyBuildPresetToCharacter(selectedBuildId);
+              if (success) {
+                await refresh();
+                const name = BUILD_PRESETS.find((b) => b.id === selectedBuildId)?.name ?? '';
+                Alert.alert('完了', `${name} を適用しました`);
+              } else {
+                Alert.alert('エラー', 'ビルド適用に失敗しました');
+              }
+            } catch (error) {
+              Alert.alert('エラー', '予期しないエラーが発生しました');
+              console.error(error);
+            } finally {
+              setIsApplyingBuild(false);
+            }
+          },
+        },
+      ]
+    );
+  };
+
   // 現在の装備数を計算
   const equippedCount = Object.values(equipment).filter(Boolean).length;
+  const buildJson = JSON.stringify(
+    {
+      level,
+      equipment,
+      unlockedSkills,
+    },
+    null,
+    2
+  );
+  const handleCopyBuildJson = async () => {
+    setShowBuildJson(true);
+    try {
+      await Share.share({ message: buildJson });
+    } catch {
+      Alert.alert(
+        '共有不可',
+        '共有シートを開けませんでした。下のJSONを長押しで選択してコピーしてください。'
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -148,6 +207,30 @@ export default function DebugScreen() {
             <Text style={styles.infoText}>取得スキル数: {unlockedSkills.length}</Text>
             <Text style={styles.infoText}>装備数: {equippedCount}/5</Text>
           </View>
+          <View style={styles.buildActionRow}>
+            <Pressable
+              style={styles.buildToggleButton}
+              onPress={() => setShowBuildJson((prev) => !prev)}
+            >
+              <Text style={styles.buildToggleText}>
+                {showBuildJson ? 'ビルドJSONを隠す' : 'ビルドJSONを表示'}
+              </Text>
+            </Pressable>
+            <Pressable
+              style={styles.buildCopyButton}
+              onPress={handleCopyBuildJson}
+            >
+              <MaterialCommunityIcons name="share-variant" size={14} color="#ddd" />
+              <Text style={styles.buildCopyText}>共有</Text>
+            </Pressable>
+          </View>
+          {showBuildJson && (
+            <View style={styles.buildJsonBox}>
+              <Text style={styles.buildJsonText} selectable>
+                {buildJson}
+              </Text>
+            </View>
+          )}
         </View>
 
         {/* ========================================
@@ -319,6 +402,57 @@ export default function DebugScreen() {
         </View>
 
         {/* ========================================
+            ビルドプリセット
+           ======================================== */}
+        <View style={styles.sectionHeader}>
+          <MaterialCommunityIcons name="account-cog" size={20} color="#80DEEA" />
+          <Text style={styles.sectionHeaderText}>ビルドプリセット</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>ビルド</Text>
+          <View style={styles.presetGrid}>
+            {BUILD_PRESETS.map((build) => (
+              <Pressable
+                key={build.id}
+                style={[
+                  styles.presetButton,
+                  selectedBuildId === build.id && styles.presetButtonSelected,
+                ]}
+                onPress={() => setSelectedBuildId(build.id)}
+              >
+                <Text
+                  style={[
+                    styles.presetButtonText,
+                    selectedBuildId === build.id && styles.presetButtonTextSelected,
+                  ]}
+                >
+                  {build.name}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Pressable
+            style={[styles.applyButton, isApplyingBuild && styles.applyButtonDisabled]}
+            onPress={handleApplyBuildPreset}
+            disabled={isApplyingBuild}
+          >
+            <MaterialCommunityIcons
+              name="check-circle-outline"
+              size={18}
+              color="#fff"
+              style={styles.applyIcon}
+            />
+            <Text style={styles.applyButtonText}>
+              {isApplyingBuild ? '適用中...' : 'ビルド適用'}
+            </Text>
+          </Pressable>
+        </View>
+
+        {/* ========================================
             戦闘速度設定
            ======================================== */}
         <View style={styles.sectionHeader}>
@@ -432,6 +566,52 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: 8,
     padding: 12,
+  },
+  buildActionRow: {
+    marginTop: 10,
+    flexDirection: 'row',
+    gap: 8,
+  },
+  buildToggleButton: {
+    backgroundColor: 'rgba(35, 40, 51, 0.5)',
+    paddingVertical: 8,
+    borderRadius: 6,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#3A3F4B',
+    flex: 1,
+  },
+  buildToggleText: {
+    color: '#ddd',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  buildCopyButton: {
+    backgroundColor: 'rgba(35, 40, 51, 0.5)',
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#3A3F4B',
+    flexDirection: 'row',
+    gap: 6,
+  },
+  buildCopyText: {
+    color: '#ddd',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  buildJsonBox: {
+    marginTop: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    borderRadius: 8,
+    padding: 8,
+  },
+  buildJsonText: {
+    color: '#bbb',
+    fontSize: 10,
+    lineHeight: 14,
   },
   infoText: {
     fontSize: 14,

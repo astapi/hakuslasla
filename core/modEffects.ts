@@ -80,6 +80,9 @@ export function createEmptyModEffects(): CombinedModEffects {
     hpOnHit: 0,
     attackSpeedPct: 0,
     attackSpeedMorePct: [],
+    timeAtkIncPct: 0,
+    timeDefIncPct: 0,
+    timeHpRegen: 0,
   };
 }
 
@@ -118,6 +121,15 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
       break;
     case 'attack_speed_more_pct':
       effects.attackSpeedMorePct.push(mod.value);
+      break;
+    case 'time_atk_inc_pct':
+      effects.timeAtkIncPct += mod.value;
+      break;
+    case 'time_def_inc_pct':
+      effects.timeDefIncPct += mod.value;
+      break;
+    case 'time_hp_regen':
+      effects.timeHpRegen += mod.value;
       break;
   }
 }

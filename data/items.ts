@@ -391,12 +391,20 @@ export function getModDescription(mod: ItemMod): string {
       return `被ダメ-${mod.value}%`;
     case 'attack_speed_pct':
       return `攻撃速度+${mod.value}%`;
+    case 'attack_speed_more_pct':
+      return `攻撃速度+${mod.value}% more`;
     case 'hp_increased_pct':
       return `HP+${mod.value}%`;
     case 'atk_increased_pct':
       return `ATK+${mod.value}%`;
     case 'def_increased_pct':
       return `DEF+${mod.value}%`;
+    case 'time_atk_inc_pct':
+      return `5秒毎にATK+${mod.value}%`;
+    case 'time_def_inc_pct':
+      return `5秒毎にDEF+${mod.value}%`;
+    case 'time_hp_regen':
+      return `5秒毎に毎秒HP+${mod.value}回復`;
     default:
       return '';
   }
