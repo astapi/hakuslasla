@@ -86,7 +86,7 @@ const EquipmentRow = ({ slot, item, t }: EquipmentRowProps) => {
                 ]}
               >
                 {t(`mods.${mod.type}`)} +{mod.value}
-                {mod.type.includes('chance') ? '%' : ''}
+                {mod.type.includes('chance') || mod.type.includes('_pct') || mod.type === 'lifesteal' ? '%' : ''}
               </Text>
             </View>
           ))

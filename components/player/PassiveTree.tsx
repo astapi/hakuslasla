@@ -564,16 +564,34 @@ export const PassiveTree = () => {
                   <View
                     style={[
                       styles.iconOverlay,
-                      { width: size, height: size, backgroundColor: ICON_BG_COLORS[iconType] },
+                      {
+                        width: size,
+                        height: size,
+                        backgroundColor: ICON_BG_COLORS[iconType],
+                        borderColor: isUnlocked
+                          ? COLORS.borderUnlocked
+                          : canUnlock
+                            ? COLORS.borderCanUnlock
+                            : COLORS.borderDefault,
+                        borderWidth: isUnlocked ? 2 : canUnlock ? 1.5 : 1,
+                        opacity: isUnlocked ? 1 : canUnlock ? 0.9 : 0.65,
+                      },
                       { borderRadius: size / 2 },
                     ]}
                   >
                     <Image
                       source={ICON_IMAGES[iconType]}
-                      style={[styles.nodeIconImage, { width: iconSize, height: iconSize }]}
+                      style={[
+                        styles.nodeIconImage,
+                        { width: iconSize, height: iconSize },
+                        { opacity: isUnlocked ? 1 : canUnlock ? 0.9 : 0.6 },
+                      ]}
                       resizeMode="contain"
                     />
                   </View>
+                  {isUnlocked && (
+                    <View style={[styles.unlockedDot, { width: size * 0.22, height: size * 0.22, borderRadius: size * 0.11 }]} />
+                  )}
                 </Pressable>
               );
             })}
@@ -699,6 +717,14 @@ const styles = StyleSheet.create({
   },
   nodeIconImage: {
     opacity: 0.95,
+  },
+  unlockedDot: {
+    position: 'absolute',
+    right: -2,
+    top: -2,
+    backgroundColor: '#7cb342',
+    borderWidth: 1,
+    borderColor: '#1a1a24',
   },
   // 下部情報パネル
   infoPanel: {

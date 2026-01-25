@@ -169,7 +169,7 @@ export default function BattleScreen() {
   const { t } = useTranslation();
   const { dungeonId } = useLocalSearchParams<{ dungeonId: string }>();
   const router = useRouter();
-  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun } = useBattle(dungeonId || '');
+  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat } = useBattle(dungeonId || '');
   const { level } = usePlayerStore();
   const dungeon = getDungeon(dungeonId || '');
 
@@ -206,9 +206,10 @@ export default function BattleScreen() {
       return;
     }
 
-    if (state.phase === 'cleared' || state.phase === 'defeat') {
+    if (state.phase === 'cleared' || state.phase === 'defeat' || state.phase === 'retreat') {
+      const isRetreat = state.phase === 'retreat';
       // 累計（現在の周回分を含む）
-      const finalTotalExp = (state.grandTotalExp || 0) + state.totalExpGained;
+      const finalTotalExp = isRetreat ? 0 : (state.grandTotalExp || 0) + state.totalExpGained;
       const finalTotalItems = [...(state.grandTotalItems || []), ...state.droppedItems];
 
       // 結果画面に遷移
@@ -218,10 +219,10 @@ export default function BattleScreen() {
           params: {
             dungeonId: dungeonId,
             dungeonName: dungeon?.name || '',
-            result: state.phase === 'cleared' ? 'cleared' : 'defeat',
+            result: state.phase === 'cleared' ? 'cleared' : state.phase === 'retreat' ? 'retreat' : 'defeat',
             floorsCleared: state.currentFloor.toString(),
             maxFloor: state.maxFloor.toString(),
-            expGained: state.totalExpGained.toString(),
+            expGained: isRetreat ? '0' : state.totalExpGained.toString(),
             itemsGained: JSON.stringify(state.droppedItems),
             runCount: state.runCount?.toString() || '1',
             grandTotalExp: finalTotalExp.toString(),
@@ -234,9 +235,9 @@ export default function BattleScreen() {
     }
   }, [state.phase, dungeonId, router, dungeon, state, isAutoRunning]);
 
-  const handleRetreatConfirm = () => {
+  const handleRetreatConfirm = async () => {
     setShowRetreatModal(false);
-    router.replace('/home');
+    await retreat();
   };
 
   const backgroundImage = dungeonId ? backgroundImages[dungeonId] : undefined;

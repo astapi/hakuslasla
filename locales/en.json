@@ -53,7 +53,7 @@
     "retreat": "Retreat",
     "retreatConfirm": {
       "title": "Confirm Retreat",
-      "message": "Are you sure you want to retreat?\nAll gained EXP and items will be lost.",
+      "message": "Are you sure you want to retreat?\nGained EXP will be lost, but items can be kept.",
       "confirm": "Retreat"
     },
     "victory": "Victory!",
@@ -65,6 +65,7 @@
   "result": {
     "cleared": "Dungeon Cleared!",
     "defeat": "Defeat...",
+    "retreat": "Retreat",
     "runsCompleted": "{{count}} Runs Completed",
     "floorsCleared": "{{current}}/{{max}} Floors Cleared",
     "rewards": "Rewards",
@@ -176,6 +177,10 @@
     "def_increased_pct": "DEF",
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
+    "hp_on_hit": "HP on Hit",
+    "damage_reduction_pct": "Damage Red.",
+    "attack_speed_pct": "Speed",
+    "lifesteal": "Lifesteal",
     "atk_more_pct": "ATK more",
     "def_more_pct": "DEF more",
     "hp_more_pct": "HP more",
@@ -952,22 +957,39 @@
   },
   "bossSkills": {
     "goblin_king": {
-      "name": "Goblin Roar"
+      "name": "Goblin Roar",
+      "shield": "Swarm Shield",
+      "warlord": "Warlord of the Horde"
     },
     "bandit_leader": {
-      "name": "Bear Trap"
+      "name": "Bear Trap",
+      "bearTrap": "Bear Trap",
+      "nightAmbush": "Night Ambush",
+      "shadowBind": "Shadow Bind"
     },
     "vampire": {
-      "name": "Blood Feast"
+      "name": "Blood Feast",
+      "bloodFeast": "Blood Feast",
+      "nightFeast": "Night Feast",
+      "crimsonPact": "Crimson Pact"
     },
     "kraken": {
-      "name": "Tsunami"
+      "name": "Tsunami",
+      "tsunami": "Tsunami",
+      "deepEmbrace": "Abyssal Embrace",
+      "abyssalEbb": "Abyssal Ebb"
     },
     "demon_lord": {
-      "name": "Death Hand"
+      "name": "Death Hand",
+      "deathHand": "Death Hand",
+      "blackFlame": "Blackflame Mark",
+      "crown": "Crown of Ruin"
     },
     "true_final_boss": {
-      "name": "End"
+      "name": "End",
+      "end": "End",
+      "convergence": "World Convergence",
+      "timeSever": "Time Sever"
     }
   },
   "battleLog": {
@@ -993,7 +1015,11 @@
     "bossSkillUsed": "{{enemy}} used {{skill}}!",
     "uberUnlocked": "Uber version of {{enemy}} unlocked!",
     "uberTicket": "Obtained an Uber ticket! ({{count}})",
-    "respecToken": "Obtained a respec item! ({{count}})"
+    "respecToken": "Obtained a respec item! ({{count}})",
+    "bossSkillActivated": "{{enemy}} triggered {{skill}}!",
+    "reflectedDamage": "{{enemy}}'s mark reflected! You took {{damage}} damage!",
+    "enemyHealRegen": "{{enemy}} regenerated {{amount}} HP!",
+    "enemyHealOnHit": "{{enemy}} leeched {{amount}} HP!"
   },
   "passiveTree": {
     "title": "Passive Tree",
@@ -1561,6 +1587,10 @@
   "modDescriptions": {
     "poisonChance": "Poison Chance +{{value}}%",
     "criticalChance": "Critical Chance +{{value}}%",
-    "criticalDamage": "Critical Damage +{{value}}%"
+    "criticalDamage": "Critical Damage +{{value}}%",
+    "damageReduction": "Damage Taken -{{value}}%",
+    "attackSpeed": "Attack Speed +{{value}}%",
+    "hpOnHit": "HP on Hit +{{value}}",
+    "lifesteal": "Lifesteal +{{value}}%"
   }
 }

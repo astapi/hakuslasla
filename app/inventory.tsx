@@ -62,6 +62,9 @@ function calculateItemStats(
         case 'critical_damage':
           desc = `[${tierLabel}] ${t('modDescriptions.criticalDamage', { value: mod.value })}`;
           break;
+        case 'damage_reduction_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.damageReduction', { value: mod.value })}`;
+          break;
         case 'atk_increased_pct':
           desc = `[${tierLabel}] ATK+${mod.value}%`;
           break;
@@ -70,6 +73,15 @@ function calculateItemStats(
           break;
         case 'hp_increased_pct':
           desc = `[${tierLabel}] HP+${mod.value}%`;
+          break;
+        case 'attack_speed_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.attackSpeed', { value: mod.value })}`;
+          break;
+        case 'hp_on_hit':
+          desc = `[${tierLabel}] ${t('modDescriptions.hpOnHit', { value: mod.value })}`;
+          break;
+        case 'lifesteal':
+          desc = `[${tierLabel}] ${t('modDescriptions.lifesteal', { value: mod.value })}`;
           break;
         case 'atk_more_pct':
           desc = `[${tierLabel}] ATK ${mod.value}% more`;

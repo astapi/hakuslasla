@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DungeonCard } from '@/components/dungeon/DungeonCard';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
-import { getDungeonList, DUNGEON_UNLOCK_ORDER } from '@/data/dungeons';
+import { getDungeonList, DUNGEON_UNLOCK_ORDER, DEBUG_DUNGEON_IDS } from '@/data/dungeons';
 import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_ID, UBER_DUNGEON_IDS } from '@/data/endContents';
 import { settingsRepository, DungeonClearRecords } from '@/db';
 import { DungeonListItem } from '@/types';
@@ -52,6 +52,16 @@ export default function DungeonSelectScreen() {
     const result: DungeonWithStatus[] = [];
 
     for (const dungeon of all) {
+      // デバッグ用ダンジョン（__DEV__のみ表示）
+      if (__DEV__ && DEBUG_DUNGEON_IDS.includes(dungeon.id)) {
+        result.push({
+          ...dungeon,
+          isLocked: false,
+          isCleared: clearRecords[dungeon.id] !== undefined,
+        });
+        continue;
+      }
+
       // エンドコンテンツの処理（従来通り）
       if (dungeon.id === DIMENSIONAL_RUSH_ID) {
         if (endContentUnlocked) {

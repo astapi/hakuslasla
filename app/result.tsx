@@ -22,7 +22,7 @@ export default function ResultScreen() {
     grandTotalItems: string;
   }>();
 
-  const result = params.result as 'cleared' | 'defeat';
+  const result = params.result as 'cleared' | 'defeat' | 'retreat';
   const floorsCleared = parseInt(params.floorsCleared || '0', 10);
   const maxFloor = parseInt(params.maxFloor || '5', 10);
   const expGained = parseInt(params.expGained || '0', 10);
@@ -36,14 +36,20 @@ export default function ResultScreen() {
   };
 
   const isCleared = result === 'cleared';
+  const isRetreat = result === 'retreat';
   const isMultiRun = runCount > 1;
 
   return (
     <ScreenWrapper>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
         <View style={styles.resultHeader}>
-          <Text style={[styles.resultText, isCleared ? styles.clearedText : styles.defeatText]}>
-            {isCleared ? t('result.cleared') : t('result.defeat')}
+          <Text
+            style={[
+              styles.resultText,
+              isCleared ? styles.clearedText : isRetreat ? styles.retreatText : styles.defeatText,
+            ]}
+          >
+            {isCleared ? t('result.cleared') : isRetreat ? t('result.retreat') : t('result.defeat')}
           </Text>
           {isMultiRun && (
             <Text style={styles.runCountText}>{t('result.runsCompleted', { count: runCount })}</Text>
@@ -131,6 +137,9 @@ const styles = StyleSheet.create({
   },
   defeatText: {
     color: '#F44336',
+  },
+  retreatText: {
+    color: '#FF9800',
   },
   runCountText: {
     fontSize: fs(18),
