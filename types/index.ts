@@ -97,7 +97,10 @@ export type ModType =
   | 'damage_reduction_pct'  // ダメージ軽減+X%（鎧専用）
   | 'hp_on_hit'          // HIT時HP回復（武器専用）
   | 'attack_speed_pct'   // AS +X% (increased、加算)
-  | 'attack_speed_more_pct'; // AS X% more (乗算)
+  | 'attack_speed_more_pct' // AS X% more (乗算)
+  | 'time_atk_inc_pct'    // 5秒毎にATK increased%加算
+  | 'time_def_inc_pct'    // 5秒毎にDEF increased%加算
+  | 'time_hp_regen';      // 5秒毎にHP回復量加算
 
 // MOD定義
 export interface ItemMod {
@@ -255,6 +258,7 @@ export interface Enemy {
   exp: number;
   attackSpeed?: number; // 攻撃速度（デフォルト1.0）
   uniqueDrop: UniqueDrop | null; // モンスター固有ドロップ
+  uniqueDrops?: UniqueDrop[]; // 複数ユニークドロップ（Uber用）
 }
 
 // モンスター出現設定
@@ -342,6 +346,7 @@ export interface EnemyDisplayInfo {
   image: string;
   exp: number;
   uniqueDrop: UniqueDrop | null;
+  uniqueDrops?: UniqueDrop[];
 }
 
 // 戦闘中の敵情報（後方互換性のため残す）
@@ -353,6 +358,7 @@ export interface BattleEnemy {
   currentHp: number;
   maxHp: number;
   uniqueDrop: UniqueDrop | null;
+  uniqueDrops?: UniqueDrop[];
   atk: number;
   def: number;
   exp: number;

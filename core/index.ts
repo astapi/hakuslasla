@@ -82,6 +82,19 @@ export {
   formatBattleTime,
 } from './gaugeBattle';
 
+// 共通バトルエンジン
+export {
+  createBattleEngine,
+  runBattleEngineToEnd,
+} from './battleEngine';
+export type {
+  BattleEngine,
+  BattleEngineConfig,
+} from './battleEngine';
+
+// ボス行動（ID定義）
+export type { BossSkillId } from './bossBehaviors';
+
 // エンドコンテンツ関連
 export * from './endContent';
 
