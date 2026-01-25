@@ -811,6 +811,180 @@
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
       "modCountRange": { "min": 2, "max": 4 }
+    },
+    "debug_dimensional_goblin_king": {
+      "id": "debug_dimensional_goblin_king",
+      "name": "DEBUG: 異次元ラッシュ - ゴブリンキング",
+      "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
+      "maxFloor": 1,
+      "monsters": [],
+      "boss": {
+        "monsterId": "goblin_king",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "debug_dimensional_bandit_leader": {
+      "id": "debug_dimensional_bandit_leader",
+      "name": "DEBUG: 異次元ラッシュ - 盗賊の頭",
+      "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
+      "maxFloor": 1,
+      "monsters": [],
+      "boss": {
+        "monsterId": "bandit_leader",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "debug_dimensional_vampire": {
+      "id": "debug_dimensional_vampire",
+      "name": "DEBUG: 異次元ラッシュ - ヴァンパイア",
+      "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
+      "maxFloor": 1,
+      "monsters": [],
+      "boss": {
+        "monsterId": "vampire",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "debug_dimensional_kraken": {
+      "id": "debug_dimensional_kraken",
+      "name": "DEBUG: 異次元ラッシュ - クラーケン",
+      "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
+      "maxFloor": 1,
+      "monsters": [],
+      "boss": {
+        "monsterId": "kraken",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "debug_dimensional_demon_lord": {
+      "id": "debug_dimensional_demon_lord",
+      "name": "DEBUG: 異次元ラッシュ - 魔王",
+      "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
+      "maxFloor": 1,
+      "monsters": [],
+      "boss": {
+        "monsterId": "demon_lord",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "debug_dimensional_true_final_boss": {
+      "id": "debug_dimensional_true_final_boss",
+      "name": "DEBUG: 異次元ラッシュ - 終焉の王",
+      "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
+      "maxFloor": 1,
+      "monsters": [],
+      "boss": {
+        "monsterId": "true_final_boss",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
     }
   }
 }

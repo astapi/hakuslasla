@@ -53,7 +53,7 @@
     "retreat": "撤退",
     "retreatConfirm": {
       "title": "撤退確認",
-      "message": "本当に撤退しますか？\n獲得した経験値とアイテムは失われます。",
+      "message": "本当に撤退しますか？\n獲得した経験値は失われますが、アイテムは持ち帰れます。",
       "confirm": "撤退する"
     },
     "victory": "勝利！",
@@ -65,6 +65,7 @@
   "result": {
     "cleared": "ダンジョン踏破！",
     "defeat": "敗北...",
+    "retreat": "撤退",
     "runsCompleted": "{{count}}周完了",
     "floorsCleared": "{{current}}/{{max}} 階クリア",
     "rewards": "獲得報酬",
@@ -176,6 +177,10 @@
     "def_increased_pct": "DEF",
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
+    "hp_on_hit": "HIT回復",
+    "damage_reduction_pct": "被ダメ減",
+    "attack_speed_pct": "速度",
+    "lifesteal": "吸収",
     "atk_more_pct": "ATK more",
     "def_more_pct": "DEF more",
     "hp_more_pct": "HP more",
@@ -980,22 +985,39 @@
   },
   "bossSkills": {
     "goblin_king": {
-      "name": "ゴブリンたちの咆哮"
+      "name": "ゴブリンたちの咆哮",
+      "shield": "群れの盾",
+      "warlord": "乱軍の王"
     },
     "bandit_leader": {
-      "name": "ベアトラップ"
+      "name": "ベアトラップ",
+      "bearTrap": "ベアトラップ",
+      "nightAmbush": "闇夜の奇襲",
+      "shadowBind": "影縫い"
     },
     "vampire": {
-      "name": "血の狂宴"
+      "name": "血の狂宴",
+      "bloodFeast": "血の狂宴",
+      "nightFeast": "夜の宴",
+      "crimsonPact": "真紅の契約"
     },
     "kraken": {
-      "name": "津波"
+      "name": "津波",
+      "tsunami": "津波",
+      "deepEmbrace": "深海の抱擁",
+      "abyssalEbb": "深淵の引き潮"
     },
     "demon_lord": {
-      "name": "デスハンド"
+      "name": "デスハンド",
+      "deathHand": "デスハンド",
+      "blackFlame": "黒炎の刻印",
+      "crown": "破滅の冠"
     },
     "true_final_boss": {
-      "name": "終焉"
+      "name": "終焉",
+      "end": "終焉",
+      "convergence": "世界の収束",
+      "timeSever": "時の断絶"
     }
   },
   "battleLog": {
@@ -1021,7 +1043,11 @@
     "bossSkillUsed": "{{enemy}}が{{skill}}を使用した！",
     "uberUnlocked": "{{enemy}}のUber版が解放された！",
     "uberTicket": "Uber入場券を入手！ ({{count}}枚)",
-    "respecToken": "リスペックアイテムを入手！ ({{count}}個)"
+    "respecToken": "リスペックアイテムを入手！ ({{count}}個)",
+    "bossSkillActivated": "{{enemy}}の{{skill}}が発動した！",
+    "reflectedDamage": "{{enemy}}の刻印が反射！ プレイヤーに{{damage}}ダメージ！",
+    "enemyHealRegen": "{{enemy}}が再生で{{amount}}回復した！",
+    "enemyHealOnHit": "{{enemy}}が吸収で{{amount}}回復した！"
   },
   "passiveTree": {
     "title": "パッシブツリー",
@@ -1589,6 +1615,10 @@
   "modDescriptions": {
     "poisonChance": "毒付与+{{value}}%",
     "criticalChance": "クリティカル+{{value}}%",
-    "criticalDamage": "クリダメ+{{value}}%"
+    "criticalDamage": "クリダメ+{{value}}%",
+    "damageReduction": "被ダメ-{{value}}%",
+    "attackSpeed": "攻撃速度+{{value}}%",
+    "hpOnHit": "HIT時HP+{{value}}回復",
+    "lifesteal": "ライフスティール+{{value}}%"
   }
 }

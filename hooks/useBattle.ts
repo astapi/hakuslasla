@@ -2,7 +2,6 @@ import { useReducer, useCallback, useEffect, useRef, useState, useMemo } from 'r
 import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState, DropFilterSettings, DEFAULT_DROP_FILTER, Dungeon } from '@/types';
 import { getDungeon } from '@/data/dungeons';
 import {
-  DIMENSIONAL_RUSH_BOSS_FLOORS,
   DIMENSIONAL_RUSH_ID,
   getDimensionalRushEnemy,
 } from '@/data/endContents';
@@ -28,6 +27,10 @@ import {
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
 import {
   getBossSkillName,
+  BASE_BOSS_BY_UBER,
+  DIMENSIONAL_RUSH_BOSS_FLOOR_BY_ID,
+  getBaseBossId,
+  DIMENSIONAL_RUSH_BOSS_IDS,
   getEnemyAtkMultiplier,
   getEnemyAttackSpeedMultiplier,
   getEnemyDamageReductionPct,
@@ -45,6 +48,47 @@ import i18n from '@/lib/i18n';
 const POISON_DAMAGE_RATIO = DEFAULT_BATTLE_CONFIG.poisonDamageRatio;
 const POISON_DURATION = DEFAULT_BATTLE_CONFIG.poisonDuration;
 const BASE_POISON_MAX_STACKS = DEFAULT_BATTLE_CONFIG.basePoisonMaxStacks;
+
+const BOSS_SKILL_KEY = {
+  goblin: {
+    shield: 'bossSkills.goblin_king.shield',
+    warlord: 'bossSkills.goblin_king.warlord',
+  },
+  bandit: {
+    bearTrap: 'bossSkills.bandit_leader.bearTrap',
+    nightAmbush: 'bossSkills.bandit_leader.nightAmbush',
+    shadowBind: 'bossSkills.bandit_leader.shadowBind',
+  },
+  vampire: {
+    bloodFeast: 'bossSkills.vampire.bloodFeast',
+    nightFeast: 'bossSkills.vampire.nightFeast',
+    crimsonPact: 'bossSkills.vampire.crimsonPact',
+  },
+  kraken: {
+    tsunami: 'bossSkills.kraken.tsunami',
+    deepEmbrace: 'bossSkills.kraken.deepEmbrace',
+    abyssalEbb: 'bossSkills.kraken.abyssalEbb',
+  },
+  demon: {
+    deathHand: 'bossSkills.demon_lord.deathHand',
+    blackFlame: 'bossSkills.demon_lord.blackFlame',
+    crown: 'bossSkills.demon_lord.crown',
+  },
+  final: {
+    end: 'bossSkills.true_final_boss.end',
+    convergence: 'bossSkills.true_final_boss.convergence',
+    timeSever: 'bossSkills.true_final_boss.timeSever',
+  },
+};
+
+const DEBUG_DIMENSIONAL_RUSH_FLOORS: Record<string, number> = {
+  debug_dimensional_goblin_king: 50,
+  debug_dimensional_bandit_leader: 70,
+  debug_dimensional_vampire: 90,
+  debug_dimensional_kraken: 110,
+  debug_dimensional_demon_lord: 120,
+  debug_dimensional_true_final_boss: 200,
+};
 
 
 // UIの状態からCore関数用のGaugeBattleState形式に変換するヘルパー
@@ -273,14 +317,34 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         }),
       };
 
+    case 'PLAYER_DAMAGE':
+      if (action.damage <= 0) return state;
+      return {
+        ...state,
+        playerCurrentHp: Math.max(0, state.playerCurrentHp - action.damage),
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: action.message,
+          type: action.logType ?? 'enemy_attack',
+        }),
+      };
+
     case 'ENEMY_HEAL':
       if (!state.enemy || action.amount <= 0) return state;
+      const healMessage = action.source === 'on_hit'
+        ? i18n.t('battleLog.enemyHealOnHit', { enemy: state.enemy.name, amount: action.amount })
+        : i18n.t('battleLog.enemyHealRegen', { enemy: state.enemy.name, amount: action.amount });
       return {
         ...state,
         enemy: {
           ...state.enemy,
           currentHp: Math.min(state.enemy.maxHp, state.enemy.currentHp + action.amount),
         },
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: healMessage,
+          type: 'heal',
+        }),
       };
 
     case 'ENEMY_DEFEATED':
@@ -318,6 +382,12 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
           message: i18n.t('battleLog.playerDefeated'),
           type: 'defeat',
         }),
+      };
+
+    case 'RETREAT':
+      return {
+        ...state,
+        phase: 'retreat',
       };
 
     case 'NEXT_FLOOR':
@@ -596,6 +666,37 @@ export const useBattle = (dungeonId: string) => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isProcessingRef = useRef(false);
   const bossSkillAppliedRef = useRef<string | null>(null);
+  const bossEffectRef = useRef({
+    enemyAttackCount: 0,
+    playerAttackCount: 0,
+    playerAttackSpeedMult: 1,
+    playerAttackSpeedRemaining: 0,
+    playerCritChanceMult: 1,
+    playerPoisonChanceMult: 1,
+    playerCritPoisonRemaining: 0,
+    playerHealingMult: 1,
+    playerHealingRemaining: 0,
+    playerDamageTakenMult: 1,
+    playerDamageTakenRemainingEnemyAttacks: 0,
+    enemyDamageReductionTempPct: 0,
+    enemyDamageReductionTempRemaining: 0,
+    enemyDamageReductionStackPct: 0,
+    enemyAttackSpeedMult: 1,
+    enemyAttackMult: 1,
+    enemyNextAttackMult: 1,
+    enemyHpOnHitBonus: 0,
+    enemyHpOnHitMult: 1,
+    enemyHpOnHitMultRemaining: 0,
+    goblinEnrage: false,
+    banditShadow: false,
+    krakenEmbrace: false,
+    demonMark: false,
+    demonCrown: false,
+    vampirePact: false,
+    vampireNightFeastLogged: false,
+    finalEndStacks: 0,
+    convergenceStacks: 0,
+  });
 
   // executeTurnとexecuteEnemyAttackをrefで保持（ゲームループの依存配列から外すため）
   const executeTurnRef = useRef<() => void>(() => {});
@@ -617,8 +718,41 @@ export const useBattle = (dungeonId: string) => {
     setIsAutoRunning(false);
   }, []);
 
+  const retreat = useCallback(async () => {
+    setIsAutoRunning(false);
+    dispatch({ type: 'RETREAT' });
+
+    // 撤退時は経験値を付与せず、取得済みアイテムのみ持ち帰る
+    const availableSpace = getInventorySpace();
+    const itemsToAdd = state.droppedItems.slice(0, availableSpace);
+    for (const item of itemsToAdd) {
+      await addToInventory(item);
+    }
+  }, [addToInventory, getInventorySpace, state.droppedItems]);
+
   // 指定フロアの敵を取得（ボスフロアならボスを返す）
   const getEnemyForFloor = useCallback((floor: number): Enemy | undefined => {
+    const debugFloor = DEBUG_DIMENSIONAL_RUSH_FLOORS[dungeonId];
+    if (debugFloor) {
+      return getDimensionalRushEnemy(debugFloor);
+    }
+    if (Object.prototype.hasOwnProperty.call(BASE_BOSS_BY_UBER, dungeonId)) {
+      const baseBossId = BASE_BOSS_BY_UBER[dungeonId];
+      const bossFloor = DIMENSIONAL_RUSH_BOSS_FLOOR_BY_ID[baseBossId];
+      const drBoss = bossFloor ? getDimensionalRushEnemy(bossFloor) : undefined;
+      const uberBoss = getEnemy(dungeonId);
+      if (drBoss && uberBoss) {
+        return {
+          ...uberBoss,
+          maxHp: Math.max(1, Math.floor(drBoss.maxHp * 1.2)),
+          atk: Math.max(1, Math.floor(drBoss.atk * 1.2)),
+          def: Math.max(0, Math.floor(drBoss.def * 1.2)),
+          exp: Math.max(1, Math.floor(drBoss.exp * 1.2)),
+          attackSpeed: Math.max(0.1, Number(((drBoss.attackSpeed ?? 1) * 1.2).toFixed(2))),
+        };
+      }
+      return uberBoss;
+    }
     if (dungeonId === DIMENSIONAL_RUSH_ID) {
       return getDimensionalRushEnemy(floor);
     }
@@ -650,6 +784,37 @@ export const useBattle = (dungeonId: string) => {
   useEffect(() => {
     if (!state.enemy || state.phase !== 'fighting') return;
     bossSkillAppliedRef.current = null;
+    bossEffectRef.current = {
+      enemyAttackCount: 0,
+      playerAttackCount: 0,
+      playerAttackSpeedMult: 1,
+      playerAttackSpeedRemaining: 0,
+      playerCritChanceMult: 1,
+      playerPoisonChanceMult: 1,
+      playerCritPoisonRemaining: 0,
+      playerHealingMult: 1,
+      playerHealingRemaining: 0,
+      playerDamageTakenMult: 1,
+      playerDamageTakenRemainingEnemyAttacks: 0,
+      enemyDamageReductionTempPct: 0,
+      enemyDamageReductionTempRemaining: 0,
+      enemyDamageReductionStackPct: 0,
+      enemyAttackSpeedMult: 1,
+      enemyAttackMult: 1,
+      enemyNextAttackMult: 1,
+      enemyHpOnHitBonus: 0,
+      enemyHpOnHitMult: 1,
+      enemyHpOnHitMultRemaining: 0,
+      goblinEnrage: false,
+      banditShadow: false,
+      krakenEmbrace: false,
+      demonMark: false,
+      demonCrown: false,
+      vampirePact: false,
+      vampireNightFeastLogged: false,
+      finalEndStacks: 0,
+      convergenceStacks: 0,
+    };
   }, [state.enemy?.id, state.currentFloor, state.phase]);
 
   // ボススキルの初回発動（エンドコンテンツのみ）
@@ -680,10 +845,9 @@ export const useBattle = (dungeonId: string) => {
     return getPoisonDamageFromMods(baseDamage, mods);
   }, []);
 
-  const handleDimensionalRushBossDefeat = useCallback((enemyId: string, floor: number, enemyName: string) => {
-    if (dungeonId !== DIMENSIONAL_RUSH_ID) return;
-    const bossId = DIMENSIONAL_RUSH_BOSS_FLOORS[floor];
-    if (bossId !== enemyId) return;
+  const handleDimensionalRushBossDefeat = useCallback((enemyId: string, enemyName: string) => {
+    const baseBossId = getBaseBossId(enemyId);
+    if (!DIMENSIONAL_RUSH_BOSS_IDS.includes(baseBossId)) return;
 
     void (async () => {
       await settingsRepository.unlockUberBoss(enemyId);
@@ -695,7 +859,7 @@ export const useBattle = (dungeonId: string) => {
         },
       });
 
-      const ticketRoll = Math.random() * 100 < 5;
+      const ticketRoll = Math.random() * 100 < 50;
       if (ticketRoll) {
         const count = await settingsRepository.addUberTicket(enemyId);
         dispatch({
@@ -707,7 +871,7 @@ export const useBattle = (dungeonId: string) => {
         });
       }
     })();
-  }, [dungeonId]);
+  }, []);
 
   const handleMimicDefeat = useCallback((enemyId: string) => {
     if (enemyId !== 'mimic') return;
@@ -731,6 +895,9 @@ export const useBattle = (dungeonId: string) => {
     const stats = getTotalStats();
     const dungeon = getDungeon(dungeonId);
     const modEffects = getCombinedModEffects();
+    const bossEffects = bossEffectRef.current;
+    const baseBossId = getBaseBossId(state.enemy.id);
+    const isUber = Object.prototype.hasOwnProperty.call(BASE_BOSS_BY_UBER, state.enemy.id);
 
     // HP回復は別タイマーで処理するため削除
 
@@ -754,7 +921,10 @@ export const useBattle = (dungeonId: string) => {
 
       // 毒ダメージ吸収による回復（poison_lifesteal）- Core関数の結果を使用
       if (poisonResult.healAmount > 0 && state.playerCurrentHp < state.playerMaxHp) {
-        dispatch({ type: 'HP_REGEN', amount: poisonResult.healAmount });
+        const scaledHeal = Math.floor(poisonResult.healAmount * bossEffectRef.current.playerHealingMult);
+        if (scaledHeal > 0) {
+          dispatch({ type: 'HP_REGEN', amount: scaledHeal });
+        }
       }
       // 毒で倒れた場合
       if (currentEnemyHp <= 0) {
@@ -790,7 +960,7 @@ export const useBattle = (dungeonId: string) => {
           droppedItems: filteredItems,
         });
 
-        handleDimensionalRushBossDefeat(state.enemy.id, state.currentFloor, state.enemy.name);
+        handleDimensionalRushBossDefeat(state.enemy.id, state.enemy.name);
 
         if (state.currentFloor >= state.maxFloor) {
           dispatch({ type: 'DUNGEON_CLEARED' });
@@ -812,8 +982,9 @@ export const useBattle = (dungeonId: string) => {
       }
     }
 
-    // クリティカル判定（MOD効果+パッシブ効果）
-    const isCritical = modEffects.criticalChance > 0 && Math.random() * 100 < modEffects.criticalChance;
+    // クリティカル判定（MOD効果+パッシブ効果 + デバフ）
+    const effectiveCritChance = modEffects.criticalChance * bossEffects.playerCritChanceMult;
+    const isCritical = effectiveCritChance > 0 && Math.random() * 100 < effectiveCritChance;
     // クリティカルダメージ倍率: 基礎150% + ボーナス%（modEffects.criticalDamageは%で加算）
     const criticalMultiplier = isCritical ? (1.5 + modEffects.criticalDamage / 100) : 1;
 
@@ -824,7 +995,10 @@ export const useBattle = (dungeonId: string) => {
 
     // プレイヤーの攻撃（ATK/DEFボーナスはgetTotalStats()で既に反映済み）
     const effectiveAtk = Math.max(1, Math.floor(stats.atk * playerAtkMultiplier));
-    const baseDamage = calculateDamage(effectiveAtk, state.enemy.def, enemyDamageReduction);
+    const totalEnemyDamageReduction = enemyDamageReduction
+      + bossEffects.enemyDamageReductionTempPct
+      + bossEffects.enemyDamageReductionStackPct;
+    const baseDamage = calculateDamage(effectiveAtk, state.enemy.def, totalEnemyDamageReduction);
 
     // 通常ダメージ無効化チェック（キーストーン効果）
     const playerDamage = modEffects.noDirectDamage ? 0 : Math.floor(baseDamage * criticalMultiplier);
@@ -835,8 +1009,9 @@ export const useBattle = (dungeonId: string) => {
     // ライフスティール処理 - Core関数使用
     if (playerDamage > 0 && state.playerCurrentHp < state.playerMaxHp) {
       const lifestealAmount = calculateLifesteal(playerDamage, isCritical, modEffects);
-      if (lifestealAmount > 0) {
-        dispatch({ type: 'HP_REGEN', amount: lifestealAmount });
+      const scaledLifesteal = Math.floor(lifestealAmount * bossEffectRef.current.playerHealingMult);
+      if (scaledLifesteal > 0) {
+        dispatch({ type: 'HP_REGEN', amount: scaledLifesteal });
       }
     }
 
@@ -844,10 +1019,22 @@ export const useBattle = (dungeonId: string) => {
 
     // 毒付与判定（スタック上限チェック）
     const maxPoisonStacks = BASE_POISON_MAX_STACKS + modEffects.poisonMaxStacks;
-    if (state.enemyPoison.length < maxPoisonStacks && modEffects.poisonChance > 0 && Math.random() * 100 < modEffects.poisonChance) {
+    const effectivePoisonChance = modEffects.poisonChance * bossEffects.playerPoisonChanceMult;
+    if (state.enemyPoison.length < maxPoisonStacks && effectivePoisonChance > 0 && Math.random() * 100 < effectivePoisonChance) {
       const rawPoisonDamage = Math.max(1, Math.floor(baseDamage * POISON_DAMAGE_RATIO));
       const poisonDamage = calculatePoisonDamageLocal(rawPoisonDamage, modEffects);
       dispatch({ type: 'APPLY_POISON', damagePerTurn: poisonDamage, turns: POISON_DURATION });
+    }
+
+    // 黒炎の刻印の反射ダメージ
+    if (baseBossId === 'demon_lord' && bossEffects.demonMark && playerDamage > 0) {
+      const reflectDamage = Math.max(1, Math.floor(playerDamage * 0.05));
+      dispatch({
+        type: 'PLAYER_DAMAGE',
+        damage: reflectDamage,
+        message: i18n.t('battleLog.reflectedDamage', { enemy: state.enemy.name, damage: reflectDamage }),
+        logType: 'enemy_attack',
+      });
     }
 
     // 敵を倒したかチェック
@@ -884,7 +1071,7 @@ export const useBattle = (dungeonId: string) => {
         droppedItems: filteredItems,
       });
 
-      handleDimensionalRushBossDefeat(state.enemy.id, state.currentFloor, state.enemy.name);
+      handleDimensionalRushBossDefeat(state.enemy.id, state.enemy.name);
 
       // 最終階層かチェック
       if (state.currentFloor >= state.maxFloor) {
@@ -907,6 +1094,122 @@ export const useBattle = (dungeonId: string) => {
       return;
     }
 
+    // HP50%以下での効果発動
+    if (state.enemy && enemyHpAfterPlayerAttack > 0) {
+      const hpRatio = enemyHpAfterPlayerAttack / state.enemy.maxHp;
+      if (hpRatio <= 0.5) {
+        if (baseBossId === 'goblin_king' && isUber && !bossEffects.goblinEnrage) {
+          bossEffects.goblinEnrage = true;
+          bossEffects.enemyAttackSpeedMult = 1.3;
+          bossEffects.enemyHpOnHitBonus = 500;
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.goblin.warlord) }),
+              type: 'info',
+            },
+          });
+        }
+        if (baseBossId === 'bandit_leader' && isUber && !bossEffects.banditShadow) {
+          bossEffects.banditShadow = true;
+          bossEffects.playerHealingMult = 0.5;
+          bossEffects.playerHealingRemaining = -1;
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.bandit.shadowBind) }),
+              type: 'info',
+            },
+          });
+        }
+        if (baseBossId === 'kraken' && !bossEffects.krakenEmbrace) {
+          bossEffects.krakenEmbrace = true;
+          bossEffects.playerAttackSpeedMult = 0.8;
+          bossEffects.playerAttackSpeedRemaining = 3;
+          bossEffects.playerHealingMult = Math.min(bossEffects.playerHealingMult, 0.7);
+          bossEffects.playerHealingRemaining = Math.max(bossEffects.playerHealingRemaining, 3);
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.kraken.deepEmbrace) }),
+              type: 'info',
+            },
+          });
+        }
+        if (baseBossId === 'demon_lord' && !bossEffects.demonMark) {
+          bossEffects.demonMark = true;
+          bossEffects.enemyDamageReductionStackPct += 10;
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.demon.blackFlame) }),
+              type: 'info',
+            },
+          });
+        }
+        if (baseBossId === 'demon_lord' && isUber && !bossEffects.demonCrown) {
+          bossEffects.demonCrown = true;
+          bossEffects.enemyHpOnHitMult = 1;
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.demon.crown) }),
+              type: 'info',
+            },
+          });
+        }
+        if (baseBossId === 'vampire' && isUber && !bossEffects.vampirePact) {
+          bossEffects.vampirePact = true;
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.vampire.crimsonPact) }),
+              type: 'info',
+            },
+          });
+        }
+      }
+    }
+
+    bossEffects.playerAttackCount += 1;
+    if (baseBossId === 'true_final_boss' && bossEffects.playerAttackCount % 6 === 0) {
+      bossEffects.convergenceStacks += 1;
+      bossEffects.enemyDamageReductionStackPct += 2;
+      dispatch({
+        type: 'ADD_LOG',
+        entry: {
+          message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.final.convergence) }),
+          type: 'info',
+        },
+      });
+    }
+
+    if (bossEffects.playerAttackSpeedRemaining > 0) {
+      bossEffects.playerAttackSpeedRemaining -= 1;
+      if (bossEffects.playerAttackSpeedRemaining <= 0) {
+        bossEffects.playerAttackSpeedMult = 1;
+      }
+    }
+    if (bossEffects.playerCritPoisonRemaining > 0) {
+      bossEffects.playerCritPoisonRemaining -= 1;
+      if (bossEffects.playerCritPoisonRemaining <= 0) {
+        bossEffects.playerCritChanceMult = 1;
+        bossEffects.playerPoisonChanceMult = 1;
+      }
+    }
+    if (bossEffects.playerHealingRemaining > 0) {
+      bossEffects.playerHealingRemaining -= 1;
+      if (bossEffects.playerHealingRemaining <= 0) {
+        bossEffects.playerHealingMult = 1;
+      }
+    }
+    if (bossEffects.enemyDamageReductionTempRemaining > 0) {
+      bossEffects.enemyDamageReductionTempRemaining -= 1;
+      if (bossEffects.enemyDamageReductionTempRemaining <= 0) {
+        bossEffects.enemyDamageReductionTempPct = 0;
+      }
+    }
+
     // 敵の攻撃はゲージ制で独立して実行されるため削除
     isProcessingRef.current = false;
   }, [state, getTotalStats, dungeonId, getCombinedModEffects, calculatePoisonDamageLocal, getEnemyForFloor, dropFilter, handleDimensionalRushBossDefeat, handleMimicDefeat]);
@@ -919,6 +1222,119 @@ export const useBattle = (dungeonId: string) => {
     const modEffects = getCombinedModEffects();
     const isEndContent = isEndContentDungeon(dungeonId);
     const enemyId = state.enemy.id;
+    const baseBossId = getBaseBossId(enemyId);
+    const isUber = Object.prototype.hasOwnProperty.call(BASE_BOSS_BY_UBER, enemyId);
+    const bossEffects = bossEffectRef.current;
+
+    bossEffects.enemyAttackCount += 1;
+    const shouldTrigger = bossEffects.enemyAttackCount % 3 === 0;
+    if (shouldTrigger) {
+      if (baseBossId === 'goblin_king') {
+        bossEffects.enemyDamageReductionTempPct = 20;
+        bossEffects.enemyDamageReductionTempRemaining = 2;
+        bossEffects.playerCritChanceMult = 0.5;
+        bossEffects.playerPoisonChanceMult = 0.5;
+        bossEffects.playerCritPoisonRemaining = 2;
+        dispatch({
+          type: 'ADD_LOG',
+          entry: {
+            message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.goblin.shield) }),
+            type: 'info',
+          },
+        });
+      }
+      if (baseBossId === 'bandit_leader') {
+        bossEffects.playerAttackSpeedMult = 0.7;
+        bossEffects.playerAttackSpeedRemaining = 2;
+        bossEffects.enemyNextAttackMult = 1.4;
+        dispatch({
+          type: 'ADD_LOG',
+          entry: {
+            message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.bandit.bearTrap) }),
+            type: 'info',
+          },
+        });
+        dispatch({
+          type: 'ADD_LOG',
+          entry: {
+            message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.bandit.nightAmbush) }),
+            type: 'info',
+          },
+        });
+      }
+      if (baseBossId === 'vampire') {
+        bossEffects.enemyHpOnHitMult = 1.5;
+        bossEffects.enemyHpOnHitMultRemaining = 1;
+        dispatch({
+          type: 'ADD_LOG',
+          entry: {
+            message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.vampire.bloodFeast) }),
+            type: 'info',
+          },
+        });
+      }
+      if (baseBossId === 'kraken') {
+        bossEffects.enemyNextAttackMult = 1.5;
+        bossEffects.playerDamageTakenMult = 1.3;
+        bossEffects.playerDamageTakenRemainingEnemyAttacks = 1;
+        dispatch({
+          type: 'ADD_LOG',
+          entry: {
+            message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.kraken.tsunami) }),
+            type: 'info',
+          },
+        });
+        if (isUber) {
+          bossEffects.playerAttackSpeedMult = 0.85;
+          bossEffects.playerAttackSpeedRemaining = Math.max(bossEffects.playerAttackSpeedRemaining, 2);
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.kraken.abyssalEbb) }),
+              type: 'info',
+            },
+          });
+        }
+      }
+      if (baseBossId === 'demon_lord') {
+        const poison = getPlayerPoisonFromBoss(enemyId);
+        if (poison) {
+          dispatch({ type: 'APPLY_PLAYER_POISON', damagePerTurn: poison.damage, turns: poison.turns });
+        }
+        bossEffects.playerHealingMult = Math.min(bossEffects.playerHealingMult, 0.7);
+        bossEffects.playerHealingRemaining = Math.max(bossEffects.playerHealingRemaining, 2);
+        dispatch({
+          type: 'ADD_LOG',
+          entry: {
+            message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.demon.deathHand) }),
+            type: 'info',
+          },
+        });
+      }
+      if (baseBossId === 'true_final_boss') {
+        bossEffects.finalEndStacks += 1;
+        bossEffects.enemyAttackMult *= 1.05;
+        bossEffects.enemyDamageReductionStackPct += 3;
+        dispatch({
+          type: 'ADD_LOG',
+          entry: {
+            message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.final.end) }),
+            type: 'info',
+          },
+        });
+        if (isUber) {
+          playerGaugeRef.current = 0;
+          dispatch({ type: 'RESET_PLAYER_GAUGE' });
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.final.timeSever) }),
+              type: 'info',
+            },
+          });
+        }
+      }
+    }
 
     // プレイヤーの毒ダメージ処理（敵行動時に1tick）
     let hpAfterPoison = state.playerCurrentHp;
@@ -945,20 +1361,58 @@ export const useBattle = (dungeonId: string) => {
       isEnemyPoisoned
     );
 
-    dispatch({ type: 'ENEMY_ATTACK', damage: enemyDamage });
+    const enemyAttackMultiplier = bossEffects.enemyAttackMult * bossEffects.enemyNextAttackMult;
+    const rawEnemyDamage = Math.floor(enemyDamage * enemyAttackMultiplier);
+    const finalEnemyDamage = Math.floor(rawEnemyDamage * bossEffects.playerDamageTakenMult);
+    dispatch({ type: 'ENEMY_ATTACK', damage: finalEnemyDamage });
 
-    const playerHpAfterEnemyAttack = hpAfterPoison - enemyDamage;
+    const playerHpAfterEnemyAttack = hpAfterPoison - finalEnemyDamage;
 
     if (isEndContent) {
       const hpOnHit = getEnemyHpOnHit(enemyId);
       if (hpOnHit > 0) {
-        dispatch({ type: 'ENEMY_HEAL', amount: hpOnHit });
+        let hpOnHitMult = bossEffects.enemyHpOnHitMult;
+        if (baseBossId === 'vampire' && state.playerPoison.length > 0) {
+          hpOnHitMult *= 1.5;
+          if (!bossEffects.vampireNightFeastLogged) {
+            bossEffects.vampireNightFeastLogged = true;
+            dispatch({
+              type: 'ADD_LOG',
+              entry: {
+                message: i18n.t('battleLog.bossSkillActivated', { enemy: state.enemy.name, skill: i18n.t(BOSS_SKILL_KEY.vampire.nightFeast) }),
+                type: 'info',
+              },
+            });
+          }
+        }
+        if (baseBossId === 'vampire' && isUber && bossEffects.vampirePact) {
+          const ratio = Math.min(1, Math.max(0, state.playerCurrentHp / Math.max(1, state.playerMaxHp)));
+          hpOnHitMult *= 1 + ratio * 0.5;
+        }
+        const amount = Math.floor(hpOnHit * hpOnHitMult + bossEffects.enemyHpOnHitBonus);
+        dispatch({ type: 'ENEMY_HEAL', amount, source: 'on_hit' });
+        if (bossEffects.enemyHpOnHitMultRemaining > 0) {
+          bossEffects.enemyHpOnHitMultRemaining -= 1;
+          if (bossEffects.enemyHpOnHitMultRemaining <= 0) {
+            bossEffects.enemyHpOnHitMult = 1;
+          }
+        }
       }
     }
 
     // プレイヤーが倒れたかチェック
     if (playerHpAfterEnemyAttack <= 0) {
       dispatch({ type: 'PLAYER_DEFEATED' });
+    }
+
+    if (bossEffects.playerDamageTakenRemainingEnemyAttacks > 0) {
+      bossEffects.playerDamageTakenRemainingEnemyAttacks -= 1;
+      if (bossEffects.playerDamageTakenRemainingEnemyAttacks <= 0) {
+        bossEffects.playerDamageTakenMult = 1;
+      }
+    }
+    if (bossEffects.enemyNextAttackMult !== 1) {
+      bossEffects.enemyNextAttackMult = 1;
     }
   }, [state, getTotalStats, getCombinedModEffects, dungeonId]);
 
@@ -975,9 +1429,9 @@ export const useBattle = (dungeonId: string) => {
   const getPlayerAttackSpeed = useCallback((): number => {
     const baseSpeed = getAttackSpeedFromMods(modEffects);
     if (!state.enemy || !isEndContentDungeon(dungeonId)) {
-      return baseSpeed;
+      return baseSpeed * bossEffectRef.current.playerAttackSpeedMult;
     }
-    return baseSpeed * getPlayerAttackSpeedMultiplier(state.enemy.id);
+    return baseSpeed * getPlayerAttackSpeedMultiplier(state.enemy.id) * bossEffectRef.current.playerAttackSpeedMult;
   }, [modEffects, state.enemy, dungeonId]);
 
   // ゲージ制ゲームループ（33msごとに更新 = 約30fps）
@@ -1017,7 +1471,7 @@ export const useBattle = (dungeonId: string) => {
     enemyGaugeRef.current = state.enemyGauge;
 
     const playerAS = getPlayerAttackSpeed();
-    const enemyAS = state.enemy.attackSpeed;
+      const enemyAS = state.enemy.attackSpeed * bossEffectRef.current.enemyAttackSpeedMult;
     const ticksPerSecond = 1000 / TICK_INTERVAL;
 
     gameLoopRef.current = setInterval(() => {
@@ -1030,16 +1484,23 @@ export const useBattle = (dungeonId: string) => {
       playerGaugeRef.current += playerGaugeIncrease;
       enemyGaugeRef.current += enemyGaugeIncrease;
 
-      // プレイヤーゲージが100に達したら攻撃
-      if (playerGaugeRef.current >= 100) {
-        playerGaugeRef.current = 0;
-        executeTurnRef.current();
+      // プレイヤーゲージが100を超えている分だけ攻撃（高倍率時の上限対策）
+      if (playerGaugeRef.current >= 100 && !isProcessingRef.current) {
+        const maxAttacks = Math.min(5, Math.floor(playerGaugeRef.current / 100));
+        for (let i = 0; i < maxAttacks; i++) {
+          if (isProcessingRef.current) break;
+          playerGaugeRef.current -= 100;
+          executeTurnRef.current();
+        }
       }
 
-      // 敵ゲージが100に達したら攻撃
+      // 敵ゲージが100を超えている分だけ攻撃（高倍率時の上限対策）
       if (enemyGaugeRef.current >= 100) {
-        enemyGaugeRef.current = 0;
-        executeEnemyAttackRef.current();
+        const maxAttacks = Math.min(5, Math.floor(enemyGaugeRef.current / 100));
+        for (let i = 0; i < maxAttacks; i++) {
+          enemyGaugeRef.current -= 100;
+          executeEnemyAttackRef.current();
+        }
       }
 
       // UIのゲージ表示を更新
@@ -1064,7 +1525,7 @@ export const useBattle = (dungeonId: string) => {
   // 戦闘速度に合わせて間隔を調整（10倍速なら100msごと = ゲーム内1秒）
   useEffect(() => {
     // 敗北時・一時停止時は回復停止
-    if (state.phase === 'defeat' || isPaused) {
+    if (state.phase === 'defeat' || state.phase === 'retreat' || isPaused) {
       if (regenTimerRef.current) {
         clearInterval(regenTimerRef.current);
         regenTimerRef.current = null;
@@ -1080,8 +1541,11 @@ export const useBattle = (dungeonId: string) => {
       const { current: currentHp, max: maxHp } = playerHpRef.current;
       // Core関数でHP回復量を計算
       const regenAmount = calculateHpRegen(currentHp, maxHp, modEffects);
+      const scaledRegen = Math.floor(regenAmount * bossEffectRef.current.playerHealingMult);
       if (regenAmount > 0) {
-        dispatch({ type: 'HP_REGEN', amount: regenAmount });
+        if (scaledRegen > 0) {
+          dispatch({ type: 'HP_REGEN', amount: scaledRegen });
+        }
       }
     }, regenInterval);
 
@@ -1105,7 +1569,12 @@ export const useBattle = (dungeonId: string) => {
 
     const regenInterval = 1000 / battleSpeed;
     const enemyId = state.enemy.id;
-    const regenPerSecond = isEndContentDungeon(dungeonId) ? getEnemyRegenPerSecond(enemyId) : 0;
+    let regenPerSecond = getEnemyRegenPerSecond(enemyId);
+    const baseBossId = getBaseBossId(enemyId);
+    const isUber = Object.prototype.hasOwnProperty.call(BASE_BOSS_BY_UBER, enemyId);
+    if (baseBossId === 'demon_lord' && isUber && bossEffectRef.current.demonCrown) {
+      regenPerSecond *= 2;
+    }
 
     if (regenPerSecond <= 0) {
       if (enemyRegenTimerRef.current) {
@@ -1119,7 +1588,7 @@ export const useBattle = (dungeonId: string) => {
       const { current, max } = enemyHpRef.current;
       const regenAmount = Math.min(regenPerSecond, max - current);
       if (regenAmount > 0) {
-        dispatch({ type: 'ENEMY_HEAL', amount: regenAmount });
+        dispatch({ type: 'ENEMY_HEAL', amount: regenAmount, source: 'regen' });
       }
     }, regenInterval);
 
@@ -1170,7 +1639,7 @@ export const useBattle = (dungeonId: string) => {
   useEffect(() => {
     if (!isAutoRunning) return;
 
-    if (state.phase === 'defeat') {
+    if (state.phase === 'defeat' || state.phase === 'retreat') {
       // 敗北時は自動周回を終了
       setIsAutoRunning(false);
       return;
@@ -1202,5 +1671,6 @@ export const useBattle = (dungeonId: string) => {
     isAutoRunning,
     startAutoRun,
     stopAutoRun,
+    retreat,
   };
 };
