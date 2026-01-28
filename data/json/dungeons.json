@@ -675,14 +675,20 @@
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
-          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 },
+          { "itemId": "uber_assassin_blade", "dropRate": 3 },
+          { "itemId": "uber_assassin_coat", "dropRate": 3 },
+          { "itemId": "uber_assassin_grip", "dropRate": 3 },
+          { "itemId": "uber_assassin_steps", "dropRate": 3 },
+          { "itemId": "uber_assassin_pendant", "dropRate": 3 }
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
-          { "itemId": "oblivion_ring", "dropRate": 10 }
+          { "itemId": "oblivion_ring", "dropRate": 10 },
+          { "itemId": "uber_double_strike_ring", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
@@ -706,7 +712,12 @@
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
-          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 },
+          { "itemId": "uber_venom_fang", "dropRate": 3 },
+          { "itemId": "uber_venom_plate", "dropRate": 3 },
+          { "itemId": "uber_venom_grip", "dropRate": 3 },
+          { "itemId": "uber_venom_stride", "dropRate": 3 },
+          { "itemId": "uber_venom_heart", "dropRate": 3 }
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
@@ -737,7 +748,12 @@
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
-          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 },
+          { "itemId": "uber_fortress_blade", "dropRate": 3 },
+          { "itemId": "uber_fortress_plate", "dropRate": 3 },
+          { "itemId": "uber_fortress_grip", "dropRate": 3 },
+          { "itemId": "uber_fortress_stomp", "dropRate": 3 },
+          { "itemId": "uber_fortress_bulwark", "dropRate": 3 }
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
@@ -864,7 +880,8 @@
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
-          { "itemId": "oblivion_ring", "dropRate": 10 }
+          { "itemId": "oblivion_ring", "dropRate": 10 },
+          { "itemId": "double_strike_ring", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },

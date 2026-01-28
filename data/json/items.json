@@ -1081,22 +1081,24 @@
       "id": "uber_vampire_fang",
       "name": "Uber ヴァンパイアの牙",
       "slot": "weapon",
-      "atk": 80,
+      "atk": 140,
       "def": 0,
       "fixedMods": [
         { "type": "hp_on_hit", "value": 120 },
-        { "type": "critical_chance", "value": 30 }
+        { "type": "critical_chance", "value": 30 },
+        { "type": "attack_speed_pct", "value": 20 }
       ]
     },
     "uber_kraken_tentacle": {
       "id": "uber_kraken_tentacle",
       "name": "Uber クラーケンの触腕",
       "slot": "weapon",
-      "atk": 85,
+      "atk": 150,
       "def": 0,
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 25 },
-        { "type": "hp_regen", "value": 80 }
+        { "type": "hp_regen", "value": 80 },
+        { "type": "atk_bonus", "value": 50 }
       ]
     },
     "uber_demon_crown": {
@@ -1128,7 +1130,7 @@
       "id": "uber_goblin_blade",
       "name": "Uber ゴブリンの剣",
       "slot": "weapon",
-      "atk": 110,
+      "atk": 150,
       "def": 0,
       "fixedMods": [
         { "type": "time_atk_inc_pct", "value": 6 },
@@ -1141,7 +1143,7 @@
       "name": "Uber ゴブリンの鎧",
       "slot": "armor",
       "atk": 0,
-      "def": 220,
+      "def": 280,
       "fixedMods": [
         { "type": "time_def_inc_pct", "value": 6 },
         { "type": "hp_bonus", "value": 200 },
@@ -1176,7 +1178,7 @@
       "id": "uber_bandit_dagger",
       "name": "Uber 盗賊王の短剣",
       "slot": "weapon",
-      "atk": 120,
+      "atk": 145,
       "def": 0,
       "fixedMods": [
         { "type": "critical_chance", "value": 25 },
@@ -1189,7 +1191,7 @@
       "name": "Uber 盗賊王の外套",
       "slot": "armor",
       "atk": 0,
-      "def": 210,
+      "def": 270,
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 20 },
         { "type": "damage_reduction_pct", "value": 8 },
@@ -1225,7 +1227,7 @@
       "name": "Uber ヴァンパイアの甲冑",
       "slot": "armor",
       "atk": 0,
-      "def": 240,
+      "def": 300,
       "fixedMods": [
         { "type": "hp_regen_pct", "value": 2 },
         { "type": "hp_on_hit", "value": 60 },
@@ -1253,7 +1255,8 @@
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 18 },
         { "type": "hp_regen", "value": 80 },
-        { "type": "poison_chance", "value": 20 }
+        { "type": "poison_chance", "value": 20 },
+        { "type": "poison_damage_pct", "value": 40 }
       ]
     },
     "uber_vampire_heart": {
@@ -1268,12 +1271,35 @@
         { "type": "def_bonus", "value": 50 }
       ]
     },
+    "double_strike_ring": {
+      "id": "double_strike_ring",
+      "name": "双撃の指輪",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "fixedMods": [
+        { "type": "critical_follow_up_attack", "value": 1 }
+      ]
+    },
+    "uber_double_strike_ring": {
+      "id": "uber_double_strike_ring",
+      "name": "Uber 双撃の指輪",
+      "slot": "accessory",
+      "atk": 95,
+      "def": 70,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 30 },
+        { "type": "critical_follow_up_attack", "value": 1 },
+        { "type": "hp_on_hit", "value": 80 },
+        { "type": "attack_speed_pct", "value": 15 }
+      ]
+    },
     "uber_kraken_shell": {
       "id": "uber_kraken_shell",
       "name": "Uber クラーケンの甲殻",
       "slot": "armor",
       "atk": 0,
-      "def": 260,
+      "def": 320,
       "fixedMods": [
         { "type": "damage_reduction_pct", "value": 12 },
         { "type": "hp_regen", "value": 90 },
@@ -1312,6 +1338,7 @@
       "def": 85,
       "fixedMods": [
         { "type": "poison_chance", "value": 25 },
+        { "type": "poison_damage_pct", "value": 50 },
         { "type": "damage_reduction_pct", "value": 8 },
         { "type": "hp_bonus", "value": 220 }
       ]
@@ -1410,6 +1437,189 @@
         { "type": "attack_speed_more_pct", "value": 15 },
         { "type": "hp_regen_pct", "value": 3 },
         { "type": "def_increased_pct", "value": 20 }
+      ]
+    },
+
+    "uber_venom_fang": {
+      "id": "uber_venom_fang",
+      "name": "Uber 毒蛇の牙",
+      "slot": "weapon",
+      "atk": 160,
+      "def": 0,
+      "fixedMods": [
+        { "type": "poison_chance", "value": 30 },
+        { "type": "atk_bonus", "value": 60 },
+        { "type": "attack_speed_pct", "value": 25 }
+      ]
+    },
+    "uber_venom_plate": {
+      "id": "uber_venom_plate",
+      "name": "Uber 毒蛇の鱗甲",
+      "slot": "armor",
+      "atk": 0,
+      "def": 300,
+      "fixedMods": [
+        { "type": "poison_damage_pct", "value": 80 },
+        { "type": "damage_reduction_pct", "value": 15 },
+        { "type": "hp_bonus", "value": 280 }
+      ]
+    },
+    "uber_venom_grip": {
+      "id": "uber_venom_grip",
+      "name": "Uber 猛毒の篭手",
+      "slot": "gloves",
+      "atk": 75,
+      "def": 90,
+      "fixedMods": [
+        { "type": "atk_increased_pct", "value": 30 },
+        { "type": "poison_damage_pct", "value": 60 },
+        { "type": "poison_damage_more_pct", "value": 20 }
+      ]
+    },
+    "uber_venom_stride": {
+      "id": "uber_venom_stride",
+      "name": "Uber 毒蛇の足跡",
+      "slot": "boots",
+      "atk": 55,
+      "def": 120,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 50 },
+        { "type": "attack_speed_pct", "value": 20 },
+        { "type": "hp_regen", "value": 85 }
+      ]
+    },
+    "uber_venom_heart": {
+      "id": "uber_venom_heart",
+      "name": "Uber 毒蛇の心臓",
+      "slot": "accessory",
+      "atk": 90,
+      "def": 85,
+      "fixedMods": [
+        { "type": "poison_chance", "value": 25 },
+        { "type": "poison_damage_pct", "value": 70 },
+        { "type": "poison_damage_more_pct", "value": 25 }
+      ]
+    },
+
+    "uber_assassin_blade": {
+      "id": "uber_assassin_blade",
+      "name": "Uber 暗殺者の刃",
+      "slot": "weapon",
+      "atk": 145,
+      "def": 0,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 40 },
+        { "type": "critical_damage", "value": 80 },
+        { "type": "attack_speed_pct", "value": 30 }
+      ]
+    },
+    "uber_assassin_coat": {
+      "id": "uber_assassin_coat",
+      "name": "Uber 暗殺者の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 260,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 30 },
+        { "type": "damage_reduction_pct", "value": 12 },
+        { "type": "hp_bonus", "value": 240 }
+      ]
+    },
+    "uber_assassin_grip": {
+      "id": "uber_assassin_grip",
+      "name": "Uber 暗殺者の手甲",
+      "slot": "gloves",
+      "atk": 75,
+      "def": 85,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 35 },
+        { "type": "critical_damage", "value": 90 },
+        { "type": "atk_increased_pct", "value": 30 }
+      ]
+    },
+    "uber_assassin_steps": {
+      "id": "uber_assassin_steps",
+      "name": "Uber 暗殺者の足運び",
+      "slot": "boots",
+      "atk": 55,
+      "def": 110,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 28 },
+        { "type": "attack_speed_pct", "value": 25 },
+        { "type": "hp_on_crit", "value": 100 }
+      ]
+    },
+    "uber_assassin_pendant": {
+      "id": "uber_assassin_pendant",
+      "name": "Uber 暗殺者のペンダント",
+      "slot": "accessory",
+      "atk": 90,
+      "def": 70,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 35 },
+        { "type": "critical_damage", "value": 100 },
+        { "type": "hp_on_hit", "value": 50 }
+      ]
+    },
+
+    "uber_fortress_blade": {
+      "id": "uber_fortress_blade",
+      "name": "Uber 要塞の剣",
+      "slot": "weapon",
+      "atk": 135,
+      "def": 50,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 60 },
+        { "type": "def_bonus", "value": 40 },
+        { "type": "hp_on_hit", "value": 80 }
+      ]
+    },
+    "uber_fortress_plate": {
+      "id": "uber_fortress_plate",
+      "name": "Uber 要塞の鎧",
+      "slot": "armor",
+      "atk": 0,
+      "def": 340,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 90 },
+        { "type": "damage_reduction_pct", "value": 18 },
+        { "type": "def_increased_pct", "value": 30 }
+      ]
+    },
+    "uber_fortress_grip": {
+      "id": "uber_fortress_grip",
+      "name": "Uber 要塞の篭手",
+      "slot": "gloves",
+      "atk": 70,
+      "def": 100,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 70 },
+        { "type": "hp_bonus", "value": 250 },
+        { "type": "damage_reduction_pct", "value": 10 }
+      ]
+    },
+    "uber_fortress_stomp": {
+      "id": "uber_fortress_stomp",
+      "name": "Uber 要塞の足止め",
+      "slot": "boots",
+      "atk": 50,
+      "def": 140,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 80 },
+        { "type": "hp_regen", "value": 90 },
+        { "type": "hp_regen_pct", "value": 3 }
+      ]
+    },
+    "uber_fortress_bulwark": {
+      "id": "uber_fortress_bulwark",
+      "name": "Uber 要塞の護壁",
+      "slot": "accessory",
+      "atk": 75,
+      "def": 100,
+      "fixedMods": [
+        { "type": "def_bonus", "value": 80 },
+        { "type": "hp_bonus", "value": 280 },
+        { "type": "damage_reduction_pct", "value": 12 }
       ]
     }
   },
