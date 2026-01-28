@@ -311,7 +311,7 @@
     },
     "bandit_brute": {
       "id": "bandit_brute",
-      "name": "盗賊ブルート",
+      "name": "盗賊の荒くれ者",
       "image": "bandit_brute",
       "maxHp": 95,
       "atk": 36,
@@ -436,10 +436,7 @@
       "def": 12,
       "exp": 65,
       "attackSpeed": 1.2,
-      "uniqueDrop": {
-        "itemId": "banshee_veil",
-        "dropRate": 2
-      }
+      "uniqueDrop": null
     },
     "wraith": {
       "id": "wraith",
@@ -450,10 +447,7 @@
       "def": 18,
       "exp": 70,
       "attackSpeed": 1.1,
-      "uniqueDrop": {
-        "itemId": "wraith_cloak",
-        "dropRate": 2
-      }
+      "uniqueDrop": null
     },
     "vampire": {
       "id": "vampire",

@@ -136,6 +136,18 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="encyclopedia"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="encyclopedia-detail"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
       <StatusBar style="light" />
     </View>

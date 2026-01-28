@@ -42,6 +42,10 @@ export default function HomeScreen() {
     router.push('/settings');
   };
 
+  const handleOpenEncyclopedia = () => {
+    router.push('/encyclopedia');
+  };
+
   const handleOpenDungeonSelect = () => {
     router.push('/dungeon-select');
   };
@@ -152,6 +156,14 @@ export default function HomeScreen() {
         >
           <MaterialCommunityIcons name="treasure-chest" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.storage')}</Text>
+        </Pressable>
+
+        <Pressable
+          style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
+          onPress={handleOpenEncyclopedia}
+        >
+          <MaterialCommunityIcons name="book-open-variant" size={24} color={colors.iconMuted} />
+          <Text style={styles.menuLabel}>{t('home.menu.encyclopedia')}</Text>
         </Pressable>
 
         <Pressable
