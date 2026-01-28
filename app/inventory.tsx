@@ -105,7 +105,7 @@ function calculateItemStats(
 export default function InventoryScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { inventory, equipment, equipItem, removeFromInventory } = usePlayerStore();
+  const { inventory, equipment, equipItem, unequipItem, removeFromInventory, isInventoryFull } = usePlayerStore();
   const [activeTab, setActiveTab] = useState<InventoryTab>('equipment');
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
@@ -207,6 +207,18 @@ export default function InventoryScreen() {
     setSelectedItem(nextItem);
   };
 
+  const handleUnequip = async (slot: EquipmentSlot) => {
+    // インベントリが満杯の場合は外せない
+    if (isInventoryFull()) {
+      alert(t('storage.inventoryFull'));
+      return;
+    }
+
+    await unequipItem(slot);
+    // 装備を外した後、選択を解除
+    setSelectedItem(null);
+  };
+
   const handleSelectItem = (item: Item) => {
     setSelectedItem(item);
   };
@@ -268,6 +280,7 @@ export default function InventoryScreen() {
                 item={selectedItem}
                 equippedItem={equippedItem}
                 onEquip={() => handleEquip(selectedItem.instanceId)}
+                onUnequip={() => handleUnequip(selectedItem.slot)}
                 onStorage={() => handleStorage(selectedItem)}
                 onSell={() => handleSell(selectedItem.instanceId)}
                 t={t}
@@ -432,6 +445,7 @@ function ItemDetail({
   item,
   equippedItem,
   onEquip,
+  onUnequip,
   onStorage,
   onSell,
   t,
@@ -439,6 +453,7 @@ function ItemDetail({
   item: Item;
   equippedItem: Item | null;
   onEquip: () => void;
+  onUnequip: () => void;
   onStorage: () => void;
   onSell: () => void;
   t: (key: string) => string;
@@ -526,11 +541,17 @@ function ItemDetail({
         </View>
       </View>
 
-      {/* アクションボタン（案4: メインボタン + アイコンボタン） */}
+      {/* アクションボタン */}
       <View style={styles.detailActions}>
         <Pressable style={styles.equipButton} onPress={onEquip}>
           <Text style={styles.equipButtonText}>{t('common.equip')}</Text>
         </Pressable>
+        {equippedItem && (
+          <Pressable style={styles.unequipActionButton} onPress={onUnequip}>
+            <MaterialCommunityIcons name="close-circle-outline" size={20} color="#F44336" />
+            <Text style={styles.unequipActionButtonText}>{t('common.unequip')}</Text>
+          </Pressable>
+        )}
         <Pressable style={styles.iconButton} onPress={onStorage}>
           <MaterialCommunityIcons name="warehouse" size={20} color="#4ECDC4" />
           <Text style={styles.iconButtonText}>{t('inventory.storage')}</Text>
@@ -679,10 +700,10 @@ const styles = StyleSheet.create({
   },
   // 矢印と差分
   comparisonArrow: {
-    width: ms(50),
+    width: ms(70),
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: ms(20),
+    alignSelf: 'flex-start',
+    paddingTop: ms(32),
   },
   arrowText: {
     fontSize: fs(18),
@@ -731,6 +752,18 @@ const styles = StyleSheet.create({
     fontSize: fs(14),
     color: '#4CAF50',
     fontWeight: 'bold',
+  },
+  unequipActionButton: {
+    width: ms(50),
+    paddingVertical: ms(6),
+    backgroundColor: 'rgba(244, 67, 54, 0.15)',
+    borderRadius: ms(8),
+    alignItems: 'center',
+  },
+  unequipActionButtonText: {
+    fontSize: fs(9),
+    color: '#F44336',
+    marginTop: ms(2),
   },
   iconButton: {
     width: ms(50),
