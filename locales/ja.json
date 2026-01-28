@@ -35,13 +35,35 @@
       "inventory": "持ち物",
       "storage": "倉庫",
       "settings": "設定",
-      "adventure": "冒険"
+      "adventure": "冒険",
+      "encyclopedia": "図鑑"
     }
   },
   "dungeonSelect": {
     "title": "ダンジョン選択",
     "subtitle": "挑戦するダンジョンを選んでください",
     "unlockRequirement": "{{dungeonName}}をクリアで解放"
+  },
+  "encyclopedia": {
+    "title": "ダンジョン図鑑",
+    "subtitle": "クリアしたダンジョンの詳細を確認できます",
+    "noClearedDungeons": "クリア済みのダンジョンがありません",
+    "clearedAt": "クリア日時: {{date}}",
+    "bestFloor": "最高到達: {{floor}}階",
+    "detail": {
+      "monsters": "出現モンスター",
+      "drops": "ドロップアイテム",
+      "uniqueDrops": "ユニークドロップ",
+      "dungeonDrops": "ダンジョンドロップ",
+      "commonDrops": "共通ドロップ",
+      "spawnRate": "出現率 {{rate}}%",
+      "dropRate": "ドロップ率 {{rate}}%",
+      "stats": "ステータス",
+      "exp": "経験値: {{exp}}",
+      "attackSpeed": "攻撃速度: {{speed}}",
+      "noUniqueDrop": "ユニークドロップなし",
+      "fixedMods": "固有MOD"
+    }
   },
   "battle": {
     "floor": "階",
@@ -747,6 +769,9 @@
     },
     "bandit_swordsman": {
       "name": "盗賊剣士"
+    },
+    "bandit_brute": {
+      "name": "盗賊の荒くれ者"
     },
     "bandit_leader": {
       "name": "盗賊の頭"

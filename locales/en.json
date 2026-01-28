@@ -35,13 +35,35 @@
       "inventory": "Items",
       "storage": "Storage",
       "settings": "Settings",
-      "adventure": "Adventure"
+      "adventure": "Adventure",
+      "encyclopedia": "Archive"
     }
   },
   "dungeonSelect": {
     "title": "Select Dungeon",
     "subtitle": "Choose a dungeon to challenge",
     "unlockRequirement": "Clear {{dungeonName}} to unlock"
+  },
+  "encyclopedia": {
+    "title": "Dungeon Archive",
+    "subtitle": "View details of cleared dungeons",
+    "noClearedDungeons": "No dungeons cleared yet",
+    "clearedAt": "Cleared: {{date}}",
+    "bestFloor": "Best Floor: {{floor}}",
+    "detail": {
+      "monsters": "Monster Spawns",
+      "drops": "Item Drops",
+      "uniqueDrops": "Unique Drops",
+      "dungeonDrops": "Dungeon Drops",
+      "commonDrops": "Common Drops",
+      "spawnRate": "Spawn Rate {{rate}}%",
+      "dropRate": "Drop Rate {{rate}}%",
+      "stats": "Stats",
+      "exp": "EXP: {{exp}}",
+      "attackSpeed": "Attack Speed: {{speed}}",
+      "noUniqueDrop": "No unique drops",
+      "fixedMods": "Fixed MODs"
+    }
   },
   "battle": {
     "floor": "F",
@@ -719,6 +741,9 @@
     },
     "bandit_swordsman": {
       "name": "Bandit Swordsman"
+    },
+    "bandit_brute": {
+      "name": "Bandit Brute"
     },
     "bandit_leader": {
       "name": "Bandit Leader"
