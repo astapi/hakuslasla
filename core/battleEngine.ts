@@ -334,9 +334,12 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       );
       events.push(...attackResult.events);
 
-      engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - attackResult.damage);
+      // ダメージ適用（メイン攻撃 + 追撃）
+      const totalDamage = attackResult.damage + attackResult.followUpDamage;
+      engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - totalDamage);
       engine.state.player.gauge = Math.max(0, engine.state.player.gauge - 100);
 
+      // ライフスティール（メイン攻撃のみ）
       if (attackResult.damage > 0 && engine.state.player.currentHp < engine.state.player.maxHp) {
         const lifestealAmount = calculateLifesteal(
           attackResult.damage,
@@ -351,6 +354,23 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
           );
           const lifestealEvent = createLifestealEvent(engine.state.elapsedTicks, scaledLifesteal);
           if (lifestealEvent) events.push(lifestealEvent);
+        }
+      }
+
+      // HIT時HP回復（メイン攻撃 + 追撃で2回発動）
+      if (attackResult.hasFollowUp && effectiveMods.hpOnHit > 0 && engine.state.player.currentHp < engine.state.player.maxHp) {
+        // 追撃分の追加回復
+        const additionalHeal = Math.floor(effectiveMods.hpOnHit * engine.bossEffects.playerHealingMult);
+        if (additionalHeal > 0) {
+          engine.state.player.currentHp = Math.min(
+            engine.state.player.maxHp,
+            engine.state.player.currentHp + additionalHeal
+          );
+          events.push({
+            type: 'player_heal',
+            tick: engine.state.elapsedTicks,
+            data: { amount: additionalHeal, source: 'follow_up_on_hit' },
+          });
         }
       }
 
@@ -486,6 +506,14 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       engine.state.player.currentHp = Math.max(0, engine.state.player.currentHp - finalEnemyDamage);
       engine.state.enemy.gauge = Math.max(0, engine.state.enemy.gauge - 100);
       events.push(createEnemyAttackEvent(engine.state.elapsedTicks, finalEnemyDamage));
+
+      // 盗賊の頭の追撃（0.5倍ダメージ）
+      const baseBossId = getBaseBossId(enemyId);
+      if (baseBossId === 'bandit_leader') {
+        const followUpDamage = Math.floor(enemyDamage * 0.5 * enemyAttackMultiplier * engine.bossEffects.playerDamageTakenMult);
+        engine.state.player.currentHp = Math.max(0, engine.state.player.currentHp - followUpDamage);
+        events.push(createEnemyAttackEvent(engine.state.elapsedTicks, followUpDamage));
+      }
 
       if (enemyHpOnHitBase > 0) {
         let hpOnHitMult = engine.bossEffects.enemyHpOnHitMult;

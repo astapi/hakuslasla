@@ -24,6 +24,8 @@ import { getPoisonDamageFromMods } from './modEffects';
 export interface PlayerAttackResult {
   damage: number;
   isCritical: boolean;
+  hasFollowUp: boolean;  // 追撃が発生したか
+  followUpDamage: number;  // 追撃ダメージ
   events: BattleEvent[];
 }
 
@@ -75,7 +77,24 @@ export function executePlayerAttack(
     });
   }
 
-  return { damage: finalDamage, isCritical, events };
+  // クリティカル追撃判定
+  let hasFollowUp = false;
+  let followUpDamage = 0;
+
+  if (isCritical && mods.criticalFollowUpAttack && !mods.noDirectDamage) {
+    hasFollowUp = true;
+    // 追撃ダメージ = ATK × 0.5（DEF減衰あり）
+    const followUpBase = calculateDamage(playerAtk * 0.5, state.enemy.def, enemyDamageReductionPct);
+    followUpDamage = Math.floor(followUpBase);
+
+    events.push({
+      type: 'player_attack',  // 追撃も通常攻撃扱い
+      tick: state.elapsedTicks,
+      data: { damage: followUpDamage },
+    });
+  }
+
+  return { damage: finalDamage, isCritical, hasFollowUp, followUpDamage, events };
 }
 
 // ========================================
