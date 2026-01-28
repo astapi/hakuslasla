@@ -215,6 +215,7 @@ export interface CombinedModEffects {
   criticalChance: number;    // 発生率%
   criticalDamage: number;    // ダメージ+%
   hpOnCrit: number;          // クリティカル時HP回復（固定値）
+  criticalFollowUpAttack: boolean;  // クリティカル時追撃（ATK×0.5の追加ダメージ + HIT時効果再発動）
 
   // 防御・吸収
   damageReductionPct: number;  // ダメージ軽減%
@@ -339,7 +340,7 @@ export interface BattleConfig {
   basePoisonMaxStacks: number;  // 基本スタック上限（デフォルト: 1）
 
   // クリティカル設定
-  baseCriticalMultiplier: number;  // 基礎倍率（デフォルト: 1.5）
+  baseCriticalMultiplier: number;  // 基礎倍率（デフォルト: 3.0）
 
   // ゲージ設定
   ticksPerSecond: number;  // 1秒あたりのティック数（デフォルト: 30）
@@ -353,7 +354,7 @@ export const DEFAULT_BATTLE_CONFIG: BattleConfig = {
   poisonDamageRatio: 1.2,
   poisonDuration: 5,
   basePoisonMaxStacks: 1,
-  baseCriticalMultiplier: 1.5,
+  baseCriticalMultiplier: 3.0,
   ticksPerSecond: 30,
   baseGaugePerSecond: 200,
 };

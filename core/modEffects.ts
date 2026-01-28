@@ -76,6 +76,7 @@ export function createEmptyModEffects(): CombinedModEffects {
     criticalChance: 0,
     criticalDamage: 0,
     hpOnCrit: 0,
+    criticalFollowUpAttack: false,
     damageReductionPct: 0,
     hpOnHit: 0,
     attackSpeedPct: 0,
@@ -104,11 +105,32 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
     case 'poison_chance':
       effects.poisonChance += mod.value;
       break;
+    case 'poison_damage_pct':
+      effects.poisonDamagePct += mod.value;
+      break;
+    case 'poison_damage_more_pct':
+      effects.poisonDamageMorePct.push(mod.value);
+      break;
+    case 'poison_max_stacks':
+      effects.poisonMaxStacks += mod.value;
+      break;
+    case 'poison_damage_reduction':
+      effects.poisonDamageReduction += mod.value;
+      break;
+    case 'poison_lifesteal':
+      effects.poisonLifesteal += mod.value;
+      break;
     case 'critical_chance':
       effects.criticalChance += mod.value;
       break;
     case 'critical_damage':
       effects.criticalDamage += mod.value;
+      break;
+    case 'hp_on_crit':
+      effects.hpOnCrit += mod.value;
+      break;
+    case 'critical_follow_up_attack':
+      effects.criticalFollowUpAttack = true;
       break;
     case 'damage_reduction_pct':
       effects.damageReductionPct += mod.value;

@@ -185,11 +185,7 @@ export const applyPlayerAttackPostEffects = (
   const baseBossId = getBaseBossId(ctx.enemyId);
 
   bossEffects.playerAttackCount += 1;
-  if (baseBossId === 'true_final_boss' && bossEffects.playerAttackCount % 6 === 0) {
-    bossEffects.convergenceStacks += 1;
-    bossEffects.enemyDamageReductionStackPct += 2;
-    events.push(createBossSkillEvent(tick, 'final_convergence'));
-  }
+  // Final Convergence削除
 
   if (bossEffects.playerAttackSpeedRemaining > 0) {
     bossEffects.playerAttackSpeedRemaining -= 1;
@@ -285,9 +281,7 @@ export const applyEnemyAttackPreEffects = (
   }
 
   if (baseBossId === 'true_final_boss') {
-    bossEffects.finalEndStacks += 1;
-    bossEffects.enemyAttackMult *= 1.05;
-    bossEffects.enemyDamageReductionStackPct += 3;
+    // Final End: Uber版はプレイヤーゲージリセットのみ
     events.push(createBossSkillEvent(tick, 'final_end'));
     if (isUber) {
       return { events, resetPlayerGauge: true };
