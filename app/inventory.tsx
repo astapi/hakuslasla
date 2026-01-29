@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
+import { useState, useMemo, useEffect, useCallback, memo } from 'react';
+import { View, Text, StyleSheet, Pressable, Image, FlatList, ListRenderItemInfo } from 'react-native';
 import { useRouter , useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -218,15 +218,58 @@ export default function InventoryScreen() {
     setSelectedItem(null);
   };
 
-  const handleSelectItem = (item: Item) => {
+  const handleSelectItem = useCallback((item: Item) => {
     setSelectedItem(item);
-  };
+  }, []);
 
   const currentItems = itemsBySlot[selectedSlot];
 
   const isFull = inventory.length >= INVENTORY_MAX_SIZE;
 
   const isUniqueItem = (item: Item) => item.mods?.some((mod) => mod.tier === 0);
+
+  // グリッドアイテムのレンダリング関数
+  const renderGridItem = useCallback(({ item }: ListRenderItemInfo<Item>) => {
+    const isSelected = selectedItem?.instanceId === item.instanceId;
+    const stats = calculateItemStats(item, t);
+    const hasMods = item.mods && item.mods.length > 0;
+    const isUnique = isUniqueItem(item);
+
+    return (
+      <Pressable
+        style={[
+          styles.gridItem,
+          isSelected && styles.gridItemSelected,
+        ]}
+        onPress={() => handleSelectItem(item)}
+      >
+        <Image
+          source={getItemIcon(item.id, item.slot)}
+          style={styles.gridItemIcon}
+        />
+        {isUnique && (
+          <View style={styles.uniqueBadge}>
+            <Text style={styles.uniqueBadgeText}>UNIQUE</Text>
+          </View>
+        )}
+        {hasMods && (
+          <View style={styles.modIndicator}>
+            <Text style={styles.modIndicatorText}>{item.mods.length}</Text>
+          </View>
+        )}
+        <Text style={styles.gridItemName} numberOfLines={1}>
+          {t(`items.${item.id}.name`)}
+        </Text>
+        <Text style={styles.gridItemStats}>
+          {stats.totalAtk > 0 && `A${stats.totalAtk}`}
+          {stats.totalAtk > 0 && stats.totalDef > 0 && ' '}
+          {stats.totalDef > 0 && `D${stats.totalDef}`}
+        </Text>
+      </Pressable>
+    );
+  }, [selectedItem?.instanceId, t, handleSelectItem]);
+
+  const keyExtractorGrid = useCallback((item: Item) => item.instanceId, []);
 
   const ticketEntries = useMemo(() => {
     return Object.entries(UBER_BOSS_BY_BASE)
@@ -327,50 +370,18 @@ export default function InventoryScreen() {
                 </Text>
               </View>
             ) : (
-              <ScrollView contentContainerStyle={styles.gridContent}>
-                <View style={styles.grid}>
-                  {currentItems.map((item) => {
-                    const isSelected = selectedItem?.instanceId === item.instanceId;
-                    const stats = calculateItemStats(item, t);
-                    const hasMods = item.mods && item.mods.length > 0;
-                    const isUnique = isUniqueItem(item);
-
-                    return (
-                      <Pressable
-                        key={item.instanceId}
-                        style={[
-                          styles.gridItem,
-                          isSelected && styles.gridItemSelected,
-                        ]}
-                        onPress={() => handleSelectItem(item)}
-                      >
-                        <Image
-                          source={getItemIcon(item.id, item.slot)}
-                          style={styles.gridItemIcon}
-                        />
-                        {isUnique && (
-                          <View style={styles.uniqueBadge}>
-                            <Text style={styles.uniqueBadgeText}>UNIQUE</Text>
-                          </View>
-                        )}
-                        {hasMods && (
-                          <View style={styles.modIndicator}>
-                            <Text style={styles.modIndicatorText}>{item.mods.length}</Text>
-                          </View>
-                        )}
-                        <Text style={styles.gridItemName} numberOfLines={1}>
-                          {t(`items.${item.id}.name`)}
-                        </Text>
-                        <Text style={styles.gridItemStats}>
-                          {stats.totalAtk > 0 && `A${stats.totalAtk}`}
-                          {stats.totalAtk > 0 && stats.totalDef > 0 && ' '}
-                          {stats.totalDef > 0 && `D${stats.totalDef}`}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-                </View>
-              </ScrollView>
+              <FlatList
+                data={currentItems}
+                renderItem={renderGridItem}
+                keyExtractor={keyExtractorGrid}
+                numColumns={4}
+                contentContainerStyle={styles.gridContent}
+                columnWrapperStyle={styles.gridRow}
+                initialNumToRender={12}
+                maxToRenderPerBatch={8}
+                windowSize={5}
+                removeClippedSubviews={true}
+              />
             )}
           </View>
         </>
@@ -427,7 +438,7 @@ export default function InventoryScreen() {
 }
 
 // 差分表示用コンポーネント
-function StatDiff({ label, newValue, oldValue }: { label: string; newValue: number; oldValue: number }) {
+const StatDiff = memo(({ label, newValue, oldValue }: { label: string; newValue: number; oldValue: number }) => {
   const diff = newValue - oldValue;
   if (diff === 0) return null;
 
@@ -437,10 +448,12 @@ function StatDiff({ label, newValue, oldValue }: { label: string; newValue: numb
       {label} {isPositive ? '+' : ''}{diff}
     </Text>
   );
-}
+});
+
+StatDiff.displayName = 'StatDiff';
 
 // アイテム詳細コンポーネント
-function ItemDetail({
+const ItemDetail = memo(({
   item,
   equippedItem,
   onEquip,
@@ -456,7 +469,7 @@ function ItemDetail({
   onStorage: () => void;
   onSell: () => void;
   t: (key: string) => string;
-}) {
+}) => {
   const stats = calculateItemStats(item, t);
   const equippedStats = equippedItem ? calculateItemStats(equippedItem, t) : null;
 
@@ -562,7 +575,9 @@ function ItemDetail({
       </View>
     </View>
   );
-}
+});
+
+ItemDetail.displayName = 'ItemDetail';
 
 const styles = StyleSheet.create({
   container: {
@@ -898,10 +913,10 @@ const styles = StyleSheet.create({
   gridContent: {
     padding: ms(12),
   },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+  gridRow: {
+    justifyContent: 'flex-start',
     gap: ms(8),
+    marginBottom: ms(8),
   },
   gridItem: {
     width: ms(72),
