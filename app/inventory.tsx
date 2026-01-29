@@ -104,7 +104,15 @@ function calculateItemStats(
 export default function InventoryScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { inventory, equipment, equipItem, unequipItem, removeFromInventory, isInventoryFull } = usePlayerStore();
+
+  // Zustand Selector パターン: 必要なフィールドのみ購読
+  const inventory = usePlayerStore((state) => state.inventory);
+  const equipment = usePlayerStore((state) => state.equipment);
+  const equipItem = usePlayerStore((state) => state.equipItem);
+  const unequipItem = usePlayerStore((state) => state.unequipItem);
+  const removeFromInventory = usePlayerStore((state) => state.removeFromInventory);
+  const isInventoryFull = usePlayerStore((state) => state.isInventoryFull);
+
   const [activeTab, setActiveTab] = useState<InventoryTab>('equipment');
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);

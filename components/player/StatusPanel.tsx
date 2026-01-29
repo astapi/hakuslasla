@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
@@ -23,27 +23,26 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     });
   };
 
-  // 装備・スキル変更時に再レンダリングするため、関連する state を購読
-  const {
-    level,
-    exp,
-    expToNextLevel,
-    levelCap,
-    maxHp,
-    atk,
-    def,
-    equipment,
-    unlockedSkills,
-    getTotalStats,
-  } = usePlayerStore();
-  // 購読のためだけに使用（値の変更を検知して再レンダリング）
-  void equipment;
-  void unlockedSkills;
-  void maxHp;
-  void atk;
-  void def;
+  // Zustand Selector パターン: 必要なフィールドのみ購読
+  const level = usePlayerStore((state) => state.level);
+  const exp = usePlayerStore((state) => state.exp);
+  const expToNextLevel = usePlayerStore((state) => state.expToNextLevel);
+  const levelCap = usePlayerStore((state) => state.levelCap);
 
-  const stats = getTotalStats();
+  // getTotalStats の依存関係を個別に購読
+  const equipment = usePlayerStore((state) => state.equipment);
+  const unlockedSkills = usePlayerStore((state) => state.unlockedSkills);
+  const maxHp = usePlayerStore((state) => state.maxHp);
+  const atk = usePlayerStore((state) => state.atk);
+  const def = usePlayerStore((state) => state.def);
+
+  // useMemo でキャッシュして無限ループを防止
+  // 依存配列の値は getTotalStats() 内部で使用されるため必要
+  const stats = useMemo(() => {
+    const state = usePlayerStore.getState();
+    return state.getTotalStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [equipment, unlockedSkills, maxHp, atk, def]);
 
   // 詳細計算用のデータを取得
   const getStatsBreakdown = () => {
