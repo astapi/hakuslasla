@@ -111,7 +111,7 @@ export default function DungeonSelectScreen() {
     }
 
     setDungeons(result);
-  }, [t]);
+  }, []);
 
   // 画面がフォーカスされた時にダンジョンリストを再読み込み
   useFocusEffect(

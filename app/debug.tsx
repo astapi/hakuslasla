@@ -6,10 +6,9 @@ import {
   ScrollView,
   Pressable,
   Alert,
-} from 'react-native';
+ Share } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Share } from 'react-native';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import {
   PRESET_TYPES,

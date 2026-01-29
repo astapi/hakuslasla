@@ -275,6 +275,7 @@ export type BattleEventType =
   | 'poison_damage'
   | 'poison_expired'
   | 'hp_regen'
+  | 'player_heal'
   | 'lifesteal'
   | 'enemy_heal'
   | 'player_damage'

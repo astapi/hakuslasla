@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter , useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
@@ -13,7 +13,6 @@ import { storageRepository } from '@/db/repositories/storageRepository';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { getTierColor, getTierDisplayName } from '@/data/items';
 import { ms, fs } from '@/utils/scaling';
-import { useFocusEffect } from 'expo-router';
 import { UBER_BOSS_BY_BASE } from '@/data/endContents';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
