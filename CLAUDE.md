@@ -14,9 +14,17 @@ npm run ios        # iOSシミュレータで起動
 npm run android    # Androidエミュレータで起動
 npm run lint       # ESLint実行
 npx tsc --noEmit   # TypeScript型チェック
+
+# シミュレーションスクリプト（戦闘バランス検証用）
+npm run simulation       # 通常ダンジョンシミュレーション
+npm run simulation:uber  # Uberボスシミュレーション
+# 個別スクリプトは scripts/*.ts で実行（tsx + TSX_TSCONFIG_PATH指定）
+TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/[スクリプト名].ts
 ```
 
-**注意**: Web (`npm run web`) は expo-sqlite の WASM 問題により動作しません。iOS/Android でのみ確認してください。
+**注意**:
+- Web (`npm run web`) は expo-sqlite の WASM 問題により動作しません。iOS/Android でのみ確認してください。
+- シミュレーションスクリプトは `tsconfig.scripts.json` を使用し、Node.js環境でバトルロジックを検証します。
 
 ## Architecture
 
@@ -56,10 +64,17 @@ app/
 
 ### Key Directories
 - `components/`: UIコンポーネント（battle/, player/, dungeon/, common/）
-- `hooks/`: カスタムフック（useBattle.ts が戦闘ロジック）
+- `hooks/`: カスタムフック（useBattle.ts が戦闘ロジック統合）
 - `stores/`: Zustand store（usePlayerStore.ts）
 - `types/`: TypeScript型定義
-- `data/`: マスターデータ（dungeons, enemies, items, skills）
+- `data/`: マスターデータ（dungeons, enemies, items, skills, passiveTree）とドロップロジック
+- `core/`: 戦闘エンジンの純粋ロジック（React非依存、シミュレーション可能）
+  - `battleEngine.ts`: ゲージ制バトルのコアエンジン
+  - `bossBehaviors.ts`: ボススキルと特殊効果
+  - `combatEffects.ts`: ダメージ計算、毒、回復などの効果処理
+  - `modEffects.ts`: 装備MOD効果の計算
+  - `endContent.ts`: エンドコンテンツ（Uber、Dimensional Rush）のバランス調整値
+- `scripts/`: バトルシミュレーションとバランス検証スクリプト（Node.js実行）
 
 ### Path Alias
 `@/*` = `./`（例: `@/components`, `@/stores`）
@@ -77,6 +92,12 @@ app/
 
 ## Core Logic
 
+### Battle System (ゲージ制)
+- ATBゲージ風：攻撃速度でゲージ増加速度が変化
+- ゲージ100で行動、プレイヤーと敵が独立に行動
+- 実装: `core/battleEngine.ts` の `createBattleEngine()`
+- 1秒 = 1000 ticks、攻撃速度でゲージ増加量が決定
+
 ### Damage Calculation
 ```typescript
 // DEF減衰式（DEFが高いほど効果が減少）
@@ -84,11 +105,36 @@ reduction = def / (def + 100)  // DEF100で50%軽減、DEF300で75%軽減
 damage = Math.max(1, atk * (1 - reduction))
 ```
 
+### Item System
+- **アイテムベース（ItemBase）**: 基本ステータスとスロット
+- **MOD（ItemMod）**: ランダム接尾辞効果（tier 1-5、ダンジョンで範囲指定）
+- **ドロップ**: ダンジョン別のModTierRange/ModCountRangeで品質管理
+- **ユニーク装備**: 固定効果、ボス撃破で一度だけドロップ
+- 実装: `data/items.ts`, `data/json/items.json`, `data/json/mods.json`
+
 ### Level Up (per level)
 - MaxHP +10, ATK +2, DEF +1, SkillPoints +1
 
 ### Total Stats
 基本値 + 装備ボーナス（getTotalStats()で計算）
+
+## Important Implementation Notes
+
+### Battle Logic Separation
+- **React層（hooks/useBattle.ts）**: UI連携、状態管理、DB操作
+- **Pure Logic層（core/）**: 戦闘計算のみ、React非依存
+  - メリット: Node.jsでシミュレーション可能、テスト容易
+  - `createBattleEngine()` はステートフルオブジェクトを返し、`advanceTicks()`でゲージを進める
+
+### MOD Effects Combination
+- 装備スロットごとのMODを `combineMods()` で統合（`core/modEffects.ts`）
+- パッシブツリー効果は `calculatePassiveEffects()` で計算（`data/passiveTree.ts`）
+- ボス特殊効果・エンドコンテンツ補正は `core/endContent.ts` と `core/bossBehaviors.ts`
+
+### Data Files Structure
+- `data/json/*.json`: マスターデータ（items, dungeons, mods, skillsなど）
+- TypeScriptから読み込み、型安全性を保つ
+- MOD tierやドロップテーブルはJSONで管理
 
 ## UI Theme
 
