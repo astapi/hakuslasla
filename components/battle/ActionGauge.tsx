@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ms } from '@/utils/scaling';
 
@@ -6,7 +7,7 @@ interface ActionGaugeProps {
   color?: string;
 }
 
-export const ActionGauge = ({
+export const ActionGauge = memo(({
   value,
   color = '#FFD700',
 }: ActionGaugeProps) => {
@@ -27,7 +28,9 @@ export const ActionGauge = ({
       </View>
     </View>
   );
-};
+});
+
+ActionGauge.displayName = 'ActionGauge';
 
 const styles = StyleSheet.create({
   container: {

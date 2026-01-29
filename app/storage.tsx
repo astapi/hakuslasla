@@ -1,5 +1,5 @@
-import { useState, useCallback, useMemo } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
+import { useState, useCallback, useMemo, memo } from 'react';
+import { View, Text, StyleSheet, Pressable, Image, FlatList, ListRenderItemInfo } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -178,12 +178,45 @@ export default function StorageScreen() {
     }
   };
 
-  const handleSelectItem = (item: Item) => {
+  const handleSelectItem = useCallback((item: Item) => {
     setSelectedItem(item);
-  };
+  }, []);
 
   const currentItems = itemsBySlot[selectedSlot];
   const inventoryFull = isInventoryFull();
+
+  // グリッドアイテムのレンダリング関数
+  const renderGridItem = useCallback(({ item }: ListRenderItemInfo<Item>) => {
+    const isSelected = selectedItem?.instanceId === item.instanceId;
+    const stats = calculateItemStats(item, t);
+    const hasMods = item.mods && item.mods.length > 0;
+
+    return (
+      <Pressable
+        style={[
+          styles.gridItem,
+          isSelected && styles.gridItemSelected,
+        ]}
+        onPress={() => handleSelectItem(item)}
+      >
+        <Image
+          source={getItemIcon(item.id, item.slot)}
+          style={styles.gridItemIcon}
+        />
+        {hasMods && <View style={styles.modIndicator} />}
+        <Text style={styles.gridItemName} numberOfLines={1}>
+          {t(`items.${item.id}.name`)}
+        </Text>
+        <Text style={styles.gridItemStats}>
+          {stats.totalAtk > 0 && `A${stats.totalAtk}`}
+          {stats.totalAtk > 0 && stats.totalDef > 0 && ' '}
+          {stats.totalDef > 0 && `D${stats.totalDef}`}
+        </Text>
+      </Pressable>
+    );
+  }, [selectedItem?.instanceId, t, handleSelectItem]);
+
+  const keyExtractorGrid = useCallback((item: Item) => item.instanceId, []);
 
   return (
     <ScreenWrapper>
@@ -250,40 +283,18 @@ export default function StorageScreen() {
             </Text>
           </View>
         ) : (
-          <ScrollView contentContainerStyle={styles.gridContent}>
-            <View style={styles.grid}>
-              {currentItems.map((item) => {
-                const isSelected = selectedItem?.instanceId === item.instanceId;
-                const stats = calculateItemStats(item, t);
-                const hasMods = item.mods && item.mods.length > 0;
-
-                return (
-                  <Pressable
-                    key={item.instanceId}
-                    style={[
-                      styles.gridItem,
-                      isSelected && styles.gridItemSelected,
-                    ]}
-                    onPress={() => handleSelectItem(item)}
-                  >
-                    <Image
-                      source={getItemIcon(item.id, item.slot)}
-                      style={styles.gridItemIcon}
-                    />
-                    {hasMods && <View style={styles.modIndicator} />}
-                    <Text style={styles.gridItemName} numberOfLines={1}>
-                      {t(`items.${item.id}.name`)}
-                    </Text>
-                    <Text style={styles.gridItemStats}>
-                      {stats.totalAtk > 0 && `A${stats.totalAtk}`}
-                      {stats.totalAtk > 0 && stats.totalDef > 0 && ' '}
-                      {stats.totalDef > 0 && `D${stats.totalDef}`}
-                    </Text>
-                  </Pressable>
-                );
-              })}
-            </View>
-          </ScrollView>
+          <FlatList
+            data={currentItems}
+            renderItem={renderGridItem}
+            keyExtractor={keyExtractorGrid}
+            numColumns={4}
+            contentContainerStyle={styles.gridContent}
+            columnWrapperStyle={styles.gridRow}
+            initialNumToRender={12}
+            maxToRenderPerBatch={8}
+            windowSize={5}
+            removeClippedSubviews={true}
+          />
         )}
       </View>
 
@@ -296,7 +307,7 @@ export default function StorageScreen() {
 }
 
 // 倉庫アイテム詳細コンポーネント
-function StorageItemDetail({
+const StorageItemDetail = memo(({
   item,
   inventoryFull,
   onWithdraw,
@@ -308,7 +319,7 @@ function StorageItemDetail({
   onWithdraw: () => void;
   onSell: () => void;
   t: (key: string) => string;
-}) {
+}) => {
   const stats = calculateItemStats(item, t);
 
   return (
@@ -364,7 +375,9 @@ function StorageItemDetail({
       </View>
     </View>
   );
-}
+});
+
+StorageItemDetail.displayName = 'StorageItemDetail';
 
 const styles = StyleSheet.create({
   container: {
@@ -557,10 +570,10 @@ const styles = StyleSheet.create({
   gridContent: {
     padding: ms(12),
   },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+  gridRow: {
+    justifyContent: 'flex-start',
     gap: ms(8),
+    marginBottom: ms(8),
   },
   gridItem: {
     width: ms(72),

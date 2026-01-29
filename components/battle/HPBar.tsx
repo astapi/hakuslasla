@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ms, fs } from '@/utils/scaling';
 
@@ -8,7 +9,7 @@ interface HPBarProps {
   showText?: boolean;
 }
 
-export const HPBar = ({ current, max, color = '#4CAF50', showText = true }: HPBarProps) => {
+export const HPBar = memo(({ current, max, color = '#4CAF50', showText = true }: HPBarProps) => {
   const percentage = Math.max(0, Math.min(100, (current / max) * 100));
 
   // HPが低いほど色を赤くする
@@ -26,7 +27,9 @@ export const HPBar = ({ current, max, color = '#4CAF50', showText = true }: HPBa
       )}
     </View>
   );
-};
+});
+
+HPBar.displayName = 'HPBar';
 
 const styles = StyleSheet.create({
   container: {
