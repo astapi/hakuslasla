@@ -1,5 +1,5 @@
 import { getMonsterImage, playerImages } from '@/data/images';
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
@@ -23,7 +23,7 @@ interface CharacterDisplayProps {
   actionGauge?: number; // 行動ゲージ (0-100)
 }
 
-export const CharacterDisplay = ({
+export const CharacterDisplay = memo(({
   name,
   currentHp,
   maxHp,
@@ -92,10 +92,12 @@ export const CharacterDisplay = ({
         <HPBar current={currentHp} max={maxHp} color={isPlayer ? '#4CAF50' : '#F44336'} />
         
       </View>
-      
+
     </View>
   );
-};
+});
+
+CharacterDisplay.displayName = 'CharacterDisplay';
 
 const styles = StyleSheet.create({
   container: {

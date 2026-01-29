@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useRef, useEffect, useCallback, memo } from 'react';
+import { View, Text, StyleSheet, FlatList, ListRenderItemInfo } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { BattleLogEntry } from '@/types';
 import { ms, fs } from '@/utils/scaling';
@@ -31,27 +31,46 @@ const getLogColor = (type: BattleLogEntry['type']): string => {
   }
 };
 
-export const BattleLog = ({ logs }: BattleLogProps) => {
+export const BattleLog = memo(({ logs }: BattleLogProps) => {
   const { t } = useTranslation();
-  const scrollViewRef = useRef<ScrollView>(null);
+  const flatListRef = useRef<FlatList<BattleLogEntry>>(null);
+
+  // メッセージがあるログのみフィルタリング
+  const filteredLogs = logs.filter(log => log.message);
 
   useEffect(() => {
-    scrollViewRef.current?.scrollToEnd({ animated: true });
-  }, [logs.length]);
+    if (filteredLogs.length > 0) {
+      flatListRef.current?.scrollToEnd({ animated: true });
+    }
+  }, [filteredLogs.length]);
+
+  const renderItem = useCallback(({ item }: ListRenderItemInfo<BattleLogEntry>) => (
+    <Text style={[styles.logEntry, { color: getLogColor(item.type) }]}>
+      {item.message}
+    </Text>
+  ), []);
+
+  const keyExtractor = useCallback((item: BattleLogEntry) => item.id.toString(), []);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{t('battleLog.title')}</Text>
-      <ScrollView ref={scrollViewRef} style={styles.scrollView}>
-        {logs.filter(log => log.message).map((log) => (
-          <Text key={log.id} style={[styles.logEntry, { color: getLogColor(log.type) }]}>
-            {log.message}
-          </Text>
-        ))}
-      </ScrollView>
+      <FlatList
+        ref={flatListRef}
+        data={filteredLogs}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        style={styles.scrollView}
+        initialNumToRender={20}
+        maxToRenderPerBatch={10}
+        windowSize={5}
+        removeClippedSubviews={true}
+      />
     </View>
   );
-};
+});
+
+BattleLog.displayName = 'BattleLog';
 
 const styles = StyleSheet.create({
   container: {
