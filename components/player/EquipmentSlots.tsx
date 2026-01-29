@@ -1,13 +1,58 @@
+import { memo } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-import { EquipmentSlot } from '@/types';
+import { EquipmentSlot, Item } from '@/types';
 import { getSlotIcon } from '@/data/itemIcons';
 import { ms, fs, s } from '@/utils/scaling';
 
-export const EquipmentSlots = () => {
+// memo化されたスロットアイテムコンポーネント
+const SlotItem = memo(({ slot, item, t }: { slot: EquipmentSlot; item: Item | null; t: (key: string, options?: Record<string, unknown>) => string }) => {
+  // ATK/DEF MODを加算した合計値を計算
+  let totalAtk = item?.atk || 0;
+  let totalDef = item?.def || 0;
+  let otherModCount = 0;
+
+  if (item?.mods) {
+    for (const mod of item.mods) {
+      if (mod.type === 'atk_bonus') totalAtk += mod.value;
+      else if (mod.type === 'def_bonus') totalDef += mod.value;
+      else otherModCount++;
+    }
+  }
+
+  return (
+    <View style={styles.slotItem}>
+      <Image source={getSlotIcon(slot)} style={styles.slotIcon} />
+      <Text style={styles.slotLabel}>{t(`slots.${slot}`)}</Text>
+      <Text style={styles.itemName} numberOfLines={1}>
+        {item ? t(`items.${item.id}.name`, { defaultValue: item.name }) : '-'}
+      </Text>
+      {item && (
+        <>
+          <Text style={styles.itemStats}>
+            {totalAtk > 0 ? `+${totalAtk}ATK ` : ''}
+            {totalDef > 0 ? `+${totalDef}DEF` : ''}
+          </Text>
+          {otherModCount > 0 && (
+            <View style={styles.modBadge}>
+              <Text style={styles.modBadgeText}>
+                {t('equipment.modCount', { count: otherModCount })}
+              </Text>
+            </View>
+          )}
+        </>
+      )}
+    </View>
+  );
+});
+
+SlotItem.displayName = 'SlotItem';
+
+export const EquipmentSlots = memo(() => {
   const { t } = useTranslation();
-  const { equipment } = usePlayerStore();
+  // Zustand Selector: equipmentのみ購読
+  const equipment = usePlayerStore((state) => state.equipment);
   const slots: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
   return (
@@ -15,57 +60,15 @@ export const EquipmentSlots = () => {
       <Text style={styles.title}>{t('equipment.title')}</Text>
 
       <View style={styles.slotsContainer}>
-        {slots.map((slot) => {
-          const item = equipment[slot];
-          return (
-            <View key={slot} style={styles.slotItem}>
-              <Image source={getSlotIcon(slot)} style={styles.slotIcon} />
-              <Text style={styles.slotLabel}>{t(`slots.${slot}`)}</Text>
-              <Text style={styles.itemName} numberOfLines={1}>
-                {item
-                  ? t(`items.${item.id}.name`, { defaultValue: item.name })
-                  : '-'}
-              </Text>
-              {item && (
-                <>
-                  {(() => {
-                    // ATK/DEF MODを加算した合計値
-                    let totalAtk = item.atk;
-                    let totalDef = item.def;
-                    let otherModCount = 0;
-                    if (item.mods) {
-                      for (const mod of item.mods) {
-                        if (mod.type === 'atk_bonus') totalAtk += mod.value;
-                        else if (mod.type === 'def_bonus') totalDef += mod.value;
-                        else otherModCount++;
-                      }
-                    }
-                    return (
-                      <>
-                        <Text style={styles.itemStats}>
-                          {totalAtk > 0 ? `+${totalAtk}ATK ` : ''}
-                          {totalDef > 0 ? `+${totalDef}DEF` : ''}
-                        </Text>
-                        {otherModCount > 0 && (
-                          <View style={styles.modBadge}>
-                            <Text style={styles.modBadgeText}>
-                              {t('equipment.modCount', { count: otherModCount })}
-                            </Text>
-                          </View>
-                        )}
-                      </>
-                    );
-                  })()}
-                </>
-              )}
-            </View>
-          );
-        })}
+        {slots.map((slot) => (
+          <SlotItem key={slot} slot={slot} item={equipment[slot]} t={t} />
+        ))}
       </View>
-
     </View>
   );
-};
+});
+
+EquipmentSlots.displayName = 'EquipmentSlots';
 
 const styles = StyleSheet.create({
   container: {
