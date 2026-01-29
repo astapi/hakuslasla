@@ -141,7 +141,7 @@ const ChestDrop = ({
         )
       );
     }
-  }, [itemIndex, rotateZ, translateY]);
+  }, [itemIndex, rotateZ, translateY, bounceHeight, swayDeg, pulseScale, glowOpacity, glow, scale]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
@@ -489,7 +489,6 @@ const styles = StyleSheet.create({
   chestDrop: {
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
     position: 'absolute',
     left: '50%',
     top: '50%',

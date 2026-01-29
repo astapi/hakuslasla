@@ -96,6 +96,7 @@ export type ModType =
   | 'critical_damage'    // クリティカルダメージ+X%
   | 'damage_reduction_pct'  // ダメージ軽減+X%（鎧専用）
   | 'hp_on_hit'          // HIT時HP回復（武器専用）
+  | 'lifesteal'          // ライフスティール（与ダメージの一部を回復）
   | 'attack_speed_pct'   // AS +X% (increased、加算)
   | 'attack_speed_more_pct' // AS X% more (乗算)
   | 'time_atk_inc_pct'    // 5秒毎にATK increased%加算
