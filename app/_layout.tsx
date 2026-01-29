@@ -7,7 +7,6 @@ import 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { initializeDatabase, settingsRepository } from '@/db';
 import { changeLanguage } from '@/lib/i18n';
-import '@/lib/i18n';
 
 // スプラッシュ画面を自動で非表示にしない
 SplashScreen.preventAutoHideAsync();

@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { View, Text, StyleSheet, Pressable, Dimensions, Image, ImageSourcePropType } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ImageSourcePropType } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { getAllPassiveNodes, canUnlockNode, canRefundNode } from '@/data/passiveTree';
@@ -20,7 +20,6 @@ import Svg, {
   Defs,
   RadialGradient,
   Stop,
-  G,
   LinearGradient,
 } from 'react-native-svg';
 import { ms, fs } from '@/utils/scaling';
@@ -159,27 +158,6 @@ const getNodeSize = (node: PassiveNode): number => {
   return NODE_SIZE_SMALL;
 };
 
-// 2点間のベジェ曲線パスを生成
-const generateBezierPath = (
-  startX: number,
-  startY: number,
-  endX: number,
-  endY: number
-): string => {
-  const dx = endX - startX;
-  const dy = endY - startY;
-
-  // 縦方向優先の場合
-  if (Math.abs(dy) > Math.abs(dx)) {
-    const controlY = startY + dy * 0.5;
-    return `M ${startX} ${startY} Q ${startX} ${controlY} ${(startX + endX) / 2} ${controlY} Q ${endX} ${controlY} ${endX} ${endY}`;
-  }
-
-  // 横方向優先の場合
-  const controlX = startX + dx * 0.5;
-  return `M ${startX} ${startY} Q ${controlX} ${startY} ${controlX} ${(startY + endY) / 2} Q ${controlX} ${endY} ${endX} ${endY}`;
-};
-
 // S字カーブのベジェ曲線パスを生成（PoE風）
 const generateSmoothPath = (
   startX: number,
@@ -241,7 +219,7 @@ export const PassiveTree = () => {
   };
 
   // 座標範囲を取得
-  const { minX, minY, xRange, yRange, contentWidth, contentHeight } = useMemo(() => {
+  const { minX, minY, contentWidth, contentHeight } = useMemo(() => {
     const xPositions = nodes.map(n => n.position.x);
     const yPositions = nodes.map(n => n.position.y);
     const minX = Math.min(...xPositions);
@@ -254,14 +232,12 @@ export const PassiveTree = () => {
     return {
       minX,
       minY,
-      xRange,
-      yRange,
       contentWidth: xRange * GRID_SIZE + padding,
       contentHeight: yRange * GRID_SIZE + padding,
     };
   }, [nodes]);
 
-  const getNodeCenter = (node: PassiveNode) => {
+  const getNodeCenter = useCallback((node: PassiveNode) => {
     const xIndex = node.position.x - minX;
     const yIndex = node.position.y - minY;
     const padding = GRID_SIZE;
@@ -269,7 +245,7 @@ export const PassiveTree = () => {
       x: xIndex * GRID_SIZE + padding + GRID_SIZE / 2,
       y: yIndex * GRID_SIZE + padding + GRID_SIZE / 2,
     };
-  };
+  }, [minX, minY]);
 
   const getNodePosition = (node: PassiveNode) => {
     const center = getNodeCenter(node);
@@ -282,12 +258,12 @@ export const PassiveTree = () => {
 
   // 接続線データを生成
   const connections = useMemo(() => {
-    const result: Array<{
+    const result: {
       id: string;
       path: string;
       isUnlocked: boolean;
       canUnlock: boolean;
-    }> = [];
+    }[] = [];
 
     nodes.forEach((node) => {
       const nodeCenter = getNodeCenter(node);
@@ -319,7 +295,7 @@ export const PassiveTree = () => {
     });
 
     return result;
-  }, [nodes, unlockedSkills, skillPoints, minX, minY]);
+  }, [nodes, unlockedSkills, skillPoints, getNodeCenter]);
 
   const handleNodePress = (node: PassiveNode) => {
     setSelectedNode(node);

@@ -82,7 +82,9 @@ export async function applyPresetToCharacter(
   // プリセットを適用
   await store.applyPassivePreset(preset.nodes);
 
-  console.log(`Applied preset: ${preset.name} (${preset.nodes.length} nodes)`);
+  if (__DEV__) {
+    console.log(`Applied preset: ${preset.name} (${preset.nodes.length} nodes)`);
+  }
   return true;
 }
 
@@ -128,6 +130,7 @@ export type BuildPreset = {
 };
 
 const UBER_GOBLIN_KING_WIN_EQUIPMENT: EquipmentSet = {
+  name: 'Uber Goblin King Win Equipment',
   weapon: {
     id: 'apocalypse_blade',
     name: '終焉の剣',
@@ -212,6 +215,7 @@ export const BUILD_PRESETS: BuildPreset[] = [
     name: 'Uber全ボス安定クリア(Lv60/ T1必須OFF)',
     level: 60,
     equipmentSet: {
+      name: 'Uber All Bosses Win Lv60 No T1 Req',
       weapon: {
         id: 'apocalypse_blade',
         name: '終焉の剣',
@@ -347,6 +351,7 @@ export const BUILD_PRESETS: BuildPreset[] = [
     name: 'Uber全ボス安定クリア(Lv60)',
     level: 60,
     equipmentSet: {
+      name: 'Uber All Bosses Win Lv60',
       weapon: {
         id: 'apocalypse_blade',
         name: '終焉の剣',
@@ -542,7 +547,9 @@ export const BUILD_PRESETS: BuildPreset[] = [
 export async function applyBuildPresetToCharacter(buildId: string): Promise<boolean> {
   const preset = BUILD_PRESETS.find((p) => p.id === buildId);
   if (!preset) {
-    console.error(`Build preset not found: ${buildId}`);
+    if (__DEV__) {
+      console.error(`Build preset not found: ${buildId}`);
+    }
     return false;
   }
 
@@ -551,7 +558,9 @@ export async function applyBuildPresetToCharacter(buildId: string): Promise<bool
   await store.applyEquipmentPreset(preset.equipmentSet);
   await store.applyPassivePreset(preset.unlockedSkills);
 
-  console.log(`Applied build preset: ${preset.name}`);
+  if (__DEV__) {
+    console.log(`Applied build preset: ${preset.name}`);
+  }
   return true;
 }
 
@@ -596,7 +605,9 @@ export async function applyEquipmentPresetToCharacter(
 ): Promise<boolean> {
   const equipmentSet = getEquipmentSet(dungeonId, setType);
   if (!equipmentSet) {
-    console.error(`Equipment set not found: ${dungeonId} ${setType}`);
+    if (__DEV__) {
+      console.error(`Equipment set not found: ${dungeonId} ${setType}`);
+    }
     return false;
   }
 
@@ -605,6 +616,8 @@ export async function applyEquipmentPresetToCharacter(
   // 装備プリセットを適用
   await store.applyEquipmentPreset(equipmentSet);
 
-  console.log(`Applied equipment preset: ${equipmentSet.name}`);
+  if (__DEV__) {
+    console.log(`Applied equipment preset: ${equipmentSet.name}`);
+  }
   return true;
 }
