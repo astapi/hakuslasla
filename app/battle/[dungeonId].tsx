@@ -1,5 +1,6 @@
 import { BattleLog } from '@/components/battle/BattleLog';
 import { CharacterDisplay } from '@/components/battle/CharacterDisplay';
+import { BoostIndicator } from '@/components/battle/BoostIndicator';
 import { Button } from '@/components/common/Button';
 import { getDungeon } from '@/data/dungeons';
 import { useBattle } from '@/hooks/useBattle';
@@ -247,10 +248,13 @@ export default function BattleScreen() {
   const battleAreaContent = (
     <>
       <View style={styles.floorInfo}>
-        <Text style={styles.floorText}>
-          {dungeon?.name} - {state.currentFloor}/{state.maxFloor}{t('battle.floor')}
-          {state.runCount > 1 && ` (${state.runCount}${t('battle.round')})`}
-        </Text>
+        <View style={styles.floorInfoRow}>
+          <Text style={styles.floorText}>
+            {dungeon?.name} - {state.currentFloor}/{state.maxFloor}{t('battle.floor')}
+            {state.runCount > 1 && ` (${state.runCount}${t('battle.round')})`}
+          </Text>
+          <BoostIndicator />
+        </View>
         {isAutoRunning && (
           <Text style={styles.autoRunText}>{t('battle.autoRunning')}</Text>
         )}
@@ -445,6 +449,11 @@ const styles = StyleSheet.create({
   floorInfo: {
     alignItems: 'center',
     marginBottom: ms(8),
+  },
+  floorInfoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(8),
   },
   floorText: {
     fontSize: fs(16),

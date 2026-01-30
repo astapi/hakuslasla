@@ -9,6 +9,7 @@ import { getRandomEnemy, getEnemy } from '@/data/enemies';
 import { tryUniqueDrop, rollDropCount, rollDropItems } from '@/data/items';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { usePlayerStore } from '@/stores/usePlayerStore';
+import { useAdBoostStore } from '@/stores/useAdBoostStore';
 import {
   CombinedModEffects,
   combineMods,
@@ -582,6 +583,7 @@ const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] =
 export const useBattle = (dungeonId: string) => {
   const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, setLevelCap } = usePlayerStore();
   const stats = getTotalStats();
+  const { getDropRateMultiplier, isTierBoosted, checkExpiredBoosts } = useAdBoostStore();
 
   // フィルター設定
   const [dropFilter, setDropFilter] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
@@ -752,12 +754,18 @@ export const useBattle = (dungeonId: string) => {
 
   const handleEnemyDefeated = useCallback(() => {
     if (!state.enemy) return;
+
+    // 広告ブースト効果を取得
+    checkExpiredBoosts(); // 期限切れチェック
+    const { uniqueBonus, dropRateMultiplier } = getDropRateMultiplier();
+    const tierBoosted = isTierBoosted();
+
     const dungeon = getDungeon(dungeonId);
     const droppedItems: Item[] = [];
 
     if (state.enemy.uniqueDrops && state.enemy.uniqueDrops.length > 0) {
       for (const drop of state.enemy.uniqueDrops) {
-        const uniqueItem = tryUniqueDrop(drop.itemId, drop.dropRate);
+        const uniqueItem = tryUniqueDrop(drop.itemId, drop.dropRate, uniqueBonus);
         if (uniqueItem) {
           droppedItems.push(uniqueItem);
         }
@@ -765,7 +773,8 @@ export const useBattle = (dungeonId: string) => {
     } else if (state.enemy.uniqueDrop) {
       const uniqueItem = tryUniqueDrop(
         state.enemy.uniqueDrop.itemId,
-        state.enemy.uniqueDrop.dropRate
+        state.enemy.uniqueDrop.dropRate,
+        uniqueBonus
       );
       if (uniqueItem) {
         droppedItems.push(uniqueItem);
@@ -773,8 +782,8 @@ export const useBattle = (dungeonId: string) => {
     }
 
     if (dungeon) {
-      const dropCount = rollDropCount();
-      const normalDrops = rollDropItems(dungeon.dropTable, dropCount, state.dungeonId);
+      const dropCount = rollDropCount(dropRateMultiplier);
+      const normalDrops = rollDropItems(dungeon.dropTable, dropCount, state.dungeonId, tierBoosted);
       droppedItems.push(...normalDrops);
     }
 
