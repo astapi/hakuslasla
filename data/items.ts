@@ -53,15 +53,74 @@ function getTiersForSlot(config: ModConfig, slot?: EquipmentSlot): Record<string
 }
 
 /**
- * 指定されたtier範囲内でランダムにtierを選択（均等確率）
+ * Tierのウェイトを取得
+ * @param tier Tier値（1-10、小さいほど高品質）
+ * @param boosted ブースト状態かどうか
+ * @returns ウェイト値（大きいほど出やすい）
+ */
+function getTierWeight(tier: number, boosted: boolean = false): number {
+  if (boosted) {
+    // ブースト時：低Tier（高品質）のウェイトを増やす
+    switch (tier) {
+      case 1: return 15;  // 約7.5倍
+      case 2: return 20;  // 約5倍
+      case 3: return 25;  // 約3倍
+      case 4: return 25;  // 1.25倍
+      case 5: return 25;  // 1.25倍
+      case 6: return 18;
+      case 7: return 15;
+      case 8: return 12;
+      case 9: return 8;
+      case 10: return 5;
+      default: return 15;
+    }
+  } else {
+    // 通常時：T4,5がやや出やすいが、緩やかな分布
+    switch (tier) {
+      case 1: return 2;   // 最も出にくい
+      case 2: return 4;
+      case 3: return 8;
+      case 4: return 20;  // やや出やすい
+      case 5: return 20;  // やや出やすい
+      case 6: return 18;
+      case 7: return 15;
+      case 8: return 12;
+      case 9: return 8;
+      case 10: return 5;
+      default: return 12;
+    }
+  }
+}
+
+/**
+ * 指定されたtier範囲内でランダムにtierを選択（ウェイト付き確率）
  * @param minTier 最低tier（数値が大きい方、例: 10）
  * @param maxTier 最高tier（数値が小さい方、例: 7）
+ * @param boosted ブースト状態かどうか
  */
-function rollTier(minTier: number, maxTier: number): number {
+function rollTier(minTier: number, maxTier: number, boosted: boolean = false): number {
   // minTier >= maxTier (数値的に)
-  // 例: minTier=10, maxTier=7 → 7, 8, 9, 10から均等確率で選択
-  const tierRange = minTier - maxTier + 1;
-  return maxTier + Math.floor(Math.random() * tierRange);
+  // 例: minTier=10, maxTier=7 → 7, 8, 9, 10からウェイト付き確率で選択
+  const tiers: number[] = [];
+  for (let t = maxTier; t <= minTier; t++) {
+    tiers.push(t);
+  }
+
+  // 各Tierのウェイトを計算
+  const weights = tiers.map(t => getTierWeight(t, boosted));
+  const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+
+  // ウェイト付きランダム選択
+  let random = Math.random() * totalWeight;
+  for (let i = 0; i < tiers.length; i++) {
+    random -= weights[i];
+    if (random <= 0) {
+      return tiers[i];
+    }
+  }
+
+  // フォールバック
+  return tiers[0];
 }
 
 /**
@@ -130,13 +189,16 @@ export const DROP_CONFIG = {
 
 /**
  * ドロップ数を決定（0〜3個）
+ * @param dropRateMultiplier ドロップ率の倍率（広告ブースト用、デフォルト1.0）
  */
-export function rollDropCount(): number {
+export function rollDropCount(dropRateMultiplier: number = 1.0): number {
   const roll = Math.random() * 100;
   let cumulative = 0;
 
   for (const { count, chance } of DROP_CONFIG.dropChances) {
-    cumulative += chance;
+    // ブースト適用: 確率を倍率で増加
+    const adjustedChance = chance * dropRateMultiplier;
+    cumulative += adjustedChance;
     if (roll < cumulative) {
       return count;
     }
@@ -150,8 +212,9 @@ export function rollDropCount(): number {
  * @param dropTable ダンジョンドロップテーブル
  * @param count ドロップ数
  * @param dungeonId ダンジョンID（tier範囲取得用）
+ * @param boosted Tierブースト状態（広告ブースト用、デフォルトfalse）
  */
-export function rollDropItems(dropTable: DungeonDropTable, count: number, dungeonId?: string): Item[] {
+export function rollDropItems(dropTable: DungeonDropTable, count: number, dungeonId?: string, boosted: boolean = false): Item[] {
   if (count <= 0) return [];
 
   const allDrops = [...dropTable.common, ...dropTable.dungeon];
@@ -178,7 +241,7 @@ export function rollDropItems(dropTable: DungeonDropTable, count: number, dungeo
         : { min: 0, max: 2 };
       // 範囲内でランダムにMOD数を決定
       const modCount = countRange.min + Math.floor(Math.random() * (countRange.max - countRange.min + 1));
-      const item = createItemInstance(selectedItemId, modCount, dungeonId);
+      const item = createItemInstance(selectedItemId, modCount, dungeonId, boosted);
       if (item) {
         items.push(item);
       }
@@ -210,8 +273,9 @@ export const getItemBase = (id: string): ItemBase | undefined => {
  * @param count 生成するMODの数
  * @param dungeonId ダンジョンID（tier範囲取得用）
  * @param itemSlot アイテムのスロット（スロット制限MOD用）
+ * @param boosted Tierブースト状態（広告ブースト用、デフォルトfalse）
  */
-export function generateRandomMods(count: number, dungeonId?: string, itemSlot?: EquipmentSlot): ItemMod[] {
+export function generateRandomMods(count: number, dungeonId?: string, itemSlot?: EquipmentSlot, boosted: boolean = false): ItemMod[] {
   const mods: ItemMod[] = [];
 
   // ダンジョンのtier範囲を取得（なければデフォルト: 10-1）
@@ -264,8 +328,10 @@ export function generateRandomMods(count: number, dungeonId?: string, itemSlot?:
 
       if (validTiers.length === 0) continue;
 
-      // 有効なtierから均等抽選
-      const tier = validTiers[Math.floor(Math.random() * validTiers.length)];
+      // 有効なtierからウェイト付き抽選
+      const minTier = Math.max(...validTiers); // tier値は大きい方が低品質
+      const maxTier = Math.min(...validTiers); // tier値は小さい方が高品質
+      const tier = rollTier(minTier, maxTier, boosted);
 
       // tierの値範囲から値を取得（スロット別tier設定を考慮）
       const slotTiers = getTiersForSlot(selectedConfig, itemSlot);
@@ -288,8 +354,9 @@ export function generateRandomMods(count: number, dungeonId?: string, itemSlot?:
  * @param itemId アイテムID
  * @param modCount ランダムMODの数（0-2）
  * @param dungeonId ダンジョンID（tier範囲取得用）
+ * @param boosted Tierブースト状態（広告ブースト用、デフォルトfalse）
  */
-export function createItemInstance(itemId: string, modCount: number = 0, dungeonId?: string): Item | undefined {
+export function createItemInstance(itemId: string, modCount: number = 0, dungeonId?: string, boosted: boolean = false): Item | undefined {
   const base = getItemBase(itemId);
   if (!base) return undefined;
 
@@ -300,7 +367,7 @@ export function createItemInstance(itemId: string, modCount: number = 0, dungeon
   }));
 
   // ランダムMOD（ダンジョンのtier範囲とスロットを考慮）
-  const randomMods = modCount > 0 ? generateRandomMods(modCount, dungeonId, base.slot) : [];
+  const randomMods = modCount > 0 ? generateRandomMods(modCount, dungeonId, base.slot, boosted) : [];
 
   // 重複するタイプのMODを除外（固有MOD優先）
   const fixedTypes = new Set(fixedMods.map(m => m.type));
@@ -318,17 +385,19 @@ export function createItemInstance(itemId: string, modCount: number = 0, dungeon
  * @param dropTable ダンジョンドロップテーブル
  * @param modCount ランダムMODの数
  * @param dungeonId ダンジョンID（tier範囲取得用）
+ * @param boosted Tierブースト状態（広告ブースト用、デフォルトfalse）
  */
 export const getRandomItemFromDungeon = (
   dropTable: DungeonDropTable,
   modCount: number = 1,
-  dungeonId?: string
+  dungeonId?: string,
+  boosted: boolean = false
 ): Item | undefined => {
   const allDrops = [...dropTable.common, ...dropTable.dungeon];
   const itemId = selectRandomItemId(allDrops);
   if (!itemId) return undefined;
 
-  return createItemInstance(itemId, modCount, dungeonId);
+  return createItemInstance(itemId, modCount, dungeonId, boosted);
 };
 
 /**
@@ -354,10 +423,12 @@ function selectRandomItemId(drops: ItemDrop[]): string | undefined {
  * モンスターユニークドロップを判定
  * @param itemId アイテムID
  * @param dropRate ドロップ確率（%）
+ * @param uniqueBonus ユニークドロップ率ボーナス（広告ブースト用、デフォルト0%）
  */
-export const tryUniqueDrop = (itemId: string, dropRate: number): Item | undefined => {
+export const tryUniqueDrop = (itemId: string, dropRate: number, uniqueBonus: number = 0): Item | undefined => {
+  const adjustedDropRate = dropRate + uniqueBonus;
   const random = Math.random() * 100;
-  if (random < dropRate) {
+  if (random < adjustedDropRate) {
     // ユニークアイテムはランダムMODなし（固有MODのみ）
     return createItemInstance(itemId, 0);
   }
