@@ -48,6 +48,7 @@ export default function ResultScreen() {
               styles.resultText,
               isCleared ? styles.clearedText : isRetreat ? styles.retreatText : styles.defeatText,
             ]}
+            testID="result-status-text"
           >
             {isCleared ? t('result.cleared') : isRetreat ? t('result.retreat') : t('result.defeat')}
           </Text>
@@ -106,7 +107,11 @@ export default function ResultScreen() {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Button title={t('result.returnButton')} onPress={handleReturn} />
+        <Button
+          title={t('result.returnButton')}
+          onPress={handleReturn}
+          testID="result-return-button"
+        />
       </View>
     </ScreenWrapper>
   );

@@ -35,6 +35,7 @@ export default function CharacterCreateScreen() {
         <Text style={styles.label}>{t('characterCreate.nameLabel')}</Text>
         <TextInput
           style={styles.input}
+          testID="character-name-input"
           value={name}
           onChangeText={setName}
           placeholder={t('characterCreate.namePlaceholder')}
@@ -72,6 +73,7 @@ export default function CharacterCreateScreen() {
           onPress={handleCancel}
           variant="secondary"
           style={styles.cancelButton}
+          testID="character-create-cancel"
         />
         <Button
           title={isCreating ? t('common.creating') : t('common.create')}
@@ -79,6 +81,7 @@ export default function CharacterCreateScreen() {
           variant="primary"
           disabled={!name.trim() || isCreating}
           style={styles.createButton}
+          testID="character-create-submit"
         />
       </View>
     </ScreenWrapper>

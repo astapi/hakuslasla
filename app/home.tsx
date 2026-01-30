@@ -90,7 +90,11 @@ export default function HomeScreen() {
                   <Pressable style={styles.debugButton} onPress={handleOpenDebug}>
                     <MaterialCommunityIcons name="flask" size={16} color={colors.iconMuted} />
                   </Pressable>
-                  <Pressable style={styles.changeButton} onPress={handleChangeCharacter}>
+                  <Pressable
+                    style={styles.changeButton}
+                    onPress={handleChangeCharacter}
+                    testID="home-change-character"
+                  >
                     <Text style={styles.changeButtonText}>{t('common.change')}</Text>
                   </Pressable>
                 </View>
@@ -114,6 +118,7 @@ export default function HomeScreen() {
         <Pressable
           style={({ pressed }) => [styles.adventureButton, pressed && styles.adventureButtonPressed]}
           onPress={handleOpenDungeonSelect}
+          testID="home-adventure-button"
         >
           <MaterialCommunityIcons name="castle" size={20} color={colors.text} />
           <Text style={styles.adventureLabel}>{t('home.menu.adventure')}</Text>
@@ -125,6 +130,7 @@ export default function HomeScreen() {
         <Pressable
           style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenSkills}
+          testID="home-menu-skills"
         >
           <View style={styles.menuIconContainer}>
             {skillPoints > 0 && <View style={styles.menuIconRing} />}
@@ -145,6 +151,7 @@ export default function HomeScreen() {
         <Pressable
           style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenInventory}
+          testID="home-menu-inventory"
         >
           <MaterialCommunityIcons name="bag-personal" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.inventory')}</Text>
@@ -153,6 +160,7 @@ export default function HomeScreen() {
         <Pressable
           style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenStorage}
+          testID="home-menu-storage"
         >
           <MaterialCommunityIcons name="treasure-chest" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.storage')}</Text>
@@ -161,6 +169,7 @@ export default function HomeScreen() {
         <Pressable
           style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenEncyclopedia}
+          testID="home-menu-encyclopedia"
         >
           <MaterialCommunityIcons name="book-open-variant" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.encyclopedia')}</Text>
@@ -169,6 +178,7 @@ export default function HomeScreen() {
         <Pressable
           style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
           onPress={handleOpenSettings}
+          testID="home-menu-settings"
         >
           <MaterialCommunityIcons name="filter-cog" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.settings')}</Text>
