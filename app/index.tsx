@@ -59,15 +59,16 @@ export default function CharacterSelectScreen() {
         {isLoading ? (
           <Text style={styles.loadingText}>{t('common.loading')}</Text>
         ) : characters.length === 0 ? (
-          <View style={styles.emptyState}>
+          <View style={styles.emptyState} testID="character-empty-state">
             <Text style={styles.emptyText}>{t('characterSelect.empty')}</Text>
             <Text style={styles.emptySubtext}>{t('characterSelect.emptyHint')}</Text>
           </View>
         ) : (
           <View style={styles.characterList}>
-            {characters.map((character) => (
+            {characters.map((character, index) => (
               <Pressable
                 key={character.id}
+                testID={`character-card-${index}`}
                 style={({ pressed }) => [
                   styles.characterCard,
                   pressed && styles.characterCardPressed,
@@ -85,6 +86,7 @@ export default function CharacterSelectScreen() {
                 </View>
                 <Pressable
                   style={styles.deleteButton}
+                  testID={`character-delete-${index}`}
                   onPress={(e) => {
                     e.stopPropagation();
                     handleDeleteCharacter(character.id);
@@ -103,6 +105,7 @@ export default function CharacterSelectScreen() {
           title={t('characterSelect.createNew')}
           onPress={handleCreateCharacter}
           variant="primary"
+          testID="character-create-button"
         />
       </View>
     </ScreenWrapper>

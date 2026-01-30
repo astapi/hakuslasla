@@ -12,6 +12,7 @@ interface DungeonCardProps {
   requiresTicket?: boolean;
   ticketCount?: number;
   isDisabled?: boolean;
+  testID?: string;
 }
 
 export const DungeonCard = ({
@@ -23,6 +24,7 @@ export const DungeonCard = ({
   requiresTicket = false,
   ticketCount = 0,
   isDisabled = false,
+  testID,
 }: DungeonCardProps) => {
   const { t } = useTranslation();
   const isTicketMissing = requiresTicket && ticketCount <= 0;
@@ -30,6 +32,7 @@ export const DungeonCard = ({
 
   return (
     <Pressable
+      testID={testID}
       style={({ pressed }) => [
         styles.container,
         pressed && isPressable && styles.pressed,

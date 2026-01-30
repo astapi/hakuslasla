@@ -151,13 +151,19 @@ export default function DungeonSelectScreen() {
               requiresTicket={dungeon.requiresTicket}
               ticketCount={dungeon.ticketCount}
               isDisabled={dungeon.isDisabled}
+              testID={`dungeon-card-${dungeon.id}`}
             />
           ))}
         </View>
       </ScrollView>
 
       <View style={styles.footer}>
-        <Button title={t('common.back')} onPress={handleBack} variant="secondary" />
+        <Button
+          title={t('common.back')}
+          onPress={handleBack}
+          variant="secondary"
+          testID="dungeon-back-button"
+        />
       </View>
     </ScreenWrapper>
   );
