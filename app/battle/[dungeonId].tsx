@@ -350,6 +350,7 @@ export default function BattleScreen() {
                 title={isPaused ? t('battle.resume') : t('battle.pause')}
                 onPress={togglePause}
                 variant="secondary"
+                testID="battle-toggle-pause"
               />
             </View>
             {!isPaused && (
@@ -359,19 +360,26 @@ export default function BattleScreen() {
                     title={t('battle.stopAutoRun')}
                     onPress={stopAutoRun}
                     variant="warning"
+                    testID="battle-auto-toggle"
                   />
                 ) : (
                   <Button
                     title={t('battle.autoRun')}
                     onPress={startAutoRun}
                     variant="primary"
+                    testID="battle-auto-toggle"
                   />
                 )}
               </View>
             )}
             {isPaused && (
               <View style={styles.buttonWrapper}>
-                <Button title={t('battle.retreat')} onPress={() => setShowRetreatModal(true)} variant="danger" />
+                <Button
+                  title={t('battle.retreat')}
+                  onPress={() => setShowRetreatModal(true)}
+                  variant="danger"
+                  testID="battle-retreat"
+                />
               </View>
             )}
           </View>
@@ -395,12 +403,14 @@ export default function BattleScreen() {
               <Pressable
                 style={[styles.modalButton, styles.modalCancelButton]}
                 onPress={() => setShowRetreatModal(false)}
+                testID="battle-retreat-cancel"
               >
                 <Text style={styles.modalCancelText}>{t('common.cancel')}</Text>
               </Pressable>
               <Pressable
                 style={[styles.modalButton, styles.modalConfirmButton]}
                 onPress={handleRetreatConfirm}
+                testID="battle-retreat-confirm"
               >
                 <Text style={styles.modalConfirmText}>{t('battle.retreatConfirm.confirm')}</Text>
               </Pressable>

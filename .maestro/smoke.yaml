@@ -1,0 +1,135 @@
+appId: com.astapi.LootDive
+---
+- openLink:
+    link: "exp+lootdive://expo-development-client/?url=http%3A%2F%2F10.0.2.2%3A8081&disableOnboarding=1"
+
+- runFlow:
+    when:
+      visible: "This is the developer menu."
+    commands:
+      - tapOn:
+          point: "96%,61%"
+      - tapOn:
+          point: "96%,67%"
+
+- runFlow:
+    when:
+      visible: "Loading from 10.0.2.2:8081..."
+    commands:
+      - extendedWaitUntil:
+          notVisible: "Loading from 10.0.2.2:8081..."
+          timeout: 15000
+
+- extendedWaitUntil:
+    visible: "Select Character"
+    timeout: 20000
+
+- runFlow:
+    when:
+      visible:
+        id: "character-create-button"
+    commands:
+      - tapOn:
+          id: "character-create-button"
+
+- runFlow:
+    when:
+      visible:
+        id: "character-name-input"
+    commands:
+      - tapOn:
+          id: "character-name-input"
+      - inputText: "E2E"
+      - hideKeyboard
+      - runFlow:
+          when:
+            visible:
+              id: "character-create-submit"
+          commands:
+            - tapOn:
+                id: "character-create-submit"
+      - runFlow:
+          when:
+            visible: "Create"
+          commands:
+            - tapOn: "Create"
+      - runFlow:
+          when:
+            visible: "作成"
+          commands:
+            - tapOn: "作成"
+
+- runFlow:
+    when:
+      visible: "Dungeon Cleared!"
+    commands:
+      - tapOn: "Return to Dungeon Select"
+
+- runFlow:
+    when:
+      visible: "Return to Dungeon Select"
+    commands:
+      - tapOn: "Return to Dungeon Select"
+
+- runFlow:
+    when:
+      visible: "Return"
+    commands:
+      - tapOn: "Return"
+
+- runFlow:
+    when:
+      visible: "Back"
+    commands:
+      - tapOn: "Back"
+
+- runFlow:
+    when:
+      visible:
+        id: "character-card-0"
+    commands:
+      - tapOn:
+          id: "character-card-0"
+
+- extendedWaitUntil:
+    visible: "Adventure"
+    timeout: 15000
+- takeScreenshot: "home-expected"
+- tapOn: "Adventure"
+- assertVisible:
+    id: "dungeon-card-grassland"
+- tapOn:
+    id: "dungeon-card-grassland"
+- assertVisible:
+    id: "battle-toggle-pause"
+- takeScreenshot: "battle-screen"
+- tapOn:
+    id: "battle-toggle-pause"
+- takeScreenshot: "after-pause-tap"
+- runFlow:
+    when:
+      visible:
+        id: "battle-retreat"
+    commands:
+      - takeScreenshot: "retreat-visible"
+      - tapOn:
+          id: "battle-retreat"
+      - assertVisible:
+          id: "battle-retreat-confirm"
+      - tapOn:
+          id: "battle-retreat-confirm"
+
+- runFlow:
+    when:
+      visible: "Dungeon Cleared!"
+    commands:
+      - tapOn: "Return to Dungeon Select"
+
+- extendedWaitUntil:
+    visible:
+      id: "result-return-button"
+    timeout: 10000
+- tapOn:
+    id: "result-return-button"
+- assertVisible:
+    id: "home-adventure-button"

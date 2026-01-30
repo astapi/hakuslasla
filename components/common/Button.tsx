@@ -8,6 +8,7 @@ interface ButtonProps {
   disabled?: boolean;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  testID?: string;
 }
 
 export const Button = ({
@@ -17,6 +18,7 @@ export const Button = ({
   disabled = false,
   style,
   textStyle,
+  testID,
 }: ButtonProps) => {
   const getButtonStyle = () => {
     switch (variant) {
@@ -33,6 +35,7 @@ export const Button = ({
 
   return (
     <Pressable
+      testID={testID}
       style={({ pressed }) => [
         styles.button,
         getButtonStyle(),
