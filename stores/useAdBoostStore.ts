@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { hasPermanentBoost } from './usePurchaseStore';
 
 /**
  * リワード広告のブースト種類
@@ -108,7 +109,9 @@ export const useAdBoostStore = create<AdBoostState & AdBoostActions>()((set, get
   // ドロップ率ブースト効果
   getDropRateMultiplier: () => {
     const state = get();
-    if (!state.dropRateBoost.active) {
+    // 課金: 常時ブースト
+    const isPermanent = hasPermanentBoost();
+    if (!state.dropRateBoost.active && !isPermanent) {
       return { uniqueBonus: 0, dropRateMultiplier: 1.0 };
     }
     // ユニークドロップ率+1%、通常ドロップ確率1.5倍
@@ -118,6 +121,7 @@ export const useAdBoostStore = create<AdBoostState & AdBoostActions>()((set, get
   // Tierブースト状態（ウェイト付き抽選で高品質Tierが出やすくなる）
   isTierBoosted: () => {
     const state = get();
-    return state.tierBoost.active;
+    // 課金: 常時ブースト
+    return state.tierBoost.active || hasPermanentBoost();
   },
 }));

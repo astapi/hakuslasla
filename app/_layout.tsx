@@ -7,6 +7,7 @@ import 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { initializeDatabase, settingsRepository } from '@/db';
 import { changeLanguage } from '@/lib/i18n';
+import { usePurchaseStore } from '@/stores/usePurchaseStore';
 
 // スプラッシュ画面を自動で非表示にしない
 SplashScreen.preventAutoHideAsync();
@@ -23,6 +24,10 @@ export default function RootLayout() {
         // 保存された言語設定を読み込んで適用
         const savedLanguage = await settingsRepository.getLanguage();
         changeLanguage(savedLanguage);
+
+        // RevenueCatを初期化
+        await usePurchaseStore.getState().initialize();
+
         setIsDbReady(true);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'DB initialization error');
@@ -143,6 +148,12 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name="encyclopedia-detail"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="shop"
           options={{
             headerShown: false,
           }}

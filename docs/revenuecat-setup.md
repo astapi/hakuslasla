@@ -48,33 +48,15 @@ LootDive に課金機能を導入するための RevenueCat セットアップ�
 2. サイドバー「App 内課金」→「管理」
 3. 「+」をクリックして商品を作成
 
-#### キャラクタースロット追加（1枠目）
+#### キャラクタースロット拡張
 
 | 項目 | 値 |
 |------|-----|
 | 種類 | 非消費型 |
-| 参照名 | キャラクタースロット追加 1 |
-| 製品 ID | `com.astapi.LootDive.character_slot_1` |
-| 価格 | Tier 1（120円）推奨 |
-| ローカリゼーション | 表示名: キャラクタースロット +1、説明: キャラクタースロットを1枠追加します |
-
-#### キャラクタースロット追加（2枠目）
-
-| 項目 | 値 |
-|------|-----|
-| 種類 | 非消費型 |
-| 参照名 | キャラクタースロット追加 2 |
-| 製品 ID | `com.astapi.LootDive.character_slot_2` |
-| 価格 | Tier 1（120円）推奨 |
-
-#### キャラクタースロット追加（3枠目）
-
-| 項目 | 値 |
-|------|-----|
-| 種類 | 非消費型 |
-| 参照名 | キャラクタースロット追加 3 |
-| 製品 ID | `com.astapi.LootDive.character_slot_3` |
-| 価格 | Tier 1（120円）推奨 |
+| 参照名 | キャラクタースロット拡張 |
+| 製品 ID | `com.astapi.LootDive.character_slots` |
+| 価格 | Tier 5（490円）推奨 |
+| ローカリゼーション | 表示名: キャラスロット拡張、説明: キャラクタースロットを5枠に拡張します |
 
 ### 2.3 共有シークレットの生成
 
@@ -111,32 +93,14 @@ LootDive に課金機能を導入するための RevenueCat セットアップ�
 1. サイドバー「収益化」→「商品」→「アプリ内アイテム」
 2. 「商品を作成」
 
-#### キャラクタースロット追加（1枠目）
+#### キャラクタースロット拡張
 
 | 項目 | 値 |
 |------|-----|
-| 製品 ID | `character_slot_1` |
-| 名前 | キャラクタースロット +1 |
-| 説明 | キャラクタースロットを1枠追加します |
-| デフォルト価格 | 120 JPY |
-
-#### キャラクタースロット追加（2枠目）
-
-| 項目 | 値 |
-|------|-----|
-| 製品 ID | `character_slot_2` |
-| 名前 | キャラクタースロット +1（2枠目） |
-| 説明 | キャラクタースロットを1枠追加します |
-| デフォルト価格 | 120 JPY |
-
-#### キャラクタースロット追加（3枠目）
-
-| 項目 | 値 |
-|------|-----|
-| 製品 ID | `character_slot_3` |
-| 名前 | キャラクタースロット +1（3枠目） |
-| 説明 | キャラクタースロットを1枠追加します |
-| デフォルト価格 | 120 JPY |
+| 製品 ID | `character_slots` |
+| 名前 | キャラスロット拡張 |
+| 説明 | キャラクタースロットを5枠に拡張します |
+| デフォルト価格 | 490 JPY |
 
 ### 3.3 サービスアカウントの作成
 
@@ -201,9 +165,7 @@ RevenueCat ダッシュボードで iOS/Android アプリを追加。
 
 | Identifier | App Store Product ID | Play Store Product ID |
 |------------|---------------------|----------------------|
-| `character_slot_1` | `com.astapi.LootDive.character_slot_1` | `character_slot_1` |
-| `character_slot_2` | `com.astapi.LootDive.character_slot_2` | `character_slot_2` |
-| `character_slot_3` | `com.astapi.LootDive.character_slot_3` | `character_slot_3` |
+| `character_slots` | `com.astapi.LootDive.character_slots` | `character_slots` |
 
 ### 4.3 Entitlements の作成
 
@@ -214,9 +176,7 @@ RevenueCat ダッシュボードで iOS/Android アプリを追加。
 
 | Identifier | 説明 | 紐付ける Products |
 |------------|------|------------------|
-| `character_slot_1` | 1枠目のスロット追加権利 | character_slot_1 |
-| `character_slot_2` | 2枠目のスロット追加権利 | character_slot_2 |
-| `character_slot_3` | 3枠目のスロット追加権利 | character_slot_3 |
+| `character_slots` | キャラスロット拡張権利（5枠） | character_slots |
 
 ### 4.4 Offerings の作成
 
@@ -228,9 +188,7 @@ RevenueCat ダッシュボードで iOS/Android アプリを追加。
 
 | Identifier | Product |
 |------------|---------|
-| `slot_1` | character_slot_1 |
-| `slot_2` | character_slot_2 |
-| `slot_3` | character_slot_3 |
+| `character_slots` | character_slots |
 
 4. 「Make Current」で default をアクティブに設定
 
@@ -284,9 +242,7 @@ LootDive で実装予定の課金商品。
 
 | 商品名 | RevenueCat ID | iOS Product ID | Android Product ID | 価格 |
 |--------|---------------|----------------|-------------------|------|
-| スロット +1（1枠目） | character_slot_1 | com.astapi.LootDive.character_slot_1 | character_slot_1 | 120円 |
-| スロット +1（2枠目） | character_slot_2 | com.astapi.LootDive.character_slot_2 | character_slot_2 | 120円 |
-| スロット +1（3枠目） | character_slot_3 | com.astapi.LootDive.character_slot_3 | character_slot_3 | 120円 |
+| キャラスロット拡張 | character_slots | com.astapi.LootDive.character_slots | character_slots | 490円 |
 
 ### 将来の拡張（未実装）
 

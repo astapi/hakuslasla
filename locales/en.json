@@ -1,6 +1,7 @@
 {
   "common": {
     "loading": "Loading...",
+    "ok": "OK",
     "back": "Back",
     "close": "Close",
     "cancel": "Cancel",
@@ -22,7 +23,9 @@
     "subtitle": "Select Character",
     "empty": "No Characters",
     "emptyHint": "Create a new character to begin",
-    "createNew": "Create New Character"
+    "createNew": "Create New Character",
+    "slotLimitTitle": "Slot Limit",
+    "slotLimitMessage": "Character slots are full ({{current}}/{{max}})"
   },
   "characterCreate": {
     "nameLabel": "Character Name",
@@ -36,7 +39,8 @@
       "storage": "Storage",
       "settings": "Settings",
       "adventure": "Adventure",
-      "encyclopedia": "Archive"
+      "encyclopedia": "Archive",
+      "shop": "Shop"
     }
   },
   "dungeonSelect": {
@@ -1630,5 +1634,48 @@
     "attackSpeed": "Attack Speed +{{value}}%",
     "hpOnHit": "HP on Hit +{{value}}",
     "lifesteal": "Lifesteal +{{value}}%"
+  },
+  "shop": {
+    "title": "Shop",
+    "subtitle": "Purchase Premium Features",
+    "purchased": "Purchased",
+    "restore": "Restore Purchases",
+    "noProducts": "No products available",
+    "alreadyPurchased": "Already Purchased",
+    "alreadyPurchasedMessage": "You already own this item",
+    "notAvailable": "Not Available",
+    "notAvailableMessage": "This item is currently not available",
+    "purchaseSuccess": "Purchase Complete",
+    "purchaseSuccessMessage": "Your purchase was successful",
+    "purchaseFailed": "Purchase Failed",
+    "purchaseFailedMessage": "Failed to complete purchase",
+    "restoreSuccess": "Restore Complete",
+    "restoreSuccessMessage": "Purchases restored successfully",
+    "restoreFailed": "Restore Failed",
+    "restoreFailedMessage": "Failed to restore purchases",
+    "inventoryExpansion": {
+      "name": "Inventory Expansion",
+      "description": "Expand inventory from 50 to 200"
+    },
+    "storageExpansion": {
+      "name": "Storage Expansion",
+      "description": "Expand storage from 20 to 100"
+    },
+    "tierFilter": {
+      "name": "Low Tier Filter",
+      "description": "Exclude T8-T10 drops"
+    },
+    "permanentBoost": {
+      "name": "Permanent Boost",
+      "description": "Drop boost always active"
+    },
+    "characterSlots": {
+      "name": "Character Slots",
+      "description": "Expand character slots to 5"
+    },
+    "premiumBundle": {
+      "name": "Premium Bundle",
+      "description": "Get all premium features at once"
+    }
   }
 }
