@@ -2,6 +2,8 @@ import { Item, ItemBase, ItemMod, ItemDrop, DungeonDropTable, ModConfig, ModTier
 import itemsData from './json/items.json';
 import dungeonsData from './json/dungeons.json';
 import modsData from './json/mods.json';
+import { TIER_FILTER_SETTINGS } from '@/constants/purchases';
+import { hasTierFilter } from '@/stores/usePurchaseStore';
 
 // アイテム基本データ（_commentキーを除外）
 const itemBases: Record<string, ItemBase> = {};
@@ -279,9 +281,17 @@ export function generateRandomMods(count: number, dungeonId?: string, itemSlot?:
   const mods: ItemMod[] = [];
 
   // ダンジョンのtier範囲を取得（なければデフォルト: 10-1）
-  const tierRange = dungeonId
+  let tierRange = dungeonId
     ? getDungeonModTierRange(dungeonId) ?? { minTier: 10, maxTier: 1 }
     : { minTier: 10, maxTier: 1 };
+
+  // 課金: Tierフィルター（T8-T10除外）
+  if (hasTierFilter() && tierRange.minTier > TIER_FILTER_SETTINGS.PREMIUM_MIN_TIER) {
+    tierRange = {
+      ...tierRange,
+      minTier: Math.min(tierRange.minTier, TIER_FILTER_SETTINGS.PREMIUM_MIN_TIER),
+    };
+  }
 
   // このダンジョンで出現可能なMODをフィルタリング
   // MODが持つtierとダンジョンのtier範囲が重複するかチェック

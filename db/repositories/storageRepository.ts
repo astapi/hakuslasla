@@ -1,6 +1,8 @@
 import { getDatabase } from '../database';
 import { Item } from '@/types';
 import { getItemBase, ensureModTiers } from '@/data/items';
+import { STORAGE_BASE_SIZE, STORAGE_EXPANDED_SIZE } from '@/core/player';
+import { hasStorageExpansion } from '@/stores/usePurchaseStore';
 
 interface StorageRow {
   instance_id: string;
@@ -68,15 +70,47 @@ export const storageRepository = {
   },
 
   /**
-   * アイテムを倉庫に追加（MOD保持）
+   * 現在の倉庫最大容量を取得
    */
-  async addItem(item: Item): Promise<void> {
+  getMaxSize(): number {
+    return hasStorageExpansion() ? STORAGE_EXPANDED_SIZE : STORAGE_BASE_SIZE;
+  },
+
+  /**
+   * 倉庫の空き容量を取得
+   */
+  async getAvailableSpace(): Promise<number> {
+    const currentCount = await this.getCount();
+    const maxSize = this.getMaxSize();
+    return Math.max(0, maxSize - currentCount);
+  },
+
+  /**
+   * 倉庫がいっぱいかどうか
+   */
+  async isFull(): Promise<boolean> {
+    const currentCount = await this.getCount();
+    const maxSize = this.getMaxSize();
+    return currentCount >= maxSize;
+  },
+
+  /**
+   * アイテムを倉庫に追加（MOD保持）
+   * 容量チェック付き
+   */
+  async addItem(item: Item): Promise<{ success: boolean; reason?: 'full' }> {
+    const isFull = await this.isFull();
+    if (isFull) {
+      return { success: false, reason: 'full' };
+    }
+
     const db = await getDatabase();
     await db.runAsync(
       'INSERT INTO storage (instance_id, item_data) VALUES (?, ?)',
       item.instanceId,
       JSON.stringify(item)
     );
+    return { success: true };
   },
 
   /**
