@@ -17,6 +17,8 @@ import {
   calculateFinalStats,
 } from '@/core';
 import { EquipmentSet } from '@/core/equipmentSets';
+import { INVENTORY_BASE_SIZE, INVENTORY_EXPANDED_SIZE } from '@/constants/purchases';
+import { hasInventoryExpansion } from '@/stores/usePurchaseStore';
 
 // 初期装備
 const initialEquipment: Equipment = {
@@ -66,6 +68,8 @@ interface PlayerActions {
   removeFromInventory: (instanceId: string) => Promise<boolean>;
   // 計算されたステータスを取得
   getTotalStats: () => { maxHp: number; atk: number; def: number };
+  // インベントリの最大容量を取得
+  getInventoryMaxSize: () => number;
   // インベントリの空き数を取得
   getInventorySpace: () => number;
   // インベントリがいっぱいかどうか
@@ -413,14 +417,20 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     return finalStats;
   },
 
+  getInventoryMaxSize: () => {
+    return hasInventoryExpansion() ? INVENTORY_EXPANDED_SIZE : INVENTORY_BASE_SIZE;
+  },
+
   getInventorySpace: () => {
     const state = get();
-    return INVENTORY_MAX_SIZE - state.inventory.length;
+    const maxSize = get().getInventoryMaxSize();
+    return maxSize - state.inventory.length;
   },
 
   isInventoryFull: () => {
     const state = get();
-    return state.inventory.length >= INVENTORY_MAX_SIZE;
+    const maxSize = get().getInventoryMaxSize();
+    return state.inventory.length >= maxSize;
   },
 
   refresh: async () => {

@@ -43,6 +43,10 @@ export default function HomeScreen() {
     router.push('/settings');
   };
 
+  const handleOpenShop = () => {
+    router.push('/shop');
+  };
+
   const handleOpenEncyclopedia = () => {
     router.push('/encyclopedia');
   };
@@ -190,6 +194,15 @@ export default function HomeScreen() {
         >
           <MaterialCommunityIcons name="filter-cog" size={24} color={colors.iconMuted} />
           <Text style={styles.menuLabel}>{t('home.menu.settings')}</Text>
+        </Pressable>
+
+        <Pressable
+          style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
+          onPress={handleOpenShop}
+          testID="home-menu-shop"
+        >
+          <MaterialCommunityIcons name="shopping" size={24} color="#FFD700" />
+          <Text style={styles.menuLabel}>{t('home.menu.shop')}</Text>
         </Pressable>
       </View>
     </ScreenWrapper>

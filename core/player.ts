@@ -32,8 +32,12 @@ export const LEVEL_UP_BONUS = {
 /** レベル上限 */
 export const MAX_LEVEL = 50;
 
-/** インベントリの最大サイズ */
+/** インベントリの最大サイズ（デフォルト） */
 export const INVENTORY_MAX_SIZE = 50;
+
+/** 倉庫の容量 */
+export const STORAGE_BASE_SIZE = 20;        // デフォルト
+export const STORAGE_EXPANDED_SIZE = 100;   // 課金後
 
 // ========================================
 // 経験値計算

@@ -106,6 +106,7 @@ export default function StorageScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const storageMaxSize = storageRepository.getMaxSize();
 
   const fetchStorage = useCallback(async () => {
     setIsLoading(true);
@@ -223,7 +224,7 @@ export default function StorageScreen() {
       {/* ヘッダー */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{t('storage.title')}</Text>
-        <Text style={styles.headerCount}>{storageItems.length}{t('common.items')}</Text>
+        <Text style={styles.headerCount}>{storageItems.length}/{storageMaxSize}</Text>
       </View>
 
       {/* 詳細表示エリア */}

@@ -1,6 +1,7 @@
 {
   "common": {
     "loading": "読み込み中...",
+    "ok": "OK",
     "back": "戻る",
     "close": "閉じる",
     "cancel": "キャンセル",
@@ -22,7 +23,9 @@
     "subtitle": "キャラクターを選択",
     "empty": "キャラクターがいません",
     "emptyHint": "新しいキャラクターを作成してください",
-    "createNew": "新しいキャラクターを作成"
+    "createNew": "新しいキャラクターを作成",
+    "slotLimitTitle": "スロット上限",
+    "slotLimitMessage": "キャラクタースロットが上限です（{{current}}/{{max}}）"
   },
   "characterCreate": {
     "nameLabel": "キャラクター名",
@@ -36,7 +39,8 @@
       "storage": "倉庫",
       "settings": "設定",
       "adventure": "冒険",
-      "encyclopedia": "図鑑"
+      "encyclopedia": "図鑑",
+      "shop": "ショップ"
     }
   },
   "dungeonSelect": {
@@ -1658,5 +1662,48 @@
     "attackSpeed": "攻撃速度+{{value}}%",
     "hpOnHit": "HIT時HP+{{value}}回復",
     "lifesteal": "ライフスティール+{{value}}%"
+  },
+  "shop": {
+    "title": "ショップ",
+    "subtitle": "プレミアム機能を購入",
+    "purchased": "購入済み",
+    "restore": "購入を復元",
+    "noProducts": "商品がありません",
+    "alreadyPurchased": "購入済み",
+    "alreadyPurchasedMessage": "この商品は既に購入済みです",
+    "notAvailable": "利用不可",
+    "notAvailableMessage": "この商品は現在利用できません",
+    "purchaseSuccess": "購入完了",
+    "purchaseSuccessMessage": "購入が完了しました",
+    "purchaseFailed": "購入失敗",
+    "purchaseFailedMessage": "購入に失敗しました",
+    "restoreSuccess": "復元完了",
+    "restoreSuccessMessage": "購入履歴を復元しました",
+    "restoreFailed": "復元失敗",
+    "restoreFailedMessage": "購入履歴の復元に失敗しました",
+    "inventoryExpansion": {
+      "name": "インベントリ拡張",
+      "description": "インベントリを50→200に拡張"
+    },
+    "storageExpansion": {
+      "name": "倉庫拡張",
+      "description": "倉庫を20→100に拡張"
+    },
+    "tierFilter": {
+      "name": "低Tier除外",
+      "description": "T8-T10のドロップを除外"
+    },
+    "permanentBoost": {
+      "name": "常時ブースト",
+      "description": "ドロップブーストが常時有効"
+    },
+    "characterSlots": {
+      "name": "キャラスロット拡張",
+      "description": "キャラクタースロットを5枠に拡張"
+    },
+    "premiumBundle": {
+      "name": "プレミアムバンドル",
+      "description": "全てのプレミアム機能を一括で入手"
+    }
   }
 }

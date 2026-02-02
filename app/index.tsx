@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import { characterRepository, settingsRepository } from '@/db';
 import { Character } from '@/types';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { ms, fs } from '@/utils/scaling';
+import { getCharacterSlotCount } from '@/stores/usePurchaseStore';
 
 export default function CharacterSelectScreen() {
   const { t } = useTranslation();
@@ -40,6 +41,16 @@ export default function CharacterSelectScreen() {
   };
 
   const handleCreateCharacter = () => {
+    // スロット数チェック
+    const maxSlots = getCharacterSlotCount();
+    if (characters.length >= maxSlots) {
+      Alert.alert(
+        t('characterSelect.slotLimitTitle'),
+        t('characterSelect.slotLimitMessage', { current: characters.length, max: maxSlots }),
+        [{ text: t('common.ok') }]
+      );
+      return;
+    }
     router.push('/character-create');
   };
 

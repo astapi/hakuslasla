@@ -8,7 +8,6 @@ import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot, Item } from '@/types';
 import { getItemIcon, getSlotIcon } from '@/data/itemIcons';
-import { INVENTORY_MAX_SIZE } from '@/core';
 import { storageRepository } from '@/db/repositories/storageRepository';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { getTierColor, getTierDisplayName } from '@/data/items';
@@ -112,6 +111,7 @@ export default function InventoryScreen() {
   const unequipItem = usePlayerStore((state) => state.unequipItem);
   const removeFromInventory = usePlayerStore((state) => state.removeFromInventory);
   const isInventoryFull = usePlayerStore((state) => state.isInventoryFull);
+  const getInventoryMaxSize = usePlayerStore((state) => state.getInventoryMaxSize);
 
   const [activeTab, setActiveTab] = useState<InventoryTab>('equipment');
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
@@ -231,8 +231,8 @@ export default function InventoryScreen() {
   }, []);
 
   const currentItems = itemsBySlot[selectedSlot];
-
-  const isFull = inventory.length >= INVENTORY_MAX_SIZE;
+  const inventoryMaxSize = getInventoryMaxSize();
+  const isFull = inventory.length >= inventoryMaxSize;
 
   const isUniqueItem = (item: Item) => item.mods?.some((mod) => mod.tier === 0);
 
@@ -295,7 +295,7 @@ export default function InventoryScreen() {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{t('inventory.title')}</Text>
         <Text style={[styles.headerCount, isFull && styles.headerCountFull]}>
-          {inventory.length}/{INVENTORY_MAX_SIZE}
+          {inventory.length}/{inventoryMaxSize}
         </Text>
       </View>
 
