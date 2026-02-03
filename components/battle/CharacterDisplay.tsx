@@ -12,6 +12,24 @@ import { ActionGauge } from './ActionGauge';
 import { HPBar } from './HPBar';
 import { ms, fs, s } from '@/utils/scaling';
 
+/**
+ * モンスター名の長さに応じて動的にフォントサイズを計算
+ * @param name モンスター名
+ * @returns 調整されたフォントサイズ
+ */
+const getDynamicNameFontSize = (name: string): number => {
+  const length = name.length;
+  const baseSize = fs(14);
+
+  if (length <= 10) {
+    return baseSize;                    // fs(14) - 標準サイズ
+  } else if (length <= 12) {
+    return Math.floor(baseSize * 0.9);  // fs(12.6) → 12 - 中サイズ
+  } else {
+    return Math.floor(baseSize * 0.8);  // fs(11.2) → 11 - 小サイズ
+  }
+};
+
 interface CharacterDisplayProps {
   name: string;
   currentHp: number;
@@ -84,7 +102,10 @@ export const CharacterDisplay = memo(({
       <View style={styles.infoContainer}>
         <ActionGauge value={actionGauge} color={isPlayer ? '#FFD700' : '#FF6B6B'} />
         <View style={styles.nameRow}>
-          <Text style={styles.name} numberOfLines={2}>
+          <Text
+            style={[styles.name, { fontSize: getDynamicNameFontSize(name) }]}
+            numberOfLines={2}
+          >
             {name}
           </Text>
           {level !== undefined && <Text style={styles.level}>Lv.{level}</Text>}
@@ -142,7 +163,7 @@ const styles = StyleSheet.create({
     marginBottom: ms(4),
   },
   name: {
-    fontSize: fs(14),
+    // fontSize は動的に指定するため削除
     fontWeight: 'bold',
     color: '#fff',
     flex: 1,
