@@ -13,9 +13,71 @@ import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { getTierColor, getTierDisplayName } from '@/data/items';
 import { ms, fs } from '@/utils/scaling';
 import { UBER_BOSS_BY_BASE } from '@/data/endContents';
+import { calculatePassiveEffects } from '@/data/passiveTree';
+import { calculateFinalStats } from '@/core/battle';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 type InventoryTab = 'equipment' | 'misc';
+
+/**
+ * 特定のスロットに特定のアイテムを装備した状態での
+ * プレイヤーの総ステータスを計算
+ */
+function calculatePlayerStatsWithItem(
+  playerBaseStats: { atk: number; def: number; maxHp: number },
+  currentEquipment: Record<EquipmentSlot, Item | null>,
+  unlockedSkills: string[],
+  newItem: Item | null,
+  targetSlot: EquipmentSlot
+): { atk: number; def: number; maxHp: number } {
+  // 1. 装備構成をシミュレート
+  const simulatedEquipment = { ...currentEquipment };
+  simulatedEquipment[targetSlot] = newItem;
+
+  // 2. フラット値とincreased%を集計
+  let baseAtk = playerBaseStats.atk;
+  let baseDef = playerBaseStats.def;
+  let baseMaxHp = playerBaseStats.maxHp;
+  let equipAtkIncPct = 0;
+  let equipDefIncPct = 0;
+  let equipHpIncPct = 0;
+
+  Object.values(simulatedEquipment).forEach((item) => {
+    if (item) {
+      baseAtk += item.atk;
+      baseDef += item.def;
+
+      if (item.mods) {
+        for (const mod of item.mods) {
+          if (mod.type === 'atk_bonus') baseAtk += mod.value;
+          if (mod.type === 'def_bonus') baseDef += mod.value;
+          if (mod.type === 'hp_bonus') baseMaxHp += mod.value;
+          if (mod.type === 'atk_increased_pct') equipAtkIncPct += mod.value;
+          if (mod.type === 'def_increased_pct') equipDefIncPct += mod.value;
+          if (mod.type === 'hp_increased_pct') equipHpIncPct += mod.value;
+        }
+      }
+    }
+  });
+
+  // 3. パッシブ効果を取得
+  const passiveEffects = calculatePassiveEffects(unlockedSkills);
+
+  // 4. PoE式で最終ステータスを計算
+  const finalStats = calculateFinalStats(
+    { maxHp: baseMaxHp, atk: baseAtk, def: baseDef },
+    {
+      hp_increased_pct: passiveEffects.hp_increased_pct + equipHpIncPct,
+      atk_increased_pct: passiveEffects.atk_increased_pct + equipAtkIncPct,
+      def_increased_pct: passiveEffects.def_increased_pct + equipDefIncPct,
+      hp_more_pct: passiveEffects.hp_more_pct,
+      atk_more_pct: passiveEffects.atk_more_pct,
+      def_more_pct: passiveEffects.def_more_pct,
+    }
+  );
+
+  return finalStats;
+}
 
 // アイテムのステータス計算
 function calculateItemStats(
@@ -112,6 +174,10 @@ export default function InventoryScreen() {
   const removeFromInventory = usePlayerStore((state) => state.removeFromInventory);
   const isInventoryFull = usePlayerStore((state) => state.isInventoryFull);
   const getInventoryMaxSize = usePlayerStore((state) => state.getInventoryMaxSize);
+  const playerAtk = usePlayerStore((state) => state.atk);
+  const playerDef = usePlayerStore((state) => state.def);
+  const playerMaxHp = usePlayerStore((state) => state.maxHp);
+  const unlockedSkills = usePlayerStore((state) => state.unlockedSkills);
 
   const [activeTab, setActiveTab] = useState<InventoryTab>('equipment');
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
@@ -338,6 +404,11 @@ export default function InventoryScreen() {
                 onStorage={() => handleStorage(selectedItem)}
                 onSell={() => handleSell(selectedItem.instanceId)}
                 t={t}
+                playerAtk={playerAtk}
+                playerDef={playerDef}
+                playerMaxHp={playerMaxHp}
+                equipment={equipment}
+                unlockedSkills={unlockedSkills}
               />
             ) : (
               <View style={styles.emptyDetail}>
@@ -473,6 +544,11 @@ const ItemDetail = memo(({
   onStorage,
   onSell,
   t,
+  playerAtk,
+  playerDef,
+  playerMaxHp,
+  equipment,
+  unlockedSkills,
 }: {
   item: Item;
   equippedItem: Item | null;
@@ -481,9 +557,38 @@ const ItemDetail = memo(({
   onStorage: () => void;
   onSell: () => void;
   t: (key: string) => string;
+  playerAtk: number;
+  playerDef: number;
+  playerMaxHp: number;
+  equipment: Record<EquipmentSlot, Item | null>;
+  unlockedSkills: string[];
 }) => {
   const stats = calculateItemStats(item, t);
   const equippedStats = equippedItem ? calculateItemStats(equippedItem, t) : null;
+
+  // 新しいアイテムを装備した場合のプレイヤーステータス
+  const newItemPlayerStats = useMemo(() =>
+    calculatePlayerStatsWithItem(
+      { atk: playerAtk, def: playerDef, maxHp: playerMaxHp },
+      equipment,
+      unlockedSkills,
+      item,
+      item.slot
+    ),
+    [playerAtk, playerDef, playerMaxHp, equipment, unlockedSkills, item]
+  );
+
+  // 現在のプレイヤーステータス
+  const currentPlayerStats = useMemo(() =>
+    calculatePlayerStatsWithItem(
+      { atk: playerAtk, def: playerDef, maxHp: playerMaxHp },
+      equipment,
+      unlockedSkills,
+      equipment[item.slot],
+      item.slot
+    ),
+    [playerAtk, playerDef, playerMaxHp, equipment, unlockedSkills, item.slot]
+  );
 
   return (
     <View style={styles.detailContent}>
@@ -522,8 +627,8 @@ const ItemDetail = memo(({
         <View style={styles.comparisonArrow}>
           <Text style={styles.arrowText}>→</Text>
           <View style={styles.diffContainer}>
-            <StatDiff label="ATK" newValue={stats.totalAtk} oldValue={equippedStats?.totalAtk ?? 0} />
-            <StatDiff label="DEF" newValue={stats.totalDef} oldValue={equippedStats?.totalDef ?? 0} />
+            <StatDiff label="ATK" newValue={newItemPlayerStats.atk} oldValue={currentPlayerStats.atk} />
+            <StatDiff label="DEF" newValue={newItemPlayerStats.def} oldValue={currentPlayerStats.def} />
           </View>
         </View>
 
