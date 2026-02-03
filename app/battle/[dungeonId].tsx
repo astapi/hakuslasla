@@ -261,7 +261,17 @@ export default function BattleScreen() {
       </View>
 
       {/* 上部2/3のスペーサー */}
-      <View style={styles.battleFieldSpacer} />
+      <View style={styles.battleFieldSpacer}>
+        {state.phase === 'victory' && (
+          <Text style={styles.victoryText}>{t('battle.victory')}</Text>
+        )}
+        {state.phase === 'defeat' && (
+          <Text style={styles.defeatText}>{t('battle.defeat')}</Text>
+        )}
+        {state.phase === 'cleared' && (
+          <Text style={styles.clearedText}>{t('battle.cleared')}</Text>
+        )}
+      </View>
 
       {/* 下部1/3: キャラクターエリア（バトルフィールド） */}
       <View style={styles.battleField}>
@@ -306,15 +316,6 @@ export default function BattleScreen() {
             </View>
           )}
         </View>
-        {state.phase === 'victory' && (
-          <Text style={styles.victoryText}>{t('battle.victory')}</Text>
-        )}
-        {state.phase === 'defeat' && (
-          <Text style={styles.defeatText}>{t('battle.defeat')}</Text>
-        )}
-        {state.phase === 'cleared' && (
-          <Text style={styles.clearedText}>{t('battle.cleared')}</Text>
-        )}
       </View>
     </>
   );
@@ -473,6 +474,8 @@ const styles = StyleSheet.create({
   },
   battleFieldSpacer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   battleField: {
     paddingBottom: ms(6),
