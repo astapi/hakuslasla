@@ -8,6 +8,7 @@ import { EquipmentList } from '@/components/player/EquipmentList';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { RewardAdBoost } from '@/components/common/RewardAdBoost';
 import { usePlayerStore } from '@/stores/usePlayerStore';
+import { useEncyclopediaStore } from '@/stores/useEncyclopediaStore';
 import { playerImages } from '@/data/images';
 import { ms, fs } from '@/utils/scaling';
 
@@ -15,6 +16,7 @@ export default function HomeScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { skillPoints, characterName, isLoaded, clear } = usePlayerStore();
+  const loadEncyclopediaData = useEncyclopediaStore((state) => state.loadClearedDungeons);
   const [statusExpanded, setStatusExpanded] = useState(false);
 
   // 画面フォーカス時に再レンダリングをトリガーするためのキー
@@ -24,7 +26,9 @@ export default function HomeScreen() {
     useCallback(() => {
       // 画面がフォーカスされたときにキーを更新して子コンポーネントを再レンダリング
       setFocusKey(prev => prev + 1);
-    }, [])
+      // 図鑑データも更新（ダンジョンクリア後に最新データを反映）
+      loadEncyclopediaData();
+    }, [loadEncyclopediaData])
   );
 
   const handleOpenSkills = () => {
@@ -47,7 +51,9 @@ export default function HomeScreen() {
     router.push('/shop');
   };
 
-  const handleOpenEncyclopedia = () => {
+  const handleOpenEncyclopedia = async () => {
+    // 画面遷移前にデータを取得
+    await loadEncyclopediaData();
     router.push('/encyclopedia');
   };
 
