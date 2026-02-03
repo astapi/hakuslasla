@@ -1,7 +1,7 @@
 import { getDatabase } from '../database';
 import { Item } from '@/types';
 import { getItemBase, ensureModTiers } from '@/data/items';
-import { STORAGE_BASE_SIZE, STORAGE_EXPANDED_SIZE } from '@/core/player';
+import { STORAGE_BASE_SIZE, STORAGE_EXPANDED_SIZE } from '@/constants/purchases';
 import { hasStorageExpansion } from '@/stores/usePurchaseStore';
 
 interface StorageRow {

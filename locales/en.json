@@ -130,6 +130,7 @@
     "selectItem": "Select an item",
     "toInventory": "To Inventory",
     "inventoryFull": "Inventory Full",
+    "storageFull": "Storage is full",
     "noItemsInSlot": "No {{slot}}"
   },
   "settings": {
