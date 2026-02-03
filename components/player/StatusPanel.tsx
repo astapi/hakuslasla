@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
@@ -16,12 +16,15 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
   const { t } = useTranslation();
   const [showDetails, setShowDetails] = useState(false);
   const toggleDetails = () => {
-    setShowDetails((prev) => {
-      const next = !prev;
-      if (onDetailsChange) onDetailsChange(next);
-      return next;
-    });
+    setShowDetails((prev) => !prev);
   };
+
+  // showDetailsが変更されたときに親コンポーネントに通知
+  useEffect(() => {
+    if (onDetailsChange) {
+      onDetailsChange(showDetails);
+    }
+  }, [showDetails, onDetailsChange]);
 
   // Zustand Selector パターン: 必要なフィールドのみ購読
   const level = usePlayerStore((state) => state.level);
