@@ -130,6 +130,7 @@
     "selectItem": "アイテムを選択してください",
     "toInventory": "インベントリへ",
     "inventoryFull": "インベントリ満杯",
+    "storageFull": "倉庫が満杯です",
     "noItemsInSlot": "{{slot}}がありません"
   },
   "settings": {

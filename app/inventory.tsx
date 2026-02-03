@@ -209,7 +209,11 @@ export default function InventoryScreen() {
   const handleStorage = async (item: Item) => {
     const nextItem = getNextItemAfterRemoval(item.instanceId);
     // 倉庫に送る（MOD保持）
-    await storageRepository.addItem(item);
+    const result = await storageRepository.addItem(item);
+    if (!result.success && result.reason === 'full') {
+      alert(t('storage.storageFull'));
+      return;
+    }
     await removeFromInventory(item.instanceId);
     setSelectedItem(nextItem);
   };
