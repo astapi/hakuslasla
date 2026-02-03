@@ -17,8 +17,8 @@ import {
   calculateFinalStats,
 } from '@/core';
 import { EquipmentSet } from '@/core/equipmentSets';
-import { INVENTORY_BASE_SIZE, INVENTORY_EXPANDED_SIZE } from '@/constants/purchases';
-import { hasInventoryExpansion } from '@/stores/usePurchaseStore';
+import { INVENTORY_BASE_SIZE, INVENTORY_EXPANDED_SIZE, STORAGE_BASE_SIZE, STORAGE_EXPANDED_SIZE } from '@/constants/purchases';
+import { hasInventoryExpansion, hasStorageExpansion } from '@/stores/usePurchaseStore';
 
 // 初期装備
 const initialEquipment: Equipment = {
@@ -341,7 +341,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     if (!state.characterId) return false;
 
     // インベントリ制限チェック
-    if (state.inventory.length >= INVENTORY_MAX_SIZE) {
+    if (state.inventory.length >= get().getInventoryMaxSize()) {
       return false;
     }
 
@@ -431,6 +431,10 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     const state = get();
     const maxSize = get().getInventoryMaxSize();
     return state.inventory.length >= maxSize;
+  },
+
+  getStorageMaxSize: () => {
+    return hasStorageExpansion() ? STORAGE_EXPANDED_SIZE : STORAGE_BASE_SIZE;
   },
 
   refresh: async () => {
