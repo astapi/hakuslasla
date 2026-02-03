@@ -23,6 +23,7 @@ import {
   DIMENSIONAL_RUSH_BOSS_FLOOR_BY_ID,
   getBaseBossId,
   DIMENSIONAL_RUSH_BOSS_IDS,
+  DEBUG_DIMENSIONAL_DUNGEON_IDS,
 } from '@/core/endContent';
 import i18n from '@/lib/i18n';
 
@@ -797,7 +798,10 @@ export const useBattle = (dungeonId: string) => {
       droppedItems: filteredItems,
     });
 
-    handleDimensionalRushBossDefeat(state.enemy.id, state.enemy.name);
+    // Dimensional Rush またはデバッグダンジョンでボスを倒した場合のみ Uber 版解放と入場券ドロップ
+    if (dungeonId === DIMENSIONAL_RUSH_ID || DEBUG_DIMENSIONAL_DUNGEON_IDS.includes(dungeonId)) {
+      handleDimensionalRushBossDefeat(state.enemy.id, state.enemy.name);
+    }
 
     if (state.currentFloor >= state.maxFloor) {
       dispatch({ type: 'DUNGEON_CLEARED' });
