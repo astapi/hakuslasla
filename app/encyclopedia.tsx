@@ -1,73 +1,27 @@
-import { useState, useCallback } from 'react';
+import { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter, useFocusEffect } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
-import { getDungeonList, DUNGEON_UNLOCK_ORDER } from '@/data/dungeons';
-import { DIMENSIONAL_RUSH_ID, UBER_DUNGEON_IDS } from '@/data/endContents';
-import { settingsRepository, DungeonClearRecords } from '@/db';
-import { DungeonListItem } from '@/types';
+import { useEncyclopediaStore } from '@/stores/useEncyclopediaStore';
 import { ms, fs } from '@/utils/scaling';
-
-interface ClearedDungeon extends DungeonListItem {
-  clearedAt: string;
-  bestFloor: number;
-}
 
 export default function EncyclopediaScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const [clearedDungeons, setClearedDungeons] = useState<ClearedDungeon[]>([]);
+  const clearedDungeons = useEncyclopediaStore((state) => state.clearedDungeons);
+  const loadClearedDungeons = useEncyclopediaStore((state) => state.loadClearedDungeons);
 
-  const loadClearedDungeons = useCallback(async () => {
-    const clearRecords: DungeonClearRecords = await settingsRepository.getDungeonClearRecords();
-    const allDungeons = getDungeonList();
-
-    const cleared: ClearedDungeon[] = [];
-    for (const dungeon of allDungeons) {
-      const record = clearRecords[dungeon.id];
-      if (record) {
-        cleared.push({
-          ...dungeon,
-          clearedAt: record.clearedAt,
-          bestFloor: record.bestFloor,
-        });
-      }
-    }
-
-    // ダンジョン選択画面と同じ順番でソート
-    cleared.sort((a, b) => {
-      const getOrder = (dungeonId: string): number => {
-        // 通常ダンジョン
-        const unlockIndex = DUNGEON_UNLOCK_ORDER.indexOf(dungeonId);
-        if (unlockIndex !== -1) return unlockIndex;
-
-        // 異次元ラッシュ
-        if (dungeonId === DIMENSIONAL_RUSH_ID) return DUNGEON_UNLOCK_ORDER.length;
-
-        // Uberダンジョン
-        const uberIndex = UBER_DUNGEON_IDS.indexOf(dungeonId);
-        if (uberIndex !== -1) return DUNGEON_UNLOCK_ORDER.length + 1 + uberIndex;
-
-        // その他（デバッグなど）
-        return 9999;
-      };
-
-      return getOrder(a.id) - getOrder(b.id);
-    });
-
-    setClearedDungeons(cleared);
-  }, []);
-
-  useFocusEffect(
-    useCallback(() => {
+  // 安全策: データが空の場合は自動的にロード（開発時のホットリロードやディープリンク対策）
+  useEffect(() => {
+    if (clearedDungeons.length === 0) {
       loadClearedDungeons();
-    }, [loadClearedDungeons])
-  );
+    }
+  }, [clearedDungeons.length, loadClearedDungeons]);
 
   const handleDungeonPress = (dungeonId: string) => {
-    router.push(`/encyclopedia-detail/${dungeonId}` as '/encyclopedia');
+    router.push(`/encyclopedia-detail/${dungeonId}` as any);
   };
 
   const handleBack = () => {
@@ -81,10 +35,13 @@ export default function EncyclopediaScreen() {
 
   return (
     <ScreenWrapper>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+      {/* ヘッダー */}
+      <View style={styles.header}>
         <Text style={styles.title}>{t('encyclopedia.title')}</Text>
         <Text style={styles.subtitle}>{t('encyclopedia.subtitle')}</Text>
+      </View>
 
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {clearedDungeons.length === 0 ? (
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>{t('encyclopedia.noClearedDungeons')}</Text>
@@ -138,11 +95,17 @@ export default function EncyclopediaScreen() {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    paddingHorizontal: ms(16),
+    paddingTop: ms(16),
+    paddingBottom: ms(16),
+  },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
     padding: ms(16),
+    paddingTop: 0,
   },
   title: {
     fontSize: fs(24),
@@ -155,12 +118,11 @@ const styles = StyleSheet.create({
     fontSize: fs(14),
     color: '#aaa',
     textAlign: 'center',
-    marginBottom: ms(24),
   },
   emptyContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    minHeight: ms(400),
     paddingVertical: ms(80),
   },
   emptyText: {
