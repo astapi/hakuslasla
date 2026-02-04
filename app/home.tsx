@@ -1,12 +1,13 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
-import { useRouter, useFocusEffect } from 'expo-router';
+import { useRouter, useFocusEffect, useNavigation } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { StatusPanel } from '@/components/player/StatusPanel';
 import { EquipmentList } from '@/components/player/EquipmentList';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
-import { RewardAdBoost } from '@/components/common/RewardAdBoost';
+import { BoostIconButton } from '@/components/common/BoostIconButton';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { useEncyclopediaStore } from '@/stores/useEncyclopediaStore';
 import { playerImages } from '@/data/images';
@@ -15,12 +16,30 @@ import { ms, fs } from '@/utils/scaling';
 export default function HomeScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
   const { skillPoints, characterName, isLoaded, clear } = usePlayerStore();
   const loadEncyclopediaData = useEncyclopediaStore((state) => state.loadClearedDungeons);
   const [statusExpanded, setStatusExpanded] = useState(false);
 
   // 画面フォーカス時に再レンダリングをトリガーするためのキー
   const [focusKey, setFocusKey] = useState(0);
+
+  // カスタムヘッダーを設定
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <View style={[headerStyles.header, { paddingTop: insets.top + ms(8) }]}>
+          <View style={headerStyles.boostButtons}>
+            <BoostIconButton type="drop_rate" />
+            <BoostIconButton type="tier_boost" />
+          </View>
+          <Text style={headerStyles.title}>{t('characterSelect.title')}</Text>
+          <View style={headerStyles.spacer} />
+        </View>
+      ),
+    });
+  }, [navigation, t, insets.top]);
 
   useFocusEffect(
     useCallback(() => {
@@ -122,13 +141,6 @@ export default function HomeScreen() {
           <View style={styles.sectionCard}>
             <EquipmentList key={`equipment-${focusKey}`} />
           </View>
-        </View>
-
-        {/* リワード広告ブースト */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('home.boosts.title', { defaultValue: '期間限定ブースト' })}</Text>
-          <RewardAdBoost type="drop_rate" />
-          <RewardAdBoost type="tier_boost" />
         </View>
       </ScrollView>
 
@@ -410,5 +422,28 @@ const styles = StyleSheet.create({
   },
   menuLabelHighlight: {
     color: colors.text,
+  },
+});
+
+const headerStyles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#15191E',
+    paddingHorizontal: ms(16),
+    paddingBottom: ms(12),
+  },
+  boostButtons: {
+    flexDirection: 'row',
+    gap: ms(8),
+  },
+  title: {
+    fontSize: fs(17),
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  spacer: {
+    width: ms(80),
   },
 });
