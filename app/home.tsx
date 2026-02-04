@@ -183,7 +183,9 @@ export default function HomeScreen() {
           onPress={handleOpenInventory}
           testID="home-menu-inventory"
         >
-          <MaterialCommunityIcons name="bag-personal" size={24} color={colors.iconMuted} />
+          <View style={styles.menuIconContainer}>
+            <MaterialCommunityIcons name="bag-personal" size={24} color={colors.iconMuted} />
+          </View>
           <Text style={styles.menuLabel}>{t('home.menu.inventory')}</Text>
         </Pressable>
 
@@ -192,7 +194,9 @@ export default function HomeScreen() {
           onPress={handleOpenStorage}
           testID="home-menu-storage"
         >
-          <MaterialCommunityIcons name="treasure-chest" size={24} color={colors.iconMuted} />
+          <View style={styles.menuIconContainer}>
+            <MaterialCommunityIcons name="treasure-chest" size={24} color={colors.iconMuted} />
+          </View>
           <Text style={styles.menuLabel}>{t('home.menu.storage')}</Text>
         </Pressable>
 
@@ -201,7 +205,9 @@ export default function HomeScreen() {
           onPress={handleOpenEncyclopedia}
           testID="home-menu-encyclopedia"
         >
-          <MaterialCommunityIcons name="book-open-variant" size={24} color={colors.iconMuted} />
+          <View style={styles.menuIconContainer}>
+            <MaterialCommunityIcons name="book-open-variant" size={24} color={colors.iconMuted} />
+          </View>
           <Text style={styles.menuLabel}>{t('home.menu.encyclopedia')}</Text>
         </Pressable>
 
@@ -210,7 +216,9 @@ export default function HomeScreen() {
           onPress={handleOpenSettings}
           testID="home-menu-settings"
         >
-          <MaterialCommunityIcons name="filter-cog" size={24} color={colors.iconMuted} />
+          <View style={styles.menuIconContainer}>
+            <MaterialCommunityIcons name="filter-cog" size={24} color={colors.iconMuted} />
+          </View>
           <Text style={styles.menuLabel}>{t('home.menu.settings')}</Text>
         </Pressable>
 
@@ -219,7 +227,9 @@ export default function HomeScreen() {
           onPress={handleOpenShop}
           testID="home-menu-shop"
         >
-          <MaterialCommunityIcons name="shopping" size={24} color="#FFD700" />
+          <View style={styles.menuIconContainer}>
+            <MaterialCommunityIcons name="shopping" size={24} color={colors.iconMuted} />
+          </View>
           <Text style={styles.menuLabel}>{t('home.menu.shop')}</Text>
         </Pressable>
       </View>
