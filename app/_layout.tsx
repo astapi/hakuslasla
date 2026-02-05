@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { initializeDatabase, settingsRepository } from '@/db';
 import { changeLanguage } from '@/lib/i18n';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
+import { CrashlyticsHelper } from '@/lib/analytics';
 
 // スプラッシュ画面を自動で非表示にしない
 SplashScreen.preventAutoHideAsync();
@@ -30,7 +31,9 @@ export default function RootLayout() {
 
         setIsDbReady(true);
       } catch (e) {
-        setError(e instanceof Error ? e.message : 'DB initialization error');
+        const error = e instanceof Error ? e : new Error('DB initialization error');
+        CrashlyticsHelper.recordError(error, 'App initialization failed');
+        setError(error.message);
       }
     };
     init();
