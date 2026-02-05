@@ -13,9 +13,8 @@
 
 import {
   runGaugeSimulation,
-  EnemyConfig,
-  DungeonConfig,
 } from '../core/simulation';
+import { EnemyConfig, DungeonConfig } from '../core/types';
 import { DEFAULT_BATTLE_CONFIG } from '../core/types';
 import {
   INITIAL_STATS,

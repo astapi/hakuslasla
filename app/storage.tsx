@@ -12,70 +12,7 @@ import { getItemIcon, getSlotIcon } from '@/data/itemIcons';
 import { Item, EquipmentSlot } from '@/types';
 import { getTierColor, getTierDisplayName } from '@/data/items';
 import { ms, fs } from '@/utils/scaling';
-import { calculatePassiveEffects } from '@/data/passiveTree';
-import { calculateFinalStats } from '@/core/battle';
-
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
-
-/**
- * 特定のスロットに特定のアイテムを装備した状態での
- * プレイヤーの総ステータスを計算
- */
-function calculatePlayerStatsWithItem(
-  playerBaseStats: { atk: number; def: number; maxHp: number },
-  currentEquipment: Record<EquipmentSlot, Item | null>,
-  unlockedSkills: string[],
-  newItem: Item | null,
-  targetSlot: EquipmentSlot
-): { atk: number; def: number; maxHp: number } {
-  // 1. 装備構成をシミュレート
-  const simulatedEquipment = { ...currentEquipment };
-  simulatedEquipment[targetSlot] = newItem;
-
-  // 2. フラット値とincreased%を集計
-  let baseAtk = playerBaseStats.atk;
-  let baseDef = playerBaseStats.def;
-  let baseMaxHp = playerBaseStats.maxHp;
-  let equipAtkIncPct = 0;
-  let equipDefIncPct = 0;
-  let equipHpIncPct = 0;
-
-  Object.values(simulatedEquipment).forEach((item) => {
-    if (item) {
-      baseAtk += item.atk;
-      baseDef += item.def;
-
-      if (item.mods) {
-        for (const mod of item.mods) {
-          if (mod.type === 'atk_bonus') baseAtk += mod.value;
-          if (mod.type === 'def_bonus') baseDef += mod.value;
-          if (mod.type === 'hp_bonus') baseMaxHp += mod.value;
-          if (mod.type === 'atk_increased_pct') equipAtkIncPct += mod.value;
-          if (mod.type === 'def_increased_pct') equipDefIncPct += mod.value;
-          if (mod.type === 'hp_increased_pct') equipHpIncPct += mod.value;
-        }
-      }
-    }
-  });
-
-  // 3. パッシブ効果を取得
-  const passiveEffects = calculatePassiveEffects(unlockedSkills);
-
-  // 4. PoE式で最終ステータスを計算
-  const finalStats = calculateFinalStats(
-    { maxHp: baseMaxHp, atk: baseAtk, def: baseDef },
-    {
-      hp_increased_pct: passiveEffects.hp_increased_pct + equipHpIncPct,
-      atk_increased_pct: passiveEffects.atk_increased_pct + equipAtkIncPct,
-      def_increased_pct: passiveEffects.def_increased_pct + equipDefIncPct,
-      hp_more_pct: passiveEffects.hp_more_pct,
-      atk_more_pct: passiveEffects.atk_more_pct,
-      def_more_pct: passiveEffects.def_more_pct,
-    }
-  );
-
-  return finalStats;
-}
 
 // アイテムのステータス計算（インベントリと同じ）
 function calculateItemStats(
@@ -164,11 +101,6 @@ export default function StorageScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { addToInventory, isInventoryFull } = usePlayerStore();
-  const equipment = usePlayerStore((state) => state.equipment);
-  const playerAtk = usePlayerStore((state) => state.atk);
-  const playerDef = usePlayerStore((state) => state.def);
-  const playerMaxHp = usePlayerStore((state) => state.maxHp);
-  const unlockedSkills = usePlayerStore((state) => state.unlockedSkills);
   const [storageItems, setStorageItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');

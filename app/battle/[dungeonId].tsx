@@ -244,7 +244,7 @@ export default function BattleScreen() {
 
       return () => clearTimeout(timer);
     }
-  }, [state.phase, dungeonId, router, dungeon, state, isAutoRunning]);
+  }, [state.phase, dungeonId, router, dungeon, state, isAutoRunning, level]);
 
   const handleRetreatConfirm = async () => {
     setShowRetreatModal(false);

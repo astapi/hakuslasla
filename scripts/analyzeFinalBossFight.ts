@@ -266,9 +266,9 @@ for (let i = 0; i < 10; i++) {
   const battle = bossFloor.battle;
   console.log(`--- 戦闘 ${i + 1} ---`);
   console.log(`結果: ${battle.victory ? '勝利' : '敗北'}`);
-  console.log(`経過時間: ${(battle.elapsedTicks / 30).toFixed(2)}秒 (${battle.elapsedTicks} ticks)`);
-  console.log(`プレイヤー最終HP: ${battle.finalPlayerHp} / ${finalStats.maxHp}`);
-  console.log(`ボス最終HP: ${battle.finalEnemyHp} / ${boss?.maxHp}`);
+  console.log(`経過時間: ${(battle.totalTicks / 30).toFixed(2)}秒 (${battle.totalTicks} ticks)`);
+  console.log(`プレイヤー最終HP: ${battle.playerHpRemaining} / ${finalStats.maxHp}`);
+  console.log(`ボス最終HP: ${battle.victory ? 0 : '生存'} / ${boss?.maxHp}`);
 
   // イベントログから重要な情報を抽出
   const playerAttacks = battle.events.filter(e => e.type === 'player_attack' || e.type === 'critical_hit');
@@ -298,7 +298,7 @@ for (let i = 0; i < 10; i++) {
   console.log(`プレイヤー総回復: ${totalHeal}`);
   console.log(`実質被ダメージ: ${totalEnemyDamage - totalHeal}`);
 
-  if (!battle.victory && battle.elapsedTicks > 0) {
+  if (!battle.victory && battle.totalTicks > 0) {
     // 敗北時の詳細分析
     const firstFewSeconds = battle.events.filter(e => e.tick <= 90); // 最初の3秒
     const playerDmgFirst3s = firstFewSeconds.filter(e => e.type === 'player_attack' || e.type === 'critical_hit').length;

@@ -242,8 +242,8 @@ function generateRandomModsForSlot(
   rng: () => number,
   count: number,
   slot: EquipmentSlot
-): { type: string; value: number; tier: number }[] {
-  const mods: { type: string; value: number; tier: number }[] = [];
+): import('../types').ItemMod[] {
+  const mods: import('../types').ItemMod[] = [];
 
   const availableConfigs = modConfigs.filter((config) => {
     if (config.slots && !config.slots.includes(slot)) return false;
@@ -279,7 +279,7 @@ function generateRandomModsForSlot(
     if (!tierConfig) continue;
 
     const value = randomIntInclusive(rng, tierConfig.min, tierConfig.max);
-    mods.push({ type: selected.type, value, tier });
+    mods.push({ type: selected.type as import('../types').ModType, value, tier });
   }
 
   return mods;
