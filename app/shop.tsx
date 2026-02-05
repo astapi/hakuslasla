@@ -7,7 +7,7 @@ import { PurchasesPackage } from 'react-native-purchases';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
-import { PURCHASE_PRODUCTS, PurchaseProduct, ENTITLEMENT_IDS } from '@/constants/purchases';
+import { PURCHASE_PRODUCTS, ENTITLEMENT_IDS } from '@/constants/purchases';
 import { ms, fs } from '@/utils/scaling';
 
 export default function ShopScreen() {
@@ -19,7 +19,6 @@ export default function ShopScreen() {
     isInitialized,
     isLoading,
     availablePackages,
-    currentOffering,
     entitlements,
     initialize,
     fetchOfferings,
@@ -62,7 +61,7 @@ export default function ShopScreen() {
 
       console.log('[Shop] Expected Product IDs from code:');
       PURCHASE_PRODUCTS.forEach((p) => {
-        console.log(`  - ${p.id}: ${t(p.nameKey)}`);
+        console.log(`  - ${p.entitlementId}: ${t(p.nameKey)}`);
       });
     }
   }, [availablePackages, t]);

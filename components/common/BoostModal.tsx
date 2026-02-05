@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Modal, Pressable, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
@@ -54,11 +54,11 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
   const isActive = boost.active;
   const config = BOOST_CONFIG[type];
 
-  const getRemainingMinutes = (): number => {
+  const getRemainingMinutes = useCallback((): number => {
     if (!boost.active || !boost.expiresAt) return 0;
     const remaining = Math.ceil((boost.expiresAt - Date.now()) / (60 * 1000));
     return Math.max(0, remaining);
-  };
+  }, [boost.active, boost.expiresAt]);
 
   const [remainingMinutes, setRemainingMinutes] = useState(getRemainingMinutes());
 
@@ -106,7 +106,7 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isActive, boost.expiresAt, checkExpiredBoosts]);
+  }, [isActive, boost.expiresAt, checkExpiredBoosts, getRemainingMinutes]);
 
   const handleShowAd = () => {
     if (!rewardedAd || !adLoaded) {

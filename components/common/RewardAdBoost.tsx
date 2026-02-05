@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, Platform } from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
 import { useAdBoostStore, AdBoostType } from '@/stores/useAdBoostStore';
 import { Button } from './Button';
@@ -23,11 +23,11 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
   const expiresAt = boost.expiresAt;
 
   // 残り時間を計算（分）
-  const getRemainingMinutes = (): number => {
+  const getRemainingMinutes = useCallback((): number => {
     if (!isActive || !expiresAt) return 0;
     const remaining = Math.max(0, expiresAt - Date.now());
     return Math.ceil(remaining / (60 * 1000));
-  };
+  }, [isActive, expiresAt]);
 
   const [remainingMinutes, setRemainingMinutes] = useState(getRemainingMinutes());
 
@@ -78,7 +78,7 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isActive, expiresAt, checkExpiredBoosts]);
+  }, [isActive, expiresAt, checkExpiredBoosts, getRemainingMinutes]);
 
   const handleShowAd = () => {
     if (!rewardedAd || !adLoaded) {

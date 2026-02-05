@@ -117,7 +117,7 @@ const FINAL_LAND_BASE_STATS = {
 let itemCounter = 0;
 
 function createItem(slot: EquipmentSlot, mods: ItemMod[]): Item {
-  const base = (FINAL_LAND_BASE_STATS as Record<EquipmentSlot, typeof FINAL_LAND_BASE_STATS.weapon>)[slot];
+  const base = FINAL_LAND_BASE_STATS[slot];
   return {
     id: base.id,
     name: base.name,
