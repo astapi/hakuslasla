@@ -311,6 +311,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       },
       inventory: newInventory,
     });
+
   },
 
   unequipItem: async (slot: EquipmentSlot) => {

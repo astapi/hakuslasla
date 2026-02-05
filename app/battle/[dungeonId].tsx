@@ -12,6 +12,7 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepe
 import { useTranslation } from 'react-i18next';
 import { ms, fs, s } from '@/utils/scaling';
 import { getChestImageForItem, getChestRarityForItem } from '@/data/images';
+import { Analytics } from '@/lib/analytics';
 
 // ダンジョン背景画像マッピング
 const backgroundImages: Record<string, ImageSourcePropType> = {
@@ -208,6 +209,15 @@ export default function BattleScreen() {
     }
 
     if (state.phase === 'cleared' || state.phase === 'defeat' || state.phase === 'retreat') {
+      if (state.phase === 'defeat') {
+        Analytics.logBattleDefeat({
+          dungeon_id: dungeonId || '',
+          floor_reached: state.currentFloor,
+          max_floor: state.maxFloor,
+          player_level: level,
+        });
+      }
+
       const isRetreat = state.phase === 'retreat';
       // 累計（現在の周回分を含む）
       const finalTotalExp = isRetreat ? 0 : (state.grandTotalExp || 0) + state.totalExpGained;

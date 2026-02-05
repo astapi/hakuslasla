@@ -18,6 +18,7 @@ import {
   BossSkillId,
 } from '@/core';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
+import { Analytics } from '@/lib/analytics';
 import {
   BASE_BOSS_BY_UBER,
   DIMENSIONAL_RUSH_BOSS_FLOOR_BY_ID,
@@ -1023,6 +1024,12 @@ export const useBattle = (dungeonId: string) => {
             state.dungeonId,
             state.maxFloor
           );
+
+          Analytics.logDungeonClear({
+            dungeon_id: state.dungeonId,
+            floors_cleared: state.currentFloor,
+            max_floor: state.maxFloor,
+          });
 
           if (state.dungeonId === 'final_land') {
             const alreadyUnlocked = await settingsRepository.getEndContentUnlocked();
