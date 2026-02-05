@@ -9,6 +9,8 @@ import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_ID, UBER_DUNGEON_IDS } from '@/data
 import { settingsRepository, DungeonClearRecords } from '@/db';
 import { DungeonListItem } from '@/types';
 import { ms, fs } from '@/utils/scaling';
+import { usePlayerStore } from '@/stores/usePlayerStore';
+import { Analytics } from '@/lib/analytics';
 import { useState, useCallback } from 'react';
 
 // ダンジョンが解放されているか判定
@@ -127,6 +129,15 @@ export default function DungeonSelectScreen() {
       const consumed = await settingsRepository.consumeUberTicket(baseBossId);
       if (!consumed) return;
     }
+
+    const dungeon = dungeons.find((d) => d.id === dungeonId);
+    Analytics.logDungeonStart({
+      dungeon_id: dungeonId,
+      dungeon_name: dungeon?.name || dungeonId,
+      player_level: usePlayerStore.getState().level,
+      is_uber: UBER_DUNGEON_IDS.includes(dungeonId),
+    });
+
     // 戦闘開始時はダンジョン選択を履歴から消す
     router.replace(`/battle/${dungeonId}`);
   };

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import Purchases, { CustomerInfo, PurchasesPackage } from 'react-native-purchases';
 import { Platform } from 'react-native';
 import { REVENUECAT_API_KEY, ENTITLEMENT_IDS } from '@/constants/purchases';
+import { Analytics } from '@/lib/analytics';
 
 /**
  * 課金状態管理ストア
@@ -143,6 +144,9 @@ export const usePurchaseStore = create<PurchaseState & PurchaseActions>()((set, 
       });
 
       console.log('[Purchase] Purchase successful! Active entitlements:', Array.from(newEntitlements));
+
+      Analytics.logPurchaseCompleted({ package_id: pkg.identifier });
+
       return { success: true };
     } catch (error: any) {
       console.error('[Purchase] Purchase failed:', error);
