@@ -1,5 +1,5 @@
 import { useState, useCallback, useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Image, Modal, TextInput } from 'react-native';
 import { useRouter, useFocusEffect, useNavigation } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -18,12 +18,16 @@ export default function HomeScreen() {
   const router = useRouter();
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
-  const { skillPoints, characterName, isLoaded, clear } = usePlayerStore();
+  const { skillPoints, characterName, isLoaded, clear, renameCharacter } = usePlayerStore();
   const loadEncyclopediaData = useEncyclopediaStore((state) => state.loadClearedDungeons);
   const [statusExpanded, setStatusExpanded] = useState(false);
 
   // 画面フォーカス時に再レンダリングをトリガーするためのキー
   const [focusKey, setFocusKey] = useState(0);
+
+  // キャラクター名変更モーダル
+  const [isRenameModalVisible, setIsRenameModalVisible] = useState(false);
+  const [newName, setNewName] = useState('');
 
   // カスタムヘッダーを設定
   useLayoutEffect(() => {
@@ -89,6 +93,19 @@ export default function HomeScreen() {
     router.push('/debug' as '/home');
   };
 
+  const handleOpenRenameModal = () => {
+    setNewName(characterName);
+    setIsRenameModalVisible(true);
+  };
+
+  const handleSaveRename = async () => {
+    const trimmedName = newName.trim();
+    if (trimmedName && trimmedName !== characterName) {
+      await renameCharacter(trimmedName);
+    }
+    setIsRenameModalVisible(false);
+  };
+
   if (!isLoaded) {
     return (
       <ScreenWrapper>
@@ -115,11 +132,15 @@ export default function HomeScreen() {
             )}
             <View style={[styles.characterInfo, statusExpanded && styles.characterInfoExpanded]}>
               <View style={styles.characterHeader}>
-                <Text style={styles.characterName}>{characterName}</Text>
+                <Pressable onPress={handleOpenRenameModal}>
+                  <Text style={styles.characterName}>{characterName}</Text>
+                </Pressable>
                 <View style={styles.headerButtons}>
-                  <Pressable style={styles.debugButton} onPress={handleOpenDebug}>
-                    <MaterialCommunityIcons name="flask" size={16} color={colors.iconMuted} />
-                  </Pressable>
+                  {__DEV__ && (
+                    <Pressable style={styles.debugButton} onPress={handleOpenDebug}>
+                      <MaterialCommunityIcons name="flask" size={16} color={colors.iconMuted} />
+                    </Pressable>
+                  )}
                   <Pressable
                     style={styles.changeButton}
                     onPress={handleChangeCharacter}
@@ -233,6 +254,42 @@ export default function HomeScreen() {
           <Text style={styles.menuLabel}>{t('home.menu.shop')}</Text>
         </Pressable>
       </View>
+
+      {/* キャラクター名変更モーダル */}
+      <Modal
+        visible={isRenameModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setIsRenameModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>{t('home.renameCharacter')}</Text>
+            <TextInput
+              style={styles.modalInput}
+              value={newName}
+              onChangeText={setNewName}
+              maxLength={20}
+              autoFocus
+              selectTextOnFocus
+            />
+            <View style={styles.modalButtons}>
+              <Pressable
+                style={styles.modalCancelButton}
+                onPress={() => setIsRenameModalVisible(false)}
+              >
+                <Text style={styles.modalCancelText}>{t('common.cancel')}</Text>
+              </Pressable>
+              <Pressable
+                style={styles.modalSaveButton}
+                onPress={handleSaveRename}
+              >
+                <Text style={styles.modalSaveText}>{t('common.save')}</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScreenWrapper>
   );
 }
@@ -432,6 +489,65 @@ const styles = StyleSheet.create({
   },
   menuLabelHighlight: {
     color: colors.text,
+  },
+  // モーダルスタイル
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: colors.slab,
+    borderRadius: ms(16),
+    padding: ms(20),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+  },
+  modalTitle: {
+    fontSize: fs(16),
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: ms(16),
+    textAlign: 'center',
+  },
+  modalInput: {
+    backgroundColor: colors.bgDeep,
+    borderRadius: ms(8),
+    padding: ms(12),
+    fontSize: fs(16),
+    color: colors.text,
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+    marginBottom: ms(16),
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    gap: ms(12),
+  },
+  modalCancelButton: {
+    flex: 1,
+    paddingVertical: ms(12),
+    borderRadius: ms(8),
+    backgroundColor: colors.accent,
+    alignItems: 'center',
+  },
+  modalCancelText: {
+    fontSize: fs(14),
+    color: colors.textMuted,
+  },
+  modalSaveButton: {
+    flex: 1,
+    paddingVertical: ms(12),
+    borderRadius: ms(8),
+    backgroundColor: 'rgba(76, 175, 80, 0.3)',
+    alignItems: 'center',
+  },
+  modalSaveText: {
+    fontSize: fs(14),
+    color: '#4CAF50',
+    fontWeight: 'bold',
   },
 });
 
