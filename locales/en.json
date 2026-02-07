@@ -10,6 +10,7 @@
     "reset": "Reset",
     "create": "Create",
     "creating": "Creating...",
+    "save": "Save",
     "equip": "Equip",
     "unequip": "Unequip",
     "sell": "Sell",
@@ -41,7 +42,8 @@
       "adventure": "Adventure",
       "encyclopedia": "Archive",
       "shop": "Shop"
-    }
+    },
+    "renameCharacter": "Rename Character"
   },
   "dungeonSelect": {
     "title": "Select Dungeon",

@@ -78,6 +78,8 @@ interface PlayerActions {
   refresh: () => Promise<void>;
   // クリア
   clear: () => void;
+  // キャラクター名を変更
+  renameCharacter: (newName: string) => Promise<void>;
   // デバッグ: パッシブプリセットを適用
   applyPassivePreset: (nodeIds: string[]) => Promise<void>;
   // デバッグ: レベルとSPを設定
@@ -446,6 +448,14 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
 
   clear: () => {
     set(initialState);
+  },
+
+  renameCharacter: async (newName: string) => {
+    const state = get();
+    if (!state.characterId) return;
+
+    await characterRepository.updateName(state.characterId, newName);
+    set({ characterName: newName });
   },
 
   // デバッグ: パッシブプリセットを適用（既存スキルをクリアして適用）
