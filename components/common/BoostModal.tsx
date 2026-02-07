@@ -11,7 +11,11 @@ interface BoostModalProps {
   type: AdBoostType;
 }
 
-const AD_UNIT_ID = __DEV__ ? TestIds.REWARDED : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyy';
+// 広告ユニットID
+const AD_UNIT_IDS = {
+  drop_rate: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-7716085580742961/9679992270',
+  tier_boost: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-7716085580742961/8366910606',
+};
 
 const colors = {
   bg: '#1B2026',
@@ -64,7 +68,7 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
 
   // 広告の初期化
   useEffect(() => {
-    const ad = RewardedAd.createForAdRequest(AD_UNIT_ID, {
+    const ad = RewardedAd.createForAdRequest(AD_UNIT_IDS[type], {
       requestNonPersonalizedAdsOnly: true,
     });
 

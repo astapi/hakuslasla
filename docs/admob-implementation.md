@@ -18,21 +18,28 @@ Google AdMobを使用してバナー広告とリワード広告を導入する�
 - [x] AdMobアカウント作成済み
 - [x] アプリ登録済み（未公開として）
 - [x] 広告ユニット作成済み
-- [ ] App ID取得
+- [x] App ID取得
 
-### AdMob情報
+### AdMob情報（本番用）
 
 ```
-# Android
-App ID: ca-app-pub-xxxxx~xxxxx
-バナー広告ユニットID: ca-app-pub-xxxxx/xxxxx
-リワード広告ユニットID: ca-app-pub-xxxxx/xxxxx
-
 # iOS
-App ID: ca-app-pub-xxxxx~xxxxx
-バナー広告ユニットID: ca-app-pub-xxxxx/xxxxx
-リワード広告ユニットID: ca-app-pub-xxxxx/xxxxx
+App ID: ca-app-pub-7716085580742961~4043678329
+リワード広告ユニットID（ドロップ率UP）: ca-app-pub-7716085580742961/9679992270
+リワード広告ユニットID（Tier確率UP）: ca-app-pub-7716085580742961/8366910606
+
+# Android（未設定）
+App ID: ca-app-pub-3940256099942544~3347511713（テスト用）
 ```
+
+### 広告ユニットの命名規則
+
+異なる配置には別の広告ユニットを作成する（分析・収益追跡のため）
+
+| ユニット名 | 用途 |
+|-----------|------|
+| `reward_drop_boost` | ドロップ率UPブースト |
+| `reward_tier_boost` | Tier確率UPブースト |
 
 ### テスト用広告ID（Google公式）
 
@@ -430,3 +437,89 @@ export default function ResultScreen() {
 - リワード広告は単価が高い傾向
 - バナー広告は表示時間で収益が決まる
 - 適切なタイミングでの広告表示が重要
+
+---
+
+## TestFlightでのテスト
+
+### 環境の違い
+
+| 環境 | `__DEV__` | 使用される広告ID |
+|------|-----------|-----------------|
+| Expo Go / Development Build | `true` | テスト用ID |
+| TestFlight / Production | `false` | 本番用ID |
+
+TestFlightは**本番環境**として扱われるため、本番用の広告IDが使用される。
+
+### テストデバイスの登録（重要）
+
+本番IDでテストする際、自分のデバイスでテスト広告を表示するために必要。
+テストデバイス登録をしないと、広告クリックでアカウントBANのリスクがある。
+
+#### iPhoneの広告ID（IDFA）確認方法
+
+1. 設定 → プライバシーとセキュリティ → トラッキング
+2. 「Appからのトラッキング要求を許可」がオンになっていることを確認
+3. IDFAを確認する方法:
+   - App Storeで「My Device IDFA by AppsFlyer」をインストール
+   - アプリを開くとIDFAが表示される（コピー可能）
+
+#### AdMobコンソールでテストデバイスを登録
+
+1. [AdMobコンソール](https://admob.google.com/) にログイン
+2. 左メニュー → **設定** → **テストデバイス**
+3. **テストデバイスを追加**
+4. 入力内容:
+   - 名前: 任意（例: `iPhone Test`）
+   - プラットフォーム: iOS
+   - 広告ID: 取得したIDFA
+
+#### コード側でテストデバイスを指定する方法（オプション）
+
+```typescript
+const ad = RewardedAd.createForAdRequest(AD_UNIT_IDS[type], {
+  requestNonPersonalizedAdsOnly: true,
+  testDeviceIdentifiers: ['YOUR-IDFA-HERE'],
+});
+```
+
+### 広告が表示されない場合
+
+1. **広告ユニット作成直後**: 反映に数時間かかる場合がある
+2. **App IDが正しくない**: `app.config.ts`のiOS App IDを確認
+3. **ネイティブ再ビルドが必要**: App ID変更後は`eas build`が必要
+4. **テストデバイス未登録**: AdMobコンソールでデバイスを登録
+
+---
+
+## 現在の実装状況
+
+### 実装済みコンポーネント
+
+| ファイル | 説明 |
+|---------|------|
+| `components/common/RewardAdBoost.tsx` | リワード広告ブーストコンポーネント |
+| `components/common/BoostModal.tsx` | リワード広告モーダル版 |
+| `stores/useAdBoostStore.ts` | ブースト状態管理 |
+
+### 広告ID設定箇所
+
+```typescript
+// components/common/RewardAdBoost.tsx, BoostModal.tsx
+const AD_UNIT_IDS = {
+  drop_rate: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-7716085580742961/9679992270',
+  tier_boost: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-7716085580742961/8366910606',
+};
+```
+
+### app.config.ts設定
+
+```typescript
+[
+  "react-native-google-mobile-ads",
+  {
+    androidAppId: "ca-app-pub-3940256099942544~3347511713", // テスト用
+    iosAppId: "ca-app-pub-7716085580742961~4043678329",    // 本番用
+  },
+],
+```

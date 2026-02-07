@@ -9,9 +9,11 @@ interface RewardAdBoostProps {
   type: AdBoostType;
 }
 
-// テスト用広告ユニットID（開発環境）
-// 本番環境では実際のIDに置き換える必要があります
-const AD_UNIT_ID = __DEV__ ? TestIds.REWARDED : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyy';
+// 広告ユニットID
+const AD_UNIT_IDS = {
+  drop_rate: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-7716085580742961/9679992270',
+  tier_boost: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-7716085580742961/8366910606',
+};
 
 export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
   const { dropRateBoost, tierBoost, activateDropRateBoost, activateTierBoost, checkExpiredBoosts } = useAdBoostStore();
@@ -33,7 +35,7 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
 
   // 広告の初期化とロード
   useEffect(() => {
-    const ad = RewardedAd.createForAdRequest(AD_UNIT_ID, {
+    const ad = RewardedAd.createForAdRequest(AD_UNIT_IDS[type], {
       requestNonPersonalizedAdsOnly: true,
     });
 
