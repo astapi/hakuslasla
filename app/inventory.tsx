@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useCallback, memo } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, FlatList, ListRenderItemInfo } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, FlatList, ListRenderItemInfo, useWindowDimensions } from 'react-native';
 import { useRouter , useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -162,9 +162,22 @@ function calculateItemStats(
   return { totalAtk, totalDef, allMods };
 }
 
+// グリッド設定
+const GRID_COLUMNS = 5;
+const GRID_PADDING = ms(12);
+const GRID_GAP = ms(6);
+
 export default function InventoryScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const { width: screenWidth } = useWindowDimensions();
+
+  // アイテムサイズを画面幅から計算
+  const itemWidth = useMemo(() => {
+    const totalGap = GRID_GAP * (GRID_COLUMNS - 1);
+    const totalPadding = GRID_PADDING * 2;
+    return (screenWidth - totalPadding - totalGap) / GRID_COLUMNS;
+  }, [screenWidth]);
 
   // Zustand Selector パターン: 必要なフィールドのみ購読
   const inventory = usePlayerStore((state) => state.inventory);
@@ -317,6 +330,7 @@ export default function InventoryScreen() {
       <Pressable
         style={[
           styles.gridItem,
+          { width: itemWidth, height: itemWidth * 1.2 },
           isSelected && styles.gridItemSelected,
         ]}
         onPress={() => handleSelectItem(item)}
@@ -327,7 +341,7 @@ export default function InventoryScreen() {
         />
         {isUnique && (
           <View style={styles.uniqueBadge}>
-            <Text style={styles.uniqueBadgeText}>UNIQUE</Text>
+            <Text style={styles.uniqueBadgeText}>U</Text>
           </View>
         )}
         {hasMods && (
@@ -345,7 +359,7 @@ export default function InventoryScreen() {
         </Text>
       </Pressable>
     );
-  }, [selectedItem?.instanceId, t, handleSelectItem]);
+  }, [selectedItem?.instanceId, t, handleSelectItem, itemWidth]);
 
   const keyExtractorGrid = useCallback((item: Item) => item.instanceId, []);
 
@@ -457,7 +471,7 @@ export default function InventoryScreen() {
                 data={currentItems}
                 renderItem={renderGridItem}
                 keyExtractor={keyExtractorGrid}
-                numColumns={4}
+                numColumns={5}
                 contentContainerStyle={styles.gridContent}
                 columnWrapperStyle={styles.gridRow}
                 initialNumToRender={12}
@@ -1031,16 +1045,13 @@ const styles = StyleSheet.create({
     padding: ms(12),
   },
   gridRow: {
-    justifyContent: 'flex-start',
-    gap: ms(8),
-    marginBottom: ms(8),
+    gap: ms(6),
+    marginBottom: ms(6),
   },
   gridItem: {
-    width: ms(72),
-    height: ms(88),
     backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderRadius: ms(8),
-    padding: ms(6),
+    borderRadius: ms(6),
+    padding: ms(4),
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -1052,9 +1063,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(76, 175, 80, 0.15)',
   },
   gridItemIcon: {
-    width: ms(32),
-    height: ms(32),
-    marginBottom: ms(4),
+    width: ms(28),
+    height: ms(28),
+    marginBottom: ms(2),
   },
   uniqueBadge: {
     position: 'absolute',
