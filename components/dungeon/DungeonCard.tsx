@@ -46,7 +46,9 @@ export const DungeonCard = ({
         {isLocked ? (
           <Text style={styles.lockIcon}>🔒</Text>
         ) : (
-          <Text style={[styles.icon, isLocked && styles.lockedText]}>{dungeon.maxFloor}F</Text>
+          <Text style={[styles.icon, isLocked && styles.lockedText]}>
+            {dungeon.maxFloor === -1 ? '∞' : `${dungeon.maxFloor}F`}
+          </Text>
         )}
       </View>
       <View style={styles.infoContainer}>
@@ -74,7 +76,9 @@ export const DungeonCard = ({
               <Text style={styles.ticketRequirementText}>{t('dungeon.ticketRequired')}</Text>
             )}
             <Text style={[styles.floors, isLocked && styles.lockedText]}>
-              {t('dungeon.floors', { count: dungeon.maxFloor })}
+              {dungeon.maxFloor === -1
+                ? t('dungeon.unlimitedFloors')
+                : t('dungeon.floors', { count: dungeon.maxFloor })}
             </Text>
           </>
         )}

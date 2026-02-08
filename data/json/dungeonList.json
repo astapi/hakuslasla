@@ -215,6 +215,12 @@
       "name": "DEBUG: 異次元ラッシュ - 終焉の王",
       "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
       "maxFloor": 1
+    },
+    {
+      "id": "dimensional_corridor",
+      "name": "次元回廊",
+      "description": "無限に続く次元の狭間。深層へ進むほど敵は強くなる。",
+      "maxFloor": -1
     }
   ]
 }

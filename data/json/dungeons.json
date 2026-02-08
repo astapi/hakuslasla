@@ -1151,6 +1151,31 @@
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
       "modCountRange": { "min": 2, "max": 4 }
+    },
+    "dimensional_corridor": {
+      "id": "dimensional_corridor",
+      "name": "次元回廊",
+      "description": "無限に続く次元の狭間。深層へ進むほど敵は強くなる。",
+      "maxFloor": -1,
+      "monsters": [],
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
     }
   }
 }

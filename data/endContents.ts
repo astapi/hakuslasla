@@ -14,9 +14,13 @@ import {
   DIMENSIONAL_RUSH_NORMAL_HP_MULT,
   DIMENSIONAL_RUSH_NORMALIZE_ALPHA,
   getDimensionalRushFloorMultiplier,
+  getDimensionalCorridorMultiplier,
+  getDimensionalCorridorBossId,
   scaleEnemyStats,
   isDimensionalRushDungeon,
+  isDimensionalCorridorDungeon,
   toOriginalDimensionalRushFloor,
+  DIMENSIONAL_CORRIDOR_ID,
 } from '@/core/endContent';
 
 export {
@@ -28,7 +32,9 @@ export {
   UBER_BOSS_BY_BASE,
   UBER_DUNGEON_IDS,
   isDimensionalRushDungeon,
+  isDimensionalCorridorDungeon,
   toOriginalDimensionalRushFloor,
+  DIMENSIONAL_CORRIDOR_ID,
 };
 
 const EARLY_DUNGEON_IDS = [
@@ -154,6 +160,59 @@ export const getDimensionalRushEnemy = (
       atk: normalization.atk * multiplier,
       def: normalization.def * multiplier,
       exp: normalization.exp * multiplier,
+    }),
+    attackSpeed: Math.max(0.1, (baseEnemy.attackSpeed ?? 1) * normalization.attackSpeed),
+  };
+};
+
+/**
+ * 次元回廊の敵生成
+ * - ベースは異次元ラッシュと同じ
+ * - 30階ごとにHP/ATKが+0.1倍（固定加算）、DEF/EXP/攻撃速度はスケールなし
+ * - ボスは200階周期でループ
+ */
+export const getDimensionalCorridorEnemy = (
+  floor: number,
+  rng: () => number = Math.random
+): Enemy | undefined => {
+  const corridorMult = getDimensionalCorridorMultiplier(floor);
+  const bossId = getDimensionalCorridorBossId(floor);
+  // 異次元ラッシュの基準フロア（ボスステータス計算用）
+  const rushFloor = bossId
+    ? Object.entries(DIMENSIONAL_RUSH_BOSS_FLOORS).find(([, id]) => id === bossId)?.[0]
+    : null;
+  const rushFloorNum = rushFloor ? Number(rushFloor) : floor;
+  const rushMultiplier = getDimensionalRushFloorMultiplier(rushFloorNum);
+
+  if (bossId) {
+    const boss = getEnemy(bossId);
+    if (!boss) return undefined;
+    const normalization = toNormalization(boss);
+    // HP/ATKのみ corridorMult を適用、DEF/EXP/攻撃速度はスケールなし
+    return {
+      ...scaleEnemyStats(boss, {
+        hp: normalization.hp * rushMultiplier * DIMENSIONAL_RUSH_BOSS_HP_MULT * corridorMult,
+        atk: normalization.atk * rushMultiplier * DIMENSIONAL_RUSH_BOSS_STAT_MULT * corridorMult,
+        def: normalization.def * rushMultiplier * DIMENSIONAL_RUSH_BOSS_STAT_MULT,
+        exp: normalization.exp * rushMultiplier * DIMENSIONAL_RUSH_BOSS_STAT_MULT,
+      }),
+      attackSpeed: Math.max(0.1, (boss.attackSpeed ?? 1) * normalization.attackSpeed),
+    };
+  }
+
+  // 通常敵: 120階以下は早期ダンジョン、それ以降は後期ダンジョンから選択
+  const isEarly = floor <= 120;
+  const spawns = isEarly ? earlySpawns : lateSpawns;
+  const baseEnemy = pickEnemyByRng(spawns, rng);
+  if (!baseEnemy) return undefined;
+  const normalization = toNormalization(baseEnemy);
+  // HP/ATKのみ corridorMult を適用、DEF/EXP/攻撃速度はスケールなし
+  return {
+    ...scaleEnemyStats(baseEnemy, {
+      hp: normalization.hp * rushMultiplier * DIMENSIONAL_RUSH_NORMAL_HP_MULT * corridorMult,
+      atk: normalization.atk * rushMultiplier * corridorMult,
+      def: normalization.def * rushMultiplier,
+      exp: normalization.exp * rushMultiplier,
     }),
     attackSpeed: Math.max(0.1, (baseEnemy.attackSpeed ?? 1) * normalization.attackSpeed),
   };
