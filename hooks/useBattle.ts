@@ -728,7 +728,7 @@ export const useBattle = (dungeonId: string) => {
         },
       });
 
-      const ticketRoll = Math.random() * 100 < 50;
+      const ticketRoll = Math.random() * 100 < 90;
       if (ticketRoll) {
         const count = await settingsRepository.addUberTicket(enemyId);
         dispatch({
