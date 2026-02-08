@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Modal, Pressable, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
 import { useAdBoostStore, AdBoostType } from '@/stores/useAdBoostStore';
+import { useAdState } from '@/hooks/useAdStore';
 import { ms, fs } from '@/utils/scaling';
 
 interface BoostModalProps {
@@ -10,12 +10,6 @@ interface BoostModalProps {
   onClose: () => void;
   type: AdBoostType;
 }
-
-// 広告ユニットID
-const AD_UNIT_IDS = {
-  drop_rate: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-7716085580742961/9679992270',
-  tier_boost: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-7716085580742961/8366910606',
-};
 
 const colors = {
   bg: '#1B2026',
@@ -43,16 +37,9 @@ const BOOST_CONFIG = {
 };
 
 export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
-  const {
-    dropRateBoost,
-    tierBoost,
-    activateDropRateBoost,
-    activateTierBoost,
-    checkExpiredBoosts,
-  } = useAdBoostStore();
-
-  const [adLoaded, setAdLoaded] = useState(false);
-  const [rewardedAd, setRewardedAd] = useState<RewardedAd | null>(null);
+  const { dropRateBoost, tierBoost, checkExpiredBoosts } = useAdBoostStore();
+  const { loaded, show } = useAdState(type);
+  const [isShowing, setIsShowing] = useState(false);
 
   const boost = type === 'drop_rate' ? dropRateBoost : tierBoost;
   const isActive = boost.active;
@@ -65,35 +52,6 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
   }, [boost.active, boost.expiresAt]);
 
   const [remainingMinutes, setRemainingMinutes] = useState(getRemainingMinutes());
-
-  // 広告の初期化
-  useEffect(() => {
-    const ad = RewardedAd.createForAdRequest(AD_UNIT_IDS[type], {
-      requestNonPersonalizedAdsOnly: true,
-    });
-
-    const loadedListener = ad.addAdEventListener(RewardedAdEventType.LOADED, () => {
-      setAdLoaded(true);
-    });
-
-    const earnedListener = ad.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
-      if (type === 'drop_rate') {
-        activateDropRateBoost();
-      } else {
-        activateTierBoost();
-      }
-      setAdLoaded(false);
-      ad.load();
-    });
-
-    ad.load();
-    setRewardedAd(ad);
-
-    return () => {
-      loadedListener();
-      earnedListener();
-    };
-  }, [type, activateDropRateBoost, activateTierBoost]);
 
   // 残り時間の更新
   useEffect(() => {
@@ -112,12 +70,18 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
     return () => clearInterval(interval);
   }, [isActive, boost.expiresAt, checkExpiredBoosts, getRemainingMinutes]);
 
-  const handleShowAd = () => {
-    if (!rewardedAd || !adLoaded) {
-      Alert.alert('エラー', '広告の準備ができていません。しばらくお待ちください。');
-      return;
+  const handleShowAd = async () => {
+    if (isShowing) return;
+
+    setIsShowing(true);
+    try {
+      const success = await show();
+      if (!success) {
+        Alert.alert('エラー', '広告の表示に失敗しました。しばらくしてからお試しください。');
+      }
+    } finally {
+      setIsShowing(false);
     }
-    rewardedAd.show();
   };
 
   return (
@@ -148,19 +112,19 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
               style={({ pressed }) => [
                 styles.adButton,
                 isActive && styles.adButtonDisabled,
-                !adLoaded && !isActive && styles.adButtonLoading,
-                pressed && !isActive && adLoaded && styles.adButtonPressed,
+                !loaded && !isActive && styles.adButtonDisabled,
+                pressed && !isActive && loaded && styles.adButtonPressed,
               ]}
               onPress={handleShowAd}
-              disabled={isActive || !adLoaded}
+              disabled={isActive || !loaded || isShowing}
             >
               <MaterialCommunityIcons
                 name="play-circle"
                 size={20}
-                color={isActive ? colors.textMuted : colors.text}
+                color={isActive || !loaded ? colors.textMuted : colors.text}
               />
-              <Text style={[styles.adButtonText, isActive && styles.adButtonTextDisabled]}>
-                {isActive ? '有効中' : !adLoaded ? '読み込み中...' : '広告を見て有効化'}
+              <Text style={[styles.adButtonText, (isActive || !loaded) && styles.adButtonTextDisabled]}>
+                {isActive ? '有効中' : isShowing ? '再生中...' : '広告を見て有効化'}
               </Text>
             </Pressable>
           </View>
@@ -249,9 +213,6 @@ const styles = StyleSheet.create({
   },
   adButtonDisabled: {
     backgroundColor: 'rgba(58, 64, 80, 0.5)',
-  },
-  adButtonLoading: {
-    backgroundColor: 'rgba(58, 64, 80, 0.7)',
   },
   adButtonText: {
     fontSize: fs(15),
