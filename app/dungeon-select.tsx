@@ -5,7 +5,7 @@ import { DungeonCard } from '@/components/dungeon/DungeonCard';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { getDungeonList, DUNGEON_UNLOCK_ORDER, DEBUG_DUNGEON_IDS } from '@/data/dungeons';
-import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_UNLOCK_CHAIN, UBER_DUNGEON_IDS, isDimensionalRushDungeon } from '@/data/endContents';
+import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_UNLOCK_CHAIN, UBER_DUNGEON_IDS, isDimensionalRushDungeon, isDimensionalCorridorDungeon } from '@/data/endContents';
 import { settingsRepository, DungeonClearRecords } from '@/db';
 import { DungeonListItem } from '@/types';
 import { ms, fs } from '@/utils/scaling';
@@ -80,6 +80,19 @@ export default function DungeonSelectScreen() {
               isCleared: clearRecords[dungeon.id] !== undefined,
             });
           }
+        }
+        continue;
+      }
+
+      // 次元回廊の処理（異次元ラッシュVI クリアで開放）
+      if (isDimensionalCorridorDungeon(dungeon.id)) {
+        const isUnlocked = clearRecords['dimensional_rush_6'] !== undefined;
+        if (isUnlocked) {
+          result.push({
+            ...dungeon,
+            isLocked: false,
+            isCleared: false, // 無制限階層なのでクリア状態は常にfalse
+          });
         }
         continue;
       }

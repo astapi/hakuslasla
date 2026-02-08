@@ -31,6 +31,9 @@ export const DIMENSIONAL_RUSH_IDS = [
   'dimensional_rush_6',
 ] as const;
 
+// 次元回廊ダンジョンID
+export const DIMENSIONAL_CORRIDOR_ID = 'dimensional_corridor';
+
 // 各分割ダンジョンのフロアオフセット（累積的な階層構成なのですべて0）
 export const DIMENSIONAL_RUSH_FLOOR_OFFSET: Record<string, number> = {
   dimensional_rush_1: 0,   // 1-50階
@@ -100,8 +103,13 @@ export const isDimensionalRushDungeon = (dungeonId: string): boolean => {
   return (DIMENSIONAL_RUSH_IDS as readonly string[]).includes(dungeonId);
 };
 
+export const isDimensionalCorridorDungeon = (dungeonId: string): boolean => {
+  return dungeonId === DIMENSIONAL_CORRIDOR_ID;
+};
+
 export const isEndContentDungeon = (dungeonId: string): boolean => {
   return isDimensionalRushDungeon(dungeonId)
+    || isDimensionalCorridorDungeon(dungeonId)
     || UBER_DUNGEON_IDS.includes(dungeonId)
     || DEBUG_DIMENSIONAL_DUNGEON_IDS.includes(dungeonId);
 };
@@ -209,6 +217,26 @@ export const getDimensionalRushFloorMultiplier = (floor: number): number => {
   if (floor <= 149) return 1.3;
   if (floor <= 179) return 1.3;
   return 1.3;
+};
+
+// 次元回廊: 30階ごとにHP/ATKが+0.1倍（固定加算）
+export const getDimensionalCorridorMultiplier = (floor: number): number => {
+  const tier = Math.floor(floor / 30);
+  return 1.0 + tier * 0.1;
+};
+
+// 次元回廊: ボスフロア判定（200階周期でループ）
+export const getDimensionalCorridorBossId = (floor: number): string | null => {
+  const floorInCycle = floor % 200 || 200; // 200→200, 400→200, 50→50
+  const bossMap: Record<number, string> = {
+    50: 'goblin_king',
+    70: 'bandit_leader',
+    90: 'vampire',
+    110: 'kraken',
+    120: 'demon_lord',
+    200: 'true_final_boss',
+  };
+  return bossMap[floorInCycle] ?? null;
 };
 
 export const scaleEnemyStats = <T extends EnemyConfig>(

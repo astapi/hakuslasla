@@ -231,6 +231,7 @@
   },
   "dungeon": {
     "floors": "{{count}} Floors",
+    "unlimitedFloors": "Unlimited",
     "recommendedLevel": "Rec. Lv.{{level}}",
     "ticketRequired": "Ticket required"
   },
@@ -330,6 +331,10 @@
     "dimensional_rush_6": {
       "name": "Dimensional Rush VI",
       "description": "Final dimensional layer. Defeat the True Final Boss on floor 200."
+    },
+    "dimensional_corridor": {
+      "name": "Dimensional Corridor",
+      "description": "An endless corridor between dimensions. Enemies grow stronger the deeper you go."
     }
   },
   "items": {

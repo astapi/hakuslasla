@@ -3,8 +3,11 @@ import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState, DropF
 import { getDungeon } from '@/data/dungeons';
 import {
   isDimensionalRushDungeon,
+  isDimensionalCorridorDungeon,
   toOriginalDimensionalRushFloor,
   getDimensionalRushEnemy,
+  getDimensionalCorridorEnemy,
+  DIMENSIONAL_CORRIDOR_ID,
 } from '@/data/endContents';
 import { getRandomEnemy, getEnemy } from '@/data/enemies';
 import { tryUniqueDrop, rollDropCount, rollDropItems } from '@/data/items';
@@ -689,6 +692,10 @@ export const useBattle = (dungeonId: string) => {
       const originalFloor = toOriginalDimensionalRushFloor(dungeonId, floor);
       return getDimensionalRushEnemy(originalFloor);
     }
+    // 次元回廊
+    if (isDimensionalCorridorDungeon(dungeonId)) {
+      return getDimensionalCorridorEnemy(floor);
+    }
     const dungeon = getDungeon(dungeonId);
     if (!dungeon) return undefined;
 
@@ -806,7 +813,16 @@ export const useBattle = (dungeonId: string) => {
       handleDimensionalRushBossDefeat(state.enemy.id, state.enemy.name);
     }
 
-    if (state.currentFloor >= state.maxFloor) {
+    // 次元回廊: 250階以降10階クリアごとにAnalytics送信
+    if (isDimensionalCorridorDungeon(dungeonId) && state.currentFloor >= 250 && state.currentFloor % 10 === 0) {
+      Analytics.logDimensionalCorridorMilestone({
+        floor_reached: state.currentFloor,
+        player_level: usePlayerStore.getState().level,
+      });
+    }
+
+    // 無制限階層（maxFloor=-1）は永遠に続く
+    if (state.maxFloor > 0 && state.currentFloor >= state.maxFloor) {
       dispatch({ type: 'DUNGEON_CLEARED' });
       return;
     }

@@ -231,6 +231,7 @@
   },
   "dungeon": {
     "floors": "全{{count}}階",
+    "unlimitedFloors": "無制限",
     "recommendedLevel": "推奨Lv.{{level}}",
     "ticketRequired": "入場券が必要"
   },
@@ -330,6 +331,10 @@
     "dimensional_rush_6": {
       "name": "異次元ラッシュVI",
       "description": "異次元の迷宮・最終層。200階の終焉の王を討ち倒せ。"
+    },
+    "dimensional_corridor": {
+      "name": "次元回廊",
+      "description": "無限に続く次元の狭間。深層へ進むほど敵は強くなる。"
     },
     "uber_goblin_king": {
       "name": "Uber ゴブリンキング",

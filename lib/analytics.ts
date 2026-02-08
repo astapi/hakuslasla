@@ -39,6 +39,14 @@ export const Analytics = {
     if (__DEV__) return;
     analytics().logEvent('purchase_completed', params);
   },
+
+  logDimensionalCorridorMilestone: (params: {
+    floor_reached: number;
+    player_level: number;
+  }) => {
+    if (__DEV__) return;
+    analytics().logEvent('dimensional_corridor_milestone', params);
+  },
 };
 
 // ============================================
