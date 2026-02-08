@@ -5,7 +5,7 @@ import { DungeonCard } from '@/components/dungeon/DungeonCard';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { getDungeonList, DUNGEON_UNLOCK_ORDER, DEBUG_DUNGEON_IDS } from '@/data/dungeons';
-import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_ID, UBER_DUNGEON_IDS } from '@/data/endContents';
+import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_UNLOCK_CHAIN, UBER_DUNGEON_IDS, isDimensionalRushDungeon } from '@/data/endContents';
 import { settingsRepository, DungeonClearRecords } from '@/db';
 import { DungeonListItem } from '@/types';
 import { ms, fs } from '@/utils/scaling';
@@ -64,14 +64,22 @@ export default function DungeonSelectScreen() {
         continue;
       }
 
-      // エンドコンテンツの処理（従来通り）
-      if (dungeon.id === DIMENSIONAL_RUSH_ID) {
+      // 分割された異次元ラッシュの処理
+      if (isDimensionalRushDungeon(dungeon.id)) {
         if (endContentUnlocked) {
-          result.push({
-            ...dungeon,
-            isLocked: false,
-            isCleared: clearRecords[dungeon.id] !== undefined,
-          });
+          // 開放条件をチェック
+          const requiredDungeon = DIMENSIONAL_RUSH_UNLOCK_CHAIN[dungeon.id];
+          // requiredDungeonがnullの場合（dimensional_rush_1）は終焉の地クリアで開放済み
+          // それ以外は前のダンジョンをクリアしているかチェック
+          const isUnlocked = requiredDungeon === null || clearRecords[requiredDungeon] !== undefined;
+
+          if (isUnlocked) {
+            result.push({
+              ...dungeon,
+              isLocked: false,
+              isCleared: clearRecords[dungeon.id] !== undefined,
+            });
+          }
         }
         continue;
       }

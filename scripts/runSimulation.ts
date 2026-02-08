@@ -22,7 +22,7 @@ import {
   combineMods,
 } from '../core';
 import { calculatePassiveEffects } from '../data/passiveTree';
-import { DIMENSIONAL_RUSH_ID, getDimensionalRushEnemy } from '../data/endContents';
+import { isDimensionalRushDungeon, toOriginalDimensionalRushFloor, getDimensionalRushEnemy } from '../data/endContents';
 
 // JSONファイルを直接読み込み
 import monstersData from '../data/json/monsters.json';
@@ -38,8 +38,11 @@ const runGaugeSimulationWithEndContent = (
   config: Parameters<typeof runGaugeSimulation>[0],
   dungeonConfig: DungeonConfig
 ) => {
-  const resolveEnemyForFloor = config.dungeonId === DIMENSIONAL_RUSH_ID
-    ? (floor: number, rng: () => number) => getDimensionalRushEnemy(floor, rng) as EnemyConfig
+  const resolveEnemyForFloor = isDimensionalRushDungeon(config.dungeonId)
+    ? (floor: number, rng: () => number) => {
+        const originalFloor = toOriginalDimensionalRushFloor(config.dungeonId, floor);
+        return getDimensionalRushEnemy(originalFloor, rng) as EnemyConfig;
+      }
     : undefined;
 
   return runGaugeSimulation(
@@ -89,7 +92,13 @@ const dungeonConfigs = {
   sacred_temple: toDungeonConfig(dungeonsData.dungeons.sacred_temple),
   chaos_realm: toDungeonConfig(dungeonsData.dungeons.chaos_realm),
   final_land: toDungeonConfig(dungeonsData.dungeons.final_land),
-  dimensional_rush: toDungeonConfig(dungeonsData.dungeons.dimensional_rush),
+  // 分割された異次元ラッシュ
+  dimensional_rush_1: toDungeonConfig(dungeonsData.dungeons.dimensional_rush_1),
+  dimensional_rush_2: toDungeonConfig(dungeonsData.dungeons.dimensional_rush_2),
+  dimensional_rush_3: toDungeonConfig(dungeonsData.dungeons.dimensional_rush_3),
+  dimensional_rush_4: toDungeonConfig(dungeonsData.dungeons.dimensional_rush_4),
+  dimensional_rush_5: toDungeonConfig(dungeonsData.dungeons.dimensional_rush_5),
+  dimensional_rush_6: toDungeonConfig(dungeonsData.dungeons.dimensional_rush_6),
 };
 
 // ダンジョン情報（推奨レベル、前ダンジョン）
@@ -112,7 +121,13 @@ const dungeonInfo: Record<string, {
   sacred_temple: { name: '神域の神殿', recommendedLevel: 70, previousDungeon: 'dragon_nest' },
   chaos_realm: { name: '混沌の領域', recommendedLevel: 80, previousDungeon: 'sacred_temple' },
   final_land: { name: '終焉の地', recommendedLevel: 99, previousDungeon: 'chaos_realm' },
-  dimensional_rush: { name: '異次元ラッシュ', recommendedLevel: 60, previousDungeon: 'final_land' },
+  // 分割された異次元ラッシュ（累積的階層構成）
+  dimensional_rush_1: { name: '異次元ラッシュI (1-50階)', recommendedLevel: 60, previousDungeon: 'final_land' },
+  dimensional_rush_2: { name: '異次元ラッシュII (1-70階)', recommendedLevel: 60, previousDungeon: 'dimensional_rush_1' },
+  dimensional_rush_3: { name: '異次元ラッシュIII (1-90階)', recommendedLevel: 60, previousDungeon: 'dimensional_rush_2' },
+  dimensional_rush_4: { name: '異次元ラッシュIV (1-110階)', recommendedLevel: 60, previousDungeon: 'dimensional_rush_3' },
+  dimensional_rush_5: { name: '異次元ラッシュV (1-120階)', recommendedLevel: 60, previousDungeon: 'dimensional_rush_4' },
+  dimensional_rush_6: { name: '異次元ラッシュVI (1-200階)', recommendedLevel: 60, previousDungeon: 'dimensional_rush_5' },
 };
 
 // レベルとパッシブレベルのマッピング

@@ -601,12 +601,161 @@
       "modTierRange": { "minTier": 10, "maxTier": 1 },
       "modCountRange": { "min": 2, "max": 4 }
     },
-    "dimensional_rush": {
-      "id": "dimensional_rush",
-      "name": "異次元ラッシュ",
-      "description": "終焉の地を超えた先に広がる異次元の迷宮。200階の終焉の王を討ち倒せ。",
+    "dimensional_rush_1": {
+      "id": "dimensional_rush_1",
+      "name": "異次元ラッシュI",
+      "description": "異次元の迷宮。50階のゴブリンキングを討ち倒せ。",
+      "maxFloor": 50,
+      "monsters": [],
+      "boss": {
+        "monsterId": "goblin_king",
+        "floor": 50
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "dimensional_rush_2": {
+      "id": "dimensional_rush_2",
+      "name": "異次元ラッシュII",
+      "description": "異次元の迷宮。70階の盗賊の頭を討ち倒せ。",
+      "maxFloor": 70,
+      "monsters": [],
+      "boss": {
+        "monsterId": "bandit_leader",
+        "floor": 70
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "dimensional_rush_3": {
+      "id": "dimensional_rush_3",
+      "name": "異次元ラッシュIII",
+      "description": "異次元の迷宮。90階のヴァンパイアを討ち倒せ。",
+      "maxFloor": 90,
+      "monsters": [],
+      "boss": {
+        "monsterId": "vampire",
+        "floor": 90
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "dimensional_rush_4": {
+      "id": "dimensional_rush_4",
+      "name": "異次元ラッシュIV",
+      "description": "異次元の迷宮。110階のクラーケンを討ち倒せ。",
+      "maxFloor": 110,
+      "monsters": [],
+      "boss": {
+        "monsterId": "kraken",
+        "floor": 110
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "dimensional_rush_5": {
+      "id": "dimensional_rush_5",
+      "name": "異次元ラッシュV",
+      "description": "異次元の迷宮。120階の魔王を討ち倒せ。",
+      "maxFloor": 120,
+      "monsters": [],
+      "boss": {
+        "monsterId": "demon_lord",
+        "floor": 120
+      },
+      "dropTable": {
+        "common": [
+          { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "void_armor", "dropRate": 5 },
+          { "itemId": "chaos_gauntlets", "dropRate": 5 },
+          { "itemId": "void_boots", "dropRate": 5 },
+          { "itemId": "chaos_crystal_ring", "dropRate": 5 }
+        ],
+        "dungeon": [
+          { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "end_armor", "dropRate": 12 },
+          { "itemId": "titan_gauntlets", "dropRate": 12 },
+          { "itemId": "end_walker_boots", "dropRate": 10 },
+          { "itemId": "oblivion_ring", "dropRate": 10 }
+        ]
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 2, "max": 4 }
+    },
+    "dimensional_rush_6": {
+      "id": "dimensional_rush_6",
+      "name": "異次元ラッシュVI",
+      "description": "異次元の迷宮・最終層。200階の終焉の王を討ち倒せ。",
       "maxFloor": 200,
       "monsters": [],
+      "boss": {
+        "monsterId": "true_final_boss",
+        "floor": 200
+      },
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },

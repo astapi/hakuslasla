@@ -29,7 +29,7 @@ import {
   calculatePassiveEffects,
   getUnlockableNodes,
 } from '../data/passiveTree';
-import { DIMENSIONAL_RUSH_ID, getDimensionalRushEnemy } from '../data/endContents';
+import { DIMENSIONAL_RUSH_IDS, getDimensionalRushEnemy } from '../data/endContents';
 
 import monstersData from '../data/json/monsters.json';
 import dungeonsData from '../data/json/dungeons.json';
@@ -101,7 +101,15 @@ function toDungeonConfig(dungeon: typeof dungeonsData.dungeons.grassland): Dunge
   return config;
 }
 
-const dimensionalRushConfig = toDungeonConfig(dungeonsData.dungeons.dimensional_rush);
+// シミュレーション用：全200階を通した異次元ラッシュ設定
+const dimensionalRushConfig: DungeonConfig = {
+  id: 'dimensional_rush_full',
+  name: '異次元ラッシュ全域',
+  maxFloor: 200,
+  enemies: [],
+  dropTable: [],
+  boss: { monsterId: 'true_final_boss', floor: 200 },
+};
 
 const bossFloors = [50, 70, 90, 110, 120, 200] as const;
 const bossFloorLabels: Record<number, string> = {
@@ -185,7 +193,7 @@ console.log(`【シミュレーション設定】`);
 console.log(`  プレイヤーレベル: ${level}`);
 console.log(`  パッシブノード数: ${nodeCount}`);
 console.log(`  装備ソース: ${getDungeonName(equipmentDungeonId)} (${equipmentDungeonId})`);
-console.log(`  対象ダンジョン: 異次元ラッシュ (${DIMENSIONAL_RUSH_ID})`);
+console.log(`  対象ダンジョン: 異次元ラッシュ全域 (200階)`);
 console.log('');
 
 const rng = createRng(65432 + level);
@@ -236,7 +244,7 @@ for (let i = 0; i < 600 && clearedBuilds.length < 10; i++) {
     {
       playerStats: finalStats,
       modEffects: combinedMods,
-      dungeonId: DIMENSIONAL_RUSH_ID,
+      dungeonId: 'dimensional_rush_full',
       runs: 10,
       seed: 65432 + i,
       resolveEnemyForFloor: (floor, floorRng) =>

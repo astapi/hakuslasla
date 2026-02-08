@@ -4,7 +4,9 @@ import { getEnemy } from './enemies';
 import {
   BASE_BOSS_BY_UBER,
   DIMENSIONAL_RUSH_BOSS_FLOORS,
-  DIMENSIONAL_RUSH_ID,
+  DIMENSIONAL_RUSH_IDS,
+  DIMENSIONAL_RUSH_FLOOR_OFFSET,
+  DIMENSIONAL_RUSH_UNLOCK_CHAIN,
   UBER_BOSS_BY_BASE,
   UBER_DUNGEON_IDS,
   DIMENSIONAL_RUSH_BOSS_HP_MULT,
@@ -13,14 +15,20 @@ import {
   DIMENSIONAL_RUSH_NORMALIZE_ALPHA,
   getDimensionalRushFloorMultiplier,
   scaleEnemyStats,
+  isDimensionalRushDungeon,
+  toOriginalDimensionalRushFloor,
 } from '@/core/endContent';
 
 export {
   BASE_BOSS_BY_UBER,
   DIMENSIONAL_RUSH_BOSS_FLOORS,
-  DIMENSIONAL_RUSH_ID,
+  DIMENSIONAL_RUSH_IDS,
+  DIMENSIONAL_RUSH_FLOOR_OFFSET,
+  DIMENSIONAL_RUSH_UNLOCK_CHAIN,
   UBER_BOSS_BY_BASE,
   UBER_DUNGEON_IDS,
+  isDimensionalRushDungeon,
+  toOriginalDimensionalRushFloor,
 };
 
 const EARLY_DUNGEON_IDS = [

@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import {
-  DIMENSIONAL_RUSH_ID,
+  DIMENSIONAL_RUSH_IDS,
   DEBUG_DIMENSIONAL_DUNGEON_IDS,
   isEndContentDungeon,
+  isDimensionalRushDungeon,
   getBaseBossId,
   isUberBoss,
   getEnemyAtkMultiplier,
@@ -12,11 +13,25 @@ import {
   getBossSkillName,
   scaleEnemyStats,
   getEnemyRegenPerSecond,
+  toOriginalDimensionalRushFloor,
 } from '../../core/endContent';
 
 describe('core/endContent', () => {
-  it('isEndContentDungeon は異次元ラッシュを判定する', () => {
-    expect(isEndContentDungeon(DIMENSIONAL_RUSH_ID)).toBe(true);
+  it('isEndContentDungeon は分割された異次元ラッシュを判定する', () => {
+    for (const id of DIMENSIONAL_RUSH_IDS) {
+      expect(isEndContentDungeon(id)).toBe(true);
+      expect(isDimensionalRushDungeon(id)).toBe(true);
+    }
+  });
+
+  it('toOriginalDimensionalRushFloor は累積的な階層構成でそのままのフロアを返す', () => {
+    // 累積的な階層構成なのでオフセットは0、フロアはそのまま
+    expect(toOriginalDimensionalRushFloor('dimensional_rush_1', 50)).toBe(50);
+    expect(toOriginalDimensionalRushFloor('dimensional_rush_2', 70)).toBe(70);
+    expect(toOriginalDimensionalRushFloor('dimensional_rush_3', 90)).toBe(90);
+    expect(toOriginalDimensionalRushFloor('dimensional_rush_4', 110)).toBe(110);
+    expect(toOriginalDimensionalRushFloor('dimensional_rush_5', 120)).toBe(120);
+    expect(toOriginalDimensionalRushFloor('dimensional_rush_6', 200)).toBe(200);
   });
 
   it('isEndContentDungeon はデバッグIDを判定する', () => {
