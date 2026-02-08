@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { ms, fs, s } from '@/utils/scaling';
 import { getChestImageForItem, getChestRarityForItem } from '@/data/images';
 import { Analytics } from '@/lib/analytics';
+import { UBER_DUNGEON_IDS } from '@/core/endContent';
 
 // ダンジョン背景画像マッピング
 const backgroundImages: Record<string, ImageSourcePropType> = {
@@ -368,7 +369,7 @@ export default function BattleScreen() {
                 testID="battle-toggle-pause"
               />
             </View>
-            {!isPaused && (
+            {!isPaused && !UBER_DUNGEON_IDS.includes(dungeonId || '') && (
               <View style={styles.buttonWrapper}>
                 {isAutoRunning ? (
                   <Button
