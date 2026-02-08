@@ -104,7 +104,9 @@ export const CharacterDisplay = memo(({
         <View style={styles.nameRow}>
           <Text
             style={[styles.name, { fontSize: getDynamicNameFontSize(name) }]}
-            numberOfLines={2}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.6}
           >
             {name}
           </Text>
