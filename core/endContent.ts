@@ -21,7 +21,35 @@ const getI18n = (): I18nLike | null => {
   }
 };
 
-export const DIMENSIONAL_RUSH_ID = 'dimensional_rush';
+// 分割された異次元ラッシュダンジョンID
+export const DIMENSIONAL_RUSH_IDS = [
+  'dimensional_rush_1',
+  'dimensional_rush_2',
+  'dimensional_rush_3',
+  'dimensional_rush_4',
+  'dimensional_rush_5',
+  'dimensional_rush_6',
+] as const;
+
+// 各分割ダンジョンのフロアオフセット（累積的な階層構成なのですべて0）
+export const DIMENSIONAL_RUSH_FLOOR_OFFSET: Record<string, number> = {
+  dimensional_rush_1: 0,   // 1-50階
+  dimensional_rush_2: 0,   // 1-70階（50階にゴブリンキングも出現）
+  dimensional_rush_3: 0,   // 1-90階
+  dimensional_rush_4: 0,   // 1-110階
+  dimensional_rush_5: 0,   // 1-120階
+  dimensional_rush_6: 0,   // 1-200階
+};
+
+// 各分割ダンジョンの開放条件（前のダンジョンをクリアで開放）
+export const DIMENSIONAL_RUSH_UNLOCK_CHAIN: Record<string, string | null> = {
+  dimensional_rush_1: null,                // 終焉の地クリアで開放
+  dimensional_rush_2: 'dimensional_rush_1',
+  dimensional_rush_3: 'dimensional_rush_2',
+  dimensional_rush_4: 'dimensional_rush_3',
+  dimensional_rush_5: 'dimensional_rush_4',
+  dimensional_rush_6: 'dimensional_rush_5',
+};
 
 export const DEBUG_DIMENSIONAL_DUNGEON_IDS: string[] = [
   'debug_dimensional_goblin_king',
@@ -32,6 +60,7 @@ export const DEBUG_DIMENSIONAL_DUNGEON_IDS: string[] = [
   'debug_dimensional_true_final_boss',
 ];
 
+// 元の異次元ラッシュでのボス階層（スケーリング計算に使用）
 export const DIMENSIONAL_RUSH_BOSS_FLOORS: Record<number, string> = {
   50: 'goblin_king',
   70: 'bandit_leader',
@@ -67,10 +96,20 @@ export const BASE_BOSS_BY_UBER = Object.fromEntries(
 
 export const UBER_DUNGEON_IDS = Object.values(UBER_BOSS_BY_BASE);
 
+export const isDimensionalRushDungeon = (dungeonId: string): boolean => {
+  return (DIMENSIONAL_RUSH_IDS as readonly string[]).includes(dungeonId);
+};
+
 export const isEndContentDungeon = (dungeonId: string): boolean => {
-  return dungeonId === DIMENSIONAL_RUSH_ID
+  return isDimensionalRushDungeon(dungeonId)
     || UBER_DUNGEON_IDS.includes(dungeonId)
     || DEBUG_DIMENSIONAL_DUNGEON_IDS.includes(dungeonId);
+};
+
+// 分割ダンジョンのローカルフロアを元の異次元ラッシュフロアに変換
+export const toOriginalDimensionalRushFloor = (dungeonId: string, localFloor: number): number => {
+  const offset = DIMENSIONAL_RUSH_FLOOR_OFFSET[dungeonId] ?? 0;
+  return offset + localFloor;
 };
 
 export const getBaseBossId = (enemyId: string): string => {

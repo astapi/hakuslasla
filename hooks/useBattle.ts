@@ -2,7 +2,8 @@ import { useReducer, useCallback, useEffect, useRef, useState, useMemo } from 'r
 import { BattleState, BattleAction, BattleEnemy, Item, Enemy, PoisonState, DropFilterSettings, DEFAULT_DROP_FILTER, Dungeon } from '@/types';
 import { getDungeon } from '@/data/dungeons';
 import {
-  DIMENSIONAL_RUSH_ID,
+  isDimensionalRushDungeon,
+  toOriginalDimensionalRushFloor,
   getDimensionalRushEnemy,
 } from '@/data/endContents';
 import { getRandomEnemy, getEnemy } from '@/data/enemies';
@@ -684,8 +685,9 @@ export const useBattle = (dungeonId: string) => {
       }
       return uberBoss;
     }
-    if (dungeonId === DIMENSIONAL_RUSH_ID) {
-      return getDimensionalRushEnemy(floor);
+    if (isDimensionalRushDungeon(dungeonId)) {
+      const originalFloor = toOriginalDimensionalRushFloor(dungeonId, floor);
+      return getDimensionalRushEnemy(originalFloor);
     }
     const dungeon = getDungeon(dungeonId);
     if (!dungeon) return undefined;
@@ -799,8 +801,8 @@ export const useBattle = (dungeonId: string) => {
       droppedItems: filteredItems,
     });
 
-    // Dimensional Rush またはデバッグダンジョンでボスを倒した場合のみ Uber 版解放と入場券ドロップ
-    if (dungeonId === DIMENSIONAL_RUSH_ID || DEBUG_DIMENSIONAL_DUNGEON_IDS.includes(dungeonId)) {
+    // 異次元ラッシュまたはデバッグダンジョンでボスを倒した場合のみ Uber 版解放と入場券ドロップ
+    if (isDimensionalRushDungeon(dungeonId) || DEBUG_DIMENSIONAL_DUNGEON_IDS.includes(dungeonId)) {
       handleDimensionalRushBossDefeat(state.enemy.id, state.enemy.name);
     }
 

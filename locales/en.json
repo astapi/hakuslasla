@@ -306,6 +306,30 @@
     "final_land": {
       "name": "Land of Endings",
       "description": "The final frontier at world's end. The ultimate being awaits."
+    },
+    "dimensional_rush_1": {
+      "name": "Dimensional Rush I",
+      "description": "Dimensional labyrinth. Defeat the Goblin King on floor 50."
+    },
+    "dimensional_rush_2": {
+      "name": "Dimensional Rush II",
+      "description": "Dimensional labyrinth. Defeat the Bandit Leader on floor 70."
+    },
+    "dimensional_rush_3": {
+      "name": "Dimensional Rush III",
+      "description": "Dimensional labyrinth. Defeat the Vampire on floor 90."
+    },
+    "dimensional_rush_4": {
+      "name": "Dimensional Rush IV",
+      "description": "Dimensional labyrinth. Defeat the Kraken on floor 110."
+    },
+    "dimensional_rush_5": {
+      "name": "Dimensional Rush V",
+      "description": "Dimensional labyrinth. Defeat the Demon Lord on floor 120."
+    },
+    "dimensional_rush_6": {
+      "name": "Dimensional Rush VI",
+      "description": "Final dimensional layer. Defeat the True Final Boss on floor 200."
     }
   },
   "items": {

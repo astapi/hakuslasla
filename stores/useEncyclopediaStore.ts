@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { settingsRepository, DungeonClearRecords } from '@/db';
 import { getDungeonList, DUNGEON_UNLOCK_ORDER } from '@/data/dungeons';
-import { DIMENSIONAL_RUSH_ID, UBER_DUNGEON_IDS } from '@/data/endContents';
+import { DIMENSIONAL_RUSH_IDS, UBER_DUNGEON_IDS, isDimensionalRushDungeon } from '@/data/endContents';
 import { DungeonListItem } from '@/types';
 
 interface ClearedDungeon extends DungeonListItem {
@@ -40,12 +40,15 @@ export const useEncyclopediaStore = create<EncyclopediaStore>((set) => ({
         const unlockIndex = DUNGEON_UNLOCK_ORDER.indexOf(dungeonId);
         if (unlockIndex !== -1) return unlockIndex;
 
-        // 異次元ラッシュ
-        if (dungeonId === DIMENSIONAL_RUSH_ID) return DUNGEON_UNLOCK_ORDER.length;
+        // 分割された異次元ラッシュ
+        if (isDimensionalRushDungeon(dungeonId)) {
+          const drIndex = DIMENSIONAL_RUSH_IDS.indexOf(dungeonId as typeof DIMENSIONAL_RUSH_IDS[number]);
+          return DUNGEON_UNLOCK_ORDER.length + drIndex;
+        }
 
         // Uberダンジョン
         const uberIndex = UBER_DUNGEON_IDS.indexOf(dungeonId);
-        if (uberIndex !== -1) return DUNGEON_UNLOCK_ORDER.length + 1 + uberIndex;
+        if (uberIndex !== -1) return DUNGEON_UNLOCK_ORDER.length + DIMENSIONAL_RUSH_IDS.length + uberIndex;
 
         // その他（デバッグなど）
         return 9999;

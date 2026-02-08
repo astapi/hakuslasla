@@ -109,9 +109,39 @@
       "maxFloor": 30
     },
     {
-      "id": "dimensional_rush",
-      "name": "異次元ラッシュ",
-      "description": "終焉の地を超えた先に広がる異次元の迷宮。200階の終焉の王を討ち倒せ。",
+      "id": "dimensional_rush_1",
+      "name": "異次元ラッシュI",
+      "description": "異次元の迷宮。50階のゴブリンキングを討ち倒せ。",
+      "maxFloor": 50
+    },
+    {
+      "id": "dimensional_rush_2",
+      "name": "異次元ラッシュII",
+      "description": "異次元の迷宮。70階の盗賊の頭を討ち倒せ。",
+      "maxFloor": 70
+    },
+    {
+      "id": "dimensional_rush_3",
+      "name": "異次元ラッシュIII",
+      "description": "異次元の迷宮。90階のヴァンパイアを討ち倒せ。",
+      "maxFloor": 90
+    },
+    {
+      "id": "dimensional_rush_4",
+      "name": "異次元ラッシュIV",
+      "description": "異次元の迷宮。110階のクラーケンを討ち倒せ。",
+      "maxFloor": 110
+    },
+    {
+      "id": "dimensional_rush_5",
+      "name": "異次元ラッシュV",
+      "description": "異次元の迷宮。120階の魔王を討ち倒せ。",
+      "maxFloor": 120
+    },
+    {
+      "id": "dimensional_rush_6",
+      "name": "異次元ラッシュVI",
+      "description": "異次元の迷宮・最終層。200階の終焉の王を討ち倒せ。",
       "maxFloor": 200
     },
     {
