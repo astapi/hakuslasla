@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
-import { RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
+import { RewardedAd, RewardedAdEventType, AdEventType, TestIds } from 'react-native-google-mobile-ads';
 import { useAdBoostStore, AdBoostType } from '@/stores/useAdBoostStore';
 import { Button } from './Button';
 import { ms, fs } from '@/utils/scaling';
@@ -18,6 +18,7 @@ const AD_UNIT_IDS = {
 export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
   const { dropRateBoost, tierBoost, activateDropRateBoost, activateTierBoost, checkExpiredBoosts } = useAdBoostStore();
   const [adLoaded, setAdLoaded] = useState(false);
+  const [adError, setAdError] = useState<string | null>(null);
   const [rewardedAd, setRewardedAd] = useState<RewardedAd | null>(null);
 
   const boost = type === 'drop_rate' ? dropRateBoost : tierBoost;
@@ -33,8 +34,11 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
 
   const [remainingMinutes, setRemainingMinutes] = useState(getRemainingMinutes());
 
-  // 広告の初期化とロード
-  useEffect(() => {
+  // 広告のロード関数
+  const loadAd = useCallback(() => {
+    setAdError(null);
+    setAdLoaded(false);
+
     const ad = RewardedAd.createForAdRequest(AD_UNIT_IDS[type], {
       requestNonPersonalizedAdsOnly: true,
     });
@@ -42,6 +46,14 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
     // 広告ロード完了イベント
     const loadedListener = ad.addAdEventListener(RewardedAdEventType.LOADED, () => {
       setAdLoaded(true);
+      setAdError(null);
+    });
+
+    // エラーイベント
+    const errorListener = ad.addAdEventListener(AdEventType.ERROR, (error) => {
+      console.error('Ad failed to load:', error);
+      setAdLoaded(false);
+      setAdError('広告の読み込みに失敗しました');
     });
 
     // 報酬獲得イベント
@@ -53,6 +65,8 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
         activateTierBoost();
       }
       setAdLoaded(false);
+      // 次の広告をロード
+      setTimeout(() => loadAd(), 1000);
     });
 
     // 広告をロード
@@ -61,9 +75,16 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
 
     return () => {
       loadedListener();
+      errorListener();
       earnedListener();
     };
   }, [type, activateDropRateBoost, activateTierBoost]);
+
+  // 広告の初期化とロード
+  useEffect(() => {
+    const cleanup = loadAd();
+    return cleanup;
+  }, [loadAd]);
 
   // 残り時間の更新
   useEffect(() => {
@@ -122,8 +143,20 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
         style={styles.button}
       />
 
-      {!adLoaded && !isActive && (
+      {!adLoaded && !isActive && !adError && (
         <Text style={styles.loadingText}>広告を読み込み中...</Text>
+      )}
+
+      {adError && !isActive && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{adError}</Text>
+          <Button
+            title="再読み込み"
+            onPress={loadAd}
+            variant="secondary"
+            style={styles.retryButton}
+          />
+        </View>
       )}
     </View>
   );
@@ -173,5 +206,18 @@ const styles = StyleSheet.create({
     color: '#888',
     textAlign: 'center',
     marginTop: ms(8),
+  },
+  errorContainer: {
+    marginTop: ms(8),
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: fs(12),
+    color: '#F44336',
+    textAlign: 'center',
+    marginBottom: ms(8),
+  },
+  retryButton: {
+    paddingHorizontal: ms(16),
   },
 });

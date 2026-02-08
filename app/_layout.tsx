@@ -9,6 +9,7 @@ import { initializeDatabase, settingsRepository } from '@/db';
 import { changeLanguage } from '@/lib/i18n';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
 import { CrashlyticsHelper } from '@/lib/analytics';
+import { adService } from '@/services/adService';
 
 // スプラッシュ画面を自動で非表示にしない
 SplashScreen.preventAutoHideAsync();
@@ -28,6 +29,9 @@ export default function RootLayout() {
 
         // RevenueCatを初期化
         await usePurchaseStore.getState().initialize();
+
+        // 広告をバックグラウンドでプリロード
+        adService.preloadAll();
 
         setIsDbReady(true);
       } catch (e) {
