@@ -31,18 +31,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     predictiveBackGestureEnabled: false,
     package: "com.astapi.LootDive",
   },
-  web: {
-    output: "static",
-    favicon: "./assets/images/favicon.png",
-  },
   plugins: [
     "expo-router",
     [
       "expo-splash-screen",
       {
-        image: "./assets/images/splash-icon.png",
-        imageWidth: 200,
-        resizeMode: "contain",
+        image: "./assets/images/splash.png",
+        resizeMode: "cover",
         backgroundColor: "#1a1a2e",
       },
     ],
