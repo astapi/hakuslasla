@@ -19,6 +19,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
     },
+    splash: {
+      image: "./assets/images/splash.png",
+      resizeMode: "cover",
+      backgroundColor: "#1a1a2e",
+    },
   },
   android: {
     adaptiveIcon: {
@@ -30,17 +35,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     edgeToEdgeEnabled: true,
     predictiveBackGestureEnabled: false,
     package: "com.astapi.LootDive",
+    splash: {
+      image: "./assets/images/splash.png",
+      resizeMode: "cover",
+      backgroundColor: "#1a1a2e",
+    },
   },
   plugins: [
     "expo-router",
-    [
-      "expo-splash-screen",
-      {
-        image: "./assets/images/splash.png",
-        resizeMode: "cover",
-        backgroundColor: "#1a1a2e",
-      },
-    ],
+    "expo-splash-screen",
     "expo-sqlite",
     [
       "react-native-google-mobile-ads",
