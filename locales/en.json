@@ -335,6 +335,30 @@
     "dimensional_corridor": {
       "name": "Dimensional Corridor",
       "description": "An endless corridor between dimensions. Enemies grow stronger the deeper you go."
+    },
+    "uber_goblin_king": {
+      "name": "Uber Goblin King",
+      "description": "The Goblin King awakened in another dimension."
+    },
+    "uber_bandit_leader": {
+      "name": "Uber Bandit Leader",
+      "description": "The Bandit Leader enhanced by dimensional power."
+    },
+    "uber_vampire": {
+      "name": "Uber Vampire",
+      "description": "A blood-starved vampire from another dimension."
+    },
+    "uber_kraken": {
+      "name": "Uber Kraken",
+      "description": "A colossal creature ruling the dimensional seas."
+    },
+    "uber_demon_lord": {
+      "name": "Uber Demon Lord",
+      "description": "The Demon Lord resurrected by dimensional power."
+    },
+    "uber_true_final_boss": {
+      "name": "Uber True Final Boss",
+      "description": "The being that brings true endings."
     }
   },
   "items": {
@@ -703,6 +727,129 @@
     },
     "uber_crown_of_end": {
       "name": "Uber Crown of End"
+    },
+    "uber_goblin_blade": {
+      "name": "Uber Goblin Blade"
+    },
+    "uber_goblin_plate": {
+      "name": "Uber Goblin Plate"
+    },
+    "uber_goblin_grip": {
+      "name": "Uber Goblin Grip"
+    },
+    "uber_goblin_stomp": {
+      "name": "Uber Goblin Stomp"
+    },
+    "uber_bandit_dagger": {
+      "name": "Uber Bandit King's Dagger"
+    },
+    "uber_bandit_coat": {
+      "name": "Uber Bandit King's Coat"
+    },
+    "uber_bandit_grip": {
+      "name": "Uber Bandit King's Grip"
+    },
+    "uber_bandit_steps": {
+      "name": "Uber Bandit King's Steps"
+    },
+    "uber_vampire_plate": {
+      "name": "Uber Vampire Plate"
+    },
+    "uber_vampire_grip": {
+      "name": "Uber Vampire Grip"
+    },
+    "uber_vampire_stride": {
+      "name": "Uber Vampire Stride"
+    },
+    "uber_vampire_heart": {
+      "name": "Uber Vampire Heart"
+    },
+    "double_strike_ring": {
+      "name": "Double Strike Ring"
+    },
+    "uber_double_strike_ring": {
+      "name": "Uber Double Strike Ring"
+    },
+    "uber_kraken_shell": {
+      "name": "Uber Kraken Shell"
+    },
+    "uber_kraken_claw": {
+      "name": "Uber Kraken Claw"
+    },
+    "uber_kraken_fin": {
+      "name": "Uber Kraken Fin"
+    },
+    "uber_kraken_eye": {
+      "name": "Uber Kraken Eye"
+    },
+    "uber_demon_blade": {
+      "name": "Uber Demon Lord's Blade"
+    },
+    "uber_demon_armor": {
+      "name": "Uber Demon Lord's Armor"
+    },
+    "uber_demon_grip": {
+      "name": "Uber Demon Lord's Grip"
+    },
+    "uber_demon_steps": {
+      "name": "Uber Demon Lord's Steps"
+    },
+    "uber_endblade": {
+      "name": "Uber End Blade"
+    },
+    "uber_endplate": {
+      "name": "Uber End Plate"
+    },
+    "uber_endgrasp": {
+      "name": "Uber End Grasp"
+    },
+    "uber_endstride": {
+      "name": "Uber End Stride"
+    },
+    "uber_venom_fang": {
+      "name": "Uber Venom Fang"
+    },
+    "uber_venom_plate": {
+      "name": "Uber Venom Plate"
+    },
+    "uber_venom_grip": {
+      "name": "Uber Venom Grip"
+    },
+    "uber_venom_stride": {
+      "name": "Uber Venom Stride"
+    },
+    "uber_venom_heart": {
+      "name": "Uber Venom Heart"
+    },
+    "uber_assassin_blade": {
+      "name": "Uber Assassin Blade"
+    },
+    "uber_assassin_coat": {
+      "name": "Uber Assassin Coat"
+    },
+    "uber_assassin_grip": {
+      "name": "Uber Assassin Grip"
+    },
+    "uber_assassin_steps": {
+      "name": "Uber Assassin Steps"
+    },
+    "uber_assassin_pendant": {
+      "name": "Uber Assassin Pendant"
+    },
+    "uber_fortress_blade": {
+      "name": "Uber Fortress Blade"
+    },
+    "uber_fortress_plate": {
+      "name": "Uber Fortress Plate"
+    },
+    "uber_fortress_grip": {
+      "name": "Uber Fortress Grip"
+    },
+    "uber_fortress_stomp": {
+      "name": "Uber Fortress Stomp"
+    },
+    "uber_fortress_bulwark": {
+      "name": "Uber Fortress Bulwark"
     }
   },
   "monsters": {
