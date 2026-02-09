@@ -5,11 +5,12 @@
 import { Platform } from 'react-native';
 
 // RevenueCat API Keys
-// 開発時: .envのEXPO_PUBLIC_REVENUECAT_API_KEY_*を使用
-// リリース時: EAS Secretsまたはハードコードの本番キーを使用
+// __DEV__ は開発ビルドでtrue、リリースビルドでfalse
 export const REVENUECAT_API_KEY = Platform.select({
-  ios: process.env.EXPO_PUBLIC_REVENUECAT_API_KEY_IOS || 'appl_bplblGrqopuSEJXJihCEhmuPdHw',
-  android: process.env.EXPO_PUBLIC_REVENUECAT_API_KEY_ANDROID || 'goog_XXXXXXXXXXXX',
+  ios: __DEV__
+    ? 'test_jpaRcWHADuZqhKJKeZORysDDntX' // Test Store用（開発時）
+    : 'appl_bplblGrqopuSEJXJihCEhmuPdHw', // Production用（リリース時）
+  android: 'goog_XXXXXXXXXXXX', // Android用（リリース時に本番キーを設定）
 }) as string;
 
 // Product IDs（ストア別）
