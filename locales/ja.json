@@ -727,6 +727,129 @@
     },
     "uber_crown_of_end": {
       "name": "Uber 終焉の王冠"
+    },
+    "uber_goblin_blade": {
+      "name": "Uber ゴブリンの剣"
+    },
+    "uber_goblin_plate": {
+      "name": "Uber ゴブリンの鎧"
+    },
+    "uber_goblin_grip": {
+      "name": "Uber ゴブリンの篭手"
+    },
+    "uber_goblin_stomp": {
+      "name": "Uber ゴブリンの踏みつけ"
+    },
+    "uber_bandit_dagger": {
+      "name": "Uber 盗賊王の短剣"
+    },
+    "uber_bandit_coat": {
+      "name": "Uber 盗賊王の外套"
+    },
+    "uber_bandit_grip": {
+      "name": "Uber 盗賊王の手甲"
+    },
+    "uber_bandit_steps": {
+      "name": "Uber 盗賊王の足運び"
+    },
+    "uber_vampire_plate": {
+      "name": "Uber ヴァンパイアの甲冑"
+    },
+    "uber_vampire_grip": {
+      "name": "Uber ヴァンパイアの篭手"
+    },
+    "uber_vampire_stride": {
+      "name": "Uber ヴァンパイアの歩み"
+    },
+    "uber_vampire_heart": {
+      "name": "Uber ヴァンパイアの心臓"
+    },
+    "double_strike_ring": {
+      "name": "双撃の指輪"
+    },
+    "uber_double_strike_ring": {
+      "name": "Uber 双撃の指輪"
+    },
+    "uber_kraken_shell": {
+      "name": "Uber クラーケンの甲殻"
+    },
+    "uber_kraken_claw": {
+      "name": "Uber クラーケンの鉤爪"
+    },
+    "uber_kraken_fin": {
+      "name": "Uber クラーケンの遊泳"
+    },
+    "uber_kraken_eye": {
+      "name": "Uber クラーケンの眼"
+    },
+    "uber_demon_blade": {
+      "name": "Uber 魔王の大剣"
+    },
+    "uber_demon_armor": {
+      "name": "Uber 魔王の甲冑"
+    },
+    "uber_demon_grip": {
+      "name": "Uber 魔王の篭手"
+    },
+    "uber_demon_steps": {
+      "name": "Uber 魔王の足跡"
+    },
+    "uber_endblade": {
+      "name": "Uber 終焉の刃"
+    },
+    "uber_endplate": {
+      "name": "Uber 終焉の甲冑"
+    },
+    "uber_endgrasp": {
+      "name": "Uber 終焉の掌"
+    },
+    "uber_endstride": {
+      "name": "Uber 終焉の歩み"
+    },
+    "uber_venom_fang": {
+      "name": "Uber 毒蛇の牙"
+    },
+    "uber_venom_plate": {
+      "name": "Uber 毒蛇の鱗甲"
+    },
+    "uber_venom_grip": {
+      "name": "Uber 猛毒の篭手"
+    },
+    "uber_venom_stride": {
+      "name": "Uber 毒蛇の足跡"
+    },
+    "uber_venom_heart": {
+      "name": "Uber 毒蛇の心臓"
+    },
+    "uber_assassin_blade": {
+      "name": "Uber 暗殺者の刃"
+    },
+    "uber_assassin_coat": {
+      "name": "Uber 暗殺者の外套"
+    },
+    "uber_assassin_grip": {
+      "name": "Uber 暗殺者の手甲"
+    },
+    "uber_assassin_steps": {
+      "name": "Uber 暗殺者の足運び"
+    },
+    "uber_assassin_pendant": {
+      "name": "Uber 暗殺者のペンダント"
+    },
+    "uber_fortress_blade": {
+      "name": "Uber 要塞の剣"
+    },
+    "uber_fortress_plate": {
+      "name": "Uber 要塞の鎧"
+    },
+    "uber_fortress_grip": {
+      "name": "Uber 要塞の篭手"
+    },
+    "uber_fortress_stomp": {
+      "name": "Uber 要塞の足止め"
+    },
+    "uber_fortress_bulwark": {
+      "name": "Uber 要塞の護壁"
     }
   },
   "monsters": {
