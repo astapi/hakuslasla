@@ -26,7 +26,9 @@
     "emptyHint": "新しいキャラクターを作成してください",
     "createNew": "新しいキャラクターを作成",
     "slotLimitTitle": "スロット上限",
-    "slotLimitMessage": "キャラクタースロットが上限です（{{current}}/{{max}}）"
+    "slotLimitMessage": "キャラクタースロットが上限です（{{current}}/{{max}}）",
+    "deleteConfirmTitle": "キャラクター削除",
+    "deleteConfirmMessage": "「{{name}}」を削除しますか？\nこの操作は取り消せません。"
   },
   "characterCreate": {
     "nameLabel": "キャラクター名",

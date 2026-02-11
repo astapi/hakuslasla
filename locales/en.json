@@ -26,7 +26,9 @@
     "emptyHint": "Create a new character to begin",
     "createNew": "Create New Character",
     "slotLimitTitle": "Slot Limit",
-    "slotLimitMessage": "Character slots are full ({{current}}/{{max}})"
+    "slotLimitMessage": "Character slots are full ({{current}}/{{max}})",
+    "deleteConfirmTitle": "Delete Character",
+    "deleteConfirmMessage": "Delete \"{{name}}\"?\nThis action cannot be undone."
   },
   "characterCreate": {
     "nameLabel": "Character Name",

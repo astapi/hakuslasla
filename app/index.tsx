@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Alert, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import { Character } from '@/types';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { ms, fs } from '@/utils/scaling';
 import { getCharacterSlotCount } from '@/stores/usePurchaseStore';
+import { getCharacterImages } from '@/data/images';
 
 export default function CharacterSelectScreen() {
   const { t } = useTranslation();
@@ -54,9 +55,22 @@ export default function CharacterSelectScreen() {
     router.push('/character-create');
   };
 
-  const handleDeleteCharacter = async (id: number) => {
-    await characterRepository.delete(id);
-    await fetchCharacters();
+  const handleDeleteCharacter = (character: Character) => {
+    Alert.alert(
+      t('characterSelect.deleteConfirmTitle'),
+      t('characterSelect.deleteConfirmMessage', { name: character.name }),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('common.delete'),
+          style: 'destructive',
+          onPress: async () => {
+            await characterRepository.delete(character.id);
+            await fetchCharacters();
+          },
+        },
+      ]
+    );
   };
 
   return (
@@ -86,6 +100,11 @@ export default function CharacterSelectScreen() {
                 ]}
                 onPress={() => handleSelectCharacter(character)}
               >
+                <Image
+                  source={getCharacterImages(character.type).standing}
+                  style={styles.characterImage}
+                  resizeMode="contain"
+                />
                 <View style={styles.characterInfo}>
                   <Text style={styles.characterName}>{character.name}</Text>
                   <Text style={styles.characterLevel}>Lv.{character.level}</Text>
@@ -100,7 +119,7 @@ export default function CharacterSelectScreen() {
                   testID={`character-delete-${index}`}
                   onPress={(e) => {
                     e.stopPropagation();
-                    handleDeleteCharacter(character.id);
+                    handleDeleteCharacter(character);
                   }}
                 >
                   <Text style={styles.deleteButtonText}>{t('common.delete')}</Text>
@@ -176,9 +195,14 @@ const styles = StyleSheet.create({
   characterCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: ms(12),
-    padding: ms(16),
+    padding: ms(12),
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  characterImage: {
+    width: ms(56),
+    height: ms(56),
+    marginRight: ms(12),
   },
   characterCardPressed: {
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
