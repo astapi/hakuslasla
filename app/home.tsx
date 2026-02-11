@@ -10,7 +10,7 @@ import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { BoostIconButton } from '@/components/common/BoostIconButton';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { useEncyclopediaStore } from '@/stores/useEncyclopediaStore';
-import { playerImages } from '@/data/images';
+import { characterImages } from '@/data/images';
 import { ms, fs } from '@/utils/scaling';
 
 export default function HomeScreen() {
@@ -18,7 +18,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
-  const { skillPoints, characterName, isLoaded, clear, renameCharacter } = usePlayerStore();
+  const { skillPoints, characterName, characterType, isLoaded, clear, renameCharacter } = usePlayerStore();
   const loadEncyclopediaData = useEncyclopediaStore((state) => state.loadClearedDungeons);
   const [statusExpanded, setStatusExpanded] = useState(false);
 
@@ -125,7 +125,7 @@ export default function HomeScreen() {
           <View style={styles.characterSection}>
             {!statusExpanded && (
               <Image
-                source={playerImages.standing}
+                source={characterImages[characterType].standing}
                 style={styles.characterImage}
                 resizeMode="contain"
               />

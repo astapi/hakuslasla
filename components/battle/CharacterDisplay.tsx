@@ -1,4 +1,5 @@
-import { getMonsterImage, playerImages } from '@/data/images';
+import { getMonsterImage, characterImages } from '@/data/images';
+import { CharacterType } from '@/types';
 import { useEffect, memo } from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import Animated, {
@@ -38,6 +39,7 @@ interface CharacterDisplayProps {
   level?: number;
   isPlayer?: boolean;
   imageId?: string; // モンスターの場合は画像ID
+  characterType?: CharacterType; // プレイヤーの場合はキャラクタータイプ
   isAttacking?: boolean; // 攻撃中フラグ
   actionGauge?: number; // 行動ゲージ (0-100)
   poisonStacks?: PoisonState[]; // 毒スタック
@@ -51,6 +53,7 @@ export const CharacterDisplay = memo(({
   level,
   isPlayer = false,
   imageId,
+  characterType = 'warrior',
   isAttacking = false,
   actionGauge = 0,
   poisonStacks = [],
@@ -88,7 +91,7 @@ export const CharacterDisplay = memo(({
 
   // 画像ソースを取得
   const imageSource: ImageSourcePropType | undefined = isPlayer
-    ? playerImages.battle
+    ? characterImages[characterType].battle
     : imageId
       ? getMonsterImage(imageId)
       : undefined;
