@@ -1,4 +1,4 @@
-import { Item, ItemBase, ItemMod, ItemDrop, DungeonDropTable, ModConfig, ModTierRange, ModCountRange, EquipmentSlot } from '@/types';
+import { Item, ItemBase, ItemMod, ItemDrop, DungeonDropTable, ModConfig, ModTierRange, ModCountRange, EquipmentSlot, WeaponType } from '@/types';
 import itemsData from './json/items.json';
 import dungeonsData from './json/dungeons.json';
 import modsData from './json/mods.json';
@@ -6,10 +6,16 @@ import { TIER_FILTER_SETTINGS } from '@/constants/purchases';
 import { hasTierFilter } from '@/stores/usePurchaseStore';
 
 // アイテム基本データ（_commentキーを除外）
+// 武器にはデフォルトでweaponType: "sword"を設定
 const itemBases: Record<string, ItemBase> = {};
 for (const [id, item] of Object.entries(itemsData.items)) {
   if (!id.startsWith('_comment')) {
-    itemBases[id] = item as ItemBase;
+    const base = item as ItemBase;
+    // 武器でweaponTypeがない場合はデフォルトで"sword"
+    if (base.slot === 'weapon' && !base.weaponType) {
+      base.weaponType = 'sword';
+    }
+    itemBases[id] = base;
   }
 }
 
@@ -277,8 +283,9 @@ export const getItemBase = (id: string): ItemBase | undefined => {
  * @param dungeonId ダンジョンID（tier範囲取得用）
  * @param itemSlot アイテムのスロット（スロット制限MOD用）
  * @param boosted Tierブースト状態（広告ブースト用、デフォルトfalse）
+ * @param weaponType 武器種別（武器のMOD制限用）
  */
-export function generateRandomMods(count: number, dungeonId?: string, itemSlot?: EquipmentSlot, boosted: boolean = false): ItemMod[] {
+export function generateRandomMods(count: number, dungeonId?: string, itemSlot?: EquipmentSlot, boosted: boolean = false, weaponType?: WeaponType): ItemMod[] {
   const mods: ItemMod[] = [];
 
   // ダンジョンのtier範囲を取得（なければデフォルト: 10-1）
@@ -300,6 +307,18 @@ export function generateRandomMods(count: number, dungeonId?: string, itemSlot?:
   const availableConfigs = modConfigs.filter(config => {
     // スロット制限チェック
     if (config.slots && itemSlot && !config.slots.includes(itemSlot)) {
+      return false;
+    }
+    // 武器種別制限チェック（MODにweaponTypesが設定されている場合）
+    const modConfig = config as ModConfig & { weaponTypes?: WeaponType[] };
+    if (modConfig.weaponTypes && itemSlot === 'weapon') {
+      // 武器種別が指定されているMODは、対応する武器種別でのみ出現
+      if (!weaponType || !modConfig.weaponTypes.includes(weaponType)) {
+        return false;
+      }
+    }
+    // 毒MODは杖には付与しない
+    if (config.type === 'poison_chance' && weaponType === 'staff') {
       return false;
     }
     // スロット別tier設定を考慮してtierリストを取得
@@ -377,8 +396,10 @@ export function createItemInstance(itemId: string, modCount: number = 0, dungeon
     tier: 0,
   }));
 
-  // ランダムMOD（ダンジョンのtier範囲とスロットを考慮）
-  const randomMods = modCount > 0 ? generateRandomMods(modCount, dungeonId, base.slot, boosted) : [];
+  // ランダムMOD（ダンジョンのtier範囲とスロット、武器種別を考慮）
+  const randomMods = modCount > 0
+    ? generateRandomMods(modCount, dungeonId, base.slot, boosted, base.weaponType)
+    : [];
 
   // 重複するタイプのMODを除外（固有MOD優先）
   const fixedTypes = new Set(fixedMods.map(m => m.type));

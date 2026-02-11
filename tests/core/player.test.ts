@@ -7,6 +7,8 @@ import {
   getPlayerCombatStats,
   createDefaultPlayerConfig,
   getLevelBasedPreset,
+  getClassInitialStats,
+  getClassAbilities,
 } from '../../core/player';
 
 describe('core/player', () => {
@@ -49,5 +51,15 @@ describe('core/player', () => {
   it('getLevelBasedPreset は指定レベルのプリセットを返す', () => {
     const preset = getLevelBasedPreset('POISON', 5);
     expect(preset.nodes.length).toBeGreaterThan(0);
+  });
+
+  it('getClassInitialStats はクラス別初期値を返す', () => {
+    expect(getClassInitialStats('warrior')).toEqual({ maxHp: 100, atk: 10, def: 5 });
+    expect(getClassInitialStats('elementalist')).toEqual({ maxHp: 85, atk: 10, def: 4 });
+  });
+
+  it('getClassAbilities はエレメンタリストの発火確率を返す', () => {
+    expect(getClassAbilities('warrior').igniteChance).toBeUndefined();
+    expect(getClassAbilities('elementalist').igniteChance).toBe(20);
   });
 });

@@ -16,6 +16,7 @@
       "dropTable": {
         "common": [
           { "itemId": "rusted_sword", "dropRate": 10 },
+          { "itemId": "rusted_staff", "dropRate": 10 },
           { "itemId": "cloth_clothes", "dropRate": 10 },
           { "itemId": "leather_hat", "dropRate": 10 },
           { "itemId": "leather_gloves", "dropRate": 10 },
@@ -25,6 +26,7 @@
         ],
         "dungeon": [
           { "itemId": "grassland_sword", "dropRate": 15 },
+          { "itemId": "grassland_staff", "dropRate": 15 },
           { "itemId": "light_leather", "dropRate": 15 },
           { "itemId": "rabbit_boots", "dropRate": 15 }
         ]
@@ -48,6 +50,7 @@
       "dropTable": {
         "common": [
           { "itemId": "rusted_sword", "dropRate": 5 },
+          { "itemId": "rusted_staff", "dropRate": 5 },
           { "itemId": "cloth_clothes", "dropRate": 5 },
           { "itemId": "leather_hat", "dropRate": 5 },
           { "itemId": "leather_gloves", "dropRate": 8 },
@@ -57,6 +60,7 @@
         ],
         "dungeon": [
           { "itemId": "cave_iron_sword", "dropRate": 15 },
+          { "itemId": "cave_iron_staff", "dropRate": 15 },
           { "itemId": "bone_shield", "dropRate": 12 },
           { "itemId": "bat_mantle", "dropRate": 12 },
           { "itemId": "underground_charm", "dropRate": 10 },

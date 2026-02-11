@@ -21,6 +21,7 @@ import {
   BattleEvent,
   BossSkillId,
 } from '@/core';
+import { CLASS_ABILITIES } from '@/core/player';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
 import { Analytics } from '@/lib/analytics';
 import {
@@ -155,6 +156,7 @@ const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState
     enemy: null,
     enemyPoison: [],
     playerPoison: [],
+    enemyIgnite: null,
     phase: 'fighting',
     battleLog: [],
     droppedItems: [],
@@ -206,6 +208,7 @@ const createExtendedInitialState = (
     enemy: null,
     enemyPoison: [],
     playerPoison: [],
+    enemyIgnite: null,
     phase: 'fighting',
     battleLog: runCount > 1 ? [{
       id: logIdCounter++,
@@ -366,6 +369,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         enemy: action.enemy,
         enemyPoison: [], // 次の敵には毒状態をリセット
         playerPoison: [], // 次の敵にはプレイヤー毒もリセット
+        enemyIgnite: null, // 次の敵には発火状態をリセット
         playerGauge: 0,  // ゲージリセット
         enemyGauge: 0,   // ゲージリセット
         phase: 'fighting',
@@ -522,6 +526,59 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         }),
       };
 
+    case 'APPLY_IGNITE':
+      // 発火は上書き（スタックしない）
+      const igniteDurationSec = Math.round(action.durationMs / 1000);
+      return {
+        ...state,
+        enemyIgnite: {
+          damage: action.damage,
+          remainingMs: action.durationMs,
+          tickIntervalMs: action.tickIntervalMs,
+        },
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: i18n.t('battleLog.igniteApplied', {
+            enemy: state.enemy?.name ?? '',
+            damage: action.damage,
+            duration: igniteDurationSec,
+          }),
+          type: 'ignite',
+        }),
+      };
+
+    case 'IGNITE_DAMAGE':
+      if (!state.enemy || !state.enemyIgnite) return state;
+      const igniteEnemyHp = Math.max(0, state.enemy.currentHp - action.damage);
+      const igniteEnded = action.remainingMs <= 0;
+      const igniteRemainingText = !igniteEnded
+        ? i18n.t('battleLog.igniteRemaining', { seconds: Math.ceil(action.remainingMs / 1000) })
+        : '';
+      const igniteEndedText = igniteEnded
+        ? i18n.t('battleLog.igniteEnded')
+        : '';
+      return {
+        ...state,
+        enemy: {
+          ...state.enemy,
+          currentHp: igniteEnemyHp,
+        },
+        enemyIgnite: igniteEnded ? null : {
+          ...state.enemyIgnite,
+          remainingMs: action.remainingMs,
+        },
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: i18n.t('battleLog.igniteDamage', {
+            enemy: state.enemy.name,
+            damage: action.damage,
+            remaining: igniteRemainingText,
+            ended: igniteEndedText,
+          }),
+          type: 'ignite',
+        }),
+      };
+
     case 'HP_REGEN':
       const healedHp = Math.min(state.playerMaxHp, state.playerCurrentHp + action.amount);
       const actualHeal = healedHp - state.playerCurrentHp;
@@ -587,7 +644,7 @@ const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] =
 };
 
 export const useBattle = (dungeonId: string) => {
-  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, setLevelCap } = usePlayerStore();
+  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, setLevelCap, characterType } = usePlayerStore();
   const stats = getTotalStats();
   const { getDropRateMultiplier, isTierBoosted, checkExpiredBoosts } = useAdBoostStore();
 
@@ -615,11 +672,18 @@ export const useBattle = (dungeonId: string) => {
     battleSpeedRef.current = battleSpeed;
   }, [battleSpeed]);
 
-  // 装備品+パッシブから戦闘時MOD効果を取得（coreロジック使用）
+  // 装備品+パッシブ+クラス能力から戦闘時MOD効果を取得（coreロジック使用）
   const modEffects = useMemo((): CombinedModEffects => {
     const passiveEffects = calculatePassiveEffects(unlockedSkills);
-    return combineMods(Object.values(equipment), passiveEffects);
-  }, [equipment, unlockedSkills]);
+    const baseMods = combineMods(Object.values(equipment), passiveEffects);
+
+    // クラス固有能力を加算
+    const classAbility = CLASS_ABILITIES[characterType];
+    return {
+      ...baseMods,
+      igniteChance: baseMods.igniteChance + (classAbility.igniteChance ?? 0),
+    };
+  }, [equipment, unlockedSkills, characterType]);
 
   // 後方互換性のためのラッパー（将来的に直接modEffectsを使用するよう移行）
   const getCombinedModEffects = useCallback((): CombinedModEffects => {
@@ -889,6 +953,19 @@ export const useBattle = (dungeonId: string) => {
         case 'lifesteal': {
           const amount = Number(data.amount ?? 0);
           dispatch({ type: 'HP_REGEN', amount });
+          break;
+        }
+        case 'ignite_applied': {
+          const damage = Number(data.damage ?? 0);
+          const durationMs = Number(data.durationMs ?? 0);
+          const tickIntervalMs = Number(data.tickIntervalMs ?? 1000);
+          dispatch({ type: 'APPLY_IGNITE', damage, durationMs, tickIntervalMs });
+          break;
+        }
+        case 'ignite_damage': {
+          const damage = Number(data.damage ?? 0);
+          const remainingMs = Number(data.remainingMs ?? 0);
+          dispatch({ type: 'IGNITE_DAMAGE', damage, remainingMs });
           break;
         }
         case 'enemy_heal': {

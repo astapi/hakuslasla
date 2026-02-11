@@ -308,6 +308,8 @@ export default function BattleScreen() {
               imageId={state.enemy.image}
               isAttacking={enemyAttacking}
               actionGauge={state.enemyGauge}
+              poisonStacks={state.enemyPoison}
+              igniteState={state.enemyIgnite}
             />
           )}
           {state.enemy && showChest && (

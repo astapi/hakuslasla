@@ -73,6 +73,10 @@ export function createEmptyModEffects(): CombinedModEffects {
     poisonDamageReduction: 0,
     poisonLifesteal: 0,
     noDirectDamage: false,
+    igniteChance: 0,
+    igniteDamagePct: 0,
+    igniteDurationPct: 0,
+    igniteTickSpeedPct: 0,
     criticalChance: 0,
     criticalDamage: 0,
     hpOnCrit: 0,
@@ -119,6 +123,18 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
       break;
     case 'poison_lifesteal':
       effects.poisonLifesteal += mod.value;
+      break;
+    case 'ignite_chance':
+      effects.igniteChance += mod.value;
+      break;
+    case 'ignite_damage_pct':
+      effects.igniteDamagePct += mod.value;
+      break;
+    case 'ignite_duration_pct':
+      effects.igniteDurationPct += mod.value;
+      break;
+    case 'ignite_tick_speed_pct':
+      effects.igniteTickSpeedPct += mod.value;
       break;
     case 'critical_chance':
       effects.criticalChance += mod.value;
@@ -267,4 +283,31 @@ export function calculatePoisonDamage(
  */
 export function getPoisonDamageFromMods(baseDamage: number, mods: CombinedModEffects): number {
   return calculatePoisonDamage(baseDamage, mods.poisonDamagePct, mods.poisonDamageMorePct);
+}
+
+// ========================================
+// 発火ダメージ計算
+// ========================================
+
+/**
+ * 発火ダメージを計算（increased%のみ）
+ * base × (1 + total_increased%)
+ *
+ * @param baseDamage 基本発火ダメージ
+ * @param increasedPct increased%の合計
+ * @returns 最終発火ダメージ
+ */
+export function calculateIgniteDamage(
+  baseDamage: number,
+  increasedPct: number
+): number {
+  const damage = baseDamage * (1 + increasedPct / 100);
+  return Math.floor(damage);
+}
+
+/**
+ * CombinedModEffectsから発火ダメージを計算
+ */
+export function getIgniteDamageFromMods(baseDamage: number, mods: CombinedModEffects): number {
+  return calculateIgniteDamage(baseDamage, mods.igniteDamagePct);
 }

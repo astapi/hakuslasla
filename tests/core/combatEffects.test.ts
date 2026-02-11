@@ -2,7 +2,9 @@ import { describe, it, expect } from 'vitest';
 import {
   executePlayerAttack,
   tryApplyPoison,
+  tryApplyIgnite,
   processPoisonDamage,
+  processIgniteDamage,
   calculateHpRegen,
   calculateLifesteal,
   calculateEnemyDamage,
@@ -17,6 +19,7 @@ const baseState: GaugeBattleState = {
   enemy: { currentHp: 50, maxHp: 50, atk: 8, def: 2, attackSpeed: 1, gauge: 0 },
   enemyPoisonStacks: [],
   playerPoisonStacks: [],
+  enemyIgniteState: null,
   elapsedTicks: 0,
   isFinished: false,
   winner: null,
@@ -43,6 +46,10 @@ const emptyMods: CombinedModEffects = {
   timeAtkIncPct: 0,
   timeDefIncPct: 0,
   timeHpRegen: 0,
+  igniteChance: 0,
+  igniteDamagePct: 0,
+  igniteDurationPct: 0,
+  igniteTickSpeedPct: 0,
 };
 
 describe('core/combatEffects', () => {
@@ -87,6 +94,44 @@ describe('core/combatEffects', () => {
     expect(result.totalDamage).toBe(10);
     expect(result.healAmount).toBe(5);
     expect(result.updatedStacks.length).toBe(1);
+  });
+
+  it('tryApplyIgnite は発火状態とイベントを生成する', () => {
+    const mods: CombinedModEffects = {
+      ...emptyMods,
+      igniteChance: 100,
+      igniteDamagePct: 50,
+      igniteDurationPct: 20,
+      igniteTickSpeedPct: 100,
+    };
+
+    const result = tryApplyIgnite(baseState, 10, mods, DEFAULT_BATTLE_CONFIG, () => 0);
+    expect(result.igniteState).not.toBeNull();
+    expect(result.event?.type).toBe('ignite_applied');
+    expect(result.event?.data.damage).toBe(15);
+    expect(result.event?.data.durationMs).toBe(6000);
+    expect(result.event?.data.tickIntervalMs).toBe(500);
+  });
+
+  it('processIgniteDamage は ignite_damage イベントに remainingMs を含める', () => {
+    const state: GaugeBattleState = {
+      ...baseState,
+      enemyIgniteState: {
+        damage: 5,
+        remainingMs: 5000,
+        tickIntervalMs: 1000,
+        lastTickMs: 0,
+      },
+    };
+
+    const result = processIgniteDamage(state, 30, DEFAULT_BATTLE_CONFIG);
+    const igniteDamageEvent = result.events.find((event) => event.type === 'ignite_damage');
+
+    expect(result.totalDamage).toBe(5);
+    expect(result.updatedState).not.toBeNull();
+    expect(igniteDamageEvent).toBeDefined();
+    expect(igniteDamageEvent?.data.tickCount).toBe(1);
+    expect(igniteDamageEvent?.data.remainingMs).toBeCloseTo(result.updatedState!.remainingMs, 5);
   });
 
   it('calculateHpRegen は上限を超えない', () => {

@@ -1,10 +1,11 @@
-export const SCHEMA_VERSION = 3;
+export const SCHEMA_VERSION = 4;
 
 export const CREATE_TABLES_SQL = `
 -- キャラクター基本情報
 CREATE TABLE IF NOT EXISTS characters (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
+  type TEXT NOT NULL DEFAULT 'warrior',
   level INTEGER NOT NULL DEFAULT 1,
   exp INTEGER NOT NULL DEFAULT 0,
   skill_points INTEGER NOT NULL DEFAULT 0,

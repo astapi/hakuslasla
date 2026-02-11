@@ -8,6 +8,7 @@ import {
   DEFAULT_BATTLE_CONFIG,
   EnemyConfig,
   PoisonStack,
+  IgniteState,
 } from './types';
 import { getAttackSpeedFromMods } from './modEffects';
 import {
@@ -17,6 +18,8 @@ import {
   executePlayerAttack,
   processPoisonDamage,
   tryApplyPoison,
+  tryApplyIgnite,
+  processIgniteDamage,
   createHpRegenEvent,
   createLifestealEvent,
   createEnemyAttackEvent,
@@ -129,6 +132,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     },
     enemyPoisonStacks: [],
     playerPoisonStacks: [],
+    enemyIgniteState: null,
     elapsedTicks: 0,
     isFinished: false,
     winner: null,
@@ -275,6 +279,28 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       }
     }
 
+    // 発火ダメージ処理（時間ベース）
+    if (engine.state.enemyIgniteState) {
+      const igniteResult = processIgniteDamage(engine.state, engine.state.elapsedTicks, engine.config);
+      if (igniteResult.totalDamage > 0) {
+        engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - igniteResult.totalDamage);
+        events.push(...igniteResult.events);
+
+        if (engine.state.enemy.currentHp <= 0) {
+          engine.state.isFinished = true;
+          engine.state.winner = 'player';
+          events.push({
+            type: 'enemy_defeated',
+            tick: engine.state.elapsedTicks,
+            data: { byIgnite: true },
+          });
+          break;
+        }
+      }
+      // 発火状態を更新
+      engine.state.enemyIgniteState = igniteResult.updatedState;
+    }
+
     // プレイヤー行動（多重行動対応）
     // 遷移中は攻撃処理をスキップ
     let playerActions = 0;
@@ -379,6 +405,13 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       if (poisonResult.poisonStack) {
         engine.state.enemyPoisonStacks = [...engine.state.enemyPoisonStacks, poisonResult.poisonStack];
         if (poisonResult.event) events.push(poisonResult.event);
+      }
+
+      // 発火付与（上書き式）
+      const igniteResult = tryApplyIgnite(engine.state, baseDamage, effectiveMods, engine.config, engine.rng);
+      if (igniteResult.igniteState) {
+        engine.state.enemyIgniteState = igniteResult.igniteState;
+        if (igniteResult.event) events.push(igniteResult.event);
       }
 
       const baseBossId = getBaseBossId(enemyId);

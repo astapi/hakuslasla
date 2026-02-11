@@ -20,7 +20,7 @@ describe('core/modEffects', () => {
   it('combineMods は装備とパッシブの効果を合算する', () => {
     const equipment = [
       { mods: [{ type: 'hp_regen', value: 2 }] },
-      { mods: [{ type: 'poison_chance', value: 10 }] },
+      { mods: [{ type: 'poison_chance', value: 10 }, { type: 'ignite_chance', value: 7 }] },
     ];
     const passive = {
       hp: 0,
@@ -53,6 +53,7 @@ describe('core/modEffects', () => {
     const combined = combineMods(equipment, passive);
     expect(combined.hpRegen).toBe(5);
     expect(combined.poisonChance).toBe(15);
+    expect(combined.igniteChance).toBe(7);
   });
 
   it('calculateAttackSpeed は increased/more を反映する', () => {
@@ -82,6 +83,10 @@ describe('core/modEffects', () => {
       timeAtkIncPct: 0,
       timeDefIncPct: 0,
       timeHpRegen: 0,
+      igniteChance: 0,
+      igniteDamagePct: 0,
+      igniteDurationPct: 0,
+      igniteTickSpeedPct: 0,
     };
 
     const result = getAttackSpeedFromMods(mods, 1);

@@ -173,6 +173,16 @@ export const migrations: Migration[] = [
       `);
     },
   },
+  {
+    // V3 → V4: キャラクターにtypeカラムを追加
+    version: 4,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      // typeカラムを追加（既存キャラはwarriorとして扱う）
+      await db.execAsync(`
+        ALTER TABLE characters ADD COLUMN type TEXT NOT NULL DEFAULT 'warrior';
+      `);
+    },
+  },
 ];
 
 /**

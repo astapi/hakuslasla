@@ -1,14 +1,34 @@
 import { ImageSourcePropType } from 'react-native';
-import { Item } from '@/types';
+import { Item, CharacterType } from '@/types';
 
 export type ChestRarity = 'normal' | 'magic' | 'rare' | 'unique';
 
-// プレイヤー画像
-export const playerImages = {
-  // ホーム画面用（立ち絵）
-  standing: require('@/assets/images/characters/warrior.png') as ImageSourcePropType,
-  // 戦闘画面用（戦闘ポーズ）
-  battle: require('@/assets/images/characters/warrior_battle.png') as ImageSourcePropType,
+// プレイヤー画像タイプ
+interface PlayerImageSet {
+  standing: ImageSourcePropType;  // ホーム画面用（立ち絵）
+  battle: ImageSourcePropType;     // 戦闘画面用（戦闘ポーズ）
+}
+
+// クラス別プレイヤー画像マッピング
+export const characterImages: Record<CharacterType, PlayerImageSet> = {
+  warrior: {
+    standing: require('@/assets/images/characters/warrior.png') as ImageSourcePropType,
+    battle: require('@/assets/images/characters/warrior_battle.png') as ImageSourcePropType,
+  },
+  elementalist: {
+    standing: require('@/assets/images/characters/elementalist.png') as ImageSourcePropType,
+    battle: require('@/assets/images/characters/elementalist_battle.png') as ImageSourcePropType,
+  },
+};
+
+// プレイヤー画像（後方互換性のため残す、デフォルトはwarrior）
+export const playerImages = characterImages.warrior;
+
+/**
+ * キャラクタータイプから画像セットを取得
+ */
+export const getCharacterImages = (type: CharacterType): PlayerImageSet => {
+  return characterImages[type] ?? characterImages.warrior;
 };
 
 export const chestImages: Record<ChestRarity, ImageSourcePropType> = {

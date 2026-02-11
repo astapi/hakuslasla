@@ -211,6 +211,12 @@ export interface CombinedModEffects {
   poisonLifesteal: number;   // 毒ダメージ吸収%（毒ダメージの一定割合を回復）
   noDirectDamage: boolean;   // 通常ダメージ無効（キーストーン）
 
+  // 発火
+  igniteChance: number;          // 付与率%（クラス固有能力 + MOD）
+  igniteDamagePct: number;       // ダメージ+%（increased）
+  igniteDurationPct: number;     // 時間+%
+  igniteTickSpeedPct: number;    // ダメージ速度+%（間隔短縮）
+
   // クリティカル
   criticalChance: number;    // 発生率%
   criticalDamage: number;    // ダメージ+%
@@ -252,6 +258,16 @@ export interface PoisonStack {
 }
 
 /**
+ * 発火状態（上書き式）
+ */
+export interface IgniteState {
+  damage: number;           // 1ティックあたりのダメージ
+  remainingMs: number;      // 残り時間（ミリ秒）
+  tickIntervalMs: number;   // ダメージ間隔（ミリ秒）- デフォルト1000ms
+  lastTickMs: number;       // 最後にダメージを与えた経過時間
+}
+
+/**
  * ゲージ制戦闘状態
  */
 export interface GaugeBattleState {
@@ -259,6 +275,7 @@ export interface GaugeBattleState {
   enemy: GaugeCombatant;
   enemyPoisonStacks: PoisonStack[];
   playerPoisonStacks: PoisonStack[];
+  enemyIgniteState: IgniteState | null;  // 発火状態（上書き式）
   elapsedTicks: number;  // 経過ティック数
   isFinished: boolean;
   winner: 'player' | 'enemy' | null;
@@ -274,6 +291,9 @@ export type BattleEventType =
   | 'poison_applied'
   | 'poison_damage'
   | 'poison_expired'
+  | 'ignite_applied'
+  | 'ignite_damage'
+  | 'ignite_expired'
   | 'hp_regen'
   | 'player_heal'
   | 'lifesteal'
@@ -336,9 +356,14 @@ export interface GaugeFloorResult {
  */
 export interface BattleConfig {
   // 毒設定
-  poisonDamageRatio: number;   // 基本ダメージ比率（デフォルト: 0.5）
+  poisonDamageRatio: number;   // 基本ダメージ比率（デフォルト: 1.2）
   poisonDuration: number;       // 持続ティック数（デフォルト: 5）
   basePoisonMaxStacks: number;  // 基本スタック上限（デフォルト: 1）
+
+  // 発火設定
+  igniteDamageRatio: number;    // 基本ダメージ比率（デフォルト: 1.0、毒より弱い）
+  igniteDurationMs: number;     // 持続時間ミリ秒（デフォルト: 5000）
+  igniteTickIntervalMs: number; // ダメージ間隔ミリ秒（デフォルト: 1000 = AS1.0相当）
 
   // クリティカル設定
   baseCriticalMultiplier: number;  // 基礎倍率（デフォルト: 3.0）
@@ -355,6 +380,9 @@ export const DEFAULT_BATTLE_CONFIG: BattleConfig = {
   poisonDamageRatio: 1.2,
   poisonDuration: 5,
   basePoisonMaxStacks: 1,
+  igniteDamageRatio: 1.0,      // 毒(1.2)より弱い
+  igniteDurationMs: 5000,      // 5秒
+  igniteTickIntervalMs: 1000,  // 1秒ごと（AS1.0相当）
   baseCriticalMultiplier: 3.0,
   ticksPerSecond: 30,
   baseGaugePerSecond: 200,

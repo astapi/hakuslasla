@@ -11,6 +11,7 @@ import Animated, {
 import { ActionGauge } from './ActionGauge';
 import { HPBar } from './HPBar';
 import { ms, fs, s } from '@/utils/scaling';
+import { PoisonState, IgniteState } from '@/types';
 
 /**
  * モンスター名の長さに応じて動的にフォントサイズを計算
@@ -39,6 +40,8 @@ interface CharacterDisplayProps {
   imageId?: string; // モンスターの場合は画像ID
   isAttacking?: boolean; // 攻撃中フラグ
   actionGauge?: number; // 行動ゲージ (0-100)
+  poisonStacks?: PoisonState[]; // 毒スタック
+  igniteState?: IgniteState | null; // 発火状態
 }
 
 export const CharacterDisplay = memo(({
@@ -50,6 +53,8 @@ export const CharacterDisplay = memo(({
   imageId,
   isAttacking = false,
   actionGauge = 0,
+  poisonStacks = [],
+  igniteState = null,
 }: CharacterDisplayProps) => {
   // 攻撃アニメーション用のSharedValue
   const translateX = useSharedValue(0);
@@ -113,7 +118,25 @@ export const CharacterDisplay = memo(({
           {level !== undefined && <Text style={styles.level}>Lv.{level}</Text>}
         </View>
         <HPBar current={currentHp} max={maxHp} color={isPlayer ? '#4CAF50' : '#F44336'} />
-        
+
+        {/* ステータス効果インジケーター */}
+        {(poisonStacks.length > 0 || igniteState) && (
+          <View style={styles.statusContainer}>
+            {poisonStacks.length > 0 && (
+              <View style={styles.statusBadge}>
+                <Text style={styles.poisonIcon}>☠️</Text>
+                {poisonStacks.length > 1 && (
+                  <Text style={styles.statusCount}>×{poisonStacks.length}</Text>
+                )}
+              </View>
+            )}
+            {igniteState && (
+              <View style={styles.statusBadge}>
+                <Text style={styles.igniteIcon}>🔥</Text>
+              </View>
+            )}
+          </View>
+        )}
       </View>
 
     </View>
@@ -174,5 +197,30 @@ const styles = StyleSheet.create({
   level: {
     fontSize: fs(12),
     color: '#aaa',
+  },
+  statusContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: ms(4),
+    gap: ms(6),
+  },
+  statusBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: ms(10),
+    paddingHorizontal: ms(6),
+    paddingVertical: ms(2),
+  },
+  poisonIcon: {
+    fontSize: fs(12),
+  },
+  igniteIcon: {
+    fontSize: fs(12),
+  },
+  statusCount: {
+    fontSize: fs(10),
+    color: '#fff',
+    marginLeft: ms(2),
   },
 });
