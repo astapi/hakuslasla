@@ -44,6 +44,14 @@ export interface PassiveEffectsData {
   poison_damage_reduction: number;
   poison_lifesteal: number;
   no_direct_damage: boolean;
+  // 発火系
+  ignite_damage_pct: number;
+  ignite_damage_more_pct: number[];
+  ignite_duration_pct: number;
+  ignite_spread: boolean;
+  // 条件付き防御
+  slow_attack_damage_reduction: number;
+  // その他
   critical_chance: number;
   critical_damage: number;
   hp_on_crit: number;
@@ -75,8 +83,11 @@ export function createEmptyModEffects(): CombinedModEffects {
     noDirectDamage: false,
     igniteChance: 0,
     igniteDamagePct: 0,
+    igniteDamageMorePct: [],
     igniteDurationPct: 0,
     igniteTickSpeedPct: 0,
+    igniteSpread: false,
+    slowAttackDamageReduction: 0,
     criticalChance: 0,
     criticalDamage: 0,
     hpOnCrit: 0,
@@ -203,6 +214,14 @@ export function combineMods(
   combined.poisonDamageReduction += passiveEffects.poison_damage_reduction;
   combined.poisonLifesteal += passiveEffects.poison_lifesteal;
   combined.noDirectDamage = passiveEffects.no_direct_damage;
+  // 発火系
+  combined.igniteDamagePct += passiveEffects.ignite_damage_pct;
+  combined.igniteDamageMorePct.push(...passiveEffects.ignite_damage_more_pct);
+  combined.igniteDurationPct += passiveEffects.ignite_duration_pct;
+  if (passiveEffects.ignite_spread) combined.igniteSpread = true;
+  // 条件付き防御
+  combined.slowAttackDamageReduction += passiveEffects.slow_attack_damage_reduction;
+  // その他
   combined.criticalChance += passiveEffects.critical_chance;
   combined.criticalDamage += passiveEffects.critical_damage;
   combined.hpOnCrit += passiveEffects.hp_on_crit;
@@ -290,18 +309,26 @@ export function getPoisonDamageFromMods(baseDamage: number, mods: CombinedModEff
 // ========================================
 
 /**
- * 発火ダメージを計算（increased%のみ）
- * base × (1 + total_increased%)
+ * 発火ダメージを計算（PoE式）
+ * base × (1 + total_increased%) × (1 + total_more%)
  *
  * @param baseDamage 基本発火ダメージ
  * @param increasedPct increased%の合計
+ * @param moreMultipliers more%の配列
  * @returns 最終発火ダメージ
  */
 export function calculateIgniteDamage(
   baseDamage: number,
-  increasedPct: number
+  increasedPct: number,
+  moreMultipliers: number[] = []
 ): number {
-  const damage = baseDamage * (1 + increasedPct / 100);
+  // Step 1: base × (1 + total_increased%)
+  let damage = baseDamage * (1 + increasedPct / 100);
+
+  // Step 2: × (1 + total_more%)
+  const totalMore = moreMultipliers.reduce((sum, more) => sum + more, 0);
+  damage = damage * (1 + totalMore / 100);
+
   return Math.floor(damage);
 }
 
@@ -309,5 +336,5 @@ export function calculateIgniteDamage(
  * CombinedModEffectsから発火ダメージを計算
  */
 export function getIgniteDamageFromMods(baseDamage: number, mods: CombinedModEffects): number {
-  return calculateIgniteDamage(baseDamage, mods.igniteDamagePct);
+  return calculateIgniteDamage(baseDamage, mods.igniteDamagePct, mods.igniteDamageMorePct);
 }

@@ -198,6 +198,10 @@ export interface PassiveEffect {
   ignite_duration_pct?: number;    // 発火時間+X%
   ignite_tick_speed_pct?: number;  // 発火ダメージ速度+X%
   ignite_damage_pct?: number;      // 発火ダメージ+X%
+  ignite_damage_more_pct?: number; // 発火ダメージ X% more（乗算）
+  ignite_spread?: boolean;         // イグナイト伝染（発火中の敵死亡時、次の敵に発火継承）
+  // 条件付き防御
+  slow_attack_damage_reduction?: number;  // AS<0.8時、ダメージ軽減+X%
   // クリティカル系
   critical_chance?: number;    // クリティカル率（%）
   critical_damage?: number;    // クリティカルダメージ+X%

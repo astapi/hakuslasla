@@ -214,8 +214,13 @@ export interface CombinedModEffects {
   // 発火
   igniteChance: number;          // 付与率%（クラス固有能力 + MOD）
   igniteDamagePct: number;       // ダメージ+%（increased）
+  igniteDamageMorePct: number[]; // ダメージ more%（配列）
   igniteDurationPct: number;     // 時間+%
   igniteTickSpeedPct: number;    // ダメージ速度+%（間隔短縮）
+  igniteSpread: boolean;         // イグナイト伝染（敵死亡時、次の敵に発火継承）
+
+  // 条件付き防御
+  slowAttackDamageReduction: number;  // AS<0.8時、ダメージ軽減+X%
 
   // クリティカル
   criticalChance: number;    // 発生率%
