@@ -21,6 +21,7 @@ import {
   BattleEvent,
   BossSkillId,
 } from '@/core';
+import { CLASS_ABILITIES } from '@/core/player';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
 import { Analytics } from '@/lib/analytics';
 import {
@@ -643,7 +644,7 @@ const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] =
 };
 
 export const useBattle = (dungeonId: string) => {
-  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, setLevelCap } = usePlayerStore();
+  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, setLevelCap, characterType } = usePlayerStore();
   const stats = getTotalStats();
   const { getDropRateMultiplier, isTierBoosted, checkExpiredBoosts } = useAdBoostStore();
 
@@ -671,11 +672,18 @@ export const useBattle = (dungeonId: string) => {
     battleSpeedRef.current = battleSpeed;
   }, [battleSpeed]);
 
-  // 装備品+パッシブから戦闘時MOD効果を取得（coreロジック使用）
+  // 装備品+パッシブ+クラス能力から戦闘時MOD効果を取得（coreロジック使用）
   const modEffects = useMemo((): CombinedModEffects => {
     const passiveEffects = calculatePassiveEffects(unlockedSkills);
-    return combineMods(Object.values(equipment), passiveEffects);
-  }, [equipment, unlockedSkills]);
+    const baseMods = combineMods(Object.values(equipment), passiveEffects);
+
+    // クラス固有能力を加算
+    const classAbility = CLASS_ABILITIES[characterType];
+    return {
+      ...baseMods,
+      igniteChance: baseMods.igniteChance + (classAbility.igniteChance ?? 0),
+    };
+  }, [equipment, unlockedSkills, characterType]);
 
   // 後方互換性のためのラッパー（将来的に直接modEffectsを使用するよう移行）
   const getCombinedModEffects = useCallback((): CombinedModEffects => {

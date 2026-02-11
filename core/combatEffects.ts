@@ -340,6 +340,10 @@ export function processIgniteDamage(
   // ダメージ発生回数を計算
   const ticksToApply = Math.floor(timeSinceLastTick / ignite.tickIntervalMs);
 
+  // 経過時間を減算（1ティック分 = 1/30秒 ≈ 33.3ms）
+  const deltaMs = 1000 / config.ticksPerSecond;
+  const newRemainingMs = ignite.remainingMs - deltaMs;
+
   let totalDamage = 0;
 
   if (ticksToApply > 0) {
@@ -352,13 +356,10 @@ export function processIgniteDamage(
       data: {
         damage: totalDamage,
         tickCount: ticksToApply,
+        remainingMs: Math.max(0, newRemainingMs),
       },
     });
   }
-
-  // 経過時間を減算（1ティック分 = 1/30秒 ≈ 33.3ms）
-  const deltaMs = 1000 / config.ticksPerSecond;
-  const newRemainingMs = ignite.remainingMs - deltaMs;
 
   // 発火状態を更新
   let updatedState: IgniteState | null = null;
