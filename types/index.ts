@@ -1,6 +1,17 @@
 // 装備スロットの種類
 export type EquipmentSlot = 'weapon' | 'armor' | 'gloves' | 'boots' | 'accessory';
 
+// 武器種別
+export type WeaponType = 'sword' | 'staff';
+
+// キャラクタークラス
+export type CharacterType = 'warrior' | 'elementalist';
+
+// クラス別固有能力
+export interface ClassAbility {
+  igniteChance?: number;  // 発火確率%（エレメンタリスト）
+}
+
 // ドロップフィルター設定
 export interface DropFilterSettings {
   // カテゴリフィルター（trueで取得、falseで除外）
@@ -39,6 +50,7 @@ export const DEFAULT_DROP_FILTER: DropFilterSettings = {
 export interface Character {
   id: number;
   name: string;
+  type: CharacterType;
   level: number;
   exp: number;
   skillPoints: number;
@@ -52,6 +64,7 @@ export interface Character {
 // キャラクター作成用
 export interface CreateCharacterInput {
   name: string;
+  type: CharacterType;
 }
 
 // キャラクター更新用
@@ -92,6 +105,10 @@ export type ModType =
   | 'hp_regen'           // 毎ターンHP X回復
   | 'hp_regen_pct'       // 毎ターンHP X%回復
   | 'poison_chance'      // 毒付与確率+X%
+  | 'ignite_chance'      // 発火付与確率+X%（杖専用）
+  | 'ignite_duration_pct'    // 発火時間+X%（杖専用）
+  | 'ignite_tick_speed_pct'  // 発火ダメージ速度+X%（杖専用）
+  | 'ignite_damage_pct'      // 発火ダメージ+X%（杖専用）
   | 'critical_chance'    // クリティカル確率+X%
   | 'critical_damage'    // クリティカルダメージ+X%
   | 'damage_reduction_pct'  // ダメージ軽減+X%（鎧専用）
@@ -130,6 +147,7 @@ export interface ItemBase {
   id: string;
   name: string;
   slot: EquipmentSlot;
+  weaponType?: WeaponType;  // 武器種別（slot='weapon'の場合のみ）
   atk: number;
   def: number;
   fixedMods?: ItemMod[]; // ユニークアイテムの固有MOD
@@ -175,6 +193,11 @@ export interface PassiveEffect {
   poison_damage_reduction?: number; // 敵が毒状態時のダメージ軽減 +X%
   poison_lifesteal?: number;   // 毒ダメージ吸収 +X%
   no_direct_damage?: boolean;  // 通常ダメージを与えられなくなる（キーストーン）
+  // 発火系
+  ignite_chance?: number;          // 発火付与率（%）
+  ignite_duration_pct?: number;    // 発火時間+X%
+  ignite_tick_speed_pct?: number;  // 発火ダメージ速度+X%
+  ignite_damage_pct?: number;      // 発火ダメージ+X%
   // クリティカル系
   critical_chance?: number;    // クリティカル率（%）
   critical_damage?: number;    // クリティカルダメージ+X%
@@ -370,7 +393,14 @@ export interface BattleEnemy {
 export interface BattleLogEntry {
   id: number;
   message: string;
-  type: 'player_attack' | 'enemy_attack' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'critical' | 'heal';
+  type: 'player_attack' | 'enemy_attack' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'ignite' | 'critical' | 'heal';
+}
+
+// 発火状態
+export interface IgniteState {
+  damage: number;           // 1ティックあたりのダメージ
+  remainingMs: number;      // 残り時間（ミリ秒）
+  tickIntervalMs: number;   // ダメージ間隔（ミリ秒）
 }
 
 // 戦闘状態（useReducer用）- 後方互換性のため残す
@@ -384,6 +414,7 @@ export interface BattleState {
   enemy: BattleEnemy | null;
   enemyPoison: PoisonState[]; // 敵の毒状態（複数スタック対応）
   playerPoison: PoisonState[]; // プレイヤーの毒状態（複数スタック対応）
+  enemyIgnite: IgniteState | null; // 敵の発火状態
   phase: BattlePhase;
   battleLog: BattleLogEntry[];
   droppedItems: Item[];
@@ -432,6 +463,14 @@ export interface DungeonBattleState {
     remainingTicks: number;
   }>;
 
+  // 発火状態
+  enemyIgniteState: {
+    damage: number;           // 1ティックあたりのダメージ
+    remainingMs: number;      // 残り時間（ミリ秒）
+    tickIntervalMs: number;   // ダメージ間隔（ミリ秒）
+    lastTickMs: number;       // 最後にダメージを与えた時間
+  } | null;
+
   elapsedTicks: number;
 }
 
@@ -454,6 +493,8 @@ export type BattleAction =
   | { type: 'APPLY_PLAYER_POISON'; damagePerTurn: number; turns: number }
   | { type: 'PLAYER_POISON_DAMAGE'; damage: number }
   | { type: 'HP_REGEN'; amount: number }
+  | { type: 'APPLY_IGNITE'; damage: number; durationMs: number; tickIntervalMs: number }
+  | { type: 'IGNITE_DAMAGE'; damage: number; remainingMs: number }
   | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number }
   | { type: 'RESET_PLAYER_GAUGE' }
   | { type: 'RESET_ENEMY_GAUGE' };
@@ -465,6 +506,8 @@ export type DungeonBattleAction =
   | { type: 'APPLY_ENEMY_ATTACK'; damage: number; newPlayerHp: number }
   | { type: 'APPLY_POISON'; damagePerTick: number; remainingTicks: number }
   | { type: 'APPLY_POISON_DAMAGE'; damage: number; healAmount: number; updatedStacks: Array<{ damagePerTick: number; remainingTicks: number }> }
+  | { type: 'APPLY_IGNITE'; damage: number; durationMs: number; tickIntervalMs: number }
+  | { type: 'APPLY_IGNITE_DAMAGE'; damage: number; updatedState: { damage: number; remainingMs: number; tickIntervalMs: number; lastTickMs: number } | null }
   | { type: 'APPLY_HP_REGEN'; amount: number }
   | { type: 'APPLY_LIFESTEAL'; amount: number }
   | { type: 'ENEMY_DEFEATED'; exp: number; droppedItems: Item[] }

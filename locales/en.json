@@ -31,6 +31,15 @@
   "characterCreate": {
     "nameLabel": "Character Name",
     "namePlaceholder": "Enter name",
+    "classLabel": "Select Class",
+    "class": {
+      "warrior": "Warrior",
+      "elementalist": "Elementalist"
+    },
+    "classAbility": "Class Ability",
+    "ability": {
+      "igniteChance": "Ignite Chance {{value}}%"
+    },
     "initialStats": "Initial Stats"
   },
   "home": {
@@ -188,6 +197,10 @@
     "attackSpeed": "Attack Speed",
     "attackSpeedMore": "AS More",
     "finalAttackSpeed": "Final AS",
+    "igniteChance": "Ignite Chance",
+    "igniteDuration": "Ignite Dur",
+    "igniteTickSpeed": "Ignite Speed",
+    "igniteDamage": "Ignite Damage",
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",
@@ -227,7 +240,11 @@
     "def_more_pct": "DEF more",
     "hp_more_pct": "HP more",
     "everyTurnHpRegen": "+{{value}} HP per turn",
-    "everyTurnHpRegenPct": "+{{value}}% HP per turn"
+    "everyTurnHpRegenPct": "+{{value}}% HP per turn",
+    "ignite_chance": "Ignite",
+    "ignite_duration_pct": "Ignite Dur",
+    "ignite_tick_speed_pct": "Ignite Spd",
+    "ignite_damage_pct": "Ignite DMG"
   },
   "dungeon": {
     "floors": "{{count}} Floors",
@@ -385,6 +402,15 @@
     },
     "grassland_sword": {
       "name": "Grassland Sword"
+    },
+    "rusted_staff": {
+      "name": "Rusted Staff"
+    },
+    "grassland_staff": {
+      "name": "Grassland Staff"
+    },
+    "cave_iron_staff": {
+      "name": "Cave Iron Staff"
     },
     "light_leather": {
       "name": "Light Leather"
@@ -1240,7 +1266,11 @@
     "bossSkillActivated": "{{enemy}} triggered {{skill}}!",
     "reflectedDamage": "{{enemy}}'s mark reflected! You took {{damage}} damage!",
     "enemyHealRegen": "{{enemy}} regenerated {{amount}} HP!",
-    "enemyHealOnHit": "{{enemy}} leeched {{amount}} HP!"
+    "enemyHealOnHit": "{{enemy}} leeched {{amount}} HP!",
+    "igniteApplied": "Applied ignite to {{enemy}}! ({{damage}} damage/sec x {{duration}}s)",
+    "igniteDamage": "Ignite damage! {{enemy}} takes {{damage}} damage!{{remaining}}{{ended}}",
+    "igniteRemaining": " ({{seconds}}s remaining)",
+    "igniteEnded": " (ignite ended)"
   },
   "passiveTree": {
     "title": "Passive Tree",

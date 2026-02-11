@@ -17,6 +17,7 @@ const baseState: GaugeBattleState = {
   enemy: { currentHp: 50, maxHp: 50, atk: 8, def: 2, attackSpeed: 1, gauge: 0 },
   enemyPoisonStacks: [],
   playerPoisonStacks: [],
+  enemyIgniteState: null,
   elapsedTicks: 0,
   isFinished: false,
   winner: null,
@@ -43,6 +44,10 @@ const emptyMods: CombinedModEffects = {
   timeAtkIncPct: 0,
   timeDefIncPct: 0,
   timeHpRegen: 0,
+  igniteChance: 0,
+  igniteDamagePct: 0,
+  igniteDurationPct: 0,
+  igniteTickSpeedPct: 0,
 };
 
 describe('core/combatEffects', () => {

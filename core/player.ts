@@ -9,17 +9,44 @@ import {
   EquipmentConfig,
   LevelUpResult,
 } from './types';
+import type { CharacterType, ClassAbility } from '@/types';
 
 // ========================================
 // 定数
 // ========================================
 
-/** 初期ステータス */
+/** 初期ステータス（後方互換性のため残す） */
 export const INITIAL_STATS: Stats = {
   maxHp: 100,
   atk: 10,
   def: 5,
 };
+
+/** クラス別初期ステータス */
+export const CLASS_INITIAL_STATS: Record<CharacterType, Stats> = {
+  warrior: { maxHp: 100, atk: 10, def: 5 },
+  elementalist: { maxHp: 85, atk: 10, def: 4 },
+};
+
+/** クラス別固有能力 */
+export const CLASS_ABILITIES: Record<CharacterType, ClassAbility> = {
+  warrior: {},  // 固有能力なし
+  elementalist: { igniteChance: 20 },  // 発火確率20%
+};
+
+/**
+ * クラスの初期ステータスを取得
+ */
+export function getClassInitialStats(type: CharacterType): Stats {
+  return CLASS_INITIAL_STATS[type];
+}
+
+/**
+ * クラスの固有能力を取得
+ */
+export function getClassAbilities(type: CharacterType): ClassAbility {
+  return CLASS_ABILITIES[type];
+}
 
 /** レベルアップ時の上昇値 */
 export const LEVEL_UP_BONUS = {

@@ -1,9 +1,10 @@
 import { getDatabase, createCharacterWithEquipmentSlots } from '../database';
-import { Character, CreateCharacterInput, UpdateCharacterStats } from '@/types';
+import { Character, CharacterType, CreateCharacterInput, UpdateCharacterStats } from '@/types';
 
 interface CharacterRow {
   id: number;
   name: string;
+  type: CharacterType;
   level: number;
   exp: number;
   skill_points: number;
@@ -17,6 +18,7 @@ interface CharacterRow {
 const rowToCharacter = (row: CharacterRow): Character => ({
   id: row.id,
   name: row.name,
+  type: row.type,
   level: row.level,
   exp: row.exp,
   skillPoints: row.skill_points,
@@ -27,12 +29,23 @@ const rowToCharacter = (row: CharacterRow): Character => ({
   updatedAt: row.updated_at,
 });
 
+// クラス別初期ステータス
+const CLASS_BASE_STATS: Record<CharacterType, { maxHp: number; atk: number; def: number }> = {
+  warrior: { maxHp: 100, atk: 10, def: 5 },
+  elementalist: { maxHp: 85, atk: 10, def: 4 },
+};
+
 export const characterRepository = {
   async create(input: CreateCharacterInput): Promise<Character> {
     const db = await getDatabase();
+    const baseStats = CLASS_BASE_STATS[input.type];
     const result = await db.runAsync(
-      'INSERT INTO characters (name) VALUES (?)',
-      input.name
+      'INSERT INTO characters (name, type, max_hp, atk, def) VALUES (?, ?, ?, ?, ?)',
+      input.name,
+      input.type,
+      baseStats.maxHp,
+      baseStats.atk,
+      baseStats.def
     );
     const characterId = result.lastInsertRowId;
 

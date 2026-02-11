@@ -6,6 +6,15 @@
       "id": "rusted_sword",
       "name": "朽ちた剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 2,
+      "def": 0
+    },
+    "rusted_staff": {
+      "id": "rusted_staff",
+      "name": "朽ちた杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 2,
       "def": 0
     },
@@ -58,6 +67,15 @@
       "id": "grassland_sword",
       "name": "草原の剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 5,
+      "def": 0
+    },
+    "grassland_staff": {
+      "id": "grassland_staff",
+      "name": "草原の杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 5,
       "def": 0
     },
@@ -115,6 +133,15 @@
       "id": "cave_iron_sword",
       "name": "洞窟の鉄剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 8,
+      "def": 0
+    },
+    "cave_iron_staff": {
+      "id": "cave_iron_staff",
+      "name": "洞窟の鉄杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 8,
       "def": 0
     },

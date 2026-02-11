@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Equipment, EquipmentSlot, Item } from '@/types';
+import { CharacterType, Equipment, EquipmentSlot, Item } from '@/types';
 import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects } from '@/data/passiveTree';
 import {
   characterRepository,
@@ -16,6 +16,7 @@ import {
   calculateLevelUp,
   calculateFinalStats,
 } from '@/core';
+import { CLASS_INITIAL_STATS } from '@/core/player';
 import { EquipmentSet } from '@/core/equipmentSets';
 import { INVENTORY_BASE_SIZE, INVENTORY_EXPANDED_SIZE, STORAGE_BASE_SIZE, STORAGE_EXPANDED_SIZE } from '@/constants/purchases';
 import { hasInventoryExpansion, hasStorageExpansion } from '@/stores/usePurchaseStore';
@@ -33,6 +34,7 @@ interface PlayerState {
   // キャラクター情報
   characterId: number | null;
   characterName: string;
+  characterType: CharacterType;
   level: number;
   exp: number;
   expToNextLevel: number;
@@ -91,6 +93,7 @@ interface PlayerActions {
 const initialState: PlayerState = {
   characterId: null,
   characterName: '',
+  characterType: 'warrior',
   level: 1,
   exp: 0,
   expToNextLevel: getExpToNextLevel(1),
@@ -133,6 +136,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     set({
       characterId: character.id,
       characterName: character.name,
+      characterType: character.type,
       level: character.level,
       exp: character.exp,
       expToNextLevel: getExpToNextLevel(character.level),
@@ -249,10 +253,11 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
 
     const newUnlocked = state.unlockedSkills.filter((id) => id !== nodeId);
     const passiveEffects = calculatePassiveEffects(newUnlocked);
+    const classStats = CLASS_INITIAL_STATS[state.characterType];
     const baseStats = {
-      maxHp: INITIAL_STATS.maxHp + (state.level - 1) * 5,
-      atk: INITIAL_STATS.atk,
-      def: INITIAL_STATS.def,
+      maxHp: classStats.maxHp + (state.level - 1) * 5,
+      atk: classStats.atk,
+      def: classStats.def,
     };
 
     const newMaxHp = baseStats.maxHp + passiveEffects.hp;
@@ -466,12 +471,13 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     // DBにプリセットを適用
     await skillRepository.applyPreset(state.characterId, nodeIds);
 
-    // パッシブ効果を計算してステータスを更新
+    // パッシブ効果を計算してステータスを更新（クラス別初期ステータスを使用）
     const passiveEffects = calculatePassiveEffects(nodeIds);
+    const classStats = CLASS_INITIAL_STATS[state.characterType];
     const baseStats = {
-      maxHp: INITIAL_STATS.maxHp + (state.level - 1) * 5, // レベルアップ分
-      atk: INITIAL_STATS.atk,
-      def: INITIAL_STATS.def,
+      maxHp: classStats.maxHp + (state.level - 1) * 5, // レベルアップ分
+      atk: classStats.atk,
+      def: classStats.def,
     };
 
     // フラット加算
@@ -494,15 +500,16 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     });
   },
 
-  // デバッグ: レベルとSPを設定
+  // デバッグ: レベルとSPを設定（クラス別初期ステータスを使用）
   setDebugLevel: async (level: number) => {
     const state = get();
     if (!state.characterId) return;
 
+    const classStats = CLASS_INITIAL_STATS[state.characterType];
     const skillPoints = level - 1; // レベル-1のSP
-    const maxHp = INITIAL_STATS.maxHp + (level - 1) * 5;
-    const atk = INITIAL_STATS.atk;
-    const def = INITIAL_STATS.def;
+    const maxHp = classStats.maxHp + (level - 1) * 5;
+    const atk = classStats.atk;
+    const def = classStats.def;
 
     await characterRepository.updateStats(state.characterId, {
       level,

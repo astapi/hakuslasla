@@ -82,6 +82,10 @@ describe('core/modEffects', () => {
       timeAtkIncPct: 0,
       timeDefIncPct: 0,
       timeHpRegen: 0,
+      igniteChance: 0,
+      igniteDamagePct: 0,
+      igniteDurationPct: 0,
+      igniteTickSpeedPct: 0,
     };
 
     const result = getAttackSpeedFromMods(mods, 1);

@@ -1,24 +1,33 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { characterRepository } from '@/db';
 import { ms, fs } from '@/utils/scaling';
+import { CharacterType } from '@/types';
+import { CLASS_INITIAL_STATS, CLASS_ABILITIES } from '@/core/player';
+import { characterImages } from '@/data/images';
+
+const CHARACTER_TYPES: CharacterType[] = ['warrior', 'elementalist'];
 
 export default function CharacterCreateScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const [name, setName] = useState('');
+  const [selectedType, setSelectedType] = useState<CharacterType>('warrior');
   const [isCreating, setIsCreating] = useState(false);
+
+  const classStats = CLASS_INITIAL_STATS[selectedType];
+  const classAbility = CLASS_ABILITIES[selectedType];
 
   const handleCreate = async () => {
     if (!name.trim()) return;
 
     setIsCreating(true);
     try {
-      await characterRepository.create({ name: name.trim() });
+      await characterRepository.create({ name: name.trim(), type: selectedType });
       router.back();
     } finally {
       setIsCreating(false);
@@ -44,6 +53,36 @@ export default function CharacterCreateScreen() {
           autoFocus
         />
 
+        {/* クラス選択 */}
+        <Text style={styles.label}>{t('characterCreate.classLabel')}</Text>
+        <View style={styles.classSelector}>
+          {CHARACTER_TYPES.map((type) => (
+            <TouchableOpacity
+              key={type}
+              style={[
+                styles.classCard,
+                selectedType === type && styles.classCardSelected,
+              ]}
+              onPress={() => setSelectedType(type)}
+              testID={`class-select-${type}`}
+            >
+              <Image
+                source={characterImages[type].standing}
+                style={styles.classImage}
+                resizeMode="contain"
+              />
+              <Text
+                style={[
+                  styles.className,
+                  selectedType === type && styles.classNameSelected,
+                ]}
+              >
+                {t(`characterCreate.class.${type}`)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         <View style={styles.previewSection}>
           <Text style={styles.previewTitle}>{t('characterCreate.initialStats')}</Text>
           <View style={styles.statsRow}>
@@ -53,17 +92,27 @@ export default function CharacterCreateScreen() {
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statLabel}>HP</Text>
-              <Text style={styles.statValue}>100</Text>
+              <Text style={styles.statValue}>{classStats.maxHp}</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statLabel}>ATK</Text>
-              <Text style={styles.statValue}>10</Text>
+              <Text style={styles.statValue}>{classStats.atk}</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statLabel}>DEF</Text>
-              <Text style={styles.statValue}>5</Text>
+              <Text style={styles.statValue}>{classStats.def}</Text>
             </View>
           </View>
+
+          {/* クラス固有能力 */}
+          {classAbility.igniteChance && (
+            <View style={styles.abilitySection}>
+              <Text style={styles.abilityLabel}>{t('characterCreate.classAbility')}</Text>
+              <Text style={styles.abilityValue}>
+                {t('characterCreate.ability.igniteChance', { value: classAbility.igniteChance })}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
 
@@ -110,6 +159,39 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: ms(24),
   },
+  classSelector: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: ms(16),
+    marginBottom: ms(24),
+  },
+  classCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: ms(12),
+    padding: ms(12),
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'transparent',
+    flex: 1,
+    maxWidth: ms(150),
+  },
+  classCardSelected: {
+    borderColor: '#FFD700',
+    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+  },
+  classImage: {
+    width: ms(80),
+    height: ms(100),
+    marginBottom: ms(8),
+  },
+  className: {
+    fontSize: fs(14),
+    color: '#aaa',
+    fontWeight: '500',
+  },
+  classNameSelected: {
+    color: '#FFD700',
+  },
   previewSection: {
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: ms(12),
@@ -137,6 +219,23 @@ const styles = StyleSheet.create({
     fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
+  },
+  abilitySection: {
+    marginTop: ms(16),
+    paddingTop: ms(12),
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+    alignItems: 'center',
+  },
+  abilityLabel: {
+    fontSize: fs(12),
+    color: '#666',
+    marginBottom: ms(4),
+  },
+  abilityValue: {
+    fontSize: fs(14),
+    color: '#FF6B35',
+    fontWeight: '500',
   },
   footer: {
     flexDirection: 'row',

@@ -7,12 +7,13 @@ import {
   CombinedModEffects,
   GaugeBattleState,
   PoisonStack,
+  IgniteState,
   BattleEvent,
   BattleConfig,
   DEFAULT_BATTLE_CONFIG,
 } from './types';
 import { calculateDamage } from './battle';
-import { getPoisonDamageFromMods } from './modEffects';
+import { getPoisonDamageFromMods, getIgniteDamageFromMods } from './modEffects';
 
 // ========================================
 // プレイヤー攻撃
@@ -228,6 +229,158 @@ export function processPoisonDamage(
   }
 
   return { totalDamage, healAmount, updatedStacks, events };
+}
+
+// ========================================
+// 発火システム
+// ========================================
+
+/**
+ * 発火付与結果
+ */
+export interface IgniteApplyResult {
+  igniteState: IgniteState | null;
+  event: BattleEvent | null;
+}
+
+/**
+ * 発火付与を試行（上書き式）
+ * @param state 現在の戦闘状態
+ * @param baseDamage プレイヤーの基本ダメージ（発火ダメージ計算用）
+ * @param mods MOD効果
+ * @param config 戦闘設定
+ * @param rng 乱数生成関数
+ * @returns 付与結果
+ */
+export function tryApplyIgnite(
+  state: GaugeBattleState,
+  baseDamage: number,
+  mods: CombinedModEffects,
+  config: BattleConfig = DEFAULT_BATTLE_CONFIG,
+  rng: () => number = Math.random
+): IgniteApplyResult {
+  // 発火付与判定
+  if (mods.igniteChance <= 0 || rng() * 100 >= mods.igniteChance) {
+    return { igniteState: null, event: null };
+  }
+
+  // 発火ダメージ計算（毒より少し弱い）
+  const rawIgniteDamage = Math.max(1, Math.floor(baseDamage * config.igniteDamageRatio));
+  const igniteDamage = getIgniteDamageFromMods(rawIgniteDamage, mods);
+
+  // 継続時間計算（MODで延長可能）
+  const durationMs = Math.floor(
+    config.igniteDurationMs * (1 + mods.igniteDurationPct / 100)
+  );
+
+  // ダメージ間隔計算（MODで短縮可能）
+  // igniteTickSpeedPct が高いほど間隔が短くなる
+  const tickIntervalMs = Math.max(
+    100, // 最低100ms
+    Math.floor(config.igniteTickIntervalMs / (1 + mods.igniteTickSpeedPct / 100))
+  );
+
+  // 経過時間をミリ秒に変換（1ティック = 1/30秒 ≈ 33.3ms）
+  const currentTimeMs = Math.floor((state.elapsedTicks / config.ticksPerSecond) * 1000);
+
+  const igniteState: IgniteState = {
+    damage: igniteDamage,
+    remainingMs: durationMs,
+    tickIntervalMs,
+    lastTickMs: currentTimeMs, // 付与時点から最初のダメージまでinterval待つ
+  };
+
+  const event: BattleEvent = {
+    type: 'ignite_applied',
+    tick: state.elapsedTicks,
+    data: {
+      damage: igniteDamage,
+      durationMs,
+      tickIntervalMs,
+    },
+  };
+
+  return { igniteState, event };
+}
+
+/**
+ * 発火ダメージ処理結果
+ */
+export interface IgniteDamageResult {
+  totalDamage: number;
+  updatedState: IgniteState | null;
+  events: BattleEvent[];
+}
+
+/**
+ * 発火ダメージを処理
+ * @param state 現在の戦闘状態
+ * @param tick 現在のティック
+ * @param config 戦闘設定
+ * @returns 処理結果
+ */
+export function processIgniteDamage(
+  state: GaugeBattleState,
+  tick: number,
+  config: BattleConfig = DEFAULT_BATTLE_CONFIG
+): IgniteDamageResult {
+  if (!state.enemyIgniteState) {
+    return { totalDamage: 0, updatedState: null, events: [] };
+  }
+
+  const events: BattleEvent[] = [];
+  const ignite = state.enemyIgniteState;
+
+  // 経過時間をミリ秒に変換
+  const currentTimeMs = Math.floor((tick / config.ticksPerSecond) * 1000);
+
+  // 最後のダメージからの経過時間
+  const timeSinceLastTick = currentTimeMs - ignite.lastTickMs;
+
+  // ダメージ発生回数を計算
+  const ticksToApply = Math.floor(timeSinceLastTick / ignite.tickIntervalMs);
+
+  let totalDamage = 0;
+
+  if (ticksToApply > 0) {
+    // ダメージ適用
+    totalDamage = ignite.damage * ticksToApply;
+
+    events.push({
+      type: 'ignite_damage',
+      tick,
+      data: {
+        damage: totalDamage,
+        tickCount: ticksToApply,
+      },
+    });
+  }
+
+  // 経過時間を減算（1ティック分 = 1/30秒 ≈ 33.3ms）
+  const deltaMs = 1000 / config.ticksPerSecond;
+  const newRemainingMs = ignite.remainingMs - deltaMs;
+
+  // 発火状態を更新
+  let updatedState: IgniteState | null = null;
+
+  if (newRemainingMs > 0) {
+    updatedState = {
+      ...ignite,
+      remainingMs: newRemainingMs,
+      lastTickMs: ticksToApply > 0
+        ? ignite.lastTickMs + ticksToApply * ignite.tickIntervalMs
+        : ignite.lastTickMs,
+    };
+  } else {
+    // 発火終了
+    events.push({
+      type: 'ignite_expired',
+      tick,
+      data: {},
+    });
+  }
+
+  return { totalDamage, updatedState, events };
 }
 
 // ========================================
