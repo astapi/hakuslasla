@@ -177,7 +177,7 @@ export default function BattleScreen() {
   const { dungeonId } = useLocalSearchParams<{ dungeonId: string }>();
   const router = useRouter();
   const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat } = useBattle(dungeonId || '');
-  const { level } = usePlayerStore();
+  const { level, characterType } = usePlayerStore();
   const dungeon = getDungeon(dungeonId || '');
 
   // 攻撃アニメーション用のstate
@@ -297,6 +297,7 @@ export default function BattleScreen() {
             maxHp={state.playerMaxHp}
             level={level}
             isPlayer
+            characterType={characterType}
             isAttacking={playerAttacking}
             actionGauge={state.playerGauge}
           />
