@@ -48,8 +48,11 @@ const emptyMods: CombinedModEffects = {
   timeHpRegen: 0,
   igniteChance: 0,
   igniteDamagePct: 0,
+  igniteDamageMorePct: [],
   igniteDurationPct: 0,
   igniteTickSpeedPct: 0,
+  igniteSpread: false,
+  slowAttackDamageReduction: 0,
 };
 
 describe('core/combatEffects', () => {

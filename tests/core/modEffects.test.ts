@@ -39,6 +39,11 @@ describe('core/modEffects', () => {
       poison_damage_reduction: 0,
       poison_lifesteal: 0,
       no_direct_damage: false,
+      ignite_damage_pct: 0,
+      ignite_damage_more_pct: [],
+      ignite_duration_pct: 0,
+      ignite_spread: false,
+      slow_attack_damage_reduction: 0,
       critical_chance: 0,
       critical_damage: 0,
       hp_on_crit: 0,
@@ -85,8 +90,11 @@ describe('core/modEffects', () => {
       timeHpRegen: 0,
       igniteChance: 0,
       igniteDamagePct: 0,
+      igniteDamageMorePct: [],
       igniteDurationPct: 0,
       igniteTickSpeedPct: 0,
+      igniteSpread: false,
+      slowAttackDamageReduction: 0,
     };
 
     const result = getAttackSpeedFromMods(mods, 1);

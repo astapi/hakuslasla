@@ -58,6 +58,7 @@ export interface BattleEngineConfig {
   dungeonId?: string;
   config?: BattleConfig;
   rng?: () => number;
+  initialIgniteState?: IgniteState | null;  // イグナイト伝染用（前の敵から引き継ぐ発火状態）
 }
 
 export interface BattleEngine {
@@ -132,7 +133,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     },
     enemyPoisonStacks: [],
     playerPoisonStacks: [],
-    enemyIgniteState: null,
+    enemyIgniteState: config.initialIgniteState ?? null,  // イグナイト伝染から引き継いだ発火状態
     elapsedTicks: 0,
     isFinished: false,
     winner: null,
@@ -282,6 +283,9 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
     // 発火ダメージ処理（時間ベース）
     if (engine.state.enemyIgniteState) {
       const igniteResult = processIgniteDamage(engine.state, engine.state.elapsedTicks, engine.config);
+      // 発火状態を先に更新（撃破時も正しい状態を保持するため）
+      engine.state.enemyIgniteState = igniteResult.updatedState;
+
       if (igniteResult.totalDamage > 0) {
         engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - igniteResult.totalDamage);
         events.push(...igniteResult.events);
@@ -297,8 +301,6 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
           break;
         }
       }
-      // 発火状態を更新
-      engine.state.enemyIgniteState = igniteResult.updatedState;
     }
 
     // プレイヤー行動（多重行動対応）
@@ -531,7 +533,8 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         engine.state.enemy.atk,
         effectivePlayerDef,
         engine.playerMods,
-        engine.state.enemyPoisonStacks.length > 0
+        engine.state.enemyPoisonStacks.length > 0,
+        playerAS  // AS<0.8時のダメージ軽減計算用
       );
       const enemyAttackMultiplier = engine.bossEffects.enemyAttackMult * engine.bossEffects.enemyNextAttackMult;
       const rawEnemyDamage = Math.floor(enemyDamage * enemyAttackMultiplier);

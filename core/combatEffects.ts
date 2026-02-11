@@ -478,13 +478,15 @@ export function createLifestealEvent(
  * @param playerDef プレイヤーの防御力
  * @param mods MOD効果
  * @param isEnemyPoisoned 敵が毒状態かどうか
+ * @param playerAttackSpeed プレイヤーの攻撃速度（オプション、AS軽減計算用）
  * @returns ダメージ量
  */
 export function calculateEnemyDamage(
   enemyAtk: number,
   playerDef: number,
   mods: CombinedModEffects,
-  isEnemyPoisoned: boolean
+  isEnemyPoisoned: boolean,
+  playerAttackSpeed?: number
 ): number {
   // 追加ダメージ軽減
   let totalDamageReduction = mods.damageReductionPct;
@@ -492,6 +494,11 @@ export function calculateEnemyDamage(
   // 敵が毒状態時の追加軽減
   if (isEnemyPoisoned) {
     totalDamageReduction += mods.poisonDamageReduction;
+  }
+
+  // AS<0.8時のダメージ軽減（緩慢なる炎キーストーン）
+  if (playerAttackSpeed !== undefined && playerAttackSpeed < 0.8 && mods.slowAttackDamageReduction > 0) {
+    totalDamageReduction += mods.slowAttackDamageReduction;
   }
 
   return calculateDamage(enemyAtk, playerDef, totalDamageReduction);

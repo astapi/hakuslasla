@@ -15,6 +15,7 @@ import {
   BattleConfig,
   DungeonConfig,
   EnemyConfig,
+  IgniteState,
   DEFAULT_BATTLE_CONFIG,
 } from './types';
 import { getAttackSpeedFromMods } from './modEffects';
@@ -123,6 +124,13 @@ function getTicksToAction(
 // ========================================
 
 /**
+ * 1体の敵との戦闘結果（発火状態を含む）
+ */
+export interface GaugeBattleResultWithIgnite extends GaugeBattleResult {
+  finalIgniteState: IgniteState | null;  // 戦闘終了時の敵の発火状態（伝染用）
+}
+
+/**
  * 1体の敵との戦闘を完了まで実行
  * @param playerStats プレイヤーの基本ステータス
  * @param playerCurrentHp プレイヤーの現在HP
@@ -130,6 +138,8 @@ function getTicksToAction(
  * @param enemy 敵の設定
  * @param config 戦闘設定
  * @param rng 乱数生成関数
+ * @param dungeonId ダンジョンID
+ * @param initialIgniteState 初期発火状態（イグナイト伝染用）
  * @returns 戦闘結果
  */
 export function runGaugeBattle(
@@ -139,8 +149,9 @@ export function runGaugeBattle(
   enemy: EnemyConfig,
   config: BattleConfig = DEFAULT_BATTLE_CONFIG,
   rng: () => number = Math.random,
-  dungeonId?: string
-): GaugeBattleResult {
+  dungeonId?: string,
+  initialIgniteState?: IgniteState | null
+): GaugeBattleResultWithIgnite {
   const MAX_TICKS = 30000;
   const { engine, events: introEvents } = createBattleEngine({
     playerStats,
@@ -150,11 +161,14 @@ export function runGaugeBattle(
     config,
     rng,
     dungeonId,
+    initialIgniteState,
   });
   const result = runBattleEngineToEnd(engine, enemy.exp, MAX_TICKS);
+  const finalState = engine.getState();
   return {
     ...result,
     events: [...introEvents, ...result.events],
+    finalIgniteState: finalState.enemyIgniteState,
   };
 }
 
@@ -189,6 +203,9 @@ export function runGaugeDungeon(
   const floorResults: GaugeFloorResult[] = [];
   const allEvents: BattleEvent[] = [];
 
+  // イグナイト伝染用: 前の敵から引き継ぐ発火状態
+  let spreadIgniteState: IgniteState | null = null;
+
   for (let floor = 1; floor <= dungeon.maxFloor; floor++) {
     // ボス階層かどうかチェック
     const enemyFromResolver = resolveEnemyForFloor
@@ -205,6 +222,9 @@ export function runGaugeDungeon(
       continue;
     }
 
+    // イグナイト伝染: igniteSpread が有効で、前の敵から発火状態を引き継ぐ場合
+    const initialIgniteForThisBattle = playerMods.igniteSpread ? spreadIgniteState : null;
+
     // 戦闘実行
     const battleResult = runGaugeBattle(
       playerStats,
@@ -213,7 +233,8 @@ export function runGaugeDungeon(
       enemy,
       config,
       rng,
-      dungeon.id
+      dungeon.id,
+      initialIgniteForThisBattle
     );
 
     floorResults.push({
@@ -238,6 +259,20 @@ export function runGaugeDungeon(
         floorResults,
         events: allEvents,
       };
+    }
+
+    // 勝利: イグナイト伝染のために発火状態を保持
+    // 敵が発火状態で死んだ場合、次の敵に伝染する
+    if (playerMods.igniteSpread && battleResult.finalIgniteState) {
+      // 発火状態をリセット（新しい敵に対して初期化）
+      spreadIgniteState = {
+        damage: battleResult.finalIgniteState.damage,
+        remainingMs: battleResult.finalIgniteState.remainingMs,
+        tickIntervalMs: battleResult.finalIgniteState.tickIntervalMs,
+        lastTickMs: 0,  // 新しい敵に対してはリセット
+      };
+    } else {
+      spreadIgniteState = null;
     }
 
     // 勝利
