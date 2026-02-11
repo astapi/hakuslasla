@@ -122,24 +122,22 @@ export const CharacterDisplay = memo(({
         </View>
         <HPBar current={currentHp} max={maxHp} color={isPlayer ? '#4CAF50' : '#F44336'} />
 
-        {/* ステータス効果インジケーター */}
-        {(poisonStacks.length > 0 || igniteState) && (
-          <View style={styles.statusContainer}>
-            {poisonStacks.length > 0 && (
-              <View style={styles.statusBadge}>
-                <Text style={styles.poisonIcon}>☠️</Text>
-                {poisonStacks.length > 1 && (
-                  <Text style={styles.statusCount}>×{poisonStacks.length}</Text>
-                )}
-              </View>
-            )}
-            {igniteState && (
-              <View style={styles.statusBadge}>
-                <Text style={styles.igniteIcon}>🔥</Text>
-              </View>
-            )}
-          </View>
-        )}
+        {/* ステータス効果インジケーター（常に高さを確保してUIズレを防止） */}
+        <View style={styles.statusContainer}>
+          {poisonStacks.length > 0 && (
+            <View style={styles.statusBadge}>
+              <Text style={styles.poisonIcon}>☠️</Text>
+              {poisonStacks.length > 1 && (
+                <Text style={styles.statusCount}>×{poisonStacks.length}</Text>
+              )}
+            </View>
+          )}
+          {igniteState && (
+            <View style={styles.statusBadge}>
+              <Text style={styles.igniteIcon}>🔥</Text>
+            </View>
+          )}
+        </View>
       </View>
 
     </View>
@@ -206,6 +204,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: ms(4),
     gap: ms(6),
+    minHeight: ms(20), // 常に高さを確保してUIズレを防止
   },
   statusBadge: {
     flexDirection: 'row',
