@@ -283,6 +283,9 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
     // 発火ダメージ処理（時間ベース）
     if (engine.state.enemyIgniteState) {
       const igniteResult = processIgniteDamage(engine.state, engine.state.elapsedTicks, engine.config);
+      // 発火状態を先に更新（撃破時も正しい状態を保持するため）
+      engine.state.enemyIgniteState = igniteResult.updatedState;
+
       if (igniteResult.totalDamage > 0) {
         engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - igniteResult.totalDamage);
         events.push(...igniteResult.events);
@@ -298,8 +301,6 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
           break;
         }
       }
-      // 発火状態を更新
-      engine.state.enemyIgniteState = igniteResult.updatedState;
     }
 
     // プレイヤー行動（多重行動対応）
