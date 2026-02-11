@@ -62,19 +62,20 @@ function getTiersForSlot(config: ModConfig, slot?: EquipmentSlot): Record<string
  */
 function getTierWeight(tier: number, boosted: boolean = false): number {
   if (boosted) {
-    // ブースト時：低Tier（高品質）のウェイトを増やす
+    // ブースト時：1段階シフト方式（通常時の1つ上のTierのウェイトを適用）
+    // T1は約2倍程度の控えめなブースト
     switch (tier) {
-      case 1: return 15;  // 約7.5倍
-      case 2: return 20;  // 約5倍
-      case 3: return 25;  // 約3倍
-      case 4: return 25;  // 1.25倍
-      case 5: return 25;  // 1.25倍
-      case 6: return 18;
-      case 7: return 15;
-      case 8: return 12;
-      case 9: return 8;
-      case 10: return 5;
-      default: return 15;
+      case 1: return 4;   // =通常T2（約2倍）
+      case 2: return 8;   // =通常T3（約2倍）
+      case 3: return 20;  // =通常T4（約2.5倍）
+      case 4: return 20;  // =通常T5（変化なし）
+      case 5: return 18;  // =通常T6（やや減少）
+      case 6: return 15;  // =通常T7
+      case 7: return 12;  // =通常T8
+      case 8: return 8;   // =通常T9
+      case 9: return 5;   // =通常T10
+      case 10: return 1;  // 最低
+      default: return 12;
     }
   } else {
     // 通常時：T4,5がやや出やすいが、緩やかな分布
