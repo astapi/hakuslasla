@@ -336,7 +336,7 @@ export default function InventoryScreen() {
         onPress={() => handleSelectItem(item)}
       >
         <Image
-          source={getItemIcon(item.id, item.slot)}
+          source={getItemIcon(item.id, item.slot, item.weaponType)}
           style={styles.gridItemIcon}
         />
         {isUnique && (
@@ -613,7 +613,7 @@ const ItemDetail = memo(({
           <Text style={styles.comparisonLabel}>{t('inventory.selected')}</Text>
           <View style={styles.comparisonHeader}>
             <Image
-              source={getItemIcon(item.id, item.slot)}
+              source={getItemIcon(item.id, item.slot, item.weaponType)}
               style={styles.comparisonIcon}
             />
             <View style={styles.comparisonInfo}>
@@ -653,7 +653,7 @@ const ItemDetail = memo(({
             <>
               <View style={styles.comparisonHeader}>
                 <Image
-                  source={getItemIcon(equippedItem.id, equippedItem.slot)}
+                  source={getItemIcon(equippedItem.id, equippedItem.slot, equippedItem.weaponType)}
                   style={styles.comparisonIcon}
                 />
                 <View style={styles.comparisonInfo}>

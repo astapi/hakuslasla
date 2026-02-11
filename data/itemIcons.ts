@@ -1,5 +1,5 @@
 import { ImageSourcePropType } from 'react-native';
-import { EquipmentSlot } from '@/types';
+import { EquipmentSlot, WeaponType } from '@/types';
 
 /**
  * スロットごとのデフォルトアイコン設定
@@ -32,6 +32,14 @@ export const SLOT_ICONS: Record<EquipmentSlot, {
 };
 
 /**
+ * 武器種類ごとのアイコン設定
+ */
+export const WEAPON_TYPE_ICONS: Record<WeaponType, ImageSourcePropType> = {
+  sword: require('@/assets/images/items/weapon.png'),
+  staff: require('@/assets/images/items/staff.png'),
+};
+
+/**
  * アイテム固有アイコン（ユニークアイテム用）
  * itemId → 画像のマッピング
  * 設定がない場合はスロットのデフォルトアイコンを使用
@@ -44,11 +52,14 @@ export const ITEM_ICONS: Record<string, ImageSourcePropType> = {
 
 /**
  * アイテムのアイコンを取得
- * 固有アイコンがあればそれを、なければスロットのデフォルトを返す
+ * 優先順位: 固有アイコン > 武器種類アイコン > スロットデフォルト
  */
-export function getItemIcon(itemId: string, slot: EquipmentSlot): ImageSourcePropType {
+export function getItemIcon(itemId: string, slot: EquipmentSlot, weaponType?: WeaponType): ImageSourcePropType {
   if (ITEM_ICONS[itemId]) {
     return ITEM_ICONS[itemId];
+  }
+  if (slot === 'weapon' && weaponType) {
+    return WEAPON_TYPE_ICONS[weaponType];
   }
   return SLOT_ICONS[slot].image;
 }

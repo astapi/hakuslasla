@@ -200,7 +200,7 @@ export default function StorageScreen() {
         onPress={() => handleSelectItem(item)}
       >
         <Image
-          source={getItemIcon(item.id, item.slot)}
+          source={getItemIcon(item.id, item.slot, item.weaponType)}
           style={styles.gridItemIcon}
         />
         {hasMods && <View style={styles.modIndicator} />}
@@ -326,7 +326,7 @@ const StorageItemDetail = memo(({
     <View style={styles.detailContent}>
       <View style={styles.detailHeader}>
         <Image
-          source={getItemIcon(item.id, item.slot)}
+          source={getItemIcon(item.id, item.slot, item.weaponType)}
           style={styles.detailIcon}
         />
         <View style={styles.detailTitleArea}>
