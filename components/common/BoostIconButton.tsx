@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAdBoostStore, AdBoostType } from '@/stores/useAdBoostStore';
+import { usePurchaseStore } from '@/stores/usePurchaseStore';
+import { ENTITLEMENT_IDS } from '@/constants/purchases';
 import { useAdState } from '@/hooks/useAdStore';
 import { BoostModal } from './BoostModal';
 import { ms } from '@/utils/scaling';
@@ -20,6 +22,9 @@ interface BoostIconButtonProps {
 
 export const BoostIconButton = ({ type }: BoostIconButtonProps) => {
   const { dropRateBoost, tierBoost, checkExpiredBoosts } = useAdBoostStore();
+  const hasPermanentBoost = usePurchaseStore((state) =>
+    state.hasEntitlement(ENTITLEMENT_IDS.PERMANENT_BOOST)
+  );
   const { loaded } = useAdState(type);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -34,6 +39,11 @@ export const BoostIconButton = ({ type }: BoostIconButtonProps) => {
 
   const icon: keyof typeof MaterialCommunityIcons.glyphMap =
     type === 'drop_rate' ? 'treasure-chest' : 'star-four-points';
+
+  // 常時ブースト購入済みの場合、広告リワード系ボタンは表示しない
+  if (hasPermanentBoost) {
+    return null;
+  }
 
   // 広告がロードされていない場合、かつブーストが有効でない場合は非表示
   // ブーストが有効な場合は残り時間表示のためボタンを表示
