@@ -387,7 +387,7 @@ export const DEFAULT_BATTLE_CONFIG: BattleConfig = {
   basePoisonMaxStacks: 1,
   igniteDamageRatio: 1.0,      // 毒(1.2)より弱い
   igniteDurationMs: 5000,      // 5秒
-  igniteTickIntervalMs: 1000,  // 1秒ごと（AS1.0相当）
+  igniteTickIntervalMs: 800,   // 0.8秒ごと
   baseCriticalMultiplier: 3.0,
   ticksPerSecond: 30,
   baseGaugePerSecond: 200,
