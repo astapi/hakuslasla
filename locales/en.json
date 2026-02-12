@@ -1306,7 +1306,7 @@
     "reflectedDamage": "{{enemy}}'s mark reflected! You took {{damage}} damage!",
     "enemyHealRegen": "{{enemy}} regenerated {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} leeched {{amount}} HP!",
-    "igniteApplied": "Applied ignite to {{enemy}}! ({{damage}} damage/sec x {{duration}}s)",
+    "igniteApplied": "Applied ignite to {{enemy}}! ({{damage}} damage × {{duration}}s)",
     "igniteDamage": "Ignite damage! {{enemy}} takes {{damage}} damage!{{remaining}}{{ended}}",
     "igniteRemaining": " ({{seconds}}s remaining)",
     "igniteEnded": " (ignite ended)"

@@ -409,10 +409,15 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         if (poisonResult.event) events.push(poisonResult.event);
       }
 
-      // 発火付与（上書き式）
+      // 発火付与（上書き式、ただしダメージタイミングは維持）
       const igniteResult = tryApplyIgnite(engine.state, baseDamage, effectiveMods, engine.config, engine.rng);
       if (igniteResult.igniteState) {
-        engine.state.enemyIgniteState = igniteResult.igniteState;
+        // 既存の発火がある場合、lastTickMsを維持（ダメージタイミングを継続）
+        const existingLastTickMs = engine.state.enemyIgniteState?.lastTickMs;
+        engine.state.enemyIgniteState = {
+          ...igniteResult.igniteState,
+          lastTickMs: existingLastTickMs ?? igniteResult.igniteState.lastTickMs,
+        };
         if (igniteResult.event) events.push(igniteResult.event);
       }
 

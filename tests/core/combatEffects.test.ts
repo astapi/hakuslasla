@@ -113,7 +113,7 @@ describe('core/combatEffects', () => {
     expect(result.event?.type).toBe('ignite_applied');
     expect(result.event?.data.damage).toBe(15);
     expect(result.event?.data.durationMs).toBe(6000);
-    expect(result.event?.data.tickIntervalMs).toBe(500);
+    expect(result.event?.data.tickIntervalMs).toBe(400);  // 800ms / 2 (igniteTickSpeedPct: 100)
   });
 
   it('processIgniteDamage は ignite_damage イベントに remainingMs を含める', () => {
