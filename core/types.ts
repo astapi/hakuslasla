@@ -385,9 +385,9 @@ export const DEFAULT_BATTLE_CONFIG: BattleConfig = {
   poisonDamageRatio: 1.2,
   poisonDuration: 5,
   basePoisonMaxStacks: 1,
-  igniteDamageRatio: 1.0,      // 毒(1.2)より弱い
-  igniteDurationMs: 5000,      // 5秒
-  igniteTickIntervalMs: 800,   // 0.8秒ごと
+  igniteDamageRatio: 0.5,      // 通常攻撃の50%ダメージ
+  igniteDurationMs: 3000,      // 3秒
+  igniteTickIntervalMs: 300,   // 0.3秒ごと（10回ダメージ = 通常攻撃の5倍）
   baseCriticalMultiplier: 3.0,
   ticksPerSecond: 30,
   baseGaugePerSecond: 200,

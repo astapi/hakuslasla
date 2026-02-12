@@ -111,9 +111,9 @@ describe('core/combatEffects', () => {
     const result = tryApplyIgnite(baseState, 10, mods, DEFAULT_BATTLE_CONFIG, () => 0);
     expect(result.igniteState).not.toBeNull();
     expect(result.event?.type).toBe('ignite_applied');
-    expect(result.event?.data.damage).toBe(15);
-    expect(result.event?.data.durationMs).toBe(6000);
-    expect(result.event?.data.tickIntervalMs).toBe(400);  // 800ms / 2 (igniteTickSpeedPct: 100)
+    expect(result.event?.data.damage).toBe(7);  // 10 * 0.5 * 1.5 = 7.5 → 7
+    expect(result.event?.data.durationMs).toBe(3600);  // 3000 * 1.2 = 3600
+    expect(result.event?.data.tickIntervalMs).toBe(150);  // 300ms / 2 (igniteTickSpeedPct: 100)
   });
 
   it('processIgniteDamage は ignite_damage イベントに remainingMs を含める', () => {
