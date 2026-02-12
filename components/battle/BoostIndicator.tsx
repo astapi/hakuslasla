@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAdBoostStore } from '@/stores/useAdBoostStore';
+import { hasPermanentBoost } from '@/stores/usePurchaseStore';
 import { ms, fs } from '@/utils/scaling';
 
 export const BoostIndicator = () => {
@@ -16,8 +17,9 @@ export const BoostIndicator = () => {
     return () => clearInterval(interval);
   }, [checkExpiredBoosts]);
 
-  const dropActive = dropRateBoost.active;
-  const tierActive = tierBoost.active;
+  const permanentActive = hasPermanentBoost();
+  const dropActive = dropRateBoost.active || permanentActive;
+  const tierActive = tierBoost.active || permanentActive;
 
   if (!dropActive && !tierActive) {
     return null; // ブーストがない場合は何も表示しない
