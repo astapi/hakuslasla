@@ -20,6 +20,7 @@ import {
   createBattleEngine,
   BattleEvent,
   BossSkillId,
+  IgniteState,
 } from '@/core';
 import { CLASS_ABILITIES } from '@/core/player';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
@@ -700,6 +701,8 @@ export const useBattle = (dungeonId: string) => {
   const isProcessingRef = useRef(false);
   const isTransitioningRef = useRef(false);
   const battleEngineRef = useRef<ReturnType<typeof createBattleEngine>['engine'] | null>(null);
+  // イグナイト伝染用: 敵撃破時の発火状態を次敵へ引き継ぐ
+  const spreadIgniteRef = useRef<IgniteState | null>(null);
 
   // 一時停止の切り替え
   const togglePause = useCallback(() => {
@@ -781,6 +784,8 @@ export const useBattle = (dungeonId: string) => {
     const enemy = getEnemyForFloor(1);
     if (!enemy) return;
 
+    // イグナイト伝染状態をリセット（新しいダンジョン開始）
+    spreadIgniteRef.current = null;
     dispatch({ type: 'START_BATTLE', enemy: createBattleEnemy(enemy, dungeonId) });
   }, [getEnemyForFloor, dungeonId]);
 
@@ -866,6 +871,20 @@ export const useBattle = (dungeonId: string) => {
 
     handleMimicDefeat(state.enemy.id);
 
+    // イグナイト伝染: 発火状態を次の敵に引き継ぐ
+    const finalIgniteState = battleEngineRef.current?.getState().enemyIgniteState;
+    const mods = getCombinedModEffects();
+    if (mods.igniteSpread && finalIgniteState) {
+      spreadIgniteRef.current = {
+        damage: finalIgniteState.damage,
+        remainingMs: finalIgniteState.remainingMs,
+        tickIntervalMs: finalIgniteState.tickIntervalMs,
+        lastTickMs: 0, // 新しい敵に対してはリセット
+      };
+    } else {
+      spreadIgniteRef.current = null;
+    }
+
     dispatch({
       type: 'ENEMY_DEFEATED',
       exp: state.enemy.exp,
@@ -905,7 +924,7 @@ export const useBattle = (dungeonId: string) => {
       // 新しい敵が出現したら遷移モードを解除
       battleEngineRef.current?.setTransitioning(false);
     }, transitionDelay);
-  }, [state, dungeonId, dropFilter, handleDimensionalRushBossDefeat, handleMimicDefeat, getEnemyForFloor]);
+  }, [state, dungeonId, dropFilter, handleDimensionalRushBossDefeat, handleMimicDefeat, getEnemyForFloor, getCombinedModEffects]);
 
   const handleBattleEvents = useCallback((events: BattleEvent[]) => {
     if (!state.enemy) return;
@@ -1042,6 +1061,7 @@ export const useBattle = (dungeonId: string) => {
       return;
     }
     const playerStats = getTotalStats();
+    const mods = getCombinedModEffects();
     const { engine, events } = createBattleEngine({
       playerStats: {
         maxHp: state.playerMaxHp,
@@ -1049,7 +1069,7 @@ export const useBattle = (dungeonId: string) => {
         def: playerStats.def,
       },
       playerCurrentHp: state.playerCurrentHp,
-      playerMods: getCombinedModEffects(),
+      playerMods: mods,
       enemy: {
         id: state.enemy.id,
         name: state.enemy.name,
@@ -1060,6 +1080,8 @@ export const useBattle = (dungeonId: string) => {
         attackSpeed: state.enemy.attackSpeed,
       },
       dungeonId,
+      // イグナイト伝染: 前の敵から引き継いだ発火状態を適用
+      initialIgniteState: mods.igniteSpread ? spreadIgniteRef.current : null,
     });
     (engine as any).__key = key;
     battleEngineRef.current = engine;
@@ -1164,6 +1186,8 @@ export const useBattle = (dungeonId: string) => {
       // クリア時は次の周回を開始
       const timer = setTimeout(() => {
         const currentStats = getTotalStats();
+        // イグナイト伝染状態をリセット（新しい周回開始）
+        spreadIgniteRef.current = null;
         dispatch({ type: 'RESET_DUNGEON', playerMaxHp: currentStats.maxHp });
       }, 1500);
 
