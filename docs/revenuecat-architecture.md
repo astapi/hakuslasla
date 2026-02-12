@@ -4,33 +4,79 @@
 
 このドキュメントでは、LootDiveアプリのRevenueCat課金実装における設計思想とアーキテクチャを説明します。
 
-## 設計の核心: Product IDとEntitlement IDの統一
+## 設計の核心: Package ID → Entitlement ID マッピング
 
-### 問題意識
+### RevenueCatの概念整理
 
-当初の実装では、iOS/Android別のProduct IDをハードコードし、コード側でProduct ID → Entitlement IDのマッピングを管理していました。
+RevenueCatには以下の概念があります：
 
-**問題点:**
-- iOS/AndroidのProduct IDをコードにハードコーディング
-- `PRODUCT_IDS`と`ENTITLEMENT_IDS`の二重管理
-- RevenueCatの商品追加時に3箇所（iOS Product ID、Android Product ID、Entitlement ID）を更新する必要がある
-- メンテナンス性が低い
+| 概念 | 説明 | 例 |
+|------|------|-----|
+| **Product ID** | ストア固有の商品ID。ストアごとに異なる | iOS: `com.astapi.LootDive.tier_filter`<br>Test Store: `tier_filter` |
+| **Package ID** | RevenueCatで設定するパッケージ識別子。**ストア非依存** | `tier_filter` |
+| **Entitlement ID** | 購入によって付与される「権利」の識別子 | `tier_filter_enabled` |
 
-### 解決策
+### 重要なポイント
 
-**RevenueCat側でProduct IDとEntitlement IDを同じ名前にする**
-
+**Product IDはストアによって異なる：**
 ```
-商品の定義（RevenueCat Test Store/Production）:
-- Product ID: expanded_inventory
-- Entitlement ID: expanded_inventory
+同じ商品でも：
+- Test Store: tier_filter
+- App Store: com.astapi.LootDive.tier_filter
+- Google Play: (別のID)
 ```
 
-この設計により：
-- コード側でマッピング不要
-- `pkg.product.identifier`をそのままEntitlement IDとして使用
-- iOS/Androidの差異をRevenueCatが吸収
-- 商品追加時はRevenueCat側のみ更新すればOK
+**Package IDはストア非依存：**
+```
+どのストアでも同じ値が返る：
+- pkg.identifier → "tier_filter"
+```
+
+### なぜProduct IDをハードコードしないのか
+
+❌ **悪い設計:** Product IDで判定
+```typescript
+// ストアによって異なる値が返るため、環境依存のバグが発生する
+const productId = pkg.product.identifier;
+// Test Store: "tier_filter"
+// App Store: "com.astapi.LootDive.tier_filter"
+```
+
+✅ **良い設計:** Package IDで判定
+```typescript
+// ストアに関係なく同じ値が返る
+const packageId = pkg.identifier;
+// どのストアでも: "tier_filter"
+```
+
+### 解決策: アプリ側でPackage ID → Entitlement IDマッピング
+
+RevenueCat SDKでは、PackageからEntitlement IDを直接取得できません（[RevenueCat Community参照](https://community.revenuecat.com/general-questions-7/how-to-get-the-entitlement-name-from-a-package-3106)）。
+
+そのため、アプリ側でマッピングを管理します：
+
+```typescript
+// constants/purchases.ts
+export const PURCHASE_PRODUCTS: PurchaseProduct[] = [
+  {
+    packageId: 'tier_filter',           // RevenueCat Package ID
+    entitlementId: 'tier_filter_enabled', // Entitlement ID
+    nameKey: 'shop.tierFilter.name',
+    // ...
+  },
+];
+```
+
+## Package ID → Entitlement ID マッピング一覧
+
+| Package ID | Entitlement ID | 機能 |
+|------------|----------------|------|
+| `inventory_expansion` | `expanded_inventory` | インベントリ拡張 |
+| `storage_expansion` | `expanded_storage` | 倉庫拡張 |
+| `tier_filter` | `tier_filter_enabled` | 低Tier除外 |
+| `permanent_boost` | `permanent_boost` | 常時ブースト |
+| `character_slots` | `character_slots` | キャラスロット拡張 |
+| `premium_bundle` | `bundle` (特殊) | プレミアムバンドル |
 
 ## アーキテクチャ
 
@@ -79,11 +125,13 @@ Entitlements抽出・保存
 
 ```typescript
 const getPackageDisplayInfo = (pkg: PurchasesPackage) => {
-  const productId = pkg.product.identifier;
-  const entitlementId = productId; // Product ID = Entitlement ID
+  const packageId = pkg.identifier; // ストア非依存のPackage ID
 
-  // UI表示用の情報を取得（オプション）
-  const productInfo = PURCHASE_PRODUCTS.find(p => p.entitlementId === entitlementId);
+  // Package ID → Entitlement ID のマッピングを取得
+  const productInfo = PURCHASE_PRODUCTS.find(p => p.packageId === packageId);
+
+  // マッピングからEntitlement IDを取得（なければPackage IDをフォールバック）
+  const entitlementId = productInfo?.entitlementId || packageId;
 
   return {
     iconName: productInfo?.iconName || 'star',
@@ -95,9 +143,9 @@ const getPackageDisplayInfo = (pkg: PurchasesPackage) => {
 ```
 
 **設計ポイント:**
-- `PURCHASE_PRODUCTS`は**UI表示用のメタデータ**のみ
-- 定義がない商品でもRevenueCatの情報で表示可能
-- フォールバック機構で柔軟性を確保
+- `pkg.identifier`（Package ID）を使用。`pkg.product.identifier`（Product ID）は使わない
+- `PURCHASE_PRODUCTS`でPackage ID → Entitlement IDをマッピング
+- 定義がない商品でもRevenueCatの情報で表示可能（フォールバック）
 
 #### 購入済み判定
 
@@ -207,7 +255,7 @@ UIが更新
 ### バンドル商品の設計
 
 **RevenueCat側:**
-- Product ID: `premium_bundle`
+- Package ID: `premium_bundle`
 - Entitlements: 上記5つ全てを付与
 
 **コード側:**
@@ -218,7 +266,7 @@ UIが更新
 
 ```
 constants/
-  └── purchases.ts          # Entitlement定義、容量定数、UI表示用メタデータ
+  └── purchases.ts          # Package ID→Entitlementマッピング、容量定数
 
 stores/
   └── usePurchaseStore.ts   # 課金状態管理、RevenueCat連携
@@ -337,13 +385,16 @@ const hasEntitlement = useCallback(
 - アプリ起動時にRevenueCatを初期化 (`app/_layout.tsx`)
 - ショップ画面に`useFocusEffect`で更新処理を追加
 
-### Product IDのマッピングエラー
+### 購入済みが正しく表示されない
 
-**原因:** RevenueCatのProduct IDとコードの期待値が不一致
+**原因:** Package IDとEntitlement IDのマッピング不一致
 
 **解決策:**
-- RevenueCat側でProduct IDとEntitlement IDを統一
-- マッピング不要な設計に変更
+1. ログでPackage IDを確認: `console.log(pkg.identifier)`
+2. `PURCHASE_PRODUCTS`の`packageId`が一致しているか確認
+3. RevenueCat Dashboardで設定されているEntitlement IDを確認
+
+**注意:** `pkg.product.identifier`（Product ID）はストアによって異なるため使用しない
 
 ## ベストプラクティス
 
@@ -351,31 +402,43 @@ const hasEntitlement = useCallback(
 
 ❌ **悪い例:** Product IDで機能制御
 ```typescript
-if (productId === 'inventory_expansion') {
-  // ...
+if (productId === 'com.astapi.LootDive.inventory_expansion') {
+  // ストア依存のコード
 }
 ```
 
 ✅ **良い例:** Entitlementで機能制御
 ```typescript
 if (hasEntitlement('expanded_inventory')) {
-  // ...
+  // ストア非依存
 }
 ```
 
-### 2. UIとロジックの分離
+### 2. Package IDを使用（Product IDは使わない）
 
-- `PURCHASE_PRODUCTS`: UI表示用メタデータのみ
+❌ **悪い例:** Product IDで判定
+```typescript
+const productId = pkg.product.identifier; // ストアによって異なる
+```
+
+✅ **良い例:** Package IDで判定
+```typescript
+const packageId = pkg.identifier; // ストア非依存
+```
+
+### 3. UIとロジックの分離
+
+- `PURCHASE_PRODUCTS`: Package ID → Entitlement IDマッピング + UI表示用メタデータ
 - Entitlement判定: ビジネスロジック層で実装
 
-### 3. フォールバック機構
+### 4. フォールバック機構
 
 ```typescript
 // 定義がない商品でも表示可能
 name: productInfo ? t(productInfo.nameKey) : pkg.product.title
 ```
 
-### 4. エラーハンドリング
+### 5. エラーハンドリング
 
 ```typescript
 try {
@@ -387,7 +450,7 @@ try {
 }
 ```
 
-### 5. ログ出力
+### 6. ログ出力
 
 ```typescript
 console.log('[Purchase] Active entitlements:', Array.from(newEntitlements));
@@ -397,19 +460,29 @@ console.log('[Purchase] Active entitlements:', Array.from(newEntitlements));
 
 ## RevenueCat設定のポイント
 
-### 1. Product IDとEntitlement IDの統一
+### 1. Package設定
 
-**必須:** 各商品でProduct IDとEntitlement IDを同じ名前にする
+RevenueCat Dashboardで各Packageを作成し、ストアごとのProductを紐付ける：
 
 ```
-商品: インベントリ拡張
-- Product ID: expanded_inventory
-- Entitlement ID: expanded_inventory
+Package: tier_filter
+  ├── Test Store: tier_filter
+  ├── App Store: com.astapi.LootDive.tier_filter
+  └── Google Play: (Android用Product ID)
 ```
 
-### 2. バンドル商品の設定
+### 2. Entitlement設定
 
-**Product ID:** `premium_bundle`（単一）
+各Entitlementを作成し、対応するProductを紐付ける：
+
+```
+Entitlement: tier_filter_enabled
+  └── Products: tier_filter (全ストア共通)
+```
+
+### 3. バンドル商品の設定
+
+**Package ID:** `premium_bundle`
 **Entitlements:** 複数のEntitlementを付与
 - `expanded_inventory`
 - `expanded_storage`
@@ -417,7 +490,7 @@ console.log('[Purchase] Active entitlements:', Array.from(newEntitlements));
 - `permanent_boost`
 - `character_slots`
 
-### 3. Product Type
+### 4. Product Type
 
 全て **Non-consumable**（買い切り型）で設定
 
@@ -425,8 +498,8 @@ console.log('[Purchase] Active entitlements:', Array.from(newEntitlements));
 
 ### 設計の特徴
 
-1. **シンプル:** Product IDとEntitlement IDの統一でマッピング不要
-2. **柔軟:** 新商品はRevenueCat側のみで追加可能
+1. **ストア非依存:** Package IDを使用し、Product IDのハードコードを回避
+2. **明示的マッピング:** Package ID → Entitlement IDを`PURCHASE_PRODUCTS`で管理
 3. **リアクティブ:** Zustandで状態変化を自動検知
 4. **堅牢:** フォールバック機構とエラーハンドリング
 5. **デバッグ可能:** 環境変数で開発時のテストが容易
@@ -436,12 +509,13 @@ console.log('[Purchase] Active entitlements:', Array.from(newEntitlements));
 新しい課金機能を追加する場合：
 
 1. **RevenueCat側:**
-   - Product IDとEntitlement IDを同じ名前で商品作成
+   - Package作成（各ストアのProductを紐付け）
+   - Entitlement作成（Productに紐付け）
 
 2. **コード側:**
    - `ENTITLEMENT_IDS`に定数追加
-   - `PURCHASE_PRODUCTS`にUI表示情報追加（オプション）
+   - `PURCHASE_PRODUCTS`にマッピング追加（packageId, entitlementId, UI情報）
    - ヘルパー関数追加（例: `hasNewFeature()`）
    - 機能実装箇所でEntitlementチェック
 
-3箇所の更新で完了。iOS/AndroidのProduct IDハードコーディングは不要。
+Product IDのハードコーディングは不要。Package IDとEntitlement IDのマッピングのみ管理。

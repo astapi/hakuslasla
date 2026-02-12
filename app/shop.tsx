@@ -51,15 +51,15 @@ export default function ShopScreen() {
     }
   }, [isInitialized, availablePackages.length, fetchOfferings]);
 
-  // デバッグ: 全パッケージのProduct IDを確認
+  // デバッグ: 全パッケージのIDを確認
   useEffect(() => {
     if (availablePackages.length > 0) {
-      console.log('[Shop] All Product IDs from RevenueCat:');
+      console.log('[Shop] All Packages from RevenueCat:');
       availablePackages.forEach((pkg) => {
-        console.log(`  - ${pkg.product.identifier}: ${pkg.product.title}`);
+        console.log(`  - Package ID: ${pkg.identifier}, Product ID: ${pkg.product.identifier}, Title: ${pkg.product.title}`);
       });
 
-      console.log('[Shop] Expected Product IDs from code:');
+      console.log('[Shop] Expected Entitlement IDs from code:');
       PURCHASE_PRODUCTS.forEach((p) => {
         console.log(`  - ${p.entitlementId}: ${t(p.nameKey)}`);
       });
@@ -141,14 +141,13 @@ export default function ShopScreen() {
 
   // パッケージに対応するアイコンと翻訳キーを取得
   const getPackageDisplayInfo = (pkg: PurchasesPackage) => {
-    const productId = pkg.product.identifier;
+    const packageId = pkg.identifier;
 
-    // Product IDをそのままEntitlement IDとして使用
-    // RevenueCat側でProduct IDとEntitlement IDを統一することを前提とする
-    const entitlementId = productId;
+    // Package ID → Entitlement ID のマッピングを取得
+    const productInfo = PURCHASE_PRODUCTS.find(p => p.packageId === packageId);
 
-    // UI表示用の情報を取得（オプション）
-    const productInfo = PURCHASE_PRODUCTS.find(p => p.entitlementId === entitlementId);
+    // マッピングからEntitlement IDを取得（なければPackage IDをフォールバック）
+    const entitlementId = productInfo?.entitlementId || packageId;
 
     return {
       iconName: productInfo?.iconName || 'star',
