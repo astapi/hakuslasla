@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAdBoostStore } from '@/stores/useAdBoostStore';
 import { hasPermanentBoost } from '@/stores/usePurchaseStore';
-import { ms, fs } from '@/utils/scaling';
+import { ms } from '@/utils/scaling';
 
 export const BoostIndicator = () => {
   const { dropRateBoost, tierBoost, checkExpiredBoosts } = useAdBoostStore();
@@ -29,14 +29,12 @@ export const BoostIndicator = () => {
     <View style={styles.container}>
       {dropActive && (
         <View style={[styles.badge, styles.dropBadge]}>
-          <MaterialCommunityIcons name="treasure-chest" size={14} color="#FFD700" />
-          <Text style={styles.badgeText}>ドロップ率UP</Text>
+          <MaterialCommunityIcons name="treasure-chest" size={16} color="#FFD700" />
         </View>
       )}
       {tierActive && (
         <View style={[styles.badge, styles.tierBadge]}>
-          <MaterialCommunityIcons name="star-four-points" size={14} color="#FF69B4" />
-          <Text style={styles.badgeText}>高品質UP</Text>
+          <MaterialCommunityIcons name="star-four-points" size={16} color="#FF69B4" />
         </View>
       )}
     </View>
@@ -50,12 +48,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   badge: {
-    flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: ms(8),
-    paddingVertical: ms(4),
-    borderRadius: ms(12),
-    gap: ms(4),
+    justifyContent: 'center',
+    width: ms(28),
+    height: ms(28),
+    borderRadius: ms(14),
     borderWidth: 1,
   },
   dropBadge: {
@@ -65,13 +62,5 @@ const styles = StyleSheet.create({
   tierBadge: {
     backgroundColor: 'rgba(255, 105, 180, 0.15)',
     borderColor: 'rgba(255, 105, 180, 0.4)',
-  },
-  badgeText: {
-    fontSize: fs(11),
-    fontWeight: 'bold',
-    color: '#fff',
-    textShadowColor: 'rgba(0, 0, 0, 0.8)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
   },
 });
