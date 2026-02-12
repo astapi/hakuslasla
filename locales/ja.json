@@ -1932,6 +1932,10 @@
   },
   "modDescriptions": {
     "poisonChance": "毒付与+{{value}}%",
+    "igniteChance": "発火付与+{{value}}%",
+    "igniteDuration": "発火時間+{{value}}%",
+    "igniteTickSpeed": "発火速度+{{value}}%",
+    "igniteDamage": "発火ダメージ+{{value}}%",
     "criticalChance": "クリティカル+{{value}}%",
     "criticalDamage": "クリダメ+{{value}}%",
     "damageReduction": "被ダメ-{{value}}%",
