@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
+import { CLASS_ABILITIES } from '@/core/player';
 import { HPBar } from '../battle/HPBar';
 import { ms, fs } from '@/utils/scaling';
 
@@ -38,6 +39,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
   const maxHp = usePlayerStore((state) => state.maxHp);
   const atk = usePlayerStore((state) => state.atk);
   const def = usePlayerStore((state) => state.def);
+  const characterType = usePlayerStore((state) => state.characterType);
 
   // useMemo でキャッシュして無限ループを防止
   // 依存配列の値は getTotalStats() 内部で使用されるため必要
@@ -99,6 +101,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     const hpRegenPerSecond = totalHpRegen + Math.floor(finalMaxHp * totalHpRegenPct / 100);
     const poisonDamageMoreTotal = combinedMods.poisonDamageMorePct.reduce((sum, v) => sum + v, 0);
     const attackSpeedMoreTotal = combinedMods.attackSpeedMorePct.reduce((sum, v) => sum + v, 0);
+    const igniteDamageMoreTotal = combinedMods.igniteDamageMorePct.reduce((sum, v) => sum + v, 0);
     const finalAttackSpeed = getAttackSpeedFromMods(combinedMods);
 
     return {
@@ -126,6 +129,10 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       poisonDamageReduction: combinedMods.poisonDamageReduction,
       poisonLifesteal: combinedMods.poisonLifesteal,
       noDirectDamage: combinedMods.noDirectDamage,
+      igniteChance: combinedMods.igniteChance + (CLASS_ABILITIES[state.characterType]?.igniteChance || 0),
+      igniteDamagePct: combinedMods.igniteDamagePct,
+      igniteDamageMore: igniteDamageMoreTotal,
+      igniteDurationPct: combinedMods.igniteDurationPct,
       damageReductionPct: combinedMods.damageReductionPct,
       attackSpeedPct: combinedMods.attackSpeedPct,
       attackSpeedMore: attackSpeedMoreTotal,
@@ -258,6 +265,39 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.noDirectDamage ? styles.poisonText : undefined}>
                   {breakdown.noDirectDamage ? t('status.on') : t('status.off')}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.separator} />
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.igniteChance')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.igniteChance > 0 ? styles.igniteText : undefined}>
+                  {breakdown.igniteChance}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.igniteDamage')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.igniteDamagePct > 0 ? styles.igniteText : undefined}>
+                  +{breakdown.igniteDamagePct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.igniteDamageMore')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.igniteDamageMore > 0 ? styles.igniteText : undefined}>
+                  +{breakdown.igniteDamageMore}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.igniteDuration')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.igniteDurationPct > 0 ? styles.igniteText : undefined}>
+                  +{breakdown.igniteDurationPct}%
                 </Text>
               </Text>
             </View>
@@ -427,6 +467,9 @@ const styles = StyleSheet.create({
   },
   poisonText: {
     color: '#9CCC65',
+  },
+  igniteText: {
+    color: '#FF7043',
   },
   healText: {
     color: '#4CAF50',

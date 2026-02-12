@@ -39,6 +39,7 @@ describe('core/modEffects', () => {
       poison_damage_reduction: 0,
       poison_lifesteal: 0,
       no_direct_damage: false,
+      ignite_chance: 0,
       ignite_damage_pct: 0,
       ignite_damage_more_pct: [],
       ignite_duration_pct: 0,
