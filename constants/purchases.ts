@@ -13,45 +13,6 @@ export const REVENUECAT_API_KEY = Platform.select({
   android: 'goog_XXXXXXXXXXXX', // Android用（リリース時に本番キーを設定）
 }) as string;
 
-// Product IDs（ストア別）
-export const PRODUCT_IDS = {
-  // インベントリ拡張（50→200）
-  INVENTORY_EXPANSION: Platform.select({
-    ios: 'com.astapi.LootDive.inventory_expansion',
-    android: 'inventory_expansion',
-  }) as string,
-
-  // 倉庫拡張（20→100）
-  STORAGE_EXPANSION: Platform.select({
-    ios: 'com.astapi.LootDive.storage_expansion',
-    android: 'storage_expansion',
-  }) as string,
-
-  // 低Tier除外（T8-T10除外）
-  TIER_FILTER: Platform.select({
-    ios: 'com.astapi.LootDive.tier_filter',
-    android: 'tier_filter',
-  }) as string,
-
-  // 常時ブースト
-  PERMANENT_BOOST: Platform.select({
-    ios: 'com.astapi.LootDive.permanent_boost',
-    android: 'permanent_boost',
-  }) as string,
-
-  // キャラクタースロット拡張（1→5枠）
-  CHARACTER_SLOTS: Platform.select({
-    ios: 'com.astapi.LootDive.character_slots',
-    android: 'character_slots',
-  }) as string,
-
-  // プレミアムバンドル（全権利一括購入）
-  PREMIUM_BUNDLE: Platform.select({
-    ios: 'com.astapi.LootDive.premium_bundle',
-    android: 'premium_bundle',
-  }) as string,
-} as const;
-
 // Entitlement IDs（RevenueCatダッシュボードで設定）
 export const ENTITLEMENT_IDS = {
   EXPANDED_INVENTORY: 'expanded_inventory',
@@ -80,10 +41,10 @@ export const TIER_FILTER_SETTINGS = {
   PREMIUM_MAX_TIER: 1,   // 課金後最高Tier
 } as const;
 
-// 商品情報（UI表示用のみ）
-// RevenueCat側でProduct IDとEntitlement IDを統一することを前提とする
+// 商品情報（UI表示用 + Package ID → Entitlement ID マッピング）
 export interface PurchaseProduct {
-  entitlementId: string | 'bundle'; // Product IDと同じ値を使用。'bundle'の場合は全Entitlementが必要
+  packageId: string;      // RevenueCat Package ID（ストア非依存）
+  entitlementId: string | 'bundle'; // Entitlement ID。'bundle'の場合は全Entitlementが必要
   nameKey: string;        // i18nキー
   descriptionKey: string; // i18nキー
   iconName: string;       // MaterialCommunityIconsの名前
@@ -91,36 +52,42 @@ export interface PurchaseProduct {
 
 export const PURCHASE_PRODUCTS: PurchaseProduct[] = [
   {
+    packageId: 'inventory_expansion',
     entitlementId: ENTITLEMENT_IDS.EXPANDED_INVENTORY,
     nameKey: 'shop.inventoryExpansion.name',
     descriptionKey: 'shop.inventoryExpansion.description',
     iconName: 'bag-personal',
   },
   {
+    packageId: 'storage_expansion',
     entitlementId: ENTITLEMENT_IDS.EXPANDED_STORAGE,
     nameKey: 'shop.storageExpansion.name',
     descriptionKey: 'shop.storageExpansion.description',
     iconName: 'warehouse',
   },
   {
+    packageId: 'tier_filter',
     entitlementId: ENTITLEMENT_IDS.TIER_FILTER_ENABLED,
     nameKey: 'shop.tierFilter.name',
     descriptionKey: 'shop.tierFilter.description',
     iconName: 'filter',
   },
   {
+    packageId: 'permanent_boost',
     entitlementId: ENTITLEMENT_IDS.PERMANENT_BOOST,
     nameKey: 'shop.permanentBoost.name',
     descriptionKey: 'shop.permanentBoost.description',
     iconName: 'rocket-launch',
   },
   {
+    packageId: 'character_slots',
     entitlementId: ENTITLEMENT_IDS.CHARACTER_SLOTS,
     nameKey: 'shop.characterSlots.name',
     descriptionKey: 'shop.characterSlots.description',
     iconName: 'account-multiple-plus',
   },
   {
+    packageId: 'premium_bundle',
     entitlementId: 'bundle', // 特別値：全Entitlementを含む
     nameKey: 'shop.premiumBundle.name',
     descriptionKey: 'shop.premiumBundle.description',
