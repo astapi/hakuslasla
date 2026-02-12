@@ -214,6 +214,15 @@
       "id": "ruins_magic_sword",
       "name": "遺跡の魔剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 12,
+      "def": 0
+    },
+    "ruins_magic_staff": {
+      "id": "ruins_magic_staff",
+      "name": "遺跡の魔杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 12,
       "def": 0
     },
@@ -296,6 +305,15 @@
       "id": "goblin_blade",
       "name": "ゴブリンの蛮刀",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 14,
+      "def": 0
+    },
+    "goblin_staff": {
+      "id": "goblin_staff",
+      "name": "ゴブリンの杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 14,
       "def": 0
     },
@@ -334,6 +352,7 @@
       "id": "shaman_staff",
       "name": "シャーマンの杖",
       "slot": "weapon",
+      "weaponType": "staff",
       "atk": 10,
       "def": 0,
       "fixedMods": [
@@ -380,6 +399,15 @@
       "id": "demon_blade",
       "name": "魔剣デモンブレイド",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 18,
+      "def": 0
+    },
+    "demon_staff": {
+      "id": "demon_staff",
+      "name": "魔杖デモンスタッフ",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 18,
       "def": 0
     },
@@ -464,6 +492,15 @@
       "id": "frost_blade",
       "name": "氷結の剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 22,
+      "def": 0
+    },
+    "frost_staff": {
+      "id": "frost_staff",
+      "name": "氷結の杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 22,
       "def": 0
     },
@@ -502,6 +539,7 @@
       "id": "frozen_staff",
       "name": "凍結の杖",
       "slot": "weapon",
+      "weaponType": "staff",
       "atk": 20,
       "def": 0,
       "fixedMods": [
@@ -526,6 +564,15 @@
       "id": "magma_blade",
       "name": "マグマブレイド",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 28,
+      "def": 0
+    },
+    "magma_staff": {
+      "id": "magma_staff",
+      "name": "マグマスタッフ",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 28,
       "def": 0
     },
@@ -588,6 +635,15 @@
       "id": "shadow_blade",
       "name": "シャドウブレイド",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 38,
+      "def": 0
+    },
+    "shadow_staff": {
+      "id": "shadow_staff",
+      "name": "シャドウスタッフ",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 38,
       "def": 0
     },
@@ -626,6 +682,7 @@
       "id": "cursed_branch",
       "name": "呪いの枝",
       "slot": "weapon",
+      "weaponType": "staff",
       "atk": 35,
       "def": 0,
       "fixedMods": [
@@ -650,6 +707,15 @@
       "id": "sky_blade",
       "name": "天空剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 50,
+      "def": 0
+    },
+    "sky_staff": {
+      "id": "sky_staff",
+      "name": "天空杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 50,
       "def": 0
     },
@@ -713,6 +779,15 @@
       "id": "hellfire_blade",
       "name": "獄炎剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 68,
+      "def": 0
+    },
+    "hellfire_staff": {
+      "id": "hellfire_staff",
+      "name": "獄炎杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 68,
       "def": 0
     },
@@ -776,6 +851,15 @@
       "id": "dragon_slayer",
       "name": "竜殺しの剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 90,
+      "def": 0
+    },
+    "dragon_staff": {
+      "id": "dragon_staff",
+      "name": "竜殺しの杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 90,
       "def": 0
     },
@@ -851,6 +935,15 @@
       "id": "holy_blade",
       "name": "聖剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 120,
+      "def": 0
+    },
+    "holy_staff": {
+      "id": "holy_staff",
+      "name": "聖杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 120,
       "def": 0
     },
@@ -914,6 +1007,15 @@
       "id": "chaos_blade",
       "name": "混沌の剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 160,
+      "def": 0
+    },
+    "chaos_staff": {
+      "id": "chaos_staff",
+      "name": "混沌の杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 160,
       "def": 0
     },
@@ -977,6 +1079,15 @@
       "id": "apocalypse_blade",
       "name": "終焉の剣",
       "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 220,
+      "def": 0
+    },
+    "apocalypse_staff": {
+      "id": "apocalypse_staff",
+      "name": "終焉の杖",
+      "slot": "weapon",
+      "weaponType": "staff",
       "atk": 220,
       "def": 0
     },

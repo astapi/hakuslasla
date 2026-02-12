@@ -92,6 +92,7 @@
         ],
         "dungeon": [
           { "itemId": "ruins_magic_sword", "dropRate": 15 },
+          { "itemId": "ruins_magic_staff", "dropRate": 15 },
           { "itemId": "cursed_robe", "dropRate": 12 },
           { "itemId": "gargoyle_boots", "dropRate": 12 },
           { "itemId": "ancient_ring", "dropRate": 10 },
@@ -121,6 +122,7 @@
       "dropTable": {
         "common": [
           { "itemId": "ruins_magic_sword", "dropRate": 5 },
+          { "itemId": "ruins_magic_staff", "dropRate": 5 },
           { "itemId": "cursed_robe", "dropRate": 5 },
           { "itemId": "gargoyle_boots", "dropRate": 5 },
           { "itemId": "ancient_ring", "dropRate": 5 },
@@ -128,6 +130,7 @@
         ],
         "dungeon": [
           { "itemId": "goblin_blade", "dropRate": 15 },
+          { "itemId": "goblin_staff", "dropRate": 15 },
           { "itemId": "goblin_mail", "dropRate": 12 },
           { "itemId": "spiked_gauntlets", "dropRate": 12 },
           { "itemId": "raider_boots", "dropRate": 10 },
@@ -156,6 +159,7 @@
       "dropTable": {
         "common": [
           { "itemId": "ruins_magic_sword", "dropRate": 5 },
+          { "itemId": "ruins_magic_staff", "dropRate": 5 },
           { "itemId": "cursed_robe", "dropRate": 5 },
           { "itemId": "gargoyle_boots", "dropRate": 5 },
           { "itemId": "ancient_ring", "dropRate": 5 },
@@ -191,6 +195,7 @@
       "dropTable": {
         "common": [
           { "itemId": "goblin_blade", "dropRate": 5 },
+          { "itemId": "goblin_staff", "dropRate": 5 },
           { "itemId": "goblin_mail", "dropRate": 5 },
           { "itemId": "spiked_gauntlets", "dropRate": 5 },
           { "itemId": "raider_boots", "dropRate": 5 },
@@ -198,6 +203,7 @@
         ],
         "dungeon": [
           { "itemId": "demon_blade", "dropRate": 15 },
+          { "itemId": "demon_staff", "dropRate": 15 },
           { "itemId": "dark_plate", "dropRate": 12 },
           { "itemId": "dragon_gauntlets", "dropRate": 12 },
           { "itemId": "inferno_boots", "dropRate": 10 },
@@ -226,6 +232,7 @@
       "dropTable": {
         "common": [
           { "itemId": "demon_blade", "dropRate": 5 },
+          { "itemId": "demon_staff", "dropRate": 5 },
           { "itemId": "dark_plate", "dropRate": 5 },
           { "itemId": "dragon_gauntlets", "dropRate": 5 },
           { "itemId": "inferno_boots", "dropRate": 5 },
@@ -258,6 +265,7 @@
       "dropTable": {
         "common": [
           { "itemId": "demon_blade", "dropRate": 5 },
+          { "itemId": "demon_staff", "dropRate": 5 },
           { "itemId": "dark_plate", "dropRate": 5 },
           { "itemId": "dragon_gauntlets", "dropRate": 5 },
           { "itemId": "inferno_boots", "dropRate": 5 },
@@ -265,6 +273,7 @@
         ],
         "dungeon": [
           { "itemId": "frost_blade", "dropRate": 15 },
+          { "itemId": "frost_staff", "dropRate": 15 },
           { "itemId": "ice_armor", "dropRate": 12 },
           { "itemId": "frozen_gauntlets", "dropRate": 12 },
           { "itemId": "blizzard_boots", "dropRate": 10 },
@@ -294,6 +303,7 @@
       "dropTable": {
         "common": [
           { "itemId": "frost_blade", "dropRate": 5 },
+          { "itemId": "frost_staff", "dropRate": 5 },
           { "itemId": "ice_armor", "dropRate": 5 },
           { "itemId": "frozen_gauntlets", "dropRate": 5 },
           { "itemId": "blizzard_boots", "dropRate": 5 },
@@ -326,6 +336,7 @@
       "dropTable": {
         "common": [
           { "itemId": "frost_blade", "dropRate": 5 },
+          { "itemId": "frost_staff", "dropRate": 5 },
           { "itemId": "ice_armor", "dropRate": 5 },
           { "itemId": "frozen_gauntlets", "dropRate": 5 },
           { "itemId": "blizzard_boots", "dropRate": 5 },
@@ -333,6 +344,7 @@
         ],
         "dungeon": [
           { "itemId": "magma_blade", "dropRate": 15 },
+          { "itemId": "magma_staff", "dropRate": 15 },
           { "itemId": "volcano_armor", "dropRate": 12 },
           { "itemId": "flame_gauntlets", "dropRate": 12 },
           { "itemId": "ember_boots", "dropRate": 10 },
@@ -361,6 +373,7 @@
       "dropTable": {
         "common": [
           { "itemId": "magma_blade", "dropRate": 5 },
+          { "itemId": "magma_staff", "dropRate": 5 },
           { "itemId": "volcano_armor", "dropRate": 5 },
           { "itemId": "flame_gauntlets", "dropRate": 5 },
           { "itemId": "ember_boots", "dropRate": 5 },
@@ -393,6 +406,7 @@
       "dropTable": {
         "common": [
           { "itemId": "magma_blade", "dropRate": 5 },
+          { "itemId": "magma_staff", "dropRate": 5 },
           { "itemId": "volcano_armor", "dropRate": 5 },
           { "itemId": "flame_gauntlets", "dropRate": 5 },
           { "itemId": "ember_boots", "dropRate": 5 },
@@ -400,6 +414,7 @@
         ],
         "dungeon": [
           { "itemId": "shadow_blade", "dropRate": 15 },
+          { "itemId": "shadow_staff", "dropRate": 15 },
           { "itemId": "dark_bark_armor", "dropRate": 12 },
           { "itemId": "nightmare_gauntlets", "dropRate": 12 },
           { "itemId": "forest_walker_boots", "dropRate": 10 },
@@ -425,6 +440,7 @@
       "dropTable": {
         "common": [
           { "itemId": "shadow_blade", "dropRate": 5 },
+          { "itemId": "shadow_staff", "dropRate": 5 },
           { "itemId": "dark_bark_armor", "dropRate": 5 },
           { "itemId": "nightmare_gauntlets", "dropRate": 5 },
           { "itemId": "forest_walker_boots", "dropRate": 5 },
@@ -432,6 +448,7 @@
         ],
         "dungeon": [
           { "itemId": "sky_blade", "dropRate": 15 },
+          { "itemId": "sky_staff", "dropRate": 15 },
           { "itemId": "cloud_armor", "dropRate": 12 },
           { "itemId": "storm_gauntlets", "dropRate": 12 },
           { "itemId": "wind_walker_boots", "dropRate": 10 },
@@ -457,6 +474,7 @@
       "dropTable": {
         "common": [
           { "itemId": "sky_blade", "dropRate": 5 },
+          { "itemId": "sky_staff", "dropRate": 5 },
           { "itemId": "cloud_armor", "dropRate": 5 },
           { "itemId": "storm_gauntlets", "dropRate": 5 },
           { "itemId": "wind_walker_boots", "dropRate": 5 },
@@ -464,6 +482,7 @@
         ],
         "dungeon": [
           { "itemId": "hellfire_blade", "dropRate": 15 },
+          { "itemId": "hellfire_staff", "dropRate": 15 },
           { "itemId": "infernal_plate", "dropRate": 12 },
           { "itemId": "demon_gauntlets", "dropRate": 12 },
           { "itemId": "hellwalker_boots", "dropRate": 10 },
@@ -489,6 +508,7 @@
       "dropTable": {
         "common": [
           { "itemId": "hellfire_blade", "dropRate": 5 },
+          { "itemId": "hellfire_staff", "dropRate": 5 },
           { "itemId": "infernal_plate", "dropRate": 5 },
           { "itemId": "demon_gauntlets", "dropRate": 5 },
           { "itemId": "hellwalker_boots", "dropRate": 5 },
@@ -496,6 +516,7 @@
         ],
         "dungeon": [
           { "itemId": "dragon_slayer", "dropRate": 15 },
+          { "itemId": "dragon_staff", "dropRate": 15 },
           { "itemId": "dragon_scale_armor", "dropRate": 12 },
           { "itemId": "dragon_claw_gauntlets", "dropRate": 12 },
           { "itemId": "dragon_hide_boots", "dropRate": 10 },
@@ -521,6 +542,7 @@
       "dropTable": {
         "common": [
           { "itemId": "dragon_slayer", "dropRate": 5 },
+          { "itemId": "dragon_staff", "dropRate": 5 },
           { "itemId": "dragon_scale_armor", "dropRate": 5 },
           { "itemId": "dragon_claw_gauntlets", "dropRate": 5 },
           { "itemId": "dragon_hide_boots", "dropRate": 5 },
@@ -528,6 +550,7 @@
         ],
         "dungeon": [
           { "itemId": "holy_blade", "dropRate": 15 },
+          { "itemId": "holy_staff", "dropRate": 15 },
           { "itemId": "divine_armor", "dropRate": 12 },
           { "itemId": "seraph_gauntlets", "dropRate": 12 },
           { "itemId": "divine_boots", "dropRate": 10 },
@@ -553,6 +576,7 @@
       "dropTable": {
         "common": [
           { "itemId": "holy_blade", "dropRate": 5 },
+          { "itemId": "holy_staff", "dropRate": 5 },
           { "itemId": "divine_armor", "dropRate": 5 },
           { "itemId": "seraph_gauntlets", "dropRate": 5 },
           { "itemId": "divine_boots", "dropRate": 5 },
@@ -560,6 +584,7 @@
         ],
         "dungeon": [
           { "itemId": "chaos_blade", "dropRate": 15 },
+          { "itemId": "chaos_staff", "dropRate": 15 },
           { "itemId": "void_armor", "dropRate": 12 },
           { "itemId": "chaos_gauntlets", "dropRate": 12 },
           { "itemId": "void_boots", "dropRate": 10 },
@@ -589,6 +614,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -596,6 +622,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -618,6 +645,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -625,6 +653,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -647,6 +676,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -654,6 +684,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -676,6 +707,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -683,6 +715,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -705,6 +738,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -712,6 +746,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -734,6 +769,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -741,6 +777,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -763,6 +800,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -770,6 +808,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -794,6 +833,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -801,6 +841,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -825,6 +866,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -837,6 +879,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -862,6 +905,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -874,6 +918,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -898,6 +943,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -910,6 +956,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -934,6 +981,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -941,6 +989,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -965,6 +1014,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -972,6 +1022,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -994,6 +1045,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -1001,6 +1053,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -1023,6 +1076,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -1030,6 +1084,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -1053,6 +1108,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -1060,6 +1116,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -1082,6 +1139,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -1089,6 +1147,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -1111,6 +1170,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -1118,6 +1178,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -1140,6 +1201,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -1147,6 +1209,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
@@ -1165,6 +1228,7 @@
       "dropTable": {
         "common": [
           { "itemId": "chaos_blade", "dropRate": 5 },
+          { "itemId": "chaos_staff", "dropRate": 5 },
           { "itemId": "void_armor", "dropRate": 5 },
           { "itemId": "chaos_gauntlets", "dropRate": 5 },
           { "itemId": "void_boots", "dropRate": 5 },
@@ -1172,6 +1236,7 @@
         ],
         "dungeon": [
           { "itemId": "apocalypse_blade", "dropRate": 15 },
+          { "itemId": "apocalypse_staff", "dropRate": 15 },
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },

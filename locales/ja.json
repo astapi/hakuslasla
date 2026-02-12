@@ -200,9 +200,10 @@
     "attackSpeedMore": "攻速more",
     "finalAttackSpeed": "最終AS",
     "igniteChance": "発火確率",
+    "igniteDamage": "発火ダメージ",
+    "igniteDamageMore": "発火more",
     "igniteDuration": "発火時間",
     "igniteTickSpeed": "発火速度",
-    "igniteDamage": "発火ダメージ",
     "perSecond": "/秒",
     "on": "ON",
     "off": "OFF",
@@ -456,6 +457,9 @@
     "ruins_magic_sword": {
       "name": "遺跡の魔剣"
     },
+    "ruins_magic_staff": {
+      "name": "遺跡の魔杖"
+    },
     "cursed_robe": {
       "name": "呪われたローブ"
     },
@@ -482,6 +486,9 @@
     },
     "goblin_blade": {
       "name": "ゴブリンの蛮刀"
+    },
+    "goblin_staff": {
+      "name": "ゴブリンの杖"
     },
     "goblin_mail": {
       "name": "ゴブリンメイル"
@@ -510,6 +517,9 @@
     "demon_blade": {
       "name": "魔剣デモンブレイド"
     },
+    "demon_staff": {
+      "name": "魔杖デモンスタッフ"
+    },
     "dark_plate": {
       "name": "闇騎士の鎧"
     },
@@ -537,6 +547,9 @@
     "frost_blade": {
       "name": "氷結の剣"
     },
+    "frost_staff": {
+      "name": "氷結の杖"
+    },
     "ice_armor": {
       "name": "アイスアーマー"
     },
@@ -557,6 +570,9 @@
     },
     "magma_blade": {
       "name": "マグマブレイド"
+    },
+    "magma_staff": {
+      "name": "マグマスタッフ"
     },
     "volcano_armor": {
       "name": "火山の鎧"
@@ -579,6 +595,9 @@
     "shadow_blade": {
       "name": "シャドウブレイド"
     },
+    "shadow_staff": {
+      "name": "シャドウスタッフ"
+    },
     "dark_bark_armor": {
       "name": "暗黒樹皮の鎧"
     },
@@ -599,6 +618,9 @@
     },
     "sky_blade": {
       "name": "天空剣"
+    },
+    "sky_staff": {
+      "name": "天空杖"
     },
     "cloud_armor": {
       "name": "雲海の鎧"
@@ -621,6 +643,9 @@
     "hellfire_blade": {
       "name": "獄炎剣"
     },
+    "hellfire_staff": {
+      "name": "獄炎杖"
+    },
     "infernal_plate": {
       "name": "煉獄の鎧"
     },
@@ -641,6 +666,9 @@
     },
     "dragon_slayer": {
       "name": "竜殺しの剣"
+    },
+    "dragon_staff": {
+      "name": "竜殺しの杖"
     },
     "dragon_scale_armor": {
       "name": "竜鱗の鎧"
@@ -666,6 +694,9 @@
     "holy_blade": {
       "name": "聖剣"
     },
+    "holy_staff": {
+      "name": "聖杖"
+    },
     "divine_armor": {
       "name": "神聖なる鎧"
     },
@@ -687,6 +718,9 @@
     "chaos_blade": {
       "name": "混沌の剣"
     },
+    "chaos_staff": {
+      "name": "混沌の杖"
+    },
     "void_armor": {
       "name": "虚無の鎧"
     },
@@ -707,6 +741,9 @@
     },
     "apocalypse_blade": {
       "name": "終焉の剣"
+    },
+    "apocalypse_staff": {
+      "name": "終焉の杖"
     },
     "end_armor": {
       "name": "終末の鎧"
@@ -1835,6 +1872,62 @@
     "speed_final2": {
       "name": "神速",
       "description": "攻撃速度 20% more, ATK 10% more"
+    },
+    "ignite_1": {
+      "name": "発火の心得",
+      "description": "HP +20, 発火確率 +6%, 発火ダメージ +10%"
+    },
+    "ignite_2": {
+      "name": "発火強化 I",
+      "description": "発火確率 +6%, 発火ダメージ +10%"
+    },
+    "ignite_3": {
+      "name": "体力と防御 I",
+      "description": "HP +25, DEF +10, 発火確率 +6%"
+    },
+    "ignite_4": {
+      "name": "生命力増幅 I",
+      "description": "DEF +10, HP +10% increased, 発火確率 +6%"
+    },
+    "ignite_5": {
+      "name": "発火強化 II",
+      "description": "発火確率 +6%, 発火ダメージ +15%"
+    },
+    "ignite_6": {
+      "name": "発火時間延長 I",
+      "description": "発火確率 +6%, 発火時間 +15%"
+    },
+    "ignite_7": {
+      "name": "耐久強化",
+      "description": "DEF +20, DEF +15% increased, 発火確率 +6%"
+    },
+    "ignite_key1": {
+      "name": "緩慢なる炎",
+      "description": "【キーストーン】発火確率 +6%, AS 0.8未満時、ダメージ軽減 +10%"
+    },
+    "ignite_8": {
+      "name": "発火強化 III",
+      "description": "発火確率 +6%, 発火ダメージ +20%"
+    },
+    "ignite_9": {
+      "name": "発火時間延長 II",
+      "description": "発火確率 +6%, 発火時間 +20%"
+    },
+    "ignite_10": {
+      "name": "生命強化",
+      "description": "HP +30, HP +15% increased, 発火確率 +6%"
+    },
+    "ignite_11": {
+      "name": "堅固なる身体",
+      "description": "DEF +30, DEF +20% increased, 発火確率 +6%"
+    },
+    "ignite_final1": {
+      "name": "灼熱の極み",
+      "description": "発火確率 +6%, 発火ダメージ 25% more, HP +10% increased"
+    },
+    "ignite_final2": {
+      "name": "伝染する炎",
+      "description": "【キーストーン】発火確率 +6%, イグナイト伝染 - 発火中の敵死亡時、次の敵に発火継承。DEF +10% increased"
     }
   },
   "modDescriptions": {

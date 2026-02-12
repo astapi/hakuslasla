@@ -200,9 +200,10 @@
     "attackSpeedMore": "AS More",
     "finalAttackSpeed": "Final AS",
     "igniteChance": "Ignite Chance",
+    "igniteDamage": "Ignite Damage",
+    "igniteDamageMore": "Ignite More",
     "igniteDuration": "Ignite Dur",
     "igniteTickSpeed": "Ignite Speed",
-    "igniteDamage": "Ignite Damage",
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",
@@ -456,6 +457,9 @@
     "ruins_magic_sword": {
       "name": "Ruins Magic Sword"
     },
+    "ruins_magic_staff": {
+      "name": "Ruins Magic Staff"
+    },
     "cursed_robe": {
       "name": "Cursed Robe"
     },
@@ -482,6 +486,9 @@
     },
     "goblin_blade": {
       "name": "Goblin Blade"
+    },
+    "goblin_staff": {
+      "name": "Goblin Staff"
     },
     "goblin_mail": {
       "name": "Goblin Mail"
@@ -510,6 +517,9 @@
     "demon_blade": {
       "name": "Demon Blade"
     },
+    "demon_staff": {
+      "name": "Demon Staff"
+    },
     "dark_plate": {
       "name": "Dark Plate"
     },
@@ -537,6 +547,9 @@
     "frost_blade": {
       "name": "Frost Blade"
     },
+    "frost_staff": {
+      "name": "Frost Staff"
+    },
     "ice_armor": {
       "name": "Ice Armor"
     },
@@ -557,6 +570,9 @@
     },
     "magma_blade": {
       "name": "Magma Blade"
+    },
+    "magma_staff": {
+      "name": "Magma Staff"
     },
     "volcano_armor": {
       "name": "Volcano Armor"
@@ -579,6 +595,9 @@
     "shadow_blade": {
       "name": "Shadow Blade"
     },
+    "shadow_staff": {
+      "name": "Shadow Staff"
+    },
     "dark_bark_armor": {
       "name": "Dark Bark Armor"
     },
@@ -599,6 +618,9 @@
     },
     "sky_blade": {
       "name": "Sky Blade"
+    },
+    "sky_staff": {
+      "name": "Sky Staff"
     },
     "cloud_armor": {
       "name": "Cloud Armor"
@@ -621,6 +643,9 @@
     "hellfire_blade": {
       "name": "Hellfire Blade"
     },
+    "hellfire_staff": {
+      "name": "Hellfire Staff"
+    },
     "infernal_plate": {
       "name": "Infernal Plate"
     },
@@ -641,6 +666,9 @@
     },
     "dragon_slayer": {
       "name": "Dragon Slayer"
+    },
+    "dragon_staff": {
+      "name": "Dragon Staff"
     },
     "dragon_scale_armor": {
       "name": "Dragon Scale Armor"
@@ -666,6 +694,9 @@
     "holy_blade": {
       "name": "Holy Blade"
     },
+    "holy_staff": {
+      "name": "Holy Staff"
+    },
     "divine_armor": {
       "name": "Divine Armor"
     },
@@ -687,6 +718,9 @@
     "chaos_blade": {
       "name": "Chaos Blade"
     },
+    "chaos_staff": {
+      "name": "Chaos Staff"
+    },
     "void_armor": {
       "name": "Void Armor"
     },
@@ -707,6 +741,9 @@
     },
     "apocalypse_blade": {
       "name": "Apocalypse Blade"
+    },
+    "apocalypse_staff": {
+      "name": "Apocalypse Staff"
     },
     "end_armor": {
       "name": "End Armor"
@@ -1835,6 +1872,62 @@
     "speed_final2": {
       "name": "Godspeed",
       "description": "Attack Speed 20% more, ATK 10% more"
+    },
+    "ignite_1": {
+      "name": "Ignite Basics",
+      "description": "HP +20, Ignite Chance +6%, Ignite Damage +10%"
+    },
+    "ignite_2": {
+      "name": "Ignite Up I",
+      "description": "Ignite Chance +6%, Ignite Damage +10%"
+    },
+    "ignite_3": {
+      "name": "HP & Defense I",
+      "description": "HP +25, DEF +10, Ignite Chance +6%"
+    },
+    "ignite_4": {
+      "name": "Vitality Amplify I",
+      "description": "DEF +10, HP +10% increased, Ignite Chance +6%"
+    },
+    "ignite_5": {
+      "name": "Ignite Up II",
+      "description": "Ignite Chance +6%, Ignite Damage +15%"
+    },
+    "ignite_6": {
+      "name": "Ignite Duration I",
+      "description": "Ignite Chance +6%, Ignite Duration +15%"
+    },
+    "ignite_7": {
+      "name": "Durability Up",
+      "description": "DEF +20, DEF +15% increased, Ignite Chance +6%"
+    },
+    "ignite_key1": {
+      "name": "Slow Flame",
+      "description": "[Keystone] Ignite Chance +6%, Damage Reduction +10% when AS < 0.8"
+    },
+    "ignite_8": {
+      "name": "Ignite Up III",
+      "description": "Ignite Chance +6%, Ignite Damage +20%"
+    },
+    "ignite_9": {
+      "name": "Ignite Duration II",
+      "description": "Ignite Chance +6%, Ignite Duration +20%"
+    },
+    "ignite_10": {
+      "name": "Life Up",
+      "description": "HP +30, HP +15% increased, Ignite Chance +6%"
+    },
+    "ignite_11": {
+      "name": "Fortified Body",
+      "description": "DEF +30, DEF +20% increased, Ignite Chance +6%"
+    },
+    "ignite_final1": {
+      "name": "Blazing Pinnacle",
+      "description": "Ignite Chance +6%, Ignite Damage 25% more, HP +10% increased"
+    },
+    "ignite_final2": {
+      "name": "Spreading Flames",
+      "description": "[Keystone] Ignite Chance +6%, Ignite Spread - When ignited enemy dies, ignite transfers to next enemy. DEF +10% increased"
     }
   },
   "modDescriptions": {

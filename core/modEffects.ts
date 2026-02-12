@@ -45,6 +45,7 @@ export interface PassiveEffectsData {
   poison_lifesteal: number;
   no_direct_damage: boolean;
   // 発火系
+  ignite_chance: number;
   ignite_damage_pct: number;
   ignite_damage_more_pct: number[];
   ignite_duration_pct: number;
@@ -215,6 +216,7 @@ export function combineMods(
   combined.poisonLifesteal += passiveEffects.poison_lifesteal;
   combined.noDirectDamage = passiveEffects.no_direct_damage;
   // 発火系
+  combined.igniteChance += passiveEffects.ignite_chance;
   combined.igniteDamagePct += passiveEffects.ignite_damage_pct;
   combined.igniteDamageMorePct.push(...passiveEffects.ignite_damage_more_pct);
   combined.igniteDurationPct += passiveEffects.ignite_duration_pct;

@@ -152,19 +152,19 @@
     {"id": "speed_final1", "name": "電光石火", "description": "攻撃速度 15% more", "effect": { "attack_speed_more_pct": 15 }, "requiredNodes": ["speed_13"], "position": { "x": 0, "y": 11 }},
     {"id": "speed_final2", "name": "神速", "description": "攻撃速度 20% more, ATK 10% more", "effect": { "attack_speed_more_pct": 20, "atk_more_pct": 10 }, "requiredNodes": ["speed_final1"], "position": { "x": 0, "y": 12 }},
 
-    {"id": "ignite_1", "name": "発火の心得", "description": "HP +20, 発火ダメージ +10%", "effect": { "hp": 20, "ignite_damage_pct": 10 }, "requiredNodes": ["vamp_key1"], "position": { "x": -6.5, "y": 5 }},
-    {"id": "ignite_2", "name": "発火強化 I", "description": "発火ダメージ +10%", "effect": { "ignite_damage_pct": 10 }, "requiredNodes": [["ignite_1", "ignite_3", "ignite_4"]], "position": { "x": -7, "y": 4.5 }},
-    {"id": "ignite_3", "name": "体力と防御 I", "description": "HP +25, DEF +10", "effect": { "hp": 25, "def": 10 }, "requiredNodes": [["ignite_2", "ignite_5"]], "position": { "x": -7.5, "y": 4 }},
-    {"id": "ignite_4", "name": "生命力増幅 I", "description": "DEF +10, HP +10% increased", "effect": { "def": 10, "hp_increased_pct": 10 }, "requiredNodes": [["ignite_2", "ignite_5"]], "position": { "x": -8, "y": 5 }},
-    {"id": "ignite_5", "name": "発火強化 II", "description": "発火ダメージ +15%", "effect": { "ignite_damage_pct": 15 }, "requiredNodes": [["ignite_3", "ignite_4", "ignite_6"]], "position": { "x": -8, "y": 4 }},
-    {"id": "ignite_6", "name": "発火時間延長 I", "description": "発火時間 +15%", "effect": { "ignite_duration_pct": 15 }, "requiredNodes": [["ignite_5", "ignite_7"]], "position": { "x": -8.5, "y": 3.5 }},
-    {"id": "ignite_7", "name": "耐久強化", "description": "DEF +20, DEF +15% increased", "effect": { "def": 20, "def_increased_pct": 15 }, "requiredNodes": [["ignite_6", "ignite_key1"]], "position": { "x": -9, "y": 3 }},
-    {"id": "ignite_key1", "name": "緩慢なる炎", "description": "【キーストーン】AS 0.8未満時、ダメージ軽減 +10%", "effect": { "slow_attack_damage_reduction": 10 }, "requiredNodes": ["ignite_7"], "position": { "x": -9.5, "y": 2.5 }},
-    {"id": "ignite_8", "name": "発火強化 III", "description": "発火ダメージ +20%", "effect": { "ignite_damage_pct": 20 }, "requiredNodes": ["ignite_key1"], "position": { "x": -10, "y": 2 }},
-    {"id": "ignite_9", "name": "発火時間延長 II", "description": "発火時間 +20%", "effect": { "ignite_duration_pct": 20 }, "requiredNodes": ["ignite_8"], "position": { "x": -10.5, "y": 1.5 }},
-    {"id": "ignite_10", "name": "生命強化", "description": "HP +30, HP +15% increased", "effect": { "hp": 30, "hp_increased_pct": 15 }, "requiredNodes": ["ignite_9"], "position": { "x": -11, "y": 1 }},
-    {"id": "ignite_11", "name": "堅固なる身体", "description": "DEF +30, DEF +20% increased", "effect": { "def": 30, "def_increased_pct": 20 }, "requiredNodes": ["ignite_10"], "position": { "x": -11.5, "y": 0.5 }},
-    {"id": "ignite_final1", "name": "灼熱の極み", "description": "発火ダメージ 25% more, HP +10% increased", "effect": { "ignite_damage_more_pct": 25, "hp_increased_pct": 10 }, "requiredNodes": ["ignite_11"], "position": { "x": -12, "y": 0 }},
-    {"id": "ignite_final2", "name": "伝染する炎", "description": "【キーストーン】イグナイト伝染 - 発火中の敵死亡時、次の敵に発火継承。DEF +10% increased", "effect": { "ignite_spread": true, "def_increased_pct": 10 }, "requiredNodes": ["ignite_final1"], "position": { "x": -12.5, "y": -0.5 }}
+    {"id": "ignite_1", "name": "発火の心得", "description": "HP +20, 発火確率 +6%, 発火ダメージ +10%", "effect": { "hp": 20, "ignite_chance": 6, "ignite_damage_pct": 10 }, "requiredNodes": ["vamp_key1"], "position": { "x": -6.5, "y": 5 }},
+    {"id": "ignite_2", "name": "発火強化 I", "description": "発火確率 +6%, 発火ダメージ +10%", "effect": { "ignite_chance": 6, "ignite_damage_pct": 10 }, "requiredNodes": [["ignite_1", "ignite_3", "ignite_4"]], "position": { "x": -7, "y": 4.5 }},
+    {"id": "ignite_3", "name": "体力と防御 I", "description": "HP +25, DEF +10, 発火確率 +6%", "effect": { "hp": 25, "def": 10, "ignite_chance": 6 }, "requiredNodes": [["ignite_2", "ignite_5"]], "position": { "x": -7.5, "y": 4 }},
+    {"id": "ignite_4", "name": "生命力増幅 I", "description": "DEF +10, HP +10% increased, 発火確率 +6%", "effect": { "def": 10, "hp_increased_pct": 10, "ignite_chance": 6 }, "requiredNodes": [["ignite_2", "ignite_5"]], "position": { "x": -8, "y": 5 }},
+    {"id": "ignite_5", "name": "発火強化 II", "description": "発火確率 +6%, 発火ダメージ +15%", "effect": { "ignite_chance": 6, "ignite_damage_pct": 15 }, "requiredNodes": [["ignite_3", "ignite_4", "ignite_6"]], "position": { "x": -8, "y": 4 }},
+    {"id": "ignite_6", "name": "発火時間延長 I", "description": "発火確率 +6%, 発火時間 +15%", "effect": { "ignite_chance": 6, "ignite_duration_pct": 15 }, "requiredNodes": [["ignite_5", "ignite_7"]], "position": { "x": -8.5, "y": 3.5 }},
+    {"id": "ignite_7", "name": "耐久強化", "description": "DEF +20, DEF +15% increased, 発火確率 +6%", "effect": { "def": 20, "def_increased_pct": 15, "ignite_chance": 6 }, "requiredNodes": [["ignite_6", "ignite_key1"]], "position": { "x": -9, "y": 3 }},
+    {"id": "ignite_key1", "name": "緩慢なる炎", "description": "【キーストーン】発火確率 +6%, AS 0.8未満時、ダメージ軽減 +10%", "effect": { "ignite_chance": 6, "slow_attack_damage_reduction": 10 }, "requiredNodes": ["ignite_7"], "position": { "x": -9.5, "y": 2.5 }},
+    {"id": "ignite_8", "name": "発火強化 III", "description": "発火確率 +6%, 発火ダメージ +20%", "effect": { "ignite_chance": 6, "ignite_damage_pct": 20 }, "requiredNodes": ["ignite_key1"], "position": { "x": -10, "y": 2 }},
+    {"id": "ignite_9", "name": "発火時間延長 II", "description": "発火確率 +6%, 発火時間 +20%", "effect": { "ignite_chance": 6, "ignite_duration_pct": 20 }, "requiredNodes": ["ignite_8"], "position": { "x": -10.5, "y": 1.5 }},
+    {"id": "ignite_10", "name": "生命強化", "description": "HP +30, HP +15% increased, 発火確率 +6%", "effect": { "hp": 30, "hp_increased_pct": 15, "ignite_chance": 6 }, "requiredNodes": ["ignite_9"], "position": { "x": -11, "y": 1 }},
+    {"id": "ignite_11", "name": "堅固なる身体", "description": "DEF +30, DEF +20% increased, 発火確率 +6%", "effect": { "def": 30, "def_increased_pct": 20, "ignite_chance": 6 }, "requiredNodes": ["ignite_10"], "position": { "x": -11.5, "y": 0.5 }},
+    {"id": "ignite_final1", "name": "灼熱の極み", "description": "発火確率 +6%, 発火ダメージ 25% more, HP +10% increased", "effect": { "ignite_chance": 6, "ignite_damage_more_pct": 25, "hp_increased_pct": 10 }, "requiredNodes": ["ignite_11"], "position": { "x": -12, "y": 0 }},
+    {"id": "ignite_final2", "name": "伝染する炎", "description": "【キーストーン】発火確率 +6%, イグナイト伝染 - 発火中の敵死亡時、次の敵に発火継承。DEF +10% increased", "effect": { "ignite_chance": 6, "ignite_spread": true, "def_increased_pct": 10 }, "requiredNodes": ["ignite_final1"], "position": { "x": -12.5, "y": -0.5 }}
   ]
 }
