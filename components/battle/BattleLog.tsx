@@ -24,6 +24,8 @@ const getLogColor = (type: BattleLogEntry['type']): string => {
       return '#9C27B0'; // 紫色（毒）
     case 'critical':
       return '#FF9800'; // オレンジ（クリティカル）
+    case 'ignite':
+      return '#FF5722'; // 赤オレンジ（発火）
     case 'heal':
       return '#00BCD4'; // シアン（回復）
     default:

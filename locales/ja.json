@@ -1306,7 +1306,7 @@
     "reflectedDamage": "{{enemy}}の刻印が反射！ プレイヤーに{{damage}}ダメージ！",
     "enemyHealRegen": "{{enemy}}が再生で{{amount}}回復した！",
     "enemyHealOnHit": "{{enemy}}が吸収で{{amount}}回復した！",
-    "igniteApplied": "{{enemy}}に発火を付与した！（{{damage}}ダメージ/秒 x {{duration}}秒）",
+    "igniteApplied": "{{enemy}}に発火を付与した！（{{damage}}ダメージ × {{duration}}秒）",
     "igniteDamage": "発火ダメージ！ {{enemy}}に{{damage}}ダメージ！{{remaining}}{{ended}}",
     "igniteRemaining": "（残り{{seconds}}秒）",
     "igniteEnded": "（発火が切れた）"
