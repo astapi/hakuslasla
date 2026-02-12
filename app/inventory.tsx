@@ -116,6 +116,18 @@ function calculateItemStats(
         case 'poison_chance':
           desc = `[${tierLabel}] ${t('modDescriptions.poisonChance', { value: mod.value })}`;
           break;
+        case 'ignite_chance':
+          desc = `[${tierLabel}] ${t('modDescriptions.igniteChance', { value: mod.value })}`;
+          break;
+        case 'ignite_duration_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.igniteDuration', { value: mod.value })}`;
+          break;
+        case 'ignite_tick_speed_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.igniteTickSpeed', { value: mod.value })}`;
+          break;
+        case 'ignite_damage_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.igniteDamage', { value: mod.value })}`;
+          break;
         case 'critical_chance':
           desc = `[${tierLabel}] ${t('modDescriptions.criticalChance', { value: mod.value })}`;
           break;

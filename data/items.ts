@@ -484,6 +484,14 @@ export function getModDescription(mod: ItemMod): string {
       return `毎秒HP${mod.value}%回復`;
     case 'poison_chance':
       return `毒付与+${mod.value}%`;
+    case 'ignite_chance':
+      return `発火付与+${mod.value}%`;
+    case 'ignite_duration_pct':
+      return `発火時間+${mod.value}%`;
+    case 'ignite_tick_speed_pct':
+      return `発火速度+${mod.value}%`;
+    case 'ignite_damage_pct':
+      return `発火ダメージ+${mod.value}%`;
     case 'critical_chance':
       return `クリティカル+${mod.value}%`;
     case 'critical_damage':

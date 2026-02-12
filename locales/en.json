@@ -1932,6 +1932,10 @@
   },
   "modDescriptions": {
     "poisonChance": "Poison Chance +{{value}}%",
+    "igniteChance": "Ignite Chance +{{value}}%",
+    "igniteDuration": "Ignite Duration +{{value}}%",
+    "igniteTickSpeed": "Ignite Tick Speed +{{value}}%",
+    "igniteDamage": "Ignite Damage +{{value}}%",
     "criticalChance": "Critical Chance +{{value}}%",
     "criticalDamage": "Critical Damage +{{value}}%",
     "damageReduction": "Damage Taken -{{value}}%",
