@@ -41,6 +41,7 @@ const backgroundImages: Record<string, ImageSourcePropType> = {
   dimensional_rush_4: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
   dimensional_rush_5: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
   dimensional_rush_6: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
+  dimensional_corridor: require('@/assets/images/backgrounds/dimensional_corridor.jpg'),
   uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
   uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
   uber_vampire: require('@/assets/images/backgrounds/vampire_mansion.jpg'),
