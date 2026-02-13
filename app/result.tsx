@@ -58,7 +58,7 @@ export default function ResultScreen() {
         </View>
 
         <View style={styles.dungeonInfo}>
-          <Text style={styles.dungeonName}>{params.dungeonName}</Text>
+          <Text style={styles.dungeonName}>{t(`dungeons.${params.dungeonId}.name`)}</Text>
           <Text style={styles.floorProgress}>
             {t('result.floorsCleared', { current: floorsCleared, max: maxFloor })}
           </Text>
