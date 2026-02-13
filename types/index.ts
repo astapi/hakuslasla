@@ -200,8 +200,7 @@ export interface PassiveEffect {
   ignite_damage_pct?: number;      // 発火ダメージ+X%
   ignite_damage_more_pct?: number; // 発火ダメージ X% more（乗算）
   ignite_spread?: boolean;         // イグナイト伝染（発火中の敵死亡時、次の敵に発火継承）
-  // 条件付き防御
-  slow_attack_damage_reduction?: number;  // AS<0.8時、ダメージ軽減+X%
+  ignite_stacking_damage?: boolean; // 緩慢なる炎: 発火付与5回ごとに+10% inc発火ダメージ（最大200%）
   // クリティカル系
   critical_chance?: number;    // クリティカル率（%）
   critical_damage?: number;    // クリティカルダメージ+X%

@@ -218,9 +218,7 @@ export interface CombinedModEffects {
   igniteDurationPct: number;     // 時間+%
   igniteTickSpeedPct: number;    // ダメージ速度+%（間隔短縮）
   igniteSpread: boolean;         // イグナイト伝染（敵死亡時、次の敵に発火継承）
-
-  // 条件付き防御
-  slowAttackDamageReduction: number;  // AS<0.8時、ダメージ軽減+X%
+  igniteStackingDamage: boolean; // 緩慢なる炎キーストーン: 発火付与5回ごとに+10% inc発火ダメージ（最大200%）
 
   // クリティカル
   criticalChance: number;    // 発生率%
@@ -281,6 +279,7 @@ export interface GaugeBattleState {
   enemyPoisonStacks: PoisonStack[];
   playerPoisonStacks: PoisonStack[];
   enemyIgniteState: IgniteState | null;  // 発火状態（上書き式）
+  igniteApplyCount: number;  // 発火付与回数（敵撃破時リセット）
   elapsedTicks: number;  // 経過ティック数
   isFinished: boolean;
   winner: 'player' | 'enemy' | null;

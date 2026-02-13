@@ -264,9 +264,9 @@ export function tryApplyIgnite(
     return { igniteState: null, event: null };
   }
 
-  // 発火ダメージ計算（毒より少し弱い）
+  // 発火ダメージ計算（緩慢なる炎キーストーンのスタック効果を含む）
   const rawIgniteDamage = Math.max(1, Math.floor(baseDamage * config.igniteDamageRatio));
-  const igniteDamage = getIgniteDamageFromMods(rawIgniteDamage, mods);
+  const igniteDamage = getIgniteDamageFromMods(rawIgniteDamage, mods, state.igniteApplyCount);
 
   // 継続時間計算（MODで延長可能）
   const durationMs = Math.floor(
@@ -478,15 +478,13 @@ export function createLifestealEvent(
  * @param playerDef プレイヤーの防御力
  * @param mods MOD効果
  * @param isEnemyPoisoned 敵が毒状態かどうか
- * @param playerAttackSpeed プレイヤーの攻撃速度（オプション、AS軽減計算用）
  * @returns ダメージ量
  */
 export function calculateEnemyDamage(
   enemyAtk: number,
   playerDef: number,
   mods: CombinedModEffects,
-  isEnemyPoisoned: boolean,
-  playerAttackSpeed?: number
+  isEnemyPoisoned: boolean
 ): number {
   // 追加ダメージ軽減
   let totalDamageReduction = mods.damageReductionPct;
@@ -494,11 +492,6 @@ export function calculateEnemyDamage(
   // 敵が毒状態時の追加軽減
   if (isEnemyPoisoned) {
     totalDamageReduction += mods.poisonDamageReduction;
-  }
-
-  // AS<0.8時のダメージ軽減（緩慢なる炎キーストーン）
-  if (playerAttackSpeed !== undefined && playerAttackSpeed < 0.8 && mods.slowAttackDamageReduction > 0) {
-    totalDamageReduction += mods.slowAttackDamageReduction;
   }
 
   return calculateDamage(enemyAtk, playerDef, totalDamageReduction);
