@@ -1930,6 +1930,17 @@
       "description": "[Keystone] Ignite Chance +6%, Ignite Spread - When ignited enemy dies, ignite transfers to next enemy. DEF +10% increased"
     }
   },
+  "ranking": {
+    "title": "Ranking",
+    "dimensionalCorridor": "Dimensional Corridor",
+    "floor": "Floor",
+    "you": "You",
+    "loading": "Loading...",
+    "loadError": "Failed to load ranking",
+    "retry": "Retry",
+    "noData": "No ranking data",
+    "cacheInfo": "Refresh available in {{minutes}}min"
+  },
   "modDescriptions": {
     "poisonChance": "Poison Chance +{{value}}%",
     "igniteChance": "Ignite Chance +{{value}}%",

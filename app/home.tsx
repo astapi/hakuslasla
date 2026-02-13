@@ -563,6 +563,7 @@ const headerStyles = StyleSheet.create({
   boostButtons: {
     flexDirection: 'row',
     gap: ms(8),
+    minWidth: ms(80),
   },
   title: {
     fontSize: fs(17),
