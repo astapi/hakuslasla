@@ -265,8 +265,9 @@ export function tryApplyIgnite(
   }
 
   // 発火ダメージ計算（緩慢なる炎キーストーンのスタック効果を含む）
+  // 今回の付与を含めたカウントで計算（5回目の付与で+10%になるように+1）
   const rawIgniteDamage = Math.max(1, Math.floor(baseDamage * config.igniteDamageRatio));
-  const igniteDamage = getIgniteDamageFromMods(rawIgniteDamage, mods, state.igniteApplyCount);
+  const igniteDamage = getIgniteDamageFromMods(rawIgniteDamage, mods, state.igniteApplyCount + 1);
 
   // 継続時間計算（MODで延長可能）
   const durationMs = Math.floor(
