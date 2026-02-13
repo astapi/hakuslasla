@@ -13,6 +13,7 @@ interface DungeonCardProps {
   ticketCount?: number;
   isDisabled?: boolean;
   testID?: string;
+  onRankingPress?: () => void;
 }
 
 export const DungeonCard = ({
@@ -25,6 +26,7 @@ export const DungeonCard = ({
   ticketCount = 0,
   isDisabled = false,
   testID,
+  onRankingPress,
 }: DungeonCardProps) => {
   const { t } = useTranslation();
   const isTicketMissing = requiresTicket && ticketCount <= 0;
@@ -83,6 +85,18 @@ export const DungeonCard = ({
           </>
         )}
       </View>
+      {onRankingPress && !isLocked && (
+        <Pressable
+          style={({ pressed }) => [styles.rankingButton, pressed && styles.rankingButtonPressed]}
+          onPress={(e) => {
+            e.stopPropagation();
+            onRankingPress();
+          }}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+          <Text style={styles.rankingIcon}>🏆</Text>
+        </Pressable>
+      )}
       <View style={styles.arrowContainer}>
         {!isLocked && <Text style={styles.arrow}>→</Text>}
       </View>
@@ -197,5 +211,15 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.7,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  rankingButton: {
+    padding: ms(8),
+    marginRight: ms(4),
+  },
+  rankingButtonPressed: {
+    opacity: 0.6,
+  },
+  rankingIcon: {
+    fontSize: fs(20),
   },
 });

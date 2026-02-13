@@ -165,6 +165,12 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="ranking"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
       <StatusBar style="light" />
     </View>

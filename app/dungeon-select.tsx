@@ -184,6 +184,11 @@ export default function DungeonSelectScreen() {
               ticketCount={dungeon.ticketCount}
               isDisabled={dungeon.isDisabled}
               testID={`dungeon-card-${dungeon.id}`}
+              onRankingPress={
+                isDimensionalCorridorDungeon(dungeon.id)
+                  ? () => router.push('/ranking')
+                  : undefined
+              }
             />
           ))}
         </View>

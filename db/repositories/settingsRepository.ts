@@ -9,6 +9,7 @@ const UBER_UNLOCKS_KEY = 'uber_boss_unlocks';
 const UBER_TICKETS_KEY = 'uber_boss_tickets';
 const RESPEC_TOKENS_KEY = 'respec_tokens';
 const DUNGEON_CLEAR_RECORDS_KEY = 'dungeon_clear_records';
+const DIMENSIONAL_CORRIDOR_BEST_KEY = 'dimensional_corridor_best';
 
 // ダンジョンクリア記録の型
 export type DungeonClearRecord = {
@@ -234,5 +235,22 @@ export const settingsRepository = {
   async isDungeonCleared(dungeonId: string): Promise<boolean> {
     const records = await this.getDungeonClearRecords();
     return records[dungeonId] !== undefined;
+  },
+
+  // 次元回廊の最高記録（キャラクターごと）
+  async getDimensionalCorridorBest(characterId: number): Promise<number> {
+    const key = `${DIMENSIONAL_CORRIDOR_BEST_KEY}_${characterId}`;
+    const value = await this.get(key);
+    if (!value) return 0;
+    const parsed = parseInt(value, 10);
+    return Number.isFinite(parsed) ? parsed : 0;
+  },
+
+  async setDimensionalCorridorBest(characterId: number, floor: number): Promise<boolean> {
+    const key = `${DIMENSIONAL_CORRIDOR_BEST_KEY}_${characterId}`;
+    const current = await this.getDimensionalCorridorBest(characterId);
+    if (floor <= current) return false; // 記録更新なし
+    await this.set(key, floor.toString());
+    return true; // 記録更新あり
   },
 };

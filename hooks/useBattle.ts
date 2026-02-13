@@ -25,6 +25,7 @@ import {
 import { CLASS_ABILITIES } from '@/core/player';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
 import { Analytics } from '@/lib/analytics';
+import { submitDimensionalCorridorScore } from '@/lib/ranking';
 import {
   BASE_BOSS_BY_UBER,
   DIMENSIONAL_RUSH_BOSS_FLOOR_BY_ID,
@@ -724,13 +725,18 @@ export const useBattle = (dungeonId: string) => {
     setIsAutoRunning(false);
     dispatch({ type: 'RETREAT' });
 
+    // 次元回廊の場合はランキングスコアを送信
+    if (isDimensionalCorridorDungeon(dungeonId)) {
+      await submitDimensionalCorridorScore(state.currentFloor);
+    }
+
     // 撤退時は経験値を付与せず、取得済みアイテムのみ持ち帰る
     const availableSpace = getInventorySpace();
     const itemsToAdd = state.droppedItems.slice(0, availableSpace);
     for (const item of itemsToAdd) {
       await addToInventory(item);
     }
-  }, [addToInventory, getInventorySpace, state.droppedItems]);
+  }, [addToInventory, getInventorySpace, state.droppedItems, dungeonId, state.currentFloor]);
 
   // 指定フロアの敵を取得（ボスフロアならボスを返す）
   const getEnemyForFloor = useCallback((floor: number): Enemy | undefined => {
@@ -894,14 +900,6 @@ export const useBattle = (dungeonId: string) => {
     // 異次元ラッシュまたはデバッグダンジョンでボスを倒した場合のみ Uber 版解放と入場券ドロップ
     if (isDimensionalRushDungeon(dungeonId) || DEBUG_DIMENSIONAL_DUNGEON_IDS.includes(dungeonId)) {
       handleDimensionalRushBossDefeat(state.enemy.id, state.enemy.name);
-    }
-
-    // 次元回廊: 250階以降10階クリアごとにAnalytics送信
-    if (isDimensionalCorridorDungeon(dungeonId) && state.currentFloor >= 250 && state.currentFloor % 10 === 0) {
-      Analytics.logDimensionalCorridorMilestone({
-        floor_reached: state.currentFloor,
-        player_level: usePlayerStore.getState().level,
-      });
     }
 
     // 無制限階層（maxFloor=-1）は永遠に続く
@@ -1157,6 +1155,11 @@ export const useBattle = (dungeonId: string) => {
           }
         }
 
+        // 次元回廊で敗北した場合はランキングスコアを送信
+        if (state.phase === 'defeat' && isDimensionalCorridorDungeon(state.dungeonId)) {
+          await submitDimensionalCorridorScore(state.currentFloor);
+        }
+
         if (state.totalExpGained > 0) {
           await gainExp(state.totalExpGained);
         }
@@ -1170,7 +1173,7 @@ export const useBattle = (dungeonId: string) => {
       }
     };
     saveResults();
-  }, [state.phase, state.dungeonId, state.totalExpGained, state.droppedItems, gainExp, addToInventory, getInventorySpace, setLevelCap]);
+  }, [state.phase, state.dungeonId, state.totalExpGained, state.droppedItems, state.currentFloor, gainExp, addToInventory, getInventorySpace, setLevelCap]);
 
   // 自動周回処理（クリア時に次の周回を開始、敗北時は終了）
   useEffect(() => {
