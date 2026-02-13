@@ -270,7 +270,7 @@ export default function BattleScreen() {
       <View style={styles.floorInfo}>
         <View style={styles.floorInfoRow}>
           <Text style={styles.floorText}>
-            {dungeon?.name} - {state.currentFloor}/{state.maxFloor}{t('battle.floor')}
+            {t(`dungeons.${dungeonId}.name`)} - {state.currentFloor}/{state.maxFloor}{t('battle.floor')}
             {state.runCount > 1 && ` (${state.runCount}${t('battle.round')})`}
           </Text>
           <BoostIndicator />
