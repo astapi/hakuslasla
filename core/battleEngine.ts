@@ -134,6 +134,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     enemyPoisonStacks: [],
     playerPoisonStacks: [],
     enemyIgniteState: config.initialIgniteState ?? null,  // イグナイト伝染から引き継いだ発火状態
+    igniteApplyCount: 0,  // 発火付与回数（敵撃破時リセット）
     elapsedTicks: 0,
     isFinished: false,
     winner: null,
@@ -412,6 +413,8 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       // 発火付与（上書き式、ただしダメージタイミングは維持）
       const igniteResult = tryApplyIgnite(engine.state, baseDamage, effectiveMods, engine.config, engine.rng);
       if (igniteResult.igniteState) {
+        // 発火付与回数を増加（緩慢なる炎キーストーン用）
+        engine.state.igniteApplyCount += 1;
         // 既存の発火がある場合、lastTickMsを維持（ダメージタイミングを継続）
         const existingLastTickMs = engine.state.enemyIgniteState?.lastTickMs;
         engine.state.enemyIgniteState = {
@@ -538,8 +541,7 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         engine.state.enemy.atk,
         effectivePlayerDef,
         engine.playerMods,
-        engine.state.enemyPoisonStacks.length > 0,
-        playerAS  // AS<0.8時のダメージ軽減計算用
+        engine.state.enemyPoisonStacks.length > 0
       );
       const enemyAttackMultiplier = engine.bossEffects.enemyAttackMult * engine.bossEffects.enemyNextAttackMult;
       const rawEnemyDamage = Math.floor(enemyDamage * enemyAttackMultiplier);

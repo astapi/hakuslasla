@@ -50,8 +50,7 @@ export interface PassiveEffectsData {
   ignite_damage_more_pct: number[];
   ignite_duration_pct: number;
   ignite_spread: boolean;
-  // 条件付き防御
-  slow_attack_damage_reduction: number;
+  ignite_stacking_damage: boolean; // 緩慢なる炎キーストーン
   // その他
   critical_chance: number;
   critical_damage: number;
@@ -88,7 +87,7 @@ export function createEmptyModEffects(): CombinedModEffects {
     igniteDurationPct: 0,
     igniteTickSpeedPct: 0,
     igniteSpread: false,
-    slowAttackDamageReduction: 0,
+    igniteStackingDamage: false,
     criticalChance: 0,
     criticalDamage: 0,
     hpOnCrit: 0,
@@ -221,8 +220,7 @@ export function combineMods(
   combined.igniteDamageMorePct.push(...passiveEffects.ignite_damage_more_pct);
   combined.igniteDurationPct += passiveEffects.ignite_duration_pct;
   if (passiveEffects.ignite_spread) combined.igniteSpread = true;
-  // 条件付き防御
-  combined.slowAttackDamageReduction += passiveEffects.slow_attack_damage_reduction;
+  if (passiveEffects.ignite_stacking_damage) combined.igniteStackingDamage = true;
   // その他
   combined.criticalChance += passiveEffects.critical_chance;
   combined.criticalDamage += passiveEffects.critical_damage;
@@ -336,7 +334,22 @@ export function calculateIgniteDamage(
 
 /**
  * CombinedModEffectsから発火ダメージを計算
+ * @param baseDamage 基本発火ダメージ
+ * @param mods MOD効果
+ * @param igniteApplyCount 発火付与回数（緩慢なる炎キーストーン用）
  */
-export function getIgniteDamageFromMods(baseDamage: number, mods: CombinedModEffects): number {
-  return calculateIgniteDamage(baseDamage, mods.igniteDamagePct, mods.igniteDamageMorePct);
+export function getIgniteDamageFromMods(
+  baseDamage: number,
+  mods: CombinedModEffects,
+  igniteApplyCount: number = 0
+): number {
+  // 緩慢なる炎: 発火付与5回ごとに+10% inc発火ダメージ（最大200%）
+  let stackingBonus = 0;
+  if (mods.igniteStackingDamage) {
+    const stacks = Math.floor(igniteApplyCount / 5);
+    stackingBonus = Math.min(stacks * 10, 200);
+  }
+
+  const totalIncreasedPct = mods.igniteDamagePct + stackingBonus;
+  return calculateIgniteDamage(baseDamage, totalIncreasedPct, mods.igniteDamageMorePct);
 }

@@ -44,7 +44,7 @@ describe('core/modEffects', () => {
       ignite_damage_more_pct: [],
       ignite_duration_pct: 0,
       ignite_spread: false,
-      slow_attack_damage_reduction: 0,
+      ignite_stacking_damage: false,
       critical_chance: 0,
       critical_damage: 0,
       hp_on_crit: 0,
@@ -95,7 +95,7 @@ describe('core/modEffects', () => {
       igniteDurationPct: 0,
       igniteTickSpeedPct: 0,
       igniteSpread: false,
-      slowAttackDamageReduction: 0,
+      igniteStackingDamage: false,
     };
 
     const result = getAttackSpeedFromMods(mods, 1);
