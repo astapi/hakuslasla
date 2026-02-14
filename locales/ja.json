@@ -79,8 +79,14 @@
       "exp": "経験値: {{exp}}",
       "attackSpeed": "攻撃速度: {{speed}}",
       "noUniqueDrop": "ユニークドロップなし",
-      "fixedMods": "固有MOD"
-    }
+      "fixedMods": "固有MOD",
+      "bossAbilities": "ボス能力",
+      "regularSkills": "通常スキル（3回攻撃ごと発動）",
+      "thresholdSkills": "追加スキル（HP50%以下で発動）",
+      "uberOnly": "Uber限定"
+    },
+    "notCleared": "未クリア",
+    "uberUnlocked": "Uber解放済み"
   },
   "battle": {
     "floor": "階",
@@ -1245,35 +1251,50 @@
     "goblin_king": {
       "name": "ゴブリンたちの咆哮",
       "shield": "群れの盾",
-      "warlord": "乱軍の王"
+      "shieldDesc": "2ターンの間ダメージ20%軽減、クリティカル・毒付与率50%低下",
+      "warlord": "乱軍の王",
+      "warlordDesc": "攻撃速度+30%、攻撃時HP500回復（HP50%以下で発動）"
     },
     "bandit_leader": {
       "name": "ベアトラップ",
       "bearTrap": "ベアトラップ",
-      "nightAmbush": "闇夜の奇襲",
-      "shadowBind": "影縫い"
+      "bearTrapDesc": "プレイヤーの攻撃速度30%低下（2ターン）",
+      "nightAmbush": "闘夜の奇襲",
+      "nightAmbushDesc": "次の攻撃ダメージ+40%",
+      "shadowBind": "影縫い",
+      "shadowBindDesc": "回復効果が永続50%低下（HP50%以下で発動）"
     },
     "vampire": {
       "name": "血の狂宴",
       "bloodFeast": "血の狂宴",
+      "bloodFeastDesc": "次の攻撃で与えたダメージの150%回復",
       "nightFeast": "夜の宴",
-      "crimsonPact": "真紅の契約"
+      "nightFeastDesc": "戦闘開始時にプレイヤーへ毒を付与",
+      "crimsonPact": "真紅の契約",
+      "crimsonPactDesc": "与えたダメージに応じてHP回復（HP50%以下で発動）"
     },
     "kraken": {
       "name": "津波",
       "tsunami": "津波",
+      "tsunamiDesc": "次の攻撃ダメージ+50%、プレイヤー被ダメージ+30%（1ターン）",
       "deepEmbrace": "深海の抱擁",
-      "abyssalEbb": "深淵の引き潮"
+      "deepEmbraceDesc": "攻撃速度20%低下、回復効果30%低下（3ターン、HP50%以下で発動）",
+      "abyssalEbb": "深淵の引き潮",
+      "abyssalEbbDesc": "攻撃速度15%低下（2ターン）"
     },
     "demon_lord": {
       "name": "デスハンド",
       "deathHand": "デスハンド",
+      "deathHandDesc": "回復効果30%低下（2ターン）、プレイヤーに毒を付与",
       "blackFlame": "黒炎の刻印",
-      "crown": "破滅の冠"
+      "blackFlameDesc": "ダメージ軽減+10%（永続、HP50%以下で発動）",
+      "crown": "破滅の冠",
+      "crownDesc": "攻撃時HP回復効果が有効化（HP50%以下で発動）"
     },
     "true_final_boss": {
       "name": "終焉",
       "end": "終焉",
+      "endDesc": "プレイヤーの行動ゲージをリセット",
       "convergence": "世界の収束",
       "timeSever": "時の断絶"
     }

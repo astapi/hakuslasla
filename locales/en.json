@@ -79,8 +79,14 @@
       "exp": "EXP: {{exp}}",
       "attackSpeed": "Attack Speed: {{speed}}",
       "noUniqueDrop": "No unique drops",
-      "fixedMods": "Fixed MODs"
-    }
+      "fixedMods": "Fixed MODs",
+      "bossAbilities": "Boss Abilities",
+      "regularSkills": "Regular Skills (every 3 attacks)",
+      "thresholdSkills": "Threshold Skills (below 50% HP)",
+      "uberOnly": "Uber Only"
+    },
+    "notCleared": "Not Cleared",
+    "uberUnlocked": "Uber Unlocked"
   },
   "battle": {
     "floor": "F",
@@ -1245,35 +1251,50 @@
     "goblin_king": {
       "name": "Goblin Roar",
       "shield": "Swarm Shield",
-      "warlord": "Warlord of the Horde"
+      "shieldDesc": "20% damage reduction for 2 turns, crit and poison chance -50%",
+      "warlord": "Warlord of the Horde",
+      "warlordDesc": "+30% attack speed, recover 500 HP on hit (triggers below 50% HP)"
     },
     "bandit_leader": {
       "name": "Bear Trap",
       "bearTrap": "Bear Trap",
+      "bearTrapDesc": "Player attack speed -30% for 2 turns",
       "nightAmbush": "Night Ambush",
-      "shadowBind": "Shadow Bind"
+      "nightAmbushDesc": "Next attack damage +40%",
+      "shadowBind": "Shadow Bind",
+      "shadowBindDesc": "Healing permanently reduced by 50% (triggers below 50% HP)"
     },
     "vampire": {
       "name": "Blood Feast",
       "bloodFeast": "Blood Feast",
+      "bloodFeastDesc": "Recover 150% of damage dealt on next attack",
       "nightFeast": "Night Feast",
-      "crimsonPact": "Crimson Pact"
+      "nightFeastDesc": "Applies poison to player at battle start",
+      "crimsonPact": "Crimson Pact",
+      "crimsonPactDesc": "Recover HP based on damage dealt (triggers below 50% HP)"
     },
     "kraken": {
       "name": "Tsunami",
       "tsunami": "Tsunami",
+      "tsunamiDesc": "Next attack +50% damage, player takes +30% damage for 1 turn",
       "deepEmbrace": "Abyssal Embrace",
-      "abyssalEbb": "Abyssal Ebb"
+      "deepEmbraceDesc": "-20% attack speed, -30% healing for 3 turns (triggers below 50% HP)",
+      "abyssalEbb": "Abyssal Ebb",
+      "abyssalEbbDesc": "-15% attack speed for 2 turns"
     },
     "demon_lord": {
       "name": "Death Hand",
       "deathHand": "Death Hand",
+      "deathHandDesc": "-30% healing for 2 turns, applies poison to player",
       "blackFlame": "Blackflame Mark",
-      "crown": "Crown of Ruin"
+      "blackFlameDesc": "+10% damage reduction permanently (triggers below 50% HP)",
+      "crown": "Crown of Ruin",
+      "crownDesc": "Enables HP recovery on hit (triggers below 50% HP)"
     },
     "true_final_boss": {
       "name": "End",
       "end": "End",
+      "endDesc": "Resets player action gauge",
       "convergence": "World Convergence",
       "timeSever": "Time Sever"
     }
