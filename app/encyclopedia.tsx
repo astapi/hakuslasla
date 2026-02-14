@@ -10,15 +10,15 @@ import { ms, fs } from '@/utils/scaling';
 export default function EncyclopediaScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const clearedDungeons = useEncyclopediaStore((state) => state.clearedDungeons);
-  const loadClearedDungeons = useEncyclopediaStore((state) => state.loadClearedDungeons);
+  const dungeons = useEncyclopediaStore((state) => state.dungeons);
+  const loadDungeons = useEncyclopediaStore((state) => state.loadDungeons);
 
   // 安全策: データが空の場合は自動的にロード（開発時のホットリロードやディープリンク対策）
   useEffect(() => {
-    if (clearedDungeons.length === 0) {
-      loadClearedDungeons();
+    if (dungeons.length === 0) {
+      loadDungeons();
     }
-  }, [clearedDungeons.length, loadClearedDungeons]);
+  }, [dungeons.length, loadDungeons]);
 
   const handleDungeonPress = (dungeonId: string) => {
     router.push(`/encyclopedia-detail/${dungeonId}` as any);
@@ -42,40 +42,54 @@ export default function EncyclopediaScreen() {
       </View>
 
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        {clearedDungeons.length === 0 ? (
+        {dungeons.length === 0 ? (
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>{t('encyclopedia.noClearedDungeons')}</Text>
           </View>
         ) : (
           <View style={styles.dungeonList}>
-            {clearedDungeons.map((dungeon) => (
+            {dungeons.map((dungeon) => (
               <Pressable
                 key={dungeon.id}
                 style={({ pressed }) => [
                   styles.dungeonCard,
+                  !dungeon.isCleared && styles.dungeonCardNotCleared,
                   pressed && styles.dungeonCardPressed,
                 ]}
                 onPress={() => handleDungeonPress(dungeon.id)}
               >
-                <View style={styles.iconContainer}>
+                <View style={[
+                  styles.iconContainer,
+                  !dungeon.isCleared && styles.iconContainerNotCleared,
+                ]}>
                   <Text style={styles.icon}>{dungeon.maxFloor}F</Text>
                 </View>
                 <View style={styles.infoContainer}>
                   <View style={styles.nameRow}>
                     <Text style={styles.name}>{t(`dungeons.${dungeon.id}.name`)}</Text>
-                    <Text style={styles.clearMark}>✓</Text>
+                    {dungeon.isCleared ? (
+                      <Text style={styles.clearMark}>✓</Text>
+                    ) : (
+                      <Text style={styles.notClearedMark}>{t('encyclopedia.notCleared')}</Text>
+                    )}
                   </View>
                   <Text style={styles.description} numberOfLines={2}>
                     {t(`dungeons.${dungeon.id}.description`)}
                   </Text>
                   <View style={styles.statsRow}>
-                    <Text style={styles.statsText}>
-                      {t('encyclopedia.bestFloor', { floor: dungeon.bestFloor })}
-                    </Text>
-                    <Text style={styles.separator}>•</Text>
-                    <Text style={styles.statsText}>
-                      {t('encyclopedia.clearedAt', { date: formatDate(dungeon.clearedAt) })}
-                    </Text>
+                    {dungeon.isCleared ? (
+                      <>
+                        <Text style={styles.statsText}>
+                          {t('encyclopedia.bestFloor', { floor: dungeon.bestFloor })}
+                        </Text>
+                        <Text style={styles.separator}>•</Text>
+                        <Text style={styles.statsText}>
+                          {t('encyclopedia.clearedAt', { date: formatDate(dungeon.clearedAt!) })}
+                        </Text>
+                      </>
+                    ) : (
+                      <Text style={styles.uberUnlockedText}>{t('encyclopedia.uberUnlocked')}</Text>
+                    )}
                   </View>
                 </View>
                 <View style={styles.arrowContainer}>
@@ -140,6 +154,11 @@ const styles = StyleSheet.create({
     padding: ms(16),
     alignItems: 'center',
   },
+  dungeonCardNotCleared: {
+    backgroundColor: 'rgba(147, 112, 219, 0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(147, 112, 219, 0.3)',
+  },
   dungeonCardPressed: {
     opacity: 0.7,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -152,6 +171,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: ms(16),
+  },
+  iconContainerNotCleared: {
+    backgroundColor: 'rgba(147, 112, 219, 0.3)',
   },
   icon: {
     fontSize: fs(18),
@@ -177,6 +199,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: ms(8),
   },
+  notClearedMark: {
+    fontSize: fs(11),
+    color: '#9370DB',
+    fontWeight: 'bold',
+    marginLeft: ms(8),
+    backgroundColor: 'rgba(147, 112, 219, 0.2)',
+    paddingHorizontal: ms(6),
+    paddingVertical: ms(2),
+    borderRadius: ms(4),
+  },
   description: {
     fontSize: fs(12),
     color: '#aaa',
@@ -194,6 +226,11 @@ const styles = StyleSheet.create({
   separator: {
     fontSize: fs(11),
     color: '#666',
+  },
+  uberUnlockedText: {
+    fontSize: fs(11),
+    color: '#9370DB',
+    fontStyle: 'italic',
   },
   arrowContainer: {
     paddingLeft: ms(12),

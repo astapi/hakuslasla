@@ -8,6 +8,7 @@ import { getDungeon } from '@/data/dungeons';
 import { getEnemy } from '@/data/enemies';
 import { getItemBase, getModDescription } from '@/data/items';
 import { getMonsterImage } from '@/data/images';
+import { getBossAbilities, isUberDungeon, BossSkillInfo } from '@/data/bossSkillInfo';
 import { Dungeon, Enemy, ItemBase } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 
@@ -61,7 +62,7 @@ export default function EncyclopediaDetailScreen() {
             {dungeon.boss && (() => {
               const bossEnemy = getEnemy(dungeon.boss.monsterId);
               if (!bossEnemy) return null;
-              return <MonsterCard key={dungeon.boss.monsterId} enemy={bossEnemy} isBoss={true} />;
+              return <MonsterCard key={dungeon.boss.monsterId} enemy={bossEnemy} isBoss={true} dungeonId={dungeon.id} />;
             })()}
           </View>
         </View>
@@ -110,10 +111,23 @@ export default function EncyclopediaDetailScreen() {
 interface MonsterCardProps {
   enemy: Enemy;
   isBoss?: boolean;
+  dungeonId?: string;
 }
 
-function MonsterCard({ enemy, isBoss = false }: MonsterCardProps) {
+function MonsterCard({ enemy, isBoss = false, dungeonId }: MonsterCardProps) {
   const { t } = useTranslation();
+  const bossAbilities = isBoss ? getBossAbilities(enemy.id) : null;
+  const isUber = dungeonId ? isUberDungeon(dungeonId) : false;
+
+  // スキルをフィルタリング（Uberでない場合はUber限定スキルを除外）
+  const filterSkills = (skills: BossSkillInfo[]) => {
+    if (isUber) return skills;
+    return skills.filter((skill) => !skill.isUberOnly);
+  };
+
+  const regularSkills = bossAbilities ? filterSkills(bossAbilities.regularSkills) : [];
+  const thresholdSkills = bossAbilities ? filterSkills(bossAbilities.thresholdSkills) : [];
+  const hasAbilities = regularSkills.length > 0 || thresholdSkills.length > 0;
 
   return (
     <View style={[styles.monsterCard, isBoss && styles.monsterCardBoss]}>
@@ -150,6 +164,57 @@ function MonsterCard({ enemy, isBoss = false }: MonsterCardProps) {
           </View>
         </View>
       </View>
+
+      {/* ボス能力 */}
+      {isBoss && hasAbilities && bossAbilities && (
+        <View style={styles.bossAbilitiesContainer}>
+          <Text style={styles.bossAbilitiesTitle}>{t('encyclopedia.detail.bossAbilities')}</Text>
+
+          {/* 通常スキル */}
+          {regularSkills.length > 0 && (
+            <View style={styles.skillSection}>
+              <Text style={styles.skillSectionTitle}>{t('encyclopedia.detail.regularSkills')}</Text>
+              {regularSkills.map((skill) => (
+                <View key={skill.skillKey} style={styles.skillItem}>
+                  <View style={styles.skillNameRow}>
+                    <Text style={styles.skillName}>
+                      {t(`bossSkills.${bossAbilities.bossId}.${skill.skillKey}`)}
+                    </Text>
+                    {skill.isUberOnly && (
+                      <Text style={styles.uberOnlyBadge}>{t('encyclopedia.detail.uberOnly')}</Text>
+                    )}
+                  </View>
+                  <Text style={styles.skillDesc}>
+                    {t(`bossSkills.${bossAbilities.bossId}.${skill.descKey}`)}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
+
+          {/* HP50%以下スキル */}
+          {thresholdSkills.length > 0 && (
+            <View style={styles.skillSection}>
+              <Text style={styles.skillSectionTitle}>{t('encyclopedia.detail.thresholdSkills')}</Text>
+              {thresholdSkills.map((skill) => (
+                <View key={skill.skillKey} style={styles.skillItem}>
+                  <View style={styles.skillNameRow}>
+                    <Text style={styles.skillName}>
+                      {t(`bossSkills.${bossAbilities.bossId}.${skill.skillKey}`)}
+                    </Text>
+                    {skill.isUberOnly && (
+                      <Text style={styles.uberOnlyBadge}>{t('encyclopedia.detail.uberOnly')}</Text>
+                    )}
+                  </View>
+                  <Text style={styles.skillDesc}>
+                    {t(`bossSkills.${bossAbilities.bossId}.${skill.descKey}`)}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
+      )}
 
       {/* ユニークドロップ */}
       {(enemy.uniqueDrop || enemy.uniqueDrops) && (
@@ -350,6 +415,59 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: fs(12),
     color: '#fff',
+    fontWeight: 'bold',
+  },
+  bossAbilitiesContainer: {
+    marginTop: ms(12),
+    paddingTop: ms(12),
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 215, 0, 0.3)',
+  },
+  bossAbilitiesTitle: {
+    fontSize: fs(14),
+    color: '#FF6B6B',
+    fontWeight: 'bold',
+    marginBottom: ms(12),
+  },
+  skillSection: {
+    marginBottom: ms(12),
+  },
+  skillSectionTitle: {
+    fontSize: fs(12),
+    color: '#aaa',
+    marginBottom: ms(8),
+  },
+  skillItem: {
+    backgroundColor: 'rgba(255, 107, 107, 0.1)',
+    borderRadius: ms(8),
+    padding: ms(10),
+    marginBottom: ms(8),
+    borderLeftWidth: 3,
+    borderLeftColor: '#FF6B6B',
+  },
+  skillNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(8),
+    marginBottom: ms(4),
+  },
+  skillName: {
+    fontSize: fs(13),
+    color: '#FF6B6B',
+    fontWeight: 'bold',
+  },
+  skillDesc: {
+    fontSize: fs(11),
+    color: '#ccc',
+    lineHeight: fs(16),
+  },
+  uberOnlyBadge: {
+    fontSize: fs(9),
+    color: '#9370DB',
+    backgroundColor: 'rgba(147, 112, 219, 0.2)',
+    paddingHorizontal: ms(5),
+    paddingVertical: ms(2),
+    borderRadius: ms(3),
     fontWeight: 'bold',
   },
   uniqueDropContainer: {
