@@ -6,7 +6,11 @@ import { usePurchaseStore } from '@/stores/usePurchaseStore';
 import { ENTITLEMENT_IDS } from '@/constants/purchases';
 import { useAdState } from '@/hooks/useAdStore';
 import { BoostModal } from './BoostModal';
-import { ms } from '@/utils/scaling';
+import { ms, isTablet } from '@/utils/scaling';
+
+// タブレット用スケーリング
+const iconSize = isTablet ? 26 : 16;
+const buttonSize = isTablet ? 44 : 36;
 
 const colors = {
   bg: 'rgba(35, 40, 51, 0.8)',
@@ -65,7 +69,7 @@ export const BoostIconButton = ({ type }: BoostIconButtonProps) => {
       >
         <MaterialCommunityIcons
           name={icon}
-          size={16}
+          size={iconSize}
           color={isActive ? colors.gold : colors.muted}
         />
         {isActive && (
@@ -84,8 +88,8 @@ export const BoostIconButton = ({ type }: BoostIconButtonProps) => {
 
 const styles = StyleSheet.create({
   button: {
-    width: ms(36),
-    height: ms(36),
+    width: ms(buttonSize),
+    height: ms(buttonSize),
     borderRadius: ms(8),
     backgroundColor: 'rgba(30, 34, 42, 0.9)',
     borderWidth: 1,

@@ -22,7 +22,7 @@ import Svg, {
   Stop,
   LinearGradient,
 } from 'react-native-svg';
-import { ms, fs } from '@/utils/scaling';
+import { ms, fs, isTablet } from '@/utils/scaling';
 import { settingsRepository } from '@/db';
 import { useFocusEffect } from 'expo-router';
 

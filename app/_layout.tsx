@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { initializeDatabase, settingsRepository } from '@/db';
+import { isTablet } from '@/utils/scaling';
 import { changeLanguage } from '@/lib/i18n';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
 import { CrashlyticsHelper } from '@/lib/analytics';
@@ -138,7 +139,7 @@ export default function RootLayout() {
           name="skills"
           options={{
             headerShown: false,
-            presentation: 'modal',
+            presentation: isTablet ? 'fullScreenModal' : 'modal',
           }}
         />
         <Stack.Screen
