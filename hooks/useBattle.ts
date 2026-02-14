@@ -590,7 +590,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         playerCurrentHp: healedHp,
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
-          message: `HP回復！ HPが${actualHeal}回復した！`,
+          message: i18n.t('battleLog.hpRegen', { amount: actualHeal }),
           type: 'heal',
         }),
       };

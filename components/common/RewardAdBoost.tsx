@@ -4,6 +4,7 @@ import { RewardedAd, RewardedAdEventType, AdEventType, TestIds } from 'react-nat
 import { useAdBoostStore, AdBoostType } from '@/stores/useAdBoostStore';
 import { Button } from './Button';
 import { ms, fs } from '@/utils/scaling';
+import i18n from '@/lib/i18n';
 
 interface RewardAdBoostProps {
   type: AdBoostType;
@@ -53,7 +54,7 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
     const errorListener = ad.addAdEventListener(AdEventType.ERROR, (error) => {
       console.error('Ad failed to load:', error);
       setAdLoaded(false);
-      setAdError('広告の読み込みに失敗しました');
+      setAdError(i18n.t('boost.adLoadFailed'));
     });
 
     // 報酬獲得イベント
@@ -105,7 +106,7 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
 
   const handleShowAd = () => {
     if (!rewardedAd || !adLoaded) {
-      Alert.alert('エラー', '広告の準備ができていません。しばらく待ってからもう一度お試しください。');
+      Alert.alert(i18n.t('boost.error'), i18n.t('boost.adNotReady'));
       return;
     }
 
@@ -113,14 +114,14 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
   };
 
   const getBoostTitle = () => {
-    return type === 'drop_rate' ? 'ドロップ率UP' : '上位Tier確率UP';
+    return type === 'drop_rate' ? i18n.t('boost.dropRate.title') : i18n.t('boost.tierBoost.title');
   };
 
   const getBoostDescription = () => {
     if (type === 'drop_rate') {
-      return 'ユニークドロップ率+1%\nアイテムドロップ確率1.5倍';
+      return i18n.t('boost.dropRate.longDescription');
     } else {
-      return '高品質Tier(T1-T3)の出現確率UP\n通常はT4,5が最も出やすい';
+      return i18n.t('boost.tierBoost.longDescription');
     }
   };
 
@@ -129,14 +130,14 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
       <View style={styles.header}>
         <Text style={styles.title}>{getBoostTitle()}</Text>
         {isActive && (
-          <Text style={styles.activeLabel}>有効中: 残り{remainingMinutes}分</Text>
+          <Text style={styles.activeLabel}>{i18n.t('boost.activeRemaining', { minutes: remainingMinutes })}</Text>
         )}
       </View>
       <Text style={styles.description}>{getBoostDescription()}</Text>
-      <Text style={styles.duration}>効果時間: 30分</Text>
+      <Text style={styles.duration}>{i18n.t('boost.duration')}</Text>
 
       <Button
-        title={isActive ? '有効中' : '広告を見て有効化'}
+        title={isActive ? i18n.t('boost.active') : i18n.t('boost.watchAdToActivate')}
         onPress={handleShowAd}
         disabled={isActive || !adLoaded}
         variant={isActive ? 'secondary' : 'primary'}
@@ -144,14 +145,14 @@ export const RewardAdBoost = ({ type }: RewardAdBoostProps) => {
       />
 
       {!adLoaded && !isActive && !adError && (
-        <Text style={styles.loadingText}>広告を読み込み中...</Text>
+        <Text style={styles.loadingText}>{i18n.t('boost.loadingAd')}</Text>
       )}
 
       {adError && !isActive && (
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{adError}</Text>
           <Button
-            title="再読み込み"
+            title={i18n.t('boost.retry')}
             onPress={loadAd}
             variant="secondary"
             style={styles.retryButton}

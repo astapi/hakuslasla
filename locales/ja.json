@@ -1309,7 +1309,8 @@
     "igniteApplied": "{{enemy}}に発火を付与した！（{{damage}}ダメージ × {{duration}}秒）",
     "igniteDamage": "発火ダメージ！ {{enemy}}に{{damage}}ダメージ！{{remaining}}{{ended}}",
     "igniteRemaining": "（残り{{seconds}}秒）",
-    "igniteEnded": "（発火が切れた）"
+    "igniteEnded": "（発火が切れた）",
+    "hpRegen": "HP回復！ HPが{{amount}}回復した！"
   },
   "passiveTree": {
     "title": "パッシブツリー",
@@ -1953,6 +1954,32 @@
     "attackSpeed": "攻撃速度+{{value}}%",
     "hpOnHit": "HIT時HP+{{value}}回復",
     "lifesteal": "ライフスティール+{{value}}%"
+  },
+  "boost": {
+    "dropRate": {
+      "title": "ドロップ率UP",
+      "description": "30分間ドロップ率1.5倍、ユニーク+1%",
+      "longDescription": "ユニークドロップ率+1%\nアイテムドロップ確率1.5倍"
+    },
+    "tierBoost": {
+      "title": "上位Tier確率UP",
+      "description": "30分間高品質アイテムの出現率UP",
+      "longDescription": "高品質Tier(T1-T3)の出現確率UP\n通常はT4,5が最も出やすい"
+    },
+    "active": "有効中",
+    "activeRemaining": "有効中: 残り{{minutes}}分",
+    "playing": "再生中...",
+    "watchAdToActivate": "広告を見て有効化",
+    "close": "閉じる",
+    "error": "エラー",
+    "adLoadFailed": "広告の読み込みに失敗しました",
+    "adShowFailed": "広告の表示に失敗しました。しばらくしてからお試しください。",
+    "adNotReady": "広告の準備ができていません。しばらく待ってからもう一度お試しください。",
+    "duration": "効果時間: 30分",
+    "loadingAd": "広告を読み込み中...",
+    "retry": "再読み込み",
+    "dropRateBoostLabel": "ドロップ率ブースト",
+    "tierBoostLabel": "Tierブースト"
   },
   "shop": {
     "title": "ショップ",

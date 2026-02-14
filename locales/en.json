@@ -1309,7 +1309,8 @@
     "igniteApplied": "Applied ignite to {{enemy}}! ({{damage}} damage × {{duration}}s)",
     "igniteDamage": "Ignite damage! {{enemy}} takes {{damage}} damage!{{remaining}}{{ended}}",
     "igniteRemaining": " ({{seconds}}s remaining)",
-    "igniteEnded": " (ignite ended)"
+    "igniteEnded": " (ignite ended)",
+    "hpRegen": "HP Regen! Recovered {{amount}} HP!"
   },
   "passiveTree": {
     "title": "Passive Tree",
@@ -1953,6 +1954,32 @@
     "attackSpeed": "Attack Speed +{{value}}%",
     "hpOnHit": "HP on Hit +{{value}}",
     "lifesteal": "Lifesteal +{{value}}%"
+  },
+  "boost": {
+    "dropRate": {
+      "title": "Drop Rate UP",
+      "description": "1.5x drop rate for 30 min, +1% unique",
+      "longDescription": "+1% unique drop rate\n1.5x item drop chance"
+    },
+    "tierBoost": {
+      "title": "Higher Tier UP",
+      "description": "Higher quality item drop rate UP for 30 min",
+      "longDescription": "Higher T1-T3 quality tier drop rate\nNormally T4-5 are most common"
+    },
+    "active": "Active",
+    "activeRemaining": "Active: {{minutes}} min left",
+    "playing": "Playing...",
+    "watchAdToActivate": "Watch ad to activate",
+    "close": "Close",
+    "error": "Error",
+    "adLoadFailed": "Failed to load ad",
+    "adShowFailed": "Failed to show ad. Please try again later.",
+    "adNotReady": "Ad is not ready. Please wait and try again.",
+    "duration": "Duration: 30 min",
+    "loadingAd": "Loading ad...",
+    "retry": "Retry",
+    "dropRateBoostLabel": "Drop Rate Boost",
+    "tierBoostLabel": "Tier Boost"
   },
   "shop": {
     "title": "Shop",
