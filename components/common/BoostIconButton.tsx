@@ -7,6 +7,7 @@ import { ENTITLEMENT_IDS } from '@/constants/purchases';
 import { useAdState } from '@/hooks/useAdStore';
 import { BoostModal } from './BoostModal';
 import { ms, isTablet } from '@/utils/scaling';
+import i18n from '@/lib/i18n';
 
 // タブレット用スケーリング
 const iconSize = isTablet ? 26 : 16;
@@ -64,7 +65,7 @@ export const BoostIconButton = ({ type }: BoostIconButtonProps) => {
           pressed && styles.buttonPressed,
         ]}
         onPress={() => setModalVisible(true)}
-        accessibilityLabel={type === 'drop_rate' ? 'ドロップ率ブースト' : 'Tierブースト'}
+        accessibilityLabel={type === 'drop_rate' ? i18n.t('boost.dropRateBoostLabel') : i18n.t('boost.tierBoostLabel')}
         hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
       >
         <MaterialCommunityIcons

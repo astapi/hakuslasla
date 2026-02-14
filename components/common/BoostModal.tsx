@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAdBoostStore, AdBoostType } from '@/stores/useAdBoostStore';
 import { useAdState } from '@/hooks/useAdStore';
 import { ms, fs } from '@/utils/scaling';
+import i18n from '@/lib/i18n';
 
 interface BoostModalProps {
   visible: boolean;
@@ -26,13 +27,13 @@ const colors = {
 const BOOST_CONFIG = {
   drop_rate: {
     icon: 'treasure-chest' as const,
-    title: 'ドロップ率UP',
-    description: '30分間ドロップ率1.5倍、ユニーク+1%',
+    titleKey: 'boost.dropRate.title',
+    descriptionKey: 'boost.dropRate.description',
   },
   tier_boost: {
     icon: 'star-four-points' as const,
-    title: '上位Tier確率UP',
-    description: '30分間高品質アイテムの出現率UP',
+    titleKey: 'boost.tierBoost.title',
+    descriptionKey: 'boost.tierBoost.description',
   },
 };
 
@@ -77,7 +78,7 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
     try {
       const success = await show();
       if (!success) {
-        Alert.alert('エラー', '広告の表示に失敗しました。しばらくしてからお試しください。');
+        Alert.alert(i18n.t('boost.error'), i18n.t('boost.adShowFailed'));
       }
     } finally {
       setIsShowing(false);
@@ -95,16 +96,16 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
         <Pressable style={styles.container} onPress={(e) => e.stopPropagation()}>
           <View style={styles.header}>
             <MaterialCommunityIcons name={config.icon} size={24} color={colors.gold} />
-            <Text style={styles.title}>{config.title}</Text>
+            <Text style={styles.title}>{i18n.t(config.titleKey)}</Text>
           </View>
 
           <View style={styles.content}>
-            <Text style={styles.description}>{config.description}</Text>
+            <Text style={styles.description}>{i18n.t(config.descriptionKey)}</Text>
 
             {isActive && (
               <View style={styles.activeStatus}>
                 <MaterialCommunityIcons name="check-circle" size={18} color={colors.success} />
-                <Text style={styles.activeText}>有効中: 残り{remainingMinutes}分</Text>
+                <Text style={styles.activeText}>{i18n.t('boost.activeRemaining', { minutes: remainingMinutes })}</Text>
               </View>
             )}
 
@@ -124,7 +125,7 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
                 color={isActive || !loaded ? colors.textMuted : colors.text}
               />
               <Text style={[styles.adButtonText, (isActive || !loaded) && styles.adButtonTextDisabled]}>
-                {isActive ? '有効中' : isShowing ? '再生中...' : '広告を見て有効化'}
+                {isActive ? i18n.t('boost.active') : isShowing ? i18n.t('boost.playing') : i18n.t('boost.watchAdToActivate')}
               </Text>
             </Pressable>
           </View>
@@ -133,7 +134,7 @@ export const BoostModal = ({ visible, onClose, type }: BoostModalProps) => {
             style={({ pressed }) => [styles.closeButton, pressed && styles.closeButtonPressed]}
             onPress={onClose}
           >
-            <Text style={styles.closeButtonText}>閉じる</Text>
+            <Text style={styles.closeButtonText}>{i18n.t('boost.close')}</Text>
           </Pressable>
         </Pressable>
       </Pressable>
