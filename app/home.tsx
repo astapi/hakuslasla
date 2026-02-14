@@ -11,7 +11,11 @@ import { BoostIconButton } from '@/components/common/BoostIconButton';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { useEncyclopediaStore } from '@/stores/useEncyclopediaStore';
 import { characterImages } from '@/data/images';
-import { ms, fs } from '@/utils/scaling';
+import { ms, fs, isTablet } from '@/utils/scaling';
+
+// タブレット用スケーリング
+const tabIconSize = isTablet ? 32 : 24;
+const tabLabelSize = isTablet ? 13 : 10;
 
 export default function HomeScreen() {
   const { t } = useTranslation();
@@ -187,7 +191,7 @@ export default function HomeScreen() {
             {skillPoints > 0 && <View style={styles.menuIconRing} />}
             <MaterialCommunityIcons
               name="star-four-points"
-              size={24}
+              size={tabIconSize}
               color={skillPoints > 0 ? colors.icon : colors.iconMuted}
             />
             {skillPoints > 0 && (
@@ -205,7 +209,7 @@ export default function HomeScreen() {
           testID="home-menu-inventory"
         >
           <View style={styles.menuIconContainer}>
-            <MaterialCommunityIcons name="bag-personal" size={24} color={colors.iconMuted} />
+            <MaterialCommunityIcons name="bag-personal" size={tabIconSize} color={colors.iconMuted} />
           </View>
           <Text style={styles.menuLabel}>{t('home.menu.inventory')}</Text>
         </Pressable>
@@ -216,7 +220,7 @@ export default function HomeScreen() {
           testID="home-menu-storage"
         >
           <View style={styles.menuIconContainer}>
-            <MaterialCommunityIcons name="treasure-chest" size={24} color={colors.iconMuted} />
+            <MaterialCommunityIcons name="treasure-chest" size={tabIconSize} color={colors.iconMuted} />
           </View>
           <Text style={styles.menuLabel}>{t('home.menu.storage')}</Text>
         </Pressable>
@@ -227,7 +231,7 @@ export default function HomeScreen() {
           testID="home-menu-encyclopedia"
         >
           <View style={styles.menuIconContainer}>
-            <MaterialCommunityIcons name="book-open-variant" size={24} color={colors.iconMuted} />
+            <MaterialCommunityIcons name="book-open-variant" size={tabIconSize} color={colors.iconMuted} />
           </View>
           <Text style={styles.menuLabel}>{t('home.menu.encyclopedia')}</Text>
         </Pressable>
@@ -238,7 +242,7 @@ export default function HomeScreen() {
           testID="home-menu-settings"
         >
           <View style={styles.menuIconContainer}>
-            <MaterialCommunityIcons name="filter-cog" size={24} color={colors.iconMuted} />
+            <MaterialCommunityIcons name="filter-cog" size={tabIconSize} color={colors.iconMuted} />
           </View>
           <Text style={styles.menuLabel}>{t('home.menu.settings')}</Text>
         </Pressable>
@@ -249,7 +253,7 @@ export default function HomeScreen() {
           testID="home-menu-shop"
         >
           <View style={styles.menuIconContainer}>
-            <MaterialCommunityIcons name="shopping" size={24} color={colors.iconMuted} />
+            <MaterialCommunityIcons name="shopping" size={tabIconSize} color={colors.iconMuted} />
           </View>
           <Text style={styles.menuLabel}>{t('home.menu.shop')}</Text>
         </Pressable>
@@ -452,8 +456,8 @@ const styles = StyleSheet.create({
   },
   menuIconContainer: {
     position: 'relative',
-    width: ms(32),
-    height: ms(32),
+    width: ms(isTablet ? 40 : 32),
+    height: ms(isTablet ? 40 : 32),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -483,7 +487,7 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   menuLabel: {
-    fontSize: fs(10),
+    fontSize: fs(tabLabelSize),
     color: colors.textMuted,
     marginTop: ms(4),
   },
