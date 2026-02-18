@@ -142,6 +142,19 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
 
   const events: BattleEvent[] = [];
 
+  // イグナイト伝染: 初期発火状態がある場合、spread イベントを発行
+  if (config.initialIgniteState) {
+    events.push({
+      type: 'ignite_spread',
+      tick: 0,
+      data: {
+        damage: config.initialIgniteState.damage,
+        durationMs: config.initialIgniteState.remainingMs,
+        tickIntervalMs: config.initialIgniteState.tickIntervalMs,
+      },
+    });
+  }
+
   if (isEndContent) {
     const skillName = getBossSkillName(enemyId);
     if (skillName) {

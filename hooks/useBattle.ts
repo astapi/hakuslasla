@@ -549,6 +549,27 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         }),
       };
 
+    case 'APPLY_IGNITE_SPREAD':
+      // イグナイト伝染（前の敵から引き継いだ発火）
+      const spreadDurationSec = Math.round(action.durationMs / 1000);
+      return {
+        ...state,
+        enemyIgnite: {
+          damage: action.damage,
+          remainingMs: action.durationMs,
+          tickIntervalMs: action.tickIntervalMs,
+        },
+        battleLog: addToLog(state.battleLog, {
+          id: logIdCounter++,
+          message: i18n.t('battleLog.igniteSpread', {
+            enemy: state.enemy?.name ?? '',
+            damage: action.damage,
+            duration: spreadDurationSec,
+          }),
+          type: 'ignite',
+        }),
+      };
+
     case 'IGNITE_DAMAGE':
       if (!state.enemy || !state.enemyIgnite) return state;
       const igniteEnemyHp = Math.max(0, state.enemy.currentHp - action.damage);
@@ -977,6 +998,13 @@ export const useBattle = (dungeonId: string) => {
           const durationMs = Number(data.durationMs ?? 0);
           const tickIntervalMs = Number(data.tickIntervalMs ?? 1000);
           dispatch({ type: 'APPLY_IGNITE', damage, durationMs, tickIntervalMs });
+          break;
+        }
+        case 'ignite_spread': {
+          const damage = Number(data.damage ?? 0);
+          const durationMs = Number(data.durationMs ?? 0);
+          const tickIntervalMs = Number(data.tickIntervalMs ?? 1000);
+          dispatch({ type: 'APPLY_IGNITE_SPREAD', damage, durationMs, tickIntervalMs });
           break;
         }
         case 'ignite_damage': {

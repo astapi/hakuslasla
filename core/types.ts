@@ -298,6 +298,7 @@ export type BattleEventType =
   | 'ignite_applied'
   | 'ignite_damage'
   | 'ignite_expired'
+  | 'ignite_spread'
   | 'hp_regen'
   | 'player_heal'
   | 'lifesteal'
