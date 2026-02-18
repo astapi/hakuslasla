@@ -2022,27 +2022,27 @@
     "restoreFailedMessage": "購入履歴の復元に失敗しました",
     "inventoryExpansion": {
       "name": "インベントリ拡張",
-      "description": "インベントリを50→200に拡張"
+      "description": "インベントリのアイテム数の上限を{{from}}個から{{to}}個に拡張します"
     },
     "storageExpansion": {
       "name": "倉庫拡張",
-      "description": "倉庫を20→100に拡張"
+      "description": "倉庫のアイテム数の上限を{{from}}個から{{to}}個に拡張します"
     },
     "tierFilter": {
       "name": "低Tier除外",
-      "description": "T8-T10のドロップを除外"
+      "description": "低品質（T8〜T10）のアイテムがドロップしなくなります"
     },
     "permanentBoost": {
       "name": "常時ブースト",
-      "description": "ドロップブーストが常時有効"
+      "description": "ユニークドロップ率+1%、アイテムドロップ率1.5倍、高品質Tier（T1〜T3）出現率UPが常時有効になります"
     },
     "characterSlots": {
       "name": "キャラスロット拡張",
-      "description": "キャラクタースロットを5枠に拡張"
+      "description": "作成できるキャラクターが5人まで増加します"
     },
     "premiumBundle": {
       "name": "プレミアムバンドル",
-      "description": "全てのプレミアム機能を一括で入手"
+      "description": "インベントリ拡張・倉庫拡張・低Tier除外・常時ブースト・キャラスロット拡張がすべて含まれたお得なセットです"
     }
   }
 }
