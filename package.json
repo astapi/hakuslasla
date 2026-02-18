@@ -1,7 +1,7 @@
 {
   "name": "lootdive",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -35,6 +35,7 @@
     "expo-font": "~14.0.10",
     "expo-haptics": "~15.0.8",
     "expo-image": "~3.0.11",
+    "expo-keep-awake": "~15.0.8",
     "expo-linking": "~8.0.11",
     "expo-localization": "^17.0.8",
     "expo-router": "~6.0.21",
