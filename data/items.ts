@@ -294,10 +294,14 @@ export function generateRandomMods(count: number, dungeonId?: string, itemSlot?:
     : { minTier: 10, maxTier: 1 };
 
   // 課金: Tierフィルター（T8-T10除外）
-  if (hasTierFilter() && tierRange.minTier > TIER_FILTER_SETTINGS.PREMIUM_MIN_TIER) {
+  // maxTierがフィルター範囲内（T7以上）の場合のみ適用
+  // 序盤ダンジョン（maxTier > 7）では元々低品質MODしか出ないため適用不要
+  if (hasTierFilter() &&
+      tierRange.minTier > TIER_FILTER_SETTINGS.PREMIUM_MIN_TIER &&
+      tierRange.maxTier <= TIER_FILTER_SETTINGS.PREMIUM_MIN_TIER) {
     tierRange = {
       ...tierRange,
-      minTier: Math.min(tierRange.minTier, TIER_FILTER_SETTINGS.PREMIUM_MIN_TIER),
+      minTier: TIER_FILTER_SETTINGS.PREMIUM_MIN_TIER,
     };
   }
 
