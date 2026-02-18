@@ -51,3 +51,6 @@ app-example
 *.apk
 *.aab
 *.ipa
+
+# Build artifacts
+build/
