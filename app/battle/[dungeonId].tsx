@@ -6,6 +6,7 @@ import { getDungeon } from '@/data/dungeons';
 import { useBattle } from '@/hooks/useBattle';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useKeepAwake } from 'expo-keep-awake';
 import { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
@@ -179,6 +180,8 @@ const ChestDrop = ({
 };
 
 export default function BattleScreen() {
+  useKeepAwake(); // 戦闘中はスリープを防止
+
   const { t } = useTranslation();
   const { dungeonId } = useLocalSearchParams<{ dungeonId: string }>();
   const router = useRouter();
