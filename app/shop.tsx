@@ -7,7 +7,14 @@ import { PurchasesPackage } from 'react-native-purchases';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
-import { PURCHASE_PRODUCTS, ENTITLEMENT_IDS } from '@/constants/purchases';
+import {
+  PURCHASE_PRODUCTS,
+  ENTITLEMENT_IDS,
+  INVENTORY_BASE_SIZE,
+  INVENTORY_EXPANDED_SIZE,
+  STORAGE_BASE_SIZE,
+  STORAGE_EXPANDED_SIZE,
+} from '@/constants/purchases';
 import { ms, fs } from '@/utils/scaling';
 
 export default function ShopScreen() {
@@ -139,6 +146,18 @@ export default function ShopScreen() {
     );
   };
 
+  // descriptionKeyに対応する補間パラメータを取得
+  const getDescriptionParams = (descriptionKey: string): Record<string, number> | undefined => {
+    switch (descriptionKey) {
+      case 'shop.inventoryExpansion.description':
+        return { from: INVENTORY_BASE_SIZE, to: INVENTORY_EXPANDED_SIZE };
+      case 'shop.storageExpansion.description':
+        return { from: STORAGE_BASE_SIZE, to: STORAGE_EXPANDED_SIZE };
+      default:
+        return undefined;
+    }
+  };
+
   // パッケージに対応するアイコンと翻訳キーを取得
   const getPackageDisplayInfo = (pkg: PurchasesPackage) => {
     const packageId = pkg.identifier;
@@ -149,11 +168,14 @@ export default function ShopScreen() {
     // マッピングからEntitlement IDを取得（なければPackage IDをフォールバック）
     const entitlementId = productInfo?.entitlementId || packageId;
 
+    // 補間パラメータを取得
+    const descriptionParams = productInfo ? getDescriptionParams(productInfo.descriptionKey) : undefined;
+
     return {
       iconName: productInfo?.iconName || 'star',
       // 定義がある場合は翻訳を使用、なければRevenueCatの情報をそのまま使用
       name: productInfo ? t(productInfo.nameKey) : pkg.product.title,
-      description: productInfo ? t(productInfo.descriptionKey) : pkg.product.description || pkg.product.title,
+      description: productInfo ? t(productInfo.descriptionKey, descriptionParams) : pkg.product.description || pkg.product.title,
       entitlementId: entitlementId,
     };
   };
