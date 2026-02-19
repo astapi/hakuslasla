@@ -1328,6 +1328,7 @@
     "enemyHealRegen": "{{enemy}}が再生で{{amount}}回復した！",
     "enemyHealOnHit": "{{enemy}}が吸収で{{amount}}回復した！",
     "igniteApplied": "{{enemy}}に発火を付与した！（{{damage}}ダメージ × {{duration}}秒）",
+    "igniteSpread": "発火が{{enemy}}に伝染した！（{{damage}}ダメージ × {{duration}}秒）",
     "igniteDamage": "発火ダメージ！ {{enemy}}に{{damage}}ダメージ！{{remaining}}{{ended}}",
     "igniteRemaining": "（残り{{seconds}}秒）",
     "igniteEnded": "（発火が切れた）",

@@ -1328,6 +1328,7 @@
     "enemyHealRegen": "{{enemy}} regenerated {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} leeched {{amount}} HP!",
     "igniteApplied": "Applied ignite to {{enemy}}! ({{damage}} damage × {{duration}}s)",
+    "igniteSpread": "Ignite spread to {{enemy}}! ({{damage}} damage × {{duration}}s)",
     "igniteDamage": "Ignite damage! {{enemy}} takes {{damage}} damage!{{remaining}}{{ended}}",
     "igniteRemaining": " ({{seconds}}s remaining)",
     "igniteEnded": " (ignite ended)",

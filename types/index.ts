@@ -497,6 +497,7 @@ export type BattleAction =
   | { type: 'PLAYER_POISON_DAMAGE'; damage: number }
   | { type: 'HP_REGEN'; amount: number }
   | { type: 'APPLY_IGNITE'; damage: number; durationMs: number; tickIntervalMs: number }
+  | { type: 'APPLY_IGNITE_SPREAD'; damage: number; durationMs: number; tickIntervalMs: number }
   | { type: 'IGNITE_DAMAGE'; damage: number; remainingMs: number }
   | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number }
   | { type: 'RESET_PLAYER_GAUGE' }
