@@ -184,6 +184,11 @@
       "modCount": "{{count}}+ MODs",
       "tierBelow": "Contains Tier {{tier}} or below MOD",
       "noFilter": "No filtering (collect all)"
+    },
+    "battleSpeed": {
+      "title": "Battle Speed",
+      "description": "Change the speed of battle progression",
+      "premiumHint": "2x speed and above available after purchase in Shop"
     }
   },
   "status": {
@@ -2040,6 +2045,10 @@
     "characterSlots": {
       "name": "Character Slots",
       "description": "Allows creating up to 5 characters"
+    },
+    "speedBoost": {
+      "name": "Speed Boost",
+      "description": "Unlock 2x-3x battle speed options"
     },
     "premiumBundle": {
       "name": "Premium Bundle",

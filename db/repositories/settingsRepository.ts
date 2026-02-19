@@ -22,9 +22,14 @@ export type AppLanguage = 'ja' | 'en' | 'system';
 export const LANGUAGE_OPTIONS: AppLanguage[] = ['system', 'ja', 'en'];
 export const DEFAULT_LANGUAGE: AppLanguage = 'system';
 
-export type BattleSpeedMultiplier = 1 | 2 | 3 | 5 | 10;
-export const BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [1, 2, 3, 5, 10];
+export type BattleSpeedMultiplier = 1 | 1.5 | 2 | 3;
+export const BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [1, 1.5, 2, 3];
 export const DEFAULT_BATTLE_SPEED: BattleSpeedMultiplier = 1;
+
+// 無料で使える倍速オプション
+export const FREE_BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [1, 1.5];
+// 課金で使える倍速オプション（2倍以上）
+export const PREMIUM_BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [2, 3];
 
 export const settingsRepository = {
   async get(key: string): Promise<string | null> {
@@ -88,7 +93,7 @@ export const settingsRepository = {
     if (!value) {
       return DEFAULT_BATTLE_SPEED;
     }
-    const parsed = parseInt(value, 10) as BattleSpeedMultiplier;
+    const parsed = parseFloat(value) as BattleSpeedMultiplier;
     if (BATTLE_SPEED_OPTIONS.includes(parsed)) {
       return parsed;
     }

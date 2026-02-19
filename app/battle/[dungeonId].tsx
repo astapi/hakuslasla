@@ -1,6 +1,7 @@
 import { BattleLog } from '@/components/battle/BattleLog';
 import { CharacterDisplay } from '@/components/battle/CharacterDisplay';
 import { BoostIndicator } from '@/components/battle/BoostIndicator';
+import { SpeedButton } from '@/components/battle/SpeedButton';
 import { Button } from '@/components/common/Button';
 import { getDungeon } from '@/data/dungeons';
 import { useBattle } from '@/hooks/useBattle';
@@ -186,7 +187,7 @@ export default function BattleScreen() {
   const { t } = useTranslation();
   const { dungeonId } = useLocalSearchParams<{ dungeonId: string }>();
   const router = useRouter();
-  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat } = useBattle(dungeonId || '');
+  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed } = useBattle(dungeonId || '');
   const { level, characterType } = usePlayerStore();
   const dungeon = getDungeon(dungeonId || '');
   const insets = useSafeAreaInsets();
@@ -280,6 +281,7 @@ export default function BattleScreen() {
             {state.runCount > 1 && ` (${state.runCount}${t('battle.round')})`}
           </Text>
           <BoostIndicator />
+          <SpeedButton currentSpeed={battleSpeed} onSpeedChange={changeBattleSpeed} />
         </View>
         {isAutoRunning && (
           <Text style={styles.autoRunText}>{t('battle.autoRunning')}</Text>

@@ -1233,6 +1233,13 @@ export const useBattle = (dungeonId: string) => {
     }
   }, [state.enemy, state.phase, startBattle]);
 
+  // 戦闘速度の変更
+  const changeBattleSpeed = useCallback(async (newSpeed: BattleSpeedMultiplier) => {
+    setBattleSpeed(newSpeed);
+    battleSpeedRef.current = newSpeed;
+    await settingsRepository.setBattleSpeed(newSpeed);
+  }, []);
+
   return {
     state,
     startBattle,
@@ -1242,5 +1249,7 @@ export const useBattle = (dungeonId: string) => {
     startAutoRun,
     stopAutoRun,
     retreat,
+    battleSpeed,
+    changeBattleSpeed,
   };
 };

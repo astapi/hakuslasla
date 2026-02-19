@@ -248,3 +248,8 @@ export const getCharacterSlotCount = (): number => {
   // デフォルト1枠、課金で5枠
   return state.hasEntitlement(ENTITLEMENT_IDS.CHARACTER_SLOTS) ? 5 : 1;
 };
+
+// 倍速ブーストを持っているか
+export const hasSpeedBoost = (): boolean => {
+  return hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST);
+};

@@ -184,6 +184,11 @@
       "modCount": "MOD {{count}}個以上",
       "tierBelow": "Tier {{tier}} 以下のMODを含む",
       "noFilter": "フィルタリングなし（すべて取得）"
+    },
+    "battleSpeed": {
+      "title": "戦闘速度",
+      "description": "戦闘の進行速度を変更します",
+      "premiumHint": "2倍速以上はショップで購入後に利用できます"
     }
   },
   "status": {
@@ -2040,6 +2045,10 @@
     "characterSlots": {
       "name": "キャラスロット拡張",
       "description": "作成できるキャラクターが5人まで増加します"
+    },
+    "speedBoost": {
+      "name": "倍速ブースト",
+      "description": "戦闘速度を2〜3倍速に設定できるようになります"
     },
     "premiumBundle": {
       "name": "プレミアムバンドル",
