@@ -9,6 +9,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useKeepAwake } from 'expo-keep-awake';
 import { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { ms, fs, s } from '@/utils/scaling';
@@ -188,6 +189,7 @@ export default function BattleScreen() {
   const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat } = useBattle(dungeonId || '');
   const { level, characterType } = usePlayerStore();
   const dungeon = getDungeon(dungeonId || '');
+  const insets = useSafeAreaInsets();
 
   // 攻撃アニメーション用のstate
   const [playerAttacking, setPlayerAttacking] = useState(false);
@@ -348,7 +350,7 @@ export default function BattleScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* 上部: バトルエリア */}
       {backgroundImage ? (
         <ImageBackground

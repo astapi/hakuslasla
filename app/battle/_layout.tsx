@@ -16,8 +16,7 @@ export default function BattleLayout() {
         contentStyle: {
           backgroundColor: '#15191E',
         },
-        title: t('battle.inProgress'),
-        headerBackVisible: false,
+        headerShown: false,
         gestureEnabled: false,
       }}
     />

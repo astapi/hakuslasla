@@ -42,7 +42,6 @@ export default function HomeScreen() {
             <BoostIconButton type="drop_rate" />
             <BoostIconButton type="tier_boost" />
           </View>
-          <Text style={headerStyles.title}>{t('characterSelect.title')}</Text>
           <View style={headerStyles.spacer} />
         </View>
       ),
@@ -566,13 +565,10 @@ const headerStyles = StyleSheet.create({
   },
   boostButtons: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: ms(8),
     minWidth: ms(80),
-  },
-  title: {
-    fontSize: fs(17),
-    fontWeight: 'bold',
-    color: '#fff',
+    minHeight: ms(isTablet ? 44 : 36),
   },
   spacer: {
     width: ms(80),
