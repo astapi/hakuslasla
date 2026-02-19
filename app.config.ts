@@ -14,6 +14,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     supportsTablet: true,
     appleTeamId: "C554RLNNG7",
     bundleIdentifier: "com.astapi.LootDive",
+    buildNumber: process.env.IOS_BUILD_NUMBER ?? "1",
     googleServicesFile:
       process.env.GOOGLE_SERVICES_INFO_PLIST ?? "./GoogleService-Info.plist",
     infoPlist: {

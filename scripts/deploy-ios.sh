@@ -43,9 +43,22 @@ SCHEME="$APP_NAME"
 ARCHIVE_PATH="build/${APP_NAME}.xcarchive"
 EXPORT_PATH="build/output"
 IPA_PATH="${EXPORT_PATH}/${APP_NAME}.ipa"
+BUILD_NUMBER_FILE=".ios-build-number"
 
-# Step 1: Expo Prebuild
-echo -e "${YELLOW}[2/5] Expo prebuild を実行中...${NC}"
+# Step 1: Build Number のインクリメント
+echo -e "${YELLOW}[1/6] Build Number をインクリメント中...${NC}"
+if [ -f "$BUILD_NUMBER_FILE" ]; then
+    CURRENT_BUILD_NUMBER=$(cat "$BUILD_NUMBER_FILE")
+else
+    CURRENT_BUILD_NUMBER=1
+fi
+NEW_BUILD_NUMBER=$((CURRENT_BUILD_NUMBER + 1))
+echo "$NEW_BUILD_NUMBER" > "$BUILD_NUMBER_FILE"
+export IOS_BUILD_NUMBER="$NEW_BUILD_NUMBER"
+echo -e "  Build Number: ${CURRENT_BUILD_NUMBER} -> ${NEW_BUILD_NUMBER}"
+
+# Step 2: Expo Prebuild
+echo -e "${YELLOW}[2/6] Expo prebuild を実行中...${NC}"
 npx expo prebuild --clean --platform ios
 
 # ワークスペースの存在確認
@@ -54,8 +67,8 @@ if [ ! -d "$WORKSPACE" ]; then
     exit 1
 fi
 
-# Step 2: Archive
-echo -e "${YELLOW}[3/5] アーカイブを作成中...${NC}"
+# Step 3: Archive
+echo -e "${YELLOW}[3/6] アーカイブを作成中...${NC}"
 xcodebuild -workspace "$WORKSPACE" \
     -scheme "$SCHEME" \
     -configuration Release \
@@ -68,8 +81,8 @@ if [ ! -d "$ARCHIVE_PATH" ]; then
     exit 1
 fi
 
-# Step 3: Export IPA
-echo -e "${YELLOW}[4/5] IPA をエクスポート中...${NC}"
+# Step 4: Export IPA
+echo -e "${YELLOW}[4/6] IPA をエクスポート中...${NC}"
 
 # ExportOptions.plist の存在確認
 if [ ! -f "ExportOptions.plist" ]; then
@@ -89,8 +102,8 @@ if [ ! -f "$IPA_PATH" ]; then
     exit 1
 fi
 
-# Step 4: Upload to App Store Connect
-echo -e "${YELLOW}[5/5] App Store Connect にアップロード中...${NC}"
+# Step 5: Upload to App Store Connect
+echo -e "${YELLOW}[5/6] App Store Connect にアップロード中...${NC}"
 xcrun altool --upload-app \
     -f "$IPA_PATH" \
     -u "$APPLE_ID" \
