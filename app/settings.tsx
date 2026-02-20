@@ -15,10 +15,7 @@ import {
   BattleSpeedMultiplier,
   BATTLE_SPEED_OPTIONS,
   DEFAULT_BATTLE_SPEED,
-  FREE_BATTLE_SPEED_OPTIONS,
-  PREMIUM_BATTLE_SPEED_OPTIONS,
 } from '@/db/repositories/settingsRepository';
-import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 import { changeLanguage } from '@/lib/i18n';
 import { ms, fs } from '@/utils/scaling';
 
@@ -48,7 +45,6 @@ export default function SettingsScreen() {
     }
     return LANGUAGE_LABELS[lang];
   };
-  const hasPremiumSpeed = hasSpeedBoost();
 
   useEffect(() => {
     loadSettings();
@@ -63,13 +59,7 @@ export default function SettingsScreen() {
       ]);
       setSettings(loaded);
       setLanguage(savedLanguage);
-      // 課金していない場合で、保存されている速度がプレミアム速度の場合は2倍にリセット
-      if (!hasSpeedBoost() && PREMIUM_BATTLE_SPEED_OPTIONS.includes(savedSpeed)) {
-        setBattleSpeed(2);
-        await settingsRepository.setBattleSpeed(2);
-      } else {
-        setBattleSpeed(savedSpeed);
-      }
+      setBattleSpeed(savedSpeed);
     } finally {
       setIsLoading(false);
     }
@@ -87,9 +77,7 @@ export default function SettingsScreen() {
   };
 
   // 利用可能な速度オプションを取得
-  const availableSpeedOptions = hasPremiumSpeed
-    ? BATTLE_SPEED_OPTIONS
-    : FREE_BATTLE_SPEED_OPTIONS;
+  const availableSpeedOptions = BATTLE_SPEED_OPTIONS;
 
   const saveSettings = async (newSettings: DropFilterSettings) => {
     setSettings(newSettings);
@@ -223,47 +211,29 @@ export default function SettingsScreen() {
             {t('settings.battleSpeed.description')}
           </Text>
           <View style={styles.speedOptions}>
-            {BATTLE_SPEED_OPTIONS.map((speed) => {
-              const isAvailable = availableSpeedOptions.includes(speed);
+            {availableSpeedOptions.map((speed) => {
               const isSelected = battleSpeed === speed;
-              const isPremium = PREMIUM_BATTLE_SPEED_OPTIONS.includes(speed);
               return (
                 <Pressable
                   key={speed}
                   style={[
                     styles.speedOption,
                     isSelected && styles.speedOptionSelected,
-                    !isAvailable && styles.speedOptionLocked,
                   ]}
-                  onPress={() => isAvailable && handleSpeedChange(speed)}
-                  disabled={!isAvailable}
+                  onPress={() => handleSpeedChange(speed)}
                 >
                   <Text
                     style={[
                       styles.speedOptionText,
                       isSelected && styles.speedOptionTextSelected,
-                      !isAvailable && styles.speedOptionTextLocked,
                     ]}
                   >
                     {speed}x
                   </Text>
-                  {isPremium && !hasPremiumSpeed && (
-                    <MaterialCommunityIcons
-                      name="lock"
-                      size={12}
-                      color="#666"
-                      style={styles.lockIcon}
-                    />
-                  )}
                 </Pressable>
               );
             })}
           </View>
-          {!hasPremiumSpeed && (
-            <Text style={styles.speedHint}>
-              {t('settings.battleSpeed.premiumHint')}
-            </Text>
-          )}
         </View>
 
         {/* カテゴリフィルター */}
@@ -636,9 +606,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#4CAF50',
     borderColor: '#4CAF50',
   },
-  speedOptionLocked: {
-    opacity: 0.5,
-  },
   speedOptionText: {
     fontSize: fs(14),
     fontWeight: '600',
@@ -646,17 +613,5 @@ const styles = StyleSheet.create({
   },
   speedOptionTextSelected: {
     color: '#fff',
-  },
-  speedOptionTextLocked: {
-    color: '#666',
-  },
-  lockIcon: {
-    marginLeft: ms(2),
-  },
-  speedHint: {
-    fontSize: fs(11),
-    color: colors.textMuted,
-    textAlign: 'center',
-    marginTop: ms(12),
   },
 });
