@@ -3,5 +3,5 @@ export { inventoryRepository } from './inventoryRepository';
 export { equipmentRepository } from './equipmentRepository';
 export { skillRepository } from './skillRepository';
 export { storageRepository } from './storageRepository';
-export { settingsRepository } from './settingsRepository';
-export type { DungeonClearRecord, DungeonClearRecords } from './settingsRepository';
+export { settingsRepository, LANGUAGE_LABELS } from './settingsRepository';
+export type { DungeonClearRecord, DungeonClearRecords, AppLanguage } from './settingsRepository';
