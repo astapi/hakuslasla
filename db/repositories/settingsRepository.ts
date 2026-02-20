@@ -18,9 +18,20 @@ export type DungeonClearRecord = {
 };
 export type DungeonClearRecords = Record<string, DungeonClearRecord>;
 
-export type AppLanguage = 'ja' | 'en' | 'system';
-export const LANGUAGE_OPTIONS: AppLanguage[] = ['system', 'ja', 'en'];
+export type AppLanguage = 'ja' | 'en' | 'zh' | 'ko' | 'es' | 'fr' | 'de' | 'system';
+export const LANGUAGE_OPTIONS: AppLanguage[] = ['system', 'ja', 'en', 'zh', 'ko', 'es', 'fr', 'de'];
 export const DEFAULT_LANGUAGE: AppLanguage = 'system';
+
+// 言語コードからネイティブ表記へのマッピング
+export const LANGUAGE_LABELS: Record<Exclude<AppLanguage, 'system'>, string> = {
+  ja: '日本語',
+  en: 'English',
+  zh: '简体中文',
+  ko: '한국어',
+  es: 'Español',
+  fr: 'Français',
+  de: 'Deutsch',
+};
 
 export type BattleSpeedMultiplier = 1 | 2 | 3 | 5 | 10;
 export const BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [1, 2, 3, 5, 10];

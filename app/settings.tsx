@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Modal } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
@@ -6,7 +6,19 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { DropFilterSettings, DEFAULT_DROP_FILTER, EquipmentSlot } from '@/types';
-import { settingsRepository, AppLanguage, LANGUAGE_OPTIONS, DEFAULT_LANGUAGE } from '@/db/repositories/settingsRepository';
+import {
+  settingsRepository,
+  AppLanguage,
+  LANGUAGE_OPTIONS,
+  DEFAULT_LANGUAGE,
+  LANGUAGE_LABELS,
+  BattleSpeedMultiplier,
+  BATTLE_SPEED_OPTIONS,
+  DEFAULT_BATTLE_SPEED,
+  FREE_BATTLE_SPEED_OPTIONS,
+  PREMIUM_BATTLE_SPEED_OPTIONS,
+} from '@/db/repositories/settingsRepository';
+import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 import { changeLanguage } from '@/lib/i18n';
 import { ms, fs } from '@/utils/scaling';
 
@@ -25,7 +37,18 @@ export default function SettingsScreen() {
   const router = useRouter();
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
   const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
+  const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
   const [isLoading, setIsLoading] = useState(true);
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+
+  // 言語コードからラベルを取得するヘルパー
+  const getLanguageLabel = (lang: AppLanguage): string => {
+    if (lang === 'system') {
+      return t('settings.language.system');
+    }
+    return LANGUAGE_LABELS[lang];
+  };
+  const hasPremiumSpeed = hasSpeedBoost();
 
   useEffect(() => {
     loadSettings();
@@ -33,12 +56,20 @@ export default function SettingsScreen() {
 
   const loadSettings = async () => {
     try {
-      const [loaded, savedLanguage] = await Promise.all([
+      const [loaded, savedLanguage, savedSpeed] = await Promise.all([
         settingsRepository.getDropFilter(),
         settingsRepository.getLanguage(),
+        settingsRepository.getBattleSpeed(),
       ]);
       setSettings(loaded);
       setLanguage(savedLanguage);
+      // 課金していない場合で、保存されている速度がプレミアム速度の場合は2倍にリセット
+      if (!hasSpeedBoost() && PREMIUM_BATTLE_SPEED_OPTIONS.includes(savedSpeed)) {
+        setBattleSpeed(2);
+        await settingsRepository.setBattleSpeed(2);
+      } else {
+        setBattleSpeed(savedSpeed);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -49,6 +80,16 @@ export default function SettingsScreen() {
     await settingsRepository.setLanguage(newLanguage);
     changeLanguage(newLanguage);
   };
+
+  const handleSpeedChange = async (newSpeed: BattleSpeedMultiplier) => {
+    setBattleSpeed(newSpeed);
+    await settingsRepository.setBattleSpeed(newSpeed);
+  };
+
+  // 利用可能な速度オプションを取得
+  const availableSpeedOptions = hasPremiumSpeed
+    ? BATTLE_SPEED_OPTIONS
+    : FREE_BATTLE_SPEED_OPTIONS;
 
   const saveSettings = async (newSettings: DropFilterSettings) => {
     setSettings(newSettings);
@@ -107,36 +148,122 @@ export default function SettingsScreen() {
           <Text style={styles.sectionDescription}>
             {t('settings.language.description')}
           </Text>
-          <View style={styles.languageOptions}>
-            {LANGUAGE_OPTIONS.map((option) => (
-              <Pressable
-                key={option}
-                style={[
-                  styles.languageOption,
-                  language === option && styles.languageOptionSelected,
-                ]}
-                onPress={() => handleLanguageChange(option)}
-              >
-                <MaterialCommunityIcons
-                  name={language === option ? 'radiobox-marked' : 'radiobox-blank'}
-                  size={20}
-                  color={language === option ? '#4CAF50' : '#666'}
-                />
-                <Text
+          <Pressable
+            style={styles.languageSelector}
+            onPress={() => setLanguageModalVisible(true)}
+          >
+            <View style={styles.languageSelectorContent}>
+              <MaterialCommunityIcons
+                name="translate"
+                size={20}
+                color={colors.text}
+              />
+              <Text style={styles.languageSelectorText}>
+                {getLanguageLabel(language)}
+              </Text>
+            </View>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={24}
+              color={colors.textMuted}
+            />
+          </Pressable>
+        </View>
+
+        {/* 言語選択モーダル */}
+        <Modal
+          visible={languageModalVisible}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setLanguageModalVisible(false)}
+        >
+          <Pressable
+            style={styles.modalOverlay}
+            onPress={() => setLanguageModalVisible(false)}
+          >
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>{t('settings.language.title')}</Text>
+              <ScrollView style={styles.modalScrollView}>
+                {LANGUAGE_OPTIONS.map((option) => (
+                  <Pressable
+                    key={option}
+                    style={[
+                      styles.languageOption,
+                      language === option && styles.languageOptionSelected,
+                    ]}
+                    onPress={() => {
+                      handleLanguageChange(option);
+                      setLanguageModalVisible(false);
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      name={language === option ? 'radiobox-marked' : 'radiobox-blank'}
+                      size={20}
+                      color={language === option ? '#4CAF50' : '#666'}
+                    />
+                    <Text
+                      style={[
+                        styles.languageOptionText,
+                        language === option && styles.languageOptionTextSelected,
+                      ]}
+                    >
+                      {getLanguageLabel(option)}
+                    </Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </View>
+          </Pressable>
+        </Modal>
+
+        {/* 戦闘速度 */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.battleSpeed.title')}</Text>
+          <Text style={styles.sectionDescription}>
+            {t('settings.battleSpeed.description')}
+          </Text>
+          <View style={styles.speedOptions}>
+            {BATTLE_SPEED_OPTIONS.map((speed) => {
+              const isAvailable = availableSpeedOptions.includes(speed);
+              const isSelected = battleSpeed === speed;
+              const isPremium = PREMIUM_BATTLE_SPEED_OPTIONS.includes(speed);
+              return (
+                <Pressable
+                  key={speed}
                   style={[
-                    styles.languageOptionText,
-                    language === option && styles.languageOptionTextSelected,
+                    styles.speedOption,
+                    isSelected && styles.speedOptionSelected,
+                    !isAvailable && styles.speedOptionLocked,
                   ]}
+                  onPress={() => isAvailable && handleSpeedChange(speed)}
+                  disabled={!isAvailable}
                 >
-                  {option === 'system'
-                    ? t('settings.language.system')
-                    : option === 'ja'
-                    ? t('settings.language.japanese')
-                    : t('settings.language.english')}
-                </Text>
-              </Pressable>
-            ))}
+                  <Text
+                    style={[
+                      styles.speedOptionText,
+                      isSelected && styles.speedOptionTextSelected,
+                      !isAvailable && styles.speedOptionTextLocked,
+                    ]}
+                  >
+                    {speed}x
+                  </Text>
+                  {isPremium && !hasPremiumSpeed && (
+                    <MaterialCommunityIcons
+                      name="lock"
+                      size={12}
+                      color="#666"
+                      style={styles.lockIcon}
+                    />
+                  )}
+                </Pressable>
+              );
+            })}
           </View>
+          {!hasPremiumSpeed && (
+            <Text style={styles.speedHint}>
+              {t('settings.battleSpeed.premiumHint')}
+            </Text>
+          )}
         </View>
 
         {/* カテゴリフィルター */}
@@ -412,24 +539,74 @@ const styles = StyleSheet.create({
     fontSize: fs(13),
     color: colors.textMuted,
   },
+  // 言語セレクター（タップでモーダルを開く）
+  languageSelector: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: ms(14),
+    paddingHorizontal: ms(12),
+    backgroundColor: colors.bgDeep,
+    borderRadius: ms(8),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+  },
+  languageSelectorContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(12),
+  },
+  languageSelectorText: {
+    fontSize: fs(15),
+    color: colors.text,
+    fontWeight: '500',
+  },
+  // モーダル
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: ms(24),
+  },
+  modalContent: {
+    backgroundColor: colors.slab,
+    borderRadius: ms(16),
+    padding: ms(16),
+    width: '100%',
+    maxWidth: ms(340),
+    maxHeight: '80%',
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+  },
+  modalTitle: {
+    fontSize: fs(18),
+    fontWeight: 'bold',
+    color: colors.text,
+    textAlign: 'center',
+    marginBottom: ms(16),
+  },
+  modalScrollView: {
+    maxHeight: ms(400),
+  },
   languageOptions: {
     gap: ms(8),
   },
   languageOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: ms(12),
+    paddingVertical: ms(14),
     paddingHorizontal: ms(12),
-    backgroundColor: colors.slab,
+    backgroundColor: colors.bgDeep,
     borderRadius: ms(8),
     gap: ms(12),
     borderWidth: 1,
     borderColor: colors.slabEdge,
+    marginBottom: ms(8),
   },
   languageOptionSelected: {
     backgroundColor: colors.accent,
-    borderWidth: 1,
-    borderColor: colors.slabEdge,
+    borderColor: '#4CAF50',
   },
   languageOptionText: {
     fontSize: fs(15),
@@ -438,5 +615,48 @@ const styles = StyleSheet.create({
   languageOptionTextSelected: {
     color: colors.text,
     fontWeight: '600',
+  },
+  speedOptions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: ms(8),
+  },
+  speedOption: {
+    paddingHorizontal: ms(16),
+    paddingVertical: ms(10),
+    backgroundColor: colors.bgDeep,
+    borderRadius: ms(8),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(4),
+  },
+  speedOptionSelected: {
+    backgroundColor: '#4CAF50',
+    borderColor: '#4CAF50',
+  },
+  speedOptionLocked: {
+    opacity: 0.5,
+  },
+  speedOptionText: {
+    fontSize: fs(14),
+    fontWeight: '600',
+    color: colors.textMuted,
+  },
+  speedOptionTextSelected: {
+    color: '#fff',
+  },
+  speedOptionTextLocked: {
+    color: '#666',
+  },
+  lockIcon: {
+    marginLeft: ms(2),
+  },
+  speedHint: {
+    fontSize: fs(11),
+    color: colors.textMuted,
+    textAlign: 'center',
+    marginTop: ms(12),
   },
 });
