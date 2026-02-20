@@ -350,7 +350,7 @@ export default function BattleScreen() {
   );
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
       {/* 上部: バトルエリア */}
       {backgroundImage ? (
         <ImageBackground
@@ -370,12 +370,12 @@ export default function BattleScreen() {
         </View>
       )}
 
-      {/* 中部: 戦闘ログ */}
+      {/* 戦闘ログ（バトルエリアとボタンの間を全て使用） */}
       <View style={styles.logArea}>
         <BattleLog logs={state.battleLog} />
       </View>
 
-      {/* 下部: アクションボタン */}
+      {/* 下部: アクションボタン（最下部に固定） */}
       {state.phase === 'fighting' && (
         <View style={styles.actionArea}>
           <View style={styles.actionButtons}>
@@ -462,7 +462,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#15191E',
   },
   battleArea: {
-    height: s(280),
+    height: s(310),
     overflow: 'hidden',
   },
   battleAreaImage: {
@@ -595,8 +595,8 @@ const styles = StyleSheet.create({
   },
   logArea: {
     flex: 1,
-    padding: ms(16),
-    maxHeight: s(300),
+    paddingHorizontal: ms(16),
+    paddingVertical: ms(8),
   },
   // モーダル
   modalOverlay: {

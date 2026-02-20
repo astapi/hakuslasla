@@ -120,7 +120,7 @@
     "items": "获得的物品",
     "totalItems": "总物品数（{{count}}）",
     "noItems": "无物品",
-    "returnButton": "返回地下城选择"
+    "returnButton": "返回主页"
   },
   "inventory": {
     "title": "背包",

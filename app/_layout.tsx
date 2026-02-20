@@ -107,6 +107,7 @@ export default function RootLayout() {
           name="dungeon-select"
           options={{
             headerShown: false,
+            gestureEnabled: false,
           }}
         />
         <Stack.Screen
@@ -125,6 +126,7 @@ export default function RootLayout() {
           name="battle"
           options={{
             headerShown: false,
+            gestureEnabled: false,
           }}
         />
         <Stack.Screen

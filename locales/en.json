@@ -120,7 +120,7 @@
     "items": "Items Obtained",
     "totalItems": "Total Items ({{count}})",
     "noItems": "No Items",
-    "returnButton": "Return to Dungeon Select"
+    "returnButton": "Return to Home"
   },
   "inventory": {
     "title": "Inventory",

@@ -120,7 +120,7 @@
     "items": "획득 아이템",
     "totalItems": "총 아이템 ({{count}}개)",
     "noItems": "아이템 없음",
-    "returnButton": "던전 선택으로 돌아가기"
+    "returnButton": "홈으로 돌아가기"
   },
   "inventory": {
     "title": "인벤토리",
