@@ -126,6 +126,12 @@ export const settingsRepository = {
     await this.set(LANGUAGE_KEY, language);
   },
 
+  // 言語が一度でも設定されたかどうか（初回起動判定用）
+  async hasLanguageBeenSet(): Promise<boolean> {
+    const value = await this.get(LANGUAGE_KEY);
+    return value !== null;
+  },
+
   async getEndContentUnlocked(): Promise<boolean> {
     const value = await this.get(END_CONTENT_UNLOCK_KEY);
     return value === '1';
