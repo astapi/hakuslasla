@@ -168,6 +168,12 @@
       "german": "Deutsch",
       "current": "当前: {{language}}"
     },
+    "sound": {
+      "title": "声音设置",
+      "description": "开启/关闭BGM和音效",
+      "bgm": "BGM",
+      "se": "音效"
+    },
     "categoryFilter": {
       "title": "类别过滤",
       "description": "只收集已启用类别的掉落物"

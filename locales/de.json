@@ -168,6 +168,12 @@
       "german": "Deutsch",
       "current": "Aktuell: {{language}}"
     },
+    "sound": {
+      "title": "Soundeinstellungen",
+      "description": "BGM und Soundeffekte ein/aus",
+      "bgm": "BGM",
+      "se": "Soundeffekte"
+    },
     "categoryFilter": {
       "title": "Kategoriefilter",
       "description": "Nur Drops aus aktivierten Kategorien sammeln"

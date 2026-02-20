@@ -168,6 +168,12 @@
       "german": "Deutsch",
       "current": "Actuel : {{language}}"
     },
+    "sound": {
+      "title": "Paramètres audio",
+      "description": "Activer/Désactiver la musique et les effets sonores",
+      "bgm": "Musique",
+      "se": "Effets sonores"
+    },
     "categoryFilter": {
       "title": "Filtre de catégorie",
       "description": "Ne collecter que les drops des catégories activées"

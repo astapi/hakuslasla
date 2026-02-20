@@ -168,6 +168,12 @@
       "german": "Deutsch",
       "current": "Current: {{language}}"
     },
+    "sound": {
+      "title": "Sound Settings",
+      "description": "Toggle BGM and sound effects ON/OFF",
+      "bgm": "BGM",
+      "se": "Sound Effects"
+    },
     "categoryFilter": {
       "title": "Category Filter",
       "description": "Only collect drops from enabled categories"
