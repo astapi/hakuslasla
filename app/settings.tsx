@@ -12,9 +12,6 @@ import {
   LANGUAGE_OPTIONS,
   DEFAULT_LANGUAGE,
   LANGUAGE_LABELS,
-  BattleSpeedMultiplier,
-  BATTLE_SPEED_OPTIONS,
-  DEFAULT_BATTLE_SPEED,
 } from '@/db/repositories/settingsRepository';
 import { changeLanguage } from '@/lib/i18n';
 import { ms, fs } from '@/utils/scaling';
@@ -34,7 +31,6 @@ export default function SettingsScreen() {
   const router = useRouter();
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
   const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
-  const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
   const [isLoading, setIsLoading] = useState(true);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
 
@@ -52,14 +48,12 @@ export default function SettingsScreen() {
 
   const loadSettings = async () => {
     try {
-      const [loaded, savedLanguage, savedSpeed] = await Promise.all([
+      const [loaded, savedLanguage] = await Promise.all([
         settingsRepository.getDropFilter(),
         settingsRepository.getLanguage(),
-        settingsRepository.getBattleSpeed(),
       ]);
       setSettings(loaded);
       setLanguage(savedLanguage);
-      setBattleSpeed(savedSpeed);
     } finally {
       setIsLoading(false);
     }
@@ -70,14 +64,6 @@ export default function SettingsScreen() {
     await settingsRepository.setLanguage(newLanguage);
     changeLanguage(newLanguage);
   };
-
-  const handleSpeedChange = async (newSpeed: BattleSpeedMultiplier) => {
-    setBattleSpeed(newSpeed);
-    await settingsRepository.setBattleSpeed(newSpeed);
-  };
-
-  // 利用可能な速度オプションを取得
-  const availableSpeedOptions = BATTLE_SPEED_OPTIONS;
 
   const saveSettings = async (newSettings: DropFilterSettings) => {
     setSettings(newSettings);
@@ -203,38 +189,6 @@ export default function SettingsScreen() {
             </View>
           </Pressable>
         </Modal>
-
-        {/* 戦闘速度 */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings.battleSpeed.title')}</Text>
-          <Text style={styles.sectionDescription}>
-            {t('settings.battleSpeed.description')}
-          </Text>
-          <View style={styles.speedOptions}>
-            {availableSpeedOptions.map((speed) => {
-              const isSelected = battleSpeed === speed;
-              return (
-                <Pressable
-                  key={speed}
-                  style={[
-                    styles.speedOption,
-                    isSelected && styles.speedOptionSelected,
-                  ]}
-                  onPress={() => handleSpeedChange(speed)}
-                >
-                  <Text
-                    style={[
-                      styles.speedOptionText,
-                      isSelected && styles.speedOptionTextSelected,
-                    ]}
-                  >
-                    {speed}x
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </View>
-        </View>
 
         {/* カテゴリフィルター */}
         <View style={styles.section}>
@@ -585,33 +539,5 @@ const styles = StyleSheet.create({
   languageOptionTextSelected: {
     color: colors.text,
     fontWeight: '600',
-  },
-  speedOptions: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: ms(8),
-  },
-  speedOption: {
-    paddingHorizontal: ms(16),
-    paddingVertical: ms(10),
-    backgroundColor: colors.bgDeep,
-    borderRadius: ms(8),
-    borderWidth: 1,
-    borderColor: colors.slabEdge,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: ms(4),
-  },
-  speedOptionSelected: {
-    backgroundColor: '#4CAF50',
-    borderColor: '#4CAF50',
-  },
-  speedOptionText: {
-    fontSize: fs(14),
-    fontWeight: '600',
-    color: colors.textMuted,
-  },
-  speedOptionTextSelected: {
-    color: '#fff',
   },
 });
