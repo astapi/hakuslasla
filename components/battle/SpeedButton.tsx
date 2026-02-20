@@ -6,6 +6,7 @@ import {
   BATTLE_SPEED_OPTIONS,
   FREE_BATTLE_SPEED_OPTIONS,
   PREMIUM_BATTLE_SPEED_OPTIONS,
+  DEFAULT_BATTLE_SPEED,
 } from '@/db/repositories/settingsRepository';
 import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 
@@ -30,15 +31,15 @@ export const SpeedButton: React.FC<SpeedButtonProps> = ({ currentSpeed, onSpeedC
     onSpeedChange(nextSpeed);
   }, [currentSpeed, availableOptions, onSpeedChange]);
 
-  // 課金していない場合で、現在の速度がプレミアム速度の場合は2倍にリセット
+  // 課金していない場合で、現在の速度がプレミアム速度の場合は1倍にリセット
   const displaySpeed = !hasPremiumSpeed && PREMIUM_BATTLE_SPEED_OPTIONS.includes(currentSpeed)
-    ? 2
+    ? DEFAULT_BATTLE_SPEED
     : currentSpeed;
 
   // 課金していない場合で、保存されている速度がプレミアム速度の場合は自動的にリセット
   React.useEffect(() => {
     if (!hasPremiumSpeed && PREMIUM_BATTLE_SPEED_OPTIONS.includes(currentSpeed)) {
-      onSpeedChange(2);
+      onSpeedChange(DEFAULT_BATTLE_SPEED);
     }
   }, [hasPremiumSpeed, currentSpeed, onSpeedChange]);
 

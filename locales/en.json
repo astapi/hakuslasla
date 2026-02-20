@@ -188,7 +188,7 @@
     "battleSpeed": {
       "title": "Battle Speed",
       "description": "Change the speed of battle progression",
-      "premiumHint": "2x speed and above available after purchase in Shop"
+      "premiumHint": "3x speed available after purchase in Shop"
     }
   },
   "status": {

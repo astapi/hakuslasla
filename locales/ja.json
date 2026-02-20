@@ -188,7 +188,7 @@
     "battleSpeed": {
       "title": "戦闘速度",
       "description": "戦闘の進行速度を変更します",
-      "premiumHint": "2倍速以上はショップで購入後に利用できます"
+      "premiumHint": "3倍速はショップで購入後に利用できます"
     }
   },
   "status": {
