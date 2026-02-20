@@ -1,0 +1,2064 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "ok": "确定",
+    "back": "返回",
+    "close": "关闭",
+    "cancel": "取消",
+    "change": "更改",
+    "delete": "删除",
+    "reset": "重置",
+    "create": "创建",
+    "creating": "创建中...",
+    "save": "保存",
+    "equip": "装备",
+    "unequip": "卸下",
+    "sell": "出售",
+    "none": "无",
+    "unequipped": "空",
+    "items": "件物品",
+    "ticket": "入场券"
+  },
+  "characterSelect": {
+    "title": "LootDive",
+    "subtitle": "选择角色",
+    "empty": "没有角色",
+    "emptyHint": "创建新角色开始游戏",
+    "createNew": "创建新角色",
+    "slotLimitTitle": "角色位已满",
+    "slotLimitMessage": "角色位已满 ({{current}}/{{max}})",
+    "deleteConfirmTitle": "删除角色",
+    "deleteConfirmMessage": "确定删除「{{name}}」？\n此操作无法撤销。"
+  },
+  "characterCreate": {
+    "nameLabel": "角色名称",
+    "namePlaceholder": "输入名称",
+    "classLabel": "选择职业",
+    "class": {
+      "warrior": "战士",
+      "elementalist": "元素师"
+    },
+    "classAbility": "职业能力",
+    "ability": {
+      "igniteChance": "点燃几率 {{value}}%"
+    },
+    "initialStats": "初始属性"
+  },
+  "home": {
+    "menu": {
+      "skills": "技能",
+      "inventory": "物品",
+      "storage": "仓库",
+      "settings": "设置",
+      "adventure": "冒险",
+      "encyclopedia": "图鉴",
+      "shop": "商店"
+    },
+    "renameCharacter": "重命名角色"
+  },
+  "dungeonSelect": {
+    "title": "选择地下城",
+    "subtitle": "选择要挑战的地下城",
+    "unlockRequirement": "通关{{dungeonName}}后解锁"
+  },
+  "encyclopedia": {
+    "title": "地下城图鉴",
+    "subtitle": "查看已通关地下城的详情",
+    "noClearedDungeons": "尚未通关任何地下城",
+    "clearedAt": "通关时间：{{date}}",
+    "bestFloor": "最高层数：{{floor}}",
+    "detail": {
+      "monsters": "出现的怪物",
+      "drops": "物品掉落",
+      "uniqueDrops": "独特掉落",
+      "dungeonDrops": "地下城掉落",
+      "commonDrops": "通用掉落",
+      "spawnRate": "出现率 {{rate}}%",
+      "dropRate": "掉落率 {{rate}}%",
+      "stats": "属性",
+      "exp": "EXP：{{exp}}",
+      "attackSpeed": "攻击速度：{{speed}}",
+      "noUniqueDrop": "无独特掉落",
+      "fixedMods": "固定 MOD",
+      "bossAbilities": "Boss技能",
+      "regularSkills": "常规技能（每3次攻击）",
+      "thresholdSkills": "临界技能（HP低于50%时）",
+      "uberOnly": "仅限 Uber"
+    },
+    "notCleared": "未通关",
+    "uberUnlocked": "已解锁 Uber"
+  },
+  "battle": {
+    "floor": "层",
+    "round": "回合",
+    "autoRunning": "自动进行中",
+    "pause": "暂停",
+    "resume": "继续",
+    "autoRun": "自动",
+    "stopAutoRun": "停止自动",
+    "retreat": "撤退",
+    "retreatConfirm": {
+      "title": "确认撤退",
+      "message": "确定要撤退吗？\n获得的 EXP 将丢失，但物品可以保留。",
+      "confirm": "撤退"
+    },
+    "victory": "胜利！",
+    "defeat": "失败...",
+    "cleared": "地下城通关！",
+    "player": "玩家",
+    "inProgress": "战斗中"
+  },
+  "result": {
+    "cleared": "地下城通关！",
+    "defeat": "失败...",
+    "retreat": "撤退",
+    "runsCompleted": "完成 {{count}} 次",
+    "floorsCleared": "已通关 {{current}}/{{max}} 层",
+    "rewards": "奖励",
+    "exp": "EXP",
+    "totalExp": "总 EXP",
+    "items": "获得的物品",
+    "totalItems": "总物品数（{{count}}）",
+    "noItems": "无物品",
+    "returnButton": "返回地下城选择"
+  },
+  "inventory": {
+    "title": "背包",
+    "selectItem": "选择一件物品",
+    "selected": "已选择",
+    "equipped": "已装备",
+    "storage": "仓库",
+    "noItemsInSlot": "没有{{slot}}",
+    "tabs": {
+      "equipment": "装备",
+      "misc": "杂项"
+    },
+    "tickets": {
+      "title": "入场券",
+      "empty": "没有入场券",
+      "item": "{{name}}入场券"
+    },
+    "respec": {
+      "title": "洗点道具",
+      "empty": "没有洗点道具",
+      "item": "洗点宝珠"
+    }
+  },
+  "storage": {
+    "title": "仓库",
+    "selectItem": "选择一件物品",
+    "toInventory": "移至背包",
+    "inventoryFull": "背包已满",
+    "storageFull": "仓库已满",
+    "noItemsInSlot": "没有{{slot}}"
+  },
+  "settings": {
+    "title": "设置",
+    "dropFilterTitle": "掉落过滤设置",
+    "language": {
+      "title": "语言",
+      "description": "选择应用显示语言",
+      "system": "跟随系统设置",
+      "japanese": "日本語",
+      "english": "English",
+      "chinese": "简体中文",
+      "korean": "한국어",
+      "spanish": "Español",
+      "french": "Français",
+      "german": "Deutsch",
+      "current": "当前: {{language}}"
+    },
+    "categoryFilter": {
+      "title": "类别过滤",
+      "description": "只收集已启用类别的掉落物"
+    },
+    "modCountFilter": {
+      "title": "最低 MOD 数量",
+      "description": "只收集拥有此数量或更多 MOD 的物品（0为禁用）",
+      "disabled": "禁用",
+      "value": "{{count}}+ MOD"
+    },
+    "tierFilter": {
+      "title": "MOD Tier 过滤",
+      "description": "只收集至少有一个 MOD 达到此 Tier 或更低的物品（Tier 1 为最高品质）",
+      "disabled": "禁用",
+      "value": "Tier {{tier}} 或更低",
+      "hint": "Tier 1 = 最佳，Tier 10 = 最低"
+    },
+    "currentFilter": {
+      "title": "当前过滤条件",
+      "modCount": "{{count}}+ MOD",
+      "tierBelow": "包含 Tier {{tier}} 或更低的 MOD",
+      "noFilter": "无过滤（收集全部）"
+    },
+    "battleSpeed": {
+      "title": "战斗速度",
+      "description": "更改战斗进行速度",
+      "premiumHint": "2倍速及以上需在商店购买后解锁"
+    }
+  },
+  "status": {
+    "title": "状态",
+    "tapForDetails": "点击查看详情",
+    "critRate": "Crit 率",
+    "critDamage": "Crit DMG",
+    "poisonChance": "毒",
+    "poisonDamage": "毒伤害",
+    "poisonDamageMore": "毒伤害加成",
+    "poisonMaxStacks": "毒层数",
+    "poisonDamageReduction": "中毒减伤",
+    "poisonLifesteal": "毒吸血",
+    "noDirectDamage": "无直接伤害",
+    "hpRegen": "HP 回复",
+    "hpOnHit": "命中回 HP",
+    "hpOnCrit": "Crit 回 HP",
+    "damageReduction": "减伤",
+    "attackSpeed": "攻击速度",
+    "attackSpeedMore": "攻速加成",
+    "finalAttackSpeed": "最终攻速",
+    "igniteChance": "点燃几率",
+    "igniteDamage": "点燃伤害",
+    "igniteDamageMore": "点燃加成",
+    "igniteDuration": "点燃持续",
+    "igniteTickSpeed": "点燃速度",
+    "perSecond": "/秒",
+    "on": "开",
+    "off": "关",
+    "max": "MAX"
+  },
+  "equipment": {
+    "title": "装备",
+    "slot": "栏位",
+    "item": "物品",
+    "mod": "MOD",
+    "modCount": "MOD x{{count}}"
+  },
+  "slots": {
+    "weapon": "武器",
+    "armor": "护甲",
+    "gloves": "手套",
+    "boots": "鞋子",
+    "accessory": "饰品"
+  },
+  "mods": {
+    "atk_bonus": "ATK",
+    "def_bonus": "DEF",
+    "hp_regen": "回复",
+    "hp_regen_pct": "HP 回复",
+    "poison_chance": "毒",
+    "critical_chance": "Crit",
+    "critical_damage": "Crit DMG",
+    "atk_increased_pct": "ATK",
+    "def_increased_pct": "DEF",
+    "hp_increased_pct": "HP",
+    "hp_bonus": "HP",
+    "hp_on_hit": "命中回 HP",
+    "damage_reduction_pct": "减伤",
+    "attack_speed_pct": "速度",
+    "lifesteal": "吸血",
+    "atk_more_pct": "ATK more",
+    "def_more_pct": "DEF more",
+    "hp_more_pct": "HP more",
+    "everyTurnHpRegen": "每回合 +{{value}} HP",
+    "everyTurnHpRegenPct": "每回合 +{{value}}% HP",
+    "ignite_chance": "点燃",
+    "ignite_duration_pct": "点燃持续",
+    "ignite_tick_speed_pct": "点燃速度",
+    "ignite_damage_pct": "点燃 DMG"
+  },
+  "dungeon": {
+    "floors": "{{count}} 层",
+    "unlimitedFloors": "无限",
+    "recommendedLevel": "推荐 Lv.{{level}}",
+    "ticketRequired": "需要入场券"
+  },
+  "dungeons": {
+    "grassland": {
+      "name": "初心者草原",
+      "description": "冒险者踏上旅途的宁静草原。栖息着弱小的怪物。"
+    },
+    "cave": {
+      "name": "地下洞窟",
+      "description": "深藏地下的黑暗洞穴。中级怪物潜伏其中。"
+    },
+    "ruins": {
+      "name": "遗忘遗迹",
+      "description": "古代文明的遗迹。强大的怪物在此徘徊的危险之地。"
+    },
+    "goblin_fort": {
+      "name": "哥布林要塞",
+      "description": "哥布林建造的巨大要塞。哥布林王统治着深处。"
+    },
+    "bandit_hideout": {
+      "name": "山贼巢穴",
+      "description": "山贼的藏身处，堆满了掠夺的财物。"
+    },
+    "vampire_mansion": {
+      "name": "吸血鬼宅邸",
+      "description": "夜色中阴森的宅邸。由不死贵族统治。"
+    },
+    "underwater_cave": {
+      "name": "海底洞窟",
+      "description": "深海中神秘的洞穴。水栖怪物守卫着它们的领地。"
+    },
+    "orc_fortress": {
+      "name": "兽人要塞",
+      "description": "由兽人和巨魔统治的巨大要塞。野蛮的战士等待着。"
+    },
+    "demon_castle": {
+      "name": "魔王城",
+      "description": "暗影环绕的魔王之城。强大的恶魔守护着主人。"
+    },
+    "ice_cave": {
+      "name": "冰封洞窟",
+      "description": "永久冻土深处的冰冷洞穴。严寒的怪物栖息于此。"
+    },
+    "volcano": {
+      "name": "炎狱火山",
+      "description": "活火山内部灼热的迷宫。火焰生物居住其中。"
+    },
+    "dark_forest": {
+      "name": "深渊森林",
+      "description": "不见光明的黑暗森林。远古巨兽潜伏其中。"
+    },
+    "sky_tower": {
+      "name": "苍穹之塔",
+      "description": "直插云霄的神秘高塔。天界守护者等待着。"
+    },
+    "hell_gate": {
+      "name": "地狱之门",
+      "description": "通往冥界的禁忌之门。地狱的守门人阻挡入侵者。"
+    },
+    "dragon_nest": {
+      "name": "龙之巢穴",
+      "description": "古龙沉睡的传说之巢。最强大的龙族栖息于此。"
+    },
+    "sacred_temple": {
+      "name": "圣神殿",
+      "description": "由神仆守护的神圣殿堂。"
+    },
+    "chaos_realm": {
+      "name": "混沌领域",
+      "description": "现实与虚空之间的混乱世界。所有法则在此扭曲。"
+    },
+    "final_land": {
+      "name": "终焉之地",
+      "description": "世界尽头的最终疆域。终极存在等待着。"
+    },
+    "dimensional_rush_1": {
+      "name": "次元突袭 I",
+      "description": "次元迷宫。在50层击败哥布林王。"
+    },
+    "dimensional_rush_2": {
+      "name": "次元突袭 II",
+      "description": "次元迷宫。在70层击败山贼首领。"
+    },
+    "dimensional_rush_3": {
+      "name": "次元突袭 III",
+      "description": "次元迷宫。在90层击败吸血鬼。"
+    },
+    "dimensional_rush_4": {
+      "name": "次元突袭 IV",
+      "description": "次元迷宫。在110层击败海妖。"
+    },
+    "dimensional_rush_5": {
+      "name": "次元突袭 V",
+      "description": "次元迷宫。在120层击败魔王。"
+    },
+    "dimensional_rush_6": {
+      "name": "次元突袭 VI",
+      "description": "最终次元层。在200层击败真正的最终Boss。"
+    },
+    "dimensional_corridor": {
+      "name": "次元回廊",
+      "description": "次元之间的无尽回廊。越深入敌人越强。"
+    },
+    "uber_goblin_king": {
+      "name": "Uber 哥布林王",
+      "description": "在异次元觉醒的哥布林王。"
+    },
+    "uber_bandit_leader": {
+      "name": "Uber 山贼首领",
+      "description": "被次元力量强化的山贼首领。"
+    },
+    "uber_vampire": {
+      "name": "Uber 吸血鬼",
+      "description": "来自异次元的嗜血吸血鬼。"
+    },
+    "uber_kraken": {
+      "name": "Uber 海妖",
+      "description": "统治次元之海的巨大生物。"
+    },
+    "uber_demon_lord": {
+      "name": "Uber 魔王",
+      "description": "被次元力量复活的魔王。"
+    },
+    "uber_true_final_boss": {
+      "name": "Uber 真·最终Boss",
+      "description": "带来真正终结的存在。"
+    }
+  },
+  "items": {
+    "rusted_sword": {
+      "name": "锈剑"
+    },
+    "cloth_clothes": {
+      "name": "布衣"
+    },
+    "leather_hat": {
+      "name": "皮帽"
+    },
+    "leather_gloves": {
+      "name": "皮手套"
+    },
+    "leather_boots": {
+      "name": "皮靴"
+    },
+    "copper_ring": {
+      "name": "铜戒指"
+    },
+    "traveler_amulet": {
+      "name": "旅人护身符"
+    },
+    "grassland_sword": {
+      "name": "草原之剑"
+    },
+    "rusted_staff": {
+      "name": "锈杖"
+    },
+    "grassland_staff": {
+      "name": "草原之杖"
+    },
+    "cave_iron_staff": {
+      "name": "洞窟铁杖"
+    },
+    "light_leather": {
+      "name": "轻皮甲"
+    },
+    "rabbit_boots": {
+      "name": "兔皮靴"
+    },
+    "division_core": {
+      "name": "分裂核心"
+    },
+    "wolf_fang": {
+      "name": "狼牙"
+    },
+    "poison_needle_ring": {
+      "name": "毒针戒指"
+    },
+    "cave_iron_sword": {
+      "name": "洞窟铁剑"
+    },
+    "bone_shield": {
+      "name": "骨盾"
+    },
+    "bat_mantle": {
+      "name": "蝙蝠斗篷"
+    },
+    "underground_charm": {
+      "name": "地下护符"
+    },
+    "warrior_ring": {
+      "name": "战士戒指"
+    },
+    "bone_sword": {
+      "name": "骨剑"
+    },
+    "war_ogre_belt": {
+      "name": "战鬼腰带"
+    },
+    "dark_night_mantle": {
+      "name": "暗夜斗篷"
+    },
+    "ruins_magic_sword": {
+      "name": "遗迹魔剑"
+    },
+    "ruins_magic_staff": {
+      "name": "遗迹魔杖"
+    },
+    "cursed_robe": {
+      "name": "诅咒长袍"
+    },
+    "gargoyle_boots": {
+      "name": "石像鬼靴"
+    },
+    "ancient_ring": {
+      "name": "古代戒指"
+    },
+    "oblivion_amulet": {
+      "name": "遗忘护身符"
+    },
+    "core_stone": {
+      "name": "核心之石"
+    },
+    "curse_bandage": {
+      "name": "诅咒绷带"
+    },
+    "lost_grimoire": {
+      "name": "失落魔典"
+    },
+    "stone_wing_boots": {
+      "name": "石翼靴"
+    },
+    "goblin_blade": {
+      "name": "哥布林之刃"
+    },
+    "goblin_staff": {
+      "name": "哥布林之杖"
+    },
+    "goblin_mail": {
+      "name": "哥布林锁甲"
+    },
+    "spiked_gauntlets": {
+      "name": "尖刺护手"
+    },
+    "raider_boots": {
+      "name": "掠袭者之靴"
+    },
+    "tribal_ring": {
+      "name": "部族戒指"
+    },
+    "shaman_staff": {
+      "name": "萨满之杖"
+    },
+    "goblin_shield": {
+      "name": "哥布林盾"
+    },
+    "champion_axe": {
+      "name": "冠军之斧"
+    },
+    "kings_crown": {
+      "name": "王之冠"
+    },
+    "demon_blade": {
+      "name": "恶魔之刃"
+    },
+    "demon_staff": {
+      "name": "恶魔之杖"
+    },
+    "dark_plate": {
+      "name": "暗黑板甲"
+    },
+    "dragon_gauntlets": {
+      "name": "龙鳞护手"
+    },
+    "inferno_boots": {
+      "name": "炼狱之靴"
+    },
+    "dark_ring": {
+      "name": "暗黑戒指"
+    },
+    "dark_grimoire": {
+      "name": "暗黑魔典"
+    },
+    "demon_horn": {
+      "name": "恶魔之角"
+    },
+    "wyvern_scale": {
+      "name": "飞龙鳞片"
+    },
+    "demon_crown": {
+      "name": "魔王之冠"
+    },
+    "frost_blade": {
+      "name": "霜冻之刃"
+    },
+    "frost_staff": {
+      "name": "霜冻之杖"
+    },
+    "ice_armor": {
+      "name": "冰霜铠甲"
+    },
+    "frozen_gauntlets": {
+      "name": "冰封护手"
+    },
+    "blizzard_boots": {
+      "name": "暴风雪之靴"
+    },
+    "ice_crystal_ring": {
+      "name": "冰晶戒指"
+    },
+    "frozen_staff": {
+      "name": "冰冻之杖"
+    },
+    "yeti_fur": {
+      "name": "雪人毛皮"
+    },
+    "magma_blade": {
+      "name": "熔岩之刃"
+    },
+    "magma_staff": {
+      "name": "熔岩之杖"
+    },
+    "volcano_armor": {
+      "name": "火山铠甲"
+    },
+    "flame_gauntlets": {
+      "name": "烈焰护手"
+    },
+    "ember_boots": {
+      "name": "余烬之靴"
+    },
+    "fire_ruby_ring": {
+      "name": "火焰红宝石戒指"
+    },
+    "magma_core": {
+      "name": "熔岩核心"
+    },
+    "flame_sword": {
+      "name": "烈焰之剑"
+    },
+    "shadow_blade": {
+      "name": "暗影之刃"
+    },
+    "shadow_staff": {
+      "name": "暗影之杖"
+    },
+    "dark_bark_armor": {
+      "name": "暗树皮甲"
+    },
+    "nightmare_gauntlets": {
+      "name": "梦魇护手"
+    },
+    "forest_walker_boots": {
+      "name": "森林行者之靴"
+    },
+    "cursed_eye_ring": {
+      "name": "诅咒之眼戒指"
+    },
+    "cursed_branch": {
+      "name": "诅咒树枝"
+    },
+    "chimera_fang": {
+      "name": "奇美拉之牙"
+    },
+    "sky_blade": {
+      "name": "天空之刃"
+    },
+    "sky_staff": {
+      "name": "天空之杖"
+    },
+    "cloud_armor": {
+      "name": "云之铠甲"
+    },
+    "storm_gauntlets": {
+      "name": "风暴护手"
+    },
+    "wind_walker_boots": {
+      "name": "御风者之靴"
+    },
+    "sky_sapphire_ring": {
+      "name": "天蓝宝石戒指"
+    },
+    "thunder_feather": {
+      "name": "雷羽"
+    },
+    "giant_belt": {
+      "name": "巨人腰带"
+    },
+    "hellfire_blade": {
+      "name": "地狱火之刃"
+    },
+    "hellfire_staff": {
+      "name": "地狱火之杖"
+    },
+    "infernal_plate": {
+      "name": "炼狱板甲"
+    },
+    "demon_gauntlets": {
+      "name": "恶魔护手"
+    },
+    "hellwalker_boots": {
+      "name": "地狱行者之靴"
+    },
+    "infernal_ruby_ring": {
+      "name": "炼狱红宝石戒指"
+    },
+    "infernal_armor": {
+      "name": "炼狱铠甲"
+    },
+    "balrog_whip": {
+      "name": "炎魔之鞭"
+    },
+    "dragon_slayer": {
+      "name": "屠龙者"
+    },
+    "dragon_staff": {
+      "name": "龙之杖"
+    },
+    "dragon_scale_armor": {
+      "name": "龙鳞铠甲"
+    },
+    "dragon_claw_gauntlets": {
+      "name": "龙爪护手"
+    },
+    "dragon_hide_boots": {
+      "name": "龙皮靴"
+    },
+    "dragon_eye_ring": {
+      "name": "龙眼戒指"
+    },
+    "fire_dragon_scale": {
+      "name": "火龙鳞片"
+    },
+    "ice_dragon_scale": {
+      "name": "冰龙鳞片"
+    },
+    "dragon_heart": {
+      "name": "龙之心"
+    },
+    "holy_blade": {
+      "name": "圣光之刃"
+    },
+    "holy_staff": {
+      "name": "圣光之杖"
+    },
+    "divine_armor": {
+      "name": "神圣铠甲"
+    },
+    "seraph_gauntlets": {
+      "name": "炽天使护手"
+    },
+    "divine_boots": {
+      "name": "神圣之靴"
+    },
+    "holy_diamond_ring": {
+      "name": "圣光钻石戒指"
+    },
+    "holy_feather": {
+      "name": "圣羽"
+    },
+    "holy_dragon_scale": {
+      "name": "圣龙鳞片"
+    },
+    "chaos_blade": {
+      "name": "混沌之刃"
+    },
+    "chaos_staff": {
+      "name": "混沌之杖"
+    },
+    "void_armor": {
+      "name": "虚空铠甲"
+    },
+    "chaos_gauntlets": {
+      "name": "混沌护手"
+    },
+    "void_boots": {
+      "name": "虚空之靴"
+    },
+    "chaos_crystal_ring": {
+      "name": "混沌水晶戒指"
+    },
+    "void_essence": {
+      "name": "虚空精华"
+    },
+    "chaos_scale": {
+      "name": "混沌鳞片"
+    },
+    "apocalypse_blade": {
+      "name": "末日之刃"
+    },
+    "apocalypse_staff": {
+      "name": "末日之杖"
+    },
+    "end_armor": {
+      "name": "终焉铠甲"
+    },
+    "titan_gauntlets": {
+      "name": "泰坦护手"
+    },
+    "end_walker_boots": {
+      "name": "终焉行者之靴"
+    },
+    "oblivion_ring": {
+      "name": "湮灭戒指"
+    },
+    "world_fragment": {
+      "name": "世界碎片"
+    },
+    "divine_blade": {
+      "name": "神圣之刃"
+    },
+    "crown_of_end": {
+      "name": "终焉之冠"
+    },
+    "bandit_crown": {
+      "name": "山贼之冠"
+    },
+    "vampire_fang": {
+      "name": "吸血鬼之牙"
+    },
+    "kraken_tentacle": {
+      "name": "海妖触手"
+    },
+    "uber_kings_crown": {
+      "name": "Uber 王之冠"
+    },
+    "uber_bandit_crown": {
+      "name": "Uber 山贼之冠"
+    },
+    "uber_vampire_fang": {
+      "name": "Uber 吸血鬼之牙"
+    },
+    "uber_kraken_tentacle": {
+      "name": "Uber 海妖触手"
+    },
+    "uber_demon_crown": {
+      "name": "Uber 魔王之冠"
+    },
+    "uber_crown_of_end": {
+      "name": "Uber 终焉之冠"
+    },
+    "uber_goblin_blade": {
+      "name": "Uber 哥布林之刃"
+    },
+    "uber_goblin_plate": {
+      "name": "Uber 哥布林板甲"
+    },
+    "uber_goblin_grip": {
+      "name": "Uber 哥布林握套"
+    },
+    "uber_goblin_stomp": {
+      "name": "Uber 哥布林重靴"
+    },
+    "uber_bandit_dagger": {
+      "name": "Uber 盗王之匕"
+    },
+    "uber_bandit_coat": {
+      "name": "Uber 盗王之衣"
+    },
+    "uber_bandit_grip": {
+      "name": "Uber 盗王握套"
+    },
+    "uber_bandit_steps": {
+      "name": "Uber 盗王之步"
+    },
+    "uber_vampire_plate": {
+      "name": "Uber 吸血鬼板甲"
+    },
+    "uber_vampire_grip": {
+      "name": "Uber 吸血鬼握套"
+    },
+    "uber_vampire_stride": {
+      "name": "Uber 吸血鬼步履"
+    },
+    "uber_vampire_heart": {
+      "name": "Uber 吸血鬼之心"
+    },
+    "double_strike_ring": {
+      "name": "连击戒指"
+    },
+    "uber_double_strike_ring": {
+      "name": "Uber 连击戒指"
+    },
+    "uber_kraken_shell": {
+      "name": "Uber 海妖之壳"
+    },
+    "uber_kraken_claw": {
+      "name": "Uber 海妖之爪"
+    },
+    "uber_kraken_fin": {
+      "name": "Uber 海妖之鳍"
+    },
+    "uber_kraken_eye": {
+      "name": "Uber 海妖之眼"
+    },
+    "uber_demon_blade": {
+      "name": "Uber 魔王之刃"
+    },
+    "uber_demon_armor": {
+      "name": "Uber 魔王铠甲"
+    },
+    "uber_demon_grip": {
+      "name": "Uber 魔王握套"
+    },
+    "uber_demon_steps": {
+      "name": "Uber 魔王之步"
+    },
+    "uber_endblade": {
+      "name": "Uber 终焉之刃"
+    },
+    "uber_endplate": {
+      "name": "Uber 终焉板甲"
+    },
+    "uber_endgrasp": {
+      "name": "Uber 终焉握套"
+    },
+    "uber_endstride": {
+      "name": "Uber 终焉步履"
+    },
+    "uber_venom_fang": {
+      "name": "Uber 剧毒之牙"
+    },
+    "uber_venom_plate": {
+      "name": "Uber 剧毒板甲"
+    },
+    "uber_venom_grip": {
+      "name": "Uber 剧毒握套"
+    },
+    "uber_venom_stride": {
+      "name": "Uber 剧毒步履"
+    },
+    "uber_venom_heart": {
+      "name": "Uber 剧毒之心"
+    },
+    "uber_assassin_blade": {
+      "name": "Uber 刺客之刃"
+    },
+    "uber_assassin_coat": {
+      "name": "Uber 刺客外套"
+    },
+    "uber_assassin_grip": {
+      "name": "Uber 刺客握套"
+    },
+    "uber_assassin_steps": {
+      "name": "Uber 刺客之步"
+    },
+    "uber_assassin_pendant": {
+      "name": "Uber 刺客吊坠"
+    },
+    "uber_fortress_blade": {
+      "name": "Uber 堡垒之刃"
+    },
+    "uber_fortress_plate": {
+      "name": "Uber 堡垒板甲"
+    },
+    "uber_fortress_grip": {
+      "name": "Uber 堡垒握套"
+    },
+    "uber_fortress_stomp": {
+      "name": "Uber 堡垒重靴"
+    },
+    "uber_fortress_bulwark": {
+      "name": "Uber 堡垒壁垒"
+    }
+  },
+  "monsters": {
+    "slime": {
+      "name": "史莱姆"
+    },
+    "wild_rabbit": {
+      "name": "杀手兔"
+    },
+    "goblin": {
+      "name": "哥布林"
+    },
+    "bee": {
+      "name": "杀手蜂"
+    },
+    "mimic": {
+      "name": "宝箱怪"
+    },
+    "wolf": {
+      "name": "狼"
+    },
+    "bat": {
+      "name": "巨型蝙蝠"
+    },
+    "goblin_warrior": {
+      "name": "哥布林战士"
+    },
+    "skeleton": {
+      "name": "骷髅"
+    },
+    "rock_lizard": {
+      "name": "岩石蜥蜴"
+    },
+    "orc": {
+      "name": "兽人"
+    },
+    "skeleton_knight": {
+      "name": "骷髅骑士"
+    },
+    "golem": {
+      "name": "石像傀儡"
+    },
+    "mummy": {
+      "name": "木乃伊"
+    },
+    "lich": {
+      "name": "巫妖"
+    },
+    "gargoyle": {
+      "name": "石像鬼"
+    },
+    "goblin_archer": {
+      "name": "哥布林弓手"
+    },
+    "goblin_shaman": {
+      "name": "哥布林萨满"
+    },
+    "goblin_knight": {
+      "name": "哥布林骑士"
+    },
+    "goblin_champion": {
+      "name": "哥布林勇士"
+    },
+    "goblin_king": {
+      "name": "哥布林王"
+    },
+    "bandit": {
+      "name": "山贼"
+    },
+    "bandit_archer": {
+      "name": "山贼弓手"
+    },
+    "bandit_swordsman": {
+      "name": "山贼剑士"
+    },
+    "bandit_brute": {
+      "name": "山贼蛮汉"
+    },
+    "bandit_leader": {
+      "name": "山贼首领"
+    },
+    "death_knight": {
+      "name": "死亡骑士"
+    },
+    "dark_mage": {
+      "name": "黑暗法师"
+    },
+    "demon": {
+      "name": "恶魔"
+    },
+    "wyvern": {
+      "name": "飞龙"
+    },
+    "demon_lord": {
+      "name": "魔王"
+    },
+    "zombie": {
+      "name": "僵尸"
+    },
+    "ghoul": {
+      "name": "食尸鬼"
+    },
+    "banshee": {
+      "name": "女妖"
+    },
+    "wraith": {
+      "name": "怨灵"
+    },
+    "vampire": {
+      "name": "吸血鬼"
+    },
+    "ice_golem": {
+      "name": "冰霜傀儡"
+    },
+    "frost_wolf": {
+      "name": "冰霜狼"
+    },
+    "ice_witch": {
+      "name": "冰霜女巫"
+    },
+    "yeti": {
+      "name": "雪人"
+    },
+    "frost_wyrm": {
+      "name": "冰霜巨龙"
+    },
+    "sahuagin": {
+      "name": "鱼人"
+    },
+    "merman": {
+      "name": "人鱼"
+    },
+    "sea_serpent": {
+      "name": "海蛇"
+    },
+    "giant_crab": {
+      "name": "巨型螃蟹"
+    },
+    "kraken": {
+      "name": "海妖"
+    },
+    "lava_slime": {
+      "name": "熔岩史莱姆"
+    },
+    "magma_golem": {
+      "name": "熔岩傀儡"
+    },
+    "salamander": {
+      "name": "火蜥蜴"
+    },
+    "flame_knight": {
+      "name": "烈焰骑士"
+    },
+    "phoenix": {
+      "name": "凤凰"
+    },
+    "orc_warrior": {
+      "name": "兽人战士"
+    },
+    "orc_mage": {
+      "name": "兽人法师"
+    },
+    "troll": {
+      "name": "巨魔"
+    },
+    "cyclops": {
+      "name": "独眼巨人"
+    },
+    "uruk_hai": {
+      "name": "强兽人"
+    },
+    "dark_treant": {
+      "name": "暗树人"
+    },
+    "shadow_wolf": {
+      "name": "暗影狼"
+    },
+    "forest_witch": {
+      "name": "森林女巫"
+    },
+    "chimera": {
+      "name": "奇美拉"
+    },
+    "nightmare": {
+      "name": "梦魇"
+    },
+    "sky_knight": {
+      "name": "天空骑士"
+    },
+    "storm_harpy": {
+      "name": "风暴鸟身女妖"
+    },
+    "thunder_bird": {
+      "name": "雷鸟"
+    },
+    "cloud_giant": {
+      "name": "云巨人"
+    },
+    "griffon": {
+      "name": "狮鹫"
+    },
+    "hell_hound": {
+      "name": "地狱犬"
+    },
+    "infernal_knight": {
+      "name": "炼狱骑士"
+    },
+    "succubus": {
+      "name": "魅魔"
+    },
+    "balrog": {
+      "name": "炎魔"
+    },
+    "cerberus": {
+      "name": "地狱三头犬"
+    },
+    "drake": {
+      "name": "亚龙"
+    },
+    "fire_dragon": {
+      "name": "火龙"
+    },
+    "ice_dragon": {
+      "name": "冰龙"
+    },
+    "thunder_dragon": {
+      "name": "雷龙"
+    },
+    "elder_dragon": {
+      "name": "古龙"
+    },
+    "divine_knight": {
+      "name": "神圣骑士"
+    },
+    "seraph": {
+      "name": "炽天使"
+    },
+    "temple_guardian": {
+      "name": "神殿守卫"
+    },
+    "holy_dragon": {
+      "name": "圣龙"
+    },
+    "valkyrie": {
+      "name": "瓦尔基里"
+    },
+    "chaos_knight": {
+      "name": "混沌骑士"
+    },
+    "void_walker": {
+      "name": "虚空行者"
+    },
+    "abomination": {
+      "name": "憎恶"
+    },
+    "chaos_dragon": {
+      "name": "混沌龙"
+    },
+    "elder_thing": {
+      "name": "远古存在"
+    },
+    "apocalypse_knight": {
+      "name": "末日骑士"
+    },
+    "world_eater": {
+      "name": "噬世者"
+    },
+    "primordial_titan": {
+      "name": "原初泰坦"
+    },
+    "god_slayer": {
+      "name": "弑神者"
+    },
+    "end_bringer": {
+      "name": "终焉使者"
+    },
+    "true_final_boss": {
+      "name": "真·最终Boss"
+    },
+    "uber_goblin_king": {
+      "name": "Uber 哥布林王"
+    },
+    "uber_bandit_leader": {
+      "name": "Uber 山贼首领"
+    },
+    "uber_vampire": {
+      "name": "Uber 吸血鬼"
+    },
+    "uber_kraken": {
+      "name": "Uber 海妖"
+    },
+    "uber_demon_lord": {
+      "name": "Uber 魔王"
+    },
+    "uber_true_final_boss": {
+      "name": "Uber 真·最终Boss"
+    }
+  },
+  "skills": {
+    "skill_atk_1": {
+      "name": "攻击提升 I",
+      "description": "攻击 +5"
+    },
+    "skill_hp_1": {
+      "name": "HP 提升 I",
+      "description": "HP +20"
+    },
+    "skill_atk_2": {
+      "name": "攻击提升 II",
+      "description": "攻击 +10"
+    },
+    "skill_def_1": {
+      "name": "防御提升 I",
+      "description": "防御 +5"
+    },
+    "skill_hp_2": {
+      "name": "HP 提升 II",
+      "description": "HP +50"
+    }
+  },
+  "skillTree": {
+    "title": "技能树",
+    "skillPoints": "SP：{{count}}",
+    "unlocked": "已解锁",
+    "available": "可用"
+  },
+  "bossSkills": {
+    "goblin_king": {
+      "name": "哥布林怒吼",
+      "shield": "虫群之盾",
+      "shieldDesc": "2回合内减伤20%，Crit和毒几率-50%",
+      "warlord": "部落军阀",
+      "warlordDesc": "攻速+30%，命中回复500 HP（HP低于50%时触发）"
+    },
+    "bandit_leader": {
+      "name": "捕兽夹",
+      "bearTrap": "捕兽夹",
+      "bearTrapDesc": "玩家攻速-30%持续2回合",
+      "nightAmbush": "夜袭",
+      "nightAmbushDesc": "下次攻击伤害+40%",
+      "shadowBind": "暗影束缚",
+      "shadowBindDesc": "治疗效果永久降低50%（HP低于50%时触发）"
+    },
+    "vampire": {
+      "name": "血宴",
+      "bloodFeast": "血宴",
+      "bloodFeastDesc": "下次攻击回复造成伤害的150%",
+      "nightFeast": "夜之盛宴",
+      "nightFeastDesc": "战斗开始时对玩家施加毒",
+      "crimsonPact": "血色契约",
+      "crimsonPactDesc": "根据造成的伤害回复HP（HP低于50%时触发）"
+    },
+    "kraken": {
+      "name": "海啸",
+      "tsunami": "海啸",
+      "tsunamiDesc": "下次攻击+50%伤害，玩家1回合内受伤+30%",
+      "deepEmbrace": "深渊拥抱",
+      "deepEmbraceDesc": "攻速-20%，治疗-30%持续3回合（HP低于50%时触发）",
+      "abyssalEbb": "深渊退潮",
+      "abyssalEbbDesc": "攻速-15%持续2回合"
+    },
+    "demon_lord": {
+      "name": "死亡之手",
+      "deathHand": "死亡之手",
+      "deathHandDesc": "2回合内治疗-30%，对玩家施加毒",
+      "blackFlame": "黑焰印记",
+      "blackFlameDesc": "永久获得+10%减伤（HP低于50%时触发）",
+      "crown": "毁灭之冠",
+      "crownDesc": "启用命中回复HP（HP低于50%时触发）"
+    },
+    "true_final_boss": {
+      "name": "终结",
+      "end": "终结",
+      "endDesc": "重置玩家行动条",
+      "convergence": "世界收束",
+      "timeSever": "时间切断"
+    }
+  },
+  "battleLog": {
+    "title": "战斗记录",
+    "runStart": "=== 第 {{count}} 次开始 ===",
+    "enemyAppeared": "{{enemy}} 出现了！",
+    "playerAttack": "玩家攻击！{{enemy}} 受到 {{damage}} 点伤害！",
+    "criticalHit": "暴击！{{enemy}} 受到 {{damage}} 点伤害！",
+    "enemyAttack": "{{enemy}} 攻击！你受到 {{damage}} 点伤害！",
+    "enemyDefeated": "击败了 {{enemy}}！获得 {{exp}} EXP！",
+    "itemDropped": "{{item}} 掉落了！",
+    "playerDefeated": "你被击败了...",
+    "nextFloor": "--- 前往第 {{floor}} 层 ---",
+    "dungeonCleared": "地下城通关！",
+    "poisonAppliedEnemy": "对 {{enemy}} 施加了毒！（{{damage}} 伤害 x {{turns}} 回合）{{stacks}}",
+    "poisonDamageEnemy": "毒伤害！{{enemy}} 受到 {{damage}} 点伤害！{{remaining}}{{ended}}{{lost}}",
+    "poisonAppliedPlayer": "中毒了！玩家受到 {{damage}} 伤害 x {{turns}} 回合！{{stacks}}",
+    "poisonDamagePlayer": "毒伤害！玩家受到 {{damage}} 点伤害！{{remaining}}{{ended}}{{lost}}",
+    "poisonStacks": "【{{count}}层】",
+    "poisonRemaining": "（剩余{{count}}层）",
+    "poisonEnded": "（毒结束）",
+    "poisonStacksLost": "（失去{{count}}层）",
+    "bossSkillUsed": "{{enemy}} 使用了 {{skill}}！",
+    "uberUnlocked": "{{enemy}} 的 Uber 版本已解锁！",
+    "uberTicket": "获得了 Uber 入场券！（{{count}}）",
+    "respecToken": "获得了洗点道具！（{{count}}）",
+    "bossSkillActivated": "{{enemy}} 触发了 {{skill}}！",
+    "reflectedDamage": "{{enemy}} 的印记反弹了！你受到 {{damage}} 点伤害！",
+    "enemyHealRegen": "{{enemy}} 回复了 {{amount}} HP！",
+    "enemyHealOnHit": "{{enemy}} 吸取了 {{amount}} HP！",
+    "igniteApplied": "对 {{enemy}} 施加了点燃！（{{damage}} 伤害 × {{duration}}秒）",
+    "igniteSpread": "点燃传播到 {{enemy}}！（{{damage}} 伤害 × {{duration}}秒）",
+    "igniteDamage": "点燃伤害！{{enemy}} 受到 {{damage}} 点伤害！{{remaining}}{{ended}}",
+    "igniteRemaining": "（剩余{{seconds}}秒）",
+    "igniteEnded": "（点燃结束）",
+    "hpRegen": "HP回复！恢复了 {{amount}} HP！"
+  },
+  "passiveTree": {
+    "title": "被动技能树",
+    "skillPoints": "SP：{{count}}",
+    "zoomHint": "捏合缩放 / 双击重置",
+    "unlocked": "已解锁",
+    "unlockButton": "解锁（SP：{{count}}）",
+    "noSp": "SP不足",
+    "locked": "需要前置技能",
+    "placeholder": "点击节点查看详情",
+    "respecButton": "洗点（消耗：{{count}}）",
+    "noRespecToken": "没有洗点道具",
+    "cannotRespec": "其他节点依赖此节点"
+  },
+  "passiveNodes": {
+    "start": {
+      "name": "冒险者资质",
+      "description": "HP +30，ATK +5，DEF +3"
+    },
+    "poison_1": {
+      "name": "毒之基础",
+      "description": "HP +20，毒几率 +3%"
+    },
+    "poison_2": {
+      "name": "毒之知识 I",
+      "description": "毒几率 +3%"
+    },
+    "poison_3": {
+      "name": "HP提升",
+      "description": "HP +20"
+    },
+    "poison_4": {
+      "name": "防御提升",
+      "description": "DEF +3"
+    },
+    "poison_5": {
+      "name": "毒之知识 II",
+      "description": "毒几率 +3%"
+    },
+    "poison_6": {
+      "name": "HP提升 II",
+      "description": "HP +25"
+    },
+    "poison_7": {
+      "name": "防御提升 II",
+      "description": "DEF +4"
+    },
+    "poison_key1": {
+      "name": "剧毒使者",
+      "description": "毒几率 +10%，毒伤害 +20%，毒吸血 +30%"
+    },
+    "poison_8": {
+      "name": "毒之知识 III",
+      "description": "毒几率 +5%"
+    },
+    "poison_9": {
+      "name": "毒伤害提升 I",
+      "description": "毒伤害 +15%"
+    },
+    "poison_10": {
+      "name": "毒抗性",
+      "description": "敌人中毒时受伤 -3%"
+    },
+    "poison_11": {
+      "name": "毒之知识 IV",
+      "description": "毒几率 +5%"
+    },
+    "poison_12": {
+      "name": "毒伤害提升 II",
+      "description": "毒伤害 +20%"
+    },
+    "poison_13": {
+      "name": "毒叠加强化",
+      "description": "毒可叠加至2层"
+    },
+    "poison_a1": {
+      "name": "深渊之毒",
+      "description": "毒伤害 +25%"
+    },
+    "poison_a2": {
+      "name": "毒之极致",
+      "description": "毒层数 +3（最多5层）"
+    },
+    "poison_b1": {
+      "name": "毒之守护",
+      "description": "敌人中毒时受伤 -5%"
+    },
+    "poison_b2": {
+      "name": "毒龙鳞甲",
+      "description": "敌人中毒时受伤 -7%，HP +30"
+    },
+    "poison_14": {
+      "name": "毒之知识 V",
+      "description": "毒几率 +8%"
+    },
+    "poison_15": {
+      "name": "致命之毒",
+      "description": "毒伤害 +30%"
+    },
+    "poison_16": {
+      "name": "毒之精通",
+      "description": "毒几率 +10%"
+    },
+    "poison_17": {
+      "name": "剧毒防护",
+      "description": "敌人中毒时受伤 -5%"
+    },
+    "poison_final1": {
+      "name": "蛇神化身",
+      "description": "毒几率 +15%，毒伤害 20% more"
+    },
+    "poison_final2": {
+      "name": "纯粹之毒【核心】",
+      "description": "不再造成直接伤害。毒伤害 50% more"
+    },
+    "crit_1": {
+      "name": "暴击基础",
+      "description": "ATK +5，Crit 几率 +3%"
+    },
+    "crit_2": {
+      "name": "暴击瞄准 I",
+      "description": "Crit 几率 +3%"
+    },
+    "crit_3": {
+      "name": "攻击提升",
+      "description": "ATK +5"
+    },
+    "crit_4": {
+      "name": "致命一击 I",
+      "description": "Crit DMG +15%"
+    },
+    "crit_5": {
+      "name": "暴击瞄准 II",
+      "description": "Crit 几率 +3%"
+    },
+    "crit_6": {
+      "name": "攻击提升 II",
+      "description": "ATK +8"
+    },
+    "crit_7": {
+      "name": "致命一击 II",
+      "description": "Crit DMG +20%"
+    },
+    "crit_key1": {
+      "name": "致死打击",
+      "description": "Crit DMG +30%"
+    },
+    "crit_8": {
+      "name": "暴击瞄准 III",
+      "description": "Crit 几率 +5%"
+    },
+    "crit_9": {
+      "name": "攻击强化",
+      "description": "ATK +15% increased"
+    },
+    "crit_10": {
+      "name": "致命一击 III",
+      "description": "Crit DMG +20%"
+    },
+    "crit_11": {
+      "name": "暴击瞄准 IV",
+      "description": "Crit 几率 +5%"
+    },
+    "crit_12": {
+      "name": "攻击提升 III",
+      "description": "ATK +10"
+    },
+    "crit_13": {
+      "name": "致命一击 IV",
+      "description": "Crit DMG +25%"
+    },
+    "crit_a1": {
+      "name": "精准打击",
+      "description": "Crit 几率 +8%"
+    },
+    "crit_a2": {
+      "name": "必中暴击",
+      "description": "Crit 几率 +10%"
+    },
+    "crit_b1": {
+      "name": "毁灭一击",
+      "description": "Crit DMG +30%"
+    },
+    "crit_b2": {
+      "name": "歼灭之刃",
+      "description": "Crit DMG +40%"
+    },
+    "crit_14": {
+      "name": "暴击瞄准 V",
+      "description": "Crit 几率 +5%"
+    },
+    "crit_15": {
+      "name": "血刃",
+      "description": "Crit 回 HP +80"
+    },
+    "crit_16": {
+      "name": "致命一击 V",
+      "description": "Crit DMG +30%"
+    },
+    "crit_17": {
+      "name": "嗜血",
+      "description": "Crit 回 HP +100"
+    },
+    "crit_final1": {
+      "name": "致命之刃",
+      "description": "Crit 几率 +10%，Crit DMG +50%"
+    },
+    "crit_final2": {
+      "name": "处刑者",
+      "description": "Crit 回 HP +150，ATK 15% more"
+    },
+    "guard_1": {
+      "name": "防御基础",
+      "description": "DEF +5，减伤 +2%"
+    },
+    "guard_2": {
+      "name": "坚守 I",
+      "description": "减伤 +2%"
+    },
+    "guard_3": {
+      "name": "防御提升",
+      "description": "DEF +4"
+    },
+    "guard_4": {
+      "name": "HP提升",
+      "description": "HP +25"
+    },
+    "guard_5": {
+      "name": "坚守 II",
+      "description": "减伤 +2%"
+    },
+    "guard_6": {
+      "name": "防御提升 II",
+      "description": "DEF +5"
+    },
+    "guard_7": {
+      "name": "HP提升 II",
+      "description": "HP +30"
+    },
+    "guard_key1": {
+      "name": "铁壁之盾",
+      "description": "减伤 +8%"
+    },
+    "guard_8": {
+      "name": "坚守 III",
+      "description": "减伤 +3%"
+    },
+    "guard_9": {
+      "name": "防御强化",
+      "description": "DEF +20% increased"
+    },
+    "guard_10": {
+      "name": "生命强化",
+      "description": "HP +20% increased"
+    },
+    "guard_11": {
+      "name": "坚守 IV",
+      "description": "减伤 +3%"
+    },
+    "guard_12": {
+      "name": "防御提升 III",
+      "description": "DEF +8"
+    },
+    "guard_13": {
+      "name": "HP提升 III",
+      "description": "HP +40"
+    },
+    "guard_a1": {
+      "name": "钢铁之躯",
+      "description": "DEF +25% increased"
+    },
+    "guard_a2": {
+      "name": "不动堡垒",
+      "description": "DEF +12"
+    },
+    "guard_b1": {
+      "name": "丰沛生命",
+      "description": "HP +25% increased"
+    },
+    "guard_b2": {
+      "name": "生命守护",
+      "description": "HP +60"
+    },
+    "guard_14": {
+      "name": "坚守 V",
+      "description": "减伤 +4%"
+    },
+    "guard_15": {
+      "name": "防御巅峰",
+      "description": "DEF +15"
+    },
+    "guard_16": {
+      "name": "坚守 VI",
+      "description": "减伤 +5%"
+    },
+    "guard_17": {
+      "name": "生命巅峰",
+      "description": "HP +80"
+    },
+    "guard_final1": {
+      "name": "铁壁守护者",
+      "description": "减伤 +10%，DEF 20% more"
+    },
+    "guard_final2": {
+      "name": "不破之墙",
+      "description": "HP 20% more"
+    },
+    "vamp_1": {
+      "name": "吸血基础",
+      "description": "ATK +5，命中回 HP +10"
+    },
+    "vamp_2": {
+      "name": "吸血 I",
+      "description": "命中回 HP +10"
+    },
+    "vamp_3": {
+      "name": "攻击提升",
+      "description": "ATK +5"
+    },
+    "vamp_4": {
+      "name": "生命回复",
+      "description": "每回合 HP +8"
+    },
+    "vamp_5": {
+      "name": "吸血 II",
+      "description": "命中回 HP +10"
+    },
+    "vamp_6": {
+      "name": "攻击提升 II",
+      "description": "ATK +8"
+    },
+    "vamp_7": {
+      "name": "生命回复 II",
+      "description": "每回合 HP +10"
+    },
+    "vamp_key1": {
+      "name": "嗜血渴望",
+      "description": "命中回 HP +20"
+    },
+    "vamp_8": {
+      "name": "吸血 III",
+      "description": "命中回 HP +10"
+    },
+    "vamp_9": {
+      "name": "攻击强化",
+      "description": "ATK +15% increased"
+    },
+    "vamp_10": {
+      "name": "持续回复",
+      "description": "每回合 HP 1%"
+    },
+    "vamp_11": {
+      "name": "吸血 IV",
+      "description": "命中回 HP +10"
+    },
+    "vamp_12": {
+      "name": "攻击提升 III",
+      "description": "ATK +10"
+    },
+    "vamp_13": {
+      "name": "生命回复 III",
+      "description": "每回合 HP +12"
+    },
+    "vamp_a1": {
+      "name": "猛攻",
+      "description": "ATK +20% increased"
+    },
+    "vamp_a2": {
+      "name": "毁灭之拳",
+      "description": "ATK +15"
+    },
+    "vamp_b1": {
+      "name": "治愈之力",
+      "description": "每回合 HP 1.5%"
+    },
+    "vamp_b2": {
+      "name": "生命涌动",
+      "description": "每回合 HP +20"
+    },
+    "vamp_14": {
+      "name": "吸血 V",
+      "description": "命中回 HP +10"
+    },
+    "vamp_15": {
+      "name": "攻击强化 II",
+      "description": "ATK +20% increased"
+    },
+    "vamp_16": {
+      "name": "吸血 VI",
+      "description": "命中回 HP +10"
+    },
+    "vamp_17": {
+      "name": "攻击巅峰",
+      "description": "ATK +20"
+    },
+    "vamp_final1": {
+      "name": "血族领主",
+      "description": "命中回 HP +30，ATK 15% more"
+    },
+    "vamp_final2": {
+      "name": "永恒吸血鬼",
+      "description": "每回合 HP 3%"
+    },
+    "regen_1": {
+      "name": "回复基础",
+      "description": "HP +30，每回合 HP +5"
+    },
+    "regen_2": {
+      "name": "生命力 I",
+      "description": "每回合 HP +5"
+    },
+    "regen_3": {
+      "name": "HP提升",
+      "description": "HP +25"
+    },
+    "regen_4": {
+      "name": "回复提升",
+      "description": "每回合 HP +8"
+    },
+    "regen_5": {
+      "name": "生命力 II",
+      "description": "HP +20% increased"
+    },
+    "regen_6": {
+      "name": "HP提升 II",
+      "description": "HP +30"
+    },
+    "regen_7": {
+      "name": "回复提升 II",
+      "description": "每回合 HP +10"
+    },
+    "regen_key1": {
+      "name": "生命之泉",
+      "description": "每回合 HP 2%"
+    },
+    "regen_8": {
+      "name": "生命力 III",
+      "description": "HP +25% increased"
+    },
+    "regen_9": {
+      "name": "HP强化",
+      "description": "HP +40"
+    },
+    "regen_10": {
+      "name": "回复强化",
+      "description": "每回合 HP +12"
+    },
+    "regen_11": {
+      "name": "生命力 IV",
+      "description": "HP +20% increased"
+    },
+    "regen_12": {
+      "name": "HP提升 III",
+      "description": "HP +50"
+    },
+    "regen_13": {
+      "name": "回复提升 III",
+      "description": "每回合 HP +15"
+    },
+    "regen_a1": {
+      "name": "坚韧生命",
+      "description": "HP +30% increased"
+    },
+    "regen_a2": {
+      "name": "不屈之躯",
+      "description": "HP +70"
+    },
+    "regen_b1": {
+      "name": "超级回复",
+      "description": "每回合 HP 1.5%"
+    },
+    "regen_b2": {
+      "name": "治愈巅峰",
+      "description": "每回合 HP +25"
+    },
+    "regen_14": {
+      "name": "生命力 V",
+      "description": "HP +25% increased"
+    },
+    "regen_15": {
+      "name": "HP提升 IV",
+      "description": "HP +60"
+    },
+    "regen_16": {
+      "name": "回复提升 IV",
+      "description": "每回合 HP +20"
+    },
+    "regen_17": {
+      "name": "生命祝福",
+      "description": "每回合 HP 2%"
+    },
+    "regen_final1": {
+      "name": "凤凰祝福",
+      "description": "HP 25% more，每回合 HP +25"
+    },
+    "regen_final2": {
+      "name": "永恒生命",
+      "description": "每回合 HP 4%"
+    },
+    "speed_1": {
+      "name": "速度基础",
+      "description": "ATK +3，攻速 +5%"
+    },
+    "speed_2": {
+      "name": "敏捷 I",
+      "description": "攻速 +5%"
+    },
+    "speed_3": {
+      "name": "快速打击",
+      "description": "ATK +5"
+    },
+    "speed_4": {
+      "name": "灵活身法",
+      "description": "攻速 +5%"
+    },
+    "speed_5": {
+      "name": "敏捷 II",
+      "description": "攻速 +5%"
+    },
+    "speed_6": {
+      "name": "攻击提升",
+      "description": "ATK +8"
+    },
+    "speed_7": {
+      "name": "敏捷 III",
+      "description": "攻速 +8%"
+    },
+    "speed_key1": {
+      "name": "疾风",
+      "description": "攻速 +15%"
+    },
+    "speed_8": {
+      "name": "敏捷 IV",
+      "description": "攻速 +8%"
+    },
+    "speed_9": {
+      "name": "连续打击",
+      "description": "ATK +10，攻速 +5%"
+    },
+    "speed_10": {
+      "name": "瞬息打击",
+      "description": "攻速 +10%"
+    },
+    "speed_11": {
+      "name": "敏捷 V",
+      "description": "攻速 +10%"
+    },
+    "speed_12": {
+      "name": "攻击强化",
+      "description": "ATK +15% increased"
+    },
+    "speed_13": {
+      "name": "加速",
+      "description": "攻速 +12%"
+    },
+    "speed_final1": {
+      "name": "闪电之速",
+      "description": "攻速 15% more"
+    },
+    "speed_final2": {
+      "name": "神速",
+      "description": "攻速 20% more，ATK 10% more"
+    },
+    "ignite_1": {
+      "name": "点燃基础",
+      "description": "HP +20，点燃几率 +6%，点燃伤害 +10%"
+    },
+    "ignite_2": {
+      "name": "点燃提升 I",
+      "description": "点燃几率 +6%，点燃伤害 +10%"
+    },
+    "ignite_3": {
+      "name": "HP与防御 I",
+      "description": "HP +25，DEF +10，点燃几率 +6%"
+    },
+    "ignite_4": {
+      "name": "生命强化 I",
+      "description": "DEF +10，HP +10% increased，点燃几率 +6%"
+    },
+    "ignite_5": {
+      "name": "点燃提升 II",
+      "description": "点燃几率 +6%，点燃伤害 +15%"
+    },
+    "ignite_6": {
+      "name": "点燃持续 I",
+      "description": "点燃几率 +6%，点燃持续 +15%"
+    },
+    "ignite_7": {
+      "name": "耐久提升",
+      "description": "DEF +20，DEF +15% increased，点燃几率 +6%"
+    },
+    "ignite_key1": {
+      "name": "缓燃【核心】",
+      "description": "点燃几率 +6%，攻速<0.8时减伤 +10%"
+    },
+    "ignite_8": {
+      "name": "点燃提升 III",
+      "description": "点燃几率 +6%，点燃伤害 +20%"
+    },
+    "ignite_9": {
+      "name": "点燃持续 II",
+      "description": "点燃几率 +6%，点燃持续 +20%"
+    },
+    "ignite_10": {
+      "name": "生命提升",
+      "description": "HP +30，HP +15% increased，点燃几率 +6%"
+    },
+    "ignite_11": {
+      "name": "强化体魄",
+      "description": "DEF +30，DEF +20% increased，点燃几率 +6%"
+    },
+    "ignite_final1": {
+      "name": "烈焰巅峰",
+      "description": "点燃几率 +6%，点燃伤害 25% more，HP +10% increased"
+    },
+    "ignite_final2": {
+      "name": "燎原之火【核心】",
+      "description": "点燃几率 +6%，点燃传播 - 点燃的敌人死亡时，点燃转移给下个敌人。DEF +10% increased"
+    }
+  },
+  "ranking": {
+    "title": "排行榜",
+    "dimensionalCorridor": "次元回廊",
+    "floor": "层",
+    "you": "你",
+    "loading": "加载中...",
+    "loadError": "加载排行榜失败",
+    "retry": "重试",
+    "noData": "暂无排行数据",
+    "cacheInfo": "{{minutes}}分钟后可刷新"
+  },
+  "modDescriptions": {
+    "poisonChance": "毒几率 +{{value}}%",
+    "igniteChance": "点燃几率 +{{value}}%",
+    "igniteDuration": "点燃持续 +{{value}}%",
+    "igniteTickSpeed": "点燃速度 +{{value}}%",
+    "igniteDamage": "点燃伤害 +{{value}}%",
+    "criticalChance": "Crit 几率 +{{value}}%",
+    "criticalDamage": "Crit DMG +{{value}}%",
+    "damageReduction": "受伤 -{{value}}%",
+    "attackSpeed": "攻速 +{{value}}%",
+    "hpOnHit": "命中回 HP +{{value}}",
+    "lifesteal": "吸血 +{{value}}%"
+  },
+  "boost": {
+    "dropRate": {
+      "title": "掉落率提升",
+      "description": "30分钟内掉落率1.5倍，独特+1%",
+      "longDescription": "独特掉落率+1%\n物品掉落几率1.5倍"
+    },
+    "tierBoost": {
+      "title": "高品质提升",
+      "description": "30分钟内高品质物品掉落率提升",
+      "longDescription": "更高的 T1-T3 品质 Tier 掉落率\n通常 T4-5 最常见"
+    },
+    "active": "生效中",
+    "activeRemaining": "生效中：剩余{{minutes}}分钟",
+    "playing": "播放中...",
+    "watchAdToActivate": "观看广告激活",
+    "close": "关闭",
+    "error": "错误",
+    "adLoadFailed": "广告加载失败",
+    "adShowFailed": "广告播放失败。请稍后再试。",
+    "adNotReady": "广告尚未准备好。请稍候再试。",
+    "duration": "持续时间：30分钟",
+    "loadingAd": "广告加载中...",
+    "retry": "重试",
+    "dropRateBoostLabel": "掉落率提升",
+    "tierBoostLabel": "Tier 提升"
+  },
+  "shop": {
+    "title": "商店",
+    "subtitle": "购买高级功能",
+    "purchased": "已购买",
+    "restore": "恢复购买",
+    "noProducts": "没有可用商品",
+    "alreadyPurchased": "已购买",
+    "alreadyPurchasedMessage": "你已经拥有此物品",
+    "notAvailable": "暂不可用",
+    "notAvailableMessage": "此物品暂时不可用",
+    "purchaseSuccess": "购买成功",
+    "purchaseSuccessMessage": "购买成功完成",
+    "purchaseFailed": "购买失败",
+    "purchaseFailedMessage": "购买未能完成",
+    "restoreSuccess": "恢复成功",
+    "restoreSuccessMessage": "购买恢复成功",
+    "restoreFailed": "恢复失败",
+    "restoreFailedMessage": "购买恢复失败",
+    "inventoryExpansion": {
+      "name": "背包扩展",
+      "description": "将背包物品上限从{{from}}增加到{{to}}"
+    },
+    "storageExpansion": {
+      "name": "仓库扩展",
+      "description": "将仓库物品上限从{{from}}增加到{{to}}"
+    },
+    "tierFilter": {
+      "name": "低阶过滤",
+      "description": "阻止低阶物品（T8-T10）掉落"
+    },
+    "permanentBoost": {
+      "name": "永久提升",
+      "description": "独特掉落率+1%，物品掉落率x1.5，高品质（T1-T3）掉落率提升永久生效"
+    },
+    "characterSlots": {
+      "name": "角色位扩展",
+      "description": "允许创建最多5个角色"
+    },
+    "speedBoost": {
+      "name": "速度提升",
+      "description": "解锁2倍-3倍战斗速度选项"
+    },
+    "premiumBundle": {
+      "name": "高级礼包",
+      "description": "以优惠价格包含背包扩展、仓库扩展、低阶过滤、永久提升和角色位扩展"
+    }
+  }
+}

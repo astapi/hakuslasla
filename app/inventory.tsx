@@ -629,7 +629,7 @@ const ItemDetail = memo(({
               style={styles.comparisonIcon}
             />
             <View style={styles.comparisonInfo}>
-              <Text style={styles.comparisonName} numberOfLines={1}>{t(`items.${item.id}.name`)}</Text>
+              <Text style={styles.comparisonName} numberOfLines={2}>{t(`items.${item.id}.name`)}</Text>
               <View style={styles.comparisonStats}>
                 {stats.totalAtk > 0 && (
                   <Text style={styles.atkText}>ATK {stats.totalAtk}</Text>
@@ -669,7 +669,7 @@ const ItemDetail = memo(({
                   style={styles.comparisonIcon}
                 />
                 <View style={styles.comparisonInfo}>
-                  <Text style={styles.comparisonName} numberOfLines={1}>{t(`items.${equippedItem.id}.name`)}</Text>
+                  <Text style={styles.comparisonName} numberOfLines={2}>{t(`items.${equippedItem.id}.name`)}</Text>
                   <View style={styles.comparisonStats}>
                     {equippedStats.totalAtk > 0 && (
                       <Text style={styles.atkText}>ATK {equippedStats.totalAtk}</Text>
@@ -753,7 +753,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: ms(8),
     paddingHorizontal: ms(16),
-    paddingBottom: ms(8),
+    paddingBottom: ms(4),
   },
   inventoryTab: {
     flex: 1,
@@ -782,7 +782,9 @@ const styles = StyleSheet.create({
   // 詳細表示エリア
   detailArea: {
     minHeight: ms(225),
-    padding: ms(12),
+    paddingHorizontal: ms(12),
+    paddingTop: ms(8),
+    paddingBottom: ms(12),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },

@@ -1,0 +1,2064 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "ok": "Aceptar",
+    "back": "Volver",
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "change": "Cambiar",
+    "delete": "Eliminar",
+    "reset": "Reiniciar",
+    "create": "Crear",
+    "creating": "Creando...",
+    "save": "Guardar",
+    "equip": "Equipar",
+    "unequip": "Desequipar",
+    "sell": "Vender",
+    "none": "Ninguno",
+    "unequipped": "Vacío",
+    "items": "objetos",
+    "ticket": "Ticket"
+  },
+  "characterSelect": {
+    "title": "LootDive",
+    "subtitle": "Seleccionar Personaje",
+    "empty": "Sin Personajes",
+    "emptyHint": "Crea un nuevo personaje para comenzar",
+    "createNew": "Crear Nuevo Personaje",
+    "slotLimitTitle": "Límite de Espacios",
+    "slotLimitMessage": "Espacios de personaje llenos ({{current}}/{{max}})",
+    "deleteConfirmTitle": "Eliminar Personaje",
+    "deleteConfirmMessage": "¿Eliminar \"{{name}}\"?\nEsta acción no se puede deshacer."
+  },
+  "characterCreate": {
+    "nameLabel": "Nombre del Personaje",
+    "namePlaceholder": "Ingresa el nombre",
+    "classLabel": "Seleccionar Clase",
+    "class": {
+      "warrior": "Guerrero",
+      "elementalist": "Elementalista"
+    },
+    "classAbility": "Habilidad de Clase",
+    "ability": {
+      "igniteChance": "Prob. de Ignite {{value}}%"
+    },
+    "initialStats": "Estadísticas Iniciales"
+  },
+  "home": {
+    "menu": {
+      "skills": "Habilidades",
+      "inventory": "Objetos",
+      "storage": "Almacén",
+      "settings": "Ajustes",
+      "adventure": "Aventura",
+      "encyclopedia": "Archivo",
+      "shop": "Tienda"
+    },
+    "renameCharacter": "Renombrar Personaje"
+  },
+  "dungeonSelect": {
+    "title": "Seleccionar Mazmorra",
+    "subtitle": "Elige una mazmorra para desafiar",
+    "unlockRequirement": "Completa {{dungeonName}} para desbloquear"
+  },
+  "encyclopedia": {
+    "title": "Archivo de Mazmorras",
+    "subtitle": "Ver detalles de mazmorras completadas",
+    "noClearedDungeons": "Ninguna mazmorra completada aún",
+    "clearedAt": "Completada: {{date}}",
+    "bestFloor": "Mejor Piso: {{floor}}",
+    "detail": {
+      "monsters": "Aparición de Monstruos",
+      "drops": "Objetos que Caen",
+      "uniqueDrops": "Drops Únicos",
+      "dungeonDrops": "Drops de Mazmorra",
+      "commonDrops": "Drops Comunes",
+      "spawnRate": "Tasa de Aparición {{rate}}%",
+      "dropRate": "Tasa de Drop {{rate}}%",
+      "stats": "Estadísticas",
+      "exp": "EXP: {{exp}}",
+      "attackSpeed": "Velocidad de Ataque: {{speed}}",
+      "noUniqueDrop": "Sin drops únicos",
+      "fixedMods": "MODs Fijos",
+      "bossAbilities": "Habilidades del Jefe",
+      "regularSkills": "Habilidades Regulares (cada 3 ataques)",
+      "thresholdSkills": "Habilidades de Umbral (bajo 50% HP)",
+      "uberOnly": "Solo Uber"
+    },
+    "notCleared": "No Completada",
+    "uberUnlocked": "Uber Desbloqueado"
+  },
+  "battle": {
+    "floor": "P",
+    "round": "Ronda",
+    "autoRunning": "Auto Ejecutando",
+    "pause": "Pausar",
+    "resume": "Reanudar",
+    "autoRun": "Auto",
+    "stopAutoRun": "Detener Auto",
+    "retreat": "Retirada",
+    "retreatConfirm": {
+      "title": "Confirmar Retirada",
+      "message": "¿Seguro que quieres retirarte?\nLa EXP ganada se perderá, pero los objetos se conservarán.",
+      "confirm": "Retirarse"
+    },
+    "victory": "¡Victoria!",
+    "defeat": "Derrota...",
+    "cleared": "¡Mazmorra Completada!",
+    "player": "Jugador",
+    "inProgress": "En Batalla"
+  },
+  "result": {
+    "cleared": "¡Mazmorra Completada!",
+    "defeat": "Derrota...",
+    "retreat": "Retirada",
+    "runsCompleted": "{{count}} Rondas Completadas",
+    "floorsCleared": "{{current}}/{{max}} Pisos Completados",
+    "rewards": "Recompensas",
+    "exp": "EXP",
+    "totalExp": "EXP Total",
+    "items": "Objetos Obtenidos",
+    "totalItems": "Objetos Totales ({{count}})",
+    "noItems": "Sin Objetos",
+    "returnButton": "Volver a Selección de Mazmorra"
+  },
+  "inventory": {
+    "title": "Inventario",
+    "selectItem": "Selecciona un objeto",
+    "selected": "Seleccionado",
+    "equipped": "Equipado",
+    "storage": "Almacén",
+    "noItemsInSlot": "Sin {{slot}}",
+    "tabs": {
+      "equipment": "Equipamiento",
+      "misc": "Varios"
+    },
+    "tickets": {
+      "title": "Tickets",
+      "empty": "Sin tickets",
+      "item": "Ticket de {{name}}"
+    },
+    "respec": {
+      "title": "Objetos de Respec",
+      "empty": "Sin objetos de respec",
+      "item": "Orbe de Respec"
+    }
+  },
+  "storage": {
+    "title": "Almacén",
+    "selectItem": "Selecciona un objeto",
+    "toInventory": "Al Inventario",
+    "inventoryFull": "Inventario Lleno",
+    "storageFull": "Almacén lleno",
+    "noItemsInSlot": "Sin {{slot}}"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "dropFilterTitle": "Ajustes de Filtro de Drop",
+    "language": {
+      "title": "Idioma",
+      "description": "Selecciona el idioma de la aplicación",
+      "system": "Seguir Ajustes del Sistema",
+      "japanese": "日本語",
+      "english": "English",
+      "chinese": "简体中文",
+      "korean": "한국어",
+      "spanish": "Español",
+      "french": "Français",
+      "german": "Deutsch",
+      "current": "Actual: {{language}}"
+    },
+    "categoryFilter": {
+      "title": "Filtro de Categoría",
+      "description": "Solo recoger drops de categorías habilitadas"
+    },
+    "modCountFilter": {
+      "title": "Cantidad Mínima de MODs",
+      "description": "Solo recoger objetos con esta cantidad de MODs o más (0 para desactivar)",
+      "disabled": "Desactivado",
+      "value": "{{count}}+ MODs"
+    },
+    "tierFilter": {
+      "title": "Filtro de Tier de MOD",
+      "description": "Solo recoger objetos con al menos un MOD en o bajo este tier (Tier 1 es la mejor calidad)",
+      "disabled": "Desactivado",
+      "value": "Tier {{tier}} o inferior",
+      "hint": "Tier 1 = Mejor, Tier 10 = Peor"
+    },
+    "currentFilter": {
+      "title": "Filtro Actual",
+      "modCount": "{{count}}+ MODs",
+      "tierBelow": "Contiene MOD de Tier {{tier}} o inferior",
+      "noFilter": "Sin filtro (recoger todo)"
+    },
+    "battleSpeed": {
+      "title": "Velocidad de Batalla",
+      "description": "Cambia la velocidad de progresión de batalla",
+      "premiumHint": "Velocidad 2x y superior disponible tras compra en Tienda"
+    }
+  },
+  "status": {
+    "title": "Estado",
+    "tapForDetails": "Toca para detalles",
+    "critRate": "Prob. Crit",
+    "critDamage": "DMG Crit",
+    "poisonChance": "Veneno",
+    "poisonDamage": "Daño de Veneno",
+    "poisonDamageMore": "Veneno More",
+    "poisonMaxStacks": "Acumulación de Veneno",
+    "poisonDamageReduction": "Reducción por Veneno",
+    "poisonLifesteal": "Robo de Veneno",
+    "noDirectDamage": "Sin Daño Directo",
+    "hpRegen": "Regen HP",
+    "hpOnHit": "HP al Golpear",
+    "hpOnCrit": "HP en Crit",
+    "damageReduction": "Reducción de Daño",
+    "attackSpeed": "Velocidad de Ataque",
+    "attackSpeedMore": "Vel. Ataque More",
+    "finalAttackSpeed": "Vel. Ataque Final",
+    "igniteChance": "Prob. Ignite",
+    "igniteDamage": "Daño Ignite",
+    "igniteDamageMore": "Ignite More",
+    "igniteDuration": "Dur. Ignite",
+    "igniteTickSpeed": "Vel. Ignite",
+    "perSecond": "/s",
+    "on": "SÍ",
+    "off": "NO",
+    "max": "MÁX"
+  },
+  "equipment": {
+    "title": "Equipamiento",
+    "slot": "Espacio",
+    "item": "Objeto",
+    "mod": "MOD",
+    "modCount": "MOD x{{count}}"
+  },
+  "slots": {
+    "weapon": "Arma",
+    "armor": "Armadura",
+    "gloves": "Guantes",
+    "boots": "Botas",
+    "accessory": "Accesorio"
+  },
+  "mods": {
+    "atk_bonus": "ATK",
+    "def_bonus": "DEF",
+    "hp_regen": "Regen",
+    "hp_regen_pct": "Regen HP",
+    "poison_chance": "Veneno",
+    "critical_chance": "Crit",
+    "critical_damage": "DMG Crit",
+    "atk_increased_pct": "ATK",
+    "def_increased_pct": "DEF",
+    "hp_increased_pct": "HP",
+    "hp_bonus": "HP",
+    "hp_on_hit": "HP al Golpear",
+    "damage_reduction_pct": "Red. Daño",
+    "attack_speed_pct": "Velocidad",
+    "lifesteal": "Robo de Vida",
+    "atk_more_pct": "ATK more",
+    "def_more_pct": "DEF more",
+    "hp_more_pct": "HP more",
+    "everyTurnHpRegen": "+{{value}} HP por turno",
+    "everyTurnHpRegenPct": "+{{value}}% HP por turno",
+    "ignite_chance": "Ignite",
+    "ignite_duration_pct": "Dur. Ignite",
+    "ignite_tick_speed_pct": "Vel. Ignite",
+    "ignite_damage_pct": "DMG Ignite"
+  },
+  "dungeon": {
+    "floors": "{{count}} Pisos",
+    "unlimitedFloors": "Ilimitado",
+    "recommendedLevel": "Nv. Rec. {{level}}",
+    "ticketRequired": "Requiere ticket"
+  },
+  "dungeons": {
+    "grassland": {
+      "name": "Pradera del Principiante",
+      "description": "Una pradera pacífica donde los aventureros comienzan su viaje. Hogar de monstruos débiles."
+    },
+    "cave": {
+      "name": "Cueva Subterránea",
+      "description": "Una cueva oscura en las profundidades. Monstruos intermedios acechan dentro."
+    },
+    "ruins": {
+      "name": "Ruinas Olvidadas",
+      "description": "Ruinas de una civilización antigua. Un lugar peligroso donde rondan monstruos poderosos."
+    },
+    "goblin_fort": {
+      "name": "Fortaleza Goblin",
+      "description": "Una fortaleza masiva construida por goblins. El Rey Goblin gobierna en sus profundidades."
+    },
+    "bandit_hideout": {
+      "name": "Guarida de Bandidos",
+      "description": "Un escondite de bandidos de montaña, repleto de bienes robados."
+    },
+    "vampire_mansion": {
+      "name": "Mansión del Vampiro",
+      "description": "Una mansión siniestra en la noche. Gobernada por un noble inmortal."
+    },
+    "underwater_cave": {
+      "name": "Cueva Submarina",
+      "description": "Una cueva misteriosa en las profundidades del mar. Monstruos acuáticos protegen su territorio."
+    },
+    "orc_fortress": {
+      "name": "Fortaleza Orca",
+      "description": "Una fortaleza masiva gobernada por orcos y trolls. Guerreros salvajes aguardan."
+    },
+    "demon_castle": {
+      "name": "Castillo Demoníaco",
+      "description": "El castillo del señor oscuro donde se arremolinan las sombras. Demonios poderosos protegen a su amo."
+    },
+    "ice_cave": {
+      "name": "Caverna Congelada",
+      "description": "Una cueva helada en las profundidades del permafrost. Monstruos gélidos habitan aquí."
+    },
+    "volcano": {
+      "name": "Volcán Ardiente",
+      "description": "Un laberinto abrasador dentro de un volcán activo. Criaturas de fuego lo habitan."
+    },
+    "dark_forest": {
+      "name": "Bosque Abismal",
+      "description": "Un bosque oscuro sin luz. Bestias antiguas acechan dentro."
+    },
+    "sky_tower": {
+      "name": "Torre Celestial",
+      "description": "Una torre mística que atraviesa las nubes. Guardianes celestiales aguardan."
+    },
+    "hell_gate": {
+      "name": "Puerta del Infierno",
+      "description": "Una puerta prohibida que conduce al inframundo. Guardianes del infierno bloquean a los intrusos."
+    },
+    "dragon_nest": {
+      "name": "Guarida del Dragón",
+      "description": "Un nido legendario donde duermen dragones antiguos. Las especies de dragones más poderosas habitan aquí."
+    },
+    "sacred_temple": {
+      "name": "Templo Divino",
+      "description": "Un templo sagrado protegido por siervos de los dioses."
+    },
+    "chaos_realm": {
+      "name": "Reino del Caos",
+      "description": "Un mundo caótico entre la realidad y el vacío. Todas las leyes están distorsionadas aquí."
+    },
+    "final_land": {
+      "name": "Tierra del Final",
+      "description": "La última frontera en el fin del mundo. El ser definitivo aguarda."
+    },
+    "dimensional_rush_1": {
+      "name": "Asalto Dimensional I",
+      "description": "Laberinto dimensional. Derrota al Rey Goblin en el piso 50."
+    },
+    "dimensional_rush_2": {
+      "name": "Asalto Dimensional II",
+      "description": "Laberinto dimensional. Derrota al Líder Bandido en el piso 70."
+    },
+    "dimensional_rush_3": {
+      "name": "Asalto Dimensional III",
+      "description": "Laberinto dimensional. Derrota al Vampiro en el piso 90."
+    },
+    "dimensional_rush_4": {
+      "name": "Asalto Dimensional IV",
+      "description": "Laberinto dimensional. Derrota al Kraken en el piso 110."
+    },
+    "dimensional_rush_5": {
+      "name": "Asalto Dimensional V",
+      "description": "Laberinto dimensional. Derrota al Señor Demonio en el piso 120."
+    },
+    "dimensional_rush_6": {
+      "name": "Asalto Dimensional VI",
+      "description": "Capa dimensional final. Derrota al Jefe Final Verdadero en el piso 200."
+    },
+    "dimensional_corridor": {
+      "name": "Corredor Dimensional",
+      "description": "Un corredor infinito entre dimensiones. Los enemigos se vuelven más fuertes cuanto más profundo vayas."
+    },
+    "uber_goblin_king": {
+      "name": "Uber Rey Goblin",
+      "description": "El Rey Goblin despertado en otra dimensión."
+    },
+    "uber_bandit_leader": {
+      "name": "Uber Líder Bandido",
+      "description": "El Líder Bandido mejorado por poder dimensional."
+    },
+    "uber_vampire": {
+      "name": "Uber Vampiro",
+      "description": "Un vampiro sediento de sangre de otra dimensión."
+    },
+    "uber_kraken": {
+      "name": "Uber Kraken",
+      "description": "Una criatura colosal que gobierna los mares dimensionales."
+    },
+    "uber_demon_lord": {
+      "name": "Uber Señor Demonio",
+      "description": "El Señor Demonio resucitado por poder dimensional."
+    },
+    "uber_true_final_boss": {
+      "name": "Uber Jefe Final Verdadero",
+      "description": "El ser que trae finales verdaderos."
+    }
+  },
+  "items": {
+    "rusted_sword": {
+      "name": "Espada Oxidada"
+    },
+    "cloth_clothes": {
+      "name": "Ropa de Tela"
+    },
+    "leather_hat": {
+      "name": "Sombrero de Cuero"
+    },
+    "leather_gloves": {
+      "name": "Guantes de Cuero"
+    },
+    "leather_boots": {
+      "name": "Botas de Cuero"
+    },
+    "copper_ring": {
+      "name": "Anillo de Cobre"
+    },
+    "traveler_amulet": {
+      "name": "Amuleto del Viajero"
+    },
+    "grassland_sword": {
+      "name": "Espada de la Pradera"
+    },
+    "rusted_staff": {
+      "name": "Bastón Oxidado"
+    },
+    "grassland_staff": {
+      "name": "Bastón de la Pradera"
+    },
+    "cave_iron_staff": {
+      "name": "Bastón de Hierro de Cueva"
+    },
+    "light_leather": {
+      "name": "Cuero Ligero"
+    },
+    "rabbit_boots": {
+      "name": "Botas de Conejo"
+    },
+    "division_core": {
+      "name": "Núcleo de División"
+    },
+    "wolf_fang": {
+      "name": "Colmillo de Lobo"
+    },
+    "poison_needle_ring": {
+      "name": "Anillo de Aguja Venenosa"
+    },
+    "cave_iron_sword": {
+      "name": "Espada de Hierro de Cueva"
+    },
+    "bone_shield": {
+      "name": "Escudo de Hueso"
+    },
+    "bat_mantle": {
+      "name": "Manto de Murciélago"
+    },
+    "underground_charm": {
+      "name": "Amuleto Subterráneo"
+    },
+    "warrior_ring": {
+      "name": "Anillo del Guerrero"
+    },
+    "bone_sword": {
+      "name": "Espada de Hueso"
+    },
+    "war_ogre_belt": {
+      "name": "Cinturón del Ogro de Guerra"
+    },
+    "dark_night_mantle": {
+      "name": "Manto de la Noche Oscura"
+    },
+    "ruins_magic_sword": {
+      "name": "Espada Mágica de las Ruinas"
+    },
+    "ruins_magic_staff": {
+      "name": "Bastón Mágico de las Ruinas"
+    },
+    "cursed_robe": {
+      "name": "Túnica Maldita"
+    },
+    "gargoyle_boots": {
+      "name": "Botas de Gárgola"
+    },
+    "ancient_ring": {
+      "name": "Anillo Antiguo"
+    },
+    "oblivion_amulet": {
+      "name": "Amuleto del Olvido"
+    },
+    "core_stone": {
+      "name": "Piedra de Núcleo"
+    },
+    "curse_bandage": {
+      "name": "Vendaje Maldito"
+    },
+    "lost_grimoire": {
+      "name": "Grimorio Perdido"
+    },
+    "stone_wing_boots": {
+      "name": "Botas de Alas de Piedra"
+    },
+    "goblin_blade": {
+      "name": "Espada Goblin"
+    },
+    "goblin_staff": {
+      "name": "Bastón Goblin"
+    },
+    "goblin_mail": {
+      "name": "Cota Goblin"
+    },
+    "spiked_gauntlets": {
+      "name": "Guanteletes con Púas"
+    },
+    "raider_boots": {
+      "name": "Botas de Saqueador"
+    },
+    "tribal_ring": {
+      "name": "Anillo Tribal"
+    },
+    "shaman_staff": {
+      "name": "Bastón de Chamán"
+    },
+    "goblin_shield": {
+      "name": "Escudo Goblin"
+    },
+    "champion_axe": {
+      "name": "Hacha del Campeón"
+    },
+    "kings_crown": {
+      "name": "Corona del Rey"
+    },
+    "demon_blade": {
+      "name": "Espada Demoníaca"
+    },
+    "demon_staff": {
+      "name": "Bastón Demoníaco"
+    },
+    "dark_plate": {
+      "name": "Armadura Oscura"
+    },
+    "dragon_gauntlets": {
+      "name": "Guanteletes de Dragón"
+    },
+    "inferno_boots": {
+      "name": "Botas del Infierno"
+    },
+    "dark_ring": {
+      "name": "Anillo Oscuro"
+    },
+    "dark_grimoire": {
+      "name": "Grimorio Oscuro"
+    },
+    "demon_horn": {
+      "name": "Cuerno de Demonio"
+    },
+    "wyvern_scale": {
+      "name": "Escama de Wyvern"
+    },
+    "demon_crown": {
+      "name": "Corona del Demonio"
+    },
+    "frost_blade": {
+      "name": "Espada de Escarcha"
+    },
+    "frost_staff": {
+      "name": "Bastón de Escarcha"
+    },
+    "ice_armor": {
+      "name": "Armadura de Hielo"
+    },
+    "frozen_gauntlets": {
+      "name": "Guanteletes Congelados"
+    },
+    "blizzard_boots": {
+      "name": "Botas de Ventisca"
+    },
+    "ice_crystal_ring": {
+      "name": "Anillo de Cristal de Hielo"
+    },
+    "frozen_staff": {
+      "name": "Bastón Congelado"
+    },
+    "yeti_fur": {
+      "name": "Pelaje de Yeti"
+    },
+    "magma_blade": {
+      "name": "Espada de Magma"
+    },
+    "magma_staff": {
+      "name": "Bastón de Magma"
+    },
+    "volcano_armor": {
+      "name": "Armadura del Volcán"
+    },
+    "flame_gauntlets": {
+      "name": "Guanteletes de Llama"
+    },
+    "ember_boots": {
+      "name": "Botas de Ascuas"
+    },
+    "fire_ruby_ring": {
+      "name": "Anillo de Rubí de Fuego"
+    },
+    "magma_core": {
+      "name": "Núcleo de Magma"
+    },
+    "flame_sword": {
+      "name": "Espada de Llama"
+    },
+    "shadow_blade": {
+      "name": "Espada de Sombra"
+    },
+    "shadow_staff": {
+      "name": "Bastón de Sombra"
+    },
+    "dark_bark_armor": {
+      "name": "Armadura de Corteza Oscura"
+    },
+    "nightmare_gauntlets": {
+      "name": "Guanteletes de Pesadilla"
+    },
+    "forest_walker_boots": {
+      "name": "Botas del Caminante del Bosque"
+    },
+    "cursed_eye_ring": {
+      "name": "Anillo del Ojo Maldito"
+    },
+    "cursed_branch": {
+      "name": "Rama Maldita"
+    },
+    "chimera_fang": {
+      "name": "Colmillo de Quimera"
+    },
+    "sky_blade": {
+      "name": "Espada Celestial"
+    },
+    "sky_staff": {
+      "name": "Bastón Celestial"
+    },
+    "cloud_armor": {
+      "name": "Armadura de Nubes"
+    },
+    "storm_gauntlets": {
+      "name": "Guanteletes de Tormenta"
+    },
+    "wind_walker_boots": {
+      "name": "Botas del Caminante del Viento"
+    },
+    "sky_sapphire_ring": {
+      "name": "Anillo de Zafiro Celestial"
+    },
+    "thunder_feather": {
+      "name": "Pluma del Trueno"
+    },
+    "giant_belt": {
+      "name": "Cinturón del Gigante"
+    },
+    "hellfire_blade": {
+      "name": "Espada de Fuego Infernal"
+    },
+    "hellfire_staff": {
+      "name": "Bastón de Fuego Infernal"
+    },
+    "infernal_plate": {
+      "name": "Armadura Infernal"
+    },
+    "demon_gauntlets": {
+      "name": "Guanteletes Demoníacos"
+    },
+    "hellwalker_boots": {
+      "name": "Botas del Caminante Infernal"
+    },
+    "infernal_ruby_ring": {
+      "name": "Anillo de Rubí Infernal"
+    },
+    "infernal_armor": {
+      "name": "Armadura Infernal"
+    },
+    "balrog_whip": {
+      "name": "Látigo de Balrog"
+    },
+    "dragon_slayer": {
+      "name": "Matadragones"
+    },
+    "dragon_staff": {
+      "name": "Bastón de Dragón"
+    },
+    "dragon_scale_armor": {
+      "name": "Armadura de Escamas de Dragón"
+    },
+    "dragon_claw_gauntlets": {
+      "name": "Guanteletes de Garra de Dragón"
+    },
+    "dragon_hide_boots": {
+      "name": "Botas de Piel de Dragón"
+    },
+    "dragon_eye_ring": {
+      "name": "Anillo del Ojo de Dragón"
+    },
+    "fire_dragon_scale": {
+      "name": "Escama de Dragón de Fuego"
+    },
+    "ice_dragon_scale": {
+      "name": "Escama de Dragón de Hielo"
+    },
+    "dragon_heart": {
+      "name": "Corazón de Dragón"
+    },
+    "holy_blade": {
+      "name": "Espada Sagrada"
+    },
+    "holy_staff": {
+      "name": "Bastón Sagrado"
+    },
+    "divine_armor": {
+      "name": "Armadura Divina"
+    },
+    "seraph_gauntlets": {
+      "name": "Guanteletes de Serafín"
+    },
+    "divine_boots": {
+      "name": "Botas Divinas"
+    },
+    "holy_diamond_ring": {
+      "name": "Anillo de Diamante Sagrado"
+    },
+    "holy_feather": {
+      "name": "Pluma Sagrada"
+    },
+    "holy_dragon_scale": {
+      "name": "Escama de Dragón Sagrado"
+    },
+    "chaos_blade": {
+      "name": "Espada del Caos"
+    },
+    "chaos_staff": {
+      "name": "Bastón del Caos"
+    },
+    "void_armor": {
+      "name": "Armadura del Vacío"
+    },
+    "chaos_gauntlets": {
+      "name": "Guanteletes del Caos"
+    },
+    "void_boots": {
+      "name": "Botas del Vacío"
+    },
+    "chaos_crystal_ring": {
+      "name": "Anillo de Cristal del Caos"
+    },
+    "void_essence": {
+      "name": "Esencia del Vacío"
+    },
+    "chaos_scale": {
+      "name": "Escama del Caos"
+    },
+    "apocalypse_blade": {
+      "name": "Espada del Apocalipsis"
+    },
+    "apocalypse_staff": {
+      "name": "Bastón del Apocalipsis"
+    },
+    "end_armor": {
+      "name": "Armadura del Final"
+    },
+    "titan_gauntlets": {
+      "name": "Guanteletes de Titán"
+    },
+    "end_walker_boots": {
+      "name": "Botas del Caminante del Final"
+    },
+    "oblivion_ring": {
+      "name": "Anillo del Olvido"
+    },
+    "world_fragment": {
+      "name": "Fragmento del Mundo"
+    },
+    "divine_blade": {
+      "name": "Espada Divina"
+    },
+    "crown_of_end": {
+      "name": "Corona del Final"
+    },
+    "bandit_crown": {
+      "name": "Corona del Bandido"
+    },
+    "vampire_fang": {
+      "name": "Colmillo de Vampiro"
+    },
+    "kraken_tentacle": {
+      "name": "Tentáculo de Kraken"
+    },
+    "uber_kings_crown": {
+      "name": "Uber Corona del Rey"
+    },
+    "uber_bandit_crown": {
+      "name": "Uber Corona del Bandido"
+    },
+    "uber_vampire_fang": {
+      "name": "Uber Colmillo de Vampiro"
+    },
+    "uber_kraken_tentacle": {
+      "name": "Uber Tentáculo de Kraken"
+    },
+    "uber_demon_crown": {
+      "name": "Uber Corona del Demonio"
+    },
+    "uber_crown_of_end": {
+      "name": "Uber Corona del Final"
+    },
+    "uber_goblin_blade": {
+      "name": "Uber Espada Goblin"
+    },
+    "uber_goblin_plate": {
+      "name": "Uber Armadura Goblin"
+    },
+    "uber_goblin_grip": {
+      "name": "Uber Agarre Goblin"
+    },
+    "uber_goblin_stomp": {
+      "name": "Uber Pisotón Goblin"
+    },
+    "uber_bandit_dagger": {
+      "name": "Uber Daga del Rey Bandido"
+    },
+    "uber_bandit_coat": {
+      "name": "Uber Abrigo del Rey Bandido"
+    },
+    "uber_bandit_grip": {
+      "name": "Uber Agarre del Rey Bandido"
+    },
+    "uber_bandit_steps": {
+      "name": "Uber Pasos del Rey Bandido"
+    },
+    "uber_vampire_plate": {
+      "name": "Uber Armadura de Vampiro"
+    },
+    "uber_vampire_grip": {
+      "name": "Uber Agarre de Vampiro"
+    },
+    "uber_vampire_stride": {
+      "name": "Uber Zancada de Vampiro"
+    },
+    "uber_vampire_heart": {
+      "name": "Uber Corazón de Vampiro"
+    },
+    "double_strike_ring": {
+      "name": "Anillo de Golpe Doble"
+    },
+    "uber_double_strike_ring": {
+      "name": "Uber Anillo de Golpe Doble"
+    },
+    "uber_kraken_shell": {
+      "name": "Uber Caparazón de Kraken"
+    },
+    "uber_kraken_claw": {
+      "name": "Uber Garra de Kraken"
+    },
+    "uber_kraken_fin": {
+      "name": "Uber Aleta de Kraken"
+    },
+    "uber_kraken_eye": {
+      "name": "Uber Ojo de Kraken"
+    },
+    "uber_demon_blade": {
+      "name": "Uber Espada del Señor Demonio"
+    },
+    "uber_demon_armor": {
+      "name": "Uber Armadura del Señor Demonio"
+    },
+    "uber_demon_grip": {
+      "name": "Uber Agarre del Señor Demonio"
+    },
+    "uber_demon_steps": {
+      "name": "Uber Pasos del Señor Demonio"
+    },
+    "uber_endblade": {
+      "name": "Uber Espada del Final"
+    },
+    "uber_endplate": {
+      "name": "Uber Armadura del Final"
+    },
+    "uber_endgrasp": {
+      "name": "Uber Agarre del Final"
+    },
+    "uber_endstride": {
+      "name": "Uber Zancada del Final"
+    },
+    "uber_venom_fang": {
+      "name": "Uber Colmillo Venenoso"
+    },
+    "uber_venom_plate": {
+      "name": "Uber Armadura Venenosa"
+    },
+    "uber_venom_grip": {
+      "name": "Uber Agarre Venenoso"
+    },
+    "uber_venom_stride": {
+      "name": "Uber Zancada Venenosa"
+    },
+    "uber_venom_heart": {
+      "name": "Uber Corazón Venenoso"
+    },
+    "uber_assassin_blade": {
+      "name": "Uber Espada del Asesino"
+    },
+    "uber_assassin_coat": {
+      "name": "Uber Abrigo del Asesino"
+    },
+    "uber_assassin_grip": {
+      "name": "Uber Agarre del Asesino"
+    },
+    "uber_assassin_steps": {
+      "name": "Uber Pasos del Asesino"
+    },
+    "uber_assassin_pendant": {
+      "name": "Uber Colgante del Asesino"
+    },
+    "uber_fortress_blade": {
+      "name": "Uber Espada de la Fortaleza"
+    },
+    "uber_fortress_plate": {
+      "name": "Uber Armadura de la Fortaleza"
+    },
+    "uber_fortress_grip": {
+      "name": "Uber Agarre de la Fortaleza"
+    },
+    "uber_fortress_stomp": {
+      "name": "Uber Pisotón de la Fortaleza"
+    },
+    "uber_fortress_bulwark": {
+      "name": "Uber Baluarte de la Fortaleza"
+    }
+  },
+  "monsters": {
+    "slime": {
+      "name": "Slime"
+    },
+    "wild_rabbit": {
+      "name": "Conejo Asesino"
+    },
+    "goblin": {
+      "name": "Goblin"
+    },
+    "bee": {
+      "name": "Abeja Asesina"
+    },
+    "mimic": {
+      "name": "Mimico"
+    },
+    "wolf": {
+      "name": "Lobo"
+    },
+    "bat": {
+      "name": "Murciélago Gigante"
+    },
+    "goblin_warrior": {
+      "name": "Guerrero Goblin"
+    },
+    "skeleton": {
+      "name": "Esqueleto"
+    },
+    "rock_lizard": {
+      "name": "Lagarto de Roca"
+    },
+    "orc": {
+      "name": "Orco"
+    },
+    "skeleton_knight": {
+      "name": "Caballero Esqueleto"
+    },
+    "golem": {
+      "name": "Gólem"
+    },
+    "mummy": {
+      "name": "Momia"
+    },
+    "lich": {
+      "name": "Lich"
+    },
+    "gargoyle": {
+      "name": "Gárgola"
+    },
+    "goblin_archer": {
+      "name": "Arquero Goblin"
+    },
+    "goblin_shaman": {
+      "name": "Chamán Goblin"
+    },
+    "goblin_knight": {
+      "name": "Caballero Goblin"
+    },
+    "goblin_champion": {
+      "name": "Campeón Goblin"
+    },
+    "goblin_king": {
+      "name": "Rey Goblin"
+    },
+    "bandit": {
+      "name": "Bandido"
+    },
+    "bandit_archer": {
+      "name": "Arquero Bandido"
+    },
+    "bandit_swordsman": {
+      "name": "Espadachín Bandido"
+    },
+    "bandit_brute": {
+      "name": "Bruto Bandido"
+    },
+    "bandit_leader": {
+      "name": "Líder Bandido"
+    },
+    "death_knight": {
+      "name": "Caballero de la Muerte"
+    },
+    "dark_mage": {
+      "name": "Mago Oscuro"
+    },
+    "demon": {
+      "name": "Demonio"
+    },
+    "wyvern": {
+      "name": "Wyvern"
+    },
+    "demon_lord": {
+      "name": "Señor Demonio"
+    },
+    "zombie": {
+      "name": "Zombi"
+    },
+    "ghoul": {
+      "name": "Ghoul"
+    },
+    "banshee": {
+      "name": "Banshee"
+    },
+    "wraith": {
+      "name": "Espectro"
+    },
+    "vampire": {
+      "name": "Vampiro"
+    },
+    "ice_golem": {
+      "name": "Gólem de Hielo"
+    },
+    "frost_wolf": {
+      "name": "Lobo de Escarcha"
+    },
+    "ice_witch": {
+      "name": "Bruja de Hielo"
+    },
+    "yeti": {
+      "name": "Yeti"
+    },
+    "frost_wyrm": {
+      "name": "Wyrm de Escarcha"
+    },
+    "sahuagin": {
+      "name": "Sahuagin"
+    },
+    "merman": {
+      "name": "Tritón"
+    },
+    "sea_serpent": {
+      "name": "Serpiente Marina"
+    },
+    "giant_crab": {
+      "name": "Cangrejo Gigante"
+    },
+    "kraken": {
+      "name": "Kraken"
+    },
+    "lava_slime": {
+      "name": "Slime de Lava"
+    },
+    "magma_golem": {
+      "name": "Gólem de Magma"
+    },
+    "salamander": {
+      "name": "Salamandra"
+    },
+    "flame_knight": {
+      "name": "Caballero de Llama"
+    },
+    "phoenix": {
+      "name": "Fénix"
+    },
+    "orc_warrior": {
+      "name": "Guerrero Orco"
+    },
+    "orc_mage": {
+      "name": "Mago Orco"
+    },
+    "troll": {
+      "name": "Troll"
+    },
+    "cyclops": {
+      "name": "Cíclope"
+    },
+    "uruk_hai": {
+      "name": "Uruk Hai"
+    },
+    "dark_treant": {
+      "name": "Ent Oscuro"
+    },
+    "shadow_wolf": {
+      "name": "Lobo de Sombra"
+    },
+    "forest_witch": {
+      "name": "Bruja del Bosque"
+    },
+    "chimera": {
+      "name": "Quimera"
+    },
+    "nightmare": {
+      "name": "Pesadilla"
+    },
+    "sky_knight": {
+      "name": "Caballero Celestial"
+    },
+    "storm_harpy": {
+      "name": "Arpía de Tormenta"
+    },
+    "thunder_bird": {
+      "name": "Ave del Trueno"
+    },
+    "cloud_giant": {
+      "name": "Gigante de las Nubes"
+    },
+    "griffon": {
+      "name": "Grifo"
+    },
+    "hell_hound": {
+      "name": "Sabueso Infernal"
+    },
+    "infernal_knight": {
+      "name": "Caballero Infernal"
+    },
+    "succubus": {
+      "name": "Súcubo"
+    },
+    "balrog": {
+      "name": "Balrog"
+    },
+    "cerberus": {
+      "name": "Cerbero"
+    },
+    "drake": {
+      "name": "Drake"
+    },
+    "fire_dragon": {
+      "name": "Dragón de Fuego"
+    },
+    "ice_dragon": {
+      "name": "Dragón de Hielo"
+    },
+    "thunder_dragon": {
+      "name": "Dragón del Trueno"
+    },
+    "elder_dragon": {
+      "name": "Dragón Ancestral"
+    },
+    "divine_knight": {
+      "name": "Caballero Divino"
+    },
+    "seraph": {
+      "name": "Serafín"
+    },
+    "temple_guardian": {
+      "name": "Guardián del Templo"
+    },
+    "holy_dragon": {
+      "name": "Dragón Sagrado"
+    },
+    "valkyrie": {
+      "name": "Valquiria"
+    },
+    "chaos_knight": {
+      "name": "Caballero del Caos"
+    },
+    "void_walker": {
+      "name": "Caminante del Vacío"
+    },
+    "abomination": {
+      "name": "Abominación"
+    },
+    "chaos_dragon": {
+      "name": "Dragón del Caos"
+    },
+    "elder_thing": {
+      "name": "Cosa Ancestral"
+    },
+    "apocalypse_knight": {
+      "name": "Caballero del Apocalipsis"
+    },
+    "world_eater": {
+      "name": "Devorador de Mundos"
+    },
+    "primordial_titan": {
+      "name": "Titán Primordial"
+    },
+    "god_slayer": {
+      "name": "Matador de Dioses"
+    },
+    "end_bringer": {
+      "name": "Portador del Final"
+    },
+    "true_final_boss": {
+      "name": "Jefe Final Verdadero"
+    },
+    "uber_goblin_king": {
+      "name": "Uber Rey Goblin"
+    },
+    "uber_bandit_leader": {
+      "name": "Uber Líder Bandido"
+    },
+    "uber_vampire": {
+      "name": "Uber Vampiro"
+    },
+    "uber_kraken": {
+      "name": "Uber Kraken"
+    },
+    "uber_demon_lord": {
+      "name": "Uber Señor Demonio"
+    },
+    "uber_true_final_boss": {
+      "name": "Uber Jefe Final Verdadero"
+    }
+  },
+  "skills": {
+    "skill_atk_1": {
+      "name": "Ataque Arriba I",
+      "description": "Ataque +5"
+    },
+    "skill_hp_1": {
+      "name": "HP Arriba I",
+      "description": "HP +20"
+    },
+    "skill_atk_2": {
+      "name": "Ataque Arriba II",
+      "description": "Ataque +10"
+    },
+    "skill_def_1": {
+      "name": "Defensa Arriba I",
+      "description": "Defensa +5"
+    },
+    "skill_hp_2": {
+      "name": "HP Arriba II",
+      "description": "HP +50"
+    }
+  },
+  "skillTree": {
+    "title": "Árbol de Habilidades",
+    "skillPoints": "SP: {{count}}",
+    "unlocked": "Desbloqueado",
+    "available": "Disponible"
+  },
+  "bossSkills": {
+    "goblin_king": {
+      "name": "Rugido Goblin",
+      "shield": "Escudo de Enjambre",
+      "shieldDesc": "20% de reducción de daño por 2 turnos, prob. de crit y veneno -50%",
+      "warlord": "Señor de la Horda",
+      "warlordDesc": "+30% velocidad de ataque, recupera 500 HP al golpear (se activa bajo 50% HP)"
+    },
+    "bandit_leader": {
+      "name": "Trampa de Oso",
+      "bearTrap": "Trampa de Oso",
+      "bearTrapDesc": "Velocidad de ataque del jugador -30% por 2 turnos",
+      "nightAmbush": "Emboscada Nocturna",
+      "nightAmbushDesc": "Daño del próximo ataque +40%",
+      "shadowBind": "Atadura de Sombra",
+      "shadowBindDesc": "Curación permanentemente reducida 50% (se activa bajo 50% HP)"
+    },
+    "vampire": {
+      "name": "Festín de Sangre",
+      "bloodFeast": "Festín de Sangre",
+      "bloodFeastDesc": "Recupera 150% del daño infligido en el próximo ataque",
+      "nightFeast": "Festín Nocturno",
+      "nightFeastDesc": "Aplica veneno al jugador al inicio de la batalla",
+      "crimsonPact": "Pacto Carmesí",
+      "crimsonPactDesc": "Recupera HP basado en el daño infligido (se activa bajo 50% HP)"
+    },
+    "kraken": {
+      "name": "Tsunami",
+      "tsunami": "Tsunami",
+      "tsunamiDesc": "Próximo ataque +50% daño, jugador recibe +30% daño por 1 turno",
+      "deepEmbrace": "Abrazo Abisal",
+      "deepEmbraceDesc": "-20% velocidad de ataque, -30% curación por 3 turnos (se activa bajo 50% HP)",
+      "abyssalEbb": "Marea Abisal",
+      "abyssalEbbDesc": "-15% velocidad de ataque por 2 turnos"
+    },
+    "demon_lord": {
+      "name": "Mano de la Muerte",
+      "deathHand": "Mano de la Muerte",
+      "deathHandDesc": "-30% curación por 2 turnos, aplica veneno al jugador",
+      "blackFlame": "Marca de Llama Negra",
+      "blackFlameDesc": "+10% reducción de daño permanente (se activa bajo 50% HP)",
+      "crown": "Corona de Ruina",
+      "crownDesc": "Habilita recuperación de HP al golpear (se activa bajo 50% HP)"
+    },
+    "true_final_boss": {
+      "name": "Fin",
+      "end": "Fin",
+      "endDesc": "Reinicia el medidor de acción del jugador",
+      "convergence": "Convergencia del Mundo",
+      "timeSever": "Corte Temporal"
+    }
+  },
+  "battleLog": {
+    "title": "Registro de Batalla",
+    "runStart": "=== Ronda {{count}} Inicio ===",
+    "enemyAppeared": "¡{{enemy}} apareció!",
+    "playerAttack": "¡El jugador ataca! ¡{{enemy}} recibe {{damage}} de daño!",
+    "criticalHit": "¡Golpe crítico! ¡{{enemy}} recibe {{damage}} de daño!",
+    "enemyAttack": "¡{{enemy}} ataca! ¡Recibes {{damage}} de daño!",
+    "enemyDefeated": "¡{{enemy}} derrotado! ¡Ganaste {{exp}} EXP!",
+    "itemDropped": "¡{{item}} obtenido!",
+    "playerDefeated": "Fuiste derrotado...",
+    "nextFloor": "--- Avanzando al Piso {{floor}} ---",
+    "dungeonCleared": "¡Mazmorra completada!",
+    "poisonAppliedEnemy": "¡Veneno aplicado a {{enemy}}! ({{damage}} daño x {{turns}} turnos){{stacks}}",
+    "poisonDamageEnemy": "¡Daño de veneno! ¡{{enemy}} recibe {{damage}} de daño!{{remaining}}{{ended}}{{lost}}",
+    "poisonAppliedPlayer": "¡Veneno aplicado! ¡El jugador recibe {{damage}} daño x {{turns}} turnos!{{stacks}}",
+    "poisonDamagePlayer": "¡Daño de veneno! ¡El jugador recibe {{damage}} de daño!{{remaining}}{{ended}}{{lost}}",
+    "poisonStacks": " [{{count}} acumulaciones]",
+    "poisonRemaining": " ({{count}} acumulaciones restantes)",
+    "poisonEnded": " (veneno terminado)",
+    "poisonStacksLost": " ({{count}} acumulaciones perdidas)",
+    "bossSkillUsed": "¡{{enemy}} usó {{skill}}!",
+    "uberUnlocked": "¡Versión Uber de {{enemy}} desbloqueada!",
+    "uberTicket": "¡Ticket Uber obtenido! ({{count}})",
+    "respecToken": "¡Objeto de respec obtenido! ({{count}})",
+    "bossSkillActivated": "¡{{enemy}} activó {{skill}}!",
+    "reflectedDamage": "¡La marca de {{enemy}} reflejó! ¡Recibiste {{damage}} de daño!",
+    "enemyHealRegen": "¡{{enemy}} regeneró {{amount}} HP!",
+    "enemyHealOnHit": "¡{{enemy}} absorbió {{amount}} HP!",
+    "igniteApplied": "¡Ignite aplicado a {{enemy}}! ({{damage}} daño × {{duration}}s)",
+    "igniteSpread": "¡Ignite se propagó a {{enemy}}! ({{damage}} daño × {{duration}}s)",
+    "igniteDamage": "¡Daño de Ignite! ¡{{enemy}} recibe {{damage}} de daño!{{remaining}}{{ended}}",
+    "igniteRemaining": " ({{seconds}}s restantes)",
+    "igniteEnded": " (ignite terminado)",
+    "hpRegen": "¡Regen de HP! ¡Recuperaste {{amount}} HP!"
+  },
+  "passiveTree": {
+    "title": "Árbol Pasivo",
+    "skillPoints": "SP: {{count}}",
+    "zoomHint": "Pellizca para zoom / Doble toque para reiniciar",
+    "unlocked": "Desbloqueado",
+    "unlockButton": "Desbloquear (SP: {{count}})",
+    "noSp": "SP insuficiente",
+    "locked": "Requiere habilidad prerrequisito",
+    "placeholder": "Toca un nodo para ver detalles",
+    "respecButton": "Respec (Costo: {{count}})",
+    "noRespecToken": "Sin objetos de respec",
+    "cannotRespec": "Otros nodos dependen de este"
+  },
+  "passiveNodes": {
+    "start": {
+      "name": "Aptitud del Aventurero",
+      "description": "HP +30, ATK +5, DEF +3"
+    },
+    "poison_1": {
+      "name": "Fundamentos de Veneno",
+      "description": "HP +20, Prob. de Veneno +3%"
+    },
+    "poison_2": {
+      "name": "Conocimiento de Veneno I",
+      "description": "Prob. de Veneno +3%"
+    },
+    "poison_3": {
+      "name": "HP Arriba",
+      "description": "HP +20"
+    },
+    "poison_4": {
+      "name": "Defensa Arriba",
+      "description": "DEF +3"
+    },
+    "poison_5": {
+      "name": "Conocimiento de Veneno II",
+      "description": "Prob. de Veneno +3%"
+    },
+    "poison_6": {
+      "name": "HP Arriba II",
+      "description": "HP +25"
+    },
+    "poison_7": {
+      "name": "Defensa Arriba II",
+      "description": "DEF +4"
+    },
+    "poison_key1": {
+      "name": "Portador de Veneno",
+      "description": "Prob. de Veneno +10%, Daño de Veneno +20%, Robo de Veneno +30%"
+    },
+    "poison_8": {
+      "name": "Conocimiento de Veneno III",
+      "description": "Prob. de Veneno +5%"
+    },
+    "poison_9": {
+      "name": "Daño de Veneno Arriba I",
+      "description": "Daño de Veneno +15%"
+    },
+    "poison_10": {
+      "name": "Resistencia al Veneno",
+      "description": "Daño Recibido -3% mientras el enemigo está envenenado"
+    },
+    "poison_11": {
+      "name": "Conocimiento de Veneno IV",
+      "description": "Prob. de Veneno +5%"
+    },
+    "poison_12": {
+      "name": "Daño de Veneno Arriba II",
+      "description": "Daño de Veneno +20%"
+    },
+    "poison_13": {
+      "name": "Aumento de Acumulación de Veneno",
+      "description": "El veneno puede acumularse hasta 2"
+    },
+    "poison_a1": {
+      "name": "Veneno Abisal",
+      "description": "Daño de Veneno +25%"
+    },
+    "poison_a2": {
+      "name": "Cúspide de Veneno",
+      "description": "Acumulación de Veneno +3 (hasta 5 en total)"
+    },
+    "poison_b1": {
+      "name": "Guardia de Veneno",
+      "description": "Daño Recibido -5% mientras el enemigo está envenenado"
+    },
+    "poison_b2": {
+      "name": "Escamas de Dragón Venenoso",
+      "description": "Daño Recibido -7% mientras el enemigo está envenenado, HP +30"
+    },
+    "poison_14": {
+      "name": "Conocimiento de Veneno V",
+      "description": "Prob. de Veneno +8%"
+    },
+    "poison_15": {
+      "name": "Veneno Letal",
+      "description": "Daño de Veneno +30%"
+    },
+    "poison_16": {
+      "name": "Maestría de Veneno",
+      "description": "Prob. de Veneno +10%"
+    },
+    "poison_17": {
+      "name": "Barrera de Veneno",
+      "description": "Daño Recibido -5% mientras el enemigo está envenenado"
+    },
+    "poison_final1": {
+      "name": "Encarnación de la Serpiente",
+      "description": "Prob. de Veneno +15%, Daño de Veneno 20% more"
+    },
+    "poison_final2": {
+      "name": "Veneno Puro [Piedra Angular]",
+      "description": "Ya no infliges daño directo. Daño de Veneno 50% more"
+    },
+    "crit_1": {
+      "name": "Fundamentos de Crit",
+      "description": "ATK +5, Prob. Crit +3%"
+    },
+    "crit_2": {
+      "name": "Puntería Crítica I",
+      "description": "Prob. Crit +3%"
+    },
+    "crit_3": {
+      "name": "Ataque Arriba",
+      "description": "ATK +5"
+    },
+    "crit_4": {
+      "name": "Golpe Mortal I",
+      "description": "DMG Crit +15%"
+    },
+    "crit_5": {
+      "name": "Puntería Crítica II",
+      "description": "Prob. Crit +3%"
+    },
+    "crit_6": {
+      "name": "Ataque Arriba II",
+      "description": "ATK +8"
+    },
+    "crit_7": {
+      "name": "Golpe Mortal II",
+      "description": "DMG Crit +20%"
+    },
+    "crit_key1": {
+      "name": "Golpe Letal",
+      "description": "DMG Crit +30%"
+    },
+    "crit_8": {
+      "name": "Puntería Crítica III",
+      "description": "Prob. Crit +5%"
+    },
+    "crit_9": {
+      "name": "Amplificación de Ataque",
+      "description": "ATK +15% increased"
+    },
+    "crit_10": {
+      "name": "Golpe Mortal III",
+      "description": "DMG Crit +20%"
+    },
+    "crit_11": {
+      "name": "Puntería Crítica IV",
+      "description": "Prob. Crit +5%"
+    },
+    "crit_12": {
+      "name": "Ataque Arriba III",
+      "description": "ATK +10"
+    },
+    "crit_13": {
+      "name": "Golpe Mortal IV",
+      "description": "DMG Crit +25%"
+    },
+    "crit_a1": {
+      "name": "Golpe de Precisión",
+      "description": "Prob. Crit +8%"
+    },
+    "crit_a2": {
+      "name": "Crit Seguro",
+      "description": "Prob. Crit +10%"
+    },
+    "crit_b1": {
+      "name": "Golpe Devastador",
+      "description": "DMG Crit +30%"
+    },
+    "crit_b2": {
+      "name": "Espada de Aniquilación",
+      "description": "DMG Crit +40%"
+    },
+    "crit_14": {
+      "name": "Puntería Crítica V",
+      "description": "Prob. Crit +5%"
+    },
+    "crit_15": {
+      "name": "Espada Sangrienta",
+      "description": "HP en Crit +80"
+    },
+    "crit_16": {
+      "name": "Golpe Mortal V",
+      "description": "DMG Crit +30%"
+    },
+    "crit_17": {
+      "name": "Sed de Sangre",
+      "description": "HP en Crit +100"
+    },
+    "crit_final1": {
+      "name": "Espada Letal",
+      "description": "Prob. Crit +10%, DMG Crit +50%"
+    },
+    "crit_final2": {
+      "name": "Ejecutor",
+      "description": "HP en Crit +150, ATK 15% more"
+    },
+    "guard_1": {
+      "name": "Fundamentos de Guardia",
+      "description": "DEF +5, Reducción de Daño +2%"
+    },
+    "guard_2": {
+      "name": "Guardia Firme I",
+      "description": "Reducción de Daño +2%"
+    },
+    "guard_3": {
+      "name": "Defensa Arriba",
+      "description": "DEF +4"
+    },
+    "guard_4": {
+      "name": "HP Arriba",
+      "description": "HP +25"
+    },
+    "guard_5": {
+      "name": "Guardia Firme II",
+      "description": "Reducción de Daño +2%"
+    },
+    "guard_6": {
+      "name": "Defensa Arriba II",
+      "description": "DEF +5"
+    },
+    "guard_7": {
+      "name": "HP Arriba II",
+      "description": "HP +30"
+    },
+    "guard_key1": {
+      "name": "Escudo de Hierro",
+      "description": "Reducción de Daño +8%"
+    },
+    "guard_8": {
+      "name": "Guardia Firme III",
+      "description": "Reducción de Daño +3%"
+    },
+    "guard_9": {
+      "name": "Amplificación de Defensa",
+      "description": "DEF +20% increased"
+    },
+    "guard_10": {
+      "name": "Amplificación de Vitalidad",
+      "description": "HP +20% increased"
+    },
+    "guard_11": {
+      "name": "Guardia Firme IV",
+      "description": "Reducción de Daño +3%"
+    },
+    "guard_12": {
+      "name": "Defensa Arriba III",
+      "description": "DEF +8"
+    },
+    "guard_13": {
+      "name": "HP Arriba III",
+      "description": "HP +40"
+    },
+    "guard_a1": {
+      "name": "Cuerpo de Acero",
+      "description": "DEF +25% increased"
+    },
+    "guard_a2": {
+      "name": "Fortaleza Inamovible",
+      "description": "DEF +12"
+    },
+    "guard_b1": {
+      "name": "Vida Abundante",
+      "description": "HP +25% increased"
+    },
+    "guard_b2": {
+      "name": "Guardia de la Vida",
+      "description": "HP +60"
+    },
+    "guard_14": {
+      "name": "Guardia Firme V",
+      "description": "Reducción de Daño +4%"
+    },
+    "guard_15": {
+      "name": "Cúspide de Defensa",
+      "description": "DEF +15"
+    },
+    "guard_16": {
+      "name": "Guardia Firme VI",
+      "description": "Reducción de Daño +5%"
+    },
+    "guard_17": {
+      "name": "Cúspide de la Vida",
+      "description": "HP +80"
+    },
+    "guard_final1": {
+      "name": "Guardián de Hierro",
+      "description": "Reducción de Daño +10%, DEF 20% more"
+    },
+    "guard_final2": {
+      "name": "Muro Indestructible",
+      "description": "HP 20% more"
+    },
+    "vamp_1": {
+      "name": "Fundamentos de Robo de Vida",
+      "description": "ATK +5, HP al Golpear +10"
+    },
+    "vamp_2": {
+      "name": "Robo de Vida I",
+      "description": "HP al Golpear +10"
+    },
+    "vamp_3": {
+      "name": "Ataque Arriba",
+      "description": "ATK +5"
+    },
+    "vamp_4": {
+      "name": "Recuperación de Vida",
+      "description": "Regen HP por Turno +8"
+    },
+    "vamp_5": {
+      "name": "Robo de Vida II",
+      "description": "HP al Golpear +10"
+    },
+    "vamp_6": {
+      "name": "Ataque Arriba II",
+      "description": "ATK +8"
+    },
+    "vamp_7": {
+      "name": "Recuperación de Vida II",
+      "description": "Regen HP por Turno +10"
+    },
+    "vamp_key1": {
+      "name": "Sed de Sangre",
+      "description": "HP al Golpear +20"
+    },
+    "vamp_8": {
+      "name": "Robo de Vida III",
+      "description": "HP al Golpear +10"
+    },
+    "vamp_9": {
+      "name": "Amplificación de Ataque",
+      "description": "ATK +15% increased"
+    },
+    "vamp_10": {
+      "name": "Recuperación Sostenida",
+      "description": "Regen HP por Turno 1%"
+    },
+    "vamp_11": {
+      "name": "Robo de Vida IV",
+      "description": "HP al Golpear +10"
+    },
+    "vamp_12": {
+      "name": "Ataque Arriba III",
+      "description": "ATK +10"
+    },
+    "vamp_13": {
+      "name": "Recuperación de Vida III",
+      "description": "Regen HP por Turno +12"
+    },
+    "vamp_a1": {
+      "name": "Embestida",
+      "description": "ATK +20% increased"
+    },
+    "vamp_a2": {
+      "name": "Puños de Destrucción",
+      "description": "ATK +15"
+    },
+    "vamp_b1": {
+      "name": "Poder de Curación",
+      "description": "Regen HP por Turno 1.5%"
+    },
+    "vamp_b2": {
+      "name": "Oleada de Vida",
+      "description": "Regen HP por Turno +20"
+    },
+    "vamp_14": {
+      "name": "Robo de Vida V",
+      "description": "HP al Golpear +10"
+    },
+    "vamp_15": {
+      "name": "Amplificación de Ataque II",
+      "description": "ATK +20% increased"
+    },
+    "vamp_16": {
+      "name": "Robo de Vida VI",
+      "description": "HP al Golpear +10"
+    },
+    "vamp_17": {
+      "name": "Cúspide de Ataque",
+      "description": "ATK +20"
+    },
+    "vamp_final1": {
+      "name": "Señor de la Sangre",
+      "description": "HP al Golpear +30, ATK 15% more"
+    },
+    "vamp_final2": {
+      "name": "Vampiro Eterno",
+      "description": "Regen HP por Turno 3%"
+    },
+    "regen_1": {
+      "name": "Fundamentos de Recuperación",
+      "description": "HP +30, Regen HP por Turno +5"
+    },
+    "regen_2": {
+      "name": "Vitalidad I",
+      "description": "Regen HP por Turno +5"
+    },
+    "regen_3": {
+      "name": "HP Arriba",
+      "description": "HP +25"
+    },
+    "regen_4": {
+      "name": "Recuperación Arriba",
+      "description": "Regen HP por Turno +8"
+    },
+    "regen_5": {
+      "name": "Vitalidad II",
+      "description": "HP +20% increased"
+    },
+    "regen_6": {
+      "name": "HP Arriba II",
+      "description": "HP +30"
+    },
+    "regen_7": {
+      "name": "Recuperación Arriba II",
+      "description": "Regen HP por Turno +10"
+    },
+    "regen_key1": {
+      "name": "Fuente de Vida",
+      "description": "Regen HP por Turno 2%"
+    },
+    "regen_8": {
+      "name": "Vitalidad III",
+      "description": "HP +25% increased"
+    },
+    "regen_9": {
+      "name": "Amplificación de HP",
+      "description": "HP +40"
+    },
+    "regen_10": {
+      "name": "Amplificación de Recuperación",
+      "description": "Regen HP por Turno +12"
+    },
+    "regen_11": {
+      "name": "Vitalidad IV",
+      "description": "HP +20% increased"
+    },
+    "regen_12": {
+      "name": "HP Arriba III",
+      "description": "HP +50"
+    },
+    "regen_13": {
+      "name": "Recuperación Arriba III",
+      "description": "Regen HP por Turno +15"
+    },
+    "regen_a1": {
+      "name": "Vida Resistente",
+      "description": "HP +30% increased"
+    },
+    "regen_a2": {
+      "name": "Cuerpo Inquebrantable",
+      "description": "HP +70"
+    },
+    "regen_b1": {
+      "name": "Súper Recuperación",
+      "description": "Regen HP por Turno 1.5%"
+    },
+    "regen_b2": {
+      "name": "Cúspide de Curación",
+      "description": "Regen HP por Turno +25"
+    },
+    "regen_14": {
+      "name": "Vitalidad V",
+      "description": "HP +25% increased"
+    },
+    "regen_15": {
+      "name": "HP Arriba IV",
+      "description": "HP +60"
+    },
+    "regen_16": {
+      "name": "Recuperación Arriba IV",
+      "description": "Regen HP por Turno +20"
+    },
+    "regen_17": {
+      "name": "Bendición de la Vida",
+      "description": "Regen HP por Turno 2%"
+    },
+    "regen_final1": {
+      "name": "Bendición del Fénix",
+      "description": "HP 25% more, Regen HP por Turno +25"
+    },
+    "regen_final2": {
+      "name": "Vida Eterna",
+      "description": "Regen HP por Turno 4%"
+    },
+    "speed_1": {
+      "name": "Fundamentos de Velocidad",
+      "description": "ATK +3, Velocidad de Ataque +5%"
+    },
+    "speed_2": {
+      "name": "Agilidad I",
+      "description": "Velocidad de Ataque +5%"
+    },
+    "speed_3": {
+      "name": "Golpe Rápido",
+      "description": "ATK +5"
+    },
+    "speed_4": {
+      "name": "Movimiento Ágil",
+      "description": "Velocidad de Ataque +5%"
+    },
+    "speed_5": {
+      "name": "Agilidad II",
+      "description": "Velocidad de Ataque +5%"
+    },
+    "speed_6": {
+      "name": "Ataque Arriba",
+      "description": "ATK +8"
+    },
+    "speed_7": {
+      "name": "Agilidad III",
+      "description": "Velocidad de Ataque +8%"
+    },
+    "speed_key1": {
+      "name": "Vendaval",
+      "description": "Velocidad de Ataque +15%"
+    },
+    "speed_8": {
+      "name": "Agilidad IV",
+      "description": "Velocidad de Ataque +8%"
+    },
+    "speed_9": {
+      "name": "Golpes Rápidos",
+      "description": "ATK +10, Velocidad de Ataque +5%"
+    },
+    "speed_10": {
+      "name": "Golpe Instantáneo",
+      "description": "Velocidad de Ataque +10%"
+    },
+    "speed_11": {
+      "name": "Agilidad V",
+      "description": "Velocidad de Ataque +10%"
+    },
+    "speed_12": {
+      "name": "Amplificación de Ataque",
+      "description": "ATK +15% increased"
+    },
+    "speed_13": {
+      "name": "Aceleración",
+      "description": "Velocidad de Ataque +12%"
+    },
+    "speed_final1": {
+      "name": "Destello de Rayo",
+      "description": "Velocidad de Ataque 15% more"
+    },
+    "speed_final2": {
+      "name": "Velocidad Divina",
+      "description": "Velocidad de Ataque 20% more, ATK 10% more"
+    },
+    "ignite_1": {
+      "name": "Fundamentos de Ignite",
+      "description": "HP +20, Prob. de Ignite +6%, Daño de Ignite +10%"
+    },
+    "ignite_2": {
+      "name": "Ignite Arriba I",
+      "description": "Prob. de Ignite +6%, Daño de Ignite +10%"
+    },
+    "ignite_3": {
+      "name": "HP y Defensa I",
+      "description": "HP +25, DEF +10, Prob. de Ignite +6%"
+    },
+    "ignite_4": {
+      "name": "Amplificación de Vitalidad I",
+      "description": "DEF +10, HP +10% increased, Prob. de Ignite +6%"
+    },
+    "ignite_5": {
+      "name": "Ignite Arriba II",
+      "description": "Prob. de Ignite +6%, Daño de Ignite +15%"
+    },
+    "ignite_6": {
+      "name": "Duración de Ignite I",
+      "description": "Prob. de Ignite +6%, Duración de Ignite +15%"
+    },
+    "ignite_7": {
+      "name": "Durabilidad Arriba",
+      "description": "DEF +20, DEF +15% increased, Prob. de Ignite +6%"
+    },
+    "ignite_key1": {
+      "name": "Llama Lenta",
+      "description": "[Piedra Angular] Prob. de Ignite +6%, Reducción de Daño +10% cuando Vel. Ataque < 0.8"
+    },
+    "ignite_8": {
+      "name": "Ignite Arriba III",
+      "description": "Prob. de Ignite +6%, Daño de Ignite +20%"
+    },
+    "ignite_9": {
+      "name": "Duración de Ignite II",
+      "description": "Prob. de Ignite +6%, Duración de Ignite +20%"
+    },
+    "ignite_10": {
+      "name": "Vida Arriba",
+      "description": "HP +30, HP +15% increased, Prob. de Ignite +6%"
+    },
+    "ignite_11": {
+      "name": "Cuerpo Fortificado",
+      "description": "DEF +30, DEF +20% increased, Prob. de Ignite +6%"
+    },
+    "ignite_final1": {
+      "name": "Cúspide Ardiente",
+      "description": "Prob. de Ignite +6%, Daño de Ignite 25% more, HP +10% increased"
+    },
+    "ignite_final2": {
+      "name": "Llamas Propagantes",
+      "description": "[Piedra Angular] Prob. de Ignite +6%, Propagación de Ignite - Cuando un enemigo con ignite muere, el ignite se transfiere al siguiente enemigo. DEF +10% increased"
+    }
+  },
+  "ranking": {
+    "title": "Ranking",
+    "dimensionalCorridor": "Corredor Dimensional",
+    "floor": "Piso",
+    "you": "Tú",
+    "loading": "Cargando...",
+    "loadError": "Error al cargar ranking",
+    "retry": "Reintentar",
+    "noData": "Sin datos de ranking",
+    "cacheInfo": "Actualización disponible en {{minutes}}min"
+  },
+  "modDescriptions": {
+    "poisonChance": "Prob. de Veneno +{{value}}%",
+    "igniteChance": "Prob. de Ignite +{{value}}%",
+    "igniteDuration": "Duración de Ignite +{{value}}%",
+    "igniteTickSpeed": "Velocidad de Tick de Ignite +{{value}}%",
+    "igniteDamage": "Daño de Ignite +{{value}}%",
+    "criticalChance": "Prob. Crit +{{value}}%",
+    "criticalDamage": "DMG Crit +{{value}}%",
+    "damageReduction": "Daño Recibido -{{value}}%",
+    "attackSpeed": "Velocidad de Ataque +{{value}}%",
+    "hpOnHit": "HP al Golpear +{{value}}",
+    "lifesteal": "Robo de Vida +{{value}}%"
+  },
+  "boost": {
+    "dropRate": {
+      "title": "Tasa de Drop ARRIBA",
+      "description": "1.5x tasa de drop por 30 min, +1% único",
+      "longDescription": "+1% tasa de drop único\n1.5x probabilidad de drop de objetos"
+    },
+    "tierBoost": {
+      "title": "Tier Superior ARRIBA",
+      "description": "Tasa de drop de objetos de mayor calidad ARRIBA por 30 min",
+      "longDescription": "Mayor tasa de drop de calidad T1-T3\nNormalmente T4-5 son los más comunes"
+    },
+    "active": "Activo",
+    "activeRemaining": "Activo: {{minutes}} min restantes",
+    "playing": "Reproduciendo...",
+    "watchAdToActivate": "Ver anuncio para activar",
+    "close": "Cerrar",
+    "error": "Error",
+    "adLoadFailed": "Error al cargar anuncio",
+    "adShowFailed": "Error al mostrar anuncio. Por favor, inténtalo más tarde.",
+    "adNotReady": "El anuncio no está listo. Por favor, espera e inténtalo de nuevo.",
+    "duration": "Duración: 30 min",
+    "loadingAd": "Cargando anuncio...",
+    "retry": "Reintentar",
+    "dropRateBoostLabel": "Boost de Tasa de Drop",
+    "tierBoostLabel": "Boost de Tier"
+  },
+  "shop": {
+    "title": "Tienda",
+    "subtitle": "Comprar Características Premium",
+    "purchased": "Comprado",
+    "restore": "Restaurar Compras",
+    "noProducts": "No hay productos disponibles",
+    "alreadyPurchased": "Ya Comprado",
+    "alreadyPurchasedMessage": "Ya posees este artículo",
+    "notAvailable": "No Disponible",
+    "notAvailableMessage": "Este artículo no está disponible actualmente",
+    "purchaseSuccess": "Compra Completada",
+    "purchaseSuccessMessage": "Tu compra fue exitosa",
+    "purchaseFailed": "Compra Fallida",
+    "purchaseFailedMessage": "Error al completar la compra",
+    "restoreSuccess": "Restauración Completada",
+    "restoreSuccessMessage": "Compras restauradas exitosamente",
+    "restoreFailed": "Restauración Fallida",
+    "restoreFailedMessage": "Error al restaurar compras",
+    "inventoryExpansion": {
+      "name": "Expansión de Inventario",
+      "description": "Aumenta el límite de objetos del inventario de {{from}} a {{to}}"
+    },
+    "storageExpansion": {
+      "name": "Expansión de Almacén",
+      "description": "Aumenta el límite de objetos del almacén de {{from}} a {{to}}"
+    },
+    "tierFilter": {
+      "name": "Filtro de Tier Bajo",
+      "description": "Evita que caigan objetos de baja calidad (T8-T10)"
+    },
+    "permanentBoost": {
+      "name": "Boost Permanente",
+      "description": "Tasa de drop único +1%, tasa de drop de objetos x1.5, y tasas de drop de tier alto (T1-T3) aumentadas siempre activas"
+    },
+    "characterSlots": {
+      "name": "Espacios de Personaje",
+      "description": "Permite crear hasta 5 personajes"
+    },
+    "speedBoost": {
+      "name": "Boost de Velocidad",
+      "description": "Desbloquea opciones de velocidad de batalla 2x-3x"
+    },
+    "premiumBundle": {
+      "name": "Paquete Premium",
+      "description": "Incluye Expansión de Inventario, Expansión de Almacén, Filtro de Tier Bajo, Boost Permanente y Espacios de Personaje a precio con descuento"
+    }
+  }
+}
