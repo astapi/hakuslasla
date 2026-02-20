@@ -120,7 +120,7 @@
     "items": "Objets obtenus",
     "totalItems": "Total des objets ({{count}})",
     "noItems": "Aucun objet",
-    "returnButton": "Retour à la sélection du donjon"
+    "returnButton": "Retour à l'accueil"
   },
   "inventory": {
     "title": "Inventaire",

@@ -120,7 +120,7 @@
     "items": "Erhaltene Gegenstaende",
     "totalItems": "Gegenstaende gesamt ({{count}})",
     "noItems": "Keine Gegenstaende",
-    "returnButton": "Zurueck zur Dungeon-Auswahl"
+    "returnButton": "Zurueck zum Startbildschirm"
   },
   "inventory": {
     "title": "Inventar",

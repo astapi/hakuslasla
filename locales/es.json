@@ -120,7 +120,7 @@
     "items": "Objetos Obtenidos",
     "totalItems": "Objetos Totales ({{count}})",
     "noItems": "Sin Objetos",
-    "returnButton": "Volver a Selección de Mazmorra"
+    "returnButton": "Volver al Inicio"
   },
   "inventory": {
     "title": "Inventario",

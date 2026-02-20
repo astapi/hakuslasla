@@ -120,7 +120,7 @@
     "items": "獲得アイテム",
     "totalItems": "累計アイテム ({{count}}個)",
     "noItems": "アイテムなし",
-    "returnButton": "ダンジョン選択に戻る"
+    "returnButton": "ホームに戻る"
   },
   "inventory": {
     "title": "インベントリ",
