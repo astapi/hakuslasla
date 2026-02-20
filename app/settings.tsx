@@ -53,10 +53,10 @@ export default function SettingsScreen() {
       ]);
       setSettings(loaded);
       setLanguage(savedLanguage);
-      // 課金していない場合で、保存されている速度がプレミアム速度の場合は2倍にリセット
+      // 課金していない場合で、保存されている速度がプレミアム速度の場合は無料枠（1x）にリセット
       if (!hasSpeedBoost() && PREMIUM_BATTLE_SPEED_OPTIONS.includes(savedSpeed)) {
-        setBattleSpeed(2);
-        await settingsRepository.setBattleSpeed(2);
+        setBattleSpeed(DEFAULT_BATTLE_SPEED);
+        await settingsRepository.setBattleSpeed(DEFAULT_BATTLE_SPEED);
       } else {
         setBattleSpeed(savedSpeed);
       }
