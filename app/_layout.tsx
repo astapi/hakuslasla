@@ -149,8 +149,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="result"
           options={{
-            title: t('result.rewards'),
-            headerBackVisible: false,
+            headerShown: false,
             gestureEnabled: false,
           }}
         />
