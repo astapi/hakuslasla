@@ -12,6 +12,7 @@ const UBER_TICKETS_KEY = 'uber_boss_tickets';
 const RESPEC_TOKENS_KEY = 'respec_tokens';
 const DUNGEON_CLEAR_RECORDS_KEY = 'dungeon_clear_records';
 const DIMENSIONAL_CORRIDOR_BEST_KEY = 'dimensional_corridor_best';
+const BOOST_TOOLTIP_SHOWN_KEY = 'boost_tooltip_shown';
 
 // ダンジョンクリア記録の型
 export type DungeonClearRecord = {
@@ -293,5 +294,15 @@ export const settingsRepository = {
     if (floor <= current) return false; // 記録更新なし
     await this.set(key, floor.toString());
     return true; // 記録更新あり
+  },
+
+  // ブーストツールチップ表示済みフラグ
+  async hasBoostTooltipBeenShown(): Promise<boolean> {
+    const value = await this.get(BOOST_TOOLTIP_SHOWN_KEY);
+    return value === '1';
+  },
+
+  async setBoostTooltipShown(): Promise<void> {
+    await this.set(BOOST_TOOLTIP_SHOWN_KEY, '1');
   },
 };

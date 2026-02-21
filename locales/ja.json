@@ -2013,7 +2013,9 @@
     "loadingAd": "広告を読み込み中...",
     "retry": "再読み込み",
     "dropRateBoostLabel": "ドロップ率ブースト",
-    "tierBoostLabel": "Tierブースト"
+    "tierBoostLabel": "Tierブースト",
+    "tooltipTitle": "広告でブースト獲得！",
+    "tooltipDescription": "動画広告を見て30分間のブーストを獲得しよう"
   },
   "shop": {
     "title": "ショップ",

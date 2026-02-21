@@ -2013,7 +2013,9 @@
     "loadingAd": "Loading ad...",
     "retry": "Retry",
     "dropRateBoostLabel": "Drop Rate Boost",
-    "tierBoostLabel": "Tier Boost"
+    "tierBoostLabel": "Tier Boost",
+    "tooltipTitle": "Get Boost with Ads!",
+    "tooltipDescription": "Watch a video ad to get 30 minutes of boost"
   },
   "shop": {
     "title": "Shop",

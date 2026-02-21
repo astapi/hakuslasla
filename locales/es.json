@@ -2018,7 +2018,9 @@
     "loadingAd": "Cargando anuncio...",
     "retry": "Reintentar",
     "dropRateBoostLabel": "Boost de Tasa de Drop",
-    "tierBoostLabel": "Boost de Tier"
+    "tierBoostLabel": "Boost de Tier",
+    "tooltipTitle": "¡Obtén Boost con Anuncios!",
+    "tooltipDescription": "Mira un anuncio de video para obtener 30 minutos de boost"
   },
   "shop": {
     "title": "Tienda",
