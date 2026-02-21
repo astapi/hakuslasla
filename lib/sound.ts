@@ -60,9 +60,9 @@ export const preloadBattleSounds = async (characterType: CharacterType): Promise
     // 設定を読み込む
     await loadSoundSettings();
 
-    // オーディオモードを設定（バックグラウンド再生対応）
+    // オーディオモードを設定（消音モード時は再生しない）
     await Audio.setAudioModeAsync({
-      playsInSilentModeIOS: true,
+      playsInSilentModeIOS: false,
       staysActiveInBackground: false,
     });
 
