@@ -2,7 +2,7 @@ import { BattleLog } from '@/components/battle/BattleLog';
 import { CharacterAvatar } from '@/components/battle/CharacterAvatar';
 import { CharacterStatus } from '@/components/battle/CharacterStatus';
 import { BoostIndicator } from '@/components/battle/BoostIndicator';
-import { Button } from '@/components/common/Button';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getDungeon } from '@/data/dungeons';
 import { useBattle } from '@/hooks/useBattle';
 import { usePlayerStore } from '@/stores/usePlayerStore';
@@ -394,53 +394,61 @@ export default function BattleScreen() {
         )}
       </View>
 
-      {/* 戦闘ログ（バトルエリアとボタンの間を全て使用） */}
+      {/* 戦闘ログ（画面下部まで拡張） */}
       <View style={styles.logArea}>
         <BattleLog logs={state.battleLog} />
+
+        {/* フローティングアクションアイコン（右下縦並び） */}
+        {state.phase === 'fighting' && (
+          <View style={styles.floatingActions}>
+            {/* 周回アイコン（Uberダンジョンでは非表示） */}
+            {!UBER_DUNGEON_IDS.includes(dungeonId || '') && (
+              <Pressable
+                style={[
+                  styles.floatingIconButton,
+                  isAutoRunning && styles.floatingIconButtonActive,
+                ]}
+                onPress={isAutoRunning ? stopAutoRun : startAutoRun}
+                testID="battle-auto-toggle"
+              >
+                <MaterialCommunityIcons
+                  name="autorenew"
+                  size={ms(18)}
+                  color={isAutoRunning ? '#4CAF50' : 'rgba(255, 255, 255, 0.7)'}
+                />
+              </Pressable>
+            )}
+            {/* 一時停止/再開アイコン */}
+            <Pressable
+              style={[
+                styles.floatingIconButton,
+                isPaused && styles.floatingIconButtonPaused,
+              ]}
+              onPress={togglePause}
+              testID="battle-toggle-pause"
+            >
+              <MaterialCommunityIcons
+                name={isPaused ? 'play' : 'pause'}
+                size={ms(18)}
+                color={isPaused ? '#FFC107' : 'rgba(255, 255, 255, 0.7)'}
+              />
+            </Pressable>
+          </View>
+        )}
       </View>
 
-      {/* 下部: アクションボタン（最下部に固定） */}
+      {/* 撤退ボタンエリア（常にスペース確保、一時停止中のみボタン表示） */}
       {state.phase === 'fighting' && (
-        <View style={styles.actionArea}>
-          <View style={styles.actionButtons}>
-            <View style={styles.buttonWrapper}>
-              <Button
-                title={isPaused ? t('battle.resume') : t('battle.pause')}
-                onPress={togglePause}
-                variant="secondary"
-                testID="battle-toggle-pause"
-              />
-            </View>
-            {!isPaused && !UBER_DUNGEON_IDS.includes(dungeonId || '') && (
-              <View style={styles.buttonWrapper}>
-                {isAutoRunning ? (
-                  <Button
-                    title={t('battle.stopAutoRun')}
-                    onPress={stopAutoRun}
-                    variant="warning"
-                    testID="battle-auto-toggle"
-                  />
-                ) : (
-                  <Button
-                    title={t('battle.autoRun')}
-                    onPress={startAutoRun}
-                    variant="primary"
-                    testID="battle-auto-toggle"
-                  />
-                )}
-              </View>
-            )}
-            {isPaused && (
-              <View style={styles.buttonWrapper}>
-                <Button
-                  title={t('battle.retreat')}
-                  onPress={() => setShowRetreatModal(true)}
-                  variant="danger"
-                  testID="battle-retreat"
-                />
-              </View>
-            )}
-          </View>
+        <View style={styles.retreatArea}>
+          {isPaused && (
+            <Pressable
+              style={styles.retreatButton}
+              onPress={() => setShowRetreatModal(true)}
+              testID="battle-retreat"
+            >
+              <Text style={styles.retreatButtonText}>{t('battle.retreat')}</Text>
+            </Pressable>
+          )}
         </View>
       )}
 
@@ -607,21 +615,56 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: ms(8),
   },
-  actionArea: {
-    paddingHorizontal: ms(16),
-    paddingVertical: ms(12),
-  },
-  actionButtons: {
-    flexDirection: 'row',
-    gap: ms(12),
-  },
-  buttonWrapper: {
-    flex: 1,
-  },
   logArea: {
     flex: 1,
     paddingHorizontal: ms(16),
-    paddingVertical: ms(8),
+    paddingTop: ms(8),
+    paddingBottom: ms(16),
+    position: 'relative',
+  },
+  floatingActions: {
+    position: 'absolute',
+    right: ms(8),
+    bottom: ms(8),
+    gap: ms(6),
+  },
+  floatingIconButton: {
+    width: ms(36),
+    height: ms(36),
+    borderRadius: ms(18),
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  floatingIconButtonActive: {
+    backgroundColor: 'rgba(76, 175, 80, 0.3)',
+    borderColor: '#4CAF50',
+  },
+  floatingIconButtonPaused: {
+    backgroundColor: 'rgba(255, 193, 7, 0.3)',
+    borderColor: '#FFC107',
+  },
+  retreatArea: {
+    paddingHorizontal: ms(16),
+    paddingBottom: ms(12),
+    alignItems: 'center',
+    minHeight: ms(52),
+    justifyContent: 'center',
+  },
+  retreatButton: {
+    paddingVertical: ms(10),
+    paddingHorizontal: ms(32),
+    backgroundColor: 'rgba(244, 67, 54, 0.2)',
+    borderRadius: ms(8),
+    borderWidth: 1,
+    borderColor: 'rgba(244, 67, 54, 0.5)',
+  },
+  retreatButtonText: {
+    fontSize: fs(14),
+    color: '#F44336',
+    fontWeight: 'bold',
   },
   // モーダル
   modalOverlay: {
