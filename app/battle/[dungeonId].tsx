@@ -203,29 +203,74 @@ export default function BattleScreen() {
   // 攻撃アニメーション用のstate
   const [playerAttacking, setPlayerAttacking] = useState(false);
   const [enemyAttacking, setEnemyAttacking] = useState(false);
-  const prevLogLengthRef = useRef(0);
+  // 最後に処理したログエントリの参照を追跡（ログが切り詰められても追跡可能）
+  const lastProcessedEntryRef = useRef<(typeof state.battleLog)[number] | null>(null);
+  // タイマーIDを管理（古いタイマーをキャンセルするため）
+  const playerAttackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const enemyAttackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 撤退確認モーダル
   const [showRetreatModal, setShowRetreatModal] = useState(false);
 
   // 戦闘ログの変化を監視して攻撃アニメーションをトリガー
   useEffect(() => {
-    const currentLength = state.battleLog.length;
-    if (currentLength > prevLogLengthRef.current) {
-      // 新しいログエントリを取得
-      const newEntries = state.battleLog.slice(prevLogLengthRef.current);
-      for (const entry of newEntries) {
-        if (entry.type === 'player_attack' || entry.type === 'critical') {
-          setPlayerAttacking(true);
-          setTimeout(() => setPlayerAttacking(false), 200);
-        } else if (entry.type === 'enemy_attack') {
-          setEnemyAttacking(true);
-          setTimeout(() => setEnemyAttacking(false), 200);
+    const currentLog = state.battleLog;
+    if (currentLog.length === 0) {
+      lastProcessedEntryRef.current = null;
+      return;
+    }
+
+    // 最後に処理したエントリの位置を探す
+    let startIndex = 0;
+    if (lastProcessedEntryRef.current) {
+      const foundIndex = currentLog.indexOf(lastProcessedEntryRef.current);
+      if (foundIndex !== -1) {
+        startIndex = foundIndex + 1;
+      }
+      // 見つからない場合（切り詰められて削除された場合）は0から処理
+    }
+
+    // 新しいエントリを取得
+    const newEntries = currentLog.slice(startIndex);
+    for (const entry of newEntries) {
+      if (entry.type === 'player_attack' || entry.type === 'critical') {
+        // 古いタイマーをキャンセル
+        if (playerAttackTimerRef.current) {
+          clearTimeout(playerAttackTimerRef.current);
         }
+        setPlayerAttacking(true);
+        playerAttackTimerRef.current = setTimeout(() => {
+          setPlayerAttacking(false);
+          playerAttackTimerRef.current = null;
+        }, 200);
+      } else if (entry.type === 'enemy_attack') {
+        // 古いタイマーをキャンセル
+        if (enemyAttackTimerRef.current) {
+          clearTimeout(enemyAttackTimerRef.current);
+        }
+        setEnemyAttacking(true);
+        enemyAttackTimerRef.current = setTimeout(() => {
+          setEnemyAttacking(false);
+          enemyAttackTimerRef.current = null;
+        }, 200);
       }
     }
-    prevLogLengthRef.current = currentLength;
+
+    // 最後のエントリを記録
+    lastProcessedEntryRef.current = currentLog[currentLog.length - 1];
   }, [state.battleLog]);
+
+  // アンマウント時にタイマーをクリーンアップ
+  useEffect(() => {
+    return () => {
+      if (playerAttackTimerRef.current) {
+        clearTimeout(playerAttackTimerRef.current);
+      }
+      if (enemyAttackTimerRef.current) {
+        clearTimeout(enemyAttackTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // 自動周回中でクリアした場合は結果画面に遷移しない（次の周回が始まる）

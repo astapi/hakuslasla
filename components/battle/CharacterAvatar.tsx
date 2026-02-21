@@ -54,12 +54,16 @@ export const CharacterAvatar = memo(({
         })
       );
     }
+    // 注意: isAttacking が false になってもアニメーションはキャンセルしない
+    // アニメーションは自然に終了させる
+  }, [isAttacking, isPlayer, translateX]);
 
-    // クリーンアップ: アンマウント時にアニメーションをキャンセル
+  // アンマウント時のみアニメーションをキャンセル
+  useEffect(() => {
     return () => {
       cancelAnimation(translateX);
     };
-  }, [isAttacking, isPlayer, translateX]);
+  }, [translateX]);
 
   // アニメーションスタイル
   const animatedStyle = useAnimatedStyle(() => ({
