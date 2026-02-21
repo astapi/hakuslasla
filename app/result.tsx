@@ -133,7 +133,6 @@ export default function ResultScreen() {
         </View>
 
         <View style={styles.rewardsSection}>
-          <Text style={styles.sectionTitle}>{t('result.rewards')}</Text>
 
           {/* 累計経験値 */}
           <View style={styles.rewardItem}>
@@ -194,12 +193,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: ms(24),
+    flexGrow: 1,
+    paddingHorizontal: ms(24),
+    paddingTop: ms(8),
+    paddingBottom: ms(8),
     alignItems: 'center',
   },
   resultHeader: {
     alignItems: 'center',
-    marginBottom: ms(24),
+    marginBottom: ms(4),
   },
   resultText: {
     fontSize: fs(28),
@@ -222,7 +224,7 @@ const styles = StyleSheet.create({
   },
   dungeonInfo: {
     alignItems: 'center',
-    marginBottom: ms(32),
+    marginBottom: ms(8),
   },
   dungeonName: {
     fontSize: fs(20),
@@ -235,16 +237,17 @@ const styles = StyleSheet.create({
     color: '#aaa',
   },
   rewardsSection: {
+    flex: 1,
     width: '100%',
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: ms(12),
-    padding: ms(16),
+    padding: ms(12),
   },
   sectionTitle: {
     fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: ms(16),
+    marginBottom: ms(8),
     textAlign: 'center',
   },
   rewardItem: {
@@ -265,7 +268,8 @@ const styles = StyleSheet.create({
     color: '#4CAF50',
   },
   itemsSection: {
-    marginTop: ms(16),
+    flex: 1,
+    marginTop: ms(8),
   },
   itemsTitle: {
     fontSize: fs(14),
@@ -273,7 +277,7 @@ const styles = StyleSheet.create({
     marginBottom: ms(8),
   },
   itemsScrollView: {
-    maxHeight: ms(300),
+    flex: 1,
   },
   itemRow: {
     flexDirection: 'row',
@@ -304,6 +308,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: ms(16),
-    paddingBottom: ms(32),
+    paddingBottom: ms(16),
   },
 });
