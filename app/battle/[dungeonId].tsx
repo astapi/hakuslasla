@@ -10,7 +10,7 @@ import { useKeepAwake } from 'expo-keep-awake';
 import { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming, cancelAnimation } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { ms, fs, s } from '@/utils/scaling';
 import { getChestImageForItem, getChestRarityForItem } from '@/data/images';
@@ -156,6 +156,14 @@ const ChestDrop = ({
         )
       );
     }
+
+    // クリーンアップ: アンマウント時にアニメーションをキャンセル
+    return () => {
+      cancelAnimation(translateY);
+      cancelAnimation(rotateZ);
+      cancelAnimation(scale);
+      cancelAnimation(glow);
+    };
   }, [itemIndex, rotateZ, translateY, bounceHeight, swayDeg, pulseScale, glowOpacity, glow, scale]);
 
   const animatedStyle = useAnimatedStyle(() => ({
