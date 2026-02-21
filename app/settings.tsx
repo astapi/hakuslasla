@@ -211,11 +211,7 @@ export default function SettingsScreen() {
 
         {/* サウンド設定 */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings.sound.title')}</Text>
-          <Text style={styles.sectionDescription}>
-            {t('settings.sound.description')}
-          </Text>
-          <View style={styles.filterRow}>
+          <View style={[styles.filterRow, { borderBottomWidth: 1 }]}>
             <View style={styles.filterLabel}>
               <MaterialCommunityIcons
                 name="music"
@@ -247,32 +243,6 @@ export default function SettingsScreen() {
               thumbColor={seEnabled ? '#fff' : '#888'}
             />
           </View>
-        </View>
-
-        {/* カテゴリフィルター */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings.categoryFilter.title')}</Text>
-          <Text style={styles.sectionDescription}>
-            {t('settings.categoryFilter.description')}
-          </Text>
-          {SLOT_ORDER.map((slot) => (
-            <View key={slot} style={styles.filterRow}>
-              <View style={styles.filterLabel}>
-                <MaterialCommunityIcons
-                  name={SLOT_ICONS[slot] as keyof typeof MaterialCommunityIcons.glyphMap}
-                  size={20}
-                  color="#aaa"
-                />
-                <Text style={styles.filterLabelText}>{t(`slots.${slot}`)}</Text>
-              </View>
-              <Switch
-                value={settings.categories[slot]}
-                onValueChange={() => toggleCategory(slot)}
-                trackColor={{ false: '#333', true: '#4CAF50' }}
-                thumbColor={settings.categories[slot] ? '#fff' : '#888'}
-              />
-            </View>
-          ))}
         </View>
 
         {/* MOD数フィルター */}
@@ -336,6 +306,32 @@ export default function SettingsScreen() {
               {t('settings.tierFilter.hint')}
             </Text>
           )}
+        </View>
+
+        {/* カテゴリフィルター */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.categoryFilter.title')}</Text>
+          <Text style={styles.sectionDescription}>
+            {t('settings.categoryFilter.description')}
+          </Text>
+          {SLOT_ORDER.map((slot) => (
+            <View key={slot} style={styles.filterRow}>
+              <View style={styles.filterLabel}>
+                <MaterialCommunityIcons
+                  name={SLOT_ICONS[slot] as keyof typeof MaterialCommunityIcons.glyphMap}
+                  size={20}
+                  color="#aaa"
+                />
+                <Text style={styles.filterLabelText}>{t(`slots.${slot}`)}</Text>
+              </View>
+              <Switch
+                value={settings.categories[slot]}
+                onValueChange={() => toggleCategory(slot)}
+                trackColor={{ false: '#333', true: '#4CAF50' }}
+                thumbColor={settings.categories[slot] ? '#fff' : '#888'}
+              />
+            </View>
+          ))}
         </View>
 
         {/* 現在の設定サマリー */}

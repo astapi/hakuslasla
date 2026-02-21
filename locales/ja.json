@@ -2017,6 +2017,11 @@
     "tooltipTitle": "広告でブースト獲得！",
     "tooltipDescription": "動画広告を見て30分間のブーストを獲得しよう"
   },
+  "modFilter": {
+    "tooltipTitle": "MODフィルターを活用しよう",
+    "tooltipDescription": "不要なアイテムを自動で除外できます。設定画面でフィルター条件をカスタマイズしましょう。",
+    "goToSettings": "設定を開く"
+  },
   "shop": {
     "title": "ショップ",
     "subtitle": "プレミアム機能を購入",

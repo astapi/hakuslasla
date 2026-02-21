@@ -2022,6 +2022,11 @@
     "tooltipTitle": "观看广告获得提升！",
     "tooltipDescription": "观看视频广告获得30分钟的提升效果"
   },
+  "modFilter": {
+    "tooltipTitle": "使用MOD过滤器",
+    "tooltipDescription": "自动过滤不需要的物品。自定义过滤设置，只保留你需要的战利品。",
+    "goToSettings": "打开设置"
+  },
   "shop": {
     "title": "商店",
     "subtitle": "购买高级功能",

@@ -2022,6 +2022,11 @@
     "tooltipTitle": "광고로 부스트 획득!",
     "tooltipDescription": "동영상 광고를 시청하고 30분간 부스트를 획득하세요"
   },
+  "modFilter": {
+    "tooltipTitle": "MOD 필터 사용하기",
+    "tooltipDescription": "불필요한 아이템을 자동으로 필터링합니다. 필터 설정을 커스터마이즈하여 필요한 전리품만 남기세요.",
+    "goToSettings": "설정 열기"
+  },
   "shop": {
     "title": "상점",
     "subtitle": "프리미엄 기능 구매",

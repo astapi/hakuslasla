@@ -2022,6 +2022,11 @@
     "tooltipTitle": "¡Obtén Boost con Anuncios!",
     "tooltipDescription": "Mira un anuncio de video para obtener 30 minutos de boost"
   },
+  "modFilter": {
+    "tooltipTitle": "Usa el Filtro de MODs",
+    "tooltipDescription": "Filtra automaticamente los objetos no deseados. Personaliza los ajustes del filtro para quedarte solo con el botin que necesitas.",
+    "goToSettings": "Abrir Ajustes"
+  },
   "shop": {
     "title": "Tienda",
     "subtitle": "Comprar Características Premium",
