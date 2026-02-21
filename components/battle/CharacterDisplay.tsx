@@ -8,6 +8,7 @@ import Animated, {
   useSharedValue,
   withSequence,
   withTiming,
+  cancelAnimation,
 } from 'react-native-reanimated';
 import { ActionGauge } from './ActionGauge';
 import { HPBar } from './HPBar';
@@ -82,6 +83,11 @@ export const CharacterDisplay = memo(({
         })
       );
     }
+
+    // クリーンアップ: アンマウント時にアニメーションをキャンセル
+    return () => {
+      cancelAnimation(translateX);
+    };
   }, [isAttacking, isPlayer, translateX]);
 
   // アニメーションスタイル
