@@ -2022,6 +2022,11 @@
     "tooltipTitle": "Obtenez un Boost avec les Pubs !",
     "tooltipDescription": "Regardez une pub vidéo pour obtenir 30 minutes de boost"
   },
+  "modFilter": {
+    "tooltipTitle": "Utilisez le Filtre MOD",
+    "tooltipDescription": "Filtrez automatiquement les objets indesirables. Personnalisez les parametres de filtre pour garder uniquement le butin dont vous avez besoin.",
+    "goToSettings": "Ouvrir les Parametres"
+  },
   "shop": {
     "title": "Boutique",
     "subtitle": "Acheter des fonctionnalités premium",

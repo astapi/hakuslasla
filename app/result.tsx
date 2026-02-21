@@ -1,8 +1,11 @@
+import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
+import { ModFilterTooltip } from '@/components/common/ModFilterTooltip';
+import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { Item } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 
@@ -31,6 +34,28 @@ export default function ResultScreen() {
   const grandTotalExp = parseInt(params.grandTotalExp || expGained.toString(), 10);
   const grandTotalItems: Item[] = params.grandTotalItems ? JSON.parse(params.grandTotalItems) : itemsGained;
 
+  // MODフィルターツールチップの表示状態
+  const [showModFilterTooltip, setShowModFilterTooltip] = useState(false);
+
+  // ゴブリンの砦初回クリア時にMODフィルターツールチップを表示
+  useEffect(() => {
+    const checkModFilterTooltip = async () => {
+      // ゴブリンの砦をクリアした場合のみ
+      if (params.dungeonId !== 'goblin_fort') return;
+      if (result !== 'cleared') return;
+
+      // DEVモードでは常に表示、本番では表示済みかチェック
+      if (!__DEV__) {
+        const alreadyShown = await settingsRepository.hasModFilterTooltipBeenShown();
+        if (alreadyShown) return;
+      }
+
+      setShowModFilterTooltip(true);
+    };
+
+    checkModFilterTooltip();
+  }, [params.dungeonId, result]);
+
   const handleReturn = () => {
     router.replace('/home');
   };
@@ -41,6 +66,12 @@ export default function ResultScreen() {
 
   return (
     <ScreenWrapper>
+      {/* MODフィルターツールチップ */}
+      <ModFilterTooltip
+        visible={showModFilterTooltip}
+        onDismiss={() => setShowModFilterTooltip(false)}
+      />
+
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
         <View style={styles.resultHeader}>
           <Text

@@ -2022,6 +2022,11 @@
     "tooltipTitle": "Boost mit Werbung erhalten!",
     "tooltipDescription": "Schau dir ein Video an und erhalte 30 Minuten Boost"
   },
+  "modFilter": {
+    "tooltipTitle": "MOD-Filter verwenden",
+    "tooltipDescription": "Filtere unerwuenschte Gegenstaende automatisch heraus. Passe die Filtereinstellungen an, um nur die Beute zu behalten, die du brauchst.",
+    "goToSettings": "Einstellungen oeffnen"
+  },
   "shop": {
     "title": "Shop",
     "subtitle": "Premium-Funktionen kaufen",

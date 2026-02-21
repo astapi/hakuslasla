@@ -13,6 +13,7 @@ const RESPEC_TOKENS_KEY = 'respec_tokens';
 const DUNGEON_CLEAR_RECORDS_KEY = 'dungeon_clear_records';
 const DIMENSIONAL_CORRIDOR_BEST_KEY = 'dimensional_corridor_best';
 const BOOST_TOOLTIP_SHOWN_KEY = 'boost_tooltip_shown';
+const MOD_FILTER_TOOLTIP_SHOWN_KEY = 'mod_filter_tooltip_shown';
 
 // ダンジョンクリア記録の型
 export type DungeonClearRecord = {
@@ -304,5 +305,15 @@ export const settingsRepository = {
 
   async setBoostTooltipShown(): Promise<void> {
     await this.set(BOOST_TOOLTIP_SHOWN_KEY, '1');
+  },
+
+  // MODフィルターツールチップ表示済みフラグ
+  async hasModFilterTooltipBeenShown(): Promise<boolean> {
+    const value = await this.get(MOD_FILTER_TOOLTIP_SHOWN_KEY);
+    return value === '1';
+  },
+
+  async setModFilterTooltipShown(): Promise<void> {
+    await this.set(MOD_FILTER_TOOLTIP_SHOWN_KEY, '1');
   },
 };

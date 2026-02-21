@@ -2017,6 +2017,11 @@
     "tooltipTitle": "Get Boost with Ads!",
     "tooltipDescription": "Watch a video ad to get 30 minutes of boost"
   },
+  "modFilter": {
+    "tooltipTitle": "Use the MOD Filter",
+    "tooltipDescription": "Automatically filter out unwanted items. Customize filter settings to keep only the loot you need.",
+    "goToSettings": "Open Settings"
+  },
   "shop": {
     "title": "Shop",
     "subtitle": "Purchase Premium Features",
