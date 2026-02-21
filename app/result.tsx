@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import * as StoreReview from 'expo-store-review';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { ModFilterTooltip } from '@/components/common/ModFilterTooltip';
@@ -54,6 +55,42 @@ export default function ResultScreen() {
     };
 
     checkModFilterTooltip();
+  }, [params.dungeonId, result]);
+
+  // 特定ダンジョン初回クリア時にストアレビューをリクエスト
+  // - 魔王城（demon_castle）
+  // - 異次元ラッシュⅡ（dimensional_rush_2）
+  useEffect(() => {
+    const STORE_REVIEW_DUNGEONS = ['demon_castle', 'dimensional_rush_2'];
+
+    const requestStoreReview = async () => {
+      const dungeonId = params.dungeonId;
+      if (!dungeonId) return;
+      if (result !== 'cleared') return;
+
+      // 対象ダンジョンかチェック
+      if (!STORE_REVIEW_DUNGEONS.includes(dungeonId)) return;
+
+      // DEVモードでは常に表示、本番ではリクエスト済みかチェック
+      if (!__DEV__) {
+        const alreadyRequested = await settingsRepository.hasStoreReviewBeenRequestedFor(dungeonId);
+        if (alreadyRequested) return;
+      }
+
+      // リクエスト済みフラグを設定
+      await settingsRepository.setStoreReviewRequestedFor(dungeonId);
+
+      // ストアレビューが利用可能か確認
+      const isAvailable = await StoreReview.isAvailableAsync();
+      if (!isAvailable) return;
+
+      // 少し遅延させてからレビューをリクエスト（UX向上）
+      setTimeout(async () => {
+        await StoreReview.requestReview();
+      }, 1000);
+    };
+
+    requestStoreReview();
   }, [params.dungeonId, result]);
 
   const handleReturn = () => {
