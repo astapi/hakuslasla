@@ -168,6 +168,12 @@
       "german": "Deutsch",
       "current": "現在: {{language}}"
     },
+    "sound": {
+      "title": "サウンド設定",
+      "description": "BGMと効果音のON/OFFを設定します",
+      "bgm": "BGM",
+      "se": "効果音"
+    },
     "categoryFilter": {
       "title": "カテゴリフィルター",
       "description": "ONのカテゴリのみドロップを取得します"

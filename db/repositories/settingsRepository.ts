@@ -4,6 +4,8 @@ import { DropFilterSettings, DEFAULT_DROP_FILTER } from '@/types';
 const DROP_FILTER_KEY = 'drop_filter_settings';
 const BATTLE_SPEED_KEY = 'battle_speed';
 const LANGUAGE_KEY = 'app_language';
+const BGM_ENABLED_KEY = 'bgm_enabled';
+const SE_ENABLED_KEY = 'se_enabled';
 const END_CONTENT_UNLOCK_KEY = 'end_content_unlocked';
 const UBER_UNLOCKS_KEY = 'uber_boss_unlocks';
 const UBER_TICKETS_KEY = 'uber_boss_tickets';
@@ -124,6 +126,28 @@ export const settingsRepository = {
 
   async setLanguage(language: AppLanguage): Promise<void> {
     await this.set(LANGUAGE_KEY, language);
+  },
+
+  // BGM設定
+  async getBgmEnabled(): Promise<boolean> {
+    const value = await this.get(BGM_ENABLED_KEY);
+    // デフォルトはON
+    return value !== '0';
+  },
+
+  async setBgmEnabled(enabled: boolean): Promise<void> {
+    await this.set(BGM_ENABLED_KEY, enabled ? '1' : '0');
+  },
+
+  // SE設定
+  async getSeEnabled(): Promise<boolean> {
+    const value = await this.get(SE_ENABLED_KEY);
+    // デフォルトはON
+    return value !== '0';
+  },
+
+  async setSeEnabled(enabled: boolean): Promise<void> {
+    await this.set(SE_ENABLED_KEY, enabled ? '1' : '0');
   },
 
   // 言語が一度でも設定されたかどうか（初回起動判定用）

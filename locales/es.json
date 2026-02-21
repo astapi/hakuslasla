@@ -168,6 +168,12 @@
       "german": "Deutsch",
       "current": "Actual: {{language}}"
     },
+    "sound": {
+      "title": "Configuración de Sonido",
+      "description": "Activar/Desactivar BGM y efectos de sonido",
+      "bgm": "BGM",
+      "se": "Efectos de Sonido"
+    },
     "categoryFilter": {
       "title": "Filtro de Categoría",
       "description": "Solo recoger drops de categorías habilitadas"

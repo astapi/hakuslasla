@@ -14,6 +14,7 @@ import {
   LANGUAGE_LABELS,
 } from '@/db/repositories/settingsRepository';
 import { changeLanguage } from '@/lib/i18n';
+import { updateSoundSettings } from '@/lib/sound';
 import { ms, fs } from '@/utils/scaling';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
@@ -31,6 +32,8 @@ export default function SettingsScreen() {
   const router = useRouter();
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
   const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
+  const [bgmEnabled, setBgmEnabled] = useState(true);
+  const [seEnabled, setSeEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
 
@@ -48,12 +51,16 @@ export default function SettingsScreen() {
 
   const loadSettings = async () => {
     try {
-      const [loaded, savedLanguage] = await Promise.all([
+      const [loaded, savedLanguage, savedBgm, savedSe] = await Promise.all([
         settingsRepository.getDropFilter(),
         settingsRepository.getLanguage(),
+        settingsRepository.getBgmEnabled(),
+        settingsRepository.getSeEnabled(),
       ]);
       setSettings(loaded);
       setLanguage(savedLanguage);
+      setBgmEnabled(savedBgm);
+      setSeEnabled(savedSe);
     } finally {
       setIsLoading(false);
     }
@@ -63,6 +70,18 @@ export default function SettingsScreen() {
     setLanguage(newLanguage);
     await settingsRepository.setLanguage(newLanguage);
     changeLanguage(newLanguage);
+  };
+
+  const handleBgmToggle = async (enabled: boolean) => {
+    setBgmEnabled(enabled);
+    await settingsRepository.setBgmEnabled(enabled);
+    updateSoundSettings(enabled, seEnabled);
+  };
+
+  const handleSeToggle = async (enabled: boolean) => {
+    setSeEnabled(enabled);
+    await settingsRepository.setSeEnabled(enabled);
+    updateSoundSettings(bgmEnabled, enabled);
   };
 
   const saveSettings = async (newSettings: DropFilterSettings) => {
@@ -189,6 +208,46 @@ export default function SettingsScreen() {
             </View>
           </Pressable>
         </Modal>
+
+        {/* サウンド設定 */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.sound.title')}</Text>
+          <Text style={styles.sectionDescription}>
+            {t('settings.sound.description')}
+          </Text>
+          <View style={styles.filterRow}>
+            <View style={styles.filterLabel}>
+              <MaterialCommunityIcons
+                name="music"
+                size={20}
+                color="#aaa"
+              />
+              <Text style={styles.filterLabelText}>{t('settings.sound.bgm')}</Text>
+            </View>
+            <Switch
+              value={bgmEnabled}
+              onValueChange={handleBgmToggle}
+              trackColor={{ false: '#333', true: '#4CAF50' }}
+              thumbColor={bgmEnabled ? '#fff' : '#888'}
+            />
+          </View>
+          <View style={[styles.filterRow, { borderBottomWidth: 0 }]}>
+            <View style={styles.filterLabel}>
+              <MaterialCommunityIcons
+                name="volume-high"
+                size={20}
+                color="#aaa"
+              />
+              <Text style={styles.filterLabelText}>{t('settings.sound.se')}</Text>
+            </View>
+            <Switch
+              value={seEnabled}
+              onValueChange={handleSeToggle}
+              trackColor={{ false: '#333', true: '#4CAF50' }}
+              thumbColor={seEnabled ? '#fff' : '#888'}
+            />
+          </View>
+        </View>
 
         {/* カテゴリフィルター */}
         <View style={styles.section}>

@@ -26,6 +26,7 @@ import { CLASS_ABILITIES } from '@/core/player';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
 import { Analytics } from '@/lib/analytics';
 import { submitDimensionalCorridorScore } from '@/lib/ranking';
+import { preloadBattleSounds, unloadBattleSounds, playBattleSound, playBattleBgm, stopBattleBgm, pauseBattleBgm, resumeBattleBgm } from '@/lib/sound';
 import {
   BASE_BOSS_BY_UBER,
   DIMENSIONAL_RUSH_BOSS_FLOOR_BY_ID,
@@ -728,7 +729,15 @@ export const useBattle = (dungeonId: string) => {
 
   // 一時停止の切り替え
   const togglePause = useCallback(() => {
-    setIsPaused((prev) => !prev);
+    setIsPaused((prev) => {
+      const newPaused = !prev;
+      if (newPaused) {
+        pauseBattleBgm();
+      } else {
+        resumeBattleBgm();
+      }
+      return newPaused;
+    });
   }, []);
 
   // 自動周回の開始
@@ -745,6 +754,9 @@ export const useBattle = (dungeonId: string) => {
   const retreat = useCallback(async () => {
     setIsAutoRunning(false);
     dispatch({ type: 'RETREAT' });
+
+    // BGMを停止
+    stopBattleBgm();
 
     // 次元回廊の場合はランキングスコアを送信
     if (isDimensionalCorridorDungeon(dungeonId)) {
@@ -814,6 +826,9 @@ export const useBattle = (dungeonId: string) => {
     // イグナイト伝染状態をリセット（新しいダンジョン開始）
     spreadIgniteRef.current = null;
     dispatch({ type: 'START_BATTLE', enemy: createBattleEnemy(enemy, dungeonId) });
+
+    // BGM再生開始
+    playBattleBgm();
   }, [getEnemyForFloor, dungeonId]);
 
 
@@ -953,16 +968,19 @@ export const useBattle = (dungeonId: string) => {
         case 'player_attack': {
           const damage = Number(data.damage ?? 0);
           dispatch({ type: 'PLAYER_ATTACK', damage, isCritical: false });
+          playBattleSound('player_attack', characterType);
           break;
         }
         case 'critical_hit': {
           const damage = Number(data.damage ?? 0);
           dispatch({ type: 'PLAYER_ATTACK', damage, isCritical: true });
+          playBattleSound('player_attack', characterType);
           break;
         }
         case 'enemy_attack': {
           const damage = Number(data.damage ?? 0);
           dispatch({ type: 'ENEMY_ATTACK', damage });
+          playBattleSound('enemy_attack');
           break;
         }
         case 'poison_applied': {
@@ -1074,7 +1092,7 @@ export const useBattle = (dungeonId: string) => {
           break;
       }
     }
-  }, [state.enemy, handleEnemyDefeated]);
+  }, [state.enemy, handleEnemyDefeated, characterType]);
 
   // ボス戦エンジン初期化（敵切り替え時のみ）
   useEffect(() => {
@@ -1161,6 +1179,9 @@ export const useBattle = (dungeonId: string) => {
   useEffect(() => {
     const saveResults = async () => {
       if (state.phase === 'cleared' || state.phase === 'defeat') {
+        // BGMを停止
+        stopBattleBgm();
+
         if (state.phase === 'cleared') {
           // ダンジョンクリア記録を保存
           await settingsRepository.saveDungeonClearRecord(
@@ -1226,12 +1247,30 @@ export const useBattle = (dungeonId: string) => {
     }
   }, [state.phase, isAutoRunning, getTotalStats]);
 
-  // 戦闘開始（初回マウント時 & RESET_DUNGEON後）
+  // 戦闘SE のプリロード/アンロード & 戦闘開始
+  const [soundsReady, setSoundsReady] = useState(false);
+
   useEffect(() => {
-    if (!state.enemy && state.phase === 'fighting') {
+    let mounted = true;
+    const init = async () => {
+      await preloadBattleSounds(characterType);
+      if (mounted) {
+        setSoundsReady(true);
+      }
+    };
+    init();
+    return () => {
+      mounted = false;
+      unloadBattleSounds();
+    };
+  }, [characterType]);
+
+  // 戦闘開始（プリロード完了後）
+  useEffect(() => {
+    if (soundsReady && !state.enemy && state.phase === 'fighting') {
       startBattle();
     }
-  }, [state.enemy, state.phase, startBattle]);
+  }, [soundsReady, state.enemy, state.phase, startBattle]);
 
   return {
     state,

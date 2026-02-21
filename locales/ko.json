@@ -168,6 +168,12 @@
       "german": "Deutsch",
       "current": "현재: {{language}}"
     },
+    "sound": {
+      "title": "사운드 설정",
+      "description": "BGM과 효과음 ON/OFF 설정",
+      "bgm": "BGM",
+      "se": "효과음"
+    },
     "categoryFilter": {
       "title": "카테고리 필터",
       "description": "활성화된 카테고리의 드롭만 수집합니다"
