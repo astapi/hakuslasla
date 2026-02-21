@@ -2018,7 +2018,9 @@
     "loadingAd": "Lade Werbung...",
     "retry": "Wiederholen",
     "dropRateBoostLabel": "Droprate-Boost",
-    "tierBoostLabel": "Tier-Boost"
+    "tierBoostLabel": "Tier-Boost",
+    "tooltipTitle": "Boost mit Werbung erhalten!",
+    "tooltipDescription": "Schau dir ein Video an und erhalte 30 Minuten Boost"
   },
   "shop": {
     "title": "Shop",

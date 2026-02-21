@@ -2018,7 +2018,9 @@
     "loadingAd": "广告加载中...",
     "retry": "重试",
     "dropRateBoostLabel": "掉落率提升",
-    "tierBoostLabel": "Tier 提升"
+    "tierBoostLabel": "Tier 提升",
+    "tooltipTitle": "观看广告获得提升！",
+    "tooltipDescription": "观看视频广告获得30分钟的提升效果"
   },
   "shop": {
     "title": "商店",

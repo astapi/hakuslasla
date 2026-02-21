@@ -2018,7 +2018,9 @@
     "loadingAd": "광고 로딩 중...",
     "retry": "재시도",
     "dropRateBoostLabel": "드롭율 부스트",
-    "tierBoostLabel": "Tier 부스트"
+    "tierBoostLabel": "Tier 부스트",
+    "tooltipTitle": "광고로 부스트 획득!",
+    "tooltipDescription": "동영상 광고를 시청하고 30분간 부스트를 획득하세요"
   },
   "shop": {
     "title": "상점",

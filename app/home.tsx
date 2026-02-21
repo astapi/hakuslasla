@@ -1,4 +1,4 @@
-import { useState, useCallback, useLayoutEffect } from 'react';
+import { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Image, Modal, TextInput } from 'react-native';
 import { useRouter, useFocusEffect, useNavigation } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,8 +8,13 @@ import { StatusPanel } from '@/components/player/StatusPanel';
 import { EquipmentList } from '@/components/player/EquipmentList';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { BoostIconButton } from '@/components/common/BoostIconButton';
+import { BoostTooltip } from '@/components/common/BoostTooltip';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { useEncyclopediaStore } from '@/stores/useEncyclopediaStore';
+import { usePurchaseStore } from '@/stores/usePurchaseStore';
+import { useAdState } from '@/hooks/useAdStore';
+import { settingsRepository } from '@/db/repositories/settingsRepository';
+import { ENTITLEMENT_IDS } from '@/constants/purchases';
 import { characterImages } from '@/data/images';
 import { ms, fs, isTablet } from '@/utils/scaling';
 
@@ -32,6 +37,31 @@ export default function HomeScreen() {
   // キャラクター名変更モーダル
   const [isRenameModalVisible, setIsRenameModalVisible] = useState(false);
   const [newName, setNewName] = useState('');
+
+  // ブーストツールチップの状態
+  const [showBoostTooltip, setShowBoostTooltip] = useState(false);
+  const hasPermanentBoost = usePurchaseStore((state) =>
+    state.hasEntitlement(ENTITLEMENT_IDS.PERMANENT_BOOST)
+  );
+  const { loaded: dropRateAdLoaded } = useAdState('drop_rate');
+  const { loaded: tierBoostAdLoaded } = useAdState('tier_boost');
+  const anyAdLoaded = dropRateAdLoaded || tierBoostAdLoaded;
+
+  // 初回表示のツールチップチェック
+  useEffect(() => {
+    const checkTooltip = async () => {
+      // 永久ブースト購入済みの場合は表示しない
+      if (hasPermanentBoost) return;
+      // 広告がロードされていない場合は表示しない
+      if (!anyAdLoaded) return;
+
+      const alreadyShown = await settingsRepository.hasBoostTooltipBeenShown();
+      if (!alreadyShown) {
+        setShowBoostTooltip(true);
+      }
+    };
+    checkTooltip();
+  }, [hasPermanentBoost, anyAdLoaded]);
 
   // カスタムヘッダーを設定
   useLayoutEffect(() => {
@@ -123,6 +153,12 @@ export default function HomeScreen() {
       style={styles.container}
       backgroundColor={colors.bg}
     >
+      {/* ブーストツールチップ */}
+      <BoostTooltip
+        visible={showBoostTooltip}
+        onDismiss={() => setShowBoostTooltip(false)}
+      />
+
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <View style={styles.characterCard}>
           <View style={styles.characterSection}>

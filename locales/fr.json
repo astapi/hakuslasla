@@ -2018,7 +2018,9 @@
     "loadingAd": "Chargement de la pub...",
     "retry": "Réessayer",
     "dropRateBoostLabel": "Boost de drop",
-    "tierBoostLabel": "Boost de Tier"
+    "tierBoostLabel": "Boost de Tier",
+    "tooltipTitle": "Obtenez un Boost avec les Pubs !",
+    "tooltipDescription": "Regardez une pub vidéo pour obtenir 30 minutes de boost"
   },
   "shop": {
     "title": "Boutique",
