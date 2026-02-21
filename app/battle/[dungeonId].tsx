@@ -1,5 +1,6 @@
 import { BattleLog } from '@/components/battle/BattleLog';
-import { CharacterDisplay } from '@/components/battle/CharacterDisplay';
+import { CharacterAvatar } from '@/components/battle/CharacterAvatar';
+import { CharacterStatus } from '@/components/battle/CharacterStatus';
 import { BoostIndicator } from '@/components/battle/BoostIndicator';
 import { Button } from '@/components/common/Button';
 import { getDungeon } from '@/data/dungeons';
@@ -278,7 +279,7 @@ export default function BattleScreen() {
   const backgroundImage = dungeonId ? backgroundImages[dungeonId] : undefined;
   const showChest = Boolean(state.enemy && state.enemy.currentHp <= 0 && state.lastDroppedItems.length > 0);
 
-  // バトルエリアの内容
+  // バトルエリアの内容（背景画像の上にはキャラクター画像のみ）
   const battleAreaContent = (
     <>
       <View style={styles.floorInfo}>
@@ -294,8 +295,8 @@ export default function BattleScreen() {
         )}
       </View>
 
-      {/* 上部2/3のスペーサー */}
-      <View style={styles.battleFieldSpacer}>
+      {/* 勝利/敗北/クリアテキスト */}
+      <View style={styles.phaseTextContainer}>
         {state.phase === 'victory' && (
           <Text style={styles.victoryText}>{t('battle.victory')}</Text>
         )}
@@ -307,59 +308,54 @@ export default function BattleScreen() {
         )}
       </View>
 
-      {/* 下部1/3: キャラクターエリア（バトルフィールド） */}
-      <View style={styles.battleField}>
-        <View style={styles.charactersContainer}>
-          <CharacterDisplay
-            name={t('battle.player')}
-            currentHp={state.playerCurrentHp}
-            maxHp={state.playerMaxHp}
-            level={level}
+      {/* キャラクターアバターエリア（画像のみ） */}
+      <View style={styles.avatarArea}>
+        <View style={styles.avatarContainer}>
+          <CharacterAvatar
             isPlayer
             characterType={characterType}
             isAttacking={playerAttacking}
-            actionGauge={state.playerGauge}
+            size={s(100)}
           />
-          {state.enemy && !showChest && (
-            <CharacterDisplay
-              name={t(`monsters.${state.enemy.id}.name`, { defaultValue: state.enemy.name })}
-              currentHp={state.enemy.currentHp}
-              maxHp={state.enemy.maxHp}
+        </View>
+        {state.enemy && !showChest && (
+          <View style={styles.avatarContainer}>
+            <CharacterAvatar
               imageId={state.enemy.image}
               isAttacking={enemyAttacking}
-              actionGauge={state.enemyGauge}
+              size={s(100)}
               poisonStacks={state.enemyPoison}
               igniteState={state.enemyIgnite}
             />
-          )}
-          {state.enemy && showChest && (
-            <View style={styles.chestSlot}>
-              <View style={styles.chestRow}>
-                {state.lastDroppedItems.map((item, index) => {
-                  const offsets = getChestOffsets(state.lastDroppedItems.length);
-                  const { x, y } = offsets[index] || { x: 0, y: 0 };
-                  return (
-                    <ChestDrop
-                      key={`${item.instanceId}-${index}`}
-                      itemIndex={index}
-                      image={getChestImageForItem(item)}
-                      rarity={getChestRarityForItem(item)}
-                      offsetX={x}
-                      offsetY={y}
-                    />
-                  );
-                })}
-              </View>
+          </View>
+        )}
+        {state.enemy && showChest && (
+          <View style={styles.chestSlot}>
+            <View style={styles.chestRow}>
+              {state.lastDroppedItems.map((item, index) => {
+                const offsets = getChestOffsets(state.lastDroppedItems.length);
+                const { x, y } = offsets[index] || { x: 0, y: 0 };
+                return (
+                  <ChestDrop
+                    key={`${item.instanceId}-${index}`}
+                    itemIndex={index}
+                    image={getChestImageForItem(item)}
+                    rarity={getChestRarityForItem(item)}
+                    offsetX={x}
+                    offsetY={y}
+                  />
+                );
+              })}
             </View>
-          )}
-        </View>
+          </View>
+        )}
       </View>
     </>
   );
 
   return (
     <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
-      {/* 上部: バトルエリア */}
+      {/* 上部: バトルエリア（背景画像 + キャラクター画像のみ） */}
       {backgroundImage ? (
         <ImageBackground
           source={backgroundImage}
@@ -377,6 +373,26 @@ export default function BattleScreen() {
           </View>
         </View>
       )}
+
+      {/* ステータスエリア（ゲージ、名前、HP等） */}
+      <View style={styles.statusArea}>
+        <CharacterStatus
+          name={t('battle.player')}
+          currentHp={state.playerCurrentHp}
+          maxHp={state.playerMaxHp}
+          level={level}
+          isPlayer
+          actionGauge={state.playerGauge}
+        />
+        {state.enemy && (
+          <CharacterStatus
+            name={t(`monsters.${state.enemy.id}.name`, { defaultValue: state.enemy.name })}
+            currentHp={state.enemy.currentHp}
+            maxHp={state.enemy.maxHp}
+            actionGauge={state.enemyGauge}
+          />
+        )}
+      </View>
 
       {/* 戦闘ログ（バトルエリアとボタンの間を全て使用） */}
       <View style={styles.logArea}>
@@ -470,7 +486,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#15191E',
   },
   battleArea: {
-    height: s(310),
+    height: s(260),
     overflow: 'hidden',
   },
   battleAreaImage: {
@@ -486,7 +502,7 @@ const styles = StyleSheet.create({
   },
   floorInfo: {
     alignItems: 'center',
-    marginBottom: ms(8),
+    marginBottom: ms(4),
   },
   floorInfoRow: {
     flexDirection: 'row',
@@ -509,29 +525,30 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
   },
-  battleFieldSpacer: {
-    flex: 1,
-    justifyContent: 'center',
+  phaseTextContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: ms(28),
   },
-  battleField: {
-    paddingBottom: ms(6),
-    backgroundColor: 'rgba(22, 33, 62, 0.6)',
-    borderTopLeftRadius: ms(16),
-    borderTopRightRadius: ms(16),
-    paddingHorizontal: ms(8),
-    paddingTop: ms(8),
-  },
-  charactersContainer: {
+  avatarArea: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingHorizontal: ms(24),
+  },
+  avatarContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  statusArea: {
+    flexDirection: 'row',
+    paddingHorizontal: ms(12),
+    paddingVertical: ms(8),
   },
   chestSlot: {
-    flex: 1,
-    padding: ms(12),
-    borderRadius: ms(12),
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    marginLeft: ms(8),
+    width: s(120),
+    height: s(120),
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
