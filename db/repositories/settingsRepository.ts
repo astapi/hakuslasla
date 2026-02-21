@@ -14,6 +14,7 @@ const DUNGEON_CLEAR_RECORDS_KEY = 'dungeon_clear_records';
 const DIMENSIONAL_CORRIDOR_BEST_KEY = 'dimensional_corridor_best';
 const BOOST_TOOLTIP_SHOWN_KEY = 'boost_tooltip_shown';
 const MOD_FILTER_TOOLTIP_SHOWN_KEY = 'mod_filter_tooltip_shown';
+const STORE_REVIEW_REQUESTED_KEY = 'store_review_requested';
 
 // ダンジョンクリア記録の型
 export type DungeonClearRecord = {
@@ -315,5 +316,15 @@ export const settingsRepository = {
 
   async setModFilterTooltipShown(): Promise<void> {
     await this.set(MOD_FILTER_TOOLTIP_SHOWN_KEY, '1');
+  },
+
+  // ストアレビューリクエスト済みフラグ（ダンジョンIDごとに管理）
+  async hasStoreReviewBeenRequestedFor(dungeonId: string): Promise<boolean> {
+    const value = await this.get(`${STORE_REVIEW_REQUESTED_KEY}_${dungeonId}`);
+    return value === '1';
+  },
+
+  async setStoreReviewRequestedFor(dungeonId: string): Promise<void> {
+    await this.set(`${STORE_REVIEW_REQUESTED_KEY}_${dungeonId}`, '1');
   },
 };
