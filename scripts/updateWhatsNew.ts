@@ -130,18 +130,60 @@ interface VersionsResponse {
 
 // 各言語のwhatsNewテキスト
 const whatsNewByLocale: Record<string, string> = {
-  // 日本語（そのまま）
-  ja: 'bugfix: イグナイト伝染キーストーン取得時に発火状態の敵を倒したとき、次の敵に発火アイコンが表示されず、発火ダメージログも出ない問題を修正。',
+  ja: `・戦闘BGM・効果音を追加
+・戦闘画面のUIを改善
+・初回起動時に言語選択画面を追加
+・安定性の向上`,
 
-  // 英語（US, GB, AU, CA共通）
-  'en-US':
-    'bugfix: Fixed an issue where when acquiring the Ignite Spread keystone and defeating an ignited enemy, the ignite icon would not display on the next enemy and the ignite damage log would not appear.',
-  'en-GB':
-    'bugfix: Fixed an issue where when acquiring the Ignite Spread keystone and defeating an ignited enemy, the ignite icon would not display on the next enemy and the ignite damage log would not appear.',
-  'en-AU':
-    'bugfix: Fixed an issue where when acquiring the Ignite Spread keystone and defeating an ignited enemy, the ignite icon would not display on the next enemy and the ignite damage log would not appear.',
-  'en-CA':
-    'bugfix: Fixed an issue where when acquiring the Ignite Spread keystone and defeating an ignited enemy, the ignite icon would not display on the next enemy and the ignite damage log would not appear.',
+  'en-US': `• Added battle BGM and sound effects
+• Improved battle screen UI
+• Added language selection on first launch
+• Improved stability`,
+
+  'en-GB': `• Added battle BGM and sound effects
+• Improved battle screen UI
+• Added language selection on first launch
+• Improved stability`,
+
+  'en-AU': `• Added battle BGM and sound effects
+• Improved battle screen UI
+• Added language selection on first launch
+• Improved stability`,
+
+  'en-CA': `• Added battle BGM and sound effects
+• Improved battle screen UI
+• Added language selection on first launch
+• Improved stability`,
+
+  'zh-Hans': `• 添加战斗BGM和音效
+• 改进战斗界面UI
+• 首次启动时添加语言选择
+• 提高稳定性`,
+
+  ko: `• 전투 BGM 및 효과음 추가
+• 전투 화면 UI 개선
+• 첫 실행 시 언어 선택 화면 추가
+• 안정성 향상`,
+
+  'es-ES': `• Añadido BGM y efectos de sonido de batalla
+• Mejorada la interfaz de la pantalla de batalla
+• Añadida selección de idioma en el primer inicio
+• Mejorada la estabilidad`,
+
+  'es-MX': `• Añadido BGM y efectos de sonido de batalla
+• Mejorada la interfaz de la pantalla de batalla
+• Añadida selección de idioma en el primer inicio
+• Mejorada la estabilidad`,
+
+  'fr-FR': `• Ajout de BGM et d'effets sonores de combat
+• Amélioration de l'interface de l'écran de combat
+• Ajout de la sélection de langue au premier lancement
+• Amélioration de la stabilité`,
+
+  'de-DE': `• Kampf-BGM und Soundeffekte hinzugefügt
+• Kampfbildschirm-UI verbessert
+• Sprachauswahl beim ersten Start hinzugefügt
+• Stabilität verbessert`,
 };
 
 // メイン処理
