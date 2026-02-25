@@ -130,60 +130,27 @@ interface VersionsResponse {
 
 // 各言語のwhatsNewテキスト
 const whatsNewByLocale: Record<string, string> = {
-  ja: `・戦闘BGM・効果音を追加
-・戦闘画面のUIを改善
-・初回起動時に言語選択画面を追加
-・安定性の向上`,
+  ja: `・アプリタイトルを変更`,
 
-  'en-US': `• Added battle BGM and sound effects
-• Improved battle screen UI
-• Added language selection on first launch
-• Improved stability`,
+  'en-US': `• Updated app title`,
 
-  'en-GB': `• Added battle BGM and sound effects
-• Improved battle screen UI
-• Added language selection on first launch
-• Improved stability`,
+  'en-GB': `• Updated app title`,
 
-  'en-AU': `• Added battle BGM and sound effects
-• Improved battle screen UI
-• Added language selection on first launch
-• Improved stability`,
+  'en-AU': `• Updated app title`,
 
-  'en-CA': `• Added battle BGM and sound effects
-• Improved battle screen UI
-• Added language selection on first launch
-• Improved stability`,
+  'en-CA': `• Updated app title`,
 
-  'zh-Hans': `• 添加战斗BGM和音效
-• 改进战斗界面UI
-• 首次启动时添加语言选择
-• 提高稳定性`,
+  'zh-Hans': `• 更新应用标题`,
 
-  ko: `• 전투 BGM 및 효과음 추가
-• 전투 화면 UI 개선
-• 첫 실행 시 언어 선택 화면 추가
-• 안정성 향상`,
+  ko: `• 앱 타이틀 변경`,
 
-  'es-ES': `• Añadido BGM y efectos de sonido de batalla
-• Mejorada la interfaz de la pantalla de batalla
-• Añadida selección de idioma en el primer inicio
-• Mejorada la estabilidad`,
+  'es-ES': `• Actualizado el título de la aplicación`,
 
-  'es-MX': `• Añadido BGM y efectos de sonido de batalla
-• Mejorada la interfaz de la pantalla de batalla
-• Añadida selección de idioma en el primer inicio
-• Mejorada la estabilidad`,
+  'es-MX': `• Actualizado el título de la aplicación`,
 
-  'fr-FR': `• Ajout de BGM et d'effets sonores de combat
-• Amélioration de l'interface de l'écran de combat
-• Ajout de la sélection de langue au premier lancement
-• Amélioration de la stabilité`,
+  'fr-FR': `• Mise à jour du titre de l'application`,
 
-  'de-DE': `• Kampf-BGM und Soundeffekte hinzugefügt
-• Kampfbildschirm-UI verbessert
-• Sprachauswahl beim ersten Start hinzugefügt
-• Stabilität verbessert`,
+  'de-DE': `• App-Titel aktualisiert`,
 };
 
 // メイン処理
