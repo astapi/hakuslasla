@@ -1,9 +1,22 @@
 #!/bin/bash
 
 # App Store Connect デプロイスクリプト
-# 使用方法: ./scripts/deploy-ios.sh
+# 使用方法: ./scripts/deploy-ios.sh [--no-clean]
+# オプション:
+#   --no-clean  prebuild時に--cleanオプションをスキップ（ネイティブコードの変更を保持）
 
 set -e  # エラー時に停止
+
+# 引数解析
+NO_CLEAN=false
+for arg in "$@"; do
+    case $arg in
+        --no-clean)
+            NO_CLEAN=true
+            shift
+            ;;
+    esac
+done
 
 # 色付き出力
 RED='\033[0;31m'
@@ -59,7 +72,12 @@ echo -e "  Build Number: ${CURRENT_BUILD_NUMBER} -> ${NEW_BUILD_NUMBER}"
 
 # Step 2: Expo Prebuild
 echo -e "${YELLOW}[2/6] Expo prebuild を実行中...${NC}"
-npx expo prebuild --clean --platform ios
+if [ "$NO_CLEAN" = true ]; then
+    echo -e "  (--no-clean モード: ネイティブコードの変更を保持)"
+    npx expo prebuild --platform ios
+else
+    npx expo prebuild --clean --platform ios
+fi
 
 # ワークスペースの存在確認
 if [ ! -d "$WORKSPACE" ]; then

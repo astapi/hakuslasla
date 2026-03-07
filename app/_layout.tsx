@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
@@ -18,15 +18,25 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const { t } = useTranslation();
   const [isDbReady, setIsDbReady] = useState(false);
+  const [needsLanguageSetup, setNeedsLanguageSetup] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const init = async () => {
       try {
         await initializeDatabase();
-        // 保存された言語設定を読み込んで適用
-        const savedLanguage = await settingsRepository.getLanguage();
-        changeLanguage(savedLanguage);
+
+        // 言語設定が一度も行われていないか確認（初回起動判定）
+        const hasLanguageBeenSet = await settingsRepository.hasLanguageBeenSet();
+
+        if (hasLanguageBeenSet) {
+          // 保存された言語設定を読み込んで適用
+          const savedLanguage = await settingsRepository.getLanguage();
+          changeLanguage(savedLanguage);
+        } else {
+          // 初回起動時は言語選択画面へ
+          setNeedsLanguageSetup(true);
+        }
 
         // RevenueCatを初期化
         await usePurchaseStore.getState().initialize();
@@ -43,6 +53,13 @@ export default function RootLayout() {
     };
     init();
   }, []);
+
+  // 初回起動時に言語選択画面へリダイレクト
+  useEffect(() => {
+    if (isDbReady && needsLanguageSetup) {
+      router.replace('/language-select');
+    }
+  }, [isDbReady, needsLanguageSetup]);
 
   // DB準備完了後にスプラッシュを非表示
   const onLayoutRootView = useCallback(async () => {
@@ -107,6 +124,7 @@ export default function RootLayout() {
           name="dungeon-select"
           options={{
             headerShown: false,
+            gestureEnabled: false,
           }}
         />
         <Stack.Screen
@@ -125,13 +143,13 @@ export default function RootLayout() {
           name="battle"
           options={{
             headerShown: false,
+            gestureEnabled: false,
           }}
         />
         <Stack.Screen
           name="result"
           options={{
-            title: t('result.rewards'),
-            headerBackVisible: false,
+            headerShown: false,
             gestureEnabled: false,
           }}
         />
@@ -170,6 +188,13 @@ export default function RootLayout() {
           name="ranking"
           options={{
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="language-select"
+          options={{
+            headerShown: false,
+            gestureEnabled: false,
           }}
         />
       </Stack>

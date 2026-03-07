@@ -1,0 +1,2077 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "ok": "OK",
+    "back": "Zurueck",
+    "close": "Schliessen",
+    "cancel": "Abbrechen",
+    "change": "Aendern",
+    "delete": "Loeschen",
+    "reset": "Zuruecksetzen",
+    "create": "Erstellen",
+    "creating": "Erstelle...",
+    "save": "Speichern",
+    "equip": "Ausruesten",
+    "unequip": "Ablegen",
+    "sell": "Verkaufen",
+    "none": "Keine",
+    "unequipped": "Leer",
+    "items": "Gegenstaende",
+    "ticket": "Ticket"
+  },
+  "characterSelect": {
+    "title": "LootDive",
+    "subtitle": "Charakter waehlen",
+    "empty": "Keine Charaktere",
+    "emptyHint": "Erstelle einen neuen Charakter um zu beginnen",
+    "createNew": "Neuen Charakter erstellen",
+    "slotLimitTitle": "Slot-Limit",
+    "slotLimitMessage": "Charakter-Slots sind voll ({{current}}/{{max}})",
+    "deleteConfirmTitle": "Charakter loeschen",
+    "deleteConfirmMessage": "\"{{name}}\" loeschen?\nDiese Aktion kann nicht rueckgaengig gemacht werden."
+  },
+  "characterCreate": {
+    "nameLabel": "Charaktername",
+    "namePlaceholder": "Name eingeben",
+    "classLabel": "Klasse waehlen",
+    "class": {
+      "warrior": "Krieger",
+      "elementalist": "Elementarist"
+    },
+    "classAbility": "Klassenfaehigkeit",
+    "ability": {
+      "igniteChance": "Entzuendungschance {{value}}%"
+    },
+    "initialStats": "Startwerte"
+  },
+  "home": {
+    "menu": {
+      "skills": "Faehigkeiten",
+      "inventory": "Inventar",
+      "storage": "Lager",
+      "settings": "Einstellungen",
+      "adventure": "Abenteuer",
+      "encyclopedia": "Archiv",
+      "shop": "Shop"
+    },
+    "renameCharacter": "Charakter umbenennen"
+  },
+  "dungeonSelect": {
+    "title": "Dungeon waehlen",
+    "subtitle": "Waehle einen Dungeon zur Herausforderung",
+    "unlockRequirement": "{{dungeonName}} abschliessen zum Freischalten"
+  },
+  "encyclopedia": {
+    "title": "Dungeon-Archiv",
+    "subtitle": "Details der abgeschlossenen Dungeons ansehen",
+    "noClearedDungeons": "Noch keine Dungeons abgeschlossen",
+    "clearedAt": "Abgeschlossen: {{date}}",
+    "bestFloor": "Bester Stockwerk: {{floor}}",
+    "detail": {
+      "monsters": "Monster-Spawns",
+      "drops": "Gegenstandsdrops",
+      "uniqueDrops": "Einzigartige Drops",
+      "dungeonDrops": "Dungeon-Drops",
+      "commonDrops": "Gewoehnliche Drops",
+      "spawnRate": "Spawnrate {{rate}}%",
+      "dropRate": "Droprate {{rate}}%",
+      "stats": "Werte",
+      "exp": "EXP: {{exp}}",
+      "attackSpeed": "Angriffsgeschw.: {{speed}}",
+      "noUniqueDrop": "Keine einzigartigen Drops",
+      "fixedMods": "Feste MODs",
+      "bossAbilities": "Boss-Faehigkeiten",
+      "regularSkills": "Regulaere Faehigkeiten (alle 3 Angriffe)",
+      "thresholdSkills": "Schwellen-Faehigkeiten (unter 50% HP)",
+      "uberOnly": "Nur Uber"
+    },
+    "notCleared": "Nicht abgeschlossen",
+    "uberUnlocked": "Uber freigeschaltet"
+  },
+  "battle": {
+    "floor": "E",
+    "round": "Runde",
+    "autoRunning": "Auto-Durchlauf",
+    "pause": "Pause",
+    "resume": "Fortsetzen",
+    "autoRun": "Auto-Durchlauf",
+    "stopAutoRun": "Auto stoppen",
+    "retreat": "Rueckzug",
+    "retreatConfirm": {
+      "title": "Rueckzug bestaetigen",
+      "message": "Moechtest du dich wirklich zurueckziehen?\nErhaltene EXP gehen verloren, aber Gegenstaende koennen behalten werden.",
+      "confirm": "Zurueckziehen"
+    },
+    "victory": "Sieg!",
+    "defeat": "Niederlage...",
+    "cleared": "Dungeon abgeschlossen!",
+    "player": "Spieler",
+    "inProgress": "Im Kampf"
+  },
+  "result": {
+    "cleared": "Dungeon abgeschlossen!",
+    "defeat": "Niederlage...",
+    "retreat": "Rueckzug",
+    "runsCompleted": "{{count}} Durchlaeufe abgeschlossen",
+    "floorsCleared": "{{current}}/{{max}} Stockwerke abgeschlossen",
+    "rewards": "Belohnungen",
+    "exp": "EXP",
+    "totalExp": "Gesamt-EXP",
+    "items": "Erhaltene Gegenstaende",
+    "totalItems": "Gegenstaende gesamt ({{count}})",
+    "noItems": "Keine Gegenstaende",
+    "returnButton": "Zurueck zum Startbildschirm"
+  },
+  "inventory": {
+    "title": "Inventar",
+    "selectItem": "Waehle einen Gegenstand",
+    "selected": "Ausgewaehlt",
+    "equipped": "Ausgeruestet",
+    "storage": "Lager",
+    "noItemsInSlot": "Kein {{slot}}",
+    "tabs": {
+      "equipment": "Ausruestung",
+      "misc": "Sonstiges"
+    },
+    "tickets": {
+      "title": "Tickets",
+      "empty": "Keine Tickets",
+      "item": "{{name}} Ticket"
+    },
+    "respec": {
+      "title": "Neuverteilungs-Gegenstaende",
+      "empty": "Keine Neuverteilungs-Gegenstaende",
+      "item": "Neuverteilungskugel"
+    }
+  },
+  "storage": {
+    "title": "Lager",
+    "selectItem": "Waehle einen Gegenstand",
+    "toInventory": "Ins Inventar",
+    "inventoryFull": "Inventar voll",
+    "storageFull": "Lager ist voll",
+    "noItemsInSlot": "Kein {{slot}}"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "dropFilterTitle": "Drop-Filter-Einstellungen",
+    "language": {
+      "title": "Sprache",
+      "description": "Waehle die App-Anzeigesprache",
+      "system": "Systemeinstellungen folgen",
+      "japanese": "日本語",
+      "english": "English",
+      "chinese": "简体中文",
+      "korean": "한국어",
+      "spanish": "Español",
+      "french": "Français",
+      "german": "Deutsch",
+      "current": "Aktuell: {{language}}"
+    },
+    "sound": {
+      "title": "Soundeinstellungen",
+      "description": "BGM und Soundeffekte ein/aus",
+      "bgm": "BGM",
+      "se": "Soundeffekte"
+    },
+    "categoryFilter": {
+      "title": "Kategoriefilter",
+      "description": "Nur Drops aus aktivierten Kategorien sammeln"
+    },
+    "modCountFilter": {
+      "title": "Minimale MOD-Anzahl",
+      "description": "Nur Gegenstaende mit dieser oder mehr MODs sammeln (0 zum Deaktivieren)",
+      "disabled": "Deaktiviert",
+      "value": "{{count}}+ MODs"
+    },
+    "tierFilter": {
+      "title": "MOD Tier Filter",
+      "description": "Nur Gegenstaende mit mindestens einem MOD auf oder unter diesem Tier sammeln (Tier 1 ist hoechste Qualitaet)",
+      "disabled": "Deaktiviert",
+      "value": "Tier {{tier}} oder niedriger",
+      "hint": "Tier 1 = Beste, Tier 10 = Niedrigste"
+    },
+    "currentFilter": {
+      "title": "Aktueller Filter",
+      "modCount": "{{count}}+ MODs",
+      "tierBelow": "Enthaelt Tier {{tier}} oder niedrigeren MOD",
+      "noFilter": "Kein Filter (alles sammeln)"
+    },
+    "battleSpeed": {
+      "title": "Kampfgeschwindigkeit",
+      "description": "Aendere die Geschwindigkeit des Kampfverlaufs",
+      "premiumHint": "2x Geschwindigkeit und hoeher nach Kauf im Shop verfuegbar"
+    }
+  },
+  "status": {
+    "title": "Status",
+    "tapForDetails": "Tippen fuer Details",
+    "critRate": "Crit Rate",
+    "critDamage": "Crit DMG",
+    "poisonChance": "Gift",
+    "poisonDamage": "Giftschaden",
+    "poisonDamageMore": "Gift mehr",
+    "poisonMaxStacks": "Gift-Stapel",
+    "poisonDamageReduction": "Gift-Schadensred.",
+    "poisonLifesteal": "Gift-Lebensraub",
+    "noDirectDamage": "Kein direkter Schaden",
+    "hpRegen": "HP-Regen",
+    "hpOnHit": "HP bei Treffer",
+    "hpOnCrit": "HP bei Crit",
+    "damageReduction": "Schadensreduzierung",
+    "attackSpeed": "Angriffsgeschw.",
+    "attackSpeedMore": "AG mehr",
+    "finalAttackSpeed": "Finale AG",
+    "igniteChance": "Entzuendungschance",
+    "igniteDamage": "Entzuendungsschaden",
+    "igniteDamageMore": "Entzuendung mehr",
+    "igniteDuration": "Entzuendungsdauer",
+    "igniteTickSpeed": "Entzuendungs-Tick",
+    "perSecond": "/s",
+    "on": "AN",
+    "off": "AUS",
+    "max": "MAX"
+  },
+  "equipment": {
+    "title": "Ausruestung",
+    "slot": "Slot",
+    "item": "Gegenstand",
+    "mod": "MOD",
+    "modCount": "MOD x{{count}}"
+  },
+  "slots": {
+    "weapon": "Waffe",
+    "armor": "Ruestung",
+    "gloves": "Handschuhe",
+    "boots": "Stiefel",
+    "accessory": "Accessoire"
+  },
+  "mods": {
+    "atk_bonus": "ATK",
+    "def_bonus": "DEF",
+    "hp_regen": "Regen",
+    "hp_regen_pct": "HP-Regen",
+    "poison_chance": "Gift",
+    "critical_chance": "Crit",
+    "critical_damage": "Crit DMG",
+    "atk_increased_pct": "ATK",
+    "def_increased_pct": "DEF",
+    "hp_increased_pct": "HP",
+    "hp_bonus": "HP",
+    "hp_on_hit": "HP bei Treffer",
+    "damage_reduction_pct": "Schadensr.",
+    "attack_speed_pct": "Geschw.",
+    "lifesteal": "Lebensraub",
+    "atk_more_pct": "ATK mehr",
+    "def_more_pct": "DEF mehr",
+    "hp_more_pct": "HP mehr",
+    "everyTurnHpRegen": "+{{value}} HP pro Runde",
+    "everyTurnHpRegenPct": "+{{value}}% HP pro Runde",
+    "ignite_chance": "Entzuendung",
+    "ignite_duration_pct": "Entz.-Dauer",
+    "ignite_tick_speed_pct": "Entz.-Tick",
+    "ignite_damage_pct": "Entz. DMG"
+  },
+  "dungeon": {
+    "floors": "{{count}} Stockwerke",
+    "unlimitedFloors": "Unbegrenzt",
+    "recommendedLevel": "Empf. St.{{level}}",
+    "ticketRequired": "Ticket erforderlich"
+  },
+  "dungeons": {
+    "grassland": {
+      "name": "Anfaengerwiese",
+      "description": "Eine friedliche Wiese, wo Abenteurer ihre Reise beginnen. Heimat schwacher Monster."
+    },
+    "cave": {
+      "name": "Unterirdische Hoehle",
+      "description": "Eine dunkle Hoehle tief unter der Erde. Mittlere Monster lauern darin."
+    },
+    "ruins": {
+      "name": "Vergessene Ruinen",
+      "description": "Ruinen einer alten Zivilisation. Ein gefaehrlicher Ort, wo maechtige Monster umherstreifen."
+    },
+    "goblin_fort": {
+      "name": "Goblin-Festung",
+      "description": "Eine massive Festung, erbaut von Goblins. Der Goblinkoenig herrscht in ihren Tiefen."
+    },
+    "bandit_hideout": {
+      "name": "Banditenversteck",
+      "description": "Ein Versteck fuer Bergbanditen, vollgestapelt mit gestohlenen Guetern."
+    },
+    "vampire_mansion": {
+      "name": "Vampir-Herrenhaus",
+      "description": "Ein unheimliches Herrenhaus in der Nacht. Beherrscht von einem unsterblichen Adeligen."
+    },
+    "underwater_cave": {
+      "name": "Unterwasserhoehle",
+      "description": "Eine mysterioese Hoehle in der Tiefsee. Wassermonster bewachen ihr Territorium."
+    },
+    "orc_fortress": {
+      "name": "Ork-Festung",
+      "description": "Eine massive Festung, beherrscht von Orks und Trollen. Wilde Krieger warten."
+    },
+    "demon_castle": {
+      "name": "Daemonenschloss",
+      "description": "Das Schloss des Dunklen Lords, wo Schatten wirbeln. Maechtige Daemonen bewachen ihren Meister."
+    },
+    "ice_cave": {
+      "name": "Gefrorene Hoehle",
+      "description": "Eine eisige Hoehle tief im Permafrost. Eisige Monster hausen hier."
+    },
+    "volcano": {
+      "name": "Lodernder Vulkan",
+      "description": "Ein gluehend heisses Labyrinth in einem aktiven Vulkan. Feuerkreaturen bewohnen es."
+    },
+    "dark_forest": {
+      "name": "Abgruendiger Wald",
+      "description": "Ein lichtloser dunkler Wald. Uralte Bestien lauern darin."
+    },
+    "sky_tower": {
+      "name": "Himmelsturm",
+      "description": "Ein mystischer Turm, der die Wolken durchsticht. Himmlische Waechter warten."
+    },
+    "hell_gate": {
+      "name": "Hoellentor",
+      "description": "Ein verbotenes Tor, das in die Unterwelt fuehrt. Hoellische Torwaechter blockieren Eindringlinge."
+    },
+    "dragon_nest": {
+      "name": "Drachenhort",
+      "description": "Ein legendaeres Nest, wo uralte Drachen schlafen. Die maechtigsten Drachenarten hausen hier."
+    },
+    "sacred_temple": {
+      "name": "Goettlicher Tempel",
+      "description": "Ein heiliger Tempel, beschuetzt von Dienern der Goetter."
+    },
+    "chaos_realm": {
+      "name": "Chaosreich",
+      "description": "Eine chaotische Welt zwischen Realitaet und Leere. Alle Gesetze sind hier verzerrt."
+    },
+    "final_land": {
+      "name": "Land der Enden",
+      "description": "Die letzte Grenze am Weltenende. Das ultimative Wesen wartet."
+    },
+    "dimensional_rush_1": {
+      "name": "Dimensionssturm I",
+      "description": "Dimensionslabyrinth. Besiege den Goblinkoenig auf Stockwerk 50."
+    },
+    "dimensional_rush_2": {
+      "name": "Dimensionssturm II",
+      "description": "Dimensionslabyrinth. Besiege den Banditenfuehrer auf Stockwerk 70."
+    },
+    "dimensional_rush_3": {
+      "name": "Dimensionssturm III",
+      "description": "Dimensionslabyrinth. Besiege den Vampir auf Stockwerk 90."
+    },
+    "dimensional_rush_4": {
+      "name": "Dimensionssturm IV",
+      "description": "Dimensionslabyrinth. Besiege den Kraken auf Stockwerk 110."
+    },
+    "dimensional_rush_5": {
+      "name": "Dimensionssturm V",
+      "description": "Dimensionslabyrinth. Besiege den Daemonenherrscher auf Stockwerk 120."
+    },
+    "dimensional_rush_6": {
+      "name": "Dimensionssturm VI",
+      "description": "Letzte Dimensionsschicht. Besiege den Wahren Endboss auf Stockwerk 200."
+    },
+    "dimensional_corridor": {
+      "name": "Dimensionskorridor",
+      "description": "Ein endloser Korridor zwischen Dimensionen. Feinde werden staerker, je tiefer du gehst."
+    },
+    "uber_goblin_king": {
+      "name": "Uber Goblinkoenig",
+      "description": "Der in einer anderen Dimension erwachte Goblinkoenig."
+    },
+    "uber_bandit_leader": {
+      "name": "Uber Banditenfuehrer",
+      "description": "Der durch Dimensionskraft verstaerkte Banditenfuehrer."
+    },
+    "uber_vampire": {
+      "name": "Uber Vampir",
+      "description": "Ein blutdurstiger Vampir aus einer anderen Dimension."
+    },
+    "uber_kraken": {
+      "name": "Uber Kraken",
+      "description": "Eine kolossale Kreatur, die ueber die Dimensionsmeere herrscht."
+    },
+    "uber_demon_lord": {
+      "name": "Uber Daemonenherrscher",
+      "description": "Der durch Dimensionskraft wiedererstandene Daemonenherrscher."
+    },
+    "uber_true_final_boss": {
+      "name": "Uber Wahrer Endboss",
+      "description": "Das Wesen, das wahre Enden bringt."
+    }
+  },
+  "items": {
+    "rusted_sword": {
+      "name": "Rostiges Schwert"
+    },
+    "cloth_clothes": {
+      "name": "Stoffkleidung"
+    },
+    "leather_hat": {
+      "name": "Lederhut"
+    },
+    "leather_gloves": {
+      "name": "Lederhandschuhe"
+    },
+    "leather_boots": {
+      "name": "Lederstiefel"
+    },
+    "copper_ring": {
+      "name": "Kupferring"
+    },
+    "traveler_amulet": {
+      "name": "Reisendenamulett"
+    },
+    "grassland_sword": {
+      "name": "Wiesenschwert"
+    },
+    "rusted_staff": {
+      "name": "Rostiger Stab"
+    },
+    "grassland_staff": {
+      "name": "Wiesenstab"
+    },
+    "cave_iron_staff": {
+      "name": "Hoehlen-Eisenstab"
+    },
+    "light_leather": {
+      "name": "Leichtes Leder"
+    },
+    "rabbit_boots": {
+      "name": "Hasenstiefel"
+    },
+    "division_core": {
+      "name": "Teilungskern"
+    },
+    "wolf_fang": {
+      "name": "Wolfszahn"
+    },
+    "poison_needle_ring": {
+      "name": "Giftnadel-Ring"
+    },
+    "cave_iron_sword": {
+      "name": "Hoehlen-Eisenschwert"
+    },
+    "bone_shield": {
+      "name": "Knochenschild"
+    },
+    "bat_mantle": {
+      "name": "Fledermausmantel"
+    },
+    "underground_charm": {
+      "name": "Untergrund-Amulett"
+    },
+    "warrior_ring": {
+      "name": "Kriegerring"
+    },
+    "bone_sword": {
+      "name": "Knochenschwert"
+    },
+    "war_ogre_belt": {
+      "name": "Kriegsoger-Guertel"
+    },
+    "dark_night_mantle": {
+      "name": "Dunkelmantel"
+    },
+    "ruins_magic_sword": {
+      "name": "Ruinen-Magieschwert"
+    },
+    "ruins_magic_staff": {
+      "name": "Ruinen-Magiestab"
+    },
+    "cursed_robe": {
+      "name": "Verfluchte Robe"
+    },
+    "gargoyle_boots": {
+      "name": "Gargoyle-Stiefel"
+    },
+    "ancient_ring": {
+      "name": "Antiker Ring"
+    },
+    "oblivion_amulet": {
+      "name": "Amulett der Vergessenheit"
+    },
+    "core_stone": {
+      "name": "Kernstein"
+    },
+    "curse_bandage": {
+      "name": "Fluchverband"
+    },
+    "lost_grimoire": {
+      "name": "Verlorenes Grimoire"
+    },
+    "stone_wing_boots": {
+      "name": "Steinfluegel-Stiefel"
+    },
+    "goblin_blade": {
+      "name": "Goblin-Klinge"
+    },
+    "goblin_staff": {
+      "name": "Goblin-Stab"
+    },
+    "goblin_mail": {
+      "name": "Goblin-Kettenhemd"
+    },
+    "spiked_gauntlets": {
+      "name": "Stachel-Handschuhe"
+    },
+    "raider_boots": {
+      "name": "Raeuber-Stiefel"
+    },
+    "tribal_ring": {
+      "name": "Stammesring"
+    },
+    "shaman_staff": {
+      "name": "Schamanen-Stab"
+    },
+    "goblin_shield": {
+      "name": "Goblin-Schild"
+    },
+    "champion_axe": {
+      "name": "Champion-Axt"
+    },
+    "kings_crown": {
+      "name": "Koenigskrone"
+    },
+    "demon_blade": {
+      "name": "Daemonenklinge"
+    },
+    "demon_staff": {
+      "name": "Daemonenstab"
+    },
+    "dark_plate": {
+      "name": "Dunkle Platte"
+    },
+    "dragon_gauntlets": {
+      "name": "Drachen-Handschuhe"
+    },
+    "inferno_boots": {
+      "name": "Inferno-Stiefel"
+    },
+    "dark_ring": {
+      "name": "Dunkler Ring"
+    },
+    "dark_grimoire": {
+      "name": "Dunkles Grimoire"
+    },
+    "demon_horn": {
+      "name": "Daemonenhorn"
+    },
+    "wyvern_scale": {
+      "name": "Lindwurm-Schuppe"
+    },
+    "demon_crown": {
+      "name": "Daemonenkrone"
+    },
+    "frost_blade": {
+      "name": "Frostklinge"
+    },
+    "frost_staff": {
+      "name": "Froststab"
+    },
+    "ice_armor": {
+      "name": "Eisruestung"
+    },
+    "frozen_gauntlets": {
+      "name": "Gefrorene Handschuhe"
+    },
+    "blizzard_boots": {
+      "name": "Blizzard-Stiefel"
+    },
+    "ice_crystal_ring": {
+      "name": "Eiskristall-Ring"
+    },
+    "frozen_staff": {
+      "name": "Gefrorener Stab"
+    },
+    "yeti_fur": {
+      "name": "Yeti-Fell"
+    },
+    "magma_blade": {
+      "name": "Magmaklinge"
+    },
+    "magma_staff": {
+      "name": "Magmastab"
+    },
+    "volcano_armor": {
+      "name": "Vulkanruestung"
+    },
+    "flame_gauntlets": {
+      "name": "Flammen-Handschuhe"
+    },
+    "ember_boots": {
+      "name": "Glut-Stiefel"
+    },
+    "fire_ruby_ring": {
+      "name": "Feuerrubin-Ring"
+    },
+    "magma_core": {
+      "name": "Magmakern"
+    },
+    "flame_sword": {
+      "name": "Flammenschwert"
+    },
+    "shadow_blade": {
+      "name": "Schattenklinge"
+    },
+    "shadow_staff": {
+      "name": "Schattenstab"
+    },
+    "dark_bark_armor": {
+      "name": "Dunkelrinden-Ruestung"
+    },
+    "nightmare_gauntlets": {
+      "name": "Alptraum-Handschuhe"
+    },
+    "forest_walker_boots": {
+      "name": "Waldlaeufer-Stiefel"
+    },
+    "cursed_eye_ring": {
+      "name": "Ring des verfluchten Auges"
+    },
+    "cursed_branch": {
+      "name": "Verfluchter Ast"
+    },
+    "chimera_fang": {
+      "name": "Chimaeren-Zahn"
+    },
+    "sky_blade": {
+      "name": "Himmelsklinge"
+    },
+    "sky_staff": {
+      "name": "Himmelsstab"
+    },
+    "cloud_armor": {
+      "name": "Wolkenruestung"
+    },
+    "storm_gauntlets": {
+      "name": "Sturm-Handschuhe"
+    },
+    "wind_walker_boots": {
+      "name": "Windlaeufer-Stiefel"
+    },
+    "sky_sapphire_ring": {
+      "name": "Himmelssaphir-Ring"
+    },
+    "thunder_feather": {
+      "name": "Donnerfeder"
+    },
+    "giant_belt": {
+      "name": "Riesenguertel"
+    },
+    "hellfire_blade": {
+      "name": "Hoellenfeuer-Klinge"
+    },
+    "hellfire_staff": {
+      "name": "Hoellenfeuer-Stab"
+    },
+    "infernal_plate": {
+      "name": "Hoellenplatte"
+    },
+    "demon_gauntlets": {
+      "name": "Daemonen-Handschuhe"
+    },
+    "hellwalker_boots": {
+      "name": "Hoellenlaeufer-Stiefel"
+    },
+    "infernal_ruby_ring": {
+      "name": "Hoellenrubin-Ring"
+    },
+    "infernal_armor": {
+      "name": "Hoellenruestung"
+    },
+    "balrog_whip": {
+      "name": "Balrog-Peitsche"
+    },
+    "dragon_slayer": {
+      "name": "Drachentoeter"
+    },
+    "dragon_staff": {
+      "name": "Drachenstab"
+    },
+    "dragon_scale_armor": {
+      "name": "Drachenschuppen-Ruestung"
+    },
+    "dragon_claw_gauntlets": {
+      "name": "Drachenklauen-Handschuhe"
+    },
+    "dragon_hide_boots": {
+      "name": "Drachenhaut-Stiefel"
+    },
+    "dragon_eye_ring": {
+      "name": "Drachenauge-Ring"
+    },
+    "fire_dragon_scale": {
+      "name": "Feuerdrachen-Schuppe"
+    },
+    "ice_dragon_scale": {
+      "name": "Eisdrachen-Schuppe"
+    },
+    "dragon_heart": {
+      "name": "Drachenherz"
+    },
+    "holy_blade": {
+      "name": "Heilige Klinge"
+    },
+    "holy_staff": {
+      "name": "Heiliger Stab"
+    },
+    "divine_armor": {
+      "name": "Goettliche Ruestung"
+    },
+    "seraph_gauntlets": {
+      "name": "Seraphim-Handschuhe"
+    },
+    "divine_boots": {
+      "name": "Goettliche Stiefel"
+    },
+    "holy_diamond_ring": {
+      "name": "Heiliger Diamantring"
+    },
+    "holy_feather": {
+      "name": "Heilige Feder"
+    },
+    "holy_dragon_scale": {
+      "name": "Heilige Drachenschuppe"
+    },
+    "chaos_blade": {
+      "name": "Chaosklinge"
+    },
+    "chaos_staff": {
+      "name": "Chaosstab"
+    },
+    "void_armor": {
+      "name": "Leerenruestung"
+    },
+    "chaos_gauntlets": {
+      "name": "Chaos-Handschuhe"
+    },
+    "void_boots": {
+      "name": "Leerenstiefel"
+    },
+    "chaos_crystal_ring": {
+      "name": "Chaoskristall-Ring"
+    },
+    "void_essence": {
+      "name": "Leerenessenz"
+    },
+    "chaos_scale": {
+      "name": "Chaosschuppe"
+    },
+    "apocalypse_blade": {
+      "name": "Apokalypsenklinge"
+    },
+    "apocalypse_staff": {
+      "name": "Apokalypsenstab"
+    },
+    "end_armor": {
+      "name": "Endzeit-Ruestung"
+    },
+    "titan_gauntlets": {
+      "name": "Titanen-Handschuhe"
+    },
+    "end_walker_boots": {
+      "name": "Endlaeufer-Stiefel"
+    },
+    "oblivion_ring": {
+      "name": "Ring der Vergessenheit"
+    },
+    "world_fragment": {
+      "name": "Weltenfragment"
+    },
+    "divine_blade": {
+      "name": "Goettliche Klinge"
+    },
+    "crown_of_end": {
+      "name": "Krone des Endes"
+    },
+    "bandit_crown": {
+      "name": "Banditenkrone"
+    },
+    "vampire_fang": {
+      "name": "Vampirzahn"
+    },
+    "kraken_tentacle": {
+      "name": "Kraken-Tentakel"
+    },
+    "uber_kings_crown": {
+      "name": "Uber Koenigskrone"
+    },
+    "uber_bandit_crown": {
+      "name": "Uber Banditenkrone"
+    },
+    "uber_vampire_fang": {
+      "name": "Uber Vampirzahn"
+    },
+    "uber_kraken_tentacle": {
+      "name": "Uber Kraken-Tentakel"
+    },
+    "uber_demon_crown": {
+      "name": "Uber Daemonenkrone"
+    },
+    "uber_crown_of_end": {
+      "name": "Uber Krone des Endes"
+    },
+    "uber_goblin_blade": {
+      "name": "Uber Goblin-Klinge"
+    },
+    "uber_goblin_plate": {
+      "name": "Uber Goblin-Platte"
+    },
+    "uber_goblin_grip": {
+      "name": "Uber Goblin-Griff"
+    },
+    "uber_goblin_stomp": {
+      "name": "Uber Goblin-Stampfer"
+    },
+    "uber_bandit_dagger": {
+      "name": "Uber Banditenkoenig-Dolch"
+    },
+    "uber_bandit_coat": {
+      "name": "Uber Banditenkoenig-Mantel"
+    },
+    "uber_bandit_grip": {
+      "name": "Uber Banditenkoenig-Griff"
+    },
+    "uber_bandit_steps": {
+      "name": "Uber Banditenkoenig-Schritte"
+    },
+    "uber_vampire_plate": {
+      "name": "Uber Vampir-Platte"
+    },
+    "uber_vampire_grip": {
+      "name": "Uber Vampir-Griff"
+    },
+    "uber_vampire_stride": {
+      "name": "Uber Vampir-Schritt"
+    },
+    "uber_vampire_heart": {
+      "name": "Uber Vampir-Herz"
+    },
+    "double_strike_ring": {
+      "name": "Doppelschlag-Ring"
+    },
+    "uber_double_strike_ring": {
+      "name": "Uber Doppelschlag-Ring"
+    },
+    "uber_kraken_shell": {
+      "name": "Uber Kraken-Panzer"
+    },
+    "uber_kraken_claw": {
+      "name": "Uber Kraken-Klaue"
+    },
+    "uber_kraken_fin": {
+      "name": "Uber Kraken-Flosse"
+    },
+    "uber_kraken_eye": {
+      "name": "Uber Kraken-Auge"
+    },
+    "uber_demon_blade": {
+      "name": "Uber Daemonenherrscher-Klinge"
+    },
+    "uber_demon_armor": {
+      "name": "Uber Daemonenherrscher-Ruestung"
+    },
+    "uber_demon_grip": {
+      "name": "Uber Daemonenherrscher-Griff"
+    },
+    "uber_demon_steps": {
+      "name": "Uber Daemonenherrscher-Schritte"
+    },
+    "uber_endblade": {
+      "name": "Uber Endzeit-Klinge"
+    },
+    "uber_endplate": {
+      "name": "Uber Endzeit-Platte"
+    },
+    "uber_endgrasp": {
+      "name": "Uber Endzeit-Griff"
+    },
+    "uber_endstride": {
+      "name": "Uber Endzeit-Schritt"
+    },
+    "uber_venom_fang": {
+      "name": "Uber Giftzahn"
+    },
+    "uber_venom_plate": {
+      "name": "Uber Gift-Platte"
+    },
+    "uber_venom_grip": {
+      "name": "Uber Gift-Griff"
+    },
+    "uber_venom_stride": {
+      "name": "Uber Gift-Schritt"
+    },
+    "uber_venom_heart": {
+      "name": "Uber Gift-Herz"
+    },
+    "uber_assassin_blade": {
+      "name": "Uber Assassinen-Klinge"
+    },
+    "uber_assassin_coat": {
+      "name": "Uber Assassinen-Mantel"
+    },
+    "uber_assassin_grip": {
+      "name": "Uber Assassinen-Griff"
+    },
+    "uber_assassin_steps": {
+      "name": "Uber Assassinen-Schritte"
+    },
+    "uber_assassin_pendant": {
+      "name": "Uber Assassinen-Anhaenger"
+    },
+    "uber_fortress_blade": {
+      "name": "Uber Festungs-Klinge"
+    },
+    "uber_fortress_plate": {
+      "name": "Uber Festungs-Platte"
+    },
+    "uber_fortress_grip": {
+      "name": "Uber Festungs-Griff"
+    },
+    "uber_fortress_stomp": {
+      "name": "Uber Festungs-Stampfer"
+    },
+    "uber_fortress_bulwark": {
+      "name": "Uber Festungs-Bollwerk"
+    }
+  },
+  "monsters": {
+    "slime": {
+      "name": "Schleim"
+    },
+    "wild_rabbit": {
+      "name": "Killerkaninchen"
+    },
+    "goblin": {
+      "name": "Goblin"
+    },
+    "bee": {
+      "name": "Killerbiene"
+    },
+    "mimic": {
+      "name": "Mimic"
+    },
+    "wolf": {
+      "name": "Wolf"
+    },
+    "bat": {
+      "name": "Riesenfledermaus"
+    },
+    "goblin_warrior": {
+      "name": "Goblin-Krieger"
+    },
+    "skeleton": {
+      "name": "Skelett"
+    },
+    "rock_lizard": {
+      "name": "Felsechse"
+    },
+    "orc": {
+      "name": "Ork"
+    },
+    "skeleton_knight": {
+      "name": "Skelett-Ritter"
+    },
+    "golem": {
+      "name": "Golem"
+    },
+    "mummy": {
+      "name": "Mumie"
+    },
+    "lich": {
+      "name": "Lich"
+    },
+    "gargoyle": {
+      "name": "Gargoyle"
+    },
+    "goblin_archer": {
+      "name": "Goblin-Bogenschuetze"
+    },
+    "goblin_shaman": {
+      "name": "Goblin-Schamane"
+    },
+    "goblin_knight": {
+      "name": "Goblin-Ritter"
+    },
+    "goblin_champion": {
+      "name": "Goblin-Champion"
+    },
+    "goblin_king": {
+      "name": "Goblinkoenig"
+    },
+    "bandit": {
+      "name": "Bandit"
+    },
+    "bandit_archer": {
+      "name": "Banditen-Bogenschuetze"
+    },
+    "bandit_swordsman": {
+      "name": "Banditen-Schwertkaempfer"
+    },
+    "bandit_brute": {
+      "name": "Banditen-Brutaler"
+    },
+    "bandit_leader": {
+      "name": "Banditenfuehrer"
+    },
+    "death_knight": {
+      "name": "Todesritter"
+    },
+    "dark_mage": {
+      "name": "Dunkelmagier"
+    },
+    "demon": {
+      "name": "Daemon"
+    },
+    "wyvern": {
+      "name": "Lindwurm"
+    },
+    "demon_lord": {
+      "name": "Daemonenherrscher"
+    },
+    "zombie": {
+      "name": "Zombie"
+    },
+    "ghoul": {
+      "name": "Ghul"
+    },
+    "banshee": {
+      "name": "Banshee"
+    },
+    "wraith": {
+      "name": "Geist"
+    },
+    "vampire": {
+      "name": "Vampir"
+    },
+    "ice_golem": {
+      "name": "Eisgolem"
+    },
+    "frost_wolf": {
+      "name": "Frostwolf"
+    },
+    "ice_witch": {
+      "name": "Eishexe"
+    },
+    "yeti": {
+      "name": "Yeti"
+    },
+    "frost_wyrm": {
+      "name": "Frostwyrm"
+    },
+    "sahuagin": {
+      "name": "Sahuagin"
+    },
+    "merman": {
+      "name": "Meermann"
+    },
+    "sea_serpent": {
+      "name": "Seeschlange"
+    },
+    "giant_crab": {
+      "name": "Riesenkrabbe"
+    },
+    "kraken": {
+      "name": "Kraken"
+    },
+    "lava_slime": {
+      "name": "Lavaschleim"
+    },
+    "magma_golem": {
+      "name": "Magmagolem"
+    },
+    "salamander": {
+      "name": "Salamander"
+    },
+    "flame_knight": {
+      "name": "Flammenritter"
+    },
+    "phoenix": {
+      "name": "Phoenix"
+    },
+    "orc_warrior": {
+      "name": "Ork-Krieger"
+    },
+    "orc_mage": {
+      "name": "Ork-Magier"
+    },
+    "troll": {
+      "name": "Troll"
+    },
+    "cyclops": {
+      "name": "Zyklop"
+    },
+    "uruk_hai": {
+      "name": "Uruk Hai"
+    },
+    "dark_treant": {
+      "name": "Dunkelbaum"
+    },
+    "shadow_wolf": {
+      "name": "Schattenwolf"
+    },
+    "forest_witch": {
+      "name": "Waldhexe"
+    },
+    "chimera": {
+      "name": "Chimaere"
+    },
+    "nightmare": {
+      "name": "Nachtmahr"
+    },
+    "sky_knight": {
+      "name": "Himmelsritter"
+    },
+    "storm_harpy": {
+      "name": "Sturmharpyie"
+    },
+    "thunder_bird": {
+      "name": "Donnervogel"
+    },
+    "cloud_giant": {
+      "name": "Wolkenriese"
+    },
+    "griffon": {
+      "name": "Greif"
+    },
+    "hell_hound": {
+      "name": "Hoellenhund"
+    },
+    "infernal_knight": {
+      "name": "Hoellenritter"
+    },
+    "succubus": {
+      "name": "Sukkubus"
+    },
+    "balrog": {
+      "name": "Balrog"
+    },
+    "cerberus": {
+      "name": "Zerberus"
+    },
+    "drake": {
+      "name": "Drache"
+    },
+    "fire_dragon": {
+      "name": "Feuerdrache"
+    },
+    "ice_dragon": {
+      "name": "Eisdrache"
+    },
+    "thunder_dragon": {
+      "name": "Donnerdrache"
+    },
+    "elder_dragon": {
+      "name": "Urdrache"
+    },
+    "divine_knight": {
+      "name": "Goettlicher Ritter"
+    },
+    "seraph": {
+      "name": "Seraph"
+    },
+    "temple_guardian": {
+      "name": "Tempelwaechter"
+    },
+    "holy_dragon": {
+      "name": "Heiliger Drache"
+    },
+    "valkyrie": {
+      "name": "Walkuere"
+    },
+    "chaos_knight": {
+      "name": "Chaosritter"
+    },
+    "void_walker": {
+      "name": "Leerenwandler"
+    },
+    "abomination": {
+      "name": "Scheusal"
+    },
+    "chaos_dragon": {
+      "name": "Chaosdrache"
+    },
+    "elder_thing": {
+      "name": "Urwesen"
+    },
+    "apocalypse_knight": {
+      "name": "Apokalypsenritter"
+    },
+    "world_eater": {
+      "name": "Weltenfresser"
+    },
+    "primordial_titan": {
+      "name": "Urtitan"
+    },
+    "god_slayer": {
+      "name": "Goettertoeter"
+    },
+    "end_bringer": {
+      "name": "Endbringer"
+    },
+    "true_final_boss": {
+      "name": "Wahrer Endboss"
+    },
+    "uber_goblin_king": {
+      "name": "Uber Goblinkoenig"
+    },
+    "uber_bandit_leader": {
+      "name": "Uber Banditenfuehrer"
+    },
+    "uber_vampire": {
+      "name": "Uber Vampir"
+    },
+    "uber_kraken": {
+      "name": "Uber Kraken"
+    },
+    "uber_demon_lord": {
+      "name": "Uber Daemonenherrscher"
+    },
+    "uber_true_final_boss": {
+      "name": "Uber Wahrer Endboss"
+    }
+  },
+  "skills": {
+    "skill_atk_1": {
+      "name": "Angriff erhoehen I",
+      "description": "ATK +5"
+    },
+    "skill_hp_1": {
+      "name": "HP erhoehen I",
+      "description": "HP +20"
+    },
+    "skill_atk_2": {
+      "name": "Angriff erhoehen II",
+      "description": "ATK +10"
+    },
+    "skill_def_1": {
+      "name": "Verteidigung erhoehen I",
+      "description": "DEF +5"
+    },
+    "skill_hp_2": {
+      "name": "HP erhoehen II",
+      "description": "HP +50"
+    }
+  },
+  "skillTree": {
+    "title": "Faehigkeitenbaum",
+    "skillPoints": "SP: {{count}}",
+    "unlocked": "Freigeschaltet",
+    "available": "Verfuegbar"
+  },
+  "bossSkills": {
+    "goblin_king": {
+      "name": "Goblin-Gebruell",
+      "shield": "Schwarmschild",
+      "shieldDesc": "20% Schadensreduzierung fuer 2 Runden, Crit und Giftchance -50%",
+      "warlord": "Kriegsfuerst der Horde",
+      "warlordDesc": "+30% Angriffsgeschw., 500 HP bei Treffer heilen (unter 50% HP)"
+    },
+    "bandit_leader": {
+      "name": "Baerenfalle",
+      "bearTrap": "Baerenfalle",
+      "bearTrapDesc": "Spieler Angriffsgeschw. -30% fuer 2 Runden",
+      "nightAmbush": "Nachtueberfall",
+      "nightAmbushDesc": "Naechster Angriffsschaden +40%",
+      "shadowBind": "Schattenfesseln",
+      "shadowBindDesc": "Heilung dauerhaft um 50% reduziert (unter 50% HP)"
+    },
+    "vampire": {
+      "name": "Blutfest",
+      "bloodFeast": "Blutfest",
+      "bloodFeastDesc": "150% des naechsten Angriffsschadens heilen",
+      "nightFeast": "Naechtliches Festmahl",
+      "nightFeastDesc": "Vergiftet Spieler bei Kampfbeginn",
+      "crimsonPact": "Purpurpakt",
+      "crimsonPactDesc": "HP basierend auf Schaden heilen (unter 50% HP)"
+    },
+    "kraken": {
+      "name": "Tsunami",
+      "tsunami": "Tsunami",
+      "tsunamiDesc": "Naechster Angriff +50% Schaden, Spieler nimmt +30% Schaden fuer 1 Runde",
+      "deepEmbrace": "Abgrundumarmung",
+      "deepEmbraceDesc": "-20% Angriffsgeschw., -30% Heilung fuer 3 Runden (unter 50% HP)",
+      "abyssalEbb": "Abyssale Ebbe",
+      "abyssalEbbDesc": "-15% Angriffsgeschw. fuer 2 Runden"
+    },
+    "demon_lord": {
+      "name": "Todeshand",
+      "deathHand": "Todeshand",
+      "deathHandDesc": "-30% Heilung fuer 2 Runden, vergiftet Spieler",
+      "blackFlame": "Schwarzflammenmal",
+      "blackFlameDesc": "+10% Schadensreduzierung permanent (unter 50% HP)",
+      "crown": "Krone des Ruins",
+      "crownDesc": "Aktiviert HP-Heilung bei Treffer (unter 50% HP)"
+    },
+    "true_final_boss": {
+      "name": "Ende",
+      "end": "Ende",
+      "endDesc": "Setzt Spieler-Aktionsanzeige zurueck",
+      "convergence": "Weltenkonvergenz",
+      "timeSever": "Zeittrennung"
+    }
+  },
+  "battleLog": {
+    "title": "Kampfprotokoll",
+    "runStart": "=== Durchlauf {{count}} Start ===",
+    "enemyAppeared": "{{enemy}} erscheint!",
+    "playerAttack": "Spieler greift an! {{enemy}} nimmt {{damage}} Schaden!",
+    "criticalHit": "Kritischer Treffer! {{enemy}} nimmt {{damage}} Schaden!",
+    "enemyAttack": "{{enemy}} greift an! Du nimmst {{damage}} Schaden!",
+    "enemyDefeated": "{{enemy}} besiegt! {{exp}} EXP erhalten!",
+    "itemDropped": "{{item}} erhalten!",
+    "playerDefeated": "Du wurdest besiegt...",
+    "nextFloor": "--- Weiter zu Stockwerk {{floor}} ---",
+    "dungeonCleared": "Dungeon abgeschlossen!",
+    "poisonAppliedEnemy": "{{enemy}} vergiftet! ({{damage}} Schaden x {{turns}} Runden){{stacks}}",
+    "poisonDamageEnemy": "Giftschaden! {{enemy}} nimmt {{damage}} Schaden!{{remaining}}{{ended}}{{lost}}",
+    "poisonAppliedPlayer": "Vergiftet! Spieler nimmt {{damage}} Schaden x {{turns}} Runden!{{stacks}}",
+    "poisonDamagePlayer": "Giftschaden! Spieler nimmt {{damage}} Schaden!{{remaining}}{{ended}}{{lost}}",
+    "poisonStacks": " [{{count}} Stapel]",
+    "poisonRemaining": " ({{count}} Stapel verbleibend)",
+    "poisonEnded": " (Gift beendet)",
+    "poisonStacksLost": " ({{count}} Stapel verloren)",
+    "bossSkillUsed": "{{enemy}} setzt {{skill}} ein!",
+    "uberUnlocked": "Uber-Version von {{enemy}} freigeschaltet!",
+    "uberTicket": "Uber-Ticket erhalten! ({{count}})",
+    "respecToken": "Neuverteilungsgegenstand erhalten! ({{count}})",
+    "bossSkillActivated": "{{enemy}} loest {{skill}} aus!",
+    "reflectedDamage": "{{enemy}}'s Mal reflektiert! Du nimmst {{damage}} Schaden!",
+    "enemyHealRegen": "{{enemy}} regeneriert {{amount}} HP!",
+    "enemyHealOnHit": "{{enemy}} absorbiert {{amount}} HP!",
+    "igniteApplied": "{{enemy}} entzuendet! ({{damage}} Schaden x {{duration}}s)",
+    "igniteSpread": "Entzuendung breitet sich auf {{enemy}} aus! ({{damage}} Schaden x {{duration}}s)",
+    "igniteDamage": "Entzuendungsschaden! {{enemy}} nimmt {{damage}} Schaden!{{remaining}}{{ended}}",
+    "igniteRemaining": " ({{seconds}}s verbleibend)",
+    "igniteEnded": " (Entzuendung beendet)",
+    "hpRegen": "HP-Regen! {{amount}} HP wiederhergestellt!"
+  },
+  "passiveTree": {
+    "title": "Passiver Baum",
+    "skillPoints": "SP: {{count}}",
+    "zoomHint": "Pinch zum Zoomen / Doppeltippen zum Zuruecksetzen",
+    "unlocked": "Freigeschaltet",
+    "unlockButton": "Freischalten (SP: {{count}})",
+    "noSp": "Nicht genug SP",
+    "locked": "Voraussetzung erforderlich",
+    "placeholder": "Tippe auf einen Knoten fuer Details",
+    "respecButton": "Neuverteilen (Kosten: {{count}})",
+    "noRespecToken": "Keine Neuverteilungsgegenstaende",
+    "cannotRespec": "Andere Knoten sind davon abhaengig"
+  },
+  "passiveNodes": {
+    "start": {
+      "name": "Abenteurer-Begabung",
+      "description": "HP +30, ATK +5, DEF +3"
+    },
+    "poison_1": {
+      "name": "Gift-Grundlagen",
+      "description": "HP +20, Giftchance +3%"
+    },
+    "poison_2": {
+      "name": "Giftwissen I",
+      "description": "Giftchance +3%"
+    },
+    "poison_3": {
+      "name": "HP erhoehen",
+      "description": "HP +20"
+    },
+    "poison_4": {
+      "name": "Verteidigung erhoehen",
+      "description": "DEF +3"
+    },
+    "poison_5": {
+      "name": "Giftwissen II",
+      "description": "Giftchance +3%"
+    },
+    "poison_6": {
+      "name": "HP erhoehen II",
+      "description": "HP +25"
+    },
+    "poison_7": {
+      "name": "Verteidigung erhoehen II",
+      "description": "DEF +4"
+    },
+    "poison_key1": {
+      "name": "Gifttraeger",
+      "description": "Giftchance +10%, Giftschaden +20%, Giftlebensraub +30%"
+    },
+    "poison_8": {
+      "name": "Giftwissen III",
+      "description": "Giftchance +5%"
+    },
+    "poison_9": {
+      "name": "Giftschaden erhoehen I",
+      "description": "Giftschaden +15%"
+    },
+    "poison_10": {
+      "name": "Giftresistenz",
+      "description": "Erlittener Schaden -3% waehrend Feind vergiftet"
+    },
+    "poison_11": {
+      "name": "Giftwissen IV",
+      "description": "Giftchance +5%"
+    },
+    "poison_12": {
+      "name": "Giftschaden erhoehen II",
+      "description": "Giftschaden +20%"
+    },
+    "poison_13": {
+      "name": "Gift-Stapelverstaerkung",
+      "description": "Gift kann bis zu 2-mal stapeln"
+    },
+    "poison_a1": {
+      "name": "Abgrundgift",
+      "description": "Giftschaden +25%"
+    },
+    "poison_a2": {
+      "name": "Gift-Spitze",
+      "description": "Giftstapel +3 (bis zu 5 insgesamt)"
+    },
+    "poison_b1": {
+      "name": "Giftschutz",
+      "description": "Erlittener Schaden -5% waehrend Feind vergiftet"
+    },
+    "poison_b2": {
+      "name": "Giftdrachenschuppen",
+      "description": "Erlittener Schaden -7% waehrend Feind vergiftet, HP +30"
+    },
+    "poison_14": {
+      "name": "Giftwissen V",
+      "description": "Giftchance +8%"
+    },
+    "poison_15": {
+      "name": "Toedliches Gift",
+      "description": "Giftschaden +30%"
+    },
+    "poison_16": {
+      "name": "Giftmeisterschaft",
+      "description": "Giftchance +10%"
+    },
+    "poison_17": {
+      "name": "Giftwache",
+      "description": "Erlittener Schaden -5% waehrend Feind vergiftet"
+    },
+    "poison_final1": {
+      "name": "Schlangeninkarnation",
+      "description": "Giftchance +15%, Giftschaden 20% mehr"
+    },
+    "poison_final2": {
+      "name": "Reines Gift [Schluesselstein]",
+      "description": "Kein direkter Schaden mehr. Giftschaden 50% mehr"
+    },
+    "crit_1": {
+      "name": "Crit Grundlagen",
+      "description": "ATK +5, Crit Rate +3%"
+    },
+    "crit_2": {
+      "name": "Crit Zielen I",
+      "description": "Crit Rate +3%"
+    },
+    "crit_3": {
+      "name": "Angriff erhoehen",
+      "description": "ATK +5"
+    },
+    "crit_4": {
+      "name": "Toedlicher Schlag I",
+      "description": "Crit DMG +15%"
+    },
+    "crit_5": {
+      "name": "Crit Zielen II",
+      "description": "Crit Rate +3%"
+    },
+    "crit_6": {
+      "name": "Angriff erhoehen II",
+      "description": "ATK +8"
+    },
+    "crit_7": {
+      "name": "Toedlicher Schlag II",
+      "description": "Crit DMG +20%"
+    },
+    "crit_key1": {
+      "name": "Vernichtender Schlag",
+      "description": "Crit DMG +30%"
+    },
+    "crit_8": {
+      "name": "Crit Zielen III",
+      "description": "Crit Rate +5%"
+    },
+    "crit_9": {
+      "name": "Angriffsverstaerkung",
+      "description": "ATK +15% erhoehen"
+    },
+    "crit_10": {
+      "name": "Toedlicher Schlag III",
+      "description": "Crit DMG +20%"
+    },
+    "crit_11": {
+      "name": "Crit Zielen IV",
+      "description": "Crit Rate +5%"
+    },
+    "crit_12": {
+      "name": "Angriff erhoehen III",
+      "description": "ATK +10"
+    },
+    "crit_13": {
+      "name": "Toedlicher Schlag IV",
+      "description": "Crit DMG +25%"
+    },
+    "crit_a1": {
+      "name": "Praezisionsschlag",
+      "description": "Crit Rate +8%"
+    },
+    "crit_a2": {
+      "name": "Sicherer Crit",
+      "description": "Crit Rate +10%"
+    },
+    "crit_b1": {
+      "name": "Verheerender Schlag",
+      "description": "Crit DMG +30%"
+    },
+    "crit_b2": {
+      "name": "Klinge der Vernichtung",
+      "description": "Crit DMG +40%"
+    },
+    "crit_14": {
+      "name": "Crit Zielen V",
+      "description": "Crit Rate +5%"
+    },
+    "crit_15": {
+      "name": "Blutklinge",
+      "description": "HP bei Crit +80"
+    },
+    "crit_16": {
+      "name": "Toedlicher Schlag V",
+      "description": "Crit DMG +30%"
+    },
+    "crit_17": {
+      "name": "Blutdurst",
+      "description": "HP bei Crit +100"
+    },
+    "crit_final1": {
+      "name": "Toedliche Klinge",
+      "description": "Crit Rate +10%, Crit DMG +50%"
+    },
+    "crit_final2": {
+      "name": "Henker",
+      "description": "HP bei Crit +150, ATK 15% mehr"
+    },
+    "guard_1": {
+      "name": "Schutz-Grundlagen",
+      "description": "DEF +5, Schadensreduzierung +2%"
+    },
+    "guard_2": {
+      "name": "Standhafter Schutz I",
+      "description": "Schadensreduzierung +2%"
+    },
+    "guard_3": {
+      "name": "Verteidigung erhoehen",
+      "description": "DEF +4"
+    },
+    "guard_4": {
+      "name": "HP erhoehen",
+      "description": "HP +25"
+    },
+    "guard_5": {
+      "name": "Standhafter Schutz II",
+      "description": "Schadensreduzierung +2%"
+    },
+    "guard_6": {
+      "name": "Verteidigung erhoehen II",
+      "description": "DEF +5"
+    },
+    "guard_7": {
+      "name": "HP erhoehen II",
+      "description": "HP +30"
+    },
+    "guard_key1": {
+      "name": "Eiserner Schild",
+      "description": "Schadensreduzierung +8%"
+    },
+    "guard_8": {
+      "name": "Standhafter Schutz III",
+      "description": "Schadensreduzierung +3%"
+    },
+    "guard_9": {
+      "name": "Verteidigungsverstaerkung",
+      "description": "DEF +20% erhoehen"
+    },
+    "guard_10": {
+      "name": "Vitalitaetsverstaerkung",
+      "description": "HP +20% erhoehen"
+    },
+    "guard_11": {
+      "name": "Standhafter Schutz IV",
+      "description": "Schadensreduzierung +3%"
+    },
+    "guard_12": {
+      "name": "Verteidigung erhoehen III",
+      "description": "DEF +8"
+    },
+    "guard_13": {
+      "name": "HP erhoehen III",
+      "description": "HP +40"
+    },
+    "guard_a1": {
+      "name": "Stahlkoerper",
+      "description": "DEF +25% erhoehen"
+    },
+    "guard_a2": {
+      "name": "Unbewegliche Festung",
+      "description": "DEF +12"
+    },
+    "guard_b1": {
+      "name": "Reichhaltiges Leben",
+      "description": "HP +25% erhoehen"
+    },
+    "guard_b2": {
+      "name": "Lebensschutz",
+      "description": "HP +60"
+    },
+    "guard_14": {
+      "name": "Standhafter Schutz V",
+      "description": "Schadensreduzierung +4%"
+    },
+    "guard_15": {
+      "name": "Verteidigungsgipfel",
+      "description": "DEF +15"
+    },
+    "guard_16": {
+      "name": "Standhafter Schutz VI",
+      "description": "Schadensreduzierung +5%"
+    },
+    "guard_17": {
+      "name": "Lebensgipfel",
+      "description": "HP +80"
+    },
+    "guard_final1": {
+      "name": "Eiserner Waechter",
+      "description": "Schadensreduzierung +10%, DEF 20% mehr"
+    },
+    "guard_final2": {
+      "name": "Unzerstoerbare Mauer",
+      "description": "HP 20% mehr"
+    },
+    "vamp_1": {
+      "name": "Lebensraub-Grundlagen",
+      "description": "ATK +5, HP bei Treffer +10"
+    },
+    "vamp_2": {
+      "name": "Lebensraub I",
+      "description": "HP bei Treffer +10"
+    },
+    "vamp_3": {
+      "name": "Angriff erhoehen",
+      "description": "ATK +5"
+    },
+    "vamp_4": {
+      "name": "Lebenswiederherstellung",
+      "description": "HP-Regen pro Runde +8"
+    },
+    "vamp_5": {
+      "name": "Lebensraub II",
+      "description": "HP bei Treffer +10"
+    },
+    "vamp_6": {
+      "name": "Angriff erhoehen II",
+      "description": "ATK +8"
+    },
+    "vamp_7": {
+      "name": "Lebenswiederherstellung II",
+      "description": "HP-Regen pro Runde +10"
+    },
+    "vamp_key1": {
+      "name": "Blutdurst",
+      "description": "HP bei Treffer +20"
+    },
+    "vamp_8": {
+      "name": "Lebensraub III",
+      "description": "HP bei Treffer +10"
+    },
+    "vamp_9": {
+      "name": "Angriffsverstaerkung",
+      "description": "ATK +15% erhoehen"
+    },
+    "vamp_10": {
+      "name": "Anhaltende Erholung",
+      "description": "HP-Regen pro Runde 1%"
+    },
+    "vamp_11": {
+      "name": "Lebensraub IV",
+      "description": "HP bei Treffer +10"
+    },
+    "vamp_12": {
+      "name": "Angriff erhoehen III",
+      "description": "ATK +10"
+    },
+    "vamp_13": {
+      "name": "Lebenswiederherstellung III",
+      "description": "HP-Regen pro Runde +12"
+    },
+    "vamp_a1": {
+      "name": "Ansturm",
+      "description": "ATK +20% erhoehen"
+    },
+    "vamp_a2": {
+      "name": "Faeuste der Zerstoerung",
+      "description": "ATK +15"
+    },
+    "vamp_b1": {
+      "name": "Heilkraft",
+      "description": "HP-Regen pro Runde 1.5%"
+    },
+    "vamp_b2": {
+      "name": "Lebenswoge",
+      "description": "HP-Regen pro Runde +20"
+    },
+    "vamp_14": {
+      "name": "Lebensraub V",
+      "description": "HP bei Treffer +10"
+    },
+    "vamp_15": {
+      "name": "Angriffsverstaerkung II",
+      "description": "ATK +20% erhoehen"
+    },
+    "vamp_16": {
+      "name": "Lebensraub VI",
+      "description": "HP bei Treffer +10"
+    },
+    "vamp_17": {
+      "name": "Angriffsgipfel",
+      "description": "ATK +20"
+    },
+    "vamp_final1": {
+      "name": "Blutlord",
+      "description": "HP bei Treffer +30, ATK 15% mehr"
+    },
+    "vamp_final2": {
+      "name": "Ewiger Vampir",
+      "description": "HP-Regen pro Runde 3%"
+    },
+    "regen_1": {
+      "name": "Erholungs-Grundlagen",
+      "description": "HP +30, HP-Regen pro Runde +5"
+    },
+    "regen_2": {
+      "name": "Vitalitaet I",
+      "description": "HP-Regen pro Runde +5"
+    },
+    "regen_3": {
+      "name": "HP erhoehen",
+      "description": "HP +25"
+    },
+    "regen_4": {
+      "name": "Erholung erhoehen",
+      "description": "HP-Regen pro Runde +8"
+    },
+    "regen_5": {
+      "name": "Vitalitaet II",
+      "description": "HP +20% erhoehen"
+    },
+    "regen_6": {
+      "name": "HP erhoehen II",
+      "description": "HP +30"
+    },
+    "regen_7": {
+      "name": "Erholung erhoehen II",
+      "description": "HP-Regen pro Runde +10"
+    },
+    "regen_key1": {
+      "name": "Lebensbrunnen",
+      "description": "HP-Regen pro Runde 2%"
+    },
+    "regen_8": {
+      "name": "Vitalitaet III",
+      "description": "HP +25% erhoehen"
+    },
+    "regen_9": {
+      "name": "HP-Verstaerkung",
+      "description": "HP +40"
+    },
+    "regen_10": {
+      "name": "Erholungsverstaerkung",
+      "description": "HP-Regen pro Runde +12"
+    },
+    "regen_11": {
+      "name": "Vitalitaet IV",
+      "description": "HP +20% erhoehen"
+    },
+    "regen_12": {
+      "name": "HP erhoehen III",
+      "description": "HP +50"
+    },
+    "regen_13": {
+      "name": "Erholung erhoehen III",
+      "description": "HP-Regen pro Runde +15"
+    },
+    "regen_a1": {
+      "name": "Widerstandsfaehiges Leben",
+      "description": "HP +30% erhoehen"
+    },
+    "regen_a2": {
+      "name": "Unnachgiebiger Koerper",
+      "description": "HP +70"
+    },
+    "regen_b1": {
+      "name": "Super-Erholung",
+      "description": "HP-Regen pro Runde 1.5%"
+    },
+    "regen_b2": {
+      "name": "Heilungsgipfel",
+      "description": "HP-Regen pro Runde +25"
+    },
+    "regen_14": {
+      "name": "Vitalitaet V",
+      "description": "HP +25% erhoehen"
+    },
+    "regen_15": {
+      "name": "HP erhoehen IV",
+      "description": "HP +60"
+    },
+    "regen_16": {
+      "name": "Erholung erhoehen IV",
+      "description": "HP-Regen pro Runde +20"
+    },
+    "regen_17": {
+      "name": "Segen des Lebens",
+      "description": "HP-Regen pro Runde 2%"
+    },
+    "regen_final1": {
+      "name": "Phoenix-Segen",
+      "description": "HP 25% mehr, HP-Regen pro Runde +25"
+    },
+    "regen_final2": {
+      "name": "Ewiges Leben",
+      "description": "HP-Regen pro Runde 4%"
+    },
+    "speed_1": {
+      "name": "Geschwindigkeits-Grundlagen",
+      "description": "ATK +3, Angriffsgeschw. +5%"
+    },
+    "speed_2": {
+      "name": "Agilitaet I",
+      "description": "Angriffsgeschw. +5%"
+    },
+    "speed_3": {
+      "name": "Schneller Schlag",
+      "description": "ATK +5"
+    },
+    "speed_4": {
+      "name": "Agile Bewegung",
+      "description": "Angriffsgeschw. +5%"
+    },
+    "speed_5": {
+      "name": "Agilitaet II",
+      "description": "Angriffsgeschw. +5%"
+    },
+    "speed_6": {
+      "name": "Angriff erhoehen",
+      "description": "ATK +8"
+    },
+    "speed_7": {
+      "name": "Agilitaet III",
+      "description": "Angriffsgeschw. +8%"
+    },
+    "speed_key1": {
+      "name": "Sturm",
+      "description": "Angriffsgeschw. +15%"
+    },
+    "speed_8": {
+      "name": "Agilitaet IV",
+      "description": "Angriffsgeschw. +8%"
+    },
+    "speed_9": {
+      "name": "Schnelle Schlaege",
+      "description": "ATK +10, Angriffsgeschw. +5%"
+    },
+    "speed_10": {
+      "name": "Sofortiger Schlag",
+      "description": "Angriffsgeschw. +10%"
+    },
+    "speed_11": {
+      "name": "Agilitaet V",
+      "description": "Angriffsgeschw. +10%"
+    },
+    "speed_12": {
+      "name": "Angriffsverstaerkung",
+      "description": "ATK +15% erhoehen"
+    },
+    "speed_13": {
+      "name": "Beschleunigung",
+      "description": "Angriffsgeschw. +12%"
+    },
+    "speed_final1": {
+      "name": "Blitzschlag",
+      "description": "Angriffsgeschw. 15% mehr"
+    },
+    "speed_final2": {
+      "name": "Goettergeschwindigkeit",
+      "description": "Angriffsgeschw. 20% mehr, ATK 10% mehr"
+    },
+    "ignite_1": {
+      "name": "Entzuendungs-Grundlagen",
+      "description": "HP +20, Entzuendungschance +6%, Entzuendungsschaden +10%"
+    },
+    "ignite_2": {
+      "name": "Entzuendung erhoehen I",
+      "description": "Entzuendungschance +6%, Entzuendungsschaden +10%"
+    },
+    "ignite_3": {
+      "name": "HP & Verteidigung I",
+      "description": "HP +25, DEF +10, Entzuendungschance +6%"
+    },
+    "ignite_4": {
+      "name": "Vitalitaetsverstaerkung I",
+      "description": "DEF +10, HP +10% erhoehen, Entzuendungschance +6%"
+    },
+    "ignite_5": {
+      "name": "Entzuendung erhoehen II",
+      "description": "Entzuendungschance +6%, Entzuendungsschaden +15%"
+    },
+    "ignite_6": {
+      "name": "Entzuendungsdauer I",
+      "description": "Entzuendungschance +6%, Entzuendungsdauer +15%"
+    },
+    "ignite_7": {
+      "name": "Widerstandsverstaerkung",
+      "description": "DEF +20, DEF +15% erhoehen, Entzuendungschance +6%"
+    },
+    "ignite_key1": {
+      "name": "Langsame Flamme",
+      "description": "[Schluesselstein] Entzuendungschance +6%, Schadensreduzierung +10% bei AG < 0.8"
+    },
+    "ignite_8": {
+      "name": "Entzuendung erhoehen III",
+      "description": "Entzuendungschance +6%, Entzuendungsschaden +20%"
+    },
+    "ignite_9": {
+      "name": "Entzuendungsdauer II",
+      "description": "Entzuendungschance +6%, Entzuendungsdauer +20%"
+    },
+    "ignite_10": {
+      "name": "Leben erhoehen",
+      "description": "HP +30, HP +15% erhoehen, Entzuendungschance +6%"
+    },
+    "ignite_11": {
+      "name": "Gefestigter Koerper",
+      "description": "DEF +30, DEF +20% erhoehen, Entzuendungschance +6%"
+    },
+    "ignite_final1": {
+      "name": "Flammengipfel",
+      "description": "Entzuendungschance +6%, Entzuendungsschaden 25% mehr, HP +10% erhoehen"
+    },
+    "ignite_final2": {
+      "name": "Ausbreitende Flammen",
+      "description": "[Schluesselstein] Entzuendungschance +6%, Flammenausbreitung - Wenn entzuendeter Feind stirbt, uebertraegt Entzuendung auf naechsten Feind. DEF +10% erhoehen"
+    }
+  },
+  "ranking": {
+    "title": "Rangliste",
+    "dimensionalCorridor": "Dimensionskorridor",
+    "floor": "Stockwerk",
+    "you": "Du",
+    "loading": "Laden...",
+    "loadError": "Rangliste konnte nicht geladen werden",
+    "retry": "Wiederholen",
+    "noData": "Keine Ranglistendaten",
+    "cacheInfo": "Aktualisierung in {{minutes}}min verfuegbar"
+  },
+  "modDescriptions": {
+    "poisonChance": "Giftchance +{{value}}%",
+    "igniteChance": "Entzuendungschance +{{value}}%",
+    "igniteDuration": "Entzuendungsdauer +{{value}}%",
+    "igniteTickSpeed": "Entzuendungs-Tick-Geschw. +{{value}}%",
+    "igniteDamage": "Entzuendungsschaden +{{value}}%",
+    "criticalChance": "Crit Rate +{{value}}%",
+    "criticalDamage": "Crit DMG +{{value}}%",
+    "damageReduction": "Erlittener Schaden -{{value}}%",
+    "attackSpeed": "Angriffsgeschw. +{{value}}%",
+    "hpOnHit": "HP bei Treffer +{{value}}",
+    "lifesteal": "Lebensraub +{{value}}%"
+  },
+  "boost": {
+    "dropRate": {
+      "title": "Droprate ERHOEHT",
+      "description": "1,5x Droprate fuer 30 Min, +1% Einzigartig",
+      "longDescription": "+1% Einzigartige Droprate\n1,5x Gegenstand-Dropchance"
+    },
+    "tierBoost": {
+      "title": "Hoeherer Tier ERHOEHT",
+      "description": "Hoehere Qualitaets-Droprate ERHOEHT fuer 30 Min",
+      "longDescription": "Hoehere T1-T3 Qualitaets-Tier-Droprate\nNormalerweise sind T4-5 am haeufigsten"
+    },
+    "active": "Aktiv",
+    "activeRemaining": "Aktiv: {{minutes}} Min verbleibend",
+    "playing": "Abspielen...",
+    "watchAdToActivate": "Werbung ansehen zum Aktivieren",
+    "close": "Schliessen",
+    "error": "Fehler",
+    "adLoadFailed": "Werbung konnte nicht geladen werden",
+    "adShowFailed": "Werbung konnte nicht angezeigt werden. Bitte spaeter erneut versuchen.",
+    "adNotReady": "Werbung nicht bereit. Bitte warten und erneut versuchen.",
+    "duration": "Dauer: 30 Min",
+    "loadingAd": "Lade Werbung...",
+    "retry": "Wiederholen",
+    "dropRateBoostLabel": "Droprate-Boost",
+    "tierBoostLabel": "Tier-Boost",
+    "tooltipTitle": "Boost mit Werbung erhalten!",
+    "tooltipDescription": "Schau dir ein Video an und erhalte 30 Minuten Boost"
+  },
+  "modFilter": {
+    "tooltipTitle": "MOD-Filter verwenden",
+    "tooltipDescription": "Filtere unerwuenschte Gegenstaende automatisch heraus. Passe die Filtereinstellungen an, um nur die Beute zu behalten, die du brauchst.",
+    "goToSettings": "Einstellungen oeffnen"
+  },
+  "shop": {
+    "title": "Shop",
+    "subtitle": "Premium-Funktionen kaufen",
+    "purchased": "Gekauft",
+    "restore": "Kaeufe wiederherstellen",
+    "noProducts": "Keine Produkte verfuegbar",
+    "alreadyPurchased": "Bereits gekauft",
+    "alreadyPurchasedMessage": "Du besitzt diesen Gegenstand bereits",
+    "notAvailable": "Nicht verfuegbar",
+    "notAvailableMessage": "Dieser Gegenstand ist derzeit nicht verfuegbar",
+    "purchaseSuccess": "Kauf abgeschlossen",
+    "purchaseSuccessMessage": "Dein Kauf war erfolgreich",
+    "purchaseFailed": "Kauf fehlgeschlagen",
+    "purchaseFailedMessage": "Kauf konnte nicht abgeschlossen werden",
+    "restoreSuccess": "Wiederherstellung abgeschlossen",
+    "restoreSuccessMessage": "Kaeufe erfolgreich wiederhergestellt",
+    "restoreFailed": "Wiederherstellung fehlgeschlagen",
+    "restoreFailedMessage": "Kaeufe konnten nicht wiederhergestellt werden",
+    "inventoryExpansion": {
+      "name": "Inventar-Erweiterung",
+      "description": "Erhoeht Inventarlimit von {{from}} auf {{to}}"
+    },
+    "storageExpansion": {
+      "name": "Lager-Erweiterung",
+      "description": "Erhoeht Lagerlimit von {{from}} auf {{to}}"
+    },
+    "tierFilter": {
+      "name": "Niedriger-Tier-Filter",
+      "description": "Verhindert Drops von Gegenstaenden niedriger Qualitaet (T8-T10)"
+    },
+    "permanentBoost": {
+      "name": "Permanenter Boost",
+      "description": "Einzigartige Droprate +1%, Gegenstand-Droprate x1,5 und erhoehte Hoch-Tier (T1-T3) Dropraten sind immer aktiv"
+    },
+    "characterSlots": {
+      "name": "Charakter-Slots",
+      "description": "Ermoeglicht Erstellung von bis zu 5 Charakteren"
+    },
+    "speedBoost": {
+      "name": "Geschwindigkeits-Boost",
+      "description": "Schalte 2x-3x Kampfgeschwindigkeits-Optionen frei"
+    },
+    "premiumBundle": {
+      "name": "Premium-Paket",
+      "description": "Beinhaltet Inventar-Erweiterung, Lager-Erweiterung, Niedriger-Tier-Filter, Permanenter Boost und Charakter-Slots zu einem reduzierten Preis"
+    }
+  }
+}

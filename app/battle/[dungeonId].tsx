@@ -1,8 +1,10 @@
 import { BattleLog } from '@/components/battle/BattleLog';
-import { CharacterDisplay } from '@/components/battle/CharacterDisplay';
+import { CharacterAvatar } from '@/components/battle/CharacterAvatar';
+import { CharacterStatus } from '@/components/battle/CharacterStatus';
 import { BoostIndicator } from '@/components/battle/BoostIndicator';
 import { SpeedButton } from '@/components/battle/SpeedButton';
 import { Button } from '@/components/common/Button';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getDungeon } from '@/data/dungeons';
 import { useBattle } from '@/hooks/useBattle';
 import { usePlayerStore } from '@/stores/usePlayerStore';
@@ -11,7 +13,7 @@ import { useKeepAwake } from 'expo-keep-awake';
 import { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming, cancelAnimation } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { ms, fs, s } from '@/utils/scaling';
 import { getChestImageForItem, getChestRarityForItem } from '@/data/images';
@@ -157,6 +159,14 @@ const ChestDrop = ({
         )
       );
     }
+
+    // クリーンアップ: アンマウント時にアニメーションをキャンセル
+    return () => {
+      cancelAnimation(translateY);
+      cancelAnimation(rotateZ);
+      cancelAnimation(scale);
+      cancelAnimation(glow);
+    };
   }, [itemIndex, rotateZ, translateY, bounceHeight, swayDeg, pulseScale, glowOpacity, glow, scale]);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -195,29 +205,74 @@ export default function BattleScreen() {
   // 攻撃アニメーション用のstate
   const [playerAttacking, setPlayerAttacking] = useState(false);
   const [enemyAttacking, setEnemyAttacking] = useState(false);
-  const prevLogLengthRef = useRef(0);
+  // 最後に処理したログエントリの参照を追跡（ログが切り詰められても追跡可能）
+  const lastProcessedEntryRef = useRef<(typeof state.battleLog)[number] | null>(null);
+  // タイマーIDを管理（古いタイマーをキャンセルするため）
+  const playerAttackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const enemyAttackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 撤退確認モーダル
   const [showRetreatModal, setShowRetreatModal] = useState(false);
 
   // 戦闘ログの変化を監視して攻撃アニメーションをトリガー
   useEffect(() => {
-    const currentLength = state.battleLog.length;
-    if (currentLength > prevLogLengthRef.current) {
-      // 新しいログエントリを取得
-      const newEntries = state.battleLog.slice(prevLogLengthRef.current);
-      for (const entry of newEntries) {
-        if (entry.type === 'player_attack' || entry.type === 'critical') {
-          setPlayerAttacking(true);
-          setTimeout(() => setPlayerAttacking(false), 200);
-        } else if (entry.type === 'enemy_attack') {
-          setEnemyAttacking(true);
-          setTimeout(() => setEnemyAttacking(false), 200);
+    const currentLog = state.battleLog;
+    if (currentLog.length === 0) {
+      lastProcessedEntryRef.current = null;
+      return;
+    }
+
+    // 最後に処理したエントリの位置を探す
+    let startIndex = 0;
+    if (lastProcessedEntryRef.current) {
+      const foundIndex = currentLog.indexOf(lastProcessedEntryRef.current);
+      if (foundIndex !== -1) {
+        startIndex = foundIndex + 1;
+      }
+      // 見つからない場合（切り詰められて削除された場合）は0から処理
+    }
+
+    // 新しいエントリを取得
+    const newEntries = currentLog.slice(startIndex);
+    for (const entry of newEntries) {
+      if (entry.type === 'player_attack' || entry.type === 'critical') {
+        // 古いタイマーをキャンセル
+        if (playerAttackTimerRef.current) {
+          clearTimeout(playerAttackTimerRef.current);
         }
+        setPlayerAttacking(true);
+        playerAttackTimerRef.current = setTimeout(() => {
+          setPlayerAttacking(false);
+          playerAttackTimerRef.current = null;
+        }, 200);
+      } else if (entry.type === 'enemy_attack') {
+        // 古いタイマーをキャンセル
+        if (enemyAttackTimerRef.current) {
+          clearTimeout(enemyAttackTimerRef.current);
+        }
+        setEnemyAttacking(true);
+        enemyAttackTimerRef.current = setTimeout(() => {
+          setEnemyAttacking(false);
+          enemyAttackTimerRef.current = null;
+        }, 200);
       }
     }
-    prevLogLengthRef.current = currentLength;
+
+    // 最後のエントリを記録
+    lastProcessedEntryRef.current = currentLog[currentLog.length - 1];
   }, [state.battleLog]);
+
+  // アンマウント時にタイマーをクリーンアップ
+  useEffect(() => {
+    return () => {
+      if (playerAttackTimerRef.current) {
+        clearTimeout(playerAttackTimerRef.current);
+      }
+      if (enemyAttackTimerRef.current) {
+        clearTimeout(enemyAttackTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // 自動周回中でクリアした場合は結果画面に遷移しない（次の周回が始まる）
@@ -271,7 +326,7 @@ export default function BattleScreen() {
   const backgroundImage = dungeonId ? backgroundImages[dungeonId] : undefined;
   const showChest = Boolean(state.enemy && state.enemy.currentHp <= 0 && state.lastDroppedItems.length > 0);
 
-  // バトルエリアの内容
+  // バトルエリアの内容（背景画像の上にはキャラクター画像のみ）
   const battleAreaContent = (
     <>
       <View style={styles.floorInfo}>
@@ -288,8 +343,8 @@ export default function BattleScreen() {
         )}
       </View>
 
-      {/* 上部2/3のスペーサー */}
-      <View style={styles.battleFieldSpacer}>
+      {/* 勝利/敗北/クリアテキスト */}
+      <View style={styles.phaseTextContainer}>
         {state.phase === 'victory' && (
           <Text style={styles.victoryText}>{t('battle.victory')}</Text>
         )}
@@ -301,59 +356,54 @@ export default function BattleScreen() {
         )}
       </View>
 
-      {/* 下部1/3: キャラクターエリア（バトルフィールド） */}
-      <View style={styles.battleField}>
-        <View style={styles.charactersContainer}>
-          <CharacterDisplay
-            name={t('battle.player')}
-            currentHp={state.playerCurrentHp}
-            maxHp={state.playerMaxHp}
-            level={level}
+      {/* キャラクターアバターエリア（画像のみ） */}
+      <View style={styles.avatarArea}>
+        <View style={styles.avatarContainer}>
+          <CharacterAvatar
             isPlayer
             characterType={characterType}
             isAttacking={playerAttacking}
-            actionGauge={state.playerGauge}
+            size={s(100)}
           />
-          {state.enemy && !showChest && (
-            <CharacterDisplay
-              name={t(`monsters.${state.enemy.id}.name`, { defaultValue: state.enemy.name })}
-              currentHp={state.enemy.currentHp}
-              maxHp={state.enemy.maxHp}
+        </View>
+        {state.enemy && !showChest && (
+          <View style={styles.avatarContainer}>
+            <CharacterAvatar
               imageId={state.enemy.image}
               isAttacking={enemyAttacking}
-              actionGauge={state.enemyGauge}
+              size={s(100)}
               poisonStacks={state.enemyPoison}
               igniteState={state.enemyIgnite}
             />
-          )}
-          {state.enemy && showChest && (
-            <View style={styles.chestSlot}>
-              <View style={styles.chestRow}>
-                {state.lastDroppedItems.map((item, index) => {
-                  const offsets = getChestOffsets(state.lastDroppedItems.length);
-                  const { x, y } = offsets[index] || { x: 0, y: 0 };
-                  return (
-                    <ChestDrop
-                      key={`${item.instanceId}-${index}`}
-                      itemIndex={index}
-                      image={getChestImageForItem(item)}
-                      rarity={getChestRarityForItem(item)}
-                      offsetX={x}
-                      offsetY={y}
-                    />
-                  );
-                })}
-              </View>
+          </View>
+        )}
+        {state.enemy && showChest && (
+          <View style={styles.chestSlot}>
+            <View style={styles.chestRow}>
+              {state.lastDroppedItems.map((item, index) => {
+                const offsets = getChestOffsets(state.lastDroppedItems.length);
+                const { x, y } = offsets[index] || { x: 0, y: 0 };
+                return (
+                  <ChestDrop
+                    key={`${item.instanceId}-${index}`}
+                    itemIndex={index}
+                    image={getChestImageForItem(item)}
+                    rarity={getChestRarityForItem(item)}
+                    offsetX={x}
+                    offsetY={y}
+                  />
+                );
+              })}
             </View>
-          )}
-        </View>
+          </View>
+        )}
       </View>
     </>
   );
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
-      {/* 上部: バトルエリア */}
+    <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+      {/* 上部: バトルエリア（背景画像 + キャラクター画像のみ） */}
       {backgroundImage ? (
         <ImageBackground
           source={backgroundImage}
@@ -372,53 +422,81 @@ export default function BattleScreen() {
         </View>
       )}
 
-      {/* 中部: 戦闘ログ */}
-      <View style={styles.logArea}>
-        <BattleLog logs={state.battleLog} />
+      {/* ステータスエリア（ゲージ、名前、HP等） */}
+      <View style={styles.statusArea}>
+        <CharacterStatus
+          name={t('battle.player')}
+          currentHp={state.playerCurrentHp}
+          maxHp={state.playerMaxHp}
+          level={level}
+          isPlayer
+          actionGauge={state.playerGauge}
+        />
+        {state.enemy && (
+          <CharacterStatus
+            name={t(`monsters.${state.enemy.id}.name`, { defaultValue: state.enemy.name })}
+            currentHp={state.enemy.currentHp}
+            maxHp={state.enemy.maxHp}
+            actionGauge={state.enemyGauge}
+          />
+        )}
       </View>
 
-      {/* 下部: アクションボタン */}
-      {state.phase === 'fighting' && (
-        <View style={styles.actionArea}>
-          <View style={styles.actionButtons}>
-            <View style={styles.buttonWrapper}>
-              <Button
-                title={isPaused ? t('battle.resume') : t('battle.pause')}
-                onPress={togglePause}
-                variant="secondary"
-                testID="battle-toggle-pause"
-              />
-            </View>
-            {!isPaused && !UBER_DUNGEON_IDS.includes(dungeonId || '') && (
-              <View style={styles.buttonWrapper}>
-                {isAutoRunning ? (
-                  <Button
-                    title={t('battle.stopAutoRun')}
-                    onPress={stopAutoRun}
-                    variant="warning"
-                    testID="battle-auto-toggle"
-                  />
-                ) : (
-                  <Button
-                    title={t('battle.autoRun')}
-                    onPress={startAutoRun}
-                    variant="primary"
-                    testID="battle-auto-toggle"
-                  />
-                )}
-              </View>
-            )}
-            {isPaused && (
-              <View style={styles.buttonWrapper}>
-                <Button
-                  title={t('battle.retreat')}
-                  onPress={() => setShowRetreatModal(true)}
-                  variant="danger"
-                  testID="battle-retreat"
+      {/* 戦闘ログ（画面下部まで拡張） */}
+      <View style={styles.logArea}>
+        <BattleLog logs={state.battleLog} />
+
+        {/* フローティングアクションアイコン（右下縦並び） */}
+        {state.phase === 'fighting' && (
+          <View style={styles.floatingActions}>
+            {/* 周回アイコン（Uberダンジョンでは非表示） */}
+            {!UBER_DUNGEON_IDS.includes(dungeonId || '') && (
+              <Pressable
+                style={[
+                  styles.floatingIconButton,
+                  isAutoRunning && styles.floatingIconButtonActive,
+                ]}
+                onPress={isAutoRunning ? stopAutoRun : startAutoRun}
+                testID="battle-auto-toggle"
+              >
+                <MaterialCommunityIcons
+                  name="autorenew"
+                  size={ms(18)}
+                  color={isAutoRunning ? '#4CAF50' : 'rgba(255, 255, 255, 0.7)'}
                 />
-              </View>
+              </Pressable>
             )}
+            {/* 一時停止/再開アイコン */}
+            <Pressable
+              style={[
+                styles.floatingIconButton,
+                isPaused && styles.floatingIconButtonPaused,
+              ]}
+              onPress={togglePause}
+              testID="battle-toggle-pause"
+            >
+              <MaterialCommunityIcons
+                name={isPaused ? 'play' : 'pause'}
+                size={ms(18)}
+                color={isPaused ? '#FFC107' : 'rgba(255, 255, 255, 0.7)'}
+              />
+            </Pressable>
           </View>
+        )}
+      </View>
+
+      {/* 撤退ボタンエリア（常にスペース確保、一時停止中のみボタン表示） */}
+      {state.phase === 'fighting' && (
+        <View style={styles.retreatArea}>
+          {isPaused && (
+            <Pressable
+              style={styles.retreatButton}
+              onPress={() => setShowRetreatModal(true)}
+              testID="battle-retreat"
+            >
+              <Text style={styles.retreatButtonText}>{t('battle.retreat')}</Text>
+            </Pressable>
+          )}
         </View>
       )}
 
@@ -464,7 +542,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#15191E',
   },
   battleArea: {
-    height: s(280),
+    height: s(260),
     overflow: 'hidden',
   },
   battleAreaImage: {
@@ -480,7 +558,7 @@ const styles = StyleSheet.create({
   },
   floorInfo: {
     alignItems: 'center',
-    marginBottom: ms(8),
+    marginBottom: ms(4),
   },
   floorInfoRow: {
     flexDirection: 'row',
@@ -503,29 +581,30 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
   },
-  battleFieldSpacer: {
-    flex: 1,
-    justifyContent: 'center',
+  phaseTextContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: ms(28),
   },
-  battleField: {
-    paddingBottom: ms(6),
-    backgroundColor: 'rgba(22, 33, 62, 0.6)',
-    borderTopLeftRadius: ms(16),
-    borderTopRightRadius: ms(16),
-    paddingHorizontal: ms(8),
-    paddingTop: ms(8),
-  },
-  charactersContainer: {
+  avatarArea: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingHorizontal: ms(24),
+  },
+  avatarContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  statusArea: {
+    flexDirection: 'row',
+    paddingHorizontal: ms(12),
+    paddingVertical: ms(8),
   },
   chestSlot: {
-    flex: 1,
-    padding: ms(12),
-    borderRadius: ms(12),
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    marginLeft: ms(8),
+    width: s(120),
+    height: s(120),
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -584,21 +663,56 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: ms(8),
   },
-  actionArea: {
-    paddingHorizontal: ms(16),
-    paddingVertical: ms(12),
-  },
-  actionButtons: {
-    flexDirection: 'row',
-    gap: ms(12),
-  },
-  buttonWrapper: {
-    flex: 1,
-  },
   logArea: {
     flex: 1,
-    padding: ms(16),
-    maxHeight: s(300),
+    paddingHorizontal: ms(16),
+    paddingTop: ms(8),
+    paddingBottom: ms(16),
+    position: 'relative',
+  },
+  floatingActions: {
+    position: 'absolute',
+    right: ms(8),
+    bottom: ms(8),
+    gap: ms(6),
+  },
+  floatingIconButton: {
+    width: ms(36),
+    height: ms(36),
+    borderRadius: ms(18),
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  floatingIconButtonActive: {
+    backgroundColor: 'rgba(76, 175, 80, 0.3)',
+    borderColor: '#4CAF50',
+  },
+  floatingIconButtonPaused: {
+    backgroundColor: 'rgba(255, 193, 7, 0.3)',
+    borderColor: '#FFC107',
+  },
+  retreatArea: {
+    paddingHorizontal: ms(16),
+    paddingBottom: ms(12),
+    alignItems: 'center',
+    minHeight: ms(52),
+    justifyContent: 'center',
+  },
+  retreatButton: {
+    paddingVertical: ms(10),
+    paddingHorizontal: ms(32),
+    backgroundColor: 'rgba(244, 67, 54, 0.2)',
+    borderRadius: ms(8),
+    borderWidth: 1,
+    borderColor: 'rgba(244, 67, 54, 0.5)',
+  },
+  retreatButtonText: {
+    fontSize: fs(14),
+    color: '#F44336',
+    fontWeight: 'bold',
   },
   // モーダル
   modalOverlay: {

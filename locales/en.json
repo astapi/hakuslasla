@@ -120,7 +120,7 @@
     "items": "Items Obtained",
     "totalItems": "Total Items ({{count}})",
     "noItems": "No Items",
-    "returnButton": "Return to Dungeon Select"
+    "returnButton": "Return to Home"
   },
   "inventory": {
     "title": "Inventory",
@@ -158,9 +158,21 @@
     "language": {
       "title": "Language",
       "description": "Select the app display language",
+      "system": "Follow System Settings",
       "japanese": "日本語",
       "english": "English",
-      "system": "Follow System Settings"
+      "chinese": "简体中文",
+      "korean": "한국어",
+      "spanish": "Español",
+      "french": "Français",
+      "german": "Deutsch",
+      "current": "Current: {{language}}"
+    },
+    "sound": {
+      "title": "Sound Settings",
+      "description": "Toggle BGM and sound effects ON/OFF",
+      "bgm": "BGM",
+      "se": "Sound Effects"
     },
     "categoryFilter": {
       "title": "Category Filter",
@@ -2006,7 +2018,14 @@
     "loadingAd": "Loading ad...",
     "retry": "Retry",
     "dropRateBoostLabel": "Drop Rate Boost",
-    "tierBoostLabel": "Tier Boost"
+    "tierBoostLabel": "Tier Boost",
+    "tooltipTitle": "Get Boost with Ads!",
+    "tooltipDescription": "Watch a video ad to get 30 minutes of boost"
+  },
+  "modFilter": {
+    "tooltipTitle": "Use the MOD Filter",
+    "tooltipDescription": "Automatically filter out unwanted items. Customize filter settings to keep only the loot you need.",
+    "goToSettings": "Open Settings"
   },
   "shop": {
     "title": "Shop",

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Modal } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
@@ -11,6 +11,7 @@ import {
   AppLanguage,
   LANGUAGE_OPTIONS,
   DEFAULT_LANGUAGE,
+  LANGUAGE_LABELS,
   BattleSpeedMultiplier,
   BATTLE_SPEED_OPTIONS,
   DEFAULT_BATTLE_SPEED,
@@ -19,6 +20,7 @@ import {
 } from '@/db/repositories/settingsRepository';
 import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 import { changeLanguage } from '@/lib/i18n';
+import { updateSoundSettings } from '@/lib/sound';
 import { ms, fs } from '@/utils/scaling';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
@@ -37,8 +39,19 @@ export default function SettingsScreen() {
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
   const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
   const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
+  const [bgmEnabled, setBgmEnabled] = useState(true);
+  const [seEnabled, setSeEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
   const hasPremiumSpeed = hasSpeedBoost();
+
+  // 言語コードからラベルを取得するヘルパー
+  const getLanguageLabel = (lang: AppLanguage): string => {
+    if (lang === 'system') {
+      return t('settings.language.system');
+    }
+    return LANGUAGE_LABELS[lang];
+  };
 
   useEffect(() => {
     loadSettings();
@@ -46,13 +59,17 @@ export default function SettingsScreen() {
 
   const loadSettings = async () => {
     try {
-      const [loaded, savedLanguage, savedSpeed] = await Promise.all([
+      const [loaded, savedLanguage, savedSpeed, savedBgm, savedSe] = await Promise.all([
         settingsRepository.getDropFilter(),
         settingsRepository.getLanguage(),
         settingsRepository.getBattleSpeed(),
+        settingsRepository.getBgmEnabled(),
+        settingsRepository.getSeEnabled(),
       ]);
       setSettings(loaded);
       setLanguage(savedLanguage);
+      setBgmEnabled(savedBgm);
+      setSeEnabled(savedSe);
       // 課金していない場合で、保存されている速度がプレミアム速度の場合は無料枠（1x）にリセット
       if (!hasSpeedBoost() && PREMIUM_BATTLE_SPEED_OPTIONS.includes(savedSpeed)) {
         setBattleSpeed(DEFAULT_BATTLE_SPEED);
@@ -80,6 +97,18 @@ export default function SettingsScreen() {
   const availableSpeedOptions = hasPremiumSpeed
     ? BATTLE_SPEED_OPTIONS
     : FREE_BATTLE_SPEED_OPTIONS;
+
+  const handleBgmToggle = async (enabled: boolean) => {
+    setBgmEnabled(enabled);
+    await settingsRepository.setBgmEnabled(enabled);
+    updateSoundSettings(enabled, seEnabled);
+  };
+
+  const handleSeToggle = async (enabled: boolean) => {
+    setSeEnabled(enabled);
+    await settingsRepository.setSeEnabled(enabled);
+    updateSoundSettings(bgmEnabled, enabled);
+  };
 
   const saveSettings = async (newSettings: DropFilterSettings) => {
     setSettings(newSettings);
@@ -138,37 +167,73 @@ export default function SettingsScreen() {
           <Text style={styles.sectionDescription}>
             {t('settings.language.description')}
           </Text>
-          <View style={styles.languageOptions}>
-            {LANGUAGE_OPTIONS.map((option) => (
-              <Pressable
-                key={option}
-                style={[
-                  styles.languageOption,
-                  language === option && styles.languageOptionSelected,
-                ]}
-                onPress={() => handleLanguageChange(option)}
-              >
-                <MaterialCommunityIcons
-                  name={language === option ? 'radiobox-marked' : 'radiobox-blank'}
-                  size={20}
-                  color={language === option ? '#4CAF50' : '#666'}
-                />
-                <Text
-                  style={[
-                    styles.languageOptionText,
-                    language === option && styles.languageOptionTextSelected,
-                  ]}
-                >
-                  {option === 'system'
-                    ? t('settings.language.system')
-                    : option === 'ja'
-                    ? t('settings.language.japanese')
-                    : t('settings.language.english')}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
+          <Pressable
+            style={styles.languageSelector}
+            onPress={() => setLanguageModalVisible(true)}
+          >
+            <View style={styles.languageSelectorContent}>
+              <MaterialCommunityIcons
+                name="translate"
+                size={20}
+                color={colors.text}
+              />
+              <Text style={styles.languageSelectorText}>
+                {getLanguageLabel(language)}
+              </Text>
+            </View>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={24}
+              color={colors.textMuted}
+            />
+          </Pressable>
         </View>
+
+        {/* 言語選択モーダル */}
+        <Modal
+          visible={languageModalVisible}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setLanguageModalVisible(false)}
+        >
+          <Pressable
+            style={styles.modalOverlay}
+            onPress={() => setLanguageModalVisible(false)}
+          >
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>{t('settings.language.title')}</Text>
+              <ScrollView style={styles.modalScrollView}>
+                {LANGUAGE_OPTIONS.map((option) => (
+                  <Pressable
+                    key={option}
+                    style={[
+                      styles.languageOption,
+                      language === option && styles.languageOptionSelected,
+                    ]}
+                    onPress={() => {
+                      handleLanguageChange(option);
+                      setLanguageModalVisible(false);
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      name={language === option ? 'radiobox-marked' : 'radiobox-blank'}
+                      size={20}
+                      color={language === option ? '#4CAF50' : '#666'}
+                    />
+                    <Text
+                      style={[
+                        styles.languageOptionText,
+                        language === option && styles.languageOptionTextSelected,
+                      ]}
+                    >
+                      {getLanguageLabel(option)}
+                    </Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </View>
+          </Pressable>
+        </Modal>
 
         {/* 戦闘速度 */}
         <View style={styles.section}>
@@ -220,30 +285,40 @@ export default function SettingsScreen() {
           )}
         </View>
 
-        {/* カテゴリフィルター */}
+        {/* サウンド設定 */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings.categoryFilter.title')}</Text>
-          <Text style={styles.sectionDescription}>
-            {t('settings.categoryFilter.description')}
-          </Text>
-          {SLOT_ORDER.map((slot) => (
-            <View key={slot} style={styles.filterRow}>
-              <View style={styles.filterLabel}>
-                <MaterialCommunityIcons
-                  name={SLOT_ICONS[slot] as keyof typeof MaterialCommunityIcons.glyphMap}
-                  size={20}
-                  color="#aaa"
-                />
-                <Text style={styles.filterLabelText}>{t(`slots.${slot}`)}</Text>
-              </View>
-              <Switch
-                value={settings.categories[slot]}
-                onValueChange={() => toggleCategory(slot)}
-                trackColor={{ false: '#333', true: '#4CAF50' }}
-                thumbColor={settings.categories[slot] ? '#fff' : '#888'}
+          <View style={[styles.filterRow, { borderBottomWidth: 1 }]}>
+            <View style={styles.filterLabel}>
+              <MaterialCommunityIcons
+                name="music"
+                size={20}
+                color="#aaa"
               />
+              <Text style={styles.filterLabelText}>{t('settings.sound.bgm')}</Text>
             </View>
-          ))}
+            <Switch
+              value={bgmEnabled}
+              onValueChange={handleBgmToggle}
+              trackColor={{ false: '#333', true: '#4CAF50' }}
+              thumbColor={bgmEnabled ? '#fff' : '#888'}
+            />
+          </View>
+          <View style={[styles.filterRow, { borderBottomWidth: 0 }]}>
+            <View style={styles.filterLabel}>
+              <MaterialCommunityIcons
+                name="volume-high"
+                size={20}
+                color="#aaa"
+              />
+              <Text style={styles.filterLabelText}>{t('settings.sound.se')}</Text>
+            </View>
+            <Switch
+              value={seEnabled}
+              onValueChange={handleSeToggle}
+              trackColor={{ false: '#333', true: '#4CAF50' }}
+              thumbColor={seEnabled ? '#fff' : '#888'}
+            />
+          </View>
         </View>
 
         {/* MOD数フィルター */}
@@ -307,6 +382,32 @@ export default function SettingsScreen() {
               {t('settings.tierFilter.hint')}
             </Text>
           )}
+        </View>
+
+        {/* カテゴリフィルター */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.categoryFilter.title')}</Text>
+          <Text style={styles.sectionDescription}>
+            {t('settings.categoryFilter.description')}
+          </Text>
+          {SLOT_ORDER.map((slot) => (
+            <View key={slot} style={styles.filterRow}>
+              <View style={styles.filterLabel}>
+                <MaterialCommunityIcons
+                  name={SLOT_ICONS[slot] as keyof typeof MaterialCommunityIcons.glyphMap}
+                  size={20}
+                  color="#aaa"
+                />
+                <Text style={styles.filterLabelText}>{t(`slots.${slot}`)}</Text>
+              </View>
+              <Switch
+                value={settings.categories[slot]}
+                onValueChange={() => toggleCategory(slot)}
+                trackColor={{ false: '#333', true: '#4CAF50' }}
+                thumbColor={settings.categories[slot] ? '#fff' : '#888'}
+              />
+            </View>
+          ))}
         </View>
 
         {/* 現在の設定サマリー */}
@@ -493,24 +594,74 @@ const styles = StyleSheet.create({
     fontSize: fs(13),
     color: colors.textMuted,
   },
+  // 言語セレクター（タップでモーダルを開く）
+  languageSelector: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: ms(14),
+    paddingHorizontal: ms(12),
+    backgroundColor: colors.bgDeep,
+    borderRadius: ms(8),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+  },
+  languageSelectorContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(12),
+  },
+  languageSelectorText: {
+    fontSize: fs(15),
+    color: colors.text,
+    fontWeight: '500',
+  },
+  // モーダル
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: ms(24),
+  },
+  modalContent: {
+    backgroundColor: colors.slab,
+    borderRadius: ms(16),
+    padding: ms(16),
+    width: '100%',
+    maxWidth: ms(340),
+    maxHeight: '80%',
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+  },
+  modalTitle: {
+    fontSize: fs(18),
+    fontWeight: 'bold',
+    color: colors.text,
+    textAlign: 'center',
+    marginBottom: ms(16),
+  },
+  modalScrollView: {
+    maxHeight: ms(400),
+  },
   languageOptions: {
     gap: ms(8),
   },
   languageOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: ms(12),
+    paddingVertical: ms(14),
     paddingHorizontal: ms(12),
-    backgroundColor: colors.slab,
+    backgroundColor: colors.bgDeep,
     borderRadius: ms(8),
     gap: ms(12),
     borderWidth: 1,
     borderColor: colors.slabEdge,
+    marginBottom: ms(8),
   },
   languageOptionSelected: {
     backgroundColor: colors.accent,
-    borderWidth: 1,
-    borderColor: colors.slabEdge,
+    borderColor: '#4CAF50',
   },
   languageOptionText: {
     fontSize: fs(15),
