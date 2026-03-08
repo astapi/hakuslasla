@@ -49,7 +49,7 @@ export const submitDimensionalCorridorScore = async (
     atk: stats.atk,
     def: stats.def,
     // クリティカル
-    critChance: combinedMods.criticalChance,
+    critChance: combinedMods.criticalChance + (classAbility.criticalChance ?? 0),
     critDamage: 150 + combinedMods.criticalDamage,
     // 毒
     poisonChance: combinedMods.poisonChance,
@@ -70,9 +70,12 @@ export const submitDimensionalCorridorScore = async (
     hpOnCrit: combinedMods.hpOnCrit,
     damageReduction: combinedMods.damageReductionPct,
     // 攻撃速度
-    attackSpeedPct: combinedMods.attackSpeedPct,
+    attackSpeedPct: combinedMods.attackSpeedPct + (classAbility.attackSpeedPct ?? 0),
     attackSpeedMore: attackSpeedMoreTotal,
-    attackSpeed: getAttackSpeedFromMods(combinedMods),
+    attackSpeed: getAttackSpeedFromMods({
+      ...combinedMods,
+      attackSpeedPct: combinedMods.attackSpeedPct + (classAbility.attackSpeedPct ?? 0),
+    }),
   };
 
   const build = {

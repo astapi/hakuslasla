@@ -9,7 +9,9 @@ export type CharacterType = 'warrior' | 'elementalist';
 
 // クラス別固有能力
 export interface ClassAbility {
-  igniteChance?: number;  // 発火確率%（エレメンタリスト）
+  igniteChance?: number;      // 発火確率%（エレメンタリスト）
+  criticalChance?: number;    // クリティカル率%（ウォリアー）
+  attackSpeedPct?: number;    // 攻撃速度+%（ウォリアー）
 }
 
 // ドロップフィルター設定

@@ -105,12 +105,24 @@ export default function CharacterCreateScreen() {
           </View>
 
           {/* クラス固有能力 */}
-          {classAbility.igniteChance && (
+          {(classAbility.igniteChance || classAbility.criticalChance || classAbility.attackSpeedPct) && (
             <View style={styles.abilitySection}>
               <Text style={styles.abilityLabel}>{t('characterCreate.classAbility')}</Text>
-              <Text style={styles.abilityValue}>
-                {t('characterCreate.ability.igniteChance', { value: classAbility.igniteChance })}
-              </Text>
+              {classAbility.igniteChance && (
+                <Text style={styles.abilityValue}>
+                  {t('characterCreate.ability.igniteChance', { value: classAbility.igniteChance })}
+                </Text>
+              )}
+              {classAbility.criticalChance && (
+                <Text style={styles.abilityValue}>
+                  {t('characterCreate.ability.criticalChance', { value: classAbility.criticalChance })}
+                </Text>
+              )}
+              {classAbility.attackSpeedPct && (
+                <Text style={styles.abilityValue}>
+                  {t('characterCreate.ability.attackSpeedPct', { value: classAbility.attackSpeedPct })}
+                </Text>
+              )}
             </View>
           )}
         </View>

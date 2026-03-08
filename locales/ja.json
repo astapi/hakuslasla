@@ -40,7 +40,9 @@
     },
     "classAbility": "クラス固有能力",
     "ability": {
-      "igniteChance": "発火確率 {{value}}%"
+      "igniteChance": "発火確率 {{value}}%",
+      "criticalChance": "クリティカル率 {{value}}%",
+      "attackSpeedPct": "攻撃速度 +{{value}}%"
     },
     "initialStats": "初期ステータス"
   },

@@ -40,7 +40,9 @@
     },
     "classAbility": "Habilidad de Clase",
     "ability": {
-      "igniteChance": "Prob. de Ignite {{value}}%"
+      "igniteChance": "Prob. de Ignite {{value}}%",
+      "criticalChance": "Prob. de Critico {{value}}%",
+      "attackSpeedPct": "Velocidad de ataque +{{value}}%"
     },
     "initialStats": "Estadísticas Iniciales"
   },
