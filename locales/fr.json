@@ -36,13 +36,15 @@
     "classLabel": "Choisir une classe",
     "class": {
       "warrior": "Guerrier",
-      "elementalist": "Élémentaliste"
+      "elementalist": "Élémentaliste",
+      "ranger": "Rôdeur"
     },
     "classAbility": "Capacité de classe",
     "ability": {
       "igniteChance": "Chance d'Ignite {{value}}%",
       "criticalChance": "Chance de Critique {{value}}%",
-      "attackSpeedPct": "Vitesse d'attaque +{{value}}%"
+      "attackSpeedPct": "Vitesse d'attaque +{{value}}%",
+      "poisonChance": "Chance de Poison {{value}}%"
     },
     "initialStats": "Stats initiales"
   },

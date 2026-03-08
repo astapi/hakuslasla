@@ -31,8 +31,9 @@ const rowToCharacter = (row: CharacterRow): Character => ({
 
 // クラス別初期ステータス
 const CLASS_BASE_STATS: Record<CharacterType, { maxHp: number; atk: number; def: number }> = {
-  warrior: { maxHp: 100, atk: 10, def: 5 },
+  warrior: { maxHp: 120, atk: 10, def: 5 },
   elementalist: { maxHp: 85, atk: 10, def: 4 },
+  ranger: { maxHp: 100, atk: 10, def: 5 },
 };
 
 export const characterRepository = {

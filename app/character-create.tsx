@@ -10,7 +10,7 @@ import { CharacterType } from '@/types';
 import { CLASS_INITIAL_STATS, CLASS_ABILITIES } from '@/core/player';
 import { characterImages } from '@/data/images';
 
-const CHARACTER_TYPES: CharacterType[] = ['warrior', 'elementalist'];
+const CHARACTER_TYPES: CharacterType[] = ['warrior', 'elementalist', 'ranger'];
 
 export default function CharacterCreateScreen() {
   const { t } = useTranslation();
@@ -105,7 +105,7 @@ export default function CharacterCreateScreen() {
           </View>
 
           {/* クラス固有能力 */}
-          {(classAbility.igniteChance || classAbility.criticalChance || classAbility.attackSpeedPct) && (
+          {(classAbility.igniteChance || classAbility.criticalChance || classAbility.attackSpeedPct || classAbility.poisonChance) && (
             <View style={styles.abilitySection}>
               <Text style={styles.abilityLabel}>{t('characterCreate.classAbility')}</Text>
               {classAbility.igniteChance && (
@@ -121,6 +121,11 @@ export default function CharacterCreateScreen() {
               {classAbility.attackSpeedPct && (
                 <Text style={styles.abilityValue}>
                   {t('characterCreate.ability.attackSpeedPct', { value: classAbility.attackSpeedPct })}
+                </Text>
+              )}
+              {classAbility.poisonChance && (
+                <Text style={styles.abilityValue}>
+                  {t('characterCreate.ability.poisonChance', { value: classAbility.poisonChance })}
                 </Text>
               )}
             </View>
@@ -185,7 +190,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'transparent',
     flex: 1,
-    maxWidth: ms(150),
+    maxWidth: ms(120),
   },
   classCardSelected: {
     borderColor: '#FFD700',

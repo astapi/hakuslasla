@@ -708,6 +708,7 @@ export const useBattle = (dungeonId: string) => {
       igniteChance: baseMods.igniteChance + (classAbility.igniteChance ?? 0),
       criticalChance: baseMods.criticalChance + (classAbility.criticalChance ?? 0),
       attackSpeedPct: baseMods.attackSpeedPct + (classAbility.attackSpeedPct ?? 0),
+      poisonChance: baseMods.poisonChance + (classAbility.poisonChance ?? 0),
     };
   }, [equipment, unlockedSkills, characterType]);
 

@@ -26,12 +26,14 @@ export const INITIAL_STATS: Stats = {
 export const CLASS_INITIAL_STATS: Record<CharacterType, Stats> = {
   warrior: { maxHp: 120, atk: 10, def: 5 },
   elementalist: { maxHp: 85, atk: 10, def: 4 },
+  ranger: { maxHp: 100, atk: 10, def: 5 },
 };
 
 /** クラス別固有能力 */
 export const CLASS_ABILITIES: Record<CharacterType, ClassAbility> = {
   warrior: { criticalChance: 10, attackSpeedPct: 10 },  // クリティカル率10%, 攻撃速度+10%
   elementalist: { igniteChance: 20 },  // 発火確率20%
+  ranger: { poisonChance: 20 },  // 毒付与率20%
 };
 
 /**

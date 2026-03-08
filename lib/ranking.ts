@@ -52,7 +52,7 @@ export const submitDimensionalCorridorScore = async (
     critChance: combinedMods.criticalChance + (classAbility.criticalChance ?? 0),
     critDamage: 150 + combinedMods.criticalDamage,
     // 毒
-    poisonChance: combinedMods.poisonChance,
+    poisonChance: combinedMods.poisonChance + (classAbility.poisonChance ?? 0),
     poisonDamagePct: combinedMods.poisonDamagePct,
     poisonDamageMore: poisonDamageMoreTotal,
     poisonMaxStacks: combinedMods.poisonMaxStacks,
