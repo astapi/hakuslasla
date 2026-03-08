@@ -36,13 +36,15 @@
     "classLabel": "클래스 선택",
     "class": {
       "warrior": "전사",
-      "elementalist": "정령술사"
+      "elementalist": "정령술사",
+      "ranger": "레인저"
     },
     "classAbility": "클래스 능력",
     "ability": {
       "igniteChance": "점화 확률 {{value}}%",
       "criticalChance": "치명타 확률 {{value}}%",
-      "attackSpeedPct": "공격 속도 +{{value}}%"
+      "attackSpeedPct": "공격 속도 +{{value}}%",
+      "poisonChance": "독 확률 {{value}}%"
     },
     "initialStats": "초기 스탯"
   },

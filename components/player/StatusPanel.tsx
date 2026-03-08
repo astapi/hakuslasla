@@ -89,7 +89,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     // 合計値を計算
     const totalCriticalChance = combinedMods.criticalChance + (CLASS_ABILITIES[state.characterType]?.criticalChance || 0);
     const totalCriticalDamage = 150 + combinedMods.criticalDamage; // 基礎150%
-    const totalPoisonChance = combinedMods.poisonChance;
+    const totalPoisonChance = combinedMods.poisonChance + (CLASS_ABILITIES[state.characterType]?.poisonChance || 0);
     const totalHpRegen = combinedMods.hpRegen;
     const totalHpRegenPct = combinedMods.hpRegenPct;
     const totalHpOnHit = combinedMods.hpOnHit;

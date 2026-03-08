@@ -36,13 +36,15 @@
     "classLabel": "Seleccionar Clase",
     "class": {
       "warrior": "Guerrero",
-      "elementalist": "Elementalista"
+      "elementalist": "Elementalista",
+      "ranger": "Explorador"
     },
     "classAbility": "Habilidad de Clase",
     "ability": {
       "igniteChance": "Prob. de Ignite {{value}}%",
       "criticalChance": "Prob. de Critico {{value}}%",
-      "attackSpeedPct": "Velocidad de ataque +{{value}}%"
+      "attackSpeedPct": "Velocidad de ataque +{{value}}%",
+      "poisonChance": "Prob. de Veneno {{value}}%"
     },
     "initialStats": "Estadísticas Iniciales"
   },

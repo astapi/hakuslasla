@@ -36,13 +36,15 @@
     "classLabel": "Select Class",
     "class": {
       "warrior": "Warrior",
-      "elementalist": "Elementalist"
+      "elementalist": "Elementalist",
+      "ranger": "Ranger"
     },
     "classAbility": "Class Ability",
     "ability": {
       "igniteChance": "Ignite Chance {{value}}%",
       "criticalChance": "Critical Chance {{value}}%",
-      "attackSpeedPct": "Attack Speed +{{value}}%"
+      "attackSpeedPct": "Attack Speed +{{value}}%",
+      "poisonChance": "Poison Chance {{value}}%"
     },
     "initialStats": "Initial Stats"
   },

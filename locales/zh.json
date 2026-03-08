@@ -36,13 +36,15 @@
     "classLabel": "选择职业",
     "class": {
       "warrior": "战士",
-      "elementalist": "元素师"
+      "elementalist": "元素师",
+      "ranger": "游侠"
     },
     "classAbility": "职业能力",
     "ability": {
       "igniteChance": "点燃几率 {{value}}%",
       "criticalChance": "暴击率 {{value}}%",
-      "attackSpeedPct": "攻击速度 +{{value}}%"
+      "attackSpeedPct": "攻击速度 +{{value}}%",
+      "poisonChance": "中毒几率 {{value}}%"
     },
     "initialStats": "初始属性"
   },

@@ -54,12 +54,15 @@ describe('core/player', () => {
   });
 
   it('getClassInitialStats はクラス別初期値を返す', () => {
-    expect(getClassInitialStats('warrior')).toEqual({ maxHp: 100, atk: 10, def: 5 });
+    expect(getClassInitialStats('warrior')).toEqual({ maxHp: 120, atk: 10, def: 5 });
     expect(getClassInitialStats('elementalist')).toEqual({ maxHp: 85, atk: 10, def: 4 });
+    expect(getClassInitialStats('ranger')).toEqual({ maxHp: 100, atk: 10, def: 5 });
   });
 
-  it('getClassAbilities はエレメンタリストの発火確率を返す', () => {
+  it('getClassAbilities はクラス別固有能力を返す', () => {
     expect(getClassAbilities('warrior').igniteChance).toBeUndefined();
+    expect(getClassAbilities('warrior').criticalChance).toBe(10);
     expect(getClassAbilities('elementalist').igniteChance).toBe(20);
+    expect(getClassAbilities('ranger').poisonChance).toBe(20);
   });
 });

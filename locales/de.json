@@ -36,13 +36,15 @@
     "classLabel": "Klasse waehlen",
     "class": {
       "warrior": "Krieger",
-      "elementalist": "Elementarist"
+      "elementalist": "Elementarist",
+      "ranger": "Waldläufer"
     },
     "classAbility": "Klassenfaehigkeit",
     "ability": {
       "igniteChance": "Entzuendungschance {{value}}%",
       "criticalChance": "Kritische Trefferchance {{value}}%",
-      "attackSpeedPct": "Angriffsgeschwindigkeit +{{value}}%"
+      "attackSpeedPct": "Angriffsgeschwindigkeit +{{value}}%",
+      "poisonChance": "Giftchance {{value}}%"
     },
     "initialStats": "Startwerte"
   },

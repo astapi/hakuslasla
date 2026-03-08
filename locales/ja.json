@@ -36,13 +36,15 @@
     "classLabel": "クラス選択",
     "class": {
       "warrior": "ウォリアー",
-      "elementalist": "エレメンタリスト"
+      "elementalist": "エレメンタリスト",
+      "ranger": "レンジャー"
     },
     "classAbility": "クラス固有能力",
     "ability": {
       "igniteChance": "発火確率 {{value}}%",
       "criticalChance": "クリティカル率 {{value}}%",
-      "attackSpeedPct": "攻撃速度 +{{value}}%"
+      "attackSpeedPct": "攻撃速度 +{{value}}%",
+      "poisonChance": "毒付与率 {{value}}%"
     },
     "initialStats": "初期ステータス"
   },
