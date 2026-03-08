@@ -30,6 +30,8 @@ import {
   BATTLE_SPEED_OPTIONS,
   DEFAULT_BATTLE_SPEED,
 } from '@/db/repositories/settingsRepository';
+import { usePurchaseStore, hasSpeedBoost } from '@/stores/usePurchaseStore';
+import { getOrCreateMyInviteCode } from '@/lib/inviteCode';
 
 const LEVELS: PresetLevel[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
@@ -53,13 +55,18 @@ export default function DebugScreen() {
   // 戦闘速度設定
   const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
 
-  // 戦闘速度設定の読み込み
+  // 招待コード
+  const [inviteBoostActive, setInviteBoostActive] = useState(false);
+
+  // 戦闘速度設定・招待コード状態の読み込み
   useEffect(() => {
-    const loadBattleSpeed = async () => {
+    const loadSettings = async () => {
       const speed = await settingsRepository.getBattleSpeed();
       setBattleSpeed(speed);
+      const boost = await settingsRepository.getInviteSpeedBoost();
+      setInviteBoostActive(boost);
     };
-    loadBattleSpeed();
+    loadSettings();
   }, []);
 
   const handleBattleSpeedChange = async (speed: BattleSpeedMultiplier) => {
@@ -489,6 +496,64 @@ export default function DebugScreen() {
           </Text>
         </View>
 
+        {/* ========================================
+            招待コード
+           ======================================== */}
+        <View style={styles.sectionHeader}>
+          <MaterialCommunityIcons name="ticket-confirmation" size={20} color="#FF9800" />
+          <Text style={styles.sectionHeaderText}>招待コード</Text>
+        </View>
+
+        <View style={styles.section}>
+          <View style={styles.infoBox}>
+            <Text style={styles.infoText}>
+              招待コード倍速: {inviteBoostActive ? '有効' : '無効'}
+            </Text>
+            <Text style={styles.infoText}>
+              hasSpeedBoost(): {hasSpeedBoost() ? 'true' : 'false'}
+            </Text>
+          </View>
+
+          <Pressable
+            style={[styles.applyButton, styles.resetButton]}
+            onPress={() => {
+              Alert.alert(
+                '招待コードリセット',
+                '招待コードの有効化をリセットし、Firestoreのドキュメントを削除して新しいコードを再生成します。',
+                [
+                  { text: 'キャンセル', style: 'cancel' },
+                  {
+                    text: 'リセット',
+                    style: 'destructive',
+                    onPress: async () => {
+                      try {
+                        // 1. ローカルの倍速フラグをリセット
+                        await settingsRepository.setInviteSpeedBoost(false);
+                        usePurchaseStore.getState().setInviteSpeedBoost(false);
+                        setInviteBoostActive(false);
+
+                        // 2. ローカルのコードキャッシュをクリア（Firestoreは手動削除前提）
+                        await settingsRepository.setMyInviteCode('');
+
+                        // 4. 新しいコードを再生成
+                        const newCode = await getOrCreateMyInviteCode();
+
+                        Alert.alert('完了', `リセットしました。\n新しいコード: ${newCode}`);
+                      } catch (error) {
+                        console.error('[Debug] Invite code reset failed:', error);
+                        Alert.alert('エラー', 'リセットに失敗しました');
+                      }
+                    },
+                  },
+                ]
+              );
+            }}
+          >
+            <MaterialCommunityIcons name="restore" size={20} color="#fff" style={styles.applyIcon} />
+            <Text style={styles.applyButtonText}>招待コードをリセット＆再生成</Text>
+          </Pressable>
+        </View>
+
         {/* 注意書き */}
         <View style={styles.warningBox}>
           <MaterialCommunityIcons name="alert" size={16} color="#FFA500" />
@@ -782,6 +847,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
     textAlign: 'center',
+    marginTop: 12,
+  },
+  resetButton: {
+    backgroundColor: '#FF5722',
     marginTop: 12,
   },
   warningBox: {

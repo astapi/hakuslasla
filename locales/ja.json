@@ -200,7 +200,31 @@
     "battleSpeed": {
       "title": "戦闘速度",
       "description": "戦闘の進行速度を変更します",
-      "premiumHint": "3倍速はショップで購入後に利用できます"
+      "premiumHint": "3倍速は招待コードで有効化できます"
+    },
+    "inviteCode": {
+      "title": "招待コード",
+      "description": "友達と招待コードを共有して、お互いに3倍速を有効化しましょう",
+      "myCode": "あなたの招待コード",
+      "copied": "コピーしました",
+      "enterCode": "友達のコードを入力",
+      "placeholder": "6文字のコード",
+      "submit": "送信",
+      "submitting": "送信中...",
+      "activated": "3倍速が有効化済み",
+      "shareText": "ルートダイブで一緒に冒険しよう！招待コード: {{code}}",
+      "error": {
+        "ownCode": "自分のコードは入力できません",
+        "notFound": "招待コードが見つかりません",
+        "alreadyUsed": "このコードは既に使用されています",
+        "alreadyRedeemed": "既に招待コードを入力済みです",
+        "networkError": "ネットワークエラーが発生しました",
+        "invalidFormat": "コードは6文字で入力してください"
+      },
+      "success": {
+        "title": "有効化完了",
+        "message": "3倍速が有効になりました！"
+      }
     }
   },
   "status": {
@@ -2066,8 +2090,13 @@
       "description": "作成できるキャラクターが5人まで増加します"
     },
     "speedBoost": {
-      "name": "倍速ブースト",
-      "description": "戦闘速度を2〜3倍速に設定できるようになります"
+      "name": "3倍速解放",
+      "description": "戦闘速度3倍速を設定できるようになります"
+    },
+    "inviteCodeBanner": {
+      "title": "3倍速を無料で有効化",
+      "description": "設定画面から招待コードを共有して、3倍速を有効化しましょう",
+      "activated": "招待コードで3倍速が有効化済み"
     },
     "premiumBundle": {
       "name": "プレミアムバンドル",

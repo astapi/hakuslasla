@@ -22,6 +22,7 @@ import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 import { changeLanguage } from '@/lib/i18n';
 import { updateSoundSettings } from '@/lib/sound';
 import { ms, fs } from '@/utils/scaling';
+import { InviteCodeSection } from '@/components/settings/InviteCodeSection';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -438,6 +439,9 @@ export default function SettingsScreen() {
             )}
           </View>
         </View>
+
+        {/* 招待コード */}
+        <InviteCodeSection />
       </ScrollView>
 
       {/* フッター */}

@@ -3,6 +3,7 @@ import Purchases, { CustomerInfo, PurchasesPackage } from 'react-native-purchase
 import { Platform } from 'react-native';
 import { REVENUECAT_API_KEY, ENTITLEMENT_IDS } from '@/constants/purchases';
 import { Analytics } from '@/lib/analytics';
+import { settingsRepository } from '@/db/repositories/settingsRepository';
 
 /**
  * 課金状態管理ストア
@@ -25,6 +26,9 @@ interface PurchaseState {
 
   // 顧客情報
   customerInfo: CustomerInfo | null;
+
+  // 招待コードによる倍速ブースト
+  inviteSpeedBoost: boolean;
 }
 
 interface PurchaseActions {
@@ -46,6 +50,10 @@ interface PurchaseActions {
   // 顧客情報を更新（Entitlementsも更新）
   refreshCustomerInfo: () => Promise<void>;
 
+  // 招待コード倍速ブースト
+  setInviteSpeedBoost: (enabled: boolean) => void;
+  loadInviteSpeedBoost: () => Promise<void>;
+
   // クリア
   clear: () => void;
 }
@@ -57,6 +65,7 @@ const initialState: PurchaseState = {
   availablePackages: [],
   currentOffering: null,
   customerInfo: null,
+  inviteSpeedBoost: false,
 };
 
 export const usePurchaseStore = create<PurchaseState & PurchaseActions>()((set, get) => ({
@@ -212,6 +221,15 @@ export const usePurchaseStore = create<PurchaseState & PurchaseActions>()((set, 
     }
   },
 
+  setInviteSpeedBoost: (enabled: boolean) => {
+    set({ inviteSpeedBoost: enabled });
+  },
+
+  loadInviteSpeedBoost: async () => {
+    const enabled = await settingsRepository.getInviteSpeedBoost();
+    set({ inviteSpeedBoost: enabled });
+  },
+
   clear: () => {
     set(initialState);
   },
@@ -249,7 +267,8 @@ export const getCharacterSlotCount = (): number => {
   return state.hasEntitlement(ENTITLEMENT_IDS.CHARACTER_SLOTS) ? 5 : 1;
 };
 
-// 倍速ブーストを持っているか
+// 倍速ブーストを持っているか（課金 or 招待コード）
 export const hasSpeedBoost = (): boolean => {
-  return hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST);
+  const state = usePurchaseStore.getState();
+  return state.hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST) || state.inviteSpeedBoost;
 };

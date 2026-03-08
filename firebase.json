@@ -1,5 +1,8 @@
 {
   "react-native": {
     "crashlytics_debug_enabled": true
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }

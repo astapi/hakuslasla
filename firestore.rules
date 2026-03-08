@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ランキング
+    match /dimensional_rankings/{docId} {
+      allow read: true;
+      allow write: true;
+    }
+
+    // 招待コード
+    match /invite_codes/{deviceId} {
+      // 読み取り: 全員可（コード検索に必要）
+      allow read: if true;
+
+      // 作成: 必須フィールドの検証
+      allow create: if
+        request.resource.data.keys().hasAll(['code', 'codeUsed', 'createdAt', 'usedBy', 'usedAt', 'redeemedCode', 'redeemedAt'])
+        && request.resource.data.code is string
+        && request.resource.data.code.size() == 6
+        && request.resource.data.codeUsed == false
+        && request.resource.data.usedBy == null
+        && request.resource.data.usedAt == null;
+
+      // 更新: 変更可能なフィールドを制限
+      allow update: if
+        // code と createdAt は変更不可
+        request.resource.data.code == resource.data.code
+        && request.resource.data.createdAt == resource.data.createdAt
+        // codeUsed: false → true のみ許可（戻せない）
+        && (
+          request.resource.data.codeUsed == resource.data.codeUsed
+          || (resource.data.codeUsed == false && request.resource.data.codeUsed == true)
+        )
+        // usedBy: null → 文字列 のみ許可（一度設定したら戻せない）
+        && (
+          request.resource.data.usedBy == resource.data.usedBy
+          || (resource.data.usedBy == null && request.resource.data.usedBy is string)
+        )
+        // redeemedCode: null → 文字列 のみ許可（一度設定したら戻せない）
+        && (
+          request.resource.data.redeemedCode == resource.data.redeemedCode
+          || (resource.data.redeemedCode == null && request.resource.data.redeemedCode is string)
+        );
+    }
+  }
+}
