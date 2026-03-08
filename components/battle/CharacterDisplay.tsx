@@ -1,4 +1,4 @@
-import { getMonsterImage, characterImages } from '@/data/images';
+import { getMonsterImage, characterImages, monsterBattleScales } from '@/data/images';
 import { CharacterType } from '@/types';
 import { useEffect, memo } from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
@@ -102,11 +102,17 @@ export const CharacterDisplay = memo(({
       ? getMonsterImage(imageId)
       : undefined;
 
+  // キャラクタータイプ別のスケール補正
+  const battleScale = isPlayer
+    ? (characterImages[characterType].battleScale ?? 1)
+    : (imageId ? (monsterBattleScales[imageId] ?? 1) : 1);
+  const avatarSize = s(68) * battleScale;
+
   return (
     <View style={[styles.container, isPlayer ? styles.playerContainer : styles.enemyContainer]}>
       <Animated.View style={[styles.avatarContainer, animatedStyle]}>
         {imageSource ? (
-          <Image source={imageSource} style={styles.avatar} resizeMode="contain" />
+          <Image source={imageSource} style={[styles.avatar, { width: avatarSize, height: avatarSize }]} resizeMode="contain" />
         ) : (
           <View style={styles.avatarPlaceholder}>
             <Text style={styles.avatarPlaceholderText}>?</Text>

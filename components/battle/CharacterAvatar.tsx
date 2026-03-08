@@ -1,4 +1,4 @@
-import { getMonsterImage, characterImages } from '@/data/images';
+import { getMonsterImage, characterImages, monsterBattleScales } from '@/data/images';
 import { CharacterType, PoisonState, IgniteState } from '@/types';
 import { useEffect, memo } from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
@@ -77,6 +77,12 @@ export const CharacterAvatar = memo(({
       ? getMonsterImage(imageId)
       : undefined;
 
+  // キャラクタータイプ別のスケール補正
+  const battleScale = isPlayer
+    ? (characterImages[characterType].battleScale ?? 1)
+    : (imageId ? (monsterBattleScales[imageId] ?? 1) : 1);
+  const scaledSize = size * battleScale;
+
   const hasStatusEffects = poisonStacks.length > 0 || igniteState;
 
   return (
@@ -85,7 +91,7 @@ export const CharacterAvatar = memo(({
         {imageSource ? (
           <Image
             source={imageSource}
-            style={[styles.avatar, { width: size, height: size }]}
+            style={[styles.avatar, { width: scaledSize, height: scaledSize }]}
             resizeMode="contain"
           />
         ) : (
