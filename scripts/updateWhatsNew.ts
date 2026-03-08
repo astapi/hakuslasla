@@ -130,27 +130,192 @@ interface VersionsResponse {
 
 // 各言語のwhatsNewテキスト
 const whatsNewByLocale: Record<string, string> = {
-  ja: `・アプリタイトルを変更`,
+  ja: `【新機能】
+・戦闘の倍速機能を追加
+・友達招待機能を追加
 
-  'en-US': `• Updated app title`,
+【新クラス追加】
+・新プレイアブルクラス「レンジャー」が登場！
 
-  'en-GB': `• Updated app title`,
+【クラス強化】
+・ウォリアーにクラス固有能力を追加し、HPを強化
 
-  'en-AU': `• Updated app title`,
+【バランス調整】
+・Uberボスのユニーク装備を強化（固定MODを4つに増加）
 
-  'en-CA': `• Updated app title`,
+【不具合修正】
+・戦闘画面のキャラクター・モンスター画像サイズを調整
+・一部ユニーク装備がフィルターで除外される問題を修正`,
 
-  'zh-Hans': `• 更新应用标题`,
+  'en-US': `[New Features]
+• Added battle speed multiplier
+• Added friend invite feature
 
-  ko: `• 앱 타이틀 변경`,
+[New Class]
+• New playable class "Ranger" is now available!
 
-  'es-ES': `• Actualizado el título de la aplicación`,
+[Class Enhancement]
+• Added unique class ability to Warrior and increased HP
 
-  'es-MX': `• Actualizado el título de la aplicación`,
+[Balance Adjustments]
+• Strengthened Uber boss unique equipment (increased fixed mods to 4)
 
-  'fr-FR': `• Mise à jour du titre de l'application`,
+[Bug Fixes]
+• Adjusted character and monster image sizes on the battle screen
+• Fixed an issue where some unique equipment was excluded by filters`,
 
-  'de-DE': `• App-Titel aktualisiert`,
+  'en-GB': `[New Features]
+• Added battle speed multiplier
+• Added friend invite feature
+
+[New Class]
+• New playable class "Ranger" is now available!
+
+[Class Enhancement]
+• Added unique class ability to Warrior and increased HP
+
+[Balance Adjustments]
+• Strengthened Uber boss unique equipment (increased fixed mods to 4)
+
+[Bug Fixes]
+• Adjusted character and monster image sizes on the battle screen
+• Fixed an issue where some unique equipment was excluded by filters`,
+
+  'en-AU': `[New Features]
+• Added battle speed multiplier
+• Added friend invite feature
+
+[New Class]
+• New playable class "Ranger" is now available!
+
+[Class Enhancement]
+• Added unique class ability to Warrior and increased HP
+
+[Balance Adjustments]
+• Strengthened Uber boss unique equipment (increased fixed mods to 4)
+
+[Bug Fixes]
+• Adjusted character and monster image sizes on the battle screen
+• Fixed an issue where some unique equipment was excluded by filters`,
+
+  'en-CA': `[New Features]
+• Added battle speed multiplier
+• Added friend invite feature
+
+[New Class]
+• New playable class "Ranger" is now available!
+
+[Class Enhancement]
+• Added unique class ability to Warrior and increased HP
+
+[Balance Adjustments]
+• Strengthened Uber boss unique equipment (increased fixed mods to 4)
+
+[Bug Fixes]
+• Adjusted character and monster image sizes on the battle screen
+• Fixed an issue where some unique equipment was excluded by filters`,
+
+  'zh-Hans': `【新功能】
+• 新增战斗倍速功能
+• 新增好友邀请功能
+
+【新职业】
+• 新可玩职业「游侠」现已登场！
+
+【职业强化】
+• 为战士添加职业固有能力，并强化HP
+
+【平衡调整】
+• 强化Uber Boss的唯一装备（固定MOD增加至4个）
+
+【问题修复】
+• 调整战斗画面中角色和怪物的图像大小
+• 修复部分唯一装备被筛选器排除的问题`,
+
+  ko: `[새로운 기능]
+• 전투 배속 기능 추가
+• 친구 초대 기능 추가
+
+[새 클래스]
+• 새로운 플레이어블 클래스 "레인저" 등장!
+
+[클래스 강화]
+• 전사에 클래스 고유 능력 추가 및 HP 강화
+
+[밸런스 조정]
+• Uber 보스 유니크 장비 강화 (고정 MOD 4개로 증가)
+
+[버그 수정]
+• 전투 화면의 캐릭터 및 몬스터 이미지 크기 조정
+• 일부 유니크 장비가 필터에서 제외되는 문제 수정`,
+
+  'es-ES': `[Nuevas funciones]
+• Velocidad de combate acelerada añadida
+• Función de invitación de amigos añadida
+
+[Nueva clase]
+• ¡La nueva clase jugable "Explorador" ya está disponible!
+
+[Mejora de clase]
+• Añadida habilidad única al Guerrero y aumento de HP
+
+[Ajustes de equilibrio]
+• Equipamiento único del jefe Uber reforzado (MODs fijos aumentados a 4)
+
+[Corrección de errores]
+• Ajustados los tamaños de imagen de personajes y monstruos en la pantalla de combate
+• Corregido un problema donde algunos equipamientos únicos eran excluidos por los filtros`,
+
+  'es-MX': `[Nuevas funciones]
+• Velocidad de combate acelerada añadida
+• Función de invitación de amigos añadida
+
+[Nueva clase]
+• ¡La nueva clase jugable "Explorador" ya está disponible!
+
+[Mejora de clase]
+• Añadida habilidad única al Guerrero y aumento de HP
+
+[Ajustes de equilibrio]
+• Equipamiento único del jefe Uber reforzado (MODs fijos aumentados a 4)
+
+[Corrección de errores]
+• Ajustados los tamaños de imagen de personajes y monstruos en la pantalla de combate
+• Corregido un problema donde algunos equipamientos únicos eran excluidos por los filtros`,
+
+  'fr-FR': `[Nouvelles fonctionnalités]
+• Ajout de la vitesse de combat accélérée
+• Ajout de la fonction d'invitation d'amis
+
+[Nouvelle classe]
+• La nouvelle classe jouable « Rôdeur » est maintenant disponible !
+
+[Amélioration de classe]
+• Ajout d'une capacité unique au Guerrier et augmentation des HP
+
+[Ajustements d'équilibre]
+• Renforcement de l'équipement unique du boss Uber (MODs fixes augmentés à 4)
+
+[Corrections de bugs]
+• Ajustement de la taille des images des personnages et des monstres sur l'écran de combat
+• Correction d'un problème où certains équipements uniques étaient exclus par les filtres`,
+
+  'de-DE': `[Neue Funktionen]
+• Kampfgeschwindigkeits-Multiplikator hinzugefuegt
+• Freunde-Einladungsfunktion hinzugefuegt
+
+[Neue Klasse]
+• Die neue spielbare Klasse "Waldläufer" ist jetzt verfuegbar!
+
+[Klassenverbesserung]
+• Einzigartige Klassenfaehigkeit fuer den Krieger hinzugefuegt und HP erhoeht
+
+[Balance-Anpassungen]
+• Einzigartige Ausruestung des Uber-Bosses verstaerkt (feste MODs auf 4 erhoeht)
+
+[Fehlerbehebungen]
+• Groesse der Charakter- und Monsterbilder auf dem Kampfbildschirm angepasst
+• Problem behoben, bei dem einige einzigartige Ausruestungen durch Filter ausgeschlossen wurden`,
 };
 
 // メイン処理
