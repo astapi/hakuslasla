@@ -241,6 +241,7 @@ async function main() {
 
 // エクスポート（他のスクリプトから使用可能）
 export {
+  validateConfig,
   generateToken,
   apiRequest,
   getAppInfo,
@@ -251,4 +252,6 @@ export {
 };
 
 // 直接実行時のみmainを実行
-main();
+if (process.argv[1]?.replace(/\.\w+$/, '').endsWith('appStoreConnect')) {
+  main();
+}
