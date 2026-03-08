@@ -7,6 +7,7 @@ export type ChestRarity = 'normal' | 'magic' | 'rare' | 'unique';
 interface PlayerImageSet {
   standing: ImageSourcePropType;  // ホーム画面用（立ち絵）
   battle: ImageSourcePropType;     // 戦闘画面用（戦闘ポーズ）
+  battleScale?: number;            // 戦闘画像のスケール補正（デフォルト1.0）
 }
 
 // クラス別プレイヤー画像マッピング
@@ -14,6 +15,7 @@ export const characterImages: Record<CharacterType, PlayerImageSet> = {
   warrior: {
     standing: require('@/assets/images/characters/warrior.png') as ImageSourcePropType,
     battle: require('@/assets/images/characters/warrior_battle.png') as ImageSourcePropType,
+    battleScale: 0.7,
   },
   elementalist: {
     standing: require('@/assets/images/characters/elementalist.png') as ImageSourcePropType,
@@ -54,6 +56,26 @@ export const getChestRarityForItem = (item: Item): ChestRarity => {
 
 export const getChestImageForItem = (item: Item): ImageSourcePropType => {
   return chestImages[getChestRarityForItem(item)];
+};
+
+// モンスター画像のスケール補正（キャンバス内の描画比率が大きいものを縮小）
+export const monsterBattleScales: Record<string, number> = {
+  slime: 0.7,
+  killer_rabbit: 0.7,
+  goblin: 0.7,
+  killer_bee: 0.7,
+  wolf: 0.7,
+  mimic: 0.7,
+  giant_bat: 0.8,
+  goblin_warrior: 0.8,
+  skeleton: 0.8,
+  rock_lizard: 0.8,
+  orc: 0.8,
+  skeleton_knight: 0.8,
+  golem: 0.8,
+  mummy: 0.8,
+  lich: 0.8,
+  gargoyle: 0.8,
 };
 
 // デフォルトモンスター画像（未設定時のフォールバック）
