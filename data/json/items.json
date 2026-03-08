@@ -1201,7 +1201,8 @@
       "fixedMods": [
         { "type": "atk_bonus", "value": 35 },
         { "type": "def_bonus", "value": 35 },
-        { "type": "hp_regen", "value": 80 }
+        { "type": "hp_regen", "value": 80 },
+        { "type": "hp_bonus", "value": 130 }
       ]
     },
     "uber_bandit_crown": {
@@ -1212,7 +1213,9 @@
       "def": 24,
       "fixedMods": [
         { "type": "critical_chance", "value": 35 },
-        { "type": "atk_bonus", "value": 20 }
+        { "type": "atk_bonus", "value": 20 },
+        { "type": "hp_bonus", "value": 160 },
+        { "type": "hp_on_hit", "value": 40 }
       ]
     },
     "uber_vampire_fang": {
@@ -1224,7 +1227,8 @@
       "fixedMods": [
         { "type": "hp_on_hit", "value": 120 },
         { "type": "critical_chance", "value": 30 },
-        { "type": "attack_speed_pct", "value": 20 }
+        { "type": "attack_speed_pct", "value": 20 },
+        { "type": "hp_bonus", "value": 190 }
       ]
     },
     "uber_kraken_tentacle": {
@@ -1236,7 +1240,8 @@
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 25 },
         { "type": "hp_regen", "value": 80 },
-        { "type": "atk_bonus", "value": 50 }
+        { "type": "atk_bonus", "value": 50 },
+        { "type": "hp_bonus", "value": 210 }
       ]
     },
     "uber_demon_crown": {
@@ -1248,7 +1253,8 @@
       "fixedMods": [
         { "type": "atk_bonus", "value": 60 },
         { "type": "def_bonus", "value": 60 },
-        { "type": "hp_regen", "value": 120 }
+        { "type": "hp_regen", "value": 120 },
+        { "type": "hp_bonus", "value": 240 }
       ]
     },
     "uber_crown_of_end": {
@@ -1273,7 +1279,8 @@
       "fixedMods": [
         { "type": "time_atk_inc_pct", "value": 6 },
         { "type": "atk_bonus", "value": 40 },
-        { "type": "attack_speed_pct", "value": 15 }
+        { "type": "attack_speed_pct", "value": 15 },
+        { "type": "hp_bonus", "value": 130 }
       ]
     },
     "uber_goblin_plate": {
@@ -1285,7 +1292,8 @@
       "fixedMods": [
         { "type": "time_def_inc_pct", "value": 6 },
         { "type": "hp_bonus", "value": 200 },
-        { "type": "def_bonus", "value": 50 }
+        { "type": "def_bonus", "value": 50 },
+        { "type": "hp_on_hit", "value": 35 }
       ]
     },
     "uber_goblin_grip": {
@@ -1297,7 +1305,8 @@
       "fixedMods": [
         { "type": "critical_chance", "value": 15 },
         { "type": "atk_increased_pct", "value": 20 },
-        { "type": "hp_bonus", "value": 120 }
+        { "type": "hp_bonus", "value": 120 },
+        { "type": "hp_on_hit", "value": 35 }
       ]
     },
     "uber_goblin_stomp": {
@@ -1309,7 +1318,8 @@
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 20 },
         { "type": "hp_regen", "value": 60 },
-        { "type": "time_hp_regen", "value": 20 }
+        { "type": "time_hp_regen", "value": 20 },
+        { "type": "hp_bonus", "value": 130 }
       ]
     },
     "uber_bandit_dagger": {
@@ -1321,7 +1331,8 @@
       "fixedMods": [
         { "type": "critical_chance", "value": 25 },
         { "type": "attack_speed_more_pct", "value": 12 },
-        { "type": "atk_bonus", "value": 45 }
+        { "type": "atk_bonus", "value": 45 },
+        { "type": "hp_bonus", "value": 160 }
       ]
     },
     "uber_bandit_coat": {
@@ -1333,7 +1344,8 @@
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 20 },
         { "type": "damage_reduction_pct", "value": 8 },
-        { "type": "hp_bonus", "value": 180 }
+        { "type": "hp_bonus", "value": 180 },
+        { "type": "hp_on_hit", "value": 40 }
       ]
     },
     "uber_bandit_grip": {
@@ -1345,7 +1357,8 @@
       "fixedMods": [
         { "type": "critical_damage", "value": 40 },
         { "type": "atk_increased_pct", "value": 25 },
-        { "type": "hp_on_hit", "value": 45 }
+        { "type": "hp_on_hit", "value": 45 },
+        { "type": "hp_bonus", "value": 160 }
       ]
     },
     "uber_bandit_steps": {
@@ -1357,7 +1370,8 @@
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 20 },
         { "type": "critical_chance", "value": 18 },
-        { "type": "def_increased_pct", "value": 12 }
+        { "type": "def_increased_pct", "value": 12 },
+        { "type": "hp_bonus", "value": 160 }
       ]
     },
     "uber_vampire_plate": {
@@ -1369,7 +1383,8 @@
       "fixedMods": [
         { "type": "hp_regen_pct", "value": 2 },
         { "type": "hp_on_hit", "value": 60 },
-        { "type": "damage_reduction_pct", "value": 10 }
+        { "type": "damage_reduction_pct", "value": 10 },
+        { "type": "hp_bonus", "value": 190 }
       ]
     },
     "uber_vampire_grip": {
@@ -1381,7 +1396,8 @@
       "fixedMods": [
         { "type": "critical_chance", "value": 20 },
         { "type": "hp_on_hit", "value": 40 },
-        { "type": "atk_increased_pct", "value": 22 }
+        { "type": "atk_increased_pct", "value": 22 },
+        { "type": "hp_bonus", "value": 190 }
       ]
     },
     "uber_vampire_stride": {
@@ -1406,7 +1422,8 @@
       "fixedMods": [
         { "type": "hp_regen", "value": 120 },
         { "type": "critical_chance", "value": 25 },
-        { "type": "def_bonus", "value": 50 }
+        { "type": "def_bonus", "value": 50 },
+        { "type": "hp_bonus", "value": 190 }
       ]
     },
     "double_strike_ring": {
@@ -1441,7 +1458,8 @@
       "fixedMods": [
         { "type": "damage_reduction_pct", "value": 12 },
         { "type": "hp_regen", "value": 90 },
-        { "type": "def_increased_pct", "value": 20 }
+        { "type": "def_increased_pct", "value": 20 },
+        { "type": "hp_bonus", "value": 210 }
       ]
     },
     "uber_kraken_claw": {
@@ -1453,7 +1471,8 @@
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 18 },
         { "type": "critical_damage", "value": 45 },
-        { "type": "atk_increased_pct", "value": 20 }
+        { "type": "atk_increased_pct", "value": 20 },
+        { "type": "hp_bonus", "value": 210 }
       ]
     },
     "uber_kraken_fin": {
@@ -1465,7 +1484,8 @@
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 15 },
         { "type": "hp_regen_pct", "value": 2 },
-        { "type": "def_bonus", "value": 60 }
+        { "type": "def_bonus", "value": 60 },
+        { "type": "hp_bonus", "value": 210 }
       ]
     },
     "uber_kraken_eye": {
@@ -1490,7 +1510,8 @@
       "fixedMods": [
         { "type": "atk_bonus", "value": 80 },
         { "type": "critical_damage", "value": 60 },
-        { "type": "damage_reduction_pct", "value": 8 }
+        { "type": "damage_reduction_pct", "value": 8 },
+        { "type": "hp_bonus", "value": 240 }
       ]
     },
     "uber_demon_armor": {
@@ -1502,7 +1523,8 @@
       "fixedMods": [
         { "type": "damage_reduction_pct", "value": 15 },
         { "type": "hp_bonus", "value": 260 },
-        { "type": "def_increased_pct", "value": 25 }
+        { "type": "def_increased_pct", "value": 25 },
+        { "type": "hp_on_hit", "value": 60 }
       ]
     },
     "uber_demon_grip": {
@@ -1514,7 +1536,8 @@
       "fixedMods": [
         { "type": "critical_chance", "value": 22 },
         { "type": "atk_increased_pct", "value": 25 },
-        { "type": "hp_regen", "value": 90 }
+        { "type": "hp_regen", "value": 90 },
+        { "type": "hp_bonus", "value": 240 }
       ]
     },
     "uber_demon_steps": {
@@ -1526,7 +1549,8 @@
       "fixedMods": [
         { "type": "hp_regen_pct", "value": 3 },
         { "type": "def_bonus", "value": 80 },
-        { "type": "atk_bonus", "value": 50 }
+        { "type": "atk_bonus", "value": 50 },
+        { "type": "hp_bonus", "value": 240 }
       ]
     },
     "uber_endblade": {
@@ -1538,7 +1562,8 @@
       "fixedMods": [
         { "type": "time_atk_inc_pct", "value": 10 },
         { "type": "critical_chance", "value": 30 },
-        { "type": "attack_speed_pct", "value": 20 }
+        { "type": "attack_speed_pct", "value": 20 },
+        { "type": "hp_bonus", "value": 280 }
       ]
     },
     "uber_endplate": {
@@ -1550,7 +1575,8 @@
       "fixedMods": [
         { "type": "time_def_inc_pct", "value": 10 },
         { "type": "damage_reduction_pct", "value": 18 },
-        { "type": "hp_bonus", "value": 320 }
+        { "type": "hp_bonus", "value": 320 },
+        { "type": "hp_on_hit", "value": 70 }
       ]
     },
     "uber_endgrasp": {
@@ -1562,7 +1588,8 @@
       "fixedMods": [
         { "type": "atk_increased_pct", "value": 30 },
         { "type": "critical_damage", "value": 70 },
-        { "type": "hp_on_hit", "value": 70 }
+        { "type": "hp_on_hit", "value": 70 },
+        { "type": "hp_bonus", "value": 280 }
       ]
     },
     "uber_endstride": {
@@ -1574,7 +1601,8 @@
       "fixedMods": [
         { "type": "attack_speed_more_pct", "value": 15 },
         { "type": "hp_regen_pct", "value": 3 },
-        { "type": "def_increased_pct", "value": 20 }
+        { "type": "def_increased_pct", "value": 20 },
+        { "type": "hp_bonus", "value": 280 }
       ]
     },
 
