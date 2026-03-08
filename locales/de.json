@@ -40,7 +40,9 @@
     },
     "classAbility": "Klassenfaehigkeit",
     "ability": {
-      "igniteChance": "Entzuendungschance {{value}}%"
+      "igniteChance": "Entzuendungschance {{value}}%",
+      "criticalChance": "Kritische Trefferchance {{value}}%",
+      "attackSpeedPct": "Angriffsgeschwindigkeit +{{value}}%"
     },
     "initialStats": "Startwerte"
   },

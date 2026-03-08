@@ -87,7 +87,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     const combinedMods = combineMods(equipmentItems, passiveEffects);
 
     // 合計値を計算
-    const totalCriticalChance = combinedMods.criticalChance;
+    const totalCriticalChance = combinedMods.criticalChance + (CLASS_ABILITIES[state.characterType]?.criticalChance || 0);
     const totalCriticalDamage = 150 + combinedMods.criticalDamage; // 基礎150%
     const totalPoisonChance = combinedMods.poisonChance;
     const totalHpRegen = combinedMods.hpRegen;
@@ -102,7 +102,11 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     const poisonDamageMoreTotal = combinedMods.poisonDamageMorePct.reduce((sum, v) => sum + v, 0);
     const attackSpeedMoreTotal = combinedMods.attackSpeedMorePct.reduce((sum, v) => sum + v, 0);
     const igniteDamageMoreTotal = combinedMods.igniteDamageMorePct.reduce((sum, v) => sum + v, 0);
-    const finalAttackSpeed = getAttackSpeedFromMods(combinedMods);
+    const classAttackSpeedPct = CLASS_ABILITIES[state.characterType]?.attackSpeedPct || 0;
+    const finalAttackSpeed = getAttackSpeedFromMods({
+      ...combinedMods,
+      attackSpeedPct: combinedMods.attackSpeedPct + classAttackSpeedPct,
+    });
 
     return {
       hp: {
@@ -134,7 +138,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       igniteDamageMore: igniteDamageMoreTotal,
       igniteDurationPct: combinedMods.igniteDurationPct,
       damageReductionPct: combinedMods.damageReductionPct,
-      attackSpeedPct: combinedMods.attackSpeedPct,
+      attackSpeedPct: combinedMods.attackSpeedPct + (CLASS_ABILITIES[state.characterType]?.attackSpeedPct || 0),
       attackSpeedMore: attackSpeedMoreTotal,
       finalAttackSpeed,
       hpRegenPerSecond,

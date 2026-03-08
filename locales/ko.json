@@ -40,7 +40,9 @@
     },
     "classAbility": "클래스 능력",
     "ability": {
-      "igniteChance": "점화 확률 {{value}}%"
+      "igniteChance": "점화 확률 {{value}}%",
+      "criticalChance": "치명타 확률 {{value}}%",
+      "attackSpeedPct": "공격 속도 +{{value}}%"
     },
     "initialStats": "초기 스탯"
   },

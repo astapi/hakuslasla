@@ -40,7 +40,9 @@
     },
     "classAbility": "职业能力",
     "ability": {
-      "igniteChance": "点燃几率 {{value}}%"
+      "igniteChance": "点燃几率 {{value}}%",
+      "criticalChance": "暴击率 {{value}}%",
+      "attackSpeedPct": "攻击速度 +{{value}}%"
     },
     "initialStats": "初始属性"
   },
