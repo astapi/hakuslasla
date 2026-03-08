@@ -200,7 +200,31 @@
     "battleSpeed": {
       "title": "Velocidad de Batalla",
       "description": "Cambia la velocidad de progresión de batalla",
-      "premiumHint": "Velocidad 2x y superior disponible tras compra en Tienda"
+      "premiumHint": "Velocidad 3x disponible con código de invitación"
+    },
+    "inviteCode": {
+      "title": "Código de Invitación",
+      "description": "Comparte códigos de invitación con amigos para desbloquear velocidad 3x para ambos",
+      "myCode": "Tu Código de Invitación",
+      "copied": "¡Copiado!",
+      "enterCode": "Ingresa el código de un amigo",
+      "placeholder": "Código de 6 caracteres",
+      "submit": "Enviar",
+      "submitting": "Enviando...",
+      "activated": "Velocidad 3x Activada",
+      "shareText": "¡Aventurémonos juntos en LootDive! Código de invitación: {{code}}",
+      "error": {
+        "ownCode": "No puedes usar tu propio código",
+        "notFound": "Código de invitación no encontrado",
+        "alreadyUsed": "Este código ya ha sido utilizado",
+        "alreadyRedeemed": "Ya has ingresado un código de invitación",
+        "networkError": "Error de red",
+        "invalidFormat": "El código debe tener 6 caracteres"
+      },
+      "success": {
+        "title": "Activado",
+        "message": "¡Velocidad 3x desbloqueada!"
+      }
     }
   },
   "status": {
@@ -2068,6 +2092,11 @@
     "speedBoost": {
       "name": "Boost de Velocidad",
       "description": "Desbloquea opciones de velocidad de batalla 2x-3x"
+    },
+    "inviteCodeBanner": {
+      "title": "Desbloquea 3x Gratis",
+      "description": "Comparte tu código de invitación desde Ajustes para desbloquear velocidad 3x",
+      "activated": "Velocidad 3x activada con código de invitación"
     },
     "premiumBundle": {
       "name": "Paquete Premium",

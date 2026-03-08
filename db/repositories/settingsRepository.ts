@@ -15,6 +15,8 @@ const DIMENSIONAL_CORRIDOR_BEST_KEY = 'dimensional_corridor_best';
 const BOOST_TOOLTIP_SHOWN_KEY = 'boost_tooltip_shown';
 const MOD_FILTER_TOOLTIP_SHOWN_KEY = 'mod_filter_tooltip_shown';
 const STORE_REVIEW_REQUESTED_KEY = 'store_review_requested';
+const INVITE_SPEED_BOOST_KEY = 'invite_speed_boost';
+const MY_INVITE_CODE_KEY = 'my_invite_code';
 
 // ダンジョンクリア記録の型
 export type DungeonClearRecord = {
@@ -38,9 +40,14 @@ export const LANGUAGE_LABELS: Record<Exclude<AppLanguage, 'system'>, string> = {
   de: 'Deutsch',
 };
 
-export type BattleSpeedMultiplier = 1 | 2 | 3 | 5 | 10;
-export const BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [1, 2, 3, 5, 10];
+export type BattleSpeedMultiplier = 1 | 2 | 3;
+export const BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [1, 2, 3];
 export const DEFAULT_BATTLE_SPEED: BattleSpeedMultiplier = 1;
+
+// 無料で使える倍速オプション
+export const FREE_BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [1, 2];
+// 課金で使える倍速オプション（3倍）
+export const PREMIUM_BATTLE_SPEED_OPTIONS: BattleSpeedMultiplier[] = [3];
 
 export const settingsRepository = {
   async get(key: string): Promise<string | null> {
@@ -104,7 +111,7 @@ export const settingsRepository = {
     if (!value) {
       return DEFAULT_BATTLE_SPEED;
     }
-    const parsed = parseInt(value, 10) as BattleSpeedMultiplier;
+    const parsed = parseFloat(value) as BattleSpeedMultiplier;
     if (BATTLE_SPEED_OPTIONS.includes(parsed)) {
       return parsed;
     }
@@ -326,5 +333,24 @@ export const settingsRepository = {
 
   async setStoreReviewRequestedFor(dungeonId: string): Promise<void> {
     await this.set(`${STORE_REVIEW_REQUESTED_KEY}_${dungeonId}`, '1');
+  },
+
+  // 招待コードによる倍速ブースト
+  async getInviteSpeedBoost(): Promise<boolean> {
+    const value = await this.get(INVITE_SPEED_BOOST_KEY);
+    return value === '1';
+  },
+
+  async setInviteSpeedBoost(enabled: boolean): Promise<void> {
+    await this.set(INVITE_SPEED_BOOST_KEY, enabled ? '1' : '0');
+  },
+
+  // 自分の招待コード（ローカルキャッシュ）
+  async getMyInviteCode(): Promise<string | null> {
+    return this.get(MY_INVITE_CODE_KEY);
+  },
+
+  async setMyInviteCode(code: string): Promise<void> {
+    await this.set(MY_INVITE_CODE_KEY, code);
   },
 };

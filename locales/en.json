@@ -196,6 +196,35 @@
       "modCount": "{{count}}+ MODs",
       "tierBelow": "Contains Tier {{tier}} or below MOD",
       "noFilter": "No filtering (collect all)"
+    },
+    "battleSpeed": {
+      "title": "Battle Speed",
+      "description": "Change the speed of battle progression",
+      "premiumHint": "3x speed can be unlocked with an invite code"
+    },
+    "inviteCode": {
+      "title": "Invite Code",
+      "description": "Share invite codes with friends to unlock 3x speed for both of you",
+      "myCode": "Your Invite Code",
+      "copied": "Copied!",
+      "enterCode": "Enter Friend's Code",
+      "placeholder": "6-character code",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "activated": "3x Speed Activated",
+      "shareText": "Let's adventure together in LootDive! Invite code: {{code}}",
+      "error": {
+        "ownCode": "You cannot use your own code",
+        "notFound": "Invite code not found",
+        "alreadyUsed": "This code has already been used",
+        "alreadyRedeemed": "You have already entered an invite code",
+        "networkError": "A network error occurred",
+        "invalidFormat": "Code must be 6 characters"
+      },
+      "success": {
+        "title": "Activated",
+        "message": "3x speed has been unlocked!"
+      }
     }
   },
   "status": {
@@ -2059,6 +2088,15 @@
     "characterSlots": {
       "name": "Character Slots",
       "description": "Allows creating up to 5 characters"
+    },
+    "speedBoost": {
+      "name": "Speed Boost",
+      "description": "Unlock 2x-3x battle speed options"
+    },
+    "inviteCodeBanner": {
+      "title": "Unlock 3x Speed for Free",
+      "description": "Share your invite code from Settings to unlock 3x speed",
+      "activated": "3x speed activated via invite code"
     },
     "premiumBundle": {
       "name": "Premium Bundle",

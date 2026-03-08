@@ -200,7 +200,31 @@
     "battleSpeed": {
       "title": "Vitesse de combat",
       "description": "Modifier la vitesse de progression du combat",
-      "premiumHint": "Vitesse 2x et plus disponible après achat en boutique"
+      "premiumHint": "Vitesse 3x disponible avec un code d'invitation"
+    },
+    "inviteCode": {
+      "title": "Code d'invitation",
+      "description": "Partagez des codes d'invitation avec des amis pour débloquer la vitesse 3x pour les deux",
+      "myCode": "Votre code d'invitation",
+      "copied": "Copié !",
+      "enterCode": "Entrer le code d'un ami",
+      "placeholder": "Code à 6 caractères",
+      "submit": "Envoyer",
+      "submitting": "Envoi en cours...",
+      "activated": "Vitesse 3x activée",
+      "shareText": "Partons à l'aventure ensemble dans LootDive ! Code d'invitation : {{code}}",
+      "error": {
+        "ownCode": "Vous ne pouvez pas utiliser votre propre code",
+        "notFound": "Code d'invitation introuvable",
+        "alreadyUsed": "Ce code a déjà été utilisé",
+        "alreadyRedeemed": "Vous avez déjà entré un code d'invitation",
+        "networkError": "Erreur réseau",
+        "invalidFormat": "Le code doit comporter 6 caractères"
+      },
+      "success": {
+        "title": "Activé",
+        "message": "Vitesse 3x débloquée !"
+      }
     }
   },
   "status": {
@@ -2068,6 +2092,11 @@
     "speedBoost": {
       "name": "Boost de vitesse",
       "description": "Débloquez les options de vitesse de combat 2x-3x"
+    },
+    "inviteCodeBanner": {
+      "title": "Débloquez 3x gratuitement",
+      "description": "Partagez votre code d'invitation depuis les Paramètres pour débloquer la vitesse 3x",
+      "activated": "Vitesse 3x activée par code d'invitation"
     },
     "premiumBundle": {
       "name": "Pack Premium",

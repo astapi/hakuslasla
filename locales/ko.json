@@ -200,7 +200,31 @@
     "battleSpeed": {
       "title": "전투 속도",
       "description": "전투 진행 속도를 변경합니다",
-      "premiumHint": "2배속 이상은 상점에서 구매 후 사용 가능"
+      "premiumHint": "3배속은 초대 코드로 해금 가능"
+    },
+    "inviteCode": {
+      "title": "초대 코드",
+      "description": "친구와 초대 코드를 공유하면 양쪽 모두 3배속이 해금됩니다",
+      "myCode": "나의 초대 코드",
+      "copied": "복사됨",
+      "enterCode": "친구의 코드 입력",
+      "placeholder": "6자리 코드",
+      "submit": "제출",
+      "submitting": "제출 중...",
+      "activated": "3배속 활성화됨",
+      "shareText": "LootDive에서 함께 모험하자! 초대 코드: {{code}}",
+      "error": {
+        "ownCode": "자신의 코드는 사용할 수 없습니다",
+        "notFound": "초대 코드를 찾을 수 없습니다",
+        "alreadyUsed": "이 코드는 이미 사용되었습니다",
+        "alreadyRedeemed": "이미 초대 코드를 입력했습니다",
+        "networkError": "네트워크 오류가 발생했습니다",
+        "invalidFormat": "코드는 6자리여야 합니다"
+      },
+      "success": {
+        "title": "활성화 완료",
+        "message": "3배속이 해금되었습니다!"
+      }
     }
   },
   "status": {
@@ -2068,6 +2092,11 @@
     "speedBoost": {
       "name": "배속 부스트",
       "description": "2배속-3배속 전투 속도 옵션 해금"
+    },
+    "inviteCodeBanner": {
+      "title": "무료로 3배속 해금",
+      "description": "설정에서 초대 코드를 공유하여 3배속을 해금하세요",
+      "activated": "초대 코드로 3배속 활성화됨"
     },
     "premiumBundle": {
       "name": "프리미엄 번들",

@@ -12,10 +12,17 @@ import {
   LANGUAGE_OPTIONS,
   DEFAULT_LANGUAGE,
   LANGUAGE_LABELS,
+  BattleSpeedMultiplier,
+  BATTLE_SPEED_OPTIONS,
+  DEFAULT_BATTLE_SPEED,
+  FREE_BATTLE_SPEED_OPTIONS,
+  PREMIUM_BATTLE_SPEED_OPTIONS,
 } from '@/db/repositories/settingsRepository';
+import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 import { changeLanguage } from '@/lib/i18n';
 import { updateSoundSettings } from '@/lib/sound';
 import { ms, fs } from '@/utils/scaling';
+import { InviteCodeSection } from '@/components/settings/InviteCodeSection';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -32,10 +39,12 @@ export default function SettingsScreen() {
   const router = useRouter();
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
   const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
+  const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
   const [bgmEnabled, setBgmEnabled] = useState(true);
   const [seEnabled, setSeEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
+  const hasPremiumSpeed = hasSpeedBoost();
 
   // 言語コードからラベルを取得するヘルパー
   const getLanguageLabel = (lang: AppLanguage): string => {
@@ -51,9 +60,10 @@ export default function SettingsScreen() {
 
   const loadSettings = async () => {
     try {
-      const [loaded, savedLanguage, savedBgm, savedSe] = await Promise.all([
+      const [loaded, savedLanguage, savedSpeed, savedBgm, savedSe] = await Promise.all([
         settingsRepository.getDropFilter(),
         settingsRepository.getLanguage(),
+        settingsRepository.getBattleSpeed(),
         settingsRepository.getBgmEnabled(),
         settingsRepository.getSeEnabled(),
       ]);
@@ -61,6 +71,13 @@ export default function SettingsScreen() {
       setLanguage(savedLanguage);
       setBgmEnabled(savedBgm);
       setSeEnabled(savedSe);
+      // 課金していない場合で、保存されている速度がプレミアム速度の場合は無料枠（1x）にリセット
+      if (!hasSpeedBoost() && PREMIUM_BATTLE_SPEED_OPTIONS.includes(savedSpeed)) {
+        setBattleSpeed(DEFAULT_BATTLE_SPEED);
+        await settingsRepository.setBattleSpeed(DEFAULT_BATTLE_SPEED);
+      } else {
+        setBattleSpeed(savedSpeed);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -71,6 +88,16 @@ export default function SettingsScreen() {
     await settingsRepository.setLanguage(newLanguage);
     changeLanguage(newLanguage);
   };
+
+  const handleSpeedChange = async (newSpeed: BattleSpeedMultiplier) => {
+    setBattleSpeed(newSpeed);
+    await settingsRepository.setBattleSpeed(newSpeed);
+  };
+
+  // 利用可能な速度オプションを取得
+  const availableSpeedOptions = hasPremiumSpeed
+    ? BATTLE_SPEED_OPTIONS
+    : FREE_BATTLE_SPEED_OPTIONS;
 
   const handleBgmToggle = async (enabled: boolean) => {
     setBgmEnabled(enabled);
@@ -208,6 +235,56 @@ export default function SettingsScreen() {
             </View>
           </Pressable>
         </Modal>
+
+        {/* 戦闘速度 */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.battleSpeed.title')}</Text>
+          <Text style={styles.sectionDescription}>
+            {t('settings.battleSpeed.description')}
+          </Text>
+          <View style={styles.speedOptions}>
+            {BATTLE_SPEED_OPTIONS.map((speed) => {
+              const isAvailable = availableSpeedOptions.includes(speed);
+              const isSelected = battleSpeed === speed;
+              const isPremium = PREMIUM_BATTLE_SPEED_OPTIONS.includes(speed);
+              return (
+                <Pressable
+                  key={speed}
+                  style={[
+                    styles.speedOption,
+                    isSelected && styles.speedOptionSelected,
+                    !isAvailable && styles.speedOptionLocked,
+                  ]}
+                  onPress={() => isAvailable && handleSpeedChange(speed)}
+                  disabled={!isAvailable}
+                >
+                  <Text
+                    style={[
+                      styles.speedOptionText,
+                      isSelected && styles.speedOptionTextSelected,
+                      !isAvailable && styles.speedOptionTextLocked,
+                    ]}
+                  >
+                    {speed}x
+                  </Text>
+                  {isPremium && !hasPremiumSpeed && (
+                    <MaterialCommunityIcons
+                      name="lock"
+                      size={12}
+                      color="#666"
+                      style={styles.lockIcon}
+                    />
+                  )}
+                </Pressable>
+              );
+            })}
+          </View>
+          {!hasPremiumSpeed && (
+            <Text style={styles.speedHint}>
+              {t('settings.battleSpeed.premiumHint')}
+            </Text>
+          )}
+        </View>
 
         {/* サウンド設定 */}
         <View style={styles.section}>
@@ -362,6 +439,9 @@ export default function SettingsScreen() {
             )}
           </View>
         </View>
+
+        {/* 招待コード */}
+        <InviteCodeSection />
       </ScrollView>
 
       {/* フッター */}
@@ -594,5 +674,48 @@ const styles = StyleSheet.create({
   languageOptionTextSelected: {
     color: colors.text,
     fontWeight: '600',
+  },
+  speedOptions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: ms(8),
+  },
+  speedOption: {
+    paddingHorizontal: ms(16),
+    paddingVertical: ms(10),
+    backgroundColor: colors.bgDeep,
+    borderRadius: ms(8),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(4),
+  },
+  speedOptionSelected: {
+    backgroundColor: '#4CAF50',
+    borderColor: '#4CAF50',
+  },
+  speedOptionLocked: {
+    opacity: 0.5,
+  },
+  speedOptionText: {
+    fontSize: fs(14),
+    fontWeight: '600',
+    color: colors.textMuted,
+  },
+  speedOptionTextSelected: {
+    color: '#fff',
+  },
+  speedOptionTextLocked: {
+    color: '#666',
+  },
+  lockIcon: {
+    marginLeft: ms(2),
+  },
+  speedHint: {
+    fontSize: fs(11),
+    color: colors.textMuted,
+    textAlign: 'center',
+    marginTop: ms(12),
   },
 });

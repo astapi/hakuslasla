@@ -20,6 +20,7 @@ export const ENTITLEMENT_IDS = {
   TIER_FILTER_ENABLED: 'tier_filter_enabled',
   PERMANENT_BOOST: 'permanent_boost',
   CHARACTER_SLOTS: 'character_slots',
+  SPEED_BOOST: 'speed_boost',
 } as const;
 
 // 容量定数
@@ -85,6 +86,13 @@ export const PURCHASE_PRODUCTS: PurchaseProduct[] = [
     nameKey: 'shop.characterSlots.name',
     descriptionKey: 'shop.characterSlots.description',
     iconName: 'account-multiple-plus',
+  },
+  {
+    packageId: 'speed_boost',
+    entitlementId: ENTITLEMENT_IDS.SPEED_BOOST,
+    nameKey: 'shop.speedBoost.name',
+    descriptionKey: 'shop.speedBoost.description',
+    iconName: 'speedometer',
   },
   {
     packageId: 'premium_bundle',
