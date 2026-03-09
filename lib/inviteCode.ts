@@ -30,11 +30,23 @@ const CODE_LENGTH = 6;
 
 export type RedeemResult =
   | { success: true }
-  | { success: false; error: 'own_code' | 'not_found' | 'already_used' | 'already_redeemed' | 'network_error' };
+  | { success: false; error: 'own_code' | 'not_found' | 'already_used' | 'already_redeemed' | 'network_error' | 'service_suspended' };
 
 // ============================================
 // Helpers
 // ============================================
+
+const isPermissionDenied = (error: any): boolean => {
+  const code = error?.code ?? '';
+  return code === 'firestore/permission-denied' || code === 'permission-denied';
+};
+
+export class ServiceSuspendedError extends Error {
+  constructor() {
+    super('Service suspended');
+    this.name = 'ServiceSuspendedError';
+  }
+}
 
 const generateCode = (): string => {
   let code = '';
@@ -57,31 +69,38 @@ export const getOrCreateMyInviteCode = async (): Promise<string> => {
   const cached = await settingsRepository.getMyInviteCode();
   if (cached) return cached;
 
-  const deviceId = await getDeviceId();
-  const db = getFirestore();
-  const docRef = doc(db, COLLECTION_NAME, deviceId);
-  const docSnap = await getDoc(docRef);
+  try {
+    const deviceId = await getDeviceId();
+    const db = getFirestore();
+    const docRef = doc(db, COLLECTION_NAME, deviceId);
+    const docSnap = await getDoc(docRef);
 
-  if (docSnap.exists()) {
-    const data = docSnap.data() as { code: string };
-    await settingsRepository.setMyInviteCode(data.code);
-    return data.code;
+    if (docSnap.exists()) {
+      const data = docSnap.data() as { code: string };
+      await settingsRepository.setMyInviteCode(data.code);
+      return data.code;
+    }
+
+    // 新規作成
+    const code = generateCode();
+    await setDoc(docRef, {
+      code,
+      codeUsed: false,
+      createdAt: serverTimestamp(),
+      usedBy: null,
+      usedAt: null,
+      redeemedCode: null,
+      redeemedAt: null,
+    });
+
+    await settingsRepository.setMyInviteCode(code);
+    return code;
+  } catch (error: any) {
+    if (isPermissionDenied(error)) {
+      throw new ServiceSuspendedError();
+    }
+    throw error;
   }
-
-  // 新規作成
-  const code = generateCode();
-  await setDoc(docRef, {
-    code,
-    codeUsed: false,
-    createdAt: serverTimestamp(),
-    usedBy: null,
-    usedAt: null,
-    redeemedCode: null,
-    redeemedAt: null,
-  });
-
-  await settingsRepository.setMyInviteCode(code);
-  return code;
 };
 
 /**
@@ -185,6 +204,9 @@ export const redeemInviteCode = async (inputCode: string): Promise<RedeemResult>
 
     return { success: true };
   } catch (error: any) {
+    if (isPermissionDenied(error)) {
+      return { success: false, error: 'service_suspended' };
+    }
     if (error.message === 'not_found') {
       return { success: false, error: 'not_found' };
     }

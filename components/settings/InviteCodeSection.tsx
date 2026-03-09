@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import * as Clipboard from 'expo-clipboard';
 import { ms, fs } from '@/utils/scaling';
-import { getOrCreateMyInviteCode, redeemInviteCode, checkInviterReward } from '@/lib/inviteCode';
+import { getOrCreateMyInviteCode, redeemInviteCode, checkInviterReward, ServiceSuspendedError } from '@/lib/inviteCode';
 import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 
 const colors = {
@@ -24,6 +24,7 @@ export function InviteCodeSection() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isSuspended, setIsSuspended] = useState(false);
   const isActivated = hasSpeedBoost();
 
   const loadMyCode = useCallback(async () => {
@@ -34,7 +35,11 @@ export function InviteCodeSection() {
       // 招待者報酬も確認
       await checkInviterReward();
     } catch (error) {
-      console.error('[InviteCode] Failed to load code:', error);
+      if (error instanceof ServiceSuspendedError) {
+        setIsSuspended(true);
+      } else {
+        console.error('[InviteCode] Failed to load code:', error);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -79,6 +84,8 @@ export function InviteCodeSection() {
         t('settings.inviteCode.success.message'),
       );
       setInputCode('');
+    } else if (result.error === 'service_suspended') {
+      setIsSuspended(true);
     } else {
       const errorKey = `settings.inviteCode.error.${result.error === 'own_code' ? 'ownCode' : result.error === 'not_found' ? 'notFound' : result.error === 'already_used' ? 'alreadyUsed' : result.error === 'already_redeemed' ? 'alreadyRedeemed' : 'networkError'}`;
       Alert.alert('', t(errorKey));
@@ -92,6 +99,16 @@ export function InviteCodeSection() {
         {t('settings.inviteCode.description')}
       </Text>
 
+      {/* 一時停止中 */}
+      {isSuspended && !isActivated && (
+        <View style={styles.suspendedBadge}>
+          <MaterialCommunityIcons name="pause-circle-outline" size={ms(16)} color="#FFA726" />
+          <Text style={styles.suspendedText}>
+            {t('settings.inviteCode.suspended')}
+          </Text>
+        </View>
+      )}
+
       {/* 有効化済みバッジ */}
       {isActivated && (
         <View style={styles.activatedBadge}>
@@ -102,8 +119,8 @@ export function InviteCodeSection() {
         </View>
       )}
 
-      {/* 自分のコード表示（未有効化の場合のみ） */}
-      {!isActivated && (
+      {/* 自分のコード表示（未有効化かつ未停止の場合のみ） */}
+      {!isActivated && !isSuspended && (
         <View style={styles.myCodeContainer}>
           <Text style={styles.myCodeLabel}>{t('settings.inviteCode.myCode')}</Text>
           <View style={styles.myCodeRow}>
@@ -138,8 +155,8 @@ export function InviteCodeSection() {
         </View>
       )}
 
-      {/* コード入力フォーム（未有効化の場合のみ） */}
-      {!isActivated && (
+      {/* コード入力フォーム（未有効化かつ未停止の場合のみ） */}
+      {!isActivated && !isSuspended && (
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>{t('settings.inviteCode.enterCode')}</Text>
           <View style={styles.inputRow}>
@@ -198,6 +215,21 @@ const styles = StyleSheet.create({
     fontSize: fs(12),
     color: colors.textMuted,
     marginBottom: ms(16),
+  },
+  suspendedBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(6),
+    backgroundColor: 'rgba(255, 167, 38, 0.15)',
+    paddingVertical: ms(8),
+    paddingHorizontal: ms(12),
+    borderRadius: ms(8),
+    marginBottom: ms(12),
+  },
+  suspendedText: {
+    fontSize: fs(13),
+    color: '#FFA726',
+    fontWeight: '600',
   },
   activatedBadge: {
     flexDirection: 'row',
