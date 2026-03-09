@@ -228,7 +228,8 @@
       "success": {
         "title": "激活成功",
         "message": "3倍速已解锁！"
-      }
+      },
+      "suspended": "邀请码功能暂时不可用"
     }
   },
   "status": {
