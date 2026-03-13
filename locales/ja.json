@@ -294,8 +294,8 @@
     "atk_more_pct": "ATK more",
     "def_more_pct": "DEF more",
     "hp_more_pct": "HP more",
-    "everyTurnHpRegen": "毎ターンHP{{value}}回復",
-    "everyTurnHpRegenPct": "毎ターンHP{{value}}%回復",
+    "everyTurnHpRegen": "毎秒HP{{value}}回復",
+    "everyTurnHpRegenPct": "毎秒HP{{value}}%回復",
     "ignite_chance": "発火",
     "ignite_duration_pct": "発火時間",
     "ignite_tick_speed_pct": "発火速度",
@@ -1700,7 +1700,7 @@
     },
     "vamp_4": {
       "name": "生命回復",
-      "description": "毎ターンHP +8回復"
+      "description": "毎秒HP +8回復"
     },
     "vamp_5": {
       "name": "吸血 II",
@@ -1712,7 +1712,7 @@
     },
     "vamp_7": {
       "name": "生命回復 II",
-      "description": "毎ターンHP +10回復"
+      "description": "毎秒HP +10回復"
     },
     "vamp_key1": {
       "name": "血の渇望",
@@ -1728,7 +1728,7 @@
     },
     "vamp_10": {
       "name": "持続回復",
-      "description": "毎ターンHP 1%回復"
+      "description": "毎秒HP 1%回復"
     },
     "vamp_11": {
       "name": "吸血 IV",
@@ -1740,7 +1740,7 @@
     },
     "vamp_13": {
       "name": "生命回復 III",
-      "description": "毎ターンHP +12回復"
+      "description": "毎秒HP +12回復"
     },
     "vamp_a1": {
       "name": "猛攻",
@@ -1752,11 +1752,11 @@
     },
     "vamp_b1": {
       "name": "治癒の力",
-      "description": "毎ターンHP 1.5%回復"
+      "description": "毎秒HP 1.5%回復"
     },
     "vamp_b2": {
       "name": "生命の奔流",
-      "description": "毎ターンHP +20回復"
+      "description": "毎秒HP +20回復"
     },
     "vamp_14": {
       "name": "吸血 V",
@@ -1780,15 +1780,15 @@
     },
     "vamp_final2": {
       "name": "永遠の吸血鬼",
-      "description": "毎ターンHP 3%回復"
+      "description": "毎秒HP 3%回復"
     },
     "regen_1": {
       "name": "回復の心得",
-      "description": "HP +30, 毎ターンHP +5回復"
+      "description": "HP +30, 毎秒HP +5回復"
     },
     "regen_2": {
       "name": "生命力 I",
-      "description": "毎ターンHP +5回復"
+      "description": "毎秒HP +5回復"
     },
     "regen_3": {
       "name": "体力強化",
@@ -1796,7 +1796,7 @@
     },
     "regen_4": {
       "name": "回復強化",
-      "description": "毎ターンHP +8回復"
+      "description": "毎秒HP +8回復"
     },
     "regen_5": {
       "name": "生命力 II",
@@ -1808,11 +1808,11 @@
     },
     "regen_7": {
       "name": "回復強化 II",
-      "description": "毎ターンHP +10回復"
+      "description": "毎秒HP +10回復"
     },
     "regen_key1": {
       "name": "生命の泉",
-      "description": "毎ターンHP 2%回復"
+      "description": "毎秒HP 2%回復"
     },
     "regen_8": {
       "name": "生命力 III",
@@ -1824,7 +1824,7 @@
     },
     "regen_10": {
       "name": "回復増幅",
-      "description": "毎ターンHP +12回復"
+      "description": "毎秒HP +12回復"
     },
     "regen_11": {
       "name": "生命力 IV",
@@ -1836,7 +1836,7 @@
     },
     "regen_13": {
       "name": "回復強化 III",
-      "description": "毎ターンHP +15回復"
+      "description": "毎秒HP +15回復"
     },
     "regen_a1": {
       "name": "強靭な生命",
@@ -1848,11 +1848,11 @@
     },
     "regen_b1": {
       "name": "超回復",
-      "description": "毎ターンHP 1.5%回復"
+      "description": "毎秒HP 1.5%回復"
     },
     "regen_b2": {
       "name": "治癒の極み",
-      "description": "毎ターンHP +25回復"
+      "description": "毎秒HP +25回復"
     },
     "regen_14": {
       "name": "生命力 V",
@@ -1864,19 +1864,19 @@
     },
     "regen_16": {
       "name": "回復強化 IV",
-      "description": "毎ターンHP +20回復"
+      "description": "毎秒HP +20回復"
     },
     "regen_17": {
       "name": "生命の加護",
-      "description": "毎ターンHP 2%回復"
+      "description": "毎秒HP 2%回復"
     },
     "regen_final1": {
       "name": "不死鳥の祝福",
-      "description": "HP 25% more, 毎ターンHP +25回復"
+      "description": "HP 25% more, 毎秒HP +25回復"
     },
     "regen_final2": {
       "name": "永遠の生命",
-      "description": "毎ターンHP 4%回復"
+      "description": "毎秒HP 4%回復"
     },
     "speed_1": {
       "name": "迅速の心得",

@@ -105,8 +105,8 @@ export type ModType =
   | 'atk_more_pct'       // ATK X% more (乗算、非常に強力)
   | 'def_more_pct'       // DEF X% more (乗算、非常に強力)
   | 'hp_more_pct'        // HP X% more (乗算、非常に強力)
-  | 'hp_regen'           // 毎ターンHP X回復
-  | 'hp_regen_pct'       // 毎ターンHP X%回復
+  | 'hp_regen'           // 毎秒HP X回復
+  | 'hp_regen_pct'       // 毎秒HP X%回復
   | 'poison_chance'      // 毒付与確率+X%
   | 'ignite_chance'      // 発火付与確率+X%（杖専用）
   | 'ignite_duration_pct'    // 発火時間+X%（杖専用）
@@ -209,8 +209,8 @@ export interface PassiveEffect {
   critical_damage?: number;    // クリティカルダメージ+X%
   hp_on_crit?: number;         // クリティカル時HP回復（固定値）
   // 回復・防御系
-  hp_regen?: number;           // 毎ターンHP回復
-  hp_regen_pct?: number;       // 毎ターンHP X%回復
+  hp_regen?: number;           // 毎秒HP回復
+  hp_regen_pct?: number;       // 毎秒HP X%回復
   damage_reduction_pct?: number; // ダメージ軽減+X%
   hp_on_hit?: number;          // HIT時HP回復（固定値）
   // 攻撃速度系
