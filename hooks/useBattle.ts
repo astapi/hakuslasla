@@ -35,6 +35,7 @@ import {
   DEBUG_DIMENSIONAL_DUNGEON_IDS,
 } from '@/core/endContent';
 import i18n from '@/lib/i18n';
+import { isUniqueItem } from '@/utils/item';
 
 const BOSS_SKILL_KEY = {
   goblin: {
@@ -644,13 +645,15 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
 // ドロップフィルタリング関数
 const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] => {
   return items.filter((item) => {
+    const uniqueItem = isUniqueItem(item);
+
     // カテゴリフィルター
     if (!filter.categories[item.slot]) {
       return false;
     }
 
-    // MOD数フィルター（0の場合は無効）
-    if (filter.minModCount > 0 && item.mods.length < filter.minModCount) {
+    // ユニークアイテムは MOD 数フィルターの対象外
+    if (!uniqueItem && filter.minModCount > 0 && item.mods.length < filter.minModCount) {
       return false;
     }
 
