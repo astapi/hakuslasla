@@ -132,6 +132,13 @@
     "selected": "選択中",
     "equipped": "装備中",
     "storage": "倉庫",
+    "bulkSell": "一括売却",
+    "bulkSellShort": "全て",
+    "bulkSellDisabled": "売却対象なし",
+    "bulkSellConfirmTitle": "一括売却",
+    "bulkSellConfirmMessage": "{{slot}}を{{count}}件まとめて売却しますか？\nこの操作は取り消せません。",
+    "bulkSellConfirmAction": "売却する",
+    "bulkSellCount": "{{count}}件",
     "noItemsInSlot": "{{slot}}がありません",
     "tabs": {
       "equipment": "装備",

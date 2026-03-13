@@ -68,6 +68,8 @@ interface PlayerActions {
   addToInventory: (item: Item) => Promise<boolean>;
   // アイテムをインベントリから削除（instanceIdで指定）
   removeFromInventory: (instanceId: string) => Promise<boolean>;
+  // 複数アイテムをインベントリから削除
+  removeItemsFromInventory: (instanceIds: string[]) => Promise<number>;
   // 計算されたステータスを取得
   getTotalStats: () => { maxHp: number; atk: number; def: number };
   // インベントリの最大容量を取得
@@ -370,6 +372,21 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       inventory: state.inventory.filter((i) => i.instanceId !== instanceId),
     });
     return true;
+  },
+
+  removeItemsFromInventory: async (instanceIds: string[]): Promise<number> => {
+    const state = get();
+    if (!state.characterId || instanceIds.length === 0) return 0;
+
+    const removedCount = await inventoryRepository.removeItems(state.characterId, instanceIds);
+    if (removedCount <= 0) return 0;
+
+    const targetIds = new Set(instanceIds);
+    set({
+      inventory: state.inventory.filter((item) => !targetIds.has(item.instanceId)),
+    });
+
+    return removedCount;
   },
 
   // PoE式計算: base × (1 + total_increased%) × more1 × more2 × ...

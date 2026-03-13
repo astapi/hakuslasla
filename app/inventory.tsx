@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useCallback, memo } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, FlatList, ListRenderItemInfo, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, FlatList, ListRenderItemInfo, useWindowDimensions, Alert } from 'react-native';
 import { useRouter , useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -197,6 +197,7 @@ export default function InventoryScreen() {
   const equipItem = usePlayerStore((state) => state.equipItem);
   const unequipItem = usePlayerStore((state) => state.unequipItem);
   const removeFromInventory = usePlayerStore((state) => state.removeFromInventory);
+  const removeItemsFromInventory = usePlayerStore((state) => state.removeItemsFromInventory);
   const isInventoryFull = usePlayerStore((state) => state.isInventoryFull);
   const getInventoryMaxSize = usePlayerStore((state) => state.getInventoryMaxSize);
   const playerAtk = usePlayerStore((state) => state.atk);
@@ -297,6 +298,39 @@ export default function InventoryScreen() {
     setSelectedItem(nextItem);
   };
 
+  const currentItems = itemsBySlot[selectedSlot];
+
+  const handleBulkSell = useCallback(() => {
+    const instanceIds = currentItems.map((item) => item.instanceId);
+    if (instanceIds.length === 0) {
+      return;
+    }
+
+    Alert.alert(
+      t('inventory.bulkSellConfirmTitle'),
+      t('inventory.bulkSellConfirmMessage', {
+        slot: t(`slots.${selectedSlot}`),
+        count: instanceIds.length,
+      }),
+      [
+        {
+          text: t('common.cancel'),
+          style: 'cancel',
+        },
+        {
+          text: t('inventory.bulkSellConfirmAction'),
+          style: 'destructive',
+          onPress: () => {
+            void (async () => {
+              await removeItemsFromInventory(instanceIds);
+              setSelectedItem(null);
+            })();
+          },
+        },
+      ]
+    );
+  }, [currentItems, removeItemsFromInventory, selectedSlot, t]);
+
   const handleStorage = async (item: Item) => {
     const nextItem = getNextItemAfterRemoval(item.instanceId);
     // 倉庫に送る（MOD保持）
@@ -325,7 +359,6 @@ export default function InventoryScreen() {
     setSelectedItem(item);
   }, []);
 
-  const currentItems = itemsBySlot[selectedSlot];
   const inventoryMaxSize = getInventoryMaxSize();
   const isFull = inventory.length >= inventoryMaxSize;
 
@@ -429,6 +462,8 @@ export default function InventoryScreen() {
                 onUnequip={() => handleUnequip(selectedItem.slot)}
                 onStorage={() => handleStorage(selectedItem)}
                 onSell={() => handleSell(selectedItem.instanceId)}
+                onBulkSell={handleBulkSell}
+                canBulkSell={currentItems.length > 0}
                 t={t}
                 playerAtk={playerAtk}
                 playerDef={playerDef}
@@ -569,6 +604,8 @@ const ItemDetail = memo(({
   onUnequip,
   onStorage,
   onSell,
+  onBulkSell,
+  canBulkSell,
   t,
   playerAtk,
   playerDef,
@@ -582,6 +619,8 @@ const ItemDetail = memo(({
   onUnequip: () => void;
   onStorage: () => void;
   onSell: () => void;
+  onBulkSell: () => void;
+  canBulkSell: boolean;
   t: (key: string) => string;
   playerAtk: number;
   playerDef: number;
@@ -714,6 +753,18 @@ const ItemDetail = memo(({
         <Pressable style={styles.iconButton} onPress={onSell}>
           <MaterialCommunityIcons name="cash" size={20} color="#FFD700" />
           <Text style={styles.iconButtonText}>{t('common.sell')}</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.iconButton, styles.bulkSellIconButton, !canBulkSell && styles.compactIconButtonDisabled]}
+          onPress={onBulkSell}
+          disabled={!canBulkSell}
+        >
+          <MaterialCommunityIcons
+            name="cash-multiple"
+            size={20}
+            color={canBulkSell ? '#FFB74D' : '#666'}
+          />
+          <Text style={styles.iconButtonText}>{t('inventory.bulkSellShort')}</Text>
         </Pressable>
       </View>
     </View>
@@ -935,6 +986,12 @@ const styles = StyleSheet.create({
     fontSize: fs(9),
     color: '#aaa',
     marginTop: ms(2),
+  },
+  bulkSellIconButton: {
+    justifyContent: 'center',
+  },
+  compactIconButtonDisabled: {
+    backgroundColor: 'rgba(100, 100, 100, 0.14)',
   },
   // カテゴリタブ
   categoryTabs: {

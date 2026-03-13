@@ -132,6 +132,13 @@
     "selected": "已选择",
     "equipped": "已装备",
     "storage": "仓库",
+    "bulkSell": "全部出售",
+    "bulkSellShort": "全部",
+    "bulkSellDisabled": "没有可出售物品",
+    "bulkSellConfirmTitle": "全部出售",
+    "bulkSellConfirmMessage": "要一次性出售全部 {{count}} 件{{slot}}吗？\n此操作无法撤销。",
+    "bulkSellConfirmAction": "出售",
+    "bulkSellCount": "{{count}}件",
     "noItemsInSlot": "没有{{slot}}",
     "tabs": {
       "equipment": "装备",

@@ -132,6 +132,13 @@
     "selected": "선택됨",
     "equipped": "장착 중",
     "storage": "창고",
+    "bulkSell": "일괄 판매",
+    "bulkSellShort": "전체",
+    "bulkSellDisabled": "판매 대상 없음",
+    "bulkSellConfirmTitle": "일괄 판매",
+    "bulkSellConfirmMessage": "{{slot}} 아이템 {{count}}개를 모두 판매할까요?\n이 작업은 되돌릴 수 없습니다.",
+    "bulkSellConfirmAction": "판매",
+    "bulkSellCount": "{{count}}개",
     "noItemsInSlot": "{{slot}} 없음",
     "tabs": {
       "equipment": "장비",
