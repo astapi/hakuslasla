@@ -132,6 +132,13 @@
     "selected": "Seleccionado",
     "equipped": "Equipado",
     "storage": "Almacén",
+    "bulkSell": "Vender todo",
+    "bulkSellShort": "todo",
+    "bulkSellDisabled": "Sin objetos para vender",
+    "bulkSellConfirmTitle": "Vender todo",
+    "bulkSellConfirmMessage": "¿Vender los {{count}} objetos de {{slot}}?\nEsta acción no se puede deshacer.",
+    "bulkSellConfirmAction": "Vender",
+    "bulkSellCount": "{{count}} objetos",
     "noItemsInSlot": "Sin {{slot}}",
     "tabs": {
       "equipment": "Equipamiento",

@@ -132,6 +132,13 @@
     "selected": "Selected",
     "equipped": "Equipped",
     "storage": "Storage",
+    "bulkSell": "Sell All",
+    "bulkSellShort": "all",
+    "bulkSellDisabled": "No Items",
+    "bulkSellConfirmTitle": "Sell All",
+    "bulkSellConfirmMessage": "Sell all {{count}} {{slot}} items?\nThis action cannot be undone.",
+    "bulkSellConfirmAction": "Sell",
+    "bulkSellCount": "{{count}} items",
     "noItemsInSlot": "No {{slot}}",
     "tabs": {
       "equipment": "Equipment",

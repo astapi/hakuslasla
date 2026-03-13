@@ -110,6 +110,25 @@ export const inventoryRepository = {
   },
 
   /**
+   * 複数アイテムをインベントリから削除
+   */
+  async removeItems(characterId: number, instanceIds: string[]): Promise<number> {
+    if (instanceIds.length === 0) {
+      return 0;
+    }
+
+    const db = await getDatabase();
+    const placeholders = instanceIds.map(() => '?').join(', ');
+    const result = await db.runAsync(
+      `DELETE FROM character_inventory
+       WHERE character_id = ? AND instance_id IN (${placeholders})`,
+      characterId,
+      ...instanceIds
+    );
+    return result.changes;
+  },
+
+  /**
    * 特定のアイテムを取得
    */
   async getItem(characterId: number, instanceId: string): Promise<Item | null> {

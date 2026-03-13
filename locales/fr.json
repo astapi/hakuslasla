@@ -132,6 +132,13 @@
     "selected": "Sélectionné",
     "equipped": "Équipé",
     "storage": "Entrepôt",
+    "bulkSell": "Tout vendre",
+    "bulkSellShort": "tout",
+    "bulkSellDisabled": "Aucun objet à vendre",
+    "bulkSellConfirmTitle": "Tout vendre",
+    "bulkSellConfirmMessage": "Vendre les {{count}} objets de type {{slot}} ?\nCette action est irréversible.",
+    "bulkSellConfirmAction": "Vendre",
+    "bulkSellCount": "{{count}} objets",
     "noItemsInSlot": "Aucun {{slot}}",
     "tabs": {
       "equipment": "Équipement",

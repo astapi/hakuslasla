@@ -132,6 +132,13 @@
     "selected": "Ausgewaehlt",
     "equipped": "Ausgeruestet",
     "storage": "Lager",
+    "bulkSell": "Alle verkaufen",
+    "bulkSellShort": "alle",
+    "bulkSellDisabled": "Keine Verkaufsobjekte",
+    "bulkSellConfirmTitle": "Alle verkaufen",
+    "bulkSellConfirmMessage": "Alle {{count}} {{slot}}-Gegenstaende verkaufen?\nDiese Aktion kann nicht rueckgaengig gemacht werden.",
+    "bulkSellConfirmAction": "Verkaufen",
+    "bulkSellCount": "{{count}} Gegenstaende",
     "noItemsInSlot": "Kein {{slot}}",
     "tabs": {
       "equipment": "Ausruestung",
