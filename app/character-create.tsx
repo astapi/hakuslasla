@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
@@ -40,7 +40,7 @@ export default function CharacterCreateScreen() {
 
   return (
     <ScreenWrapper>
-      <View style={styles.content}>
+      <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         <Text style={styles.label}>{t('characterCreate.nameLabel')}</Text>
         <TextInput
           style={styles.input}
@@ -131,7 +131,7 @@ export default function CharacterCreateScreen() {
             </View>
           )}
         </View>
-      </View>
+      </ScrollView>
 
       <View style={styles.footer}>
         <Button
@@ -161,6 +161,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  contentContainer: {
     padding: ms(16),
   },
   label: {
