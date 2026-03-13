@@ -27,8 +27,8 @@ export interface PassiveStats extends Stats {
   poison_chance: number;      // 毒付与率（%）
   critical_chance: number;    // クリティカル率（%）
   critical_damage: number;    // クリティカルダメージ+X%
-  hp_regen: number;           // 毎ターンHP回復
-  hp_regen_pct: number;       // 毎ターンHP X%回復
+  hp_regen: number;           // 毎秒HP回復
+  hp_regen_pct: number;       // 毎秒HP X%回復
 }
 
 export interface CombatStats extends Stats {

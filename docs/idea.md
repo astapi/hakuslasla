@@ -31,5 +31,5 @@ AS: 1.0で1秒に1回攻撃
   - ATK+15
   - AS 30%inc
 - 聞か猿(アクセサリー)
-  - unique mod: 毎ターン LV * 3 回復
+  - unique mod: 毎秒 LV * 3 回復
   - DEF+20

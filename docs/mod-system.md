@@ -30,8 +30,8 @@ export type ModType =
   | 'atk_increased_pct'   // ATK +X% (increased)
   | 'def_increased_pct'   // DEF +X% (increased)
   | 'hp_increased_pct'    // HP +X% (increased)
-  | 'hp_regen'            // 毎ターンHP X回復
-  | 'hp_regen_pct'        // 毎ターンHP X%回復
+  | 'hp_regen'            // 毎秒HP X回復
+  | 'hp_regen_pct'        // 毎秒HP X%回復
   | 'poison_chance'       // 毒付与確率+X%
   | 'critical_chance'     // クリティカル確率+X%
   | 'critical_damage'     // クリティカルダメージ+X%
@@ -84,8 +84,8 @@ export interface TierValueRange {
 
 | MODタイプ | 効果 | 適用タイミング |
 |----------|------|---------------|
-| `hp_regen` | 毎ターンHP X回復 | ターン開始時 |
-| `hp_regen_pct` | 毎ターン最大HPのX%回復 | ターン開始時 |
+| `hp_regen` | 毎秒HP X回復 | 毎秒 |
+| `hp_regen_pct` | 毎秒最大HPのX%回復 | 毎秒 |
 | `poison_chance` | 毒付与確率+X% | 攻撃時 |
 | `critical_chance` | クリティカル確率+X% | 攻撃時 |
 | `critical_damage` | クリティカルダメージ+X% | クリティカル発生時 |
@@ -321,8 +321,8 @@ export function getModDescription(mod: ItemMod): string {
     case 'atk_bonus': return tierStr + `ATK+${mod.value}`;
     case 'def_bonus': return tierStr + `DEF+${mod.value}`;
     case 'hp_bonus': return tierStr + `HP+${mod.value}`;
-    case 'hp_regen': return tierStr + `毎ターンHP${mod.value}回復`;
-    case 'hp_regen_pct': return tierStr + `毎ターンHP${mod.value}%回復`;
+    case 'hp_regen': return tierStr + `毎秒HP${mod.value}回復`;
+    case 'hp_regen_pct': return tierStr + `毎秒HP${mod.value}%回復`;
     case 'poison_chance': return tierStr + `毒付与+${mod.value}%`;
     case 'critical_chance': return tierStr + `クリティカル+${mod.value}%`;
     case 'critical_damage': return tierStr + `クリダメ+${mod.value}%`;

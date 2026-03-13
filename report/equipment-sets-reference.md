@@ -507,8 +507,8 @@
 | atk_bonus | ATK固定値増加 |
 | atk_increased_pct | ATK%増加 |
 | def_bonus | DEF固定値増加 |
-| hp_regen | HP回復量（毎ターン） |
-| hp_regen_pct | HP%回復（毎ターン） |
+| hp_regen | HP回復量（毎秒） |
+| hp_regen_pct | HP%回復（毎秒） |
 | critical_chance | クリティカル率 |
 | critical_damage | クリティカルダメージ倍率 |
 | poison_chance | 毒付与確率 |

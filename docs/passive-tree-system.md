@@ -112,8 +112,8 @@ interface PassiveEffect {
   hp_on_crit?: number;              // クリティカル時HP回復
 
   // 回復・防御系
-  hp_regen?: number;                // 毎ターンHP回復
-  hp_regen_pct?: number;            // 毎ターンHP X%回復
+  hp_regen?: number;                // 毎秒HP回復
+  hp_regen_pct?: number;            // 毎秒HP X%回復
   damage_reduction_pct?: number;    // ダメージ軽減+X%
   hp_on_hit?: number;               // HIT時HP回復
 
@@ -175,26 +175,26 @@ interface PassiveEffect {
 **主な効果:**
 - HIT時HP回復
 - ATK増加
-- 毎ターンHP回復
+- 毎秒HP回復
 
 **キーストーン:**
 - `血の渇望`: HIT時HP +30回復
 - `血の支配者`: HIT時HP +40回復, ATK 15% more
-- `永遠の吸血鬼`: 毎ターンHP 3%回復
+- `永遠の吸血鬼`: 毎秒HP 3%回復
 
 ### 5. 回復/リジェネビルド（左上方向）
 
 高いHP再生力で長期戦に強い。
 
 **主な効果:**
-- 毎ターンHP回復（フラット）
-- 毎ターンHP%回復
+- 毎秒HP回復（フラット）
+- 毎秒HP%回復
 - HP増加（フラット・Increased・More）
 
 **キーストーン:**
-- `生命の泉`: 毎ターンHP 2%回復
-- `不死鳥の祝福`: HP 25% more, 毎ターンHP +25回復
-- `永遠の生命`: 毎ターンHP 4%回復
+- `生命の泉`: 毎秒HP 2%回復
+- `不死鳥の祝福`: HP 25% more, 毎秒HP +25回復
+- `永遠の生命`: 毎秒HP 4%回復
 
 ### 6. 攻撃速度ビルド（下方向）
 
