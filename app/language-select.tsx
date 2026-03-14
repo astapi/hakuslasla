@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { settingsRepository, LANGUAGE_LABELS, AppLanguage } from '@/db';
 import { changeLanguage, getDeviceLanguage } from '@/lib/i18n';
+import { consumePendingInviteLink } from '@/lib/inviteLink';
 
 // 言語オプション（systemを除く）
 const LANGUAGE_OPTIONS: Exclude<AppLanguage, 'system'>[] = [
@@ -33,7 +34,18 @@ export default function LanguageSelectScreen() {
     // 言語を保存して適用
     await settingsRepository.setLanguage(selectedLanguage);
     changeLanguage(selectedLanguage);
-    // キャラクター選択画面へ
+    const pendingInvite = consumePendingInviteLink();
+    if (pendingInvite) {
+      router.replace(
+        pendingInvite.code
+          ? {
+              pathname: '/settings',
+              params: { inviteCode: pendingInvite.code },
+            }
+          : '/settings'
+      );
+      return;
+    }
     router.replace('/');
   };
 

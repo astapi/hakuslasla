@@ -218,12 +218,13 @@
       "description": "友達と招待コードを共有して、お互いに3倍速を有効化しましょう",
       "myCode": "あなたの招待コード",
       "copied": "コピーしました",
+      "receivedFromLink": "招待リンクのコードを入力欄にセットしました",
       "enterCode": "友達のコードを入力",
       "placeholder": "6文字のコード",
       "submit": "送信",
       "submitting": "送信中...",
       "activated": "3倍速が有効化済み",
-      "shareText": "ルートダイブで一緒に冒険しよう！招待コード: {{code}}",
+      "shareText": "ルートダイブで一緒に冒険しよう！このリンクを開くと招待コードがそのまま受け取れます。\nhttps://astapi.net/lootdive/invite?code={{code}}\nうまく開けない場合は招待コード {{code}} を入力してください。",
       "error": {
         "ownCode": "自分のコードは入力できません",
         "notFound": "招待コードが見つかりません",
@@ -237,6 +238,17 @@
         "message": "3倍速が有効になりました！"
       },
       "suspended": "招待コード機能は一時的に停止中です"
+    }
+  },
+  "inviteLink": {
+    "title": "招待コードを受け取りました",
+    "description": "リンクから招待コードを読み込みました。適用すると3倍速を解放できます。",
+    "receivedCode": "受け取ったコード",
+    "apply": "このコードを適用",
+    "openSettings": "設定画面で確認する",
+    "goHome": "ホームへ戻る",
+    "result": {
+      "alreadyActivated": "すでに3倍速は解放済みです。"
     }
   },
   "status": {

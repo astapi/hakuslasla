@@ -15,6 +15,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     appleTeamId: "C554RLNNG7",
     bundleIdentifier: "com.astapi.LootDive",
     buildNumber: process.env.IOS_BUILD_NUMBER ?? "1",
+    associatedDomains: ["applinks:astapi.net"],
     googleServicesFile:
       process.env.GOOGLE_SERVICES_INFO_PLIST ?? "./GoogleService-Info.plist",
     infoPlist: {
@@ -36,6 +37,20 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     edgeToEdgeEnabled: true,
     predictiveBackGestureEnabled: false,
     package: "com.astapi.LootDive",
+    intentFilters: [
+      {
+        action: "VIEW",
+        autoVerify: true,
+        data: [
+          {
+            scheme: "https",
+            host: "astapi.net",
+            pathPrefix: "/lootdive/invite",
+          },
+        ],
+        category: ["BROWSABLE", "DEFAULT"],
+      },
+    ],
     splash: {
       image: "./assets/images/splash.png",
       resizeMode: "cover",

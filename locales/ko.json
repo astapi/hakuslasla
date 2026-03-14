@@ -218,12 +218,13 @@
       "description": "친구와 초대 코드를 공유하면 양쪽 모두 3배속이 해금됩니다",
       "myCode": "나의 초대 코드",
       "copied": "복사됨",
+      "receivedFromLink": "링크의 초대 코드가 입력란에 채워졌습니다",
       "enterCode": "친구의 코드 입력",
       "placeholder": "6자리 코드",
       "submit": "제출",
       "submitting": "제출 중...",
       "activated": "3배속 활성화됨",
-      "shareText": "LootDive에서 함께 모험하자! 초대 코드: {{code}}",
+      "shareText": "LootDive에서 함께 모험해요! 이 링크를 열면 초대 코드를 바로 받을 수 있어요.\nhttps://astapi.net/lootdive/invite?code={{code}}\n앱이 열리지 않으면 코드 {{code}} 를 직접 입력해 주세요.",
       "error": {
         "ownCode": "자신의 코드는 사용할 수 없습니다",
         "notFound": "초대 코드를 찾을 수 없습니다",
@@ -237,6 +238,17 @@
         "message": "3배속이 해금되었습니다!"
       },
       "suspended": "초대 코드 기능이 일시적으로 중단되었습니다"
+    }
+  },
+  "inviteLink": {
+    "title": "초대 코드를 받았습니다",
+    "description": "링크에서 초대 코드를 읽었습니다. 적용하면 3배속이 해제됩니다.",
+    "receivedCode": "받은 코드",
+    "apply": "이 코드 적용",
+    "openSettings": "설정 열기",
+    "goHome": "홈으로",
+    "result": {
+      "alreadyActivated": "이미 3배속이 해제되어 있습니다."
     }
   },
   "status": {

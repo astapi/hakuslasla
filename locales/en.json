@@ -218,12 +218,13 @@
       "description": "Share invite codes with friends to unlock 3x speed for both of you",
       "myCode": "Your Invite Code",
       "copied": "Copied!",
+      "receivedFromLink": "The invite code from the link has been filled in",
       "enterCode": "Enter Friend's Code",
       "placeholder": "6-character code",
       "submit": "Submit",
       "submitting": "Submitting...",
       "activated": "3x Speed Activated",
-      "shareText": "Let's adventure together in LootDive! Invite code: {{code}}",
+      "shareText": "Let's adventure together in LootDive! Open this link to receive the invite code automatically.\nhttps://astapi.net/lootdive/invite?code={{code}}\nIf the app does not open, enter code {{code}} manually.",
       "error": {
         "ownCode": "You cannot use your own code",
         "notFound": "Invite code not found",
@@ -237,6 +238,17 @@
         "message": "3x speed has been unlocked!"
       },
       "suspended": "Invite code feature is temporarily unavailable"
+    }
+  },
+  "inviteLink": {
+    "title": "Invite Code Received",
+    "description": "We read an invite code from the link. Apply it to unlock 3x speed.",
+    "receivedCode": "Received Code",
+    "apply": "Apply This Code",
+    "openSettings": "Open Settings",
+    "goHome": "Go Home",
+    "result": {
+      "alreadyActivated": "3x speed is already unlocked."
     }
   },
   "status": {

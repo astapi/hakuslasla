@@ -1,6 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Stack, router } from 'expo-router';
+import * as Linking from 'expo-linking';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
@@ -8,8 +9,9 @@ import { useTranslation } from 'react-i18next';
 import { initializeDatabase, settingsRepository } from '@/db';
 import { isTablet } from '@/utils/scaling';
 import { changeLanguage } from '@/lib/i18n';
+import { Analytics, CrashlyticsHelper } from '@/lib/analytics';
+import { consumePendingInviteLink, parseInviteLink, setPendingInviteLink } from '@/lib/inviteLink';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
-import { CrashlyticsHelper } from '@/lib/analytics';
 import { adService } from '@/services/adService';
 
 // スプラッシュ画面を自動で非表示にしない
@@ -20,6 +22,34 @@ export default function RootLayout() {
   const [isDbReady, setIsDbReady] = useState(false);
   const [needsLanguageSetup, setNeedsLanguageSetup] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isDbReadyRef = useRef(false);
+  const needsLanguageSetupRef = useRef(false);
+  const hasCheckedInitialUrlRef = useRef(false);
+
+  const handleIncomingUrl = useCallback((url: string, coldStart: boolean) => {
+    const inviteLink = parseInviteLink(url);
+    if (!inviteLink) {
+      return;
+    }
+
+    setPendingInviteLink(inviteLink);
+    Analytics.logInviteLinkOpened({
+      source: inviteLink.source,
+      cold_start: coldStart,
+    });
+
+    if (isDbReadyRef.current && !needsLanguageSetupRef.current) {
+      router.push(
+        inviteLink.code
+          ? {
+              pathname: '/settings',
+              params: { inviteCode: inviteLink.code },
+            }
+          : '/settings'
+      );
+      setPendingInviteLink(null);
+    }
+  }, []);
 
   useEffect(() => {
     const init = async () => {
@@ -57,11 +87,65 @@ export default function RootLayout() {
     init();
   }, []);
 
+  useEffect(() => {
+    isDbReadyRef.current = isDbReady;
+  }, [isDbReady]);
+
+  useEffect(() => {
+    needsLanguageSetupRef.current = needsLanguageSetup;
+  }, [needsLanguageSetup]);
+
+  useEffect(() => {
+    if (hasCheckedInitialUrlRef.current) {
+      return;
+    }
+    hasCheckedInitialUrlRef.current = true;
+
+    Linking.getInitialURL()
+      .then((url) => {
+        if (url) {
+          handleIncomingUrl(url, true);
+        }
+      })
+      .catch((linkError) => {
+        const nextError = linkError instanceof Error ? linkError : new Error('Initial URL read failed');
+        CrashlyticsHelper.recordError(nextError, 'Initial URL read failed');
+      });
+
+    const subscription = Linking.addEventListener('url', ({ url }) => {
+      handleIncomingUrl(url, false);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [handleIncomingUrl]);
+
   // 初回起動時に言語選択画面へリダイレクト
   useEffect(() => {
     if (isDbReady && needsLanguageSetup) {
       router.replace('/language-select');
     }
+  }, [isDbReady, needsLanguageSetup]);
+
+  useEffect(() => {
+    if (!isDbReady || needsLanguageSetup) {
+      return;
+    }
+
+    const pendingInvite = consumePendingInviteLink();
+    if (!pendingInvite) {
+      return;
+    }
+
+    router.push(
+      pendingInvite.code
+        ? {
+            pathname: '/settings',
+            params: { inviteCode: pendingInvite.code },
+          }
+        : '/settings'
+    );
   }, [isDbReady, needsLanguageSetup]);
 
   // DB準備完了後にスプラッシュを非表示
