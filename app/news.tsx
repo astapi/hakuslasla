@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { Button } from '@/components/common/Button';
-import { fetchRssItems, RssItem } from '@/lib/rss';
+import { fetchRssItems, filterItemsByLocale, RssItem } from '@/lib/rss';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { ms, fs } from '@/utils/scaling';
 
@@ -16,7 +16,7 @@ function formatDate(pubDate: string): string {
 }
 
 export default function NewsScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const [items, setItems] = useState<RssItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,8 @@ export default function NewsScreen() {
     setLoading(true);
     setError(false);
     try {
-      const rssItems = await fetchRssItems();
+      const allItems = await fetchRssItems();
+      const rssItems = filterItemsByLocale(allItems, i18n.language);
       setItems(rssItems);
       // 一覧を開いた時点で既読にする
       if (rssItems.length > 0) {

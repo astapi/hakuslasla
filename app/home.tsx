@@ -17,7 +17,7 @@ import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { ENTITLEMENT_IDS } from '@/constants/purchases';
 import { characterImages } from '@/data/images';
 import { NewsModal } from '@/components/common/NewsModal';
-import { fetchRssItems, RssItem } from '@/lib/rss';
+import { fetchRssItems, filterItemsByLocale, RssItem } from '@/lib/rss';
 import { ms, fs, isTablet } from '@/utils/scaling';
 
 // タブレット用スケーリング
@@ -25,7 +25,7 @@ const tabIconSize = isTablet ? 32 : 24;
 const tabLabelSize = isTablet ? 13 : 10;
 
 export default function HomeScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
@@ -57,7 +57,8 @@ export default function HomeScreen() {
   useEffect(() => {
     const checkNews = async () => {
       try {
-        const items = await fetchRssItems();
+        const allItems = await fetchRssItems();
+        const items = filterItemsByLocale(allItems, i18n.language);
         if (items.length === 0) return;
         const lastRead = await settingsRepository.getNewsLastReadDate();
         const lastReadTime = lastRead ? new Date(lastRead).getTime() : 0;
