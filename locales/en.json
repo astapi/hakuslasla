@@ -275,6 +275,7 @@
     "igniteDamageMore": "Ignite More",
     "igniteDuration": "Ignite Dur",
     "igniteTickSpeed": "Ignite Speed",
+    "igniteLifesteal": "Ignite Leech",
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",

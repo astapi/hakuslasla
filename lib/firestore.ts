@@ -42,6 +42,7 @@ export interface RankingStats {
   igniteDamagePct: number;
   igniteDamageMore: number;
   igniteDurationPct: number;
+  igniteLifesteal: number;
   // 回復・防御
   hpRegen: number;
   hpOnHit: number;

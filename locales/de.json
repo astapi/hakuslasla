@@ -275,6 +275,7 @@
     "igniteDamageMore": "Entzuendung mehr",
     "igniteDuration": "Entzuendungsdauer",
     "igniteTickSpeed": "Entzuendungs-Tick",
+    "igniteLifesteal": "Entzuendungsraub",
     "perSecond": "/s",
     "on": "AN",
     "off": "AUS",

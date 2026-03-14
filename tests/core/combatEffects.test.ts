@@ -54,6 +54,7 @@ const emptyMods: CombinedModEffects = {
   igniteDamageMorePct: [],
   igniteDurationPct: 0,
   igniteTickSpeedPct: 0,
+  igniteLifesteal: 0,
   igniteSpread: false,
   igniteStackingDamage: false,
   warlordEnrage: false,
@@ -131,7 +132,7 @@ describe('core/combatEffects', () => {
       },
     };
 
-    const result = processIgniteDamage(state, 30, DEFAULT_BATTLE_CONFIG);
+    const result = processIgniteDamage(state, 30, emptyMods, DEFAULT_BATTLE_CONFIG);
     const igniteDamageEvent = result.events.find((event) => event.type === 'ignite_damage');
 
     expect(result.totalDamage).toBe(5);

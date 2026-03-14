@@ -275,6 +275,7 @@
     "igniteDamageMore": "点燃加成",
     "igniteDuration": "点燃持续",
     "igniteTickSpeed": "点燃速度",
+    "igniteLifesteal": "点燃吸血",
     "perSecond": "/秒",
     "on": "开",
     "off": "关",

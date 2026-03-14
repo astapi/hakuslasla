@@ -305,13 +305,23 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
 
     // 発火ダメージ処理（時間ベース）
     if (engine.state.enemyIgniteState) {
-      const igniteResult = processIgniteDamage(engine.state, engine.state.elapsedTicks, engine.config);
+      const igniteResult = processIgniteDamage(engine.state, engine.state.elapsedTicks, engine.playerMods, engine.config);
       // 発火状態を先に更新（撃破時も正しい状態を保持するため）
       engine.state.enemyIgniteState = igniteResult.updatedState;
 
       if (igniteResult.totalDamage > 0) {
         engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - igniteResult.totalDamage);
         events.push(...igniteResult.events);
+
+        // 発火ダメージ吸収による回復
+        if (igniteResult.healAmount > 0) {
+          const actualHeal = Math.min(igniteResult.healAmount, engine.playerStats.maxHp - engine.state.player.currentHp);
+          if (actualHeal > 0) {
+            engine.state.player.currentHp += actualHeal;
+            const lifestealEvent = createLifestealEvent(engine.state.elapsedTicks, actualHeal);
+            if (lifestealEvent) events.push(lifestealEvent);
+          }
+        }
 
         if (engine.state.enemy.currentHp <= 0) {
           engine.state.isFinished = true;

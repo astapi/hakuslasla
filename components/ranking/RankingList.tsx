@@ -111,6 +111,7 @@ const RankingRow = ({ entry, isMe }: RankingRowProps) => {
             <StatItem label={t('status.igniteDamage')} value={`+${entry.stats.igniteDamagePct}%`} color="#FF7043" />
             <StatItem label={t('status.igniteDamageMore')} value={`+${entry.stats.igniteDamageMore}%`} color="#FF7043" />
             <StatItem label={t('status.igniteDuration')} value={`+${entry.stats.igniteDurationPct}%`} color="#FF7043" />
+            <StatItem label={t('status.igniteLifesteal')} value={`${entry.stats.igniteLifesteal}%`} color="#FF7043" />
             {/* 回復・防御 */}
             <StatItem label={t('status.hpRegen')} value={`${entry.stats.hpRegen}${t('status.perSecond')}`} color="#4CAF50" />
             <StatItem label={t('status.hpOnHit')} value={entry.stats.hpOnHit} color="#4CAF50" />

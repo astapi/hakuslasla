@@ -309,6 +309,7 @@ export function tryApplyIgnite(
  */
 export interface IgniteDamageResult {
   totalDamage: number;
+  healAmount: number;
   updatedState: IgniteState | null;
   events: BattleEvent[];
 }
@@ -317,16 +318,18 @@ export interface IgniteDamageResult {
  * 発火ダメージを処理
  * @param state 現在の戦闘状態
  * @param tick 現在のティック
+ * @param mods MOD効果（発火ダメージ吸収用）
  * @param config 戦闘設定
  * @returns 処理結果
  */
 export function processIgniteDamage(
   state: GaugeBattleState,
   tick: number,
+  mods: CombinedModEffects,
   config: BattleConfig = DEFAULT_BATTLE_CONFIG
 ): IgniteDamageResult {
   if (!state.enemyIgniteState) {
-    return { totalDamage: 0, updatedState: null, events: [] };
+    return { totalDamage: 0, healAmount: 0, updatedState: null, events: [] };
   }
 
   const events: BattleEvent[] = [];
@@ -362,6 +365,11 @@ export function processIgniteDamage(
     });
   }
 
+  // 発火ダメージ吸収による回復量計算
+  const healAmount = mods.igniteLifesteal > 0
+    ? Math.floor(totalDamage * mods.igniteLifesteal / 100)
+    : 0;
+
   // 発火状態を更新
   let updatedState: IgniteState | null = null;
 
@@ -382,7 +390,7 @@ export function processIgniteDamage(
     });
   }
 
-  return { totalDamage, updatedState, events };
+  return { totalDamage, healAmount, updatedState, events };
 }
 
 // ========================================
