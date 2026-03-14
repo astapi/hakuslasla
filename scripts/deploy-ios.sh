@@ -91,6 +91,7 @@ xcodebuild -workspace "$WORKSPACE" \
     -scheme "$SCHEME" \
     -configuration Release \
     -archivePath "$ARCHIVE_PATH" \
+    -allowProvisioningUpdates \
     archive
 
 # アーカイブの存在確認
