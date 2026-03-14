@@ -2131,5 +2131,12 @@
       "name": "Paquete Premium",
       "description": "Incluye Expansión de Inventario, Expansión de Almacén, Filtro de Tier Bajo, Boost Permanente y Espacios de Personaje a precio con descuento"
     }
+  },
+  "news": {
+    "title": "Noticias",
+    "modalTitle": "Nuevos anuncios",
+    "empty": "No hay anuncios",
+    "fetchError": "Error al cargar noticias",
+    "retry": "Reintentar"
   }
 }

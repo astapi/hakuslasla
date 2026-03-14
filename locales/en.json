@@ -2131,5 +2131,12 @@
       "name": "Premium Bundle",
       "description": "Includes Inventory Expansion, Storage Expansion, Low Tier Filter, Permanent Boost, and Character Slots at a discounted price"
     }
+  },
+  "news": {
+    "title": "News",
+    "modalTitle": "New Announcements",
+    "empty": "No announcements",
+    "fetchError": "Failed to load news",
+    "retry": "Retry"
   }
 }

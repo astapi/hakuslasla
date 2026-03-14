@@ -2131,5 +2131,12 @@
       "name": "Premium-Paket",
       "description": "Beinhaltet Inventar-Erweiterung, Lager-Erweiterung, Niedriger-Tier-Filter, Permanenter Boost und Charakter-Slots zu einem reduzierten Preis"
     }
+  },
+  "news": {
+    "title": "Neuigkeiten",
+    "modalTitle": "Neue Ankündigungen",
+    "empty": "Keine Ankündigungen",
+    "fetchError": "Neuigkeiten konnten nicht geladen werden",
+    "retry": "Erneut versuchen"
   }
 }
