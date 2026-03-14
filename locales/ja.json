@@ -318,7 +318,8 @@
     "ignite_chance": "発火",
     "ignite_duration_pct": "発火時間",
     "ignite_tick_speed_pct": "発火速度",
-    "ignite_damage_pct": "発火ダメ"
+    "ignite_damage_pct": "発火ダメ",
+    "hp_regen_to_atk_pct": "回復変換"
   },
   "dungeon": {
     "floors": "全{{count}}階",

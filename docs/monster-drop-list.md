@@ -29,7 +29,7 @@
 - スケルトンナイト: なし
 - ゴーレム: 心核石（固定MOD: hp_regen+10, def_bonus+5）（2%）
 - ミイラ: 呪縛の包帯（固定MOD: poison_chance+30）（2%）
-- リッチ: 失われた魔導書（固定MOD: critical_chance+25）（2%）
+- リッチ: 失われた魔導書（固定MOD: ignite_chance+50, poison_chance+50, def_bonus+40）（2%）
 - ガーゴイル: 石翼のブーツ（固定MOD: def_bonus+5）（2%）
 ### ダンジョンドロップ
 - 共通: 革の手袋, 革のブーツ, 銅の指輪, 旅人の護符

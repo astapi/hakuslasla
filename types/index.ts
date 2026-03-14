@@ -121,7 +121,8 @@ export type ModType =
   | 'attack_speed_more_pct' // AS X% more (乗算)
   | 'time_atk_inc_pct'    // 5秒毎にATK increased%加算
   | 'time_def_inc_pct'    // 5秒毎にDEF increased%加算
-  | 'time_hp_regen';      // 5秒毎にHP回復量加算
+  | 'time_hp_regen'       // 5秒毎にHP回復量加算
+  | 'hp_regen_to_atk_pct'; // 毎秒HP回復量のX%をATKに変換
 
 // MOD定義
 export interface ItemMod {

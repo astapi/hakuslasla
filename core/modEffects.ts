@@ -94,6 +94,7 @@ export function createEmptyModEffects(): CombinedModEffects {
     criticalFollowUpAttack: false,
     damageReductionPct: 0,
     hpOnHit: 0,
+    hpRegenToAtkPct: 0,
     attackSpeedPct: 0,
     attackSpeedMorePct: [],
     timeAtkIncPct: 0,
@@ -180,6 +181,9 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
     case 'time_hp_regen':
       effects.timeHpRegen += mod.value;
       break;
+    case 'hp_regen_to_atk_pct':
+      effects.hpRegenToAtkPct += mod.value;
+      break;
   }
 }
 
@@ -259,7 +263,8 @@ export function calculateAttackSpeed(
   const totalMore = moreMultipliers.reduce((sum, more) => sum + more, 0);
   result = result * (1 + totalMore / 100);
 
-  return result;
+  // 攻撃速度の最低値を保証（0以下にならないように）
+  return Math.max(0.1, result);
 }
 
 /**

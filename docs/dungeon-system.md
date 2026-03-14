@@ -398,7 +398,7 @@ export const getRandomEnemy = (monsterSpawns: MonsterSpawn[]): Enemy | undefined
 |---------|----------|------|--------|
 | 心核石 | ゴーレム | 2% | hp_regen: 10, def_bonus: 5 |
 | 呪縛の包帯 | ミイラ | 2% | poison_chance: 30 |
-| 失われた魔導書 | リッチ | 2% | critical_chance: 25 |
+| 失われた魔導書 | リッチ | 2% | ignite_chance: 50, poison_chance: 50, def_bonus: 40 |
 | 石翼のブーツ | ガーゴイル | 2% | def_bonus: 5 |
 
 ---

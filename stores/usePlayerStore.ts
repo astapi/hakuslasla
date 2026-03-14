@@ -404,6 +404,11 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     let equipAtkIncPct = 0;
     let equipDefIncPct = 0;
 
+    // HP回復変換用
+    let equipHpRegen = 0;
+    let equipHpRegenPct = 0;
+    let equipHpRegenToAtkPct = 0;
+
     // 装備ステータス加算
     Object.values(state.equipment).forEach((item) => {
       if (item) {
@@ -418,6 +423,9 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
             if (mod.type === 'hp_increased_pct') equipHpIncPct += mod.value;
             if (mod.type === 'atk_increased_pct') equipAtkIncPct += mod.value;
             if (mod.type === 'def_increased_pct') equipDefIncPct += mod.value;
+            if (mod.type === 'hp_regen') equipHpRegen += mod.value;
+            if (mod.type === 'hp_regen_pct') equipHpRegenPct += mod.value;
+            if (mod.type === 'hp_regen_to_atk_pct') equipHpRegenToAtkPct += mod.value;
           }
         }
       }
@@ -438,6 +446,15 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
         def_more_pct: passiveEffects.def_more_pct,
       }
     );
+
+    // 4. HP回復変換: 毎秒HP回復量の一定%をATKに加算
+    if (equipHpRegenToAtkPct > 0) {
+      const totalHpRegen = equipHpRegen + passiveEffects.hp_regen;
+      const totalHpRegenPct = equipHpRegenPct + passiveEffects.hp_regen_pct;
+      const pctRegen = Math.floor(finalStats.maxHp * totalHpRegenPct / 100);
+      const regenToAtkBonus = Math.floor((totalHpRegen + pctRegen) * equipHpRegenToAtkPct / 100);
+      finalStats.atk += regenToAtkBonus;
+    }
 
     return finalStats;
   },

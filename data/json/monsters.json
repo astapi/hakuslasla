@@ -330,10 +330,11 @@
       "exp": 400,
       "attackSpeed": 0.9,
       "isBoss": true,
-      "uniqueDrop": {
-        "itemId": "bandit_crown",
-        "dropRate": 5
-      }
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "bandit_crown", "dropRate": 5 },
+        { "itemId": "double_strike_ring", "dropRate": 10 }
+      ]
     },
     "_comment_castle": "=== 魔王城 (Lv30) ===",
     "death_knight": {
@@ -1215,7 +1216,8 @@
         { "itemId": "uber_bandit_coat", "dropRate": 5 },
         { "itemId": "uber_bandit_grip", "dropRate": 5 },
         { "itemId": "uber_bandit_steps", "dropRate": 5 },
-        { "itemId": "uber_bandit_crown", "dropRate": 5 }
+        { "itemId": "uber_bandit_crown", "dropRate": 5 },
+        { "itemId": "uber_double_strike_ring", "dropRate": 10 }
       ]
     },
     "uber_vampire": {

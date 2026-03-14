@@ -285,7 +285,9 @@
       "atk": 8,
       "def": 0,
       "fixedMods": [
-        { "type": "critical_chance", "value": 25 }
+        { "type": "ignite_chance", "value": 50 },
+        { "type": "poison_chance", "value": 50 },
+        { "type": "def_bonus", "value": 40 }
       ]
     },
     "stone_wing_boots": {
@@ -376,8 +378,10 @@
       "atk": 16,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 8 },
-        { "type": "critical_chance", "value": 15 }
+        { "type": "attack_speed_pct", "value": -20 },
+        { "type": "critical_chance", "value": 30 },
+        { "type": "atk_bonus", "value": 60 },
+        { "type": "hp_bonus", "value": 100 }
       ]
     },
     "kings_crown": {
@@ -923,9 +927,9 @@
       "atk": 40,
       "def": 40,
       "fixedMods": [
-        { "type": "hp_regen", "value": 55 },
-        { "type": "atk_bonus", "value": 30 },
-        { "type": "def_bonus", "value": 30 }
+        { "type": "hp_regen", "value": 100 },
+        { "type": "hp_regen_pct", "value": 10 },
+        { "type": "hp_regen_to_atk_pct", "value": 50 }
       ]
     },
 
