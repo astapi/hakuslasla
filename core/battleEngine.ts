@@ -135,6 +135,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     playerPoisonStacks: [],
     enemyIgniteState: config.initialIgniteState ?? null,  // イグナイト伝染から引き継いだ発火状態
     igniteApplyCount: 0,  // 発火付与回数（敵撃破時リセット）
+    warlordEnrageActivated: false,
     elapsedTicks: 0,
     isFinished: false,
     winner: null,
@@ -611,6 +612,26 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
             }
           }
         }
+      }
+
+      // 乱軍の王: HP30%以下で1度だけ発動
+      if (
+        engine.playerMods.warlordEnrage &&
+        !engine.state.warlordEnrageActivated &&
+        engine.state.player.currentHp > 0 &&
+        engine.state.player.currentHp <= engine.state.player.maxHp * 0.3
+      ) {
+        engine.state.warlordEnrageActivated = true;
+        engine.playerMods.attackSpeedPct += 20;
+        engine.playerMods.hpOnHit += 300;
+        // 攻撃速度を再計算
+        engine.playerAttackSpeedBase = getAttackSpeedFromMods(engine.playerMods) *
+          (isEndContent ? getPlayerAttackSpeedMultiplier(enemyId) : 1);
+        events.push({
+          type: 'warlord_enrage',
+          tick: engine.state.elapsedTicks,
+          data: { attackSpeedPct: 20, hpOnHit: 300 },
+        });
       }
 
       if (engine.state.player.currentHp <= 0) {

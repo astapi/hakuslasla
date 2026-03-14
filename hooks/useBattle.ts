@@ -1082,6 +1082,16 @@ export const useBattle = (dungeonId: string) => {
           }
           break;
         }
+        case 'warlord_enrage': {
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.warlordEnrage'),
+              type: 'info',
+            },
+          });
+          break;
+        }
         case 'reset_player_gauge': {
           dispatch({ type: 'RESET_PLAYER_GAUGE' });
           break;

@@ -318,7 +318,9 @@
     "ignite_chance": "점화",
     "ignite_duration_pct": "점화 지속",
     "ignite_tick_speed_pct": "점화 속도",
-    "ignite_damage_pct": "점화 DMG"
+    "ignite_damage_pct": "점화 DMG",
+    "hp_regen_to_atk_pct": "회복 전환",
+    "warlord_enrage": "전쟁군주"
   },
   "dungeon": {
     "floors": "{{count}}층",
@@ -1389,6 +1391,7 @@
     "uberTicket": "Uber 티켓 획득! ({{count}})",
     "respecToken": "리스펙 아이템 획득! ({{count}})",
     "bossSkillActivated": "{{enemy}}의 {{skill}} 발동!",
+    "warlordEnrage": "【전쟁군주】 발동! 공격 속도+20%, 적중 시 HP 회복+300",
     "reflectedDamage": "{{enemy}}의 표식이 반사! {{damage}} 피해를 받았다!",
     "enemyHealRegen": "{{enemy}}이(가) {{amount}} HP 재생!",
     "enemyHealOnHit": "{{enemy}}이(가) {{amount}} HP 흡수!",
@@ -2040,7 +2043,8 @@
     "damageReduction": "받는 피해 -{{value}}%",
     "attackSpeed": "공격 속도 +{{value}}%",
     "hpOnHit": "적중 시 HP +{{value}}",
-    "lifesteal": "흡혈 +{{value}}%"
+    "lifesteal": "흡혈 +{{value}}%",
+    "warlordEnrage": "전쟁군주"
   },
   "boost": {
     "dropRate": {

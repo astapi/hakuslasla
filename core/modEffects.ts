@@ -100,6 +100,7 @@ export function createEmptyModEffects(): CombinedModEffects {
     timeAtkIncPct: 0,
     timeDefIncPct: 0,
     timeHpRegen: 0,
+    warlordEnrage: false,
   };
 }
 
@@ -183,6 +184,9 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
       break;
     case 'hp_regen_to_atk_pct':
       effects.hpRegenToAtkPct += mod.value;
+      break;
+    case 'warlord_enrage':
+      effects.warlordEnrage = true;
       break;
   }
 }

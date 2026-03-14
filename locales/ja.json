@@ -319,7 +319,8 @@
     "ignite_duration_pct": "発火時間",
     "ignite_tick_speed_pct": "発火速度",
     "ignite_damage_pct": "発火ダメ",
-    "hp_regen_to_atk_pct": "回復変換"
+    "hp_regen_to_atk_pct": "回復変換",
+    "warlord_enrage": "乱軍の王"
   },
   "dungeon": {
     "floors": "全{{count}}階",
@@ -1390,6 +1391,7 @@
     "uberTicket": "Uber入場券を入手！ ({{count}}枚)",
     "respecToken": "リスペックアイテムを入手！ ({{count}}個)",
     "bossSkillActivated": "{{enemy}}の{{skill}}が発動した！",
+    "warlordEnrage": "【乱軍の王】発動！ 攻撃速度+20%, HIT時HP回復+300",
     "reflectedDamage": "{{enemy}}の刻印が反射！ プレイヤーに{{damage}}ダメージ！",
     "enemyHealRegen": "{{enemy}}が再生で{{amount}}回復した！",
     "enemyHealOnHit": "{{enemy}}が吸収で{{amount}}回復した！",
@@ -2041,7 +2043,8 @@
     "damageReduction": "被ダメ-{{value}}%",
     "attackSpeed": "攻撃速度+{{value}}%",
     "hpOnHit": "HIT時HP+{{value}}回復",
-    "lifesteal": "ライフスティール+{{value}}%"
+    "lifesteal": "ライフスティール+{{value}}%",
+    "warlordEnrage": "乱軍の王"
   },
   "boost": {
     "dropRate": {

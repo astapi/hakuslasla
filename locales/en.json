@@ -318,7 +318,9 @@
     "ignite_chance": "Ignite",
     "ignite_duration_pct": "Ignite Dur",
     "ignite_tick_speed_pct": "Ignite Spd",
-    "ignite_damage_pct": "Ignite DMG"
+    "ignite_damage_pct": "Ignite DMG",
+    "hp_regen_to_atk_pct": "Regen Conv.",
+    "warlord_enrage": "Warlord"
   },
   "dungeon": {
     "floors": "{{count}} Floors",
@@ -1389,6 +1391,7 @@
     "uberTicket": "Obtained an Uber ticket! ({{count}})",
     "respecToken": "Obtained a respec item! ({{count}})",
     "bossSkillActivated": "{{enemy}} triggered {{skill}}!",
+    "warlordEnrage": "[Warlord] Activated! Attack Speed+20%, HP on Hit+300",
     "reflectedDamage": "{{enemy}}'s mark reflected! You took {{damage}} damage!",
     "enemyHealRegen": "{{enemy}} regenerated {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} leeched {{amount}} HP!",
@@ -2040,7 +2043,8 @@
     "damageReduction": "Damage Taken -{{value}}%",
     "attackSpeed": "Attack Speed +{{value}}%",
     "hpOnHit": "HP on Hit +{{value}}",
-    "lifesteal": "Lifesteal +{{value}}%"
+    "lifesteal": "Lifesteal +{{value}}%",
+    "warlordEnrage": "Warlord"
   },
   "boost": {
     "dropRate": {

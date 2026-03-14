@@ -21,6 +21,7 @@ const baseState: GaugeBattleState = {
   playerPoisonStacks: [],
   enemyIgniteState: null,
   igniteApplyCount: 0,
+  warlordEnrageActivated: false,
   elapsedTicks: 0,
   isFinished: false,
   winner: null,
@@ -55,6 +56,7 @@ const emptyMods: CombinedModEffects = {
   igniteTickSpeedPct: 0,
   igniteSpread: false,
   igniteStackingDamage: false,
+  warlordEnrage: false,
 };
 
 describe('core/combatEffects', () => {

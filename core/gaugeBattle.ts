@@ -67,6 +67,7 @@ export function createGaugeBattleState(
     playerPoisonStacks: [],
     enemyIgniteState: null,
     igniteApplyCount: 0,
+    warlordEnrageActivated: false,
     elapsedTicks: 0,
     isFinished: false,
     winner: null,

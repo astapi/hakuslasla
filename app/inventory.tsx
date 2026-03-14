@@ -179,6 +179,9 @@ function calculateItemStats(
         case 'hp_more_pct':
           desc = `[${tierLabel}] HP ${mod.value}% more`;
           break;
+        case 'warlord_enrage':
+          desc = `[${tierLabel}] ${t('modDescriptions.warlordEnrage')}`;
+          break;
       }
       if (desc) {
         allMods.push({ type: mod.type, value: mod.value, tier, desc, color });
