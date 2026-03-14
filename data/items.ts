@@ -520,6 +520,8 @@ export function getModDescription(mod: ItemMod): string {
       return `5秒毎にDEF+${mod.value}%`;
     case 'time_hp_regen':
       return `5秒毎に毎秒HP+${mod.value}回復`;
+    case 'hp_regen_to_atk_pct':
+      return `HP回復量の${mod.value}%をATKに変換`;
     default:
       return '';
   }

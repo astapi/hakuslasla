@@ -223,9 +223,17 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
     const timeAtkIncPct = engine.playerMods.timeAtkIncPct * timeStacks;
     const timeDefIncPct = engine.playerMods.timeDefIncPct * timeStacks;
     const timeHpRegenBonus = engine.playerMods.timeHpRegen * timeStacks;
+    // HP回復変換: 毎秒HP回復量の一定%をATKに加算
+    let regenToAtkBonus = 0;
+    if (engine.playerMods.hpRegenToAtkPct > 0) {
+      const baseRegen = engine.playerMods.hpRegen + timeHpRegenBonus;
+      const pctRegen = Math.floor(engine.state.player.maxHp * engine.playerMods.hpRegenPct / 100);
+      regenToAtkBonus = Math.floor((baseRegen + pctRegen) * engine.playerMods.hpRegenToAtkPct / 100);
+    }
+
     const effectivePlayerAtk = Math.max(
       1,
-      Math.floor(engine.state.player.atk * (1 + timeAtkIncPct / 100))
+      Math.floor(engine.state.player.atk * (1 + timeAtkIncPct / 100)) + regenToAtkBonus
     );
     const effectivePlayerDef = Math.max(
       0,

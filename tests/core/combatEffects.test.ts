@@ -42,6 +42,7 @@ const emptyMods: CombinedModEffects = {
   criticalFollowUpAttack: false,
   damageReductionPct: 0,
   hpOnHit: 0,
+  hpRegenToAtkPct: 0,
   attackSpeedPct: 0,
   attackSpeedMorePct: [],
   timeAtkIncPct: 0,

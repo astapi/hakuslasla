@@ -230,6 +230,9 @@ export interface CombinedModEffects {
   damageReductionPct: number;  // ダメージ軽減%
   hpOnHit: number;             // HIT時HP回復（固定値）
 
+  // HP回復変換
+  hpRegenToAtkPct: number;  // 毎秒HP回復量の一定%をATKに追加
+
   // 攻撃速度
   attackSpeedPct: number;        // increased%
   attackSpeedMorePct: number[];  // more%（配列）

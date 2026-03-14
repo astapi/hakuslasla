@@ -84,6 +84,7 @@ describe('core/modEffects', () => {
       criticalFollowUpAttack: false,
       damageReductionPct: 0,
       hpOnHit: 0,
+      hpRegenToAtkPct: 0,
       attackSpeedPct: 50,
       attackSpeedMorePct: [20],
       timeAtkIncPct: 0,

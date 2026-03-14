@@ -240,7 +240,9 @@ const RUINS_SETS: DungeonEquipmentSets = {
       gloves: createItem('leather_gloves', '革の手袋', 'gloves', 1, 1, []),
       boots: createItem('gargoyle_boots', 'ガーゴイルブーツ', 'boots', 2, 6, []),
       accessory: createItem('lost_grimoire', '失われた魔導書', 'accessory', 8, 0, [
-        createMod('critical_chance', 25, 8),
+        createMod('ignite_chance', 50, 8),
+        createMod('poison_chance', 50, 8),
+        createMod('def_bonus', 40, 8),
       ]),
     },
     POISON: {

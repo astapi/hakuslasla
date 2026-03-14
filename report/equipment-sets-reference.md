@@ -135,7 +135,7 @@
 | armor | 呪われたローブ | 3 | 8 | hp_regen +3 |
 | gloves | 革の手袋 | 1 | 1 | - |
 | boots | ガーゴイルブーツ | 2 | 6 | - |
-| accessory | 失われた魔導書 | 8 | 0 | critical_chance +25% |
+| accessory | 失われた魔導書 | 8 | 0 | ignite_chance +50%, poison_chance +50%, def_bonus +40 |
 
 #### POISON型
 | スロット | アイテム名 | ATK | DEF | MOD |
