@@ -130,192 +130,214 @@ interface VersionsResponse {
 
 // 各言語のwhatsNewテキスト
 const whatsNewByLocale: Record<string, string> = {
-  ja: `【新機能】
-・戦闘の倍速機能を追加
-・友達招待機能を追加
+  ja: `【バランス調整 - 新MOD】
+・「乱軍の王」: HP30%以下で1度だけ発動し、攻撃速度+20%・攻撃時HP回復+300を得る
+・「発火ダメージ吸収」: 発火ダメージの一定割合をHPとして回復する
 
-【新クラス追加】
-・新プレイアブルクラス「レンジャー」が登場！
+【バランス調整 - ユニーク装備変更】
+・マグマコア: 発火特化に変更（発火確率+60%、発火ダメージ+50%、発火吸収+10%）
+・クラーケンの触腕: ATK+30、DEF+35、HP回復+50、HP回復+2%に変更
+・Uber クラーケンの触腕: HP回復+120、HP回復+5%、HP+210、DEF+50に変更
+・Uber ゴブリンの篭手: 乱軍の王、HP+200、ATK+80、ATK増加+20%に変更
+・Uber クラーケンの遊泳: 攻撃速度-20%、HP回復+5%、DEF+80、HP+250に変更
+・Uber クラーケンの眼: 毒ダメージ+50%、毒ダメージ軽減+5、HP+220、毒ダメージ5% moreに変更
+・Uber 終焉の刃: 5秒毎ATK増加+10%、ATK増加+30%、攻撃速度+20%、HP+280に変更
 
-【クラス強化】
-・ウォリアーにクラス固有能力を追加し、HPを強化
-
-【バランス調整】
-・Uberボスのユニーク装備を強化（固定MODを4つに増加）
+【改善】
+・図鑑でユニーク装備のMOD効果が表示されるようになりました
 
 【不具合修正】
-・戦闘画面のキャラクター・モンスター画像サイズを調整
-・一部ユニーク装備がフィルターで除外される問題を修正`,
+・図鑑詳細画面で不要なヘッダーが表示される問題を修正`,
 
-  'en-US': `[New Features]
-• Added battle speed multiplier
-• Added friend invite feature
+  'en-US': `[Balance - New Mods]
+• "Warlord's Enrage": Triggers once at 30% HP, granting +20% attack speed and +300 HP on hit
+• "Ignite Lifesteal": Recover a percentage of ignite damage as HP
 
-[New Class]
-• New playable class "Ranger" is now available!
+[Balance - Unique Item Changes]
+• Magma Core: Reworked to ignite-focused (Ignite Chance +60%, Ignite DMG +50%, Ignite Lifesteal +10%)
+• Kraken Tentacle: Changed to ATK +30, DEF +35, Regen +50, HP Regen +2%
+• Uber Kraken Tentacle: Changed to Regen +120, HP Regen +5%, HP +210, DEF +50
+• Uber Goblin Grip: Changed to Warlord's Enrage, HP +200, ATK +80, ATK Increased +20%
+• Uber Kraken Fin: Changed to Speed -20%, HP Regen +5%, DEF +80, HP +250
+• Uber Kraken Eye: Changed to Poison DMG +50%, Poison Reduction +5, HP +220, Poison DMG 5% more
+• Uber End Blade: Changed to ATK Inc +10%/5s, ATK Increased +30%, Speed +20%, HP +280
 
-[Class Enhancement]
-• Added unique class ability to Warrior and increased HP
-
-[Balance Adjustments]
-• Strengthened Uber boss unique equipment (increased fixed mods to 4)
-
-[Bug Fixes]
-• Adjusted character and monster image sizes on the battle screen
-• Fixed an issue where some unique equipment was excluded by filters`,
-
-  'en-GB': `[New Features]
-• Added battle speed multiplier
-• Added friend invite feature
-
-[New Class]
-• New playable class "Ranger" is now available!
-
-[Class Enhancement]
-• Added unique class ability to Warrior and increased HP
-
-[Balance Adjustments]
-• Strengthened Uber boss unique equipment (increased fixed mods to 4)
+[Improvements]
+• Encyclopedia now displays mod effects for unique items
 
 [Bug Fixes]
-• Adjusted character and monster image sizes on the battle screen
-• Fixed an issue where some unique equipment was excluded by filters`,
+• Fixed an unnecessary header on the encyclopedia detail screen`,
 
-  'en-AU': `[New Features]
-• Added battle speed multiplier
-• Added friend invite feature
+  'en-GB': `[Balance - New Mods]
+• "Warlord's Enrage": Triggers once at 30% HP, granting +20% attack speed and +300 HP on hit
+• "Ignite Lifesteal": Recover a percentage of ignite damage as HP
 
-[New Class]
-• New playable class "Ranger" is now available!
+[Balance - Unique Item Changes]
+• Magma Core: Reworked to ignite-focused (Ignite Chance +60%, Ignite DMG +50%, Ignite Lifesteal +10%)
+• Kraken Tentacle: Changed to ATK +30, DEF +35, Regen +50, HP Regen +2%
+• Uber Kraken Tentacle: Changed to Regen +120, HP Regen +5%, HP +210, DEF +50
+• Uber Goblin Grip: Changed to Warlord's Enrage, HP +200, ATK +80, ATK Increased +20%
+• Uber Kraken Fin: Changed to Speed -20%, HP Regen +5%, DEF +80, HP +250
+• Uber Kraken Eye: Changed to Poison DMG +50%, Poison Reduction +5, HP +220, Poison DMG 5% more
+• Uber End Blade: Changed to ATK Inc +10%/5s, ATK Increased +30%, Speed +20%, HP +280
 
-[Class Enhancement]
-• Added unique class ability to Warrior and increased HP
-
-[Balance Adjustments]
-• Strengthened Uber boss unique equipment (increased fixed mods to 4)
-
-[Bug Fixes]
-• Adjusted character and monster image sizes on the battle screen
-• Fixed an issue where some unique equipment was excluded by filters`,
-
-  'en-CA': `[New Features]
-• Added battle speed multiplier
-• Added friend invite feature
-
-[New Class]
-• New playable class "Ranger" is now available!
-
-[Class Enhancement]
-• Added unique class ability to Warrior and increased HP
-
-[Balance Adjustments]
-• Strengthened Uber boss unique equipment (increased fixed mods to 4)
+[Improvements]
+• Encyclopedia now displays mod effects for unique items
 
 [Bug Fixes]
-• Adjusted character and monster image sizes on the battle screen
-• Fixed an issue where some unique equipment was excluded by filters`,
+• Fixed an unnecessary header on the encyclopedia detail screen`,
 
-  'zh-Hans': `【新功能】
-• 新增战斗倍速功能
-• 新增好友邀请功能
+  'en-AU': `[Balance - New Mods]
+• "Warlord's Enrage": Triggers once at 30% HP, granting +20% attack speed and +300 HP on hit
+• "Ignite Lifesteal": Recover a percentage of ignite damage as HP
 
-【新职业】
-• 新可玩职业「游侠」现已登场！
+[Balance - Unique Item Changes]
+• Magma Core: Reworked to ignite-focused (Ignite Chance +60%, Ignite DMG +50%, Ignite Lifesteal +10%)
+• Kraken Tentacle: Changed to ATK +30, DEF +35, Regen +50, HP Regen +2%
+• Uber Kraken Tentacle: Changed to Regen +120, HP Regen +5%, HP +210, DEF +50
+• Uber Goblin Grip: Changed to Warlord's Enrage, HP +200, ATK +80, ATK Increased +20%
+• Uber Kraken Fin: Changed to Speed -20%, HP Regen +5%, DEF +80, HP +250
+• Uber Kraken Eye: Changed to Poison DMG +50%, Poison Reduction +5, HP +220, Poison DMG 5% more
+• Uber End Blade: Changed to ATK Inc +10%/5s, ATK Increased +30%, Speed +20%, HP +280
 
-【职业强化】
-• 为战士添加职业固有能力，并强化HP
+[Improvements]
+• Encyclopedia now displays mod effects for unique items
 
-【平衡调整】
-• 强化Uber Boss的唯一装备（固定MOD增加至4个）
+[Bug Fixes]
+• Fixed an unnecessary header on the encyclopedia detail screen`,
+
+  'en-CA': `[Balance - New Mods]
+• "Warlord's Enrage": Triggers once at 30% HP, granting +20% attack speed and +300 HP on hit
+• "Ignite Lifesteal": Recover a percentage of ignite damage as HP
+
+[Balance - Unique Item Changes]
+• Magma Core: Reworked to ignite-focused (Ignite Chance +60%, Ignite DMG +50%, Ignite Lifesteal +10%)
+• Kraken Tentacle: Changed to ATK +30, DEF +35, Regen +50, HP Regen +2%
+• Uber Kraken Tentacle: Changed to Regen +120, HP Regen +5%, HP +210, DEF +50
+• Uber Goblin Grip: Changed to Warlord's Enrage, HP +200, ATK +80, ATK Increased +20%
+• Uber Kraken Fin: Changed to Speed -20%, HP Regen +5%, DEF +80, HP +250
+• Uber Kraken Eye: Changed to Poison DMG +50%, Poison Reduction +5, HP +220, Poison DMG 5% more
+• Uber End Blade: Changed to ATK Inc +10%/5s, ATK Increased +30%, Speed +20%, HP +280
+
+[Improvements]
+• Encyclopedia now displays mod effects for unique items
+
+[Bug Fixes]
+• Fixed an unnecessary header on the encyclopedia detail screen`,
+
+  'zh-Hans': `【平衡调整 - 新MOD】
+• 「乱军之王」: HP低于30%时触发一次，获得攻击速度+20%和命中回复HP+300
+• 「点燃伤害吸收」: 将点燃伤害的一定比例转化为HP回复
+
+【平衡调整 - 唯一装备变更】
+• 熔岩核心: 改为点燃特化（点燃概率+60%、点燃伤害+50%、点燃吸收+10%）
+• 海妖触腕: 改为ATK+30、DEF+35、HP回复+50、HP回复+2%
+• Uber 海妖触腕: 改为HP回复+120、HP回复+5%、HP+210、DEF+50
+• Uber 哥布林护手: 改为乱军之王、HP+200、ATK+80、ATK增加+20%
+• Uber 海妖之鳍: 改为攻击速度-20%、HP回复+5%、DEF+80、HP+250
+• Uber 海妖之眼: 改为毒伤害+50%、毒伤害减免+5、HP+220、毒伤害5% more
+• Uber 终焉之刃: 改为每5秒ATK增加+10%、ATK增加+30%、攻击速度+20%、HP+280
+
+【改善】
+• 图鉴现已显示唯一装备的MOD效果
 
 【问题修复】
-• 调整战斗画面中角色和怪物的图像大小
-• 修复部分唯一装备被筛选器排除的问题`,
+• 修复图鉴详情画面显示多余标题的问题`,
 
-  ko: `[새로운 기능]
-• 전투 배속 기능 추가
-• 친구 초대 기능 추가
+  ko: `[밸런스 - 새 MOD]
+• "난군의 왕": HP 30% 이하에서 1회 발동, 공격 속도 +20% 및 공격 시 HP 회복 +300 획득
+• "점화 피해 흡수": 점화 피해의 일정 비율을 HP로 회복
 
-[새 클래스]
-• 새로운 플레이어블 클래스 "레인저" 등장!
+[밸런스 - 유니크 장비 변경]
+• 마그마 코어: 점화 특화로 변경 (점화 확률 +60%, 점화 피해 +50%, 점화 흡수 +10%)
+• 크라켄 촉완: ATK +30, DEF +35, HP 회복 +50, HP 회복 +2%로 변경
+• Uber 크라켄 촉완: HP 회복 +120, HP 회복 +5%, HP +210, DEF +50으로 변경
+• Uber 고블린 그립: 난군의 왕, HP +200, ATK +80, ATK 증가 +20%로 변경
+• Uber 크라켄 핀: 공격 속도 -20%, HP 회복 +5%, DEF +80, HP +250으로 변경
+• Uber 크라켄 아이: 독 피해 +50%, 독 피해 감소 +5, HP +220, 독 피해 5% more로 변경
+• Uber 종언의 칼날: 5초당 ATK 증가 +10%, ATK 증가 +30%, 공격 속도 +20%, HP +280으로 변경
 
-[클래스 강화]
-• 전사에 클래스 고유 능력 추가 및 HP 강화
-
-[밸런스 조정]
-• Uber 보스 유니크 장비 강화 (고정 MOD 4개로 증가)
+[개선]
+• 도감에서 유니크 장비의 MOD 효과가 표시됩니다
 
 [버그 수정]
-• 전투 화면의 캐릭터 및 몬스터 이미지 크기 조정
-• 일부 유니크 장비가 필터에서 제외되는 문제 수정`,
+• 도감 상세 화면에서 불필요한 헤더가 표시되는 문제 수정`,
 
-  'es-ES': `[Nuevas funciones]
-• Velocidad de combate acelerada añadida
-• Función de invitación de amigos añadida
+  'es-ES': `[Balance - Nuevos Mods]
+• "Furia del Señor de la Guerra": Se activa una vez al 30% de HP, otorgando +20% de velocidad de ataque y +300 de recuperación de HP al golpear
+• "Robo de vida por ignición": Recupera un porcentaje del daño de ignición como HP
 
-[Nueva clase]
-• ¡La nueva clase jugable "Explorador" ya está disponible!
+[Balance - Cambios en equipamiento único]
+• Núcleo de Magma: Rediseñado con enfoque en ignición (Prob. ignición +60%, Daño ignición +50%, Robo ignición +10%)
+• Tentáculo de Kraken: Cambiado a ATK +30, DEF +35, Regeneración +50, Regen HP +2%
+• Uber Tentáculo de Kraken: Cambiado a Regeneración +120, Regen HP +5%, HP +210, DEF +50
+• Uber Garra de Goblin: Cambiado a Furia del Señor de la Guerra, HP +200, ATK +80, ATK Aumentado +20%
+• Uber Aleta de Kraken: Cambiado a Velocidad -20%, Regen HP +5%, DEF +80, HP +250
+• Uber Ojo de Kraken: Cambiado a Daño veneno +50%, Reducción veneno +5, HP +220, Daño veneno 5% more
+• Uber Hoja del Fin: Cambiado a ATK Inc +10%/5s, ATK Aumentado +30%, Velocidad +20%, HP +280
 
-[Mejora de clase]
-• Añadida habilidad única al Guerrero y aumento de HP
-
-[Ajustes de equilibrio]
-• Equipamiento único del jefe Uber reforzado (MODs fijos aumentados a 4)
-
-[Corrección de errores]
-• Ajustados los tamaños de imagen de personajes y monstruos en la pantalla de combate
-• Corregido un problema donde algunos equipamientos únicos eran excluidos por los filtros`,
-
-  'es-MX': `[Nuevas funciones]
-• Velocidad de combate acelerada añadida
-• Función de invitación de amigos añadida
-
-[Nueva clase]
-• ¡La nueva clase jugable "Explorador" ya está disponible!
-
-[Mejora de clase]
-• Añadida habilidad única al Guerrero y aumento de HP
-
-[Ajustes de equilibrio]
-• Equipamiento único del jefe Uber reforzado (MODs fijos aumentados a 4)
+[Mejoras]
+• La enciclopedia ahora muestra los efectos de MOD del equipamiento único
 
 [Corrección de errores]
-• Ajustados los tamaños de imagen de personajes y monstruos en la pantalla de combate
-• Corregido un problema donde algunos equipamientos únicos eran excluidos por los filtros`,
+• Corregido un encabezado innecesario en la pantalla de detalle de la enciclopedia`,
 
-  'fr-FR': `[Nouvelles fonctionnalités]
-• Ajout de la vitesse de combat accélérée
-• Ajout de la fonction d'invitation d'amis
+  'es-MX': `[Balance - Nuevos Mods]
+• "Furia del Señor de la Guerra": Se activa una vez al 30% de HP, otorgando +20% de velocidad de ataque y +300 de recuperación de HP al golpear
+• "Robo de vida por ignición": Recupera un porcentaje del daño de ignición como HP
 
-[Nouvelle classe]
-• La nouvelle classe jouable « Rôdeur » est maintenant disponible !
+[Balance - Cambios en equipamiento único]
+• Núcleo de Magma: Rediseñado con enfoque en ignición (Prob. ignición +60%, Daño ignición +50%, Robo ignición +10%)
+• Tentáculo de Kraken: Cambiado a ATK +30, DEF +35, Regeneración +50, Regen HP +2%
+• Uber Tentáculo de Kraken: Cambiado a Regeneración +120, Regen HP +5%, HP +210, DEF +50
+• Uber Garra de Goblin: Cambiado a Furia del Señor de la Guerra, HP +200, ATK +80, ATK Aumentado +20%
+• Uber Aleta de Kraken: Cambiado a Velocidad -20%, Regen HP +5%, DEF +80, HP +250
+• Uber Ojo de Kraken: Cambiado a Daño veneno +50%, Reducción veneno +5, HP +220, Daño veneno 5% more
+• Uber Hoja del Fin: Cambiado a ATK Inc +10%/5s, ATK Aumentado +30%, Velocidad +20%, HP +280
 
-[Amélioration de classe]
-• Ajout d'une capacité unique au Guerrier et augmentation des HP
+[Mejoras]
+• La enciclopedia ahora muestra los efectos de MOD del equipamiento único
 
-[Ajustements d'équilibre]
-• Renforcement de l'équipement unique du boss Uber (MODs fixes augmentés à 4)
+[Corrección de errores]
+• Corregido un encabezado innecesario en la pantalla de detalle de la enciclopedia`,
+
+  'fr-FR': `[Équilibre - Nouveaux Mods]
+• « Rage du Seigneur de Guerre » : Se déclenche une fois à 30% de HP, accordant +20% de vitesse d'attaque et +300 de récupération de HP par coup
+• « Vol de vie par embrasement » : Récupère un pourcentage des dégâts d'embrasement en HP
+
+[Équilibre - Modifications d'équipement unique]
+• Cœur de Magma : Refondu en spécialisation embrasement (Chance embrasement +60%, Dégâts embrasement +50%, Vol embrasement +10%)
+• Tentacule de Kraken : Modifié en ATK +30, DEF +35, Régénération +50, Regen HP +2%
+• Uber Tentacule de Kraken : Modifié en Régénération +120, Regen HP +5%, HP +210, DEF +50
+• Uber Poigne de Gobelin : Modifié en Rage du Seigneur de Guerre, HP +200, ATK +80, ATK Augmenté +20%
+• Uber Nageoire de Kraken : Modifié en Vitesse -20%, Regen HP +5%, DEF +80, HP +250
+• Uber Œil de Kraken : Modifié en Dégâts poison +50%, Réduction poison +5, HP +220, Dégâts poison 5% more
+• Uber Lame de la Fin : Modifié en ATK Inc +10%/5s, ATK Augmenté +30%, Vitesse +20%, HP +280
+
+[Améliorations]
+• L'encyclopédie affiche désormais les effets de MOD des équipements uniques
 
 [Corrections de bugs]
-• Ajustement de la taille des images des personnages et des monstres sur l'écran de combat
-• Correction d'un problème où certains équipements uniques étaient exclus par les filtres`,
+• Correction d'un en-tête inutile sur l'écran de détail de l'encyclopédie`,
 
-  'de-DE': `[Neue Funktionen]
-• Kampfgeschwindigkeits-Multiplikator hinzugefuegt
-• Freunde-Einladungsfunktion hinzugefuegt
+  'de-DE': `[Balance - Neue Mods]
+• "Zorn des Kriegsherrn": Wird einmalig bei 30% HP ausgeloest und gewaehrt +20% Angriffsgeschwindigkeit und +300 HP-Heilung bei Treffer
+• "Entzuendungs-Lebensraub": Stellt einen Prozentsatz des Entzuendungsschadens als HP wieder her
 
-[Neue Klasse]
-• Die neue spielbare Klasse "Waldläufer" ist jetzt verfuegbar!
+[Balance - Aenderungen an einzigartiger Ausruestung]
+• Magmakern: Auf Entzuendung spezialisiert (Entzuendungschance +60%, Entzuendungsschaden +50%, Entzuendungs-Lebensraub +10%)
+• Krakententakel: Geaendert zu ATK +30, DEF +35, Regeneration +50, HP-Regen +2%
+• Uber Krakententakel: Geaendert zu Regeneration +120, HP-Regen +5%, HP +210, DEF +50
+• Uber Goblin-Griff: Geaendert zu Zorn des Kriegsherrn, HP +200, ATK +80, ATK Erhoeht +20%
+• Uber Krakenflosse: Geaendert zu Geschwindigkeit -20%, HP-Regen +5%, DEF +80, HP +250
+• Uber Krakenauge: Geaendert zu Giftschaden +50%, Giftreduktion +5, HP +220, Giftschaden 5% more
+• Uber Endklinge: Geaendert zu ATK Erh. +10%/5s, ATK Erhoeht +30%, Geschwindigkeit +20%, HP +280
 
-[Klassenverbesserung]
-• Einzigartige Klassenfaehigkeit fuer den Krieger hinzugefuegt und HP erhoeht
-
-[Balance-Anpassungen]
-• Einzigartige Ausruestung des Uber-Bosses verstaerkt (feste MODs auf 4 erhoeht)
+[Verbesserungen]
+• Enzyklopaedie zeigt jetzt MOD-Effekte fuer einzigartige Ausruestung an
 
 [Fehlerbehebungen]
-• Groesse der Charakter- und Monsterbilder auf dem Kampfbildschirm angepasst
-• Problem behoben, bei dem einige einzigartige Ausruestungen durch Filter ausgeschlossen wurden`,
+• Unnoetige Kopfzeile auf dem Enzyklopaedie-Detailbildschirm behoben`,
 };
 
 // メイン処理
