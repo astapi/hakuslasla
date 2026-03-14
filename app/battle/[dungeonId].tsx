@@ -213,6 +213,8 @@ export default function BattleScreen() {
 
   // 撤退確認モーダル
   const [showRetreatModal, setShowRetreatModal] = useState(false);
+  // 画面遷移前にImageを安全にアンマウントするフラグ
+  const [isExiting, setIsExiting] = useState(false);
 
   // 戦闘ログの変化を監視して攻撃アニメーションをトリガー
   useEffect(() => {
@@ -275,6 +277,11 @@ export default function BattleScreen() {
   }, []);
 
   useEffect(() => {
+    // 戦闘開始時にisExitingをリセット（自動周回の次ラウンド対応）
+    if (state.phase === 'fighting') {
+      setIsExiting(false);
+    }
+
     // 自動周回中でクリアした場合は結果画面に遷移しない（次の周回が始まる）
     if (isAutoRunning && state.phase === 'cleared') {
       return;
@@ -295,7 +302,13 @@ export default function BattleScreen() {
       const finalTotalExp = isRetreat ? 0 : (state.grandTotalExp || 0) + state.totalExpGained;
       const finalTotalItems = [...(state.grandTotalItems || []), ...state.droppedItems];
 
-      // 結果画面に遷移
+      // 遷移前にImageコンポーネントをアンマウントし、
+      // Reanimatedイベントリスナーとの競合によるクラッシュを防止
+      const exitTimer = setTimeout(() => {
+        setIsExiting(true);
+      }, 1700);
+
+      // 結果画面に遷移（Imageアンマウント後に十分な間隔を確保）
       const timer = setTimeout(() => {
         router.replace({
           pathname: '/result',
@@ -314,7 +327,10 @@ export default function BattleScreen() {
         });
       }, 2000);
 
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(exitTimer);
+        clearTimeout(timer);
+      };
     }
   }, [state.phase, dungeonId, router, dungeon, state, isAutoRunning, level]);
 
@@ -357,45 +373,55 @@ export default function BattleScreen() {
       </View>
 
       {/* キャラクターアバターエリア（画像のみ） */}
+      {/* isExiting時はImageコンポーネントを事前にアンマウントし、
+          画面遷移時のReanimated handleRawEventクラッシュを防止 */}
       <View style={styles.avatarArea}>
-        <View style={styles.avatarContainer}>
-          <CharacterAvatar
-            isPlayer
-            characterType={characterType}
-            isAttacking={playerAttacking}
-            size={s(100)}
-          />
-        </View>
-        {state.enemy && !showChest && (
-          <View style={styles.avatarContainer}>
-            <CharacterAvatar
-              imageId={state.enemy.image}
-              isAttacking={enemyAttacking}
-              size={s(100)}
-              poisonStacks={state.enemyPoison}
-              igniteState={state.enemyIgnite}
-            />
-          </View>
-        )}
-        {state.enemy && showChest && (
-          <View style={styles.chestSlot}>
-            <View style={styles.chestRow}>
-              {state.lastDroppedItems.map((item, index) => {
-                const offsets = getChestOffsets(state.lastDroppedItems.length);
-                const { x, y } = offsets[index] || { x: 0, y: 0 };
-                return (
-                  <ChestDrop
-                    key={`${item.instanceId}-${index}`}
-                    itemIndex={index}
-                    image={getChestImageForItem(item)}
-                    rarity={getChestRarityForItem(item)}
-                    offsetX={x}
-                    offsetY={y}
-                  />
-                );
-              })}
+        {!isExiting && (
+          <>
+            <View style={styles.avatarContainer}>
+              <CharacterAvatar
+                isPlayer
+                characterType={characterType}
+                isAttacking={playerAttacking}
+                size={s(100)}
+              />
             </View>
-          </View>
+            {state.enemy && (
+              <>
+                {/* 敵アバター: 宝箱表示時はアンマウントせずopacityで非表示にし、
+                    Reanimatedイベント競合クラッシュを防止 */}
+                <View style={[styles.avatarContainer, showChest && styles.hidden]}>
+                  <CharacterAvatar
+                    imageId={state.enemy.image}
+                    isAttacking={enemyAttacking}
+                    size={s(100)}
+                    poisonStacks={state.enemyPoison}
+                    igniteState={state.enemyIgnite}
+                  />
+                </View>
+                {showChest && (
+                  <View style={styles.chestSlot}>
+                    <View style={styles.chestRow}>
+                      {state.lastDroppedItems.map((item, index) => {
+                        const offsets = getChestOffsets(state.lastDroppedItems.length);
+                        const { x, y } = offsets[index] || { x: 0, y: 0 };
+                        return (
+                          <ChestDrop
+                            key={`${item.instanceId}-${index}`}
+                            itemIndex={index}
+                            image={getChestImageForItem(item)}
+                            rarity={getChestRarityForItem(item)}
+                            offsetX={x}
+                            offsetY={y}
+                          />
+                        );
+                      })}
+                    </View>
+                  </View>
+                )}
+              </>
+            )}
+          </>
         )}
       </View>
     </>
@@ -404,7 +430,8 @@ export default function BattleScreen() {
   return (
     <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
       {/* 上部: バトルエリア（背景画像 + キャラクター画像のみ） */}
-      {backgroundImage ? (
+      {/* isExiting時はImageBackgroundもアンマウントし、画像onLoadイベントの競合を防止 */}
+      {backgroundImage && !isExiting ? (
         <ImageBackground
           source={backgroundImage}
           style={styles.battleArea}
@@ -554,7 +581,7 @@ const styles = StyleSheet.create({
     paddingTop: ms(8),
   },
   battleAreaFallback: {
-    backgroundColor: '#16213e',
+    backgroundColor: '#15191E',
   },
   floorInfo: {
     alignItems: 'center',
@@ -596,6 +623,10 @@ const styles = StyleSheet.create({
   avatarContainer: {
     alignItems: 'center',
     justifyContent: 'flex-end',
+  },
+  hidden: {
+    opacity: 0,
+    position: 'absolute',
   },
   statusArea: {
     flexDirection: 'row',
