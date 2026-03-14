@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Modal } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
@@ -37,6 +37,8 @@ const SLOT_ICONS: Record<EquipmentSlot, string> = {
 export default function SettingsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const params = useLocalSearchParams<{ inviteCode?: string | string[] }>();
+  const scrollViewRef = useRef<ScrollView>(null);
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
   const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
   const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
@@ -45,6 +47,10 @@ export default function SettingsScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
   const hasPremiumSpeed = hasSpeedBoost();
+  const inviteCodeParam = useMemo(
+    () => (Array.isArray(params.inviteCode) ? params.inviteCode[0] : params.inviteCode) ?? '',
+    [params.inviteCode]
+  );
 
   // 言語コードからラベルを取得するヘルパー
   const getLanguageLabel = (lang: AppLanguage): string => {
@@ -57,6 +63,18 @@ export default function SettingsScreen() {
   useEffect(() => {
     loadSettings();
   }, []);
+
+  useEffect(() => {
+    if (isLoading || !inviteCodeParam) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [inviteCodeParam, isLoading]);
 
   const loadSettings = async () => {
     try {
@@ -142,8 +160,13 @@ export default function SettingsScreen() {
     saveSettings(DEFAULT_DROP_FILTER);
   };
 
-  const handleBack = () => {
-    router.back();
+  const handleBack = async () => {
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+
+    router.replace('/');
   };
 
   if (isLoading) {
@@ -161,7 +184,11 @@ export default function SettingsScreen() {
         <Text style={styles.headerTitle}>{t('settings.title')}</Text>
       </View>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
         {/* 言語設定 */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings.language.title')}</Text>
@@ -441,7 +468,7 @@ export default function SettingsScreen() {
         </View>
 
         {/* 招待コード */}
-        <InviteCodeSection />
+        <InviteCodeSection initialCode={inviteCodeParam} />
       </ScrollView>
 
       {/* フッター */}

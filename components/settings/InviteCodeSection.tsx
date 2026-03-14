@@ -5,7 +5,13 @@ import { useTranslation } from 'react-i18next';
 import * as Clipboard from 'expo-clipboard';
 import { ms, fs } from '@/utils/scaling';
 import { getOrCreateMyInviteCode, redeemInviteCode, checkInviterReward, ServiceSuspendedError } from '@/lib/inviteCode';
+import { Analytics } from '@/lib/analytics';
+import { sanitizeInviteCode } from '@/lib/inviteLink';
 import { hasSpeedBoost } from '@/stores/usePurchaseStore';
+
+type InviteCodeSectionProps = {
+  initialCode?: string | string[];
+};
 
 const colors = {
   bg: '#15191E',
@@ -17,7 +23,7 @@ const colors = {
   textMuted: '#8C929A',
 };
 
-export function InviteCodeSection() {
+export function InviteCodeSection({ initialCode }: InviteCodeSectionProps) {
   const { t } = useTranslation();
   const [myCode, setMyCode] = useState<string | null>(null);
   const [inputCode, setInputCode] = useState('');
@@ -49,6 +55,14 @@ export function InviteCodeSection() {
     loadMyCode();
   }, [loadMyCode]);
 
+  useEffect(() => {
+    const nextCode = sanitizeInviteCode(Array.isArray(initialCode) ? initialCode[0] : initialCode);
+    if (!nextCode) {
+      return;
+    }
+    setInputCode(nextCode);
+  }, [initialCode]);
+
   const handleCopy = async () => {
     if (!myCode) return;
     await Clipboard.setStringAsync(myCode);
@@ -75,18 +89,22 @@ export function InviteCodeSection() {
     }
 
     setIsSubmitting(true);
+    Analytics.logInviteRedeemAttempted({ source: 'settings' });
     const result = await redeemInviteCode(code);
     setIsSubmitting(false);
 
     if (result.success) {
+      Analytics.logInviteRedeemCompleted({ source: 'settings', result: 'success' });
       Alert.alert(
         t('settings.inviteCode.success.title'),
         t('settings.inviteCode.success.message'),
       );
       setInputCode('');
     } else if (result.error === 'service_suspended') {
+      Analytics.logInviteRedeemCompleted({ source: 'settings', result: 'service_suspended' });
       setIsSuspended(true);
     } else {
+      Analytics.logInviteRedeemCompleted({ source: 'settings', result: result.error });
       const errorKey = `settings.inviteCode.error.${result.error === 'own_code' ? 'ownCode' : result.error === 'not_found' ? 'notFound' : result.error === 'already_used' ? 'alreadyUsed' : result.error === 'already_redeemed' ? 'alreadyRedeemed' : 'networkError'}`;
       Alert.alert('', t(errorKey));
     }
@@ -98,6 +116,15 @@ export function InviteCodeSection() {
       <Text style={styles.sectionDescription}>
         {t('settings.inviteCode.description')}
       </Text>
+
+      {inputCode.length === 6 && !isActivated && !isSuspended && (
+        <View style={styles.receivedBadge}>
+          <MaterialCommunityIcons name="link-variant" size={ms(16)} color="#4ECDC4" />
+          <Text style={styles.receivedText}>
+            {t('settings.inviteCode.receivedFromLink')}
+          </Text>
+        </View>
+      )}
 
       {/* 一時停止中 */}
       {isSuspended && !isActivated && (
@@ -229,6 +256,21 @@ const styles = StyleSheet.create({
   suspendedText: {
     fontSize: fs(13),
     color: '#FFA726',
+    fontWeight: '600',
+  },
+  receivedBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(6),
+    backgroundColor: 'rgba(78, 205, 196, 0.15)',
+    paddingVertical: ms(8),
+    paddingHorizontal: ms(12),
+    borderRadius: ms(8),
+    marginBottom: ms(12),
+  },
+  receivedText: {
+    fontSize: fs(13),
+    color: '#4ECDC4',
     fontWeight: '600',
   },
   activatedBadge: {

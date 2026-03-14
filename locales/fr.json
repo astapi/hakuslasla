@@ -218,12 +218,13 @@
       "description": "Partagez des codes d'invitation avec des amis pour débloquer la vitesse 3x pour les deux",
       "myCode": "Votre code d'invitation",
       "copied": "Copié !",
+      "receivedFromLink": "Le code du lien a été prérempli",
       "enterCode": "Entrer le code d'un ami",
       "placeholder": "Code à 6 caractères",
       "submit": "Envoyer",
       "submitting": "Envoi en cours...",
       "activated": "Vitesse 3x activée",
-      "shareText": "Partons à l'aventure ensemble dans LootDive ! Code d'invitation : {{code}}",
+      "shareText": "Partons à l'aventure ensemble dans LootDive ! Ouvrez ce lien pour recevoir automatiquement le code d'invitation.\nhttps://astapi.net/lootdive/invite?code={{code}}\nSi l'app ne s'ouvre pas, saisissez manuellement le code {{code}}.",
       "error": {
         "ownCode": "Vous ne pouvez pas utiliser votre propre code",
         "notFound": "Code d'invitation introuvable",
@@ -237,6 +238,17 @@
         "message": "Vitesse 3x débloquée !"
       },
       "suspended": "La fonction de code d'invitation est temporairement indisponible"
+    }
+  },
+  "inviteLink": {
+    "title": "Code d'invitation reçu",
+    "description": "Nous avons lu un code d'invitation depuis le lien. Appliquez-le pour débloquer la vitesse 3x.",
+    "receivedCode": "Code reçu",
+    "apply": "Appliquer ce code",
+    "openSettings": "Ouvrir les réglages",
+    "goHome": "Retour à l'accueil",
+    "result": {
+      "alreadyActivated": "La vitesse 3x est déjà débloquée."
     }
   },
   "status": {

@@ -39,6 +39,37 @@ export const Analytics = {
     if (__DEV__) return;
     analytics().logEvent('purchase_completed', params);
   },
+
+  logInviteLinkOpened: (params: {
+    source: 'universal' | 'scheme';
+    cold_start: boolean;
+  }) => {
+    if (__DEV__) return;
+    analytics().logEvent('invite_link_opened', params);
+  },
+
+  logInviteRedeemAttempted: (params: {
+    source: 'link' | 'settings';
+  }) => {
+    if (__DEV__) return;
+    analytics().logEvent('invite_redeem_attempted', params);
+  },
+
+  logInviteRedeemCompleted: (params: {
+    source: 'link' | 'settings';
+    result:
+      | 'success'
+      | 'own_code'
+      | 'not_found'
+      | 'already_used'
+      | 'already_redeemed'
+      | 'network_error'
+      | 'service_suspended'
+      | 'already_activated';
+  }) => {
+    if (__DEV__) return;
+    analytics().logEvent('invite_redeem_completed', params);
+  },
 };
 
 // ============================================

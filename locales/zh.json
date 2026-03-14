@@ -218,12 +218,13 @@
       "description": "与朋友分享邀请码，双方均可解锁3倍速",
       "myCode": "你的邀请码",
       "copied": "已复制",
+      "receivedFromLink": "链接中的邀请码已自动填入",
       "enterCode": "输入朋友的邀请码",
       "placeholder": "6位代码",
       "submit": "提交",
       "submitting": "提交中...",
       "activated": "3倍速已激活",
-      "shareText": "一起来LootDive冒险吧！邀请码：{{code}}",
+      "shareText": "一起来 LootDive 冒险吧！打开此链接即可直接领取邀请码。\nhttps://astapi.net/lootdive/invite?code={{code}}\n如果应用没有打开，也可以手动输入邀请码 {{code}}。",
       "error": {
         "ownCode": "不能使用自己的邀请码",
         "notFound": "未找到该邀请码",
@@ -237,6 +238,17 @@
         "message": "3倍速已解锁！"
       },
       "suspended": "邀请码功能暂时不可用"
+    }
+  },
+  "inviteLink": {
+    "title": "已收到邀请码",
+    "description": "我们已从链接中读取邀请码。应用后即可解锁 3 倍速。",
+    "receivedCode": "收到的邀请码",
+    "apply": "应用此邀请码",
+    "openSettings": "打开设置",
+    "goHome": "返回首页",
+    "result": {
+      "alreadyActivated": "3 倍速已解锁。"
     }
   },
   "status": {
