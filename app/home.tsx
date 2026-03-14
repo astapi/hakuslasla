@@ -16,6 +16,8 @@ import { useAdState } from '@/hooks/useAdStore';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { ENTITLEMENT_IDS } from '@/constants/purchases';
 import { characterImages } from '@/data/images';
+import { NewsModal } from '@/components/common/NewsModal';
+import { fetchRssItems, RssItem } from '@/lib/rss';
 import { ms, fs, isTablet } from '@/utils/scaling';
 
 // タブレット用スケーリング
@@ -38,6 +40,10 @@ export default function HomeScreen() {
   const [isRenameModalVisible, setIsRenameModalVisible] = useState(false);
   const [newName, setNewName] = useState('');
 
+  // お知らせモーダルの状態
+  const [showNewsModal, setShowNewsModal] = useState(false);
+  const [newsItems, setNewsItems] = useState<RssItem[]>([]);
+
   // ブーストツールチップの状態
   const [showBoostTooltip, setShowBoostTooltip] = useState(false);
   const hasPermanentBoost = usePurchaseStore((state) =>
@@ -46,6 +52,38 @@ export default function HomeScreen() {
   const { loaded: dropRateAdLoaded } = useAdState('drop_rate');
   const { loaded: tierBoostAdLoaded } = useAdState('tier_boost');
   const anyAdLoaded = dropRateAdLoaded || tierBoostAdLoaded;
+
+  // 新着お知らせチェック
+  useEffect(() => {
+    const checkNews = async () => {
+      try {
+        const items = await fetchRssItems();
+        if (items.length === 0) return;
+        const lastRead = await settingsRepository.getNewsLastReadDate();
+        const lastReadTime = lastRead ? new Date(lastRead).getTime() : 0;
+        const unreadItems = items.filter(
+          (item) => new Date(item.pubDate).getTime() > lastReadTime
+        );
+        if (unreadItems.length > 0) {
+          setNewsItems(unreadItems.slice(0, 5));
+          setShowNewsModal(true);
+        }
+      } catch {
+        // お知らせ取得失敗は無視
+      }
+    };
+    checkNews();
+  }, []);
+
+  const handleCloseNewsModal = async () => {
+    setShowNewsModal(false);
+    if (newsItems.length > 0) {
+      const latestDate = newsItems
+        .map((item) => new Date(item.pubDate).getTime())
+        .reduce((a, b) => Math.max(a, b), 0);
+      await settingsRepository.setNewsLastReadDate(new Date(latestDate).toISOString());
+    }
+  };
 
   // 初回表示のツールチップチェック
   useEffect(() => {
@@ -293,6 +331,13 @@ export default function HomeScreen() {
           <Text style={styles.menuLabel}>{t('home.menu.shop')}</Text>
         </Pressable>
       </View>
+
+      {/* お知らせモーダル */}
+      <NewsModal
+        visible={showNewsModal}
+        items={newsItems}
+        onClose={handleCloseNewsModal}
+      />
 
       {/* キャラクター名変更モーダル */}
       <Modal

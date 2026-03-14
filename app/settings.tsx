@@ -189,6 +189,20 @@ export default function SettingsScreen() {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
+        {/* お知らせ */}
+        <View style={styles.section}>
+          <Pressable
+            style={styles.newsLink}
+            onPress={() => router.push('/news' as '/settings')}
+          >
+            <View style={styles.newsLinkContent}>
+              <MaterialCommunityIcons name="bell-outline" size={20} color={colors.text} />
+              <Text style={styles.newsLinkText}>{t('news.title')}</Text>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" size={24} color={colors.textMuted} />
+          </Pressable>
+        </View>
+
         {/* 言語設定 */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings.language.title')}</Text>
@@ -738,6 +752,27 @@ const styles = StyleSheet.create({
   },
   lockIcon: {
     marginLeft: ms(2),
+  },
+  newsLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: ms(14),
+    paddingHorizontal: ms(12),
+    backgroundColor: colors.bgDeep,
+    borderRadius: ms(8),
+    borderWidth: 1,
+    borderColor: colors.slabEdge,
+  },
+  newsLinkContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(12),
+  },
+  newsLinkText: {
+    fontSize: fs(15),
+    color: colors.text,
+    fontWeight: '500',
   },
   speedHint: {
     fontSize: fs(11),

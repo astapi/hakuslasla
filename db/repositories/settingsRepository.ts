@@ -17,6 +17,7 @@ const MOD_FILTER_TOOLTIP_SHOWN_KEY = 'mod_filter_tooltip_shown';
 const STORE_REVIEW_REQUESTED_KEY = 'store_review_requested';
 const INVITE_SPEED_BOOST_KEY = 'invite_speed_boost';
 const MY_INVITE_CODE_KEY = 'my_invite_code';
+const NEWS_LAST_READ_KEY = 'news_last_read_date';
 
 // ダンジョンクリア記録の型
 export type DungeonClearRecord = {
@@ -352,5 +353,14 @@ export const settingsRepository = {
 
   async setMyInviteCode(code: string): Promise<void> {
     await this.set(MY_INVITE_CODE_KEY, code);
+  },
+
+  // お知らせ既読日時
+  async getNewsLastReadDate(): Promise<string | null> {
+    return this.get(NEWS_LAST_READ_KEY);
+  },
+
+  async setNewsLastReadDate(isoDate: string): Promise<void> {
+    await this.set(NEWS_LAST_READ_KEY, isoDate);
   },
 };

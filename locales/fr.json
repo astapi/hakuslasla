@@ -2131,5 +2131,12 @@
       "name": "Pack Premium",
       "description": "Inclut l'extension d'inventaire, l'extension d'entrepôt, le filtre de palier bas, le boost permanent et les emplacements de personnages à prix réduit"
     }
+  },
+  "news": {
+    "title": "Actualités",
+    "modalTitle": "Nouvelles annonces",
+    "empty": "Aucune annonce",
+    "fetchError": "Échec du chargement des actualités",
+    "retry": "Réessayer"
   }
 }

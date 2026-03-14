@@ -278,6 +278,12 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="news"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="language-select"
           options={{
             headerShown: false,
