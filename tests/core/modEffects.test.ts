@@ -97,6 +97,7 @@ describe('core/modEffects', () => {
       igniteTickSpeedPct: 0,
       igniteSpread: false,
       igniteStackingDamage: false,
+      warlordEnrage: false,
     };
 
     const result = getAttackSpeedFromMods(mods, 1);

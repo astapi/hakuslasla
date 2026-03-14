@@ -318,7 +318,9 @@
     "ignite_chance": "Ignite",
     "ignite_duration_pct": "Durée Ignite",
     "ignite_tick_speed_pct": "Vitesse Ignite",
-    "ignite_damage_pct": "DMG Ignite"
+    "ignite_damage_pct": "DMG Ignite",
+    "hp_regen_to_atk_pct": "Conv. Régén.",
+    "warlord_enrage": "Seigneur de guerre"
   },
   "dungeon": {
     "floors": "{{count}} étages",
@@ -1389,6 +1391,7 @@
     "uberTicket": "Ticket Uber obtenu ! ({{count}})",
     "respecToken": "Objet de respec obtenu ! ({{count}})",
     "bossSkillActivated": "{{enemy}} a déclenché {{skill}} !",
+    "warlordEnrage": "[Seigneur de guerre] Activé ! Vitesse d'attaque+20%, HP par coup+300",
     "reflectedDamage": "La marque de {{enemy}} se reflète ! Vous subissez {{damage}} dégâts !",
     "enemyHealRegen": "{{enemy}} a régénéré {{amount}} HP !",
     "enemyHealOnHit": "{{enemy}} a absorbé {{amount}} HP !",
@@ -2040,7 +2043,8 @@
     "damageReduction": "Dégâts subis -{{value}}%",
     "attackSpeed": "Vitesse d'attaque +{{value}}%",
     "hpOnHit": "HP par coup +{{value}}",
-    "lifesteal": "Vol de vie +{{value}}%"
+    "lifesteal": "Vol de vie +{{value}}%",
+    "warlordEnrage": "Seigneur de guerre"
   },
   "boost": {
     "dropRate": {

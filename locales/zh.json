@@ -318,7 +318,9 @@
     "ignite_chance": "点燃",
     "ignite_duration_pct": "点燃持续",
     "ignite_tick_speed_pct": "点燃速度",
-    "ignite_damage_pct": "点燃 DMG"
+    "ignite_damage_pct": "点燃 DMG",
+    "hp_regen_to_atk_pct": "回复转换",
+    "warlord_enrage": "战神之怒"
   },
   "dungeon": {
     "floors": "{{count}} 层",
@@ -1389,6 +1391,7 @@
     "uberTicket": "获得了 Uber 入场券！（{{count}}）",
     "respecToken": "获得了洗点道具！（{{count}}）",
     "bossSkillActivated": "{{enemy}} 触发了 {{skill}}！",
+    "warlordEnrage": "【战神之怒】发动！攻击速度+20%，命中回复HP+300",
     "reflectedDamage": "{{enemy}} 的印记反弹了！你受到 {{damage}} 点伤害！",
     "enemyHealRegen": "{{enemy}} 回复了 {{amount}} HP！",
     "enemyHealOnHit": "{{enemy}} 吸取了 {{amount}} HP！",
@@ -2040,7 +2043,8 @@
     "damageReduction": "受伤 -{{value}}%",
     "attackSpeed": "攻速 +{{value}}%",
     "hpOnHit": "命中回 HP +{{value}}",
-    "lifesteal": "吸血 +{{value}}%"
+    "lifesteal": "吸血 +{{value}}%",
+    "warlordEnrage": "战神之怒"
   },
   "boost": {
     "dropRate": {

@@ -522,6 +522,8 @@ export function getModDescription(mod: ItemMod): string {
       return `5秒毎に毎秒HP+${mod.value}回復`;
     case 'hp_regen_to_atk_pct':
       return `HP回復量の${mod.value}%をATKに変換`;
+    case 'warlord_enrage':
+      return '乱軍の王（HP30%以下で1度だけ発動。攻撃速度+20%, 攻撃時HP回復+300）';
     default:
       return '';
   }

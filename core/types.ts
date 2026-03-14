@@ -241,6 +241,9 @@ export interface CombinedModEffects {
   timeAtkIncPct: number;   // 5秒ごとにATK increased%加算
   timeDefIncPct: number;   // 5秒ごとにDEF increased%加算
   timeHpRegen: number;     // 5秒ごとにHP回復量加算
+
+  // 乱軍の王（HP30%以下で1度発動: 攻撃速度+20%, 攻撃時HP回復+300）
+  warlordEnrage: boolean;
 }
 
 /**
@@ -283,6 +286,7 @@ export interface GaugeBattleState {
   playerPoisonStacks: PoisonStack[];
   enemyIgniteState: IgniteState | null;  // 発火状態（上書き式）
   igniteApplyCount: number;  // 発火付与回数（敵撃破時リセット）
+  warlordEnrageActivated: boolean;  // 乱軍の王が発動済みか
   elapsedTicks: number;  // 経過ティック数
   isFinished: boolean;
   winner: 'player' | 'enemy' | null;
@@ -313,7 +317,8 @@ export type BattleEventType =
   | 'boss_skill'
   | 'boss_intro'
   | 'player_defeated'
-  | 'enemy_defeated';
+  | 'enemy_defeated'
+  | 'warlord_enrage';
 
 /**
  * 戦闘イベント（ログ用）

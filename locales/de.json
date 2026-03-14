@@ -318,7 +318,9 @@
     "ignite_chance": "Entzuendung",
     "ignite_duration_pct": "Entz.-Dauer",
     "ignite_tick_speed_pct": "Entz.-Tick",
-    "ignite_damage_pct": "Entz. DMG"
+    "ignite_damage_pct": "Entz. DMG",
+    "hp_regen_to_atk_pct": "Regen-Umw.",
+    "warlord_enrage": "Kriegsherr"
   },
   "dungeon": {
     "floors": "{{count}} Stockwerke",
@@ -1389,6 +1391,7 @@
     "uberTicket": "Uber-Ticket erhalten! ({{count}})",
     "respecToken": "Neuverteilungsgegenstand erhalten! ({{count}})",
     "bossSkillActivated": "{{enemy}} loest {{skill}} aus!",
+    "warlordEnrage": "[Kriegsherr] Aktiviert! Angriffsgeschw.+20%, HP bei Treffer+300",
     "reflectedDamage": "{{enemy}}'s Mal reflektiert! Du nimmst {{damage}} Schaden!",
     "enemyHealRegen": "{{enemy}} regeneriert {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} absorbiert {{amount}} HP!",
@@ -2040,7 +2043,8 @@
     "damageReduction": "Erlittener Schaden -{{value}}%",
     "attackSpeed": "Angriffsgeschw. +{{value}}%",
     "hpOnHit": "HP bei Treffer +{{value}}",
-    "lifesteal": "Lebensraub +{{value}}%"
+    "lifesteal": "Lebensraub +{{value}}%",
+    "warlordEnrage": "Kriegsherr"
   },
   "boost": {
     "dropRate": {

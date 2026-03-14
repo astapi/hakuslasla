@@ -50,7 +50,9 @@ export default function EncyclopediaDetailScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('encyclopedia.detail.monsters')}</Text>
           <View style={styles.monsterList}>
-            {dungeon.monsters.map((spawn) => {
+            {dungeon.monsters
+              .filter((spawn) => !dungeon.boss || spawn.monsterId !== dungeon.boss.monsterId)
+              .map((spawn) => {
               const enemy = getEnemy(spawn.monsterId);
               if (!enemy) return null;
 
@@ -222,15 +224,9 @@ function MonsterCard({ enemy, isBoss = false, dungeonId }: MonsterCardProps) {
           <Text style={styles.uniqueDropTitle}>{t('encyclopedia.detail.uniqueDrops')}</Text>
           {enemy.uniqueDrops ? (
             // 複数ユニークドロップ（Uber用）
-            enemy.uniqueDrops.map((drop) => {
-              const item = getItemBase(drop.itemId);
-              if (!item) return null;
-              return (
-                <View key={drop.itemId} style={styles.uniqueDropItem}>
-                  <Text style={styles.uniqueDropName}>{t(`items.${item.id}.name`)}</Text>
-                </View>
-              );
-            })
+            enemy.uniqueDrops.map((drop) => (
+              <UniqueDropItem key={drop.itemId} itemId={drop.itemId} />
+            ))
           ) : enemy.uniqueDrop ? (
             // 単一ユニークドロップ
             <UniqueDropItem itemId={enemy.uniqueDrop.itemId} />

@@ -122,7 +122,8 @@ export type ModType =
   | 'time_atk_inc_pct'    // 5秒毎にATK increased%加算
   | 'time_def_inc_pct'    // 5秒毎にDEF increased%加算
   | 'time_hp_regen'       // 5秒毎にHP回復量加算
-  | 'hp_regen_to_atk_pct'; // 毎秒HP回復量のX%をATKに変換
+  | 'hp_regen_to_atk_pct' // 毎秒HP回復量のX%をATKに変換
+  | 'warlord_enrage';     // 乱軍の王（HP30%以下で1度発動: 攻撃速度+20%, 攻撃時HP回復300）
 
 // MOD定義
 export interface ItemMod {
