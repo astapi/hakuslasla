@@ -615,11 +615,12 @@
       "id": "magma_core",
       "name": "マグマコア",
       "slot": "accessory",
-      "atk": 15,
-      "def": 5,
+      "atk": 30,
+      "def": 30,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 20 },
-        { "type": "critical_chance", "value": 20 }
+        { "type": "ignite_chance", "value": 60 },
+        { "type": "ignite_damage_pct", "value": 50 },
+        { "type": "ignite_lifesteal", "value": 10 }
       ]
     },
     "flame_sword": {
@@ -1567,7 +1568,7 @@
       "def": 0,
       "fixedMods": [
         { "type": "time_atk_inc_pct", "value": 10 },
-        { "type": "critical_chance", "value": 30 },
+        { "type": "atk_inc_pct", "value": 30 },
         { "type": "attack_speed_pct", "value": 20 },
         { "type": "hp_bonus", "value": 280 }
       ]

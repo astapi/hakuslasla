@@ -137,6 +137,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       igniteDamagePct: combinedMods.igniteDamagePct,
       igniteDamageMore: igniteDamageMoreTotal,
       igniteDurationPct: combinedMods.igniteDurationPct,
+      igniteLifesteal: combinedMods.igniteLifesteal,
       damageReductionPct: combinedMods.damageReductionPct,
       attackSpeedPct: combinedMods.attackSpeedPct + (CLASS_ABILITIES[state.characterType]?.attackSpeedPct || 0),
       attackSpeedMore: attackSpeedMoreTotal,
@@ -302,6 +303,14 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.igniteDurationPct > 0 ? styles.igniteText : undefined}>
                   +{breakdown.igniteDurationPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.igniteLifesteal')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.igniteLifesteal > 0 ? styles.igniteText : undefined}>
+                  {breakdown.igniteLifesteal}%
                 </Text>
               </Text>
             </View>

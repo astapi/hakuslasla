@@ -217,6 +217,7 @@ export interface CombinedModEffects {
   igniteDamageMorePct: number[]; // ダメージ more%（配列）
   igniteDurationPct: number;     // 時間+%
   igniteTickSpeedPct: number;    // ダメージ速度+%（間隔短縮）
+  igniteLifesteal: number;       // 発火ダメージ吸収%（発火ダメージの一定割合を回復）
   igniteSpread: boolean;         // イグナイト伝染（敵死亡時、次の敵に発火継承）
   igniteStackingDamage: boolean; // 緩慢なる炎キーストーン: 発火付与5回ごとに+10% inc発火ダメージ（最大200%）
 

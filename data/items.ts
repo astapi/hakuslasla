@@ -496,6 +496,8 @@ export function getModDescription(mod: ItemMod): string {
       return `発火速度+${mod.value}%`;
     case 'ignite_damage_pct':
       return `発火ダメージ+${mod.value}%`;
+    case 'ignite_lifesteal':
+      return `発火ダメージ吸収${mod.value}%`;
     case 'critical_chance':
       return `クリティカル+${mod.value}%`;
     case 'critical_damage':

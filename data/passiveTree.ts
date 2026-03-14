@@ -210,6 +210,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   ignite_damage_pct: number;
   ignite_damage_more_pct: number[];
   ignite_duration_pct: number;
+  ignite_lifesteal: number;
   ignite_spread: boolean;
   ignite_stacking_damage: boolean; // 緩慢なる炎キーストーン
   // クリティカル系
@@ -248,6 +249,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   let ignite_damage_pct = 0;
   const ignite_damage_more_pct: number[] = [];
   let ignite_duration_pct = 0;
+  let ignite_lifesteal = 0;
   let ignite_spread = false;
   let ignite_stacking_damage = false;
   // クリティカル系
@@ -291,6 +293,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       ignite_damage_pct += node.effect.ignite_damage_pct || 0;
       if (node.effect.ignite_damage_more_pct) ignite_damage_more_pct.push(node.effect.ignite_damage_more_pct);
       ignite_duration_pct += node.effect.ignite_duration_pct || 0;
+      ignite_lifesteal += node.effect.ignite_lifesteal || 0;
       if (node.effect.ignite_spread) ignite_spread = true;
       if (node.effect.ignite_stacking_damage) ignite_stacking_damage = true;
       // クリティカル系
@@ -314,7 +317,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     hp_more_pct, atk_more_pct, def_more_pct,
     poison_chance, poison_damage_pct, poison_damage_more_pct,
     poison_max_stacks, poison_damage_reduction, poison_lifesteal, no_direct_damage,
-    ignite_chance, ignite_damage_pct, ignite_damage_more_pct, ignite_duration_pct, ignite_spread,
+    ignite_chance, ignite_damage_pct, ignite_damage_more_pct, ignite_duration_pct, ignite_lifesteal, ignite_spread,
     ignite_stacking_damage,
     critical_chance, critical_damage, hp_on_crit,
     hp_regen, hp_regen_pct,

@@ -275,6 +275,7 @@
     "igniteDamageMore": "점화 More",
     "igniteDuration": "점화 지속",
     "igniteTickSpeed": "점화 속도",
+    "igniteLifesteal": "점화 흡혈",
     "perSecond": "/초",
     "on": "켜짐",
     "off": "꺼짐",

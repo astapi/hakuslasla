@@ -64,6 +64,7 @@ export const submitDimensionalCorridorScore = async (
     igniteDamagePct: combinedMods.igniteDamagePct,
     igniteDamageMore: igniteDamageMoreTotal,
     igniteDurationPct: combinedMods.igniteDurationPct,
+    igniteLifesteal: combinedMods.igniteLifesteal,
     // 回復・防御
     hpRegen: combinedMods.hpRegen + Math.floor(stats.maxHp * combinedMods.hpRegenPct / 100),
     hpOnHit: combinedMods.hpOnHit,

@@ -112,6 +112,7 @@ export type ModType =
   | 'ignite_duration_pct'    // 発火時間+X%（杖専用）
   | 'ignite_tick_speed_pct'  // 発火ダメージ速度+X%（杖専用）
   | 'ignite_damage_pct'      // 発火ダメージ+X%（杖専用）
+  | 'ignite_lifesteal'       // 発火ダメージ吸収+X%
   | 'critical_chance'    // クリティカル確率+X%
   | 'critical_damage'    // クリティカルダメージ+X%
   | 'damage_reduction_pct'  // ダメージ軽減+X%（鎧専用）
@@ -204,6 +205,7 @@ export interface PassiveEffect {
   ignite_tick_speed_pct?: number;  // 発火ダメージ速度+X%
   ignite_damage_pct?: number;      // 発火ダメージ+X%
   ignite_damage_more_pct?: number; // 発火ダメージ X% more（乗算）
+  ignite_lifesteal?: number;       // 発火ダメージ吸収 +X%
   ignite_spread?: boolean;         // イグナイト伝染（発火中の敵死亡時、次の敵に発火継承）
   ignite_stacking_damage?: boolean; // 緩慢なる炎: 発火付与5回ごとに+10% inc発火ダメージ（最大200%）
   // クリティカル系

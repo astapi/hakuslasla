@@ -275,6 +275,7 @@
     "igniteDamageMore": "Ignite More",
     "igniteDuration": "Durée Ignite",
     "igniteTickSpeed": "Vitesse Ignite",
+    "igniteLifesteal": "Vol de vie Ignite",
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",

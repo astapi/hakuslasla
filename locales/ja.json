@@ -275,6 +275,7 @@
     "igniteDamageMore": "発火more",
     "igniteDuration": "発火時間",
     "igniteTickSpeed": "発火速度",
+    "igniteLifesteal": "発火吸収",
     "perSecond": "/秒",
     "on": "ON",
     "off": "OFF",
@@ -319,6 +320,7 @@
     "ignite_duration_pct": "発火時間",
     "ignite_tick_speed_pct": "発火速度",
     "ignite_damage_pct": "発火ダメ",
+    "ignite_lifesteal": "発火吸収",
     "hp_regen_to_atk_pct": "回復変換",
     "warlord_enrage": "乱軍の王"
   },
