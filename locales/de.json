@@ -321,6 +321,10 @@
     "ignite_tick_speed_pct": "Entz.-Tick",
     "ignite_damage_pct": "Entz. DMG",
     "hp_regen_to_atk_pct": "Regen-Umw.",
+    "time_atk_inc_pct": "ATK/5s",
+    "time_def_inc_pct": "DEF/5s",
+    "time_hp_regen": "Regen/5s",
+    "attack_speed_more_pct": "Geschw. mehr",
     "warlord_enrage": "Kriegsherr"
   },
   "dungeon": {
@@ -2045,7 +2049,11 @@
     "attackSpeed": "Angriffsgeschw. +{{value}}%",
     "hpOnHit": "HP bei Treffer +{{value}}",
     "lifesteal": "Lebensraub +{{value}}%",
-    "warlordEnrage": "Kriegsherr"
+    "warlordEnrage": "Kriegsherr",
+    "timeAtkInc": "ATK +{{value}}% alle 5s",
+    "timeDefInc": "DEF +{{value}}% alle 5s",
+    "timeHpRegen": "HP-Regen +{{value}} alle 5s",
+    "attackSpeedMore": "Angriffsgeschw. +{{value}}% mehr"
   },
   "boost": {
     "dropRate": {

@@ -99,6 +99,21 @@ function calculateItemStats(
         case 'hp_more_pct':
           desc = `[${tierLabel}] HP ${mod.value}% more`;
           break;
+        case 'attack_speed_more_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.attackSpeedMore', { value: mod.value })}`;
+          break;
+        case 'time_atk_inc_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.timeAtkInc', { value: mod.value })}`;
+          break;
+        case 'time_def_inc_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.timeDefInc', { value: mod.value })}`;
+          break;
+        case 'time_hp_regen':
+          desc = `[${tierLabel}] ${t('modDescriptions.timeHpRegen', { value: mod.value })}`;
+          break;
+        case 'warlord_enrage':
+          desc = `[${tierLabel}] ${t('modDescriptions.warlordEnrage')}`;
+          break;
       }
       if (desc) {
         otherMods.push({ type: mod.type, value: mod.value, tier, desc, color });

@@ -321,6 +321,10 @@
     "ignite_tick_speed_pct": "Vel. Ignite",
     "ignite_damage_pct": "DMG Ignite",
     "hp_regen_to_atk_pct": "Conv. Regen.",
+    "time_atk_inc_pct": "ATK/5s",
+    "time_def_inc_pct": "DEF/5s",
+    "time_hp_regen": "Regen/5s",
+    "attack_speed_more_pct": "Vel. more",
     "warlord_enrage": "Señor de la guerra"
   },
   "dungeon": {
@@ -2045,7 +2049,11 @@
     "attackSpeed": "Velocidad de Ataque +{{value}}%",
     "hpOnHit": "HP al Golpear +{{value}}",
     "lifesteal": "Robo de Vida +{{value}}%",
-    "warlordEnrage": "Señor de la guerra"
+    "warlordEnrage": "Señor de la guerra",
+    "timeAtkInc": "ATK +{{value}}% cada 5s",
+    "timeDefInc": "DEF +{{value}}% cada 5s",
+    "timeHpRegen": "Regen HP +{{value}} cada 5s",
+    "attackSpeedMore": "Vel. de Ataque +{{value}}% more"
   },
   "boost": {
     "dropRate": {
