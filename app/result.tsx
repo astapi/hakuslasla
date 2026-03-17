@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import * as StoreReview from 'expo-store-review';
-import { Button } from '@/components/common/Button';
+import { Ionicons } from '@expo/vector-icons';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { ModFilterTooltip } from '@/components/common/ModFilterTooltip';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
+import { UBER_DUNGEON_IDS, BASE_BOSS_BY_UBER } from '@/core/endContent';
 import { Item } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 
@@ -37,6 +38,16 @@ export default function ResultScreen() {
 
   // MODフィルターツールチップの表示状態
   const [showModFilterTooltip, setShowModFilterTooltip] = useState(false);
+
+  // Uber入場券の状態
+  const isUberDungeon = UBER_DUNGEON_IDS.includes(params.dungeonId ?? '');
+  const baseBossId = isUberDungeon ? BASE_BOSS_BY_UBER[params.dungeonId!] : undefined;
+  const [uberTicketCount, setUberTicketCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!isUberDungeon || !baseBossId) return;
+    void settingsRepository.getUberTicketCount(baseBossId).then(setUberTicketCount);
+  }, [isUberDungeon, baseBossId]);
 
   // ゴブリンの砦初回クリア時にMODフィルターツールチップを表示
   useEffect(() => {
@@ -97,9 +108,19 @@ export default function ResultScreen() {
     router.replace('/home');
   };
 
+  const handleRepeat = async () => {
+    if (isUberDungeon && baseBossId) {
+      const consumed = await settingsRepository.consumeUberTicket(baseBossId);
+      if (!consumed) return;
+      setUberTicketCount((prev) => (prev ?? 1) - 1);
+    }
+    router.replace(`/battle/${params.dungeonId}`);
+  };
+
   const isCleared = result === 'cleared';
   const isRetreat = result === 'retreat';
   const isMultiRun = runCount > 1;
+  const repeatDisabled = isUberDungeon && (uberTicketCount === null || uberTicketCount <= 0);
 
   return (
     <ScreenWrapper>
@@ -174,11 +195,32 @@ export default function ResultScreen() {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Button
-          title={t('result.returnButton')}
+        <Pressable
+          style={({ pressed }) => [styles.iconButton, pressed && styles.iconButtonPressed]}
           onPress={handleReturn}
           testID="result-return-button"
-        />
+        >
+          <Ionicons name="home" size={ms(28)} color="#fff" />
+        </Pressable>
+        <View style={styles.repeatContainer}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.iconButton,
+              repeatDisabled && styles.iconButtonDisabled,
+              pressed && !repeatDisabled && styles.iconButtonPressed,
+            ]}
+            onPress={handleRepeat}
+            disabled={repeatDisabled}
+            testID="result-repeat-button"
+          >
+            <Ionicons name="reload" size={ms(28)} color={repeatDisabled ? '#666' : '#fff'} />
+          </Pressable>
+          {isUberDungeon && uberTicketCount !== null && (
+            <Text style={[styles.ticketText, repeatDisabled && styles.ticketTextDisabled]}>
+              {t('common.ticket')} x{uberTicketCount}
+            </Text>
+          )}
+        </View>
       </View>
     </ScreenWrapper>
   );
@@ -307,7 +349,36 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: ms(32),
     padding: ms(16),
     paddingBottom: ms(16),
+  },
+  iconButton: {
+    width: ms(56),
+    height: ms(56),
+    borderRadius: ms(28),
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconButtonDisabled: {
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    opacity: 0.5,
+  },
+  iconButtonPressed: {
+    opacity: 0.6,
+  },
+  repeatContainer: {
+    alignItems: 'center',
+    gap: ms(4),
+  },
+  ticketText: {
+    fontSize: fs(11),
+    color: '#aaa',
+  },
+  ticketTextDisabled: {
+    color: '#666',
   },
 });
