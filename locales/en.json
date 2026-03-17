@@ -321,6 +321,10 @@
     "ignite_tick_speed_pct": "Ignite Spd",
     "ignite_damage_pct": "Ignite DMG",
     "hp_regen_to_atk_pct": "Regen Conv.",
+    "time_atk_inc_pct": "ATK/5s",
+    "time_def_inc_pct": "DEF/5s",
+    "time_hp_regen": "Regen/5s",
+    "attack_speed_more_pct": "Speed more",
     "warlord_enrage": "Warlord"
   },
   "dungeon": {
@@ -2045,7 +2049,11 @@
     "attackSpeed": "Attack Speed +{{value}}%",
     "hpOnHit": "HP on Hit +{{value}}",
     "lifesteal": "Lifesteal +{{value}}%",
-    "warlordEnrage": "Warlord"
+    "warlordEnrage": "Warlord",
+    "timeAtkInc": "ATK +{{value}}% every 5s",
+    "timeDefInc": "DEF +{{value}}% every 5s",
+    "timeHpRegen": "HP Regen +{{value}} every 5s",
+    "attackSpeedMore": "Attack Speed +{{value}}% more"
   },
   "boost": {
     "dropRate": {

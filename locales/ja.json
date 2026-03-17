@@ -322,6 +322,10 @@
     "ignite_damage_pct": "発火ダメ",
     "ignite_lifesteal": "発火吸収",
     "hp_regen_to_atk_pct": "回復変換",
+    "time_atk_inc_pct": "ATK/5秒",
+    "time_def_inc_pct": "DEF/5秒",
+    "time_hp_regen": "回復/5秒",
+    "attack_speed_more_pct": "速度more",
     "warlord_enrage": "乱軍の王"
   },
   "dungeon": {
@@ -2046,7 +2050,11 @@
     "attackSpeed": "攻撃速度+{{value}}%",
     "hpOnHit": "HIT時HP+{{value}}回復",
     "lifesteal": "ライフスティール+{{value}}%",
-    "warlordEnrage": "乱軍の王"
+    "warlordEnrage": "乱軍の王",
+    "timeAtkInc": "5秒毎にATK+{{value}}%",
+    "timeDefInc": "5秒毎にDEF+{{value}}%",
+    "timeHpRegen": "5秒毎にHP回復+{{value}}",
+    "attackSpeedMore": "攻撃速度+{{value}}% more"
   },
   "boost": {
     "dropRate": {

@@ -321,6 +321,10 @@
     "ignite_tick_speed_pct": "点燃速度",
     "ignite_damage_pct": "点燃 DMG",
     "hp_regen_to_atk_pct": "回复转换",
+    "time_atk_inc_pct": "ATK/5秒",
+    "time_def_inc_pct": "DEF/5秒",
+    "time_hp_regen": "回复/5秒",
+    "attack_speed_more_pct": "速度more",
     "warlord_enrage": "战神之怒"
   },
   "dungeon": {
@@ -2045,7 +2049,11 @@
     "attackSpeed": "攻速 +{{value}}%",
     "hpOnHit": "命中回 HP +{{value}}",
     "lifesteal": "吸血 +{{value}}%",
-    "warlordEnrage": "战神之怒"
+    "warlordEnrage": "战神之怒",
+    "timeAtkInc": "每5秒ATK +{{value}}%",
+    "timeDefInc": "每5秒DEF +{{value}}%",
+    "timeHpRegen": "每5秒HP回复 +{{value}}",
+    "attackSpeedMore": "攻速 +{{value}}% more"
   },
   "boost": {
     "dropRate": {
