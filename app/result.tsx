@@ -10,6 +10,7 @@ import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { UBER_DUNGEON_IDS, BASE_BOSS_BY_UBER } from '@/core/endContent';
 import { Item } from '@/types';
 import { ms, fs } from '@/utils/scaling';
+import { isRepeatDisabled } from '@/core/resultHelpers';
 
 export default function ResultScreen() {
   const { t } = useTranslation();
@@ -120,7 +121,7 @@ export default function ResultScreen() {
   const isCleared = result === 'cleared';
   const isRetreat = result === 'retreat';
   const isMultiRun = runCount > 1;
-  const repeatDisabled = isUberDungeon && (uberTicketCount === null || uberTicketCount <= 0);
+  const repeatDisabled = isRepeatDisabled(isUberDungeon, uberTicketCount);
 
   return (
     <ScreenWrapper>
