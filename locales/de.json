@@ -325,6 +325,12 @@
     "time_def_inc_pct": "DEF/5s",
     "time_hp_regen": "Regen/5s",
     "attack_speed_more_pct": "Geschw. mehr",
+    "poison_damage_pct": "Gift Schd.",
+    "poison_damage_more_pct": "Gift Schd. mehr",
+    "poison_damage_reduction": "Gift Def.",
+    "critical_follow_up_attack": "Krit Nachschlag",
+    "atk_inc_pct": "ATK Erh.",
+    "hp_on_crit": "LP bei Krit",
     "warlord_enrage": "Kriegsherr"
   },
   "dungeon": {

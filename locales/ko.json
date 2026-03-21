@@ -325,6 +325,12 @@
     "time_def_inc_pct": "DEF/5초",
     "time_hp_regen": "회복/5초",
     "attack_speed_more_pct": "속도 more",
+    "poison_damage_pct": "독 피해",
+    "poison_damage_more_pct": "독 피해more",
+    "poison_damage_reduction": "중독 피감",
+    "critical_follow_up_attack": "크리 추격",
+    "atk_inc_pct": "ATK 증가",
+    "hp_on_crit": "크리 회복",
     "warlord_enrage": "전쟁군주"
   },
   "dungeon": {
