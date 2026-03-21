@@ -2199,10 +2199,12 @@
     "locked": "前置节点未解锁",
     "unlock": "解锁",
     "route": {
-      "destruction": "毁灭之路",
+      "destruction": "破坏之路",
       "immortality": "不灭之路",
-      "swiftness": "迅捷之路",
-      "corrosion": "侵蚀之路"
+      "critical": "必杀之路",
+      "venom": "剧毒之路",
+      "inferno": "业火之路",
+      "frostbite": "冰封之路"
     }
   }
 }

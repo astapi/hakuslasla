@@ -26,6 +26,9 @@ const baseState: GaugeBattleState = {
   playerFreezeState: null,
   igniteApplyCount: 0,
   warlordEnrageActivated: false,
+  enemyWoundStacks: 0,
+  enemyWoundActionCounter: 0,
+  poisonStackAccumulator: 0,
   elapsedTicks: 0,
   isFinished: false,
   winner: null,
@@ -67,6 +70,12 @@ const emptyMods: CombinedModEffects = {
   freezeChance: 0,
   freezeDurationPct: 0,
   warlordEnrage: false,
+  heavyStrike: false,
+  defHpToAtk: false,
+  uberCriticalFollowUp: false,
+  poisonMultiStack: 1,
+  igniteIntensify: false,
+  chillFreezeDamageMult: 1,
 };
 
 describe('core/combatEffects', () => {

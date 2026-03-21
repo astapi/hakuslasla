@@ -2201,8 +2201,10 @@
     "route": {
       "destruction": "파괴의 길",
       "immortality": "불멸의 길",
-      "swiftness": "신속의 길",
-      "corrosion": "침식의 길"
+      "critical": "필살의 길",
+      "venom": "맹독의 길",
+      "inferno": "업화의 길",
+      "frostbite": "빙결의 길"
     }
   }
 }

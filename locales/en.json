@@ -2225,8 +2225,10 @@
     "route": {
       "destruction": "Path of Destruction",
       "immortality": "Path of Immortality",
-      "swiftness": "Path of Swiftness",
-      "corrosion": "Path of Corrosion"
+      "critical": "Path of the Lethal",
+      "venom": "Path of Venom",
+      "inferno": "Path of Inferno",
+      "frostbite": "Path of Frostbite"
     }
   }
 }

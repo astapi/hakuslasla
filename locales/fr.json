@@ -2201,8 +2201,10 @@
     "route": {
       "destruction": "Voie de la Destruction",
       "immortality": "Voie de l'Immortalité",
-      "swiftness": "Voie de la Célérité",
-      "corrosion": "Voie de la Corrosion"
+      "critical": "Voie du Létal",
+      "venom": "Voie du Venin",
+      "inferno": "Voie de l'Enfer",
+      "frostbite": "Voie du Givre"
     }
   }
 }

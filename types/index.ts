@@ -233,6 +233,13 @@ export interface PassiveEffect {
   // フリーズ系
   freeze_chance?: number;          // フリーズ付与率（%、上限10%）
   freeze_duration_pct?: number;    // フリーズ持続時間+X%
+  // Uberツリー最終ノード固有能力
+  heavy_strike?: boolean;              // 重撃
+  def_hp_to_atk?: boolean;            // 防御転換
+  uber_critical_follow_up?: boolean;   // クリティカル追撃+1
+  poison_multi_stack?: number;         // 毒マルチスタック倍率
+  ignite_intensify?: boolean;          // 灼熱加速
+  chill_freeze_damage_mult?: number;   // チル/フリーズダメージ倍率
 }
 
 // パッシブノード位置（UI表示用）

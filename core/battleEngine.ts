@@ -117,7 +117,11 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
   const enemySpeedMultiplier = isEndContent ? getEnemyAttackSpeedMultiplier(enemyId) : 1;
   const playerSpeedMultiplier = isEndContent ? getPlayerAttackSpeedMultiplier(enemyId) : 1;
 
-  const playerAttackSpeedBase = getAttackSpeedFromMods(config.playerMods) * playerSpeedMultiplier;
+  let playerAttackSpeedBase = getAttackSpeedFromMods(config.playerMods) * playerSpeedMultiplier;
+  // 重撃: 攻撃速度-20%
+  if (config.playerMods.heavyStrike) {
+    playerAttackSpeedBase *= 0.8;
+  }
   const enemyAttackSpeedBase = (config.enemy.attackSpeed ?? 1) * enemySpeedMultiplier;
 
   const state: GaugeBattleState = {
@@ -146,6 +150,9 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     playerFreezeState: null,
     igniteApplyCount: 0,  // 発火付与回数（敵撃破時リセット）
     warlordEnrageActivated: false,
+    enemyWoundStacks: 0,
+    enemyWoundActionCounter: 0,
+    poisonStackAccumulator: 0,
     elapsedTicks: 0,
     isFinished: false,
     winner: null,
@@ -470,15 +477,76 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       );
       events.push(...attackResult.events);
 
-      // ダメージ適用（メイン攻撃 + 追撃）
-      const totalDamage = attackResult.damage + attackResult.followUpDamage;
+      // チル/フリーズダメージ倍率（Uber氷結の覚醒）
+      let chillFreezeMult = 1;
+      if (effectiveMods.chillFreezeDamageMult > 1 &&
+          (engine.state.enemyChillState || engine.state.enemyFreezeState)) {
+        chillFreezeMult = effectiveMods.chillFreezeDamageMult;
+      }
+
+      // 重傷スタック倍率（重撃の覚醒）
+      let woundMult = 1;
+      if (effectiveMods.heavyStrike && engine.state.enemyWoundStacks > 0) {
+        woundMult = Math.pow(1.2, engine.state.enemyWoundStacks);
+      }
+
+      const combinedMult = chillFreezeMult * woundMult;
+
+      // ダメージ適用（メイン攻撃 + 追撃）に倍率適用
+      const scaledMainDamage = Math.floor(attackResult.damage * combinedMult);
+      const scaledFollowUpDamage = Math.floor(attackResult.followUpDamage * combinedMult);
+      const totalDamage = scaledMainDamage + scaledFollowUpDamage;
       engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - totalDamage);
       engine.state.player.gauge = Math.max(0, engine.state.player.gauge - 100);
 
-      // ライフスティール（メイン攻撃のみ）
-      if (attackResult.damage > 0 && engine.state.player.currentHp < engine.state.player.maxHp) {
+      // Uberクリティカル追撃（ATK100%、双撃の指輪とは別）
+      let uberFollowUpDamage = 0;
+      if (attackResult.isCritical && effectiveMods.uberCriticalFollowUp && !effectiveMods.noDirectDamage) {
+        const followUpBase = calculateDamage(effectivePlayerAtk, engine.state.enemy.def, totalEnemyDamageReduction);
+        uberFollowUpDamage = Math.floor(followUpBase * combinedMult);
+        engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - uberFollowUpDamage);
+        events.push({
+          type: 'player_attack',
+          tick: engine.state.elapsedTicks,
+          data: { damage: uberFollowUpDamage },
+        });
+      }
+
+      // 重撃: 攻撃ごとに重傷スタック付与（上限5）
+      if (effectiveMods.heavyStrike && totalDamage > 0) {
+        if (engine.state.enemyWoundStacks < 5) {
+          engine.state.enemyWoundStacks += 1;
+          events.push({
+            type: 'wound_applied',
+            tick: engine.state.elapsedTicks,
+            data: { stacks: engine.state.enemyWoundStacks },
+          });
+        }
+      }
+
+      // 重撃: 与ダメージの100%をHP吸収
+      if (effectiveMods.heavyStrike && totalDamage + uberFollowUpDamage > 0) {
+        const heavyHeal = Math.min(
+          totalDamage + uberFollowUpDamage,
+          engine.state.player.maxHp - engine.state.player.currentHp
+        );
+        if (heavyHeal > 0) {
+          const scaledHeavyHeal = Math.floor(heavyHeal * engine.bossEffects.playerHealingMult);
+          if (scaledHeavyHeal > 0) {
+            engine.state.player.currentHp = Math.min(
+              engine.state.player.maxHp,
+              engine.state.player.currentHp + scaledHeavyHeal
+            );
+            const healEvent = createLifestealEvent(engine.state.elapsedTicks, scaledHeavyHeal);
+            if (healEvent) events.push(healEvent);
+          }
+        }
+      }
+
+      // ライフスティール（メイン攻撃のみ、重撃でない場合）
+      if (!effectiveMods.heavyStrike && scaledMainDamage > 0 && engine.state.player.currentHp < engine.state.player.maxHp) {
         const lifestealAmount = calculateLifesteal(
-          attackResult.damage,
+          scaledMainDamage,
           attackResult.isCritical,
           effectiveMods
         );
@@ -509,24 +577,61 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
           });
         }
       }
+      // Uberクリティカル追撃のHIT時HP回復
+      if (uberFollowUpDamage > 0 && effectiveMods.hpOnHit > 0 && engine.state.player.currentHp < engine.state.player.maxHp) {
+        const uberFollowHeal = Math.floor(effectiveMods.hpOnHit * engine.bossEffects.playerHealingMult);
+        if (uberFollowHeal > 0) {
+          engine.state.player.currentHp = Math.min(
+            engine.state.player.maxHp,
+            engine.state.player.currentHp + uberFollowHeal
+          );
+          events.push({
+            type: 'player_heal',
+            tick: engine.state.elapsedTicks,
+            data: { amount: uberFollowHeal, source: 'uber_follow_up_on_hit' },
+          });
+        }
+      }
 
       const baseDamage = calculateDamage(effectivePlayerAtk, engine.state.enemy.def, totalEnemyDamageReduction);
       const poisonResult = tryApplyPoison(engine.state, baseDamage, effectiveMods, engine.config, engine.rng);
       if (poisonResult.poisonStack) {
-        engine.state.enemyPoisonStacks = [...engine.state.enemyPoisonStacks, poisonResult.poisonStack];
+        // 毒マルチスタック（猛毒の覚醒: 1付与で1.5スタック、端数蓄積式）
+        const multiStack = effectiveMods.poisonMultiStack;
+        if (multiStack > 1) {
+          engine.state.poisonStackAccumulator += multiStack;
+          // 整数部分だけスタックを付与
+          const stacksToApply = Math.floor(engine.state.poisonStackAccumulator);
+          engine.state.poisonStackAccumulator -= stacksToApply;
+          for (let s = 0; s < stacksToApply; s++) {
+            engine.state.enemyPoisonStacks = [...engine.state.enemyPoisonStacks, { ...poisonResult.poisonStack }];
+          }
+        } else {
+          engine.state.enemyPoisonStacks = [...engine.state.enemyPoisonStacks, poisonResult.poisonStack];
+        }
         if (poisonResult.event) events.push(poisonResult.event);
       }
 
       // 発火付与（上書き式、ただしダメージタイミングは維持）
+      // 灼熱加速（Uber業火の覚醒）: 継続時間半分+間隔半分
       const igniteResult = tryApplyIgnite(engine.state, baseDamage, effectiveMods, engine.config, engine.rng);
       if (igniteResult.igniteState) {
         // 発火付与回数を増加（緩慢なる炎キーストーン用）
         engine.state.igniteApplyCount += 1;
+        // 灼熱加速: 継続時間半分+間隔半分（DPS2倍）
+        let finalIgniteState = igniteResult.igniteState;
+        if (effectiveMods.igniteIntensify) {
+          finalIgniteState = {
+            ...finalIgniteState,
+            remainingMs: Math.floor(finalIgniteState.remainingMs / 2),
+            tickIntervalMs: Math.max(50, Math.floor(finalIgniteState.tickIntervalMs / 2)),
+          };
+        }
         // 既存の発火がある場合、lastTickMsを維持（ダメージタイミングを継続）
         const existingLastTickMs = engine.state.enemyIgniteState?.lastTickMs;
         engine.state.enemyIgniteState = {
-          ...igniteResult.igniteState,
-          lastTickMs: existingLastTickMs ?? igniteResult.igniteState.lastTickMs,
+          ...finalIgniteState,
+          lastTickMs: existingLastTickMs ?? finalIgniteState.lastTickMs,
         };
         if (igniteResult.event) events.push(igniteResult.event);
       }
@@ -679,6 +784,20 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       engine.state.enemy.gauge = Math.max(0, engine.state.enemy.gauge - 100);
       events.push(createEnemyAttackEvent(engine.state.elapsedTicks, finalEnemyDamage));
 
+      // 重傷スタック減衰: 敵行動4回で1スタック減少
+      if (engine.playerMods.heavyStrike && engine.state.enemyWoundStacks > 0) {
+        engine.state.enemyWoundActionCounter += 1;
+        if (engine.state.enemyWoundActionCounter >= 4) {
+          engine.state.enemyWoundActionCounter = 0;
+          engine.state.enemyWoundStacks = Math.max(0, engine.state.enemyWoundStacks - 1);
+          events.push({
+            type: 'wound_decayed',
+            tick: engine.state.elapsedTicks,
+            data: { stacks: engine.state.enemyWoundStacks },
+          });
+        }
+      }
+
       // 盗賊の頭の追撃（0.5倍ダメージ）
       const baseBossId = getBaseBossId(enemyId);
       if (baseBossId === 'bandit_leader') {
@@ -731,9 +850,10 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         engine.state.warlordEnrageActivated = true;
         engine.playerMods.attackSpeedPct += 20;
         engine.playerMods.hpOnHit += 300;
-        // 攻撃速度を再計算
+        // 攻撃速度を再計算（重撃ペナルティも維持）
         engine.playerAttackSpeedBase = getAttackSpeedFromMods(engine.playerMods) *
-          (isEndContent ? getPlayerAttackSpeedMultiplier(enemyId) : 1);
+          (isEndContent ? getPlayerAttackSpeedMultiplier(enemyId) : 1) *
+          (engine.playerMods.heavyStrike ? 0.8 : 1);
         events.push({
           type: 'warlord_enrage',
           tick: engine.state.elapsedTicks,

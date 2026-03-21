@@ -115,6 +115,12 @@ export function createEmptyModEffects(): CombinedModEffects {
     timeDefIncPct: 0,
     timeHpRegen: 0,
     warlordEnrage: false,
+    heavyStrike: false,
+    defHpToAtk: false,
+    uberCriticalFollowUp: false,
+    poisonMultiStack: 1,
+    igniteIntensify: false,
+    chillFreezeDamageMult: 1,
   };
 }
 

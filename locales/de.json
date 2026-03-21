@@ -2201,8 +2201,10 @@
     "route": {
       "destruction": "Pfad der Zerstörung",
       "immortality": "Pfad der Unsterblichkeit",
-      "swiftness": "Pfad der Schnelligkeit",
-      "corrosion": "Pfad der Korrosion"
+      "critical": "Pfad des Tödlichen",
+      "venom": "Pfad des Gifts",
+      "inferno": "Pfad des Infernos",
+      "frostbite": "Pfad des Frostbiss"
     }
   }
 }

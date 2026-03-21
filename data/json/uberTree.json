@@ -20,18 +20,18 @@
     },
     {
       "id": "uber_atk_3",
-      "name": "致命の一閃",
-      "description": "クリティカルダメージ +20%",
-      "effect": { "critical_damage": 20 },
+      "name": "破壊の頂点",
+      "description": "ATK 10% more",
+      "effect": { "atk_more_pct": 10 },
       "requiredNodes": ["uber_atk_2"],
       "position": { "x": -1.5, "y": -3 },
       "route": "destruction"
     },
     {
       "id": "uber_atk_4",
-      "name": "超越の破壊力",
-      "description": "ATK 10% more",
-      "effect": { "atk_more_pct": 10 },
+      "name": "重撃の覚醒",
+      "description": "重撃: 攻撃速度-20%、与ダメージの100%をHP吸収。攻撃ごとに重傷スタック付与(上限5)。重傷1スタックごとにダメージ1.2倍。敵行動4回で1スタック減少。",
+      "effect": { "heavy_strike": true },
       "requiredNodes": ["uber_atk_3"],
       "position": { "x": -1.5, "y": -4 },
       "route": "destruction"
@@ -58,94 +58,168 @@
     {
       "id": "uber_def_3",
       "name": "生命の泉",
-      "description": "毎秒HP回復 +5",
-      "effect": { "hp_regen": 5 },
+      "description": "毎秒HP回復 +5, HP 5% more",
+      "effect": { "hp_regen": 5, "hp_more_pct": 5 },
       "requiredNodes": ["uber_def_2"],
       "position": { "x": 1.5, "y": -3 },
       "route": "immortality"
     },
     {
       "id": "uber_def_4",
-      "name": "超越の生命力",
-      "description": "HP 10% more",
-      "effect": { "hp_more_pct": 10 },
+      "name": "護りの覚醒",
+      "description": "防御転換: DEF + 最大HPの半分をATKに追加",
+      "effect": { "def_hp_to_atk": true },
       "requiredNodes": ["uber_def_3"],
       "position": { "x": 1.5, "y": -4 },
       "route": "immortality"
     },
 
     {
-      "id": "uber_speed_1",
-      "name": "疾風の加護",
-      "description": "攻撃速度 +5%",
-      "effect": { "attack_speed_pct": 5 },
-      "requiredNodes": [],
-      "position": { "x": -1.5, "y": 1 },
-      "route": "swiftness"
-    },
-    {
-      "id": "uber_speed_2",
-      "name": "連撃の極意",
-      "description": "攻撃速度 +5%, HIT時HP回復 +10",
-      "effect": { "attack_speed_pct": 5, "hp_on_hit": 10 },
-      "requiredNodes": ["uber_speed_1"],
-      "position": { "x": -1.5, "y": 2 },
-      "route": "swiftness"
-    },
-    {
-      "id": "uber_speed_3",
-      "name": "鋭敏なる眼",
+      "id": "uber_crit_1",
+      "name": "鋭利なる刃",
       "description": "クリティカル率 +5%",
       "effect": { "critical_chance": 5 },
-      "requiredNodes": ["uber_speed_2"],
-      "position": { "x": -1.5, "y": 3 },
-      "route": "swiftness"
+      "requiredNodes": [],
+      "position": { "x": -1.5, "y": 1 },
+      "route": "critical"
     },
     {
-      "id": "uber_speed_4",
-      "name": "超越の疾走",
-      "description": "攻撃速度 5% more",
-      "effect": { "attack_speed_more_pct": 5 },
-      "requiredNodes": ["uber_speed_3"],
+      "id": "uber_crit_2",
+      "name": "急所の知識",
+      "description": "クリティカルダメージ +15%",
+      "effect": { "critical_damage": 15 },
+      "requiredNodes": ["uber_crit_1"],
+      "position": { "x": -1.5, "y": 2 },
+      "route": "critical"
+    },
+    {
+      "id": "uber_crit_3",
+      "name": "心眼",
+      "description": "クリティカル率 +3%, 攻撃速度 +5%",
+      "effect": { "critical_chance": 3, "attack_speed_pct": 5 },
+      "requiredNodes": ["uber_crit_2"],
+      "position": { "x": -1.5, "y": 3 },
+      "route": "critical"
+    },
+    {
+      "id": "uber_crit_4",
+      "name": "双撃の覚醒",
+      "description": "クリティカル追撃: クリティカル時にATK100%の追撃を行う",
+      "effect": { "uber_critical_follow_up": true },
+      "requiredNodes": ["uber_crit_3"],
       "position": { "x": -1.5, "y": 4 },
-      "route": "swiftness"
+      "route": "critical"
     },
 
     {
-      "id": "uber_ailment_1",
-      "name": "汚染の種",
-      "description": "毒付与率 +5%, 発火確率 +5%",
-      "effect": { "poison_chance": 5, "ignite_chance": 5 },
+      "id": "uber_poison_1",
+      "name": "猛毒の素養",
+      "description": "毒付与率 +5%",
+      "effect": { "poison_chance": 5 },
       "requiredNodes": [],
       "position": { "x": 1.5, "y": 1 },
-      "route": "corrosion"
+      "route": "venom"
     },
     {
-      "id": "uber_ailment_2",
-      "name": "侵蝕の波動",
-      "description": "チル付与率 +5%, 毒ダメージ +15%",
-      "effect": { "chill_chance": 5, "poison_damage_pct": 15 },
-      "requiredNodes": ["uber_ailment_1"],
+      "id": "uber_poison_2",
+      "name": "蝕む毒牙",
+      "description": "毒ダメージ +15%",
+      "effect": { "poison_damage_pct": 15 },
+      "requiredNodes": ["uber_poison_1"],
       "position": { "x": 1.5, "y": 2 },
-      "route": "corrosion"
+      "route": "venom"
     },
     {
-      "id": "uber_ailment_3",
-      "name": "災厄の連鎖",
-      "description": "発火ダメージ +20%, フリーズ確率 +1%",
-      "effect": { "ignite_damage_pct": 20, "freeze_chance": 1 },
-      "requiredNodes": ["uber_ailment_2"],
+      "id": "uber_poison_3",
+      "name": "浸透する毒霧",
+      "description": "毒付与率 +5%, 毒ダメージ +10%",
+      "effect": { "poison_chance": 5, "poison_damage_pct": 10 },
+      "requiredNodes": ["uber_poison_2"],
       "position": { "x": 1.5, "y": 3 },
-      "route": "corrosion"
+      "route": "venom"
     },
     {
-      "id": "uber_ailment_4",
-      "name": "超越の侵蝕",
-      "description": "毒ダメージ 15% more, 発火ダメージ 15% more",
-      "effect": { "poison_damage_more_pct": 15, "ignite_damage_more_pct": 15 },
-      "requiredNodes": ["uber_ailment_3"],
+      "id": "uber_poison_4",
+      "name": "猛毒の覚醒",
+      "description": "猛毒の本能: 1回の毒付与で1.5スタックを与える。端数は蓄積され、1になると追加スタックが付与される。",
+      "effect": { "poison_multi_stack": 1.5 },
+      "requiredNodes": ["uber_poison_3"],
       "position": { "x": 1.5, "y": 4 },
-      "route": "corrosion"
+      "route": "venom"
+    },
+
+    {
+      "id": "uber_ignite_1",
+      "name": "業火の点火",
+      "description": "発火確率 +5%",
+      "effect": { "ignite_chance": 5 },
+      "requiredNodes": [],
+      "position": { "x": -2.5, "y": 1 },
+      "route": "inferno"
+    },
+    {
+      "id": "uber_ignite_2",
+      "name": "灼熱の炎",
+      "description": "発火ダメージ +15%",
+      "effect": { "ignite_damage_pct": 15 },
+      "requiredNodes": ["uber_ignite_1"],
+      "position": { "x": -2.5, "y": 2 },
+      "route": "inferno"
+    },
+    {
+      "id": "uber_ignite_3",
+      "name": "燃え盛る怒り",
+      "description": "発火確率 +5%, 発火ダメージ +10%",
+      "effect": { "ignite_chance": 5, "ignite_damage_pct": 10 },
+      "requiredNodes": ["uber_ignite_2"],
+      "position": { "x": -2.5, "y": 3 },
+      "route": "inferno"
+    },
+    {
+      "id": "uber_ignite_4",
+      "name": "業火の覚醒",
+      "description": "灼熱加速: 発火の継続時間が半分になり、ダメージ間隔も半分になる。（DPS2倍）",
+      "effect": { "ignite_intensify": true },
+      "requiredNodes": ["uber_ignite_3"],
+      "position": { "x": -2.5, "y": 4 },
+      "route": "inferno"
+    },
+
+    {
+      "id": "uber_ice_1",
+      "name": "氷結の息吹",
+      "description": "チル付与率 +5%",
+      "effect": { "chill_chance": 5 },
+      "requiredNodes": [],
+      "position": { "x": 2.5, "y": 1 },
+      "route": "frostbite"
+    },
+    {
+      "id": "uber_ice_2",
+      "name": "凍てつく大気",
+      "description": "チル付与率 +3%, フリーズ確率 +1%",
+      "effect": { "chill_chance": 3, "freeze_chance": 1 },
+      "requiredNodes": ["uber_ice_1"],
+      "position": { "x": 2.5, "y": 2 },
+      "route": "frostbite"
+    },
+    {
+      "id": "uber_ice_3",
+      "name": "氷晶の牢獄",
+      "description": "フリーズ確率 +1%, チル効果強化 +15%",
+      "effect": { "freeze_chance": 1, "chill_effect_pct": 15 },
+      "requiredNodes": ["uber_ice_2"],
+      "position": { "x": 2.5, "y": 3 },
+      "route": "frostbite"
+    },
+    {
+      "id": "uber_ice_4",
+      "name": "氷結の覚醒",
+      "description": "凍傷の刃: チルまたはフリーズ状態の敵に与えるダメージが1.5倍になる",
+      "effect": { "chill_freeze_damage_mult": 1.5 },
+      "requiredNodes": ["uber_ice_3"],
+      "position": { "x": 2.5, "y": 4 },
+      "route": "frostbite"
     }
   ]
 }

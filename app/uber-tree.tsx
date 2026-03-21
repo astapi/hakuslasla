@@ -11,15 +11,19 @@ import { ms, fs } from '@/utils/scaling';
 const ROUTE_COLORS: Record<string, string> = {
   destruction: '#FF6B6B',
   immortality: '#4CAF50',
-  swiftness: '#64B5F6',
-  corrosion: '#AB47BC',
+  critical: '#FFD700',
+  venom: '#8BC34A',
+  inferno: '#FF9800',
+  frostbite: '#64B5F6',
 };
 
 const ROUTE_NAMES: Record<string, string> = {
   destruction: 'uberTree.route.destruction',
   immortality: 'uberTree.route.immortality',
-  swiftness: 'uberTree.route.swiftness',
-  corrosion: 'uberTree.route.corrosion',
+  critical: 'uberTree.route.critical',
+  venom: 'uberTree.route.venom',
+  inferno: 'uberTree.route.inferno',
+  frostbite: 'uberTree.route.frostbite',
 };
 
 export default function UberTreeScreen() {
@@ -29,7 +33,7 @@ export default function UberTreeScreen() {
   const [selectedNode, setSelectedNode] = useState<UberTreeNode | null>(null);
 
   const allNodes = getAllUberTreeNodes();
-  const routes = ['destruction', 'immortality', 'swiftness', 'corrosion'];
+  const routes = ['destruction', 'immortality', 'critical', 'venom', 'inferno', 'frostbite'];
 
   const handleUnlock = useCallback(async () => {
     if (!selectedNode) return;

@@ -2199,10 +2199,12 @@
     "locked": "Requisito no cumplido",
     "unlock": "Desbloquear",
     "route": {
-      "destruction": "Senda de Destrucción",
-      "immortality": "Senda de Inmortalidad",
-      "swiftness": "Senda de Rapidez",
-      "corrosion": "Senda de Corrosión"
+      "destruction": "Senda de la Destrucción",
+      "immortality": "Senda de la Inmortalidad",
+      "critical": "Senda del Letal",
+      "venom": "Senda del Veneno",
+      "inferno": "Senda del Infierno",
+      "frostbite": "Senda de la Escarcha"
     }
   }
 }

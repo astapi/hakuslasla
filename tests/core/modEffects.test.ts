@@ -110,6 +110,12 @@ describe('core/modEffects', () => {
       freezeChance: 0,
       freezeDurationPct: 0,
       warlordEnrage: false,
+      heavyStrike: false,
+      defHpToAtk: false,
+      uberCriticalFollowUp: false,
+      poisonMultiStack: 1,
+      igniteIntensify: false,
+      chillFreezeDamageMult: 1,
     };
 
     const result = getAttackSpeedFromMods(mods, 1);
