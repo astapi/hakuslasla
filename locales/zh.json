@@ -325,6 +325,12 @@
     "time_def_inc_pct": "DEF/5秒",
     "time_hp_regen": "回复/5秒",
     "attack_speed_more_pct": "速度more",
+    "poison_damage_pct": "毒伤",
+    "poison_damage_more_pct": "毒伤more",
+    "poison_damage_reduction": "中毒减伤",
+    "critical_follow_up_attack": "暴击追击",
+    "atk_inc_pct": "ATK增加",
+    "hp_on_crit": "暴击回复",
     "warlord_enrage": "战神之怒"
   },
   "dungeon": {

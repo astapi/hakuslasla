@@ -325,6 +325,12 @@
     "time_def_inc_pct": "DEF/5s",
     "time_hp_regen": "Regen/5s",
     "attack_speed_more_pct": "Vel. more",
+    "poison_damage_pct": "Daño veneno",
+    "poison_damage_more_pct": "Daño veneno more",
+    "poison_damage_reduction": "Def. veneno",
+    "critical_follow_up_attack": "Golpe crit",
+    "atk_inc_pct": "ATK aum.",
+    "hp_on_crit": "PV al crit",
     "warlord_enrage": "Señor de la guerra"
   },
   "dungeon": {

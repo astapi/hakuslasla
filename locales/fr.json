@@ -325,6 +325,12 @@
     "time_def_inc_pct": "DEF/5s",
     "time_hp_regen": "Régén./5s",
     "attack_speed_more_pct": "Vitesse more",
+    "poison_damage_pct": "Dég. poison",
+    "poison_damage_more_pct": "Dég. poison more",
+    "poison_damage_reduction": "Déf. poison",
+    "critical_follow_up_attack": "Crit poursuite",
+    "atk_inc_pct": "ATK augm.",
+    "hp_on_crit": "PV sur crit",
     "warlord_enrage": "Seigneur de guerre"
   },
   "dungeon": {

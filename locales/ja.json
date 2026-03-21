@@ -326,6 +326,12 @@
     "time_def_inc_pct": "DEF/5秒",
     "time_hp_regen": "回復/5秒",
     "attack_speed_more_pct": "速度more",
+    "poison_damage_pct": "毒ダメ",
+    "poison_damage_more_pct": "毒ダメmore",
+    "poison_damage_reduction": "毒時被ダメ減",
+    "critical_follow_up_attack": "クリ時追撃",
+    "atk_inc_pct": "ATK増加",
+    "hp_on_crit": "クリ時回復",
     "warlord_enrage": "乱軍の王"
   },
   "dungeon": {
