@@ -736,10 +736,18 @@ export const useBattle = (dungeonId: string) => {
       igniteDamagePct: baseMods.igniteDamagePct + uberEffects.ignite_damage_pct,
       igniteDamageMorePct: [...baseMods.igniteDamageMorePct, ...uberEffects.ignite_damage_more_pct],
       chillChance: baseMods.chillChance + (classAbility.chillChance ?? 0) + uberEffects.chill_chance,
+      chillEffectPct: baseMods.chillEffectPct + uberEffects.chill_effect_pct,
       freezeChance: baseMods.freezeChance + uberEffects.freeze_chance,
       hpRegen: baseMods.hpRegen + uberEffects.hp_regen,
       hpOnHit: baseMods.hpOnHit + uberEffects.hp_on_hit,
       damageReductionPct: baseMods.damageReductionPct + uberEffects.damage_reduction_pct,
+      // Uberツリー最終ノード固有能力
+      heavyStrike: baseMods.heavyStrike || uberEffects.heavy_strike,
+      defHpToAtk: baseMods.defHpToAtk || uberEffects.def_hp_to_atk,
+      uberCriticalFollowUp: baseMods.uberCriticalFollowUp || uberEffects.uber_critical_follow_up,
+      poisonMultiStack: uberEffects.poison_multi_stack,
+      igniteIntensify: baseMods.igniteIntensify || uberEffects.ignite_intensify,
+      chillFreezeDamageMult: uberEffects.chill_freeze_damage_mult,
     };
   }, [equipment, unlockedSkills, unlockedUberSkills, characterType]);
 

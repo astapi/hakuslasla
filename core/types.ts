@@ -247,6 +247,14 @@ export interface CombinedModEffects {
   freezeChance: number;          // 付与率%（上限10%のハードキャップ）
   freezeDurationPct: number;     // フリーズ持続時間+%
 
+  // Uberツリー最終ノード固有能力
+  heavyStrike: boolean;              // 重撃: 攻撃速度-20%, 与ダメ100%吸収, 重傷スタック
+  defHpToAtk: boolean;               // 防御転換: DEF + maxHP/2 をATKに追加
+  uberCriticalFollowUp: boolean;     // クリティカル追撃+1 (ATK100%)
+  poisonMultiStack: number;          // 毒マルチスタック倍率（デフォルト1、猛毒覚醒で1.5）
+  igniteIntensify: boolean;          // 灼熱加速: 発火継続時間半分+間隔半分
+  chillFreezeDamageMult: number;     // チル/フリーズ中の敵へのダメージ倍率（デフォルト1）
+
   // 戦闘経過で増える効果
   timeAtkIncPct: number;   // 5秒ごとにATK increased%加算
   timeDefIncPct: number;   // 5秒ごとにDEF increased%加算
@@ -316,6 +324,9 @@ export interface GaugeBattleState {
   playerFreezeState: FreezeState | null; // プレイヤーのフリーズ状態
   igniteApplyCount: number;  // 発火付与回数（敵撃破時リセット）
   warlordEnrageActivated: boolean;  // 乱軍の王が発動済みか
+  enemyWoundStacks: number;  // 重傷スタック数（重撃用、上限5）
+  enemyWoundActionCounter: number;  // 敵行動カウンター（4回で重傷-1）
+  poisonStackAccumulator: number;  // 毒スタック端数アキュムレータ（猛毒の覚醒用）
   elapsedTicks: number;  // 経過ティック数
   isFinished: boolean;
   winner: 'player' | 'enemy' | null;
@@ -351,7 +362,9 @@ export type BattleEventType =
   | 'boss_intro'
   | 'player_defeated'
   | 'enemy_defeated'
-  | 'warlord_enrage';
+  | 'warlord_enrage'
+  | 'wound_applied'
+  | 'wound_decayed';
 
 /**
  * 戦闘イベント（ログ用）

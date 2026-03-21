@@ -50,7 +50,7 @@ export function canUnlockUberNode(nodeId: string, unlockedNodes: string[]): bool
  * Uberツリーの効果を計算
  * パッシブツリーのcalculatePassiveEffectsと同様のパターン
  */
-export function calculateUberTreeEffects(unlockedNodeIds: string[]): {
+export interface UberTreeEffects {
   hp: number;
   atk: number;
   def: number;
@@ -74,8 +74,18 @@ export function calculateUberTreeEffects(unlockedNodeIds: string[]): {
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
   chill_chance: number;
+  chill_effect_pct: number;
   freeze_chance: number;
-} {
+  // 最終ノード固有能力
+  heavy_strike: boolean;
+  def_hp_to_atk: boolean;
+  uber_critical_follow_up: boolean;
+  poison_multi_stack: number;
+  ignite_intensify: boolean;
+  chill_freeze_damage_mult: number;
+}
+
+export function calculateUberTreeEffects(unlockedNodeIds: string[]): UberTreeEffects {
   let hp = 0, atk = 0, def = 0;
   let hp_increased_pct = 0, atk_increased_pct = 0, def_increased_pct = 0;
   const hp_more_pct: number[] = [];
@@ -89,7 +99,14 @@ export function calculateUberTreeEffects(unlockedNodeIds: string[]): {
   let hp_regen = 0, hp_on_hit = 0, damage_reduction_pct = 0;
   let attack_speed_pct = 0;
   const attack_speed_more_pct: number[] = [];
-  let chill_chance = 0, freeze_chance = 0;
+  let chill_chance = 0, chill_effect_pct = 0, freeze_chance = 0;
+  // 最終ノード固有能力
+  let heavy_strike = false;
+  let def_hp_to_atk = false;
+  let uber_critical_follow_up = false;
+  let poison_multi_stack = 1;  // デフォルト1（通常）
+  let ignite_intensify = false;
+  let chill_freeze_damage_mult = 1;  // デフォルト1（通常）
 
   for (const nodeId of unlockedNodeIds) {
     const node = nodes.get(nodeId);
@@ -119,7 +136,15 @@ export function calculateUberTreeEffects(unlockedNodeIds: string[]): {
     attack_speed_pct += e.attack_speed_pct || 0;
     if (e.attack_speed_more_pct) attack_speed_more_pct.push(e.attack_speed_more_pct);
     chill_chance += e.chill_chance || 0;
+    chill_effect_pct += e.chill_effect_pct || 0;
     freeze_chance += e.freeze_chance || 0;
+    // 最終ノード固有能力
+    if (e.heavy_strike) heavy_strike = true;
+    if (e.def_hp_to_atk) def_hp_to_atk = true;
+    if (e.uber_critical_follow_up) uber_critical_follow_up = true;
+    if (e.poison_multi_stack) poison_multi_stack = e.poison_multi_stack;
+    if (e.ignite_intensify) ignite_intensify = true;
+    if (e.chill_freeze_damage_mult) chill_freeze_damage_mult = e.chill_freeze_damage_mult;
   }
 
   return {
@@ -131,6 +156,8 @@ export function calculateUberTreeEffects(unlockedNodeIds: string[]): {
     critical_chance, critical_damage,
     hp_regen, hp_on_hit, damage_reduction_pct,
     attack_speed_pct, attack_speed_more_pct,
-    chill_chance, freeze_chance,
+    chill_chance, chill_effect_pct, freeze_chance,
+    heavy_strike, def_hp_to_atk, uber_critical_follow_up,
+    poison_multi_stack, ignite_intensify, chill_freeze_damage_mult,
   };
 }

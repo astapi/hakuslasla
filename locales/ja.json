@@ -2226,8 +2226,10 @@
     "route": {
       "destruction": "破壊の道",
       "immortality": "不滅の道",
-      "swiftness": "迅速の道",
-      "corrosion": "侵蝕の道"
+      "critical": "必殺の道",
+      "venom": "猛毒の道",
+      "inferno": "業火の道",
+      "frostbite": "氷結の道"
     }
   }
 }

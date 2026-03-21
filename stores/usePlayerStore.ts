@@ -487,6 +487,11 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       }
     );
 
+    // 3.5. Uberツリー: 防御転換（DEF + maxHP/2 をATKに追加）
+    if (uberEffects.def_hp_to_atk) {
+      finalStats.atk += finalStats.def + Math.floor(finalStats.maxHp / 2);
+    }
+
     // 4. HP回復変換: 毎秒HP回復量の一定%をATKに加算
     if (equipHpRegenToAtkPct > 0) {
       const totalHpRegen = equipHpRegen + passiveEffects.hp_regen;
