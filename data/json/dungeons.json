@@ -1245,6 +1245,23 @@
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
       "modCountRange": { "min": 2, "max": 4 }
+    },
+    "uber_uber_goblin_king": {
+      "id": "uber_uber_goblin_king",
+      "name": "UberUber ゴブリンキング",
+      "description": "究極の覚醒を遂げたゴブリンキング。全てのバッジを持つ者のみが挑める。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_uber_goblin_king", "spawnRate": 100 }
+      ],
+      "boss": { "monsterId": "uber_uber_goblin_king", "floor": 1 },
+      "dropTable": {
+        "common": [],
+        "dungeon": []
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 3, "max": 4 },
+      "requiresTicket": true
     }
   }
 }

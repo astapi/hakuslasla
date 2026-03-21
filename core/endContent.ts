@@ -97,6 +97,16 @@ export const BASE_BOSS_BY_UBER = Object.fromEntries(
   Object.entries(UBER_BOSS_BY_BASE).map(([base, uber]) => [uber, base])
 );
 
+export const UBER_UBER_BOSS_BY_UBER: Record<string, string> = {
+  uber_goblin_king: 'uber_uber_goblin_king',
+};
+
+export const UBER_BY_UBER_UBER = Object.fromEntries(
+  Object.entries(UBER_UBER_BOSS_BY_UBER).map(([uber, uberUber]) => [uberUber, uber])
+);
+
+export const UBER_UBER_DUNGEON_IDS = Object.values(UBER_UBER_BOSS_BY_UBER);
+
 export const UBER_DUNGEON_IDS = Object.values(UBER_BOSS_BY_BASE);
 
 export const isDimensionalRushDungeon = (dungeonId: string): boolean => {
@@ -111,6 +121,7 @@ export const isEndContentDungeon = (dungeonId: string): boolean => {
   return isDimensionalRushDungeon(dungeonId)
     || isDimensionalCorridorDungeon(dungeonId)
     || UBER_DUNGEON_IDS.includes(dungeonId)
+    || UBER_UBER_DUNGEON_IDS.includes(dungeonId)
     || DEBUG_DIMENSIONAL_DUNGEON_IDS.includes(dungeonId);
 };
 
@@ -121,11 +132,18 @@ export const toOriginalDimensionalRushFloor = (dungeonId: string, localFloor: nu
 };
 
 export const getBaseBossId = (enemyId: string): string => {
+  // UberUber → Uber → Base の順で解決
+  const fromUberUber = UBER_BY_UBER_UBER[enemyId];
+  if (fromUberUber) return BASE_BOSS_BY_UBER[fromUberUber] ?? fromUberUber;
   return BASE_BOSS_BY_UBER[enemyId] ?? enemyId;
 };
 
 export const isUberBoss = (enemyId: string): boolean => {
-  return Boolean(BASE_BOSS_BY_UBER[enemyId]);
+  return Boolean(BASE_BOSS_BY_UBER[enemyId]) || isUberUberBoss(enemyId);
+};
+
+export const isUberUberBoss = (enemyId: string): boolean => {
+  return Boolean(UBER_BY_UBER_UBER[enemyId]);
 };
 
 export const getBossSkillName = (enemyId: string): string | null => {
@@ -140,7 +158,8 @@ export const getBossSkillName = (enemyId: string): string | null => {
 export const getPlayerAtkMultiplier = (enemyId: string): number => {
   const baseId = getBaseBossId(enemyId);
   const uber = isUberBoss(enemyId);
-  if (baseId === 'goblin_king') return uber ? 0.75 : 0.85;
+  const uberUber = isUberUberBoss(enemyId);
+  if (baseId === 'goblin_king') return uberUber ? 0.7 : uber ? 0.75 : 0.85;
   return 1;
 };
 
@@ -161,6 +180,7 @@ export const getPlayerAttackSpeedMultiplier = (enemyId: string): number => {
 export const getEnemyAtkMultiplier = (enemyId: string): number => {
   const baseId = getBaseBossId(enemyId);
   const uber = isUberBoss(enemyId);
+  const uberUber = isUberUberBoss(enemyId);
   if (baseId === 'goblin_king') return uber ? 1.35 : 1.2;
   if (baseId === 'kraken') return uber ? 1.3 : 1.15;
   if (baseId === 'true_final_boss') return uber ? 1.8 : 1.5;
@@ -191,7 +211,7 @@ export const getEnemyHpOnHit = (enemyId: string): number => {
 export const getEnemyRegenPerSecond = (enemyId: string): number => {
   const baseId = getBaseBossId(enemyId);
   const uber = isUberBoss(enemyId);
-  if (baseId === 'goblin_king') return uber ? 2000 : 0;
+  if (baseId === 'goblin_king') return isUberUberBoss(enemyId) ? 3000 : uber ? 2000 : 0;
   if (baseId === 'kraken') return uber ? 150 : 100;
   if (baseId === 'demon_lord') return uber ? 1400 : 1000;
   if (baseId === 'true_final_boss') return uber ? 3000 : 2200;

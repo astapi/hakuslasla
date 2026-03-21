@@ -238,6 +238,15 @@ export interface CombinedModEffects {
   attackSpeedPct: number;        // increased%
   attackSpeedMorePct: number[];  // more%（配列）
 
+  // チル
+  chillChance: number;           // 付与率%
+  chillEffectPct: number;        // チル効果強化%（0.8倍をさらに低下、最低0.5まで）
+  chillDurationPct: number;      // チル持続時間+%
+
+  // フリーズ
+  freezeChance: number;          // 付与率%（上限10%のハードキャップ）
+  freezeDurationPct: number;     // フリーズ持続時間+%
+
   // 戦闘経過で増える効果
   timeAtkIncPct: number;   // 5秒ごとにATK increased%加算
   timeDefIncPct: number;   // 5秒ごとにDEF increased%加算
@@ -278,6 +287,21 @@ export interface IgniteState {
 }
 
 /**
+ * チル状態（攻撃速度低下）
+ */
+export interface ChillState {
+  speedMultiplier: number;  // 攻撃速度倍率（デフォルト0.8、低いほど強い）
+  remainingMs: number;      // 残り時間（ミリ秒）
+}
+
+/**
+ * フリーズ状態（行動不能、HP regenは継続）
+ */
+export interface FreezeState {
+  remainingMs: number;      // 残り時間（ミリ秒）
+}
+
+/**
  * ゲージ制戦闘状態
  */
 export interface GaugeBattleState {
@@ -286,6 +310,10 @@ export interface GaugeBattleState {
   enemyPoisonStacks: PoisonStack[];
   playerPoisonStacks: PoisonStack[];
   enemyIgniteState: IgniteState | null;  // 発火状態（上書き式）
+  enemyChillState: ChillState | null;    // チル状態（攻撃速度低下）
+  enemyFreezeState: FreezeState | null;  // フリーズ状態（行動不能）
+  playerChillState: ChillState | null;   // プレイヤーのチル状態
+  playerFreezeState: FreezeState | null; // プレイヤーのフリーズ状態
   igniteApplyCount: number;  // 発火付与回数（敵撃破時リセット）
   warlordEnrageActivated: boolean;  // 乱軍の王が発動済みか
   elapsedTicks: number;  // 経過ティック数
@@ -307,6 +335,10 @@ export type BattleEventType =
   | 'ignite_damage'
   | 'ignite_expired'
   | 'ignite_spread'
+  | 'chill_applied'
+  | 'chill_expired'
+  | 'freeze_applied'
+  | 'freeze_expired'
   | 'hp_regen'
   | 'player_heal'
   | 'lifesteal'
@@ -379,6 +411,15 @@ export interface BattleConfig {
   igniteDurationMs: number;     // 持続時間ミリ秒（デフォルト: 5000）
   igniteTickIntervalMs: number; // ダメージ間隔ミリ秒（デフォルト: 1000 = AS1.0相当）
 
+  // チル設定
+  chillDurationMs: number;         // チル持続時間ミリ秒（デフォルト: 3000）
+  chillBaseSpeedMultiplier: number; // チル基本速度倍率（デフォルト: 0.8）
+  chillMinSpeedMultiplier: number;  // チル最低速度倍率（デフォルト: 0.5）
+
+  // フリーズ設定
+  freezeDurationMs: number;        // フリーズ持続時間ミリ秒（デフォルト: 1500）
+  freezeChanceCap: number;         // フリーズ発生率上限%（デフォルト: 10）
+
   // クリティカル設定
   baseCriticalMultiplier: number;  // 基礎倍率（デフォルト: 3.0）
 
@@ -397,6 +438,11 @@ export const DEFAULT_BATTLE_CONFIG: BattleConfig = {
   igniteDamageRatio: 0.5,      // 通常攻撃の50%ダメージ
   igniteDurationMs: 3000,      // 3秒
   igniteTickIntervalMs: 300,   // 0.3秒ごと（10回ダメージ = 通常攻撃の5倍）
+  chillDurationMs: 3000,       // 3秒
+  chillBaseSpeedMultiplier: 0.8, // 攻撃速度×0.8
+  chillMinSpeedMultiplier: 0.5,  // 最低×0.5
+  freezeDurationMs: 1500,      // 1.5秒
+  freezeChanceCap: 10,         // 最大10%
   baseCriticalMultiplier: 3.0,
   ticksPerSecond: 30,
   baseGaugePerSecond: 200,

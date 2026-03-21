@@ -37,14 +37,16 @@
     "class": {
       "warrior": "Guerrero",
       "elementalist": "Elementalista",
-      "ranger": "Explorador"
+      "ranger": "Explorador",
+      "ice_mage": "Mago de Hielo"
     },
     "classAbility": "Habilidad de Clase",
     "ability": {
       "igniteChance": "Prob. de Ignite {{value}}%",
       "criticalChance": "Prob. de Critico {{value}}%",
       "attackSpeedPct": "Velocidad de ataque +{{value}}%",
-      "poisonChance": "Prob. de Veneno {{value}}%"
+      "poisonChance": "Prob. de Veneno {{value}}%",
+      "chillChance": "Prob. Escalofrío {{value}}%"
     },
     "initialStats": "Estadísticas Iniciales"
   },
@@ -56,7 +58,8 @@
       "settings": "Ajustes",
       "adventure": "Aventura",
       "encyclopedia": "Archivo",
-      "shop": "Tienda"
+      "shop": "Tienda",
+      "uberTree": "Uber"
     },
     "renameCharacter": "Renombrar Personaje"
   },
@@ -276,6 +279,9 @@
     "igniteDuration": "Dur. Ignite",
     "igniteTickSpeed": "Vel. Ignite",
     "igniteLifesteal": "Robo Ignite",
+    "chillChance": "Prob. Escalofrío",
+    "chillEffect": "Efecto Frío",
+    "freezeChance": "Prob. Congelar",
     "perSecond": "/s",
     "on": "SÍ",
     "off": "NO",
@@ -331,7 +337,12 @@
     "critical_follow_up_attack": "Golpe crit",
     "atk_inc_pct": "ATK aum.",
     "hp_on_crit": "PV al crit",
-    "warlord_enrage": "Señor de la guerra"
+    "warlord_enrage": "Señor de la guerra",
+    "chill_chance": "Escalofrío",
+    "chill_effect_pct": "Efecto frío",
+    "chill_duration_pct": "Dur. frío",
+    "freeze_chance": "Congelar",
+    "freeze_duration_pct": "Dur. congel."
   },
   "dungeon": {
     "floors": "{{count}} Pisos",
@@ -443,6 +454,10 @@
     "uber_goblin_king": {
       "name": "Uber Rey Goblin",
       "description": "El Rey Goblin despertado en otra dimensión."
+    },
+    "uber_uber_goblin_king": {
+      "name": "UberUber Rey Goblin",
+      "description": "El Rey Goblin definitivamente despertado."
     },
     "uber_bandit_leader": {
       "name": "Uber Líder Bandido",
@@ -1281,6 +1296,9 @@
     "uber_goblin_king": {
       "name": "Uber Rey Goblin"
     },
+    "uber_uber_goblin_king": {
+      "name": "UberUber Rey Goblin"
+    },
     "uber_bandit_leader": {
       "name": "Uber Líder Bandido"
     },
@@ -1331,7 +1349,11 @@
       "shield": "Escudo de Enjambre",
       "shieldDesc": "20% de reducción de daño por 2 turnos, prob. de crit y veneno -50%",
       "warlord": "Señor de la Horda",
-      "warlordDesc": "+30% velocidad de ataque, recupera 500 HP al golpear (se activa bajo 50% HP)"
+      "warlordDesc": "+30% velocidad de ataque, recupera 500 HP al golpear (se activa bajo 50% HP)",
+      "kingsSlam": "Golpe del Rey",
+      "kingsSlamDesc": "Un golpe devastador de ATK×3 cada 10 ataques",
+      "kingsRoar": "Rugido del Rey",
+      "kingsRoarDesc": "Limpia veneno y fuego cada 3 ataques"
     },
     "bandit_leader": {
       "name": "Trampa de Oso",
@@ -1403,6 +1425,10 @@
     "respecToken": "¡Objeto de respec obtenido! ({{count}})",
     "bossSkillActivated": "¡{{enemy}} activó {{skill}}!",
     "warlordEnrage": "[Señor de la guerra] ¡Activado! Velocidad de ataque+20%, HP al golpear+300",
+    "chillApplied": "¡{{enemy}} está helado! ¡Velocidad de ataque reducida!",
+    "chillExpired": "El efecto de frío de {{enemy}} ha expirado",
+    "freezeApplied": "¡{{enemy}} está congelado! ¡No puede actuar!",
+    "freezeExpired": "El efecto de congelación de {{enemy}} ha expirado",
     "reflectedDamage": "¡La marca de {{enemy}} reflejó! ¡Recibiste {{damage}} de daño!",
     "enemyHealRegen": "¡{{enemy}} regeneró {{amount}} HP!",
     "enemyHealOnHit": "¡{{enemy}} absorbió {{amount}} HP!",
@@ -2152,5 +2178,31 @@
     "empty": "No hay anuncios",
     "fetchError": "Error al cargar noticias",
     "retry": "Reintentar"
+  },
+  "badges": {
+    "title": "Insignias",
+    "uber_goblin_king": { "name": "Regicida", "description": "Derrota al Uber Rey Goblin" },
+    "uber_bandit_leader": { "name": "Conquistador de Sombras", "description": "Derrota al Uber Líder Bandido" },
+    "uber_vampire": { "name": "Cazador Diurno", "description": "Derrota al Uber Vampiro" },
+    "uber_kraken": { "name": "Conquistador del Abismo", "description": "Derrota al Uber Kraken" },
+    "uber_demon_lord": { "name": "Cazador de Demonios", "description": "Derrota al Uber Rey Demonio" },
+    "uber_true_final_boss": { "name": "Más Allá del Final", "description": "Derrota al Uber Jefe Final" },
+    "dimensional_4000": { "name": "Señor Dimensional", "description": "Alcanza el piso 4000 en el Corredor Dimensional" },
+    "uber_uber_all": { "name": "Desafío Supremo", "description": "Derrota a todos los jefes UberUber" },
+    "earned": "Obtenida",
+    "notEarned": "No obtenida",
+    "newBadge": "¡Nueva insignia obtenida!"
+  },
+  "uberTree": {
+    "title": "Árbol Uber",
+    "unlocked": "Desbloqueado",
+    "locked": "Requisito no cumplido",
+    "unlock": "Desbloquear",
+    "route": {
+      "destruction": "Senda de Destrucción",
+      "immortality": "Senda de Inmortalidad",
+      "swiftness": "Senda de Rapidez",
+      "corrosion": "Senda de Corrosión"
+    }
   }
 }

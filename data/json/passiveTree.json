@@ -165,6 +165,20 @@
     {"id": "ignite_10", "name": "生命強化", "description": "HP +30, HP +15% increased, 発火確率 +6%", "effect": { "hp": 30, "hp_increased_pct": 15, "ignite_chance": 6 }, "requiredNodes": ["ignite_9"], "position": { "x": -11, "y": 1 }},
     {"id": "ignite_11", "name": "堅固なる身体", "description": "DEF +30, DEF +20% increased, 発火確率 +6%", "effect": { "def": 30, "def_increased_pct": 20, "ignite_chance": 6 }, "requiredNodes": ["ignite_10"], "position": { "x": -11.5, "y": 0.5 }},
     {"id": "ignite_final1", "name": "灼熱の極み", "description": "発火確率 +6%, 発火ダメージ 25% more, HP +10% increased", "effect": { "ignite_chance": 6, "ignite_damage_more_pct": 25, "hp_increased_pct": 10 }, "requiredNodes": ["ignite_11"], "position": { "x": -12, "y": 0 }},
-    {"id": "ignite_final2", "name": "伝染する炎", "description": "【キーストーン】発火確率 +6%, イグナイト伝染 - 発火中の敵死亡時、次の敵に発火継承。DEF +10% increased", "effect": { "ignite_chance": 6, "ignite_spread": true, "def_increased_pct": 10 }, "requiredNodes": ["ignite_final1"], "position": { "x": -12.5, "y": -0.5 }}
+    {"id": "ignite_final2", "name": "伝染する炎", "description": "【キーストーン】発火確率 +6%, イグナイト伝染 - 発火中の敵死亡時、次の敵に発火継承。DEF +10% increased", "effect": { "ignite_chance": 6, "ignite_spread": true, "def_increased_pct": 10 }, "requiredNodes": ["ignite_final1"], "position": { "x": -12.5, "y": -0.5 }},
+
+    {"id": "ice_1", "name": "氷の心得", "description": "HP +15, チル付与率 +3%", "effect": { "hp": 15, "chill_chance": 3 }, "requiredNodes": [["start", "ice_2"]], "position": { "x": -4, "y": -1 }},
+    {"id": "ice_2", "name": "冷気の知識 I", "description": "チル付与率 +3%", "effect": { "chill_chance": 3 }, "requiredNodes": [["ice_1", "ice_3", "ice_4"]], "position": { "x": -4, "y": -2 }},
+    {"id": "ice_3", "name": "氷の防壁", "description": "DEF +5, チル効果 +10%", "effect": { "def": 5, "chill_effect_pct": 10 }, "requiredNodes": [["ice_2", "ice_5"]], "position": { "x": -5, "y": -2.5 }},
+    {"id": "ice_4", "name": "冷気持続", "description": "チル持続時間 +20%", "effect": { "chill_duration_pct": 20 }, "requiredNodes": [["ice_2", "ice_5"]], "position": { "x": -3, "y": -2.5 }},
+    {"id": "ice_5", "name": "冷気の知識 II", "description": "チル付与率 +5%", "effect": { "chill_chance": 5 }, "requiredNodes": [["ice_3", "ice_4", "ice_6"]], "position": { "x": -4, "y": -3 }},
+    {"id": "ice_6", "name": "凍結の兆し", "description": "フリーズ確率 +2%", "effect": { "freeze_chance": 2 }, "requiredNodes": [["ice_5", "ice_7"]], "position": { "x": -4, "y": -4 }},
+    {"id": "ice_7", "name": "体力強化", "description": "HP +20, DEF +3", "effect": { "hp": 20, "def": 3 }, "requiredNodes": [["ice_6", "ice_key1"]], "position": { "x": -4, "y": -5 }},
+    {"id": "ice_key1", "name": "凍てつく支配", "description": "【キーストーン】チル付与率 +8%, チル効果 +20%, フリーズ確率 +2%", "effect": { "chill_chance": 8, "chill_effect_pct": 20, "freeze_chance": 2 }, "requiredNodes": [["ice_7", "poison_key1"]], "position": { "x": -4, "y": -6 }},
+    {"id": "ice_8", "name": "深淵の冷気", "description": "チル付与率 +5%, チル効果 +15%", "effect": { "chill_chance": 5, "chill_effect_pct": 15 }, "requiredNodes": ["ice_key1"], "position": { "x": -4, "y": -7 }},
+    {"id": "ice_9", "name": "永久凍土", "description": "フリーズ確率 +2%, フリーズ持続時間 +30%", "effect": { "freeze_chance": 2, "freeze_duration_pct": 30 }, "requiredNodes": ["ice_8"], "position": { "x": -5, "y": -7.5 }},
+    {"id": "ice_10", "name": "氷の鎧", "description": "DEF +10, ダメージ軽減 +3%, チル持続時間 +25%", "effect": { "def": 10, "damage_reduction_pct": 3, "chill_duration_pct": 25 }, "requiredNodes": ["ice_8"], "position": { "x": -3, "y": -7.5 }},
+    {"id": "ice_final1", "name": "絶対零度", "description": "チル付与率 +5%, フリーズ確率 +2%, チル効果 +25%", "effect": { "chill_chance": 5, "freeze_chance": 2, "chill_effect_pct": 25 }, "requiredNodes": [["ice_9", "ice_10"]], "position": { "x": -4, "y": -8.5 }},
+    {"id": "ice_final2", "name": "氷河の終焉", "description": "フリーズ確率 +2%, フリーズ持続時間 +50%, HP +15% increased", "effect": { "freeze_chance": 2, "freeze_duration_pct": 50, "hp_increased_pct": 15 }, "requiredNodes": ["ice_final1"], "position": { "x": -4, "y": -9.5 }}
   ]
 }

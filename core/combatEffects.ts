@@ -8,6 +8,8 @@ import {
   GaugeBattleState,
   PoisonStack,
   IgniteState,
+  ChillState,
+  FreezeState,
   BattleEvent,
   BattleConfig,
   DEFAULT_BATTLE_CONFIG,
@@ -517,5 +519,205 @@ export function createEnemyAttackEvent(
     type: 'enemy_attack',
     tick,
     data: { damage },
+  };
+}
+
+// ========================================
+// チルシステム
+// ========================================
+
+/**
+ * チル付与結果
+ */
+export interface ChillApplyResult {
+  chillState: ChillState | null;
+  event: BattleEvent | null;
+}
+
+/**
+ * チル付与を試行（上書き式）
+ */
+export function tryApplyChill(
+  state: GaugeBattleState,
+  mods: CombinedModEffects,
+  config: BattleConfig = DEFAULT_BATTLE_CONFIG,
+  rng: () => number = Math.random
+): ChillApplyResult {
+  if (mods.chillChance <= 0 || rng() * 100 >= mods.chillChance) {
+    return { chillState: null, event: null };
+  }
+
+  // チルエフェクト計算: 基本0.8 → effectPctで強化（下げる）、最低0.5
+  const effectReduction = mods.chillEffectPct / 100;  // 例: 30% → 0.3
+  const speedMultiplier = Math.max(
+    config.chillMinSpeedMultiplier,
+    config.chillBaseSpeedMultiplier - effectReduction * (1 - config.chillBaseSpeedMultiplier)
+  );
+
+  // 持続時間計算
+  const durationMs = Math.floor(
+    config.chillDurationMs * (1 + mods.chillDurationPct / 100)
+  );
+
+  const chillState: ChillState = {
+    speedMultiplier,
+    remainingMs: durationMs,
+  };
+
+  const event: BattleEvent = {
+    type: 'chill_applied',
+    tick: state.elapsedTicks,
+    data: { speedMultiplier, durationMs },
+  };
+
+  return { chillState, event };
+}
+
+/**
+ * チル持続管理結果
+ */
+export interface ChillProcessResult {
+  updatedState: ChillState | null;
+  event: BattleEvent | null;
+}
+
+/**
+ * チル状態を時間経過で更新
+ */
+export function processChillState(
+  chillState: ChillState | null,
+  tick: number,
+  config: BattleConfig = DEFAULT_BATTLE_CONFIG
+): ChillProcessResult {
+  if (!chillState) {
+    return { updatedState: null, event: null };
+  }
+
+  const deltaMs = 1000 / config.ticksPerSecond;
+  const newRemainingMs = chillState.remainingMs - deltaMs;
+
+  if (newRemainingMs <= 0) {
+    return {
+      updatedState: null,
+      event: {
+        type: 'chill_expired',
+        tick,
+        data: {},
+      },
+    };
+  }
+
+  return {
+    updatedState: { ...chillState, remainingMs: newRemainingMs },
+    event: null,
+  };
+}
+
+// ========================================
+// フリーズシステム
+// ========================================
+
+/**
+ * フリーズ付与結果
+ */
+export interface FreezeApplyResult {
+  freezeState: FreezeState | null;
+  chillAfterFreeze: ChillState | null;  // フリーズ解除後に移行するチル状態
+  event: BattleEvent | null;
+}
+
+/**
+ * フリーズ付与を試行（独立判定、上限10%）
+ */
+export function tryApplyFreeze(
+  state: GaugeBattleState,
+  mods: CombinedModEffects,
+  config: BattleConfig = DEFAULT_BATTLE_CONFIG,
+  rng: () => number = Math.random
+): FreezeApplyResult {
+  // フリーズ中は再フリーズしない
+  if (state.enemyFreezeState) {
+    return { freezeState: null, chillAfterFreeze: null, event: null };
+  }
+
+  // 発生率にハードキャップ適用
+  const effectiveChance = Math.min(mods.freezeChance, config.freezeChanceCap);
+  if (effectiveChance <= 0 || rng() * 100 >= effectiveChance) {
+    return { freezeState: null, chillAfterFreeze: null, event: null };
+  }
+
+  // フリーズ持続時間
+  const durationMs = Math.floor(
+    config.freezeDurationMs * (1 + mods.freezeDurationPct / 100)
+  );
+
+  const freezeState: FreezeState = {
+    remainingMs: durationMs,
+  };
+
+  // フリーズ解除後にチルに移行するための状態を準備
+  const effectReduction = mods.chillEffectPct / 100;
+  const speedMultiplier = Math.max(
+    config.chillMinSpeedMultiplier,
+    config.chillBaseSpeedMultiplier - effectReduction * (1 - config.chillBaseSpeedMultiplier)
+  );
+  const chillDurationMs = Math.floor(
+    config.chillDurationMs * (1 + mods.chillDurationPct / 100)
+  );
+  const chillAfterFreeze: ChillState = {
+    speedMultiplier,
+    remainingMs: chillDurationMs,
+  };
+
+  const event: BattleEvent = {
+    type: 'freeze_applied',
+    tick: state.elapsedTicks,
+    data: { durationMs },
+  };
+
+  return { freezeState, chillAfterFreeze, event };
+}
+
+/**
+ * フリーズ持続管理結果
+ */
+export interface FreezeProcessResult {
+  updatedState: FreezeState | null;
+  chillTransition: ChillState | null;  // フリーズ解除時にチルに移行
+  event: BattleEvent | null;
+}
+
+/**
+ * フリーズ状態を時間経過で更新
+ */
+export function processFreezeState(
+  freezeState: FreezeState | null,
+  pendingChillAfterFreeze: ChillState | null,
+  tick: number,
+  config: BattleConfig = DEFAULT_BATTLE_CONFIG
+): FreezeProcessResult {
+  if (!freezeState) {
+    return { updatedState: null, chillTransition: null, event: null };
+  }
+
+  const deltaMs = 1000 / config.ticksPerSecond;
+  const newRemainingMs = freezeState.remainingMs - deltaMs;
+
+  if (newRemainingMs <= 0) {
+    return {
+      updatedState: null,
+      chillTransition: pendingChillAfterFreeze,
+      event: {
+        type: 'freeze_expired',
+        tick,
+        data: {},
+      },
+    };
+  }
+
+  return {
+    updatedState: { ...freezeState, remainingMs: newRemainingMs },
+    chillTransition: null,
+    event: null,
   };
 }

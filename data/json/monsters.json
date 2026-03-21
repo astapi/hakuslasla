@@ -1295,6 +1295,25 @@
         { "itemId": "uber_endstride", "dropRate": 5 },
         { "itemId": "uber_crown_of_end", "dropRate": 5 }
       ]
+    },
+    "uber_uber_goblin_king": {
+      "id": "uber_uber_goblin_king",
+      "name": "UberUber ゴブリンキング",
+      "image": "goblin_king",
+      "maxHp": 240000,
+      "atk": 3500,
+      "def": 600,
+      "exp": 10000,
+      "attackSpeed": 1.0,
+      "isBoss": true,
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "uber_goblin_blade", "dropRate": 10 },
+        { "itemId": "uber_goblin_plate", "dropRate": 10 },
+        { "itemId": "uber_goblin_grip", "dropRate": 10 },
+        { "itemId": "uber_goblin_stomp", "dropRate": 10 },
+        { "itemId": "uber_kings_crown", "dropRate": 10 }
+      ]
     }
   }
 }

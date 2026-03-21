@@ -5,7 +5,7 @@ export type EquipmentSlot = 'weapon' | 'armor' | 'gloves' | 'boots' | 'accessory
 export type WeaponType = 'sword' | 'staff';
 
 // キャラクタークラス
-export type CharacterType = 'warrior' | 'elementalist' | 'ranger';
+export type CharacterType = 'warrior' | 'elementalist' | 'ranger' | 'ice_mage';
 
 // クラス別固有能力
 export interface ClassAbility {
@@ -13,6 +13,7 @@ export interface ClassAbility {
   criticalChance?: number;    // クリティカル率%（ウォリアー）
   attackSpeedPct?: number;    // 攻撃速度+%（ウォリアー）
   poisonChance?: number;      // 毒付与率%（レンジャー）
+  chillChance?: number;       // チル付与率%（氷系術師）
 }
 
 // ドロップフィルター設定
@@ -124,7 +125,12 @@ export type ModType =
   | 'time_def_inc_pct'    // 5秒毎にDEF increased%加算
   | 'time_hp_regen'       // 5秒毎にHP回復量加算
   | 'hp_regen_to_atk_pct' // 毎秒HP回復量のX%をATKに変換
-  | 'warlord_enrage';     // 乱軍の王（HP30%以下で1度発動: 攻撃速度+20%, 攻撃時HP回復300）
+  | 'warlord_enrage'      // 乱軍の王（HP30%以下で1度発動: 攻撃速度+20%, 攻撃時HP回復300）
+  | 'chill_chance'         // チル付与確率+X%
+  | 'chill_effect_pct'     // チル効果強化+X%（速度低下をさらに強化）
+  | 'chill_duration_pct'   // チル持続時間+X%
+  | 'freeze_chance'        // フリーズ付与確率+X%（上限10%）
+  | 'freeze_duration_pct'; // フリーズ持続時間+X%
 
 // MOD定義
 export interface ItemMod {
@@ -220,6 +226,13 @@ export interface PassiveEffect {
   // 攻撃速度系
   attack_speed_pct?: number;       // AS +X% increased
   attack_speed_more_pct?: number;  // AS X% more
+  // チル系
+  chill_chance?: number;           // チル付与率（%）
+  chill_effect_pct?: number;       // チル効果強化+X%
+  chill_duration_pct?: number;     // チル持続時間+X%
+  // フリーズ系
+  freeze_chance?: number;          // フリーズ付与率（%、上限10%）
+  freeze_duration_pct?: number;    // フリーズ持続時間+X%
 }
 
 // パッシブノード位置（UI表示用）
@@ -403,7 +416,7 @@ export interface BattleEnemy {
 export interface BattleLogEntry {
   id: number;
   message: string;
-  type: 'player_attack' | 'enemy_attack' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'ignite' | 'critical' | 'heal';
+  type: 'player_attack' | 'enemy_attack' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'ignite' | 'critical' | 'heal' | 'chill' | 'freeze';
 }
 
 // 発火状態
@@ -425,6 +438,8 @@ export interface BattleState {
   enemyPoison: PoisonState[]; // 敵の毒状態（複数スタック対応）
   playerPoison: PoisonState[]; // プレイヤーの毒状態（複数スタック対応）
   enemyIgnite: IgniteState | null; // 敵の発火状態
+  enemyChill: { speedMultiplier: number; remainingMs: number } | null; // 敵のチル状態
+  enemyFreeze: { remainingMs: number } | null; // 敵のフリーズ状態
   phase: BattlePhase;
   battleLog: BattleLogEntry[];
   droppedItems: Item[];
@@ -481,6 +496,17 @@ export interface DungeonBattleState {
     lastTickMs: number;       // 最後にダメージを与えた時間
   } | null;
 
+  // チル状態
+  enemyChillState: {
+    speedMultiplier: number;
+    remainingMs: number;
+  } | null;
+
+  // フリーズ状態
+  enemyFreezeState: {
+    remainingMs: number;
+  } | null;
+
   elapsedTicks: number;
 }
 
@@ -506,7 +532,7 @@ export type BattleAction =
   | { type: 'APPLY_IGNITE'; damage: number; durationMs: number; tickIntervalMs: number }
   | { type: 'APPLY_IGNITE_SPREAD'; damage: number; durationMs: number; tickIntervalMs: number }
   | { type: 'IGNITE_DAMAGE'; damage: number; remainingMs: number }
-  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number }
+  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number; enemyChill?: { speedMultiplier: number; remainingMs: number } | null; enemyFreeze?: { remainingMs: number } | null }
   | { type: 'RESET_PLAYER_GAUGE' }
   | { type: 'RESET_ENEMY_GAUGE' };
 
@@ -526,7 +552,7 @@ export type DungeonBattleAction =
   | { type: 'NEXT_FLOOR'; enemyInfo: EnemyDisplayInfo; enemyStats: { maxHp: number; atk: number; def: number; attackSpeed: number } }
   | { type: 'DUNGEON_CLEARED' }
   | { type: 'ADD_LOG'; entry: Omit<BattleLogEntry, 'id'> }
-  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number }
+  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number; enemyChill?: { speedMultiplier: number; remainingMs: number } | null; enemyFreeze?: { remainingMs: number } | null }
   | { type: 'RESET_DUNGEON'; playerMaxHp: number; playerAtk: number; playerDef: number; playerAttackSpeed: number };
 
 // 結果画面用のパラメータ

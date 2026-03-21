@@ -20,6 +20,10 @@ const baseState: GaugeBattleState = {
   enemyPoisonStacks: [],
   playerPoisonStacks: [],
   enemyIgniteState: null,
+  enemyChillState: null,
+  enemyFreezeState: null,
+  playerChillState: null,
+  playerFreezeState: null,
   igniteApplyCount: 0,
   warlordEnrageActivated: false,
   elapsedTicks: 0,
@@ -57,6 +61,11 @@ const emptyMods: CombinedModEffects = {
   igniteLifesteal: 0,
   igniteSpread: false,
   igniteStackingDamage: false,
+  chillChance: 0,
+  chillEffectPct: 0,
+  chillDurationPct: 0,
+  freezeChance: 0,
+  freezeDurationPct: 0,
   warlordEnrage: false,
 };
 

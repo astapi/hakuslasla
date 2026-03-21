@@ -64,5 +64,13 @@ describe('core/player', () => {
     expect(getClassAbilities('warrior').criticalChance).toBe(10);
     expect(getClassAbilities('elementalist').igniteChance).toBe(20);
     expect(getClassAbilities('ranger').poisonChance).toBe(20);
+    expect(getClassAbilities('ice_mage').chillChance).toBe(25);
+  });
+
+  it('getClassInitialStats は氷系術師の初期ステータスを返す', () => {
+    const stats = getClassInitialStats('ice_mage');
+    expect(stats.maxHp).toBe(80);
+    expect(stats.atk).toBe(10);
+    expect(stats.def).toBe(3);
   });
 });

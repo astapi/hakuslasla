@@ -1,0 +1,151 @@
+{
+  "nodes": [
+    {
+      "id": "uber_atk_1",
+      "name": "破壊の萌芽",
+      "description": "ATK +5% increased",
+      "effect": { "atk_increased_pct": 5 },
+      "requiredNodes": [],
+      "position": { "x": -1.5, "y": -1 },
+      "route": "destruction"
+    },
+    {
+      "id": "uber_atk_2",
+      "name": "破壊の奔流",
+      "description": "ATK +8% increased",
+      "effect": { "atk_increased_pct": 8 },
+      "requiredNodes": ["uber_atk_1"],
+      "position": { "x": -1.5, "y": -2 },
+      "route": "destruction"
+    },
+    {
+      "id": "uber_atk_3",
+      "name": "致命の一閃",
+      "description": "クリティカルダメージ +20%",
+      "effect": { "critical_damage": 20 },
+      "requiredNodes": ["uber_atk_2"],
+      "position": { "x": -1.5, "y": -3 },
+      "route": "destruction"
+    },
+    {
+      "id": "uber_atk_4",
+      "name": "超越の破壊力",
+      "description": "ATK 10% more",
+      "effect": { "atk_more_pct": 10 },
+      "requiredNodes": ["uber_atk_3"],
+      "position": { "x": -1.5, "y": -4 },
+      "route": "destruction"
+    },
+
+    {
+      "id": "uber_def_1",
+      "name": "不滅の礎",
+      "description": "HP +10% increased",
+      "effect": { "hp_increased_pct": 10 },
+      "requiredNodes": [],
+      "position": { "x": 1.5, "y": -1 },
+      "route": "immortality"
+    },
+    {
+      "id": "uber_def_2",
+      "name": "鋼の意志",
+      "description": "DEF +10% increased, ダメージ軽減 +3%",
+      "effect": { "def_increased_pct": 10, "damage_reduction_pct": 3 },
+      "requiredNodes": ["uber_def_1"],
+      "position": { "x": 1.5, "y": -2 },
+      "route": "immortality"
+    },
+    {
+      "id": "uber_def_3",
+      "name": "生命の泉",
+      "description": "毎秒HP回復 +5",
+      "effect": { "hp_regen": 5 },
+      "requiredNodes": ["uber_def_2"],
+      "position": { "x": 1.5, "y": -3 },
+      "route": "immortality"
+    },
+    {
+      "id": "uber_def_4",
+      "name": "超越の生命力",
+      "description": "HP 10% more",
+      "effect": { "hp_more_pct": 10 },
+      "requiredNodes": ["uber_def_3"],
+      "position": { "x": 1.5, "y": -4 },
+      "route": "immortality"
+    },
+
+    {
+      "id": "uber_speed_1",
+      "name": "疾風の加護",
+      "description": "攻撃速度 +5%",
+      "effect": { "attack_speed_pct": 5 },
+      "requiredNodes": [],
+      "position": { "x": -1.5, "y": 1 },
+      "route": "swiftness"
+    },
+    {
+      "id": "uber_speed_2",
+      "name": "連撃の極意",
+      "description": "攻撃速度 +5%, HIT時HP回復 +10",
+      "effect": { "attack_speed_pct": 5, "hp_on_hit": 10 },
+      "requiredNodes": ["uber_speed_1"],
+      "position": { "x": -1.5, "y": 2 },
+      "route": "swiftness"
+    },
+    {
+      "id": "uber_speed_3",
+      "name": "鋭敏なる眼",
+      "description": "クリティカル率 +5%",
+      "effect": { "critical_chance": 5 },
+      "requiredNodes": ["uber_speed_2"],
+      "position": { "x": -1.5, "y": 3 },
+      "route": "swiftness"
+    },
+    {
+      "id": "uber_speed_4",
+      "name": "超越の疾走",
+      "description": "攻撃速度 5% more",
+      "effect": { "attack_speed_more_pct": 5 },
+      "requiredNodes": ["uber_speed_3"],
+      "position": { "x": -1.5, "y": 4 },
+      "route": "swiftness"
+    },
+
+    {
+      "id": "uber_ailment_1",
+      "name": "汚染の種",
+      "description": "毒付与率 +5%, 発火確率 +5%",
+      "effect": { "poison_chance": 5, "ignite_chance": 5 },
+      "requiredNodes": [],
+      "position": { "x": 1.5, "y": 1 },
+      "route": "corrosion"
+    },
+    {
+      "id": "uber_ailment_2",
+      "name": "侵蝕の波動",
+      "description": "チル付与率 +5%, 毒ダメージ +15%",
+      "effect": { "chill_chance": 5, "poison_damage_pct": 15 },
+      "requiredNodes": ["uber_ailment_1"],
+      "position": { "x": 1.5, "y": 2 },
+      "route": "corrosion"
+    },
+    {
+      "id": "uber_ailment_3",
+      "name": "災厄の連鎖",
+      "description": "発火ダメージ +20%, フリーズ確率 +1%",
+      "effect": { "ignite_damage_pct": 20, "freeze_chance": 1 },
+      "requiredNodes": ["uber_ailment_2"],
+      "position": { "x": 1.5, "y": 3 },
+      "route": "corrosion"
+    },
+    {
+      "id": "uber_ailment_4",
+      "name": "超越の侵蝕",
+      "description": "毒ダメージ 15% more, 発火ダメージ 15% more",
+      "effect": { "poison_damage_more_pct": 15, "ignite_damage_more_pct": 15 },
+      "requiredNodes": ["uber_ailment_3"],
+      "position": { "x": 1.5, "y": 4 },
+      "route": "corrosion"
+    }
+  ]
+}

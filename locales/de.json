@@ -37,14 +37,16 @@
     "class": {
       "warrior": "Krieger",
       "elementalist": "Elementarist",
-      "ranger": "Waldläufer"
+      "ranger": "Waldläufer",
+      "ice_mage": "Eismagier"
     },
     "classAbility": "Klassenfaehigkeit",
     "ability": {
       "igniteChance": "Entzuendungschance {{value}}%",
       "criticalChance": "Kritische Trefferchance {{value}}%",
       "attackSpeedPct": "Angriffsgeschwindigkeit +{{value}}%",
-      "poisonChance": "Giftchance {{value}}%"
+      "poisonChance": "Giftchance {{value}}%",
+      "chillChance": "Kältechance {{value}}%"
     },
     "initialStats": "Startwerte"
   },
@@ -56,7 +58,8 @@
       "settings": "Einstellungen",
       "adventure": "Abenteuer",
       "encyclopedia": "Archiv",
-      "shop": "Shop"
+      "shop": "Shop",
+      "uberTree": "Uber"
     },
     "renameCharacter": "Charakter umbenennen"
   },
@@ -276,6 +279,9 @@
     "igniteDuration": "Entzuendungsdauer",
     "igniteTickSpeed": "Entzuendungs-Tick",
     "igniteLifesteal": "Entzuendungsraub",
+    "chillChance": "Kältechance",
+    "chillEffect": "Kälteeffekt",
+    "freezeChance": "Einfrierchance",
     "perSecond": "/s",
     "on": "AN",
     "off": "AUS",
@@ -331,7 +337,12 @@
     "critical_follow_up_attack": "Krit Nachschlag",
     "atk_inc_pct": "ATK Erh.",
     "hp_on_crit": "LP bei Krit",
-    "warlord_enrage": "Kriegsherr"
+    "warlord_enrage": "Kriegsherr",
+    "chill_chance": "Kälte",
+    "chill_effect_pct": "Kälteeffekt",
+    "chill_duration_pct": "Kältedauer",
+    "freeze_chance": "Einfrieren",
+    "freeze_duration_pct": "Einfrierdauer"
   },
   "dungeon": {
     "floors": "{{count}} Stockwerke",
@@ -443,6 +454,10 @@
     "uber_goblin_king": {
       "name": "Uber Goblinkoenig",
       "description": "Der in einer anderen Dimension erwachte Goblinkoenig."
+    },
+    "uber_uber_goblin_king": {
+      "name": "UberUber Goblinkönig",
+      "description": "Der ultimativ erwachte Goblinkönig."
     },
     "uber_bandit_leader": {
       "name": "Uber Banditenfuehrer",
@@ -1281,6 +1296,9 @@
     "uber_goblin_king": {
       "name": "Uber Goblinkoenig"
     },
+    "uber_uber_goblin_king": {
+      "name": "UberUber Goblinkönig"
+    },
     "uber_bandit_leader": {
       "name": "Uber Banditenfuehrer"
     },
@@ -1331,7 +1349,11 @@
       "shield": "Schwarmschild",
       "shieldDesc": "20% Schadensreduzierung fuer 2 Runden, Crit und Giftchance -50%",
       "warlord": "Kriegsfuerst der Horde",
-      "warlordDesc": "+30% Angriffsgeschw., 500 HP bei Treffer heilen (unter 50% HP)"
+      "warlordDesc": "+30% Angriffsgeschw., 500 HP bei Treffer heilen (unter 50% HP)",
+      "kingsSlam": "Königsschlag",
+      "kingsSlamDesc": "Alle 10 Angriffe ein verheerender ATK×3-Schlag",
+      "kingsRoar": "Gebrüll des Königs",
+      "kingsRoarDesc": "Entfernt Gift und Feuer alle 3 Angriffe"
     },
     "bandit_leader": {
       "name": "Baerenfalle",
@@ -1403,6 +1425,10 @@
     "respecToken": "Neuverteilungsgegenstand erhalten! ({{count}})",
     "bossSkillActivated": "{{enemy}} loest {{skill}} aus!",
     "warlordEnrage": "[Kriegsherr] Aktiviert! Angriffsgeschw.+20%, HP bei Treffer+300",
+    "chillApplied": "{{enemy}} ist unterkühlt! Angriffsgeschwindigkeit verringert!",
+    "chillExpired": "{{enemy}}s Unterkühlung ist abgeklungen",
+    "freezeApplied": "{{enemy}} ist eingefroren! Handlungsunfähig!",
+    "freezeExpired": "{{enemy}}s Einfrieren ist abgeklungen",
     "reflectedDamage": "{{enemy}}'s Mal reflektiert! Du nimmst {{damage}} Schaden!",
     "enemyHealRegen": "{{enemy}} regeneriert {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} absorbiert {{amount}} HP!",
@@ -2152,5 +2178,31 @@
     "empty": "Keine Ankündigungen",
     "fetchError": "Neuigkeiten konnten nicht geladen werden",
     "retry": "Erneut versuchen"
+  },
+  "badges": {
+    "title": "Abzeichen",
+    "uber_goblin_king": { "name": "Königsmörder", "description": "Uber-Goblinkönig besiegen" },
+    "uber_bandit_leader": { "name": "Schatteneroberung", "description": "Uber-Banditenführer besiegen" },
+    "uber_vampire": { "name": "Tageslichtjäger", "description": "Uber-Vampir besiegen" },
+    "uber_kraken": { "name": "Abgrundbezwinger", "description": "Uber-Kraken besiegen" },
+    "uber_demon_lord": { "name": "Dämonentöter", "description": "Uber-Dämonenfürst besiegen" },
+    "uber_true_final_boss": { "name": "Jenseits des Endes", "description": "Uber-Endboss besiegen" },
+    "dimensional_4000": { "name": "Dimensionsherrscher", "description": "Etage 4000 im Dimensionskorridor erreichen" },
+    "uber_uber_all": { "name": "Ultimative Herausforderung", "description": "Alle UberUber-Bosse besiegen" },
+    "earned": "Erhalten",
+    "notEarned": "Nicht erhalten",
+    "newBadge": "Neues Abzeichen erhalten!"
+  },
+  "uberTree": {
+    "title": "Uber-Baum",
+    "unlocked": "Freigeschaltet",
+    "locked": "Voraussetzung nicht erfüllt",
+    "unlock": "Freischalten",
+    "route": {
+      "destruction": "Pfad der Zerstörung",
+      "immortality": "Pfad der Unsterblichkeit",
+      "swiftness": "Pfad der Schnelligkeit",
+      "corrosion": "Pfad der Korrosion"
+    }
   }
 }

@@ -10,7 +10,7 @@ import { CharacterType } from '@/types';
 import { CLASS_INITIAL_STATS, CLASS_ABILITIES } from '@/core/player';
 import { characterImages } from '@/data/images';
 
-const CHARACTER_TYPES: CharacterType[] = ['warrior', 'elementalist', 'ranger'];
+const CHARACTER_TYPES: CharacterType[] = ['warrior', 'elementalist', 'ranger', 'ice_mage'];
 
 export default function CharacterCreateScreen() {
   const { t } = useTranslation();
@@ -105,7 +105,7 @@ export default function CharacterCreateScreen() {
           </View>
 
           {/* クラス固有能力 */}
-          {(classAbility.igniteChance || classAbility.criticalChance || classAbility.attackSpeedPct || classAbility.poisonChance) && (
+          {(classAbility.igniteChance || classAbility.criticalChance || classAbility.attackSpeedPct || classAbility.poisonChance || classAbility.chillChance) && (
             <View style={styles.abilitySection}>
               <Text style={styles.abilityLabel}>{t('characterCreate.classAbility')}</Text>
               {classAbility.igniteChance && (
@@ -126,6 +126,11 @@ export default function CharacterCreateScreen() {
               {classAbility.poisonChance && (
                 <Text style={styles.abilityValue}>
                   {t('characterCreate.ability.poisonChance', { value: classAbility.poisonChance })}
+                </Text>
+              )}
+              {classAbility.chillChance && (
+                <Text style={styles.abilityValue}>
+                  {t('characterCreate.ability.chillChance', { value: classAbility.chillChance })}
                 </Text>
               )}
             </View>

@@ -1,0 +1,60 @@
+{
+  "badges": [
+    {
+      "id": "badge_uber_goblin_king",
+      "nameKey": "badges.uber_goblin_king.name",
+      "descriptionKey": "badges.uber_goblin_king.description",
+      "condition": { "type": "uber_boss_clear", "dungeonId": "uber_goblin_king" },
+      "icon": "crown"
+    },
+    {
+      "id": "badge_uber_bandit_leader",
+      "nameKey": "badges.uber_bandit_leader.name",
+      "descriptionKey": "badges.uber_bandit_leader.description",
+      "condition": { "type": "uber_boss_clear", "dungeonId": "uber_bandit_leader" },
+      "icon": "knife"
+    },
+    {
+      "id": "badge_uber_vampire",
+      "nameKey": "badges.uber_vampire.name",
+      "descriptionKey": "badges.uber_vampire.description",
+      "condition": { "type": "uber_boss_clear", "dungeonId": "uber_vampire" },
+      "icon": "sun"
+    },
+    {
+      "id": "badge_uber_kraken",
+      "nameKey": "badges.uber_kraken.name",
+      "descriptionKey": "badges.uber_kraken.description",
+      "condition": { "type": "uber_boss_clear", "dungeonId": "uber_kraken" },
+      "icon": "anchor"
+    },
+    {
+      "id": "badge_uber_demon_lord",
+      "nameKey": "badges.uber_demon_lord.name",
+      "descriptionKey": "badges.uber_demon_lord.description",
+      "condition": { "type": "uber_boss_clear", "dungeonId": "uber_demon_lord" },
+      "icon": "fire"
+    },
+    {
+      "id": "badge_uber_true_final_boss",
+      "nameKey": "badges.uber_true_final_boss.name",
+      "descriptionKey": "badges.uber_true_final_boss.description",
+      "condition": { "type": "uber_boss_clear", "dungeonId": "uber_true_final_boss" },
+      "icon": "star"
+    },
+    {
+      "id": "badge_dimensional_4000",
+      "nameKey": "badges.dimensional_4000.name",
+      "descriptionKey": "badges.dimensional_4000.description",
+      "condition": { "type": "dimensional_floor", "floor": 4000 },
+      "icon": "infinity"
+    },
+    {
+      "id": "badge_uber_uber_all",
+      "nameKey": "badges.uber_uber_all.name",
+      "descriptionKey": "badges.uber_uber_all.description",
+      "condition": { "type": "uber_uber_all_clear" },
+      "icon": "trophy"
+    }
+  ]
+}

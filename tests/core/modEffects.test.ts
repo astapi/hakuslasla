@@ -55,6 +55,11 @@ describe('core/modEffects', () => {
       hp_on_hit: 0,
       attack_speed_pct: 0,
       attack_speed_more_pct: [],
+      chill_chance: 0,
+      chill_effect_pct: 0,
+      chill_duration_pct: 0,
+      freeze_chance: 0,
+      freeze_duration_pct: 0,
     };
 
     const combined = combineMods(equipment, passive);
@@ -99,6 +104,11 @@ describe('core/modEffects', () => {
       igniteLifesteal: 0,
       igniteSpread: false,
       igniteStackingDamage: false,
+      chillChance: 0,
+      chillEffectPct: 0,
+      chillDurationPct: 0,
+      freezeChance: 0,
+      freezeDurationPct: 0,
       warlordEnrage: false,
     };
 
