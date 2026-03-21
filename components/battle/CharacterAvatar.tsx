@@ -20,6 +20,7 @@ interface CharacterAvatarProps {
   size?: number; // アバターサイズ
   poisonStacks?: PoisonState[]; // 毒スタック
   igniteState?: IgniteState | null; // 発火状態
+  hideImage?: boolean; // Imageのみ非表示（Animated.Viewはマウント維持）
 }
 
 export const CharacterAvatar = memo(({
@@ -30,6 +31,7 @@ export const CharacterAvatar = memo(({
   size = s(80),
   poisonStacks = [],
   igniteState = null,
+  hideImage = false,
 }: CharacterAvatarProps) => {
   // 攻撃アニメーション用のSharedValue
   const translateX = useSharedValue(0);
@@ -88,16 +90,18 @@ export const CharacterAvatar = memo(({
   return (
     <View style={styles.wrapper}>
       <Animated.View style={[styles.container, animatedStyle]}>
-        {imageSource ? (
-          <Image
-            source={imageSource}
-            style={[styles.avatar, { width: scaledSize, height: scaledSize }]}
-            resizeMode="contain"
-          />
-        ) : (
-          <View style={[styles.avatarPlaceholder, { width: size, height: size }]}>
-            <Text style={styles.avatarPlaceholderText}>?</Text>
-          </View>
+        {!hideImage && (
+          imageSource ? (
+            <Image
+              source={imageSource}
+              style={[styles.avatar, { width: scaledSize, height: scaledSize }]}
+              resizeMode="contain"
+            />
+          ) : (
+            <View style={[styles.avatarPlaceholder, { width: size, height: size }]}>
+              <Text style={styles.avatarPlaceholderText}>?</Text>
+            </View>
+          )
         )}
       </Animated.View>
 

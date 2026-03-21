@@ -373,53 +373,51 @@ export default function BattleScreen() {
       </View>
 
       {/* キャラクターアバターエリア（画像のみ） */}
-      {/* isExiting時はImageコンポーネントを事前にアンマウントし、
-          画面遷移時のReanimated handleRawEventクラッシュを防止 */}
+      {/* isExiting時はAnimated.Viewをマウント維持したまま、Imageのみ非表示にし、
+          Reanimated StaticPropsRegistryとの競合クラッシュを防止 */}
       <View style={styles.avatarArea}>
-        {!isExiting && (
+        <View style={styles.avatarContainer}>
+          <CharacterAvatar
+            isPlayer
+            characterType={characterType}
+            isAttacking={playerAttacking}
+            size={s(100)}
+            hideImage={isExiting}
+          />
+        </View>
+        {state.enemy && (
           <>
-            <View style={styles.avatarContainer}>
+            {/* 敵アバター: 宝箱表示時はopacityで非表示にし、
+                Reanimatedイベント競合クラッシュを防止 */}
+            <View style={[styles.avatarContainer, showChest && styles.hidden]}>
               <CharacterAvatar
-                isPlayer
-                characterType={characterType}
-                isAttacking={playerAttacking}
+                imageId={state.enemy.image}
+                isAttacking={enemyAttacking}
                 size={s(100)}
+                poisonStacks={state.enemyPoison}
+                igniteState={state.enemyIgnite}
+                hideImage={isExiting}
               />
             </View>
-            {state.enemy && (
-              <>
-                {/* 敵アバター: 宝箱表示時はアンマウントせずopacityで非表示にし、
-                    Reanimatedイベント競合クラッシュを防止 */}
-                <View style={[styles.avatarContainer, showChest && styles.hidden]}>
-                  <CharacterAvatar
-                    imageId={state.enemy.image}
-                    isAttacking={enemyAttacking}
-                    size={s(100)}
-                    poisonStacks={state.enemyPoison}
-                    igniteState={state.enemyIgnite}
-                  />
+            {showChest && !isExiting && (
+              <View style={styles.chestSlot}>
+                <View style={styles.chestRow}>
+                  {state.lastDroppedItems.map((item, index) => {
+                    const offsets = getChestOffsets(state.lastDroppedItems.length);
+                    const { x, y } = offsets[index] || { x: 0, y: 0 };
+                    return (
+                      <ChestDrop
+                        key={`${item.instanceId}-${index}`}
+                        itemIndex={index}
+                        image={getChestImageForItem(item)}
+                        rarity={getChestRarityForItem(item)}
+                        offsetX={x}
+                        offsetY={y}
+                      />
+                    );
+                  })}
                 </View>
-                {showChest && (
-                  <View style={styles.chestSlot}>
-                    <View style={styles.chestRow}>
-                      {state.lastDroppedItems.map((item, index) => {
-                        const offsets = getChestOffsets(state.lastDroppedItems.length);
-                        const { x, y } = offsets[index] || { x: 0, y: 0 };
-                        return (
-                          <ChestDrop
-                            key={`${item.instanceId}-${index}`}
-                            itemIndex={index}
-                            image={getChestImageForItem(item)}
-                            rarity={getChestRarityForItem(item)}
-                            offsetX={x}
-                            offsetY={y}
-                          />
-                        );
-                      })}
-                    </View>
-                  </View>
-                )}
-              </>
+              </View>
             )}
           </>
         )}
@@ -430,8 +428,9 @@ export default function BattleScreen() {
   return (
     <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
       {/* 上部: バトルエリア（背景画像 + キャラクター画像のみ） */}
-      {/* isExiting時はImageBackgroundもアンマウントし、画像onLoadイベントの競合を防止 */}
-      {backgroundImage && !isExiting ? (
+      {/* ImageBackgroundはアンマウントせずマウント維持し、
+          Reanimated StaticPropsRegistryとの競合を防止 */}
+      {backgroundImage ? (
         <ImageBackground
           source={backgroundImage}
           style={styles.battleArea}
