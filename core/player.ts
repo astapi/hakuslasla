@@ -27,6 +27,7 @@ export const CLASS_INITIAL_STATS: Record<CharacterType, Stats> = {
   warrior: { maxHp: 120, atk: 10, def: 5 },
   elementalist: { maxHp: 85, atk: 10, def: 4 },
   ranger: { maxHp: 100, atk: 10, def: 5 },
+  ice_mage: { maxHp: 80, atk: 10, def: 3 },
 };
 
 /** クラス別固有能力 */
@@ -34,6 +35,7 @@ export const CLASS_ABILITIES: Record<CharacterType, ClassAbility> = {
   warrior: { criticalChance: 10, attackSpeedPct: 10 },  // クリティカル率10%, 攻撃速度+10%
   elementalist: { igniteChance: 20 },  // 発火確率20%
   ranger: { poisonChance: 20 },  // 毒付与率20%
+  ice_mage: { chillChance: 25 },  // チル付与率25%
 };
 
 /**

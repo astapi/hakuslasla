@@ -24,6 +24,9 @@ import {
 } from '@/core';
 import { CLASS_ABILITIES } from '@/core/player';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
+import { badgeRepository } from '@/db/repositories/badgeRepository';
+import { getUberBossClearBadgeId, DIMENSIONAL_BADGE_ID, DIMENSIONAL_BADGE_FLOOR } from '@/data/badges';
+import { calculateUberTreeEffects } from '@/data/uberTree';
 import { Analytics } from '@/lib/analytics';
 import { submitDimensionalCorridorScore } from '@/lib/ranking';
 import { preloadBattleSounds, unloadBattleSounds, playBattleSound, playBattleBgm, stopBattleBgm, pauseBattleBgm, resumeBattleBgm } from '@/lib/sound';
@@ -87,6 +90,8 @@ const BOSS_SKILL_LABEL_BY_ID: Record<BossSkillId, string | null> = {
   final_end: BOSS_SKILL_KEY.final.end,
   final_convergence: BOSS_SKILL_KEY.final.convergence,
   final_time_sever: BOSS_SKILL_KEY.final.timeSever,
+  goblin_kings_slam: 'bossSkills.goblin_king.kingsSlam',
+  goblin_kings_roar: 'bossSkills.goblin_king.kingsRoar',
   boss_intro: null,
 };
 
@@ -161,6 +166,8 @@ const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState
     enemyPoison: [],
     playerPoison: [],
     enemyIgnite: null,
+    enemyChill: null,
+    enemyFreeze: null,
     phase: 'fighting',
     battleLog: [],
     droppedItems: [],
@@ -213,6 +220,8 @@ const createExtendedInitialState = (
     enemyPoison: [],
     playerPoison: [],
     enemyIgnite: null,
+    enemyChill: null,
+    enemyFreeze: null,
     phase: 'fighting',
     battleLog: runCount > 1 ? [{
       id: logIdCounter++,
@@ -374,6 +383,8 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         enemyPoison: [], // 次の敵には毒状態をリセット
         playerPoison: [], // 次の敵にはプレイヤー毒もリセット
         enemyIgnite: null, // 次の敵には発火状態をリセット
+        enemyChill: null,  // 次の敵にはチル状態をリセット
+        enemyFreeze: null, // 次の敵にはフリーズ状態をリセット
         playerGauge: 0,  // ゲージリセット
         enemyGauge: 0,   // ゲージリセット
         phase: 'fighting',
@@ -623,6 +634,8 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         ...state,
         playerGauge: action.playerGauge,
         enemyGauge: action.enemyGauge,
+        enemyChill: action.enemyChill ?? null,
+        enemyFreeze: action.enemyFreeze ?? null,
       };
 
     case 'RESET_PLAYER_GAUGE':
@@ -671,7 +684,7 @@ const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] =
 };
 
 export const useBattle = (dungeonId: string) => {
-  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, setLevelCap, characterType } = usePlayerStore();
+  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, unlockedUberSkills, setLevelCap, characterType, characterId } = usePlayerStore();
   const stats = getTotalStats();
   const { getDropRateMultiplier, isTierBoosted, checkExpiredBoosts } = useAdBoostStore();
 
@@ -699,21 +712,36 @@ export const useBattle = (dungeonId: string) => {
     battleSpeedRef.current = battleSpeed;
   }, [battleSpeed]);
 
-  // 装備品+パッシブ+クラス能力から戦闘時MOD効果を取得（coreロジック使用）
+  // 装備品+パッシブ+クラス能力+Uberツリーから戦闘時MOD効果を取得（coreロジック使用）
   const modEffects = useMemo((): CombinedModEffects => {
     const passiveEffects = calculatePassiveEffects(unlockedSkills);
     const baseMods = combineMods(Object.values(equipment), passiveEffects);
 
     // クラス固有能力を加算
     const classAbility = CLASS_ABILITIES[characterType];
+
+    // Uberツリー効果を加算
+    const uberEffects = calculateUberTreeEffects(unlockedUberSkills);
+
     return {
       ...baseMods,
-      igniteChance: baseMods.igniteChance + (classAbility.igniteChance ?? 0),
-      criticalChance: baseMods.criticalChance + (classAbility.criticalChance ?? 0),
-      attackSpeedPct: baseMods.attackSpeedPct + (classAbility.attackSpeedPct ?? 0),
-      poisonChance: baseMods.poisonChance + (classAbility.poisonChance ?? 0),
+      igniteChance: baseMods.igniteChance + (classAbility.igniteChance ?? 0) + uberEffects.ignite_chance,
+      criticalChance: baseMods.criticalChance + (classAbility.criticalChance ?? 0) + uberEffects.critical_chance,
+      criticalDamage: baseMods.criticalDamage + uberEffects.critical_damage,
+      attackSpeedPct: baseMods.attackSpeedPct + (classAbility.attackSpeedPct ?? 0) + uberEffects.attack_speed_pct,
+      attackSpeedMorePct: [...baseMods.attackSpeedMorePct, ...uberEffects.attack_speed_more_pct],
+      poisonChance: baseMods.poisonChance + (classAbility.poisonChance ?? 0) + uberEffects.poison_chance,
+      poisonDamagePct: baseMods.poisonDamagePct + uberEffects.poison_damage_pct,
+      poisonDamageMorePct: [...baseMods.poisonDamageMorePct, ...uberEffects.poison_damage_more_pct],
+      igniteDamagePct: baseMods.igniteDamagePct + uberEffects.ignite_damage_pct,
+      igniteDamageMorePct: [...baseMods.igniteDamageMorePct, ...uberEffects.ignite_damage_more_pct],
+      chillChance: baseMods.chillChance + (classAbility.chillChance ?? 0) + uberEffects.chill_chance,
+      freezeChance: baseMods.freezeChance + uberEffects.freeze_chance,
+      hpRegen: baseMods.hpRegen + uberEffects.hp_regen,
+      hpOnHit: baseMods.hpOnHit + uberEffects.hp_on_hit,
+      damageReductionPct: baseMods.damageReductionPct + uberEffects.damage_reduction_pct,
     };
-  }, [equipment, unlockedSkills, characterType]);
+  }, [equipment, unlockedSkills, unlockedUberSkills, characterType]);
 
   // 後方互換性のためのラッパー（将来的に直接modEffectsを使用するよう移行）
   const getCombinedModEffects = useCallback((): CombinedModEffects => {
@@ -1082,6 +1110,46 @@ export const useBattle = (dungeonId: string) => {
           }
           break;
         }
+        case 'chill_applied': {
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.chillApplied', { enemy: state.enemy.name }),
+              type: 'chill',
+            },
+          });
+          break;
+        }
+        case 'chill_expired': {
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.chillExpired', { enemy: state.enemy.name }),
+              type: 'chill',
+            },
+          });
+          break;
+        }
+        case 'freeze_applied': {
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.freezeApplied', { enemy: state.enemy.name }),
+              type: 'freeze',
+            },
+          });
+          break;
+        }
+        case 'freeze_expired': {
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.freezeExpired', { enemy: state.enemy.name }),
+              type: 'freeze',
+            },
+          });
+          break;
+        }
         case 'warlord_enrage': {
           dispatch({
             type: 'ADD_LOG',
@@ -1179,6 +1247,8 @@ export const useBattle = (dungeonId: string) => {
         type: 'UPDATE_GAUGES',
         playerGauge: Math.min(100, coreState.player.gauge),
         enemyGauge: Math.min(100, coreState.enemy.gauge),
+        enemyChill: coreState.enemyChillState,
+        enemyFreeze: coreState.enemyFreezeState,
       });
       isProcessingRef.current = false;
     }, TICK_INTERVAL);
@@ -1218,11 +1288,23 @@ export const useBattle = (dungeonId: string) => {
               setLevelCap(60);
             }
           }
+
+          // Uberボスクリアバッジ付与
+          const uberBadgeId = getUberBossClearBadgeId(state.dungeonId);
+          if (uberBadgeId && characterId) {
+            await badgeRepository.awardBadge(characterId, uberBadgeId);
+          }
         }
 
-        // 次元回廊で敗北した場合はランキングスコアを送信
-        if (state.phase === 'defeat' && isDimensionalCorridorDungeon(state.dungeonId)) {
-          await submitDimensionalCorridorScore(state.currentFloor);
+        // 次元回廊で敗北した場合はランキングスコアを送信 & バッジチェック
+        if (isDimensionalCorridorDungeon(state.dungeonId)) {
+          if (state.phase === 'defeat') {
+            await submitDimensionalCorridorScore(state.currentFloor);
+          }
+          // 次元回廊4000階バッジ（クリア/敗北問わず到達フロアで判定）
+          if (state.currentFloor >= DIMENSIONAL_BADGE_FLOOR && characterId) {
+            await badgeRepository.awardBadge(characterId, DIMENSIONAL_BADGE_ID);
+          }
         }
 
         if (state.totalExpGained > 0) {

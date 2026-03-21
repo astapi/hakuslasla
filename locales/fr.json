@@ -37,14 +37,16 @@
     "class": {
       "warrior": "Guerrier",
       "elementalist": "Élémentaliste",
-      "ranger": "Rôdeur"
+      "ranger": "Rôdeur",
+      "ice_mage": "Mage de Glace"
     },
     "classAbility": "Capacité de classe",
     "ability": {
       "igniteChance": "Chance d'Ignite {{value}}%",
       "criticalChance": "Chance de Critique {{value}}%",
       "attackSpeedPct": "Vitesse d'attaque +{{value}}%",
-      "poisonChance": "Chance de Poison {{value}}%"
+      "poisonChance": "Chance de Poison {{value}}%",
+      "chillChance": "Chance de Gel {{value}}%"
     },
     "initialStats": "Stats initiales"
   },
@@ -56,7 +58,8 @@
       "settings": "Paramètres",
       "adventure": "Aventure",
       "encyclopedia": "Archives",
-      "shop": "Boutique"
+      "shop": "Boutique",
+      "uberTree": "Uber"
     },
     "renameCharacter": "Renommer le personnage"
   },
@@ -276,6 +279,9 @@
     "igniteDuration": "Durée Ignite",
     "igniteTickSpeed": "Vitesse Ignite",
     "igniteLifesteal": "Vol de vie Ignite",
+    "chillChance": "Chance de Gel",
+    "chillEffect": "Effet de Gel",
+    "freezeChance": "Chance de Congélation",
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",
@@ -331,7 +337,12 @@
     "critical_follow_up_attack": "Crit poursuite",
     "atk_inc_pct": "ATK augm.",
     "hp_on_crit": "PV sur crit",
-    "warlord_enrage": "Seigneur de guerre"
+    "warlord_enrage": "Seigneur de guerre",
+    "chill_chance": "Gel",
+    "chill_effect_pct": "Effet gel",
+    "chill_duration_pct": "Durée gel",
+    "freeze_chance": "Congélation",
+    "freeze_duration_pct": "Durée congél."
   },
   "dungeon": {
     "floors": "{{count}} étages",
@@ -443,6 +454,10 @@
     "uber_goblin_king": {
       "name": "Uber Roi Gobelin",
       "description": "Le Roi Gobelin éveillé dans une autre dimension."
+    },
+    "uber_uber_goblin_king": {
+      "name": "UberUber Roi Gobelin",
+      "description": "Le Roi Gobelin définitivement éveillé."
     },
     "uber_bandit_leader": {
       "name": "Uber Chef des bandits",
@@ -1281,6 +1296,9 @@
     "uber_goblin_king": {
       "name": "Uber Roi Gobelin"
     },
+    "uber_uber_goblin_king": {
+      "name": "UberUber Roi Gobelin"
+    },
     "uber_bandit_leader": {
       "name": "Uber Chef des bandits"
     },
@@ -1331,7 +1349,11 @@
       "shield": "Bouclier de meute",
       "shieldDesc": "Réduction de dégâts de 20% pendant 2 tours, Crit et chance de poison -50%",
       "warlord": "Seigneur de guerre de la horde",
-      "warlordDesc": "+30% de vitesse d'attaque, récupère 500 HP par coup (se déclenche sous 50% HP)"
+      "warlordDesc": "+30% de vitesse d'attaque, récupère 500 HP par coup (se déclenche sous 50% HP)",
+      "kingsSlam": "Fracas du Roi",
+      "kingsSlamDesc": "Une frappe dévastatrice ATK×3 tous les 10 attaques",
+      "kingsRoar": "Rugissement du Roi",
+      "kingsRoarDesc": "Purifie le poison et le feu tous les 3 attaques"
     },
     "bandit_leader": {
       "name": "Piège à ours",
@@ -1403,6 +1425,10 @@
     "respecToken": "Objet de respec obtenu ! ({{count}})",
     "bossSkillActivated": "{{enemy}} a déclenché {{skill}} !",
     "warlordEnrage": "[Seigneur de guerre] Activé ! Vitesse d'attaque+20%, HP par coup+300",
+    "chillApplied": "{{enemy}} est gelé ! Vitesse d'attaque réduite !",
+    "chillExpired": "Le gel de {{enemy}} a expiré",
+    "freezeApplied": "{{enemy}} est congelé ! Incapable d'agir !",
+    "freezeExpired": "La congélation de {{enemy}} a expiré",
     "reflectedDamage": "La marque de {{enemy}} se reflète ! Vous subissez {{damage}} dégâts !",
     "enemyHealRegen": "{{enemy}} a régénéré {{amount}} HP !",
     "enemyHealOnHit": "{{enemy}} a absorbé {{amount}} HP !",
@@ -2152,5 +2178,31 @@
     "empty": "Aucune annonce",
     "fetchError": "Échec du chargement des actualités",
     "retry": "Réessayer"
+  },
+  "badges": {
+    "title": "Badges",
+    "uber_goblin_king": { "name": "Tueur de Roi", "description": "Vaincre l'Uber Roi Gobelin" },
+    "uber_bandit_leader": { "name": "Conquérant de l'Ombre", "description": "Vaincre l'Uber Chef Bandit" },
+    "uber_vampire": { "name": "Chasseur Diurne", "description": "Vaincre l'Uber Vampire" },
+    "uber_kraken": { "name": "Conquérant des Abysses", "description": "Vaincre l'Uber Kraken" },
+    "uber_demon_lord": { "name": "Pourfendeur de Démons", "description": "Vaincre l'Uber Seigneur Démon" },
+    "uber_true_final_boss": { "name": "Au-delà de la Fin", "description": "Vaincre l'Uber Boss Final" },
+    "dimensional_4000": { "name": "Seigneur Dimensionnel", "description": "Atteindre l'étage 4000 du Couloir Dimensionnel" },
+    "uber_uber_all": { "name": "Défi Ultime", "description": "Vaincre tous les boss UberUber" },
+    "earned": "Obtenu",
+    "notEarned": "Non obtenu",
+    "newBadge": "Nouveau badge obtenu !"
+  },
+  "uberTree": {
+    "title": "Arbre Uber",
+    "unlocked": "Débloqué",
+    "locked": "Prérequis non rempli",
+    "unlock": "Débloquer",
+    "route": {
+      "destruction": "Voie de la Destruction",
+      "immortality": "Voie de l'Immortalité",
+      "swiftness": "Voie de la Célérité",
+      "corrosion": "Voie de la Corrosion"
+    }
   }
 }

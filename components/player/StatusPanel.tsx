@@ -139,6 +139,9 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       igniteDurationPct: combinedMods.igniteDurationPct,
       igniteLifesteal: combinedMods.igniteLifesteal,
       damageReductionPct: combinedMods.damageReductionPct,
+      chillChance: combinedMods.chillChance + (CLASS_ABILITIES[state.characterType]?.chillChance || 0),
+      chillEffectPct: combinedMods.chillEffectPct,
+      freezeChance: Math.min(combinedMods.freezeChance, 10),
       attackSpeedPct: combinedMods.attackSpeedPct + (CLASS_ABILITIES[state.characterType]?.attackSpeedPct || 0),
       attackSpeedMore: attackSpeedMoreTotal,
       finalAttackSpeed,
@@ -316,6 +319,31 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
             </View>
             <View style={styles.separator} />
             <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.chillChance')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.chillChance > 0 ? styles.chillText : undefined}>
+                  {breakdown.chillChance}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.chillEffect')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.chillEffectPct > 0 ? styles.chillText : undefined}>
+                  +{breakdown.chillEffectPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.freezeChance')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.freezeChance > 0 ? styles.chillText : undefined}>
+                  {breakdown.freezeChance}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.separator} />
+            <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>{t('status.hpRegen')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.hpRegenPerSecond > 0 ? styles.healText : undefined}>
@@ -483,6 +511,9 @@ const styles = StyleSheet.create({
   },
   igniteText: {
     color: '#FF7043',
+  },
+  chillText: {
+    color: '#81D4FA',
   },
   healText: {
     color: '#4CAF50',

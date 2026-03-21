@@ -51,6 +51,8 @@ export const createCharacterWithEquipmentSlots = async (
 export const resetDatabase = async (): Promise<void> => {
   const database = await getDatabase();
   await database.execAsync(`
+    DROP TABLE IF EXISTS character_uber_skills;
+    DROP TABLE IF EXISTS character_badges;
     DROP TABLE IF EXISTS character_skills;
     DROP TABLE IF EXISTS character_inventory;
     DROP TABLE IF EXISTS character_equipment;

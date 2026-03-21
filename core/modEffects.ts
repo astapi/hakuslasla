@@ -62,6 +62,13 @@ export interface PassiveEffectsData {
   hp_on_hit: number;
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
+  // チル系
+  chill_chance: number;
+  chill_effect_pct: number;
+  chill_duration_pct: number;
+  // フリーズ系
+  freeze_chance: number;
+  freeze_duration_pct: number;
 }
 
 // ========================================
@@ -99,6 +106,11 @@ export function createEmptyModEffects(): CombinedModEffects {
     hpRegenToAtkPct: 0,
     attackSpeedPct: 0,
     attackSpeedMorePct: [],
+    chillChance: 0,
+    chillEffectPct: 0,
+    chillDurationPct: 0,
+    freezeChance: 0,
+    freezeDurationPct: 0,
     timeAtkIncPct: 0,
     timeDefIncPct: 0,
     timeHpRegen: 0,
@@ -193,6 +205,21 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
     case 'warlord_enrage':
       effects.warlordEnrage = true;
       break;
+    case 'chill_chance':
+      effects.chillChance += mod.value;
+      break;
+    case 'chill_effect_pct':
+      effects.chillEffectPct += mod.value;
+      break;
+    case 'chill_duration_pct':
+      effects.chillDurationPct += mod.value;
+      break;
+    case 'freeze_chance':
+      effects.freezeChance += mod.value;
+      break;
+    case 'freeze_duration_pct':
+      effects.freezeDurationPct += mod.value;
+      break;
   }
 }
 
@@ -243,6 +270,13 @@ export function combineMods(
   combined.hpOnHit += passiveEffects.hp_on_hit;
   combined.attackSpeedPct += passiveEffects.attack_speed_pct;
   combined.attackSpeedMorePct.push(...passiveEffects.attack_speed_more_pct);
+  // チル系
+  combined.chillChance += passiveEffects.chill_chance;
+  combined.chillEffectPct += passiveEffects.chill_effect_pct;
+  combined.chillDurationPct += passiveEffects.chill_duration_pct;
+  // フリーズ系
+  combined.freezeChance += passiveEffects.freeze_chance;
+  combined.freezeDurationPct += passiveEffects.freeze_duration_pct;
 
   return combined;
 }

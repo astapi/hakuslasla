@@ -183,6 +183,37 @@ export const migrations: Migration[] = [
       `);
     },
   },
+  {
+    // V4 → V5: バッジテーブルを追加
+    version: 5,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS character_badges (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          character_id INTEGER NOT NULL,
+          badge_id TEXT NOT NULL,
+          earned_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+          UNIQUE(character_id, badge_id)
+        );
+      `);
+    },
+  },
+  {
+    // V5 → V6: Uberツリーテーブルを追加
+    version: 6,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS character_uber_skills (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          character_id INTEGER NOT NULL,
+          skill_id TEXT NOT NULL,
+          FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+          UNIQUE(character_id, skill_id)
+        );
+      `);
+    },
+  },
 ];
 
 /**

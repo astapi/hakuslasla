@@ -37,14 +37,16 @@
     "class": {
       "warrior": "ウォリアー",
       "elementalist": "エレメンタリスト",
-      "ranger": "レンジャー"
+      "ranger": "レンジャー",
+      "ice_mage": "氷系術師"
     },
     "classAbility": "クラス固有能力",
     "ability": {
       "igniteChance": "発火確率 {{value}}%",
       "criticalChance": "クリティカル率 {{value}}%",
       "attackSpeedPct": "攻撃速度 +{{value}}%",
-      "poisonChance": "毒付与率 {{value}}%"
+      "poisonChance": "毒付与率 {{value}}%",
+      "chillChance": "チル付与率 {{value}}%"
     },
     "initialStats": "初期ステータス"
   },
@@ -56,7 +58,8 @@
       "settings": "設定",
       "adventure": "冒険",
       "encyclopedia": "図鑑",
-      "shop": "ショップ"
+      "shop": "ショップ",
+      "uberTree": "Uber"
     },
     "renameCharacter": "キャラクター名を変更"
   },
@@ -276,6 +279,9 @@
     "igniteDuration": "発火時間",
     "igniteTickSpeed": "発火速度",
     "igniteLifesteal": "発火吸収",
+    "chillChance": "チル確率",
+    "chillEffect": "チル効果",
+    "freezeChance": "フリーズ確率",
     "perSecond": "/秒",
     "on": "ON",
     "off": "OFF",
@@ -332,7 +338,12 @@
     "critical_follow_up_attack": "クリ時追撃",
     "atk_inc_pct": "ATK増加",
     "hp_on_crit": "クリ時回復",
-    "warlord_enrage": "乱軍の王"
+    "warlord_enrage": "乱軍の王",
+    "chill_chance": "チル",
+    "chill_effect_pct": "チル効果",
+    "chill_duration_pct": "チル時間",
+    "freeze_chance": "フリーズ",
+    "freeze_duration_pct": "フリーズ時間"
   },
   "dungeon": {
     "floors": "全{{count}}階",
@@ -444,6 +455,10 @@
     "uber_goblin_king": {
       "name": "Uber ゴブリンキング",
       "description": "異次元で覚醒したゴブリンキング。"
+    },
+    "uber_uber_goblin_king": {
+      "name": "UberUber ゴブリンキング",
+      "description": "究極の覚醒を遂げたゴブリンキング。全てのバッジを持つ者のみが挑める。"
     },
     "uber_bandit_leader": {
       "name": "Uber 盗賊の頭",
@@ -1282,6 +1297,9 @@
     "uber_goblin_king": {
       "name": "Uber ゴブリンキング"
     },
+    "uber_uber_goblin_king": {
+      "name": "UberUber ゴブリンキング"
+    },
     "uber_bandit_leader": {
       "name": "Uber 盗賊の頭"
     },
@@ -1332,7 +1350,11 @@
       "shield": "群れの盾",
       "shieldDesc": "2ターンの間ダメージ20%軽減、クリティカル・毒付与率50%低下",
       "warlord": "乱軍の王",
-      "warlordDesc": "攻撃速度+30%、攻撃時HP500回復（HP50%以下で発動）"
+      "warlordDesc": "攻撃速度+30%、攻撃時HP500回復（HP50%以下で発動）",
+      "kingsSlam": "キングスラム",
+      "kingsSlamDesc": "10回攻撃ごとにATK3倍の強烈な一撃",
+      "kingsRoar": "王の咆哮",
+      "kingsRoarDesc": "3回攻撃ごとに毒・発火状態を浄化"
     },
     "bandit_leader": {
       "name": "ベアトラップ",
@@ -1404,6 +1426,10 @@
     "respecToken": "リスペックアイテムを入手！ ({{count}}個)",
     "bossSkillActivated": "{{enemy}}の{{skill}}が発動した！",
     "warlordEnrage": "【乱軍の王】発動！ 攻撃速度+20%, HIT時HP回復+300",
+    "chillApplied": "{{enemy}}をチル状態にした！ 攻撃速度低下！",
+    "chillExpired": "{{enemy}}のチル状態が解除された",
+    "freezeApplied": "{{enemy}}をフリーズ状態にした！ 行動不能！",
+    "freezeExpired": "{{enemy}}のフリーズ状態が解除された",
     "reflectedDamage": "{{enemy}}の刻印が反射！ プレイヤーに{{damage}}ダメージ！",
     "enemyHealRegen": "{{enemy}}が再生で{{amount}}回復した！",
     "enemyHealOnHit": "{{enemy}}が吸収で{{amount}}回復した！",
@@ -2153,5 +2179,55 @@
     "empty": "お知らせはありません",
     "fetchError": "お知らせの取得に失敗しました",
     "retry": "再試行"
+  },
+  "badges": {
+    "title": "バッジ",
+    "uber_goblin_king": {
+      "name": "王殺し",
+      "description": "Uberゴブリンキングを撃破"
+    },
+    "uber_bandit_leader": {
+      "name": "影の制覇者",
+      "description": "Uber盗賊の頭を撃破"
+    },
+    "uber_vampire": {
+      "name": "真昼の狩人",
+      "description": "Uberヴァンパイアを撃破"
+    },
+    "uber_kraken": {
+      "name": "深淵の征服者",
+      "description": "Uberクラーケンを撃破"
+    },
+    "uber_demon_lord": {
+      "name": "魔王討伐者",
+      "description": "Uber魔王を撃破"
+    },
+    "uber_true_final_boss": {
+      "name": "終焉を超えし者",
+      "description": "Uber最終ボスを撃破"
+    },
+    "dimensional_4000": {
+      "name": "次元の覇者",
+      "description": "次元回廊4000階に到達"
+    },
+    "uber_uber_all": {
+      "name": "究極の挑戦者",
+      "description": "全UberUberボスを撃破"
+    },
+    "earned": "獲得済み",
+    "notEarned": "未獲得",
+    "newBadge": "新しいバッジを獲得！"
+  },
+  "uberTree": {
+    "title": "Uberツリー",
+    "unlocked": "解放済み",
+    "locked": "前提ノード未解放",
+    "unlock": "解放する",
+    "route": {
+      "destruction": "破壊の道",
+      "immortality": "不滅の道",
+      "swiftness": "迅速の道",
+      "corrosion": "侵蝕の道"
+    }
   }
 }

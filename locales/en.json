@@ -37,14 +37,16 @@
     "class": {
       "warrior": "Warrior",
       "elementalist": "Elementalist",
-      "ranger": "Ranger"
+      "ranger": "Ranger",
+      "ice_mage": "Ice Mage"
     },
     "classAbility": "Class Ability",
     "ability": {
       "igniteChance": "Ignite Chance {{value}}%",
       "criticalChance": "Critical Chance {{value}}%",
       "attackSpeedPct": "Attack Speed +{{value}}%",
-      "poisonChance": "Poison Chance {{value}}%"
+      "poisonChance": "Poison Chance {{value}}%",
+      "chillChance": "Chill Chance {{value}}%"
     },
     "initialStats": "Initial Stats"
   },
@@ -56,7 +58,8 @@
       "settings": "Settings",
       "adventure": "Adventure",
       "encyclopedia": "Archive",
-      "shop": "Shop"
+      "shop": "Shop",
+      "uberTree": "Uber"
     },
     "renameCharacter": "Rename Character"
   },
@@ -276,6 +279,9 @@
     "igniteDuration": "Ignite Dur",
     "igniteTickSpeed": "Ignite Speed",
     "igniteLifesteal": "Ignite Leech",
+    "chillChance": "Chill Chance",
+    "chillEffect": "Chill Effect",
+    "freezeChance": "Freeze Chance",
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",
@@ -331,7 +337,12 @@
     "critical_follow_up_attack": "Crit Follow-up",
     "atk_inc_pct": "ATK Inc",
     "hp_on_crit": "HP on Crit",
-    "warlord_enrage": "Warlord"
+    "warlord_enrage": "Warlord",
+    "chill_chance": "Chill",
+    "chill_effect_pct": "Chill Effect",
+    "chill_duration_pct": "Chill Dur",
+    "freeze_chance": "Freeze",
+    "freeze_duration_pct": "Freeze Dur"
   },
   "dungeon": {
     "floors": "{{count}} Floors",
@@ -443,6 +454,10 @@
     "uber_goblin_king": {
       "name": "Uber Goblin King",
       "description": "The Goblin King awakened in another dimension."
+    },
+    "uber_uber_goblin_king": {
+      "name": "UberUber Goblin King",
+      "description": "The ultimately awakened Goblin King. Only those with all badges may challenge."
     },
     "uber_bandit_leader": {
       "name": "Uber Bandit Leader",
@@ -1281,6 +1296,9 @@
     "uber_goblin_king": {
       "name": "Uber Goblin King"
     },
+    "uber_uber_goblin_king": {
+      "name": "UberUber Goblin King"
+    },
     "uber_bandit_leader": {
       "name": "Uber Bandit Leader"
     },
@@ -1331,7 +1349,11 @@
       "shield": "Swarm Shield",
       "shieldDesc": "20% damage reduction for 2 turns, crit and poison chance -50%",
       "warlord": "Warlord of the Horde",
-      "warlordDesc": "+30% attack speed, recover 500 HP on hit (triggers below 50% HP)"
+      "warlordDesc": "+30% attack speed, recover 500 HP on hit (triggers below 50% HP)",
+      "kingsSlam": "King's Slam",
+      "kingsSlamDesc": "A devastating ATK×3 strike every 10 attacks",
+      "kingsRoar": "King's Roar",
+      "kingsRoarDesc": "Cleanses poison and ignite every 3 attacks"
     },
     "bandit_leader": {
       "name": "Bear Trap",
@@ -1403,6 +1425,10 @@
     "respecToken": "Obtained a respec item! ({{count}})",
     "bossSkillActivated": "{{enemy}} triggered {{skill}}!",
     "warlordEnrage": "[Warlord] Activated! Attack Speed+20%, HP on Hit+300",
+    "chillApplied": "{{enemy}} is chilled! Attack speed reduced!",
+    "chillExpired": "{{enemy}}'s chill has expired",
+    "freezeApplied": "{{enemy}} is frozen! Unable to act!",
+    "freezeExpired": "{{enemy}}'s freeze has expired",
     "reflectedDamage": "{{enemy}}'s mark reflected! You took {{damage}} damage!",
     "enemyHealRegen": "{{enemy}} regenerated {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} leeched {{amount}} HP!",
@@ -2152,5 +2178,55 @@
     "empty": "No announcements",
     "fetchError": "Failed to load news",
     "retry": "Retry"
+  },
+  "badges": {
+    "title": "Badges",
+    "uber_goblin_king": {
+      "name": "Kingslayer",
+      "description": "Defeat Uber Goblin King"
+    },
+    "uber_bandit_leader": {
+      "name": "Shadow Conqueror",
+      "description": "Defeat Uber Bandit Leader"
+    },
+    "uber_vampire": {
+      "name": "Daylight Hunter",
+      "description": "Defeat Uber Vampire"
+    },
+    "uber_kraken": {
+      "name": "Abyss Conqueror",
+      "description": "Defeat Uber Kraken"
+    },
+    "uber_demon_lord": {
+      "name": "Demon Slayer",
+      "description": "Defeat Uber Demon Lord"
+    },
+    "uber_true_final_boss": {
+      "name": "Beyond the End",
+      "description": "Defeat Uber True Final Boss"
+    },
+    "dimensional_4000": {
+      "name": "Dimensional Lord",
+      "description": "Reach Floor 4000 in Dimensional Corridor"
+    },
+    "uber_uber_all": {
+      "name": "Ultimate Challenger",
+      "description": "Defeat all UberUber Bosses"
+    },
+    "earned": "Earned",
+    "notEarned": "Not Earned",
+    "newBadge": "New Badge Earned!"
+  },
+  "uberTree": {
+    "title": "Uber Tree",
+    "unlocked": "Unlocked",
+    "locked": "Prerequisite not met",
+    "unlock": "Unlock",
+    "route": {
+      "destruction": "Path of Destruction",
+      "immortality": "Path of Immortality",
+      "swiftness": "Path of Swiftness",
+      "corrosion": "Path of Corrosion"
+    }
   }
 }

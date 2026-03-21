@@ -1,12 +1,16 @@
 import { create } from 'zustand';
 import { CharacterType, Equipment, EquipmentSlot, Item } from '@/types';
 import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects } from '@/data/passiveTree';
+import { canUnlockUberNode, calculateUberTreeEffects } from '@/data/uberTree';
+import { BADGES } from '@/data/badges';
 import {
   characterRepository,
   inventoryRepository,
   equipmentRepository,
   skillRepository,
   settingsRepository,
+  badgeRepository,
+  uberTreeRepository,
 } from '@/db';
 import {
   INITIAL_STATS,
@@ -46,6 +50,8 @@ interface PlayerState {
   equipment: Equipment;
   inventory: Item[]; // MOD付きItemの配列
   unlockedSkills: string[];
+  unlockedUberSkills: string[];
+  uberPoints: number;  // 使用可能なUberポイント（Uberボスバッジ数 - 使用済み数）
   isLoaded: boolean;
 }
 
@@ -86,6 +92,8 @@ interface PlayerActions {
   renameCharacter: (newName: string) => Promise<void>;
   // デバッグ: パッシブプリセットを適用
   applyPassivePreset: (nodeIds: string[]) => Promise<void>;
+  // Uberツリーノードを解放
+  unlockUberSkill: (nodeId: string) => Promise<boolean>;
   // デバッグ: レベルとSPを設定
   setDebugLevel: (level: number) => Promise<void>;
   // デバッグ: 装備プリセットを適用
@@ -107,6 +115,8 @@ const initialState: PlayerState = {
   equipment: initialEquipment,
   inventory: [],
   unlockedSkills: [],
+  unlockedUberSkills: [],
+  uberPoints: 0,
   isLoaded: false,
 };
 
@@ -135,6 +145,15 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     const endContentUnlocked = await settingsRepository.getEndContentUnlocked();
     const levelCap = endContentUnlocked ? 60 : MAX_LEVEL;
 
+    // Uberツリー読み込み
+    const unlockedUberSkills = await uberTreeRepository.getAll(characterId);
+    // Uberポイント = Uberボスバッジ数 - 使用済みノード数
+    const badges = await badgeRepository.getBadges(characterId);
+    const uberBossBadgeCount = badges.filter(b =>
+      BADGES.some(bd => bd.id === b.badgeId && bd.condition.type === 'uber_boss_clear')
+    ).length;
+    const uberPoints = Math.max(0, uberBossBadgeCount - unlockedUberSkills.length);
+
     set({
       characterId: character.id,
       characterName: character.name,
@@ -150,6 +169,8 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       equipment,
       inventory,
       unlockedSkills,
+      unlockedUberSkills,
+      uberPoints,
       isLoaded: true,
     });
   },
@@ -282,6 +303,22 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       def: newDef,
     });
 
+    return true;
+  },
+
+  unlockUberSkill: async (nodeId: string) => {
+    const state = get();
+    if (!state.characterId) return false;
+    if (state.uberPoints < 1) return false;
+    if (!canUnlockUberNode(nodeId, state.unlockedUberSkills)) return false;
+
+    const success = await uberTreeRepository.unlock(state.characterId, nodeId);
+    if (!success) return false;
+
+    set({
+      unlockedUberSkills: [...state.unlockedUberSkills, nodeId],
+      uberPoints: state.uberPoints - 1,
+    });
     return true;
   },
 
@@ -434,16 +471,19 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     // 2. パッシブ効果を取得（inc%/more%含む）
     const passiveEffects = calculatePassiveEffects(state.unlockedSkills);
 
-    // 3. PoE式計算で最終ステータスを算出（装備+パッシブのincreased%を合算）
+    // 2.5. Uberツリー効果を取得
+    const uberEffects = calculateUberTreeEffects(state.unlockedUberSkills);
+
+    // 3. PoE式計算で最終ステータスを算出（装備+パッシブ+Uberツリーのincreased%を合算）
     const finalStats = calculateFinalStats(
-      { maxHp: baseMaxHp, atk: baseAtk, def: baseDef },
+      { maxHp: baseMaxHp + uberEffects.hp, atk: baseAtk + uberEffects.atk, def: baseDef + uberEffects.def },
       {
-        hp_increased_pct: passiveEffects.hp_increased_pct + equipHpIncPct,
-        atk_increased_pct: passiveEffects.atk_increased_pct + equipAtkIncPct,
-        def_increased_pct: passiveEffects.def_increased_pct + equipDefIncPct,
-        hp_more_pct: passiveEffects.hp_more_pct,
-        atk_more_pct: passiveEffects.atk_more_pct,
-        def_more_pct: passiveEffects.def_more_pct,
+        hp_increased_pct: passiveEffects.hp_increased_pct + equipHpIncPct + uberEffects.hp_increased_pct,
+        atk_increased_pct: passiveEffects.atk_increased_pct + equipAtkIncPct + uberEffects.atk_increased_pct,
+        def_increased_pct: passiveEffects.def_increased_pct + equipDefIncPct + uberEffects.def_increased_pct,
+        hp_more_pct: [...passiveEffects.hp_more_pct, ...uberEffects.hp_more_pct],
+        atk_more_pct: [...passiveEffects.atk_more_pct, ...uberEffects.atk_more_pct],
+        def_more_pct: [...passiveEffects.def_more_pct, ...uberEffects.def_more_pct],
       }
     );
 

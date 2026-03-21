@@ -37,14 +37,16 @@
     "class": {
       "warrior": "전사",
       "elementalist": "정령술사",
-      "ranger": "레인저"
+      "ranger": "레인저",
+      "ice_mage": "빙결술사"
     },
     "classAbility": "클래스 능력",
     "ability": {
       "igniteChance": "점화 확률 {{value}}%",
       "criticalChance": "치명타 확률 {{value}}%",
       "attackSpeedPct": "공격 속도 +{{value}}%",
-      "poisonChance": "독 확률 {{value}}%"
+      "poisonChance": "독 확률 {{value}}%",
+      "chillChance": "냉각 확률 {{value}}%"
     },
     "initialStats": "초기 스탯"
   },
@@ -56,7 +58,8 @@
       "settings": "설정",
       "adventure": "모험",
       "encyclopedia": "도감",
-      "shop": "상점"
+      "shop": "상점",
+      "uberTree": "Uber"
     },
     "renameCharacter": "캐릭터 이름 변경"
   },
@@ -276,6 +279,9 @@
     "igniteDuration": "점화 지속",
     "igniteTickSpeed": "점화 속도",
     "igniteLifesteal": "점화 흡혈",
+    "chillChance": "냉각 확률",
+    "chillEffect": "냉각 효과",
+    "freezeChance": "빙결 확률",
     "perSecond": "/초",
     "on": "켜짐",
     "off": "꺼짐",
@@ -331,7 +337,12 @@
     "critical_follow_up_attack": "크리 추격",
     "atk_inc_pct": "ATK 증가",
     "hp_on_crit": "크리 회복",
-    "warlord_enrage": "전쟁군주"
+    "warlord_enrage": "전쟁군주",
+    "chill_chance": "냉각",
+    "chill_effect_pct": "냉각 효과",
+    "chill_duration_pct": "냉각 시간",
+    "freeze_chance": "빙결",
+    "freeze_duration_pct": "빙결 시간"
   },
   "dungeon": {
     "floors": "{{count}}층",
@@ -443,6 +454,10 @@
     "uber_goblin_king": {
       "name": "Uber 고블린 왕",
       "description": "다른 차원에서 각성한 고블린 왕."
+    },
+    "uber_uber_goblin_king": {
+      "name": "UberUber 고블린 킹",
+      "description": "궁극적으로 각성한 고블린 킹."
     },
     "uber_bandit_leader": {
       "name": "Uber 산적 두목",
@@ -1281,6 +1296,9 @@
     "uber_goblin_king": {
       "name": "Uber 고블린 왕"
     },
+    "uber_uber_goblin_king": {
+      "name": "UberUber 고블린 킹"
+    },
     "uber_bandit_leader": {
       "name": "Uber 산적 두목"
     },
@@ -1331,7 +1349,11 @@
       "shield": "군단 방패",
       "shieldDesc": "2턴 동안 피해 감소 20%, Crit 및 독 확률 -50%",
       "warlord": "무리의 대장",
-      "warlordDesc": "공격 속도 +30%, 적중 시 HP 500 회복 (HP 50% 이하에서 발동)"
+      "warlordDesc": "공격 속도 +30%, 적중 시 HP 500 회복 (HP 50% 이하에서 발동)",
+      "kingsSlam": "왕의 강타",
+      "kingsSlamDesc": "10회 공격마다 ATK×3의 강력한 일격",
+      "kingsRoar": "왕의 포효",
+      "kingsRoarDesc": "3회 공격마다 독과 발화 상태를 정화"
     },
     "bandit_leader": {
       "name": "덫",
@@ -1403,6 +1425,10 @@
     "respecToken": "리스펙 아이템 획득! ({{count}})",
     "bossSkillActivated": "{{enemy}}의 {{skill}} 발동!",
     "warlordEnrage": "【전쟁군주】 발동! 공격 속도+20%, 적중 시 HP 회복+300",
+    "chillApplied": "{{enemy}}이(가) 냉각 상태! 공격 속도 감소!",
+    "chillExpired": "{{enemy}}의 냉각 상태가 해제되었다",
+    "freezeApplied": "{{enemy}}이(가) 빙결 상태! 행동 불가!",
+    "freezeExpired": "{{enemy}}의 빙결 상태가 해제되었다",
     "reflectedDamage": "{{enemy}}의 표식이 반사! {{damage}} 피해를 받았다!",
     "enemyHealRegen": "{{enemy}}이(가) {{amount}} HP 재생!",
     "enemyHealOnHit": "{{enemy}}이(가) {{amount}} HP 흡수!",
@@ -2152,5 +2178,31 @@
     "empty": "공지사항이 없습니다",
     "fetchError": "공지사항을 불러오지 못했습니다",
     "retry": "다시 시도"
+  },
+  "badges": {
+    "title": "뱃지",
+    "uber_goblin_king": { "name": "왕 살해자", "description": "Uber 고블린 킹 격파" },
+    "uber_bandit_leader": { "name": "그림자 정복자", "description": "Uber 도적 두목 격파" },
+    "uber_vampire": { "name": "한낮의 사냥꾼", "description": "Uber 뱀파이어 격파" },
+    "uber_kraken": { "name": "심연의 정복자", "description": "Uber 크라켄 격파" },
+    "uber_demon_lord": { "name": "마왕 토벌자", "description": "Uber 마왕 격파" },
+    "uber_true_final_boss": { "name": "종언을 넘어선 자", "description": "Uber 최종 보스 격파" },
+    "dimensional_4000": { "name": "차원의 패자", "description": "차원 회랑 4000층 도달" },
+    "uber_uber_all": { "name": "궁극의 도전자", "description": "모든 UberUber 보스 격파" },
+    "earned": "획득 완료",
+    "notEarned": "미획득",
+    "newBadge": "새로운 뱃지를 획득했습니다!"
+  },
+  "uberTree": {
+    "title": "Uber 트리",
+    "unlocked": "해금 완료",
+    "locked": "선행 노드 미해금",
+    "unlock": "해금하기",
+    "route": {
+      "destruction": "파괴의 길",
+      "immortality": "불멸의 길",
+      "swiftness": "신속의 길",
+      "corrosion": "침식의 길"
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { getMonsterImage, characterImages, monsterBattleScales } from '@/data/images';
 import { CharacterType, PoisonState, IgniteState } from '@/types';
+import { ChillState, FreezeState } from '@/core/types';
 import { useEffect, memo } from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import Animated, {
@@ -20,6 +21,8 @@ interface CharacterAvatarProps {
   size?: number; // アバターサイズ
   poisonStacks?: PoisonState[]; // 毒スタック
   igniteState?: IgniteState | null; // 発火状態
+  chillState?: ChillState | null; // チル状態
+  freezeState?: FreezeState | null; // フリーズ状態
   hideImage?: boolean; // Imageのみ非表示（Animated.Viewはマウント維持）
 }
 
@@ -31,6 +34,8 @@ export const CharacterAvatar = memo(({
   size = s(80),
   poisonStacks = [],
   igniteState = null,
+  chillState = null,
+  freezeState = null,
   hideImage = false,
 }: CharacterAvatarProps) => {
   // 攻撃アニメーション用のSharedValue
@@ -85,7 +90,7 @@ export const CharacterAvatar = memo(({
     : (imageId ? (monsterBattleScales[imageId] ?? 1) : 1);
   const scaledSize = size * battleScale;
 
-  const hasStatusEffects = poisonStacks.length > 0 || igniteState;
+  const hasStatusEffects = poisonStacks.length > 0 || igniteState || chillState || freezeState;
 
   return (
     <View style={styles.wrapper}>
@@ -120,6 +125,15 @@ export const CharacterAvatar = memo(({
             <Text style={styles.statusIcon}>🔥</Text>
           </View>
         )}
+        {freezeState ? (
+          <View style={styles.statusBadge}>
+            <Text style={styles.statusIcon}>🧊</Text>
+          </View>
+        ) : chillState ? (
+          <View style={styles.statusBadge}>
+            <Text style={styles.statusIcon}>❄️</Text>
+          </View>
+        ) : null}
       </View>
     </View>
   );

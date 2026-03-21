@@ -37,14 +37,16 @@
     "class": {
       "warrior": "战士",
       "elementalist": "元素师",
-      "ranger": "游侠"
+      "ranger": "游侠",
+      "ice_mage": "冰系法师"
     },
     "classAbility": "职业能力",
     "ability": {
       "igniteChance": "点燃几率 {{value}}%",
       "criticalChance": "暴击率 {{value}}%",
       "attackSpeedPct": "攻击速度 +{{value}}%",
-      "poisonChance": "中毒几率 {{value}}%"
+      "poisonChance": "中毒几率 {{value}}%",
+      "chillChance": "冰缓概率 {{value}}%"
     },
     "initialStats": "初始属性"
   },
@@ -56,7 +58,8 @@
       "settings": "设置",
       "adventure": "冒险",
       "encyclopedia": "图鉴",
-      "shop": "商店"
+      "shop": "商店",
+      "uberTree": "Uber"
     },
     "renameCharacter": "重命名角色"
   },
@@ -276,6 +279,9 @@
     "igniteDuration": "点燃持续",
     "igniteTickSpeed": "点燃速度",
     "igniteLifesteal": "点燃吸血",
+    "chillChance": "冰缓概率",
+    "chillEffect": "冰缓效果",
+    "freezeChance": "冻结概率",
     "perSecond": "/秒",
     "on": "开",
     "off": "关",
@@ -331,7 +337,12 @@
     "critical_follow_up_attack": "暴击追击",
     "atk_inc_pct": "ATK增加",
     "hp_on_crit": "暴击回复",
-    "warlord_enrage": "战神之怒"
+    "warlord_enrage": "战神之怒",
+    "chill_chance": "冰缓",
+    "chill_effect_pct": "冰缓效果",
+    "chill_duration_pct": "冰缓时间",
+    "freeze_chance": "冻结",
+    "freeze_duration_pct": "冻结时间"
   },
   "dungeon": {
     "floors": "{{count}} 层",
@@ -443,6 +454,10 @@
     "uber_goblin_king": {
       "name": "Uber 哥布林王",
       "description": "在异次元觉醒的哥布林王。"
+    },
+    "uber_uber_goblin_king": {
+      "name": "UberUber 哥布林王",
+      "description": "究极觉醒的哥布林王。"
     },
     "uber_bandit_leader": {
       "name": "Uber 山贼首领",
@@ -1281,6 +1296,9 @@
     "uber_goblin_king": {
       "name": "Uber 哥布林王"
     },
+    "uber_uber_goblin_king": {
+      "name": "UberUber 哥布林王"
+    },
     "uber_bandit_leader": {
       "name": "Uber 山贼首领"
     },
@@ -1331,7 +1349,11 @@
       "shield": "虫群之盾",
       "shieldDesc": "2回合内减伤20%，Crit和毒几率-50%",
       "warlord": "部落军阀",
-      "warlordDesc": "攻速+30%，命中回复500 HP（HP低于50%时触发）"
+      "warlordDesc": "攻速+30%，命中回复500 HP（HP低于50%时触发）",
+      "kingsSlam": "国王重击",
+      "kingsSlamDesc": "每10次攻击释放ATK×3的毁灭性一击",
+      "kingsRoar": "国王咆哮",
+      "kingsRoarDesc": "每3次攻击净化毒和燃烧状态"
     },
     "bandit_leader": {
       "name": "捕兽夹",
@@ -1403,6 +1425,10 @@
     "respecToken": "获得了洗点道具！（{{count}}）",
     "bossSkillActivated": "{{enemy}} 触发了 {{skill}}！",
     "warlordEnrage": "【战神之怒】发动！攻击速度+20%，命中回复HP+300",
+    "chillApplied": "{{enemy}}被冰缓了！攻击速度降低！",
+    "chillExpired": "{{enemy}}的冰缓状态解除了",
+    "freezeApplied": "{{enemy}}被冻结了！无法行动！",
+    "freezeExpired": "{{enemy}}的冻结状态解除了",
     "reflectedDamage": "{{enemy}} 的印记反弹了！你受到 {{damage}} 点伤害！",
     "enemyHealRegen": "{{enemy}} 回复了 {{amount}} HP！",
     "enemyHealOnHit": "{{enemy}} 吸取了 {{amount}} HP！",
@@ -2152,5 +2178,31 @@
     "empty": "暂无公告",
     "fetchError": "获取公告失败",
     "retry": "重试"
+  },
+  "badges": {
+    "title": "徽章",
+    "uber_goblin_king": { "name": "弑王者", "description": "击败Uber哥布林王" },
+    "uber_bandit_leader": { "name": "暗影征服者", "description": "击败Uber盗贼头目" },
+    "uber_vampire": { "name": "日光猎人", "description": "击败Uber吸血鬼" },
+    "uber_kraken": { "name": "深渊征服者", "description": "击败Uber海怪" },
+    "uber_demon_lord": { "name": "魔王讨伐者", "description": "击败Uber魔王" },
+    "uber_true_final_boss": { "name": "超越终焉者", "description": "击败Uber最终Boss" },
+    "dimensional_4000": { "name": "次元霸主", "description": "在次元回廊到达4000层" },
+    "uber_uber_all": { "name": "究极挑战者", "description": "击败所有UberUber Boss" },
+    "earned": "已获得",
+    "notEarned": "未获得",
+    "newBadge": "获得了新徽章！"
+  },
+  "uberTree": {
+    "title": "Uber天赋树",
+    "unlocked": "已解锁",
+    "locked": "前置节点未解锁",
+    "unlock": "解锁",
+    "route": {
+      "destruction": "毁灭之路",
+      "immortality": "不灭之路",
+      "swiftness": "迅捷之路",
+      "corrosion": "侵蚀之路"
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { BattleEvent, PoisonStack } from './types';
-import { getBaseBossId, isUberBoss, getPlayerPoisonFromBoss } from './endContent';
+import { getBaseBossId, isUberBoss, isUberUberBoss, getPlayerPoisonFromBoss } from './endContent';
 
 export type BossSkillId =
   | 'goblin_shield'
@@ -19,6 +19,8 @@ export type BossSkillId =
   | 'final_end'
   | 'final_convergence'
   | 'final_time_sever'
+  | 'goblin_kings_slam'
+  | 'goblin_kings_roar'
   | 'boss_intro';
 
 export interface BossEffectState {
@@ -51,6 +53,7 @@ export interface BossEffectState {
   vampireNightFeastLogged: boolean;
   finalEndStacks: number;
   convergenceStacks: number;
+  goblinSlamCounter: number;  // UberUberゴブリンキング: キングスラムまでのカウンタ
 }
 
 export const createBossEffectState = (): BossEffectState => ({
@@ -83,6 +86,7 @@ export const createBossEffectState = (): BossEffectState => ({
   vampireNightFeastLogged: false,
   finalEndStacks: 0,
   convergenceStacks: 0,
+  goblinSlamCounter: 0,
 });
 
 export interface BossBehaviorContext {
@@ -97,6 +101,7 @@ export interface BossBehaviorResult {
   events: BattleEvent[];
   resetPlayerGauge?: boolean;
   applyPlayerPoison?: PoisonStack;
+  cleansePoisonIgnite?: boolean;  // ボスの毒・発火状態を解除
 }
 
 const createBossSkillEvent = (tick: number, skillId: BossSkillId): BattleEvent => ({
@@ -108,7 +113,7 @@ const createBossSkillEvent = (tick: number, skillId: BossSkillId): BattleEvent =
 export const createBossIntroEvents = (
   tick: number,
   enemyId: string
-): { events: BattleEvent[]; playerPoison?: PoisonStack } => {
+): { events: BattleEvent[]; playerPoison?: PoisonStack; initBossEffects?: Partial<BossEffectState> } => {
   const events: BattleEvent[] = [];
   const poison = getPlayerPoisonFromBoss(enemyId);
   if (poison) {
@@ -118,6 +123,28 @@ export const createBossIntroEvents = (
     };
     return { events, playerPoison: stack };
   }
+
+  // UberUberゴブリンキング: goblin_shield常時 + goblin_warlord常時
+  if (isUberUberBoss(enemyId) && getBaseBossId(enemyId) === 'goblin_king') {
+    events.push(createBossSkillEvent(tick, 'goblin_shield'));
+    events.push(createBossSkillEvent(tick, 'goblin_warlord'));
+    return {
+      events,
+      initBossEffects: {
+        // goblin_shield常時
+        enemyDamageReductionTempPct: 20,
+        enemyDamageReductionTempRemaining: -1,  // 永続
+        playerCritChanceMult: 0.5,
+        playerPoisonChanceMult: 0.5,
+        playerCritPoisonRemaining: -1,  // 永続
+        // goblin_warlord常時
+        goblinEnrage: true,
+        enemyAttackSpeedMult: 1.3,
+        enemyHpOnHitBonus: 500,
+      },
+    };
+  }
+
   return { events };
 };
 
@@ -226,6 +253,23 @@ export const applyEnemyAttackPreEffects = (
   const isUber = isUberBoss(ctx.enemyId);
 
   bossEffects.enemyAttackCount += 1;
+
+  // UberUberゴブリンキング: キングスラム（10回に1回、ATK×3）
+  if (baseBossId === 'goblin_king' && isUberUberBoss(ctx.enemyId)) {
+    bossEffects.goblinSlamCounter += 1;
+    if (bossEffects.goblinSlamCounter >= 10) {
+      bossEffects.goblinSlamCounter = 0;
+      bossEffects.enemyNextAttackMult = 3.0;
+      events.push(createBossSkillEvent(tick, 'goblin_kings_slam'));
+    }
+    // 王の咆哮: 3回に1回、毒・発火状態を解除（cleansePoisonIgniteフラグ）
+    if (bossEffects.enemyAttackCount % 3 === 0) {
+      events.push(createBossSkillEvent(tick, 'goblin_kings_roar'));
+      return { events, cleansePoisonIgnite: true };
+    }
+    return { events };
+  }
+
   const shouldTrigger = bossEffects.enemyAttackCount % 3 === 0;
   if (!shouldTrigger) {
     return { events };

@@ -223,6 +223,13 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   hp_on_hit: number;
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
+  // チル系
+  chill_chance: number;
+  chill_effect_pct: number;
+  chill_duration_pct: number;
+  // フリーズ系
+  freeze_chance: number;
+  freeze_duration_pct: number;
 } {
   // フラット加算
   let hp = 0;
@@ -264,6 +271,13 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   // 攻撃速度系
   let attack_speed_pct = 0;
   const attack_speed_more_pct: number[] = [];
+  // チル系
+  let chill_chance = 0;
+  let chill_effect_pct = 0;
+  let chill_duration_pct = 0;
+  // フリーズ系
+  let freeze_chance = 0;
+  let freeze_duration_pct = 0;
 
   for (const nodeId of unlockedNodeIds) {
     const node = getPassiveNode(nodeId);
@@ -308,6 +322,13 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       // 攻撃速度系
       attack_speed_pct += node.effect.attack_speed_pct || 0;
       if (node.effect.attack_speed_more_pct) attack_speed_more_pct.push(node.effect.attack_speed_more_pct);
+      // チル系
+      chill_chance += node.effect.chill_chance || 0;
+      chill_effect_pct += node.effect.chill_effect_pct || 0;
+      chill_duration_pct += node.effect.chill_duration_pct || 0;
+      // フリーズ系
+      freeze_chance += node.effect.freeze_chance || 0;
+      freeze_duration_pct += node.effect.freeze_duration_pct || 0;
     }
   }
 
@@ -323,6 +344,8 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     hp_regen, hp_regen_pct,
     damage_reduction_pct, hp_on_hit,
     attack_speed_pct, attack_speed_more_pct,
+    chill_chance, chill_effect_pct, chill_duration_pct,
+    freeze_chance, freeze_duration_pct,
   };
 }
 

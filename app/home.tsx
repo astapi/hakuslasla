@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { StatusPanel } from '@/components/player/StatusPanel';
 import { EquipmentList } from '@/components/player/EquipmentList';
+import { BadgeList } from '@/components/player/BadgeList';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { BoostIconButton } from '@/components/common/BoostIconButton';
 import { BoostTooltip } from '@/components/common/BoostTooltip';
@@ -130,6 +131,10 @@ export default function HomeScreen() {
     router.push('/skills');
   };
 
+  const handleOpenUberTree = () => {
+    router.push('/uber-tree' as any);
+  };
+
   const handleOpenInventory = () => {
     router.push('/inventory');
   };
@@ -232,6 +237,7 @@ export default function HomeScreen() {
                 key={`status-${focusKey}`}
                 onDetailsChange={setStatusExpanded}
               />
+              <BadgeList key={`badges-${focusKey}`} />
             </View>
           </View>
         </View>
@@ -275,6 +281,17 @@ export default function HomeScreen() {
             )}
           </View>
           <Text style={[styles.menuLabel, skillPoints > 0 && styles.menuLabelHighlight]}>{t('home.menu.skills')}</Text>
+        </Pressable>
+
+        <Pressable
+          style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
+          onPress={handleOpenUberTree}
+          testID="home-menu-uber-tree"
+        >
+          <View style={styles.menuIconContainer}>
+            <MaterialCommunityIcons name="star-shooting" size={tabIconSize} color={colors.iconMuted} />
+          </View>
+          <Text style={styles.menuLabel}>{t('home.menu.uberTree')}</Text>
         </Pressable>
 
         <Pressable

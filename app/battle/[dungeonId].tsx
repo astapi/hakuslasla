@@ -396,6 +396,8 @@ export default function BattleScreen() {
                 size={s(100)}
                 poisonStacks={state.enemyPoison}
                 igniteState={state.enemyIgnite}
+                chillState={state.enemyChill}
+                freezeState={state.enemyFreeze}
                 hideImage={isExiting}
               />
             </View>

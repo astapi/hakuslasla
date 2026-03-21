@@ -25,6 +25,10 @@ export const characterImages: Record<CharacterType, PlayerImageSet> = {
     standing: require('@/assets/images/characters/ranger.png') as ImageSourcePropType,
     battle: require('@/assets/images/characters/ranger_battle.png') as ImageSourcePropType,
   },
+  ice_mage: {
+    standing: require('@/assets/images/characters/ice_mage.png') as ImageSourcePropType,
+    battle: require('@/assets/images/characters/ice_mage_battle.png') as ImageSourcePropType,
+  },
 };
 
 // プレイヤー画像（後方互換性のため残す、デフォルトはwarrior）

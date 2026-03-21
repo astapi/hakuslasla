@@ -5,3 +5,6 @@ export { skillRepository } from './skillRepository';
 export { storageRepository } from './storageRepository';
 export { settingsRepository, LANGUAGE_LABELS } from './settingsRepository';
 export type { DungeonClearRecord, DungeonClearRecords, AppLanguage } from './settingsRepository';
+export { badgeRepository } from './badgeRepository';
+export type { BadgeRecord } from './badgeRepository';
+export { uberTreeRepository } from './uberTreeRepository';

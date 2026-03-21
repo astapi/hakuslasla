@@ -1,6 +1,7 @@
 import {
   BattleConfig,
   BattleEvent,
+  ChillState,
   CombinedModEffects,
   GaugeBattleResult,
   GaugeBattleState,
@@ -20,6 +21,10 @@ import {
   tryApplyPoison,
   tryApplyIgnite,
   processIgniteDamage,
+  tryApplyChill,
+  tryApplyFreeze,
+  processChillState,
+  processFreezeState,
   createHpRegenEvent,
   createLifestealEvent,
   createEnemyAttackEvent,
@@ -83,6 +88,7 @@ interface BattleEngineState {
   playerAttackSpeedBase: number;
   enemyAttackSpeedBase: number;
   isTransitioning: boolean;
+  pendingEnemyChillAfterFreeze: ChillState | null;  // フリーズ解除後にチルに移行する状態
 }
 
 const createBossSkillEvent = (tick: number, skillId: BossSkillId): BattleEvent => ({
@@ -134,6 +140,10 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     enemyPoisonStacks: [],
     playerPoisonStacks: [],
     enemyIgniteState: config.initialIgniteState ?? null,  // イグナイト伝染から引き継いだ発火状態
+    enemyChillState: null,
+    enemyFreezeState: null,
+    playerChillState: null,
+    playerFreezeState: null,
     igniteApplyCount: 0,  // 発火付与回数（敵撃破時リセット）
     warlordEnrageActivated: false,
     elapsedTicks: 0,
@@ -173,6 +183,9 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
       state.playerPoisonStacks = [intro.playerPoison];
       events.push(createPlayerPoisonEvent(0, intro.playerPoison));
     }
+    if (intro.initBossEffects) {
+      Object.assign(bossEffects, intro.initBossEffects);
+    }
   }
 
   const engineState: BattleEngineState = {
@@ -189,6 +202,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     playerAttackSpeedBase,
     enemyAttackSpeedBase,
     isTransitioning: false,
+    pendingEnemyChillAfterFreeze: null,
   };
 
   const engine: BattleEngine = {
@@ -245,10 +259,71 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
     const enemyAS = engine.enemyAttackSpeedBase * engine.bossEffects.enemyAttackSpeedMult;
     const gaugePerTick = engine.config.baseGaugePerSecond / engine.config.ticksPerSecond;
 
+    // チル/フリーズ状態の時間経過処理（敵）
+    if (engine.state.enemyChillState) {
+      const chillResult = processChillState(engine.state.enemyChillState, engine.state.elapsedTicks, engine.config);
+      engine.state.enemyChillState = chillResult.updatedState;
+      if (chillResult.event) events.push(chillResult.event);
+    }
+    if (engine.state.enemyFreezeState) {
+      const freezeResult = processFreezeState(
+        engine.state.enemyFreezeState,
+        engine.pendingEnemyChillAfterFreeze,
+        engine.state.elapsedTicks,
+        engine.config
+      );
+      engine.state.enemyFreezeState = freezeResult.updatedState;
+      if (freezeResult.event) events.push(freezeResult.event);
+      // フリーズ解除時にチルに移行
+      if (freezeResult.chillTransition) {
+        engine.state.enemyChillState = freezeResult.chillTransition;
+        engine.pendingEnemyChillAfterFreeze = null;
+        events.push({
+          type: 'chill_applied',
+          tick: engine.state.elapsedTicks,
+          data: {
+            speedMultiplier: freezeResult.chillTransition.speedMultiplier,
+            durationMs: freezeResult.chillTransition.remainingMs,
+            source: 'freeze_transition',
+          },
+        });
+      }
+    }
+
+    // チル/フリーズ状態の時間経過処理（プレイヤー）
+    if (engine.state.playerChillState) {
+      const chillResult = processChillState(engine.state.playerChillState, engine.state.elapsedTicks, engine.config);
+      engine.state.playerChillState = chillResult.updatedState;
+      if (chillResult.event) events.push(chillResult.event);
+    }
+    if (engine.state.playerFreezeState) {
+      const freezeResult = processFreezeState(engine.state.playerFreezeState, null, engine.state.elapsedTicks, engine.config);
+      engine.state.playerFreezeState = freezeResult.updatedState;
+      if (freezeResult.event) events.push(freezeResult.event);
+    }
+
+    // 攻撃速度にチル/フリーズ倍率を適用
+    let playerASFinal = playerAS;
+    let enemyASFinal = enemyAS;
+
+    // プレイヤーのチル/フリーズ
+    if (engine.state.playerFreezeState) {
+      playerASFinal = 0;
+    } else if (engine.state.playerChillState) {
+      playerASFinal *= engine.state.playerChillState.speedMultiplier;
+    }
+
+    // 敵のチル/フリーズ
+    if (engine.state.enemyFreezeState) {
+      enemyASFinal = 0;
+    } else if (engine.state.enemyChillState) {
+      enemyASFinal *= engine.state.enemyChillState.speedMultiplier;
+    }
+
     // 遷移中はゲージを進めない
     if (!engine.isTransitioning) {
-      engine.state.player.gauge += playerAS * gaugePerTick;
-      engine.state.enemy.gauge += enemyAS * gaugePerTick;
+      engine.state.player.gauge += playerASFinal * gaugePerTick;
+      engine.state.enemy.gauge += enemyASFinal * gaugePerTick;
     }
 
     // HP回復（1秒ごと）
@@ -456,6 +531,24 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         if (igniteResult.event) events.push(igniteResult.event);
       }
 
+      // チル付与（上書き式）
+      const chillResult = tryApplyChill(engine.state, effectiveMods, engine.config, engine.rng);
+      if (chillResult.chillState) {
+        engine.state.enemyChillState = chillResult.chillState;
+        if (chillResult.event) events.push(chillResult.event);
+      }
+
+      // フリーズ付与（独立判定、上限10%）
+      const freezeResult = tryApplyFreeze(engine.state, effectiveMods, engine.config, engine.rng);
+      if (freezeResult.freezeState) {
+        engine.state.enemyFreezeState = freezeResult.freezeState;
+        engine.state.enemyChillState = null;  // フリーズ中はチルを解除
+        engine.pendingEnemyChillAfterFreeze = freezeResult.chillAfterFreeze;
+        // フリーズ時にキングスラムカウンタをリセット
+        engine.bossEffects.goblinSlamCounter = 0;
+        if (freezeResult.event) events.push(freezeResult.event);
+      }
+
       const baseBossId = getBaseBossId(enemyId);
       if (baseBossId === 'demon_lord' && engine.bossEffects.demonMark && attackResult.damage > 0) {
         const reflectDamage = Math.max(1, Math.floor(attackResult.damage * 0.05));
@@ -529,6 +622,10 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       if (pre.applyPlayerPoison) {
         engine.state.playerPoisonStacks = [...engine.state.playerPoisonStacks, pre.applyPlayerPoison];
         events.push(createPlayerPoisonEvent(engine.state.elapsedTicks, pre.applyPlayerPoison));
+      }
+      if (pre.cleansePoisonIgnite) {
+        engine.state.enemyPoisonStacks = [];
+        engine.state.enemyIgniteState = null;
       }
       if (pre.resetPlayerGauge) {
         engine.state.player.gauge = 0;
