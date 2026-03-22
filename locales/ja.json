@@ -2060,7 +2060,14 @@
     "timeAtkInc": "5秒毎にATK+{{value}}%",
     "timeDefInc": "5秒毎にDEF+{{value}}%",
     "timeHpRegen": "5秒毎にHP回復+{{value}}",
-    "attackSpeedMore": "攻撃速度+{{value}}% more"
+    "attackSpeedMore": "攻撃速度+{{value}}% more",
+    "criticalFollowUpAttack": "クリティカル時追撃",
+    "igniteLifesteal": "発火ダメージ吸収+{{value}}%",
+    "hpRegenToAtk": "HP回復量の{{value}}%をATKに変換",
+    "poisonDamagePct": "毒ダメージ+{{value}}%",
+    "poisonDamageMore": "毒ダメージ {{value}}% more",
+    "poisonDamageReduction": "毒状態時の被ダメ-{{value}}%",
+    "hpOnCrit": "クリティカル時HP+{{value}}回復"
   },
   "boost": {
     "dropRate": {

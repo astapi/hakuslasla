@@ -2059,7 +2059,14 @@
     "timeAtkInc": "5초마다 ATK +{{value}}%",
     "timeDefInc": "5초마다 DEF +{{value}}%",
     "timeHpRegen": "5초마다 HP 회복 +{{value}}",
-    "attackSpeedMore": "공격 속도 +{{value}}% more"
+    "attackSpeedMore": "공격 속도 +{{value}}% more",
+    "criticalFollowUpAttack": "크리티컬 시 추가 공격",
+    "igniteLifesteal": "발화 생명력 흡수 +{{value}}%",
+    "hpRegenToAtk": "HP 회복량의 {{value}}%를 ATK로 변환",
+    "poisonDamagePct": "독 피해 +{{value}}%",
+    "poisonDamageMore": "독 피해 {{value}}% more",
+    "poisonDamageReduction": "독 상태 시 받는 피해 -{{value}}%",
+    "hpOnCrit": "크리티컬 시 HP +{{value}} 회복"
   },
   "boost": {
     "dropRate": {

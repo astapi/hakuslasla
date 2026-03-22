@@ -2059,7 +2059,14 @@
     "timeAtkInc": "ATK +{{value}}% cada 5s",
     "timeDefInc": "DEF +{{value}}% cada 5s",
     "timeHpRegen": "Regen HP +{{value}} cada 5s",
-    "attackSpeedMore": "Vel. de Ataque +{{value}}% more"
+    "attackSpeedMore": "Vel. de Ataque +{{value}}% more",
+    "criticalFollowUpAttack": "Ataque adicional en Crítico",
+    "igniteLifesteal": "Robo de vida por Ignición +{{value}}%",
+    "hpRegenToAtk": "Convertir {{value}}% Regen HP en ATK",
+    "poisonDamagePct": "Daño de veneno +{{value}}%",
+    "poisonDamageMore": "Daño de veneno {{value}}% more",
+    "poisonDamageReduction": "Daño recibido -{{value}}% vs Envenenado",
+    "hpOnCrit": "HP +{{value}} en Crítico"
   },
   "boost": {
     "dropRate": {
