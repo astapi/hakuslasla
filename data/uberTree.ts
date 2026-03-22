@@ -10,6 +10,8 @@ export interface UberTreeNode extends PassiveNodeData {
   route: string;
 }
 
+export const UBER_TREE_START_NODE_ID = uberTreeData.startNodeId;
+
 // ノードデータをロード
 const nodes: Map<string, UberTreeNode> = new Map();
 for (const node of uberTreeData.nodes as UberTreeNode[]) {
@@ -25,9 +27,19 @@ export const getAllUberTreeNodes = (): UberTreeNode[] => {
 };
 
 /**
+ * スタートノードは常に解放済みとして扱う
+ */
+function isNodeUnlocked(nodeId: string, unlockedNodes: string[]): boolean {
+  if (nodeId === UBER_TREE_START_NODE_ID) return true;
+  return unlockedNodes.includes(nodeId);
+}
+
+/**
  * Uberツリーノードを解放可能か判定
  */
 export function canUnlockUberNode(nodeId: string, unlockedNodes: string[]): boolean {
+  // スタートノードは解放不要
+  if (nodeId === UBER_TREE_START_NODE_ID) return false;
   if (unlockedNodes.includes(nodeId)) return false;
 
   const node = nodes.get(nodeId);
@@ -36,13 +48,13 @@ export function canUnlockUberNode(nodeId: string, unlockedNodes: string[]): bool
   // 前提ノードなし → 解放可能
   if (node.requiredNodes.length === 0) return true;
 
-  // 全前提ノードが解放済みか
+  // 全前提ノードが解放済みか（スタートノードは常に解放済み）
   return node.requiredNodes.every(req => {
     if (typeof req === 'string') {
-      return unlockedNodes.includes(req);
+      return isNodeUnlocked(req, unlockedNodes);
     }
     // OR条件
-    return (req as string[]).some(r => unlockedNodes.includes(r));
+    return (req as string[]).some(r => isNodeUnlocked(r, unlockedNodes));
   });
 }
 
@@ -108,7 +120,11 @@ export function calculateUberTreeEffects(unlockedNodeIds: string[]): UberTreeEff
   let ignite_intensify = false;
   let chill_freeze_damage_mult = 1;  // デフォルト1（通常）
 
-  for (const nodeId of unlockedNodeIds) {
+  // スタートノードの効果を常に含める
+  const effectiveNodeIds = new Set(unlockedNodeIds);
+  effectiveNodeIds.add(UBER_TREE_START_NODE_ID);
+
+  for (const nodeId of effectiveNodeIds) {
     const node = nodes.get(nodeId);
     if (!node) continue;
     const e = node.effect;
