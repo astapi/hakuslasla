@@ -50,10 +50,10 @@
       "icon": "infinity"
     },
     {
-      "id": "badge_uber_uber_all",
-      "nameKey": "badges.uber_uber_all.name",
-      "descriptionKey": "badges.uber_uber_all.description",
-      "condition": { "type": "uber_uber_all_clear" },
+      "id": "badge_uber_uber_goblin_king",
+      "nameKey": "badges.uber_uber_goblin_king.name",
+      "descriptionKey": "badges.uber_uber_goblin_king.description",
+      "condition": { "type": "uber_boss_clear", "dungeonId": "uber_uber_goblin_king" },
       "icon": "trophy"
     }
   ]

@@ -6,7 +6,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { StatusPanel } from '@/components/player/StatusPanel';
 import { EquipmentList } from '@/components/player/EquipmentList';
-import { BadgeList } from '@/components/player/BadgeList';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { BoostIconButton } from '@/components/common/BoostIconButton';
 import { BoostTooltip } from '@/components/common/BoostTooltip';
@@ -237,7 +236,6 @@ export default function HomeScreen() {
                 key={`status-${focusKey}`}
                 onDetailsChange={setStatusExpanded}
               />
-              <BadgeList key={`badges-${focusKey}`} />
             </View>
           </View>
         </View>

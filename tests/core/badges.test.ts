@@ -19,11 +19,11 @@ describe('バッジシステム', () => {
     expect(ALL_BADGE_IDS.length).toBe(8);
     expect(ALL_BADGE_IDS).toContain('badge_uber_goblin_king');
     expect(ALL_BADGE_IDS).toContain('badge_dimensional_4000');
-    expect(ALL_BADGE_IDS).toContain('badge_uber_uber_all');
+    expect(ALL_BADGE_IDS).toContain('badge_uber_uber_goblin_king');
   });
 
-  it('BADGE_IDS_EXCEPT_UBER_UBER はUberUberバッジを除外する', () => {
-    expect(BADGE_IDS_EXCEPT_UBER_UBER).not.toContain('badge_uber_uber_all');
+  it('BADGE_IDS_EXCEPT_UBER_UBER はUberUberゴブリンキングバッジを除外する', () => {
+    expect(BADGE_IDS_EXCEPT_UBER_UBER).not.toContain('badge_uber_uber_goblin_king');
     expect(BADGE_IDS_EXCEPT_UBER_UBER.length).toBe(7);
   });
 
@@ -45,6 +45,7 @@ describe('バッジシステム', () => {
     expect(getUberBossClearBadgeId('uber_kraken')).toBe('badge_uber_kraken');
     expect(getUberBossClearBadgeId('uber_demon_lord')).toBe('badge_uber_demon_lord');
     expect(getUberBossClearBadgeId('uber_true_final_boss')).toBe('badge_uber_true_final_boss');
+    expect(getUberBossClearBadgeId('uber_uber_goblin_king')).toBe('badge_uber_uber_goblin_king');
   });
 
   it('getUberBossClearBadgeId は非Uberダンジョンで undefined を返す', () => {
@@ -58,12 +59,12 @@ describe('バッジシステム', () => {
   });
 
   it('UberUberバッジIDが正しい', () => {
-    expect(UBER_UBER_BADGE_ID).toBe('badge_uber_uber_all');
+    expect(UBER_UBER_BADGE_ID).toBe('badge_uber_uber_goblin_king');
   });
 
-  it('uber_boss_clearバッジが6つ存在する', () => {
+  it('uber_boss_clearバッジが7つ存在する', () => {
     const uberBadges = BADGES.filter(b => b.condition.type === 'uber_boss_clear');
-    expect(uberBadges.length).toBe(6);
+    expect(uberBadges.length).toBe(7);
   });
 
   it('dimensional_floorバッジが1つ存在する', () => {

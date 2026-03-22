@@ -69,8 +69,10 @@
     "unlockRequirement": "{{dungeonName}} 클리어 시 해금"
   },
   "encyclopedia": {
-    "title": "던전 도감",
-    "subtitle": "클리어한 던전의 정보를 확인하세요",
+    "title": "도감",
+    "subtitle": "던전 정보와 배지를 확인하세요",
+    "tabDungeons": "던전",
+    "tabBadges": "배지",
     "noClearedDungeons": "아직 클리어한 던전이 없습니다",
     "clearedAt": "클리어: {{date}}",
     "bestFloor": "최고 층: {{floor}}",
@@ -2188,7 +2190,7 @@
     "uber_demon_lord": { "name": "마왕 토벌자", "description": "Uber 마왕 격파" },
     "uber_true_final_boss": { "name": "종언을 넘어선 자", "description": "Uber 최종 보스 격파" },
     "dimensional_4000": { "name": "차원의 패자", "description": "차원 회랑 4000층 도달" },
-    "uber_uber_all": { "name": "궁극의 도전자", "description": "모든 UberUber 보스 격파" },
+    "uber_uber_goblin_king": { "name": "진정한 왕 살해자", "description": "UberUber 고블린 킹 격파" },
     "earned": "획득 완료",
     "notEarned": "미획득",
     "newBadge": "새로운 뱃지를 획득했습니다!"

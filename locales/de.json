@@ -69,8 +69,10 @@
     "unlockRequirement": "{{dungeonName}} abschliessen zum Freischalten"
   },
   "encyclopedia": {
-    "title": "Dungeon-Archiv",
-    "subtitle": "Details der abgeschlossenen Dungeons ansehen",
+    "title": "Archiv",
+    "subtitle": "Dungeon-Details und Abzeichen ansehen",
+    "tabDungeons": "Dungeons",
+    "tabBadges": "Abzeichen",
     "noClearedDungeons": "Noch keine Dungeons abgeschlossen",
     "clearedAt": "Abgeschlossen: {{date}}",
     "bestFloor": "Bester Stockwerk: {{floor}}",
@@ -2188,7 +2190,7 @@
     "uber_demon_lord": { "name": "Dämonentöter", "description": "Uber-Dämonenfürst besiegen" },
     "uber_true_final_boss": { "name": "Jenseits des Endes", "description": "Uber-Endboss besiegen" },
     "dimensional_4000": { "name": "Dimensionsherrscher", "description": "Etage 4000 im Dimensionskorridor erreichen" },
-    "uber_uber_all": { "name": "Ultimative Herausforderung", "description": "Alle UberUber-Bosse besiegen" },
+    "uber_uber_goblin_king": { "name": "Wahrer Königsmörder", "description": "UberUber-Goblin-König besiegen" },
     "earned": "Erhalten",
     "notEarned": "Nicht erhalten",
     "newBadge": "Neues Abzeichen erhalten!"

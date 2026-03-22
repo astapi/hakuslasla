@@ -69,8 +69,10 @@
     "unlockRequirement": "Clear {{dungeonName}} to unlock"
   },
   "encyclopedia": {
-    "title": "Dungeon Archive",
-    "subtitle": "View details of cleared dungeons",
+    "title": "Archive",
+    "subtitle": "View dungeon details and badges",
+    "tabDungeons": "Dungeons",
+    "tabBadges": "Badges",
     "noClearedDungeons": "No dungeons cleared yet",
     "clearedAt": "Cleared: {{date}}",
     "bestFloor": "Best Floor: {{floor}}",
@@ -2209,9 +2211,9 @@
       "name": "Dimensional Lord",
       "description": "Reach Floor 4000 in Dimensional Corridor"
     },
-    "uber_uber_all": {
-      "name": "Ultimate Challenger",
-      "description": "Defeat all UberUber Bosses"
+    "uber_uber_goblin_king": {
+      "name": "True Kingslayer",
+      "description": "Defeat UberUber Goblin King"
     },
     "earned": "Earned",
     "notEarned": "Not Earned",

@@ -69,8 +69,10 @@
     "unlockRequirement": "通关{{dungeonName}}后解锁"
   },
   "encyclopedia": {
-    "title": "地下城图鉴",
-    "subtitle": "查看已通关地下城的详情",
+    "title": "图鉴",
+    "subtitle": "查看地下城详情和徽章",
+    "tabDungeons": "地下城",
+    "tabBadges": "徽章",
     "noClearedDungeons": "尚未通关任何地下城",
     "clearedAt": "通关时间：{{date}}",
     "bestFloor": "最高层数：{{floor}}",
@@ -2188,7 +2190,7 @@
     "uber_demon_lord": { "name": "魔王讨伐者", "description": "击败Uber魔王" },
     "uber_true_final_boss": { "name": "超越终焉者", "description": "击败Uber最终Boss" },
     "dimensional_4000": { "name": "次元霸主", "description": "在次元回廊到达4000层" },
-    "uber_uber_all": { "name": "究极挑战者", "description": "击败所有UberUber Boss" },
+    "uber_uber_goblin_king": { "name": "真正的弑王者", "description": "击败UberUber哥布林国王" },
     "earned": "已获得",
     "notEarned": "未获得",
     "newBadge": "获得了新徽章！"
