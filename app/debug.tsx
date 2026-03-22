@@ -10,6 +10,7 @@ import {
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { usePlayerStore } from '@/stores/usePlayerStore';
+import { createItemInstance } from '@/data/items';
 import {
   PRESET_TYPES,
   PRESET_NAMES,
@@ -35,9 +36,24 @@ import { getOrCreateMyInviteCode } from '@/lib/inviteCode';
 
 const LEVELS: PresetLevel[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
+// 今回修正したMODを持つユニークアイテム一覧
+const DEBUG_UNIQUE_ITEMS = [
+  { id: 'double_strike_ring', name: '双撃の指輪', mod: 'クリティカル時追撃' },
+  { id: 'uber_double_strike_ring', name: 'Uber 双撃の指輪', mod: 'クリティカル時追撃' },
+  { id: 'dragon_heart', name: 'ドラゴンの心臓', mod: 'HP回復→ATK変換' },
+  { id: 'magma_core', name: '炎の精霊の杖', mod: '発火吸収' },
+  { id: 'uber_assassin_steps', name: 'Uber 暗殺者の足運び', mod: 'クリ時HP回復' },
+  { id: 'uber_endblade', name: 'Uber 時の試練の剣', mod: 'ATK増加%' },
+  { id: 'uber_kraken_eye', name: 'Uber クラーケンの瞳', mod: '毒ダメ/more/被ダメ減' },
+  { id: 'uber_vampire_stride', name: 'Uber 吸血鬼の歩み', mod: '毒ダメージ%' },
+  { id: 'uber_venom_grip', name: 'Uber 毒蛇の手甲', mod: '毒ダメ/more' },
+  { id: 'uber_venom_heart', name: 'Uber 毒蛇の心臓', mod: '毒ダメ/more' },
+  { id: 'uber_venom_plate', name: 'Uber 毒蛇の鎧', mod: '毒ダメージ%' },
+] as const;
+
 export default function DebugScreen() {
   const router = useRouter();
-  const { level, unlockedSkills, equipment, refresh } = usePlayerStore();
+  const { level, unlockedSkills, equipment, inventory, refresh, addToInventory } = usePlayerStore();
   const [showBuildJson, setShowBuildJson] = useState(false);
 
   // パッシブプリセット
@@ -168,6 +184,30 @@ export default function DebugScreen() {
         },
       ]
     );
+  };
+
+  const [addingItemId, setAddingItemId] = useState<string | null>(null);
+
+  const handleAddUniqueItem = async (itemId: string, itemName: string) => {
+    setAddingItemId(itemId);
+    try {
+      const item = createItemInstance(itemId);
+      if (!item) {
+        Alert.alert('エラー', `アイテム ${itemId} の生成に失敗しました`);
+        return;
+      }
+      const success = await addToInventory(item);
+      if (success) {
+        Alert.alert('完了', `${itemName} をインベントリに追加しました`);
+      } else {
+        Alert.alert('エラー', 'インベントリが一杯です');
+      }
+    } catch (error) {
+      Alert.alert('エラー', '予期しないエラーが発生しました');
+      console.error(error);
+    } finally {
+      setAddingItemId(null);
+    }
   };
 
   // 現在の装備数を計算
@@ -554,6 +594,37 @@ export default function DebugScreen() {
           </Pressable>
         </View>
 
+        {/* ========================================
+            ユニークアイテム追加（MOD表示確認用）
+           ======================================== */}
+        <View style={styles.sectionHeader}>
+          <MaterialCommunityIcons name="ring" size={20} color="#E040FB" />
+          <Text style={styles.sectionHeaderText}>ユニークアイテム追加</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>MOD表示確認用ユニーク装備</Text>
+          <Text style={styles.uniqueItemHint}>
+            インベントリ: {inventory.length}個
+          </Text>
+          <View style={styles.uniqueItemGrid}>
+            {DEBUG_UNIQUE_ITEMS.map((item) => (
+              <Pressable
+                key={item.id}
+                style={[
+                  styles.uniqueItemButton,
+                  addingItemId === item.id && styles.applyButtonDisabled,
+                ]}
+                onPress={() => handleAddUniqueItem(item.id, item.name)}
+                disabled={addingItemId !== null}
+              >
+                <Text style={styles.uniqueItemName}>{item.name}</Text>
+                <Text style={styles.uniqueItemMod}>{item.mod}</Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+
         {/* 注意書き */}
         <View style={styles.warningBox}>
           <MaterialCommunityIcons name="alert" size={16} color="#FFA500" />
@@ -852,6 +923,34 @@ const styles = StyleSheet.create({
   resetButton: {
     backgroundColor: '#FF5722',
     marginTop: 12,
+  },
+  uniqueItemHint: {
+    fontSize: 12,
+    color: '#888',
+    marginBottom: 10,
+  },
+  uniqueItemGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  uniqueItemButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: 'rgba(224, 64, 251, 0.15)',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(224, 64, 251, 0.3)',
+  },
+  uniqueItemName: {
+    fontSize: 12,
+    color: '#E040FB',
+    fontWeight: 'bold',
+  },
+  uniqueItemMod: {
+    fontSize: 10,
+    color: '#aaa',
+    marginTop: 2,
   },
   warningBox: {
     flexDirection: 'row',

@@ -736,7 +736,7 @@ const ItemDetail = memo(({
           {stats.allMods.length > 0 && (
             <View style={styles.comparisonMods}>
               {stats.allMods.map((mod, idx) => (
-                <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={1}>{mod.desc}</Text>
+                <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={2}>{mod.desc}</Text>
               ))}
             </View>
           )}
@@ -776,7 +776,7 @@ const ItemDetail = memo(({
               {equippedStats.allMods.length > 0 && (
                 <View style={styles.comparisonMods}>
                   {equippedStats.allMods.map((mod, idx) => (
-                    <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={1}>{mod.desc}</Text>
+                    <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={2}>{mod.desc}</Text>
                   ))}
                 </View>
               )}
