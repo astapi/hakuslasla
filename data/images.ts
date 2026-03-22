@@ -7,6 +7,7 @@ export type ChestRarity = 'normal' | 'magic' | 'rare' | 'unique';
 interface PlayerImageSet {
   standing: ImageSourcePropType;  // ホーム画面用（立ち絵）
   battle: ImageSourcePropType;     // 戦闘画面用（戦闘ポーズ）
+  standingScale?: number;          // 立ち絵のスケール補正（デフォルト1.0）
   battleScale?: number;            // 戦闘画像のスケール補正（デフォルト1.0）
 }
 
@@ -25,9 +26,11 @@ export const characterImages: Record<CharacterType, PlayerImageSet> = {
     standing: require('@/assets/images/characters/ranger.png') as ImageSourcePropType,
     battle: require('@/assets/images/characters/ranger_battle.png') as ImageSourcePropType,
   },
-  ice_mage: {
-    standing: require('@/assets/images/characters/ice_mage.png') as ImageSourcePropType,
-    battle: require('@/assets/images/characters/ice_mage_battle.png') as ImageSourcePropType,
+  frostmage: {
+    standing: require('@/assets/images/characters/frostmage.png') as ImageSourcePropType,
+    battle: require('@/assets/images/characters/frostmage_battle.png') as ImageSourcePropType,
+    standingScale: 0.75,
+    battleScale: 0.75,
   },
 };
 

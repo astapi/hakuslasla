@@ -38,7 +38,7 @@
       "warrior": "전사",
       "elementalist": "정령술사",
       "ranger": "레인저",
-      "ice_mage": "빙결술사"
+      "frostmage": "프로스트 메이지"
     },
     "classAbility": "클래스 능력",
     "ability": {

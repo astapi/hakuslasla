@@ -38,7 +38,7 @@
       "warrior": "Warrior",
       "elementalist": "Elementalist",
       "ranger": "Ranger",
-      "ice_mage": "Ice Mage"
+      "frostmage": "Frost Mage"
     },
     "classAbility": "Class Ability",
     "ability": {

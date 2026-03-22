@@ -38,7 +38,7 @@
       "warrior": "Krieger",
       "elementalist": "Elementarist",
       "ranger": "Waldläufer",
-      "ice_mage": "Eismagier"
+      "frostmage": "Frostmagier"
     },
     "classAbility": "Klassenfaehigkeit",
     "ability": {

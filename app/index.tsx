@@ -102,7 +102,7 @@ export default function CharacterSelectScreen() {
               >
                 <Image
                   source={getCharacterImages(character.type).standing}
-                  style={styles.characterImage}
+                  style={[styles.characterImage, getCharacterImages(character.type).standingScale ? { transform: [{ scale: getCharacterImages(character.type).standingScale! }] } : undefined]}
                   resizeMode="contain"
                 />
                 <View style={styles.characterInfo}>

@@ -38,7 +38,7 @@
       "warrior": "ウォリアー",
       "elementalist": "エレメンタリスト",
       "ranger": "レンジャー",
-      "ice_mage": "氷系術師"
+      "frostmage": "フロストメイジ"
     },
     "classAbility": "クラス固有能力",
     "ability": {

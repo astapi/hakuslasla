@@ -209,7 +209,7 @@ export default function HomeScreen() {
             {!statusExpanded && (
               <Image
                 source={characterImages[characterType].standing}
-                style={styles.characterImage}
+                style={[styles.characterImage, characterImages[characterType].standingScale ? { transform: [{ scale: characterImages[characterType].standingScale! }] } : undefined]}
                 resizeMode="contain"
               />
             )}

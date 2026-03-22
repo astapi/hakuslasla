@@ -38,7 +38,7 @@
       "warrior": "战士",
       "elementalist": "元素师",
       "ranger": "游侠",
-      "ice_mage": "冰系法师"
+      "frostmage": "霜冻法师"
     },
     "classAbility": "职业能力",
     "ability": {
