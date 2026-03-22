@@ -69,8 +69,10 @@
     "unlockRequirement": "{{dungeonName}}をクリアで解放"
   },
   "encyclopedia": {
-    "title": "ダンジョン図鑑",
-    "subtitle": "クリアしたダンジョンの詳細を確認できます",
+    "title": "図鑑",
+    "subtitle": "ダンジョンの詳細やバッジを確認できます",
+    "tabDungeons": "ダンジョン",
+    "tabBadges": "バッジ",
     "noClearedDungeons": "クリア済みのダンジョンがありません",
     "clearedAt": "クリア日時: {{date}}",
     "bestFloor": "最高到達: {{floor}}階",
@@ -2210,9 +2212,9 @@
       "name": "次元の覇者",
       "description": "次元回廊4000階に到達"
     },
-    "uber_uber_all": {
-      "name": "究極の挑戦者",
-      "description": "全UberUberボスを撃破"
+    "uber_uber_goblin_king": {
+      "name": "真の王殺し",
+      "description": "UberUberゴブリンキングを撃破"
     },
     "earned": "獲得済み",
     "notEarned": "未獲得",

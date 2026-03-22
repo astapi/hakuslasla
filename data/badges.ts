@@ -1,7 +1,7 @@
 import badgesData from './json/badges.json';
 
 export interface BadgeCondition {
-  type: 'uber_boss_clear' | 'dimensional_floor' | 'uber_uber_all_clear';
+  type: 'uber_boss_clear' | 'dimensional_floor';
   dungeonId?: string;
   floor?: number;
 }
@@ -27,7 +27,7 @@ export const ALL_BADGE_IDS = BADGES.map(b => b.id);
 
 // UberUberバッジ以外の全バッジID（UberUber入場条件チェック用）
 export const BADGE_IDS_EXCEPT_UBER_UBER = BADGES
-  .filter(b => b.condition.type !== 'uber_uber_all_clear')
+  .filter(b => b.id !== 'badge_uber_uber_goblin_king')
   .map(b => b.id);
 
 // Uberボスクリアバッジの取得
@@ -44,5 +44,5 @@ export const DIMENSIONAL_BADGE_FLOOR = 4000;
 // 次元回廊バッジID
 export const DIMENSIONAL_BADGE_ID = 'badge_dimensional_4000';
 
-// UberUberバッジID
-export const UBER_UBER_BADGE_ID = 'badge_uber_uber_all';
+// UberUberゴブリンキングバッジID
+export const UBER_UBER_BADGE_ID = 'badge_uber_uber_goblin_king';

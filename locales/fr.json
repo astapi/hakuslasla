@@ -69,8 +69,10 @@
     "unlockRequirement": "Terminez {{dungeonName}} pour débloquer"
   },
   "encyclopedia": {
-    "title": "Archives des donjons",
-    "subtitle": "Consultez les détails des donjons terminés",
+    "title": "Archives",
+    "subtitle": "Consultez les détails des donjons et badges",
+    "tabDungeons": "Donjons",
+    "tabBadges": "Badges",
     "noClearedDungeons": "Aucun donjon terminé",
     "clearedAt": "Terminé le : {{date}}",
     "bestFloor": "Meilleur étage : {{floor}}",
@@ -2188,7 +2190,7 @@
     "uber_demon_lord": { "name": "Pourfendeur de Démons", "description": "Vaincre l'Uber Seigneur Démon" },
     "uber_true_final_boss": { "name": "Au-delà de la Fin", "description": "Vaincre l'Uber Boss Final" },
     "dimensional_4000": { "name": "Seigneur Dimensionnel", "description": "Atteindre l'étage 4000 du Couloir Dimensionnel" },
-    "uber_uber_all": { "name": "Défi Ultime", "description": "Vaincre tous les boss UberUber" },
+    "uber_uber_goblin_king": { "name": "Vrai Régicide", "description": "Vaincre le Roi Gobelin UberUber" },
     "earned": "Obtenu",
     "notEarned": "Non obtenu",
     "newBadge": "Nouveau badge obtenu !"
