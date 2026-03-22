@@ -130,7 +130,13 @@ export type ModType =
   | 'chill_effect_pct'     // チル効果強化+X%（速度低下をさらに強化）
   | 'chill_duration_pct'   // チル持続時間+X%
   | 'freeze_chance'        // フリーズ付与確率+X%（上限10%）
-  | 'freeze_duration_pct'; // フリーズ持続時間+X%
+  | 'freeze_duration_pct'  // フリーズ持続時間+X%
+  | 'critical_follow_up_attack' // クリティカル時追撃
+  | 'poison_damage_pct'       // 毒ダメージ+X%
+  | 'poison_damage_more_pct'  // 毒ダメージ X% more
+  | 'poison_damage_reduction' // 敵が毒状態時のダメージ軽減+X%
+  | 'hp_on_crit'              // クリティカル時HP回復
+  | 'atk_inc_pct';            // ATK +X% (increased、加算) ※atk_increased_pctのエイリアス
 
 // MOD定義
 export interface ItemMod {

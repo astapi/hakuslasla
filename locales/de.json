@@ -2087,7 +2087,14 @@
     "timeAtkInc": "ATK +{{value}}% alle 5s",
     "timeDefInc": "DEF +{{value}}% alle 5s",
     "timeHpRegen": "HP-Regen +{{value}} alle 5s",
-    "attackSpeedMore": "Angriffsgeschw. +{{value}}% mehr"
+    "attackSpeedMore": "Angriffsgeschw. +{{value}}% mehr",
+    "criticalFollowUpAttack": "Folgeangriff bei Kritisch",
+    "igniteLifesteal": "Entzündungs-Lebensraub +{{value}}%",
+    "hpRegenToAtk": "{{value}}% HP-Regen in ATK umwandeln",
+    "poisonDamagePct": "Giftschaden +{{value}}%",
+    "poisonDamageMore": "Giftschaden {{value}}% mehr",
+    "poisonDamageReduction": "Erl. Schaden -{{value}}% bei Gift",
+    "hpOnCrit": "HP +{{value}} bei Kritisch"
   },
   "boost": {
     "dropRate": {

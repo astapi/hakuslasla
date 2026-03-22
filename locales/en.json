@@ -2087,7 +2087,14 @@
     "timeAtkInc": "ATK +{{value}}% every 5s",
     "timeDefInc": "DEF +{{value}}% every 5s",
     "timeHpRegen": "HP Regen +{{value}} every 5s",
-    "attackSpeedMore": "Attack Speed +{{value}}% more"
+    "attackSpeedMore": "Attack Speed +{{value}}% more",
+    "criticalFollowUpAttack": "Follow-up Attack on Critical",
+    "igniteLifesteal": "Ignite Lifesteal +{{value}}%",
+    "hpRegenToAtk": "Convert {{value}}% HP Regen to ATK",
+    "poisonDamagePct": "Poison Damage +{{value}}%",
+    "poisonDamageMore": "Poison Damage {{value}}% more",
+    "poisonDamageReduction": "Damage Taken -{{value}}% vs Poisoned",
+    "hpOnCrit": "HP +{{value}} on Critical"
   },
   "boost": {
     "dropRate": {

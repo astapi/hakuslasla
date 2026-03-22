@@ -2087,7 +2087,14 @@
     "timeAtkInc": "每5秒ATK +{{value}}%",
     "timeDefInc": "每5秒DEF +{{value}}%",
     "timeHpRegen": "每5秒HP回复 +{{value}}",
-    "attackSpeedMore": "攻速 +{{value}}% more"
+    "attackSpeedMore": "攻速 +{{value}}% more",
+    "criticalFollowUpAttack": "暴击时追击",
+    "igniteLifesteal": "点燃生命偷取 +{{value}}%",
+    "hpRegenToAtk": "将{{value}}%生命回复转化为ATK",
+    "poisonDamagePct": "毒伤害 +{{value}}%",
+    "poisonDamageMore": "毒伤害 {{value}}% more",
+    "poisonDamageReduction": "中毒时受伤 -{{value}}%",
+    "hpOnCrit": "暴击时HP +{{value}}回复"
   },
   "boost": {
     "dropRate": {
