@@ -181,6 +181,12 @@
       "maxFloor": 1
     },
     {
+      "id": "uber_uber_goblin_king",
+      "name": "UberUber ゴブリンキング",
+      "description": "全ての試練を乗り越えた者だけが挑める、究極のゴブリンキング。",
+      "maxFloor": 1
+    },
+    {
       "id": "debug_dimensional_goblin_king",
       "name": "DEBUG: 異次元ラッシュ - ゴブリンキング",
       "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",

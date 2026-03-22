@@ -240,11 +240,18 @@ const createExtendedInitialState = (
 };
 
 // 拡張アクション型
-type ExtendedBattleAction = BattleAction | { type: 'RESET_DUNGEON'; playerMaxHp: number };
+type ExtendedBattleAction = BattleAction | { type: 'RESET_DUNGEON'; playerMaxHp: number } | { type: 'CLEANSE_ENEMY_POISON_IGNITE' };
 
 // リデューサー
 const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction): ExtendedBattleState => {
   switch (action.type) {
+    case 'CLEANSE_ENEMY_POISON_IGNITE':
+      return {
+        ...state,
+        enemyPoison: [],
+        enemyIgnite: null,
+      };
+
     case 'RESET_DUNGEON':
       // 周回完了時に累計を更新
       return createExtendedInitialState(
@@ -1115,6 +1122,10 @@ export const useBattle = (dungeonId: string) => {
                 type: 'info',
               },
             });
+          }
+          // 王の咆哮: 毒・発火状態をUIにも反映
+          if (skillId === 'goblin_kings_roar') {
+            dispatch({ type: 'CLEANSE_ENEMY_POISON_IGNITE' });
           }
           break;
         }

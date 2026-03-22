@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { CharacterType, Equipment, EquipmentSlot, Item } from '@/types';
 import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects } from '@/data/passiveTree';
-import { canUnlockUberNode, calculateUberTreeEffects } from '@/data/uberTree';
+import { canUnlockUberNode, canRefundUberNode, calculateUberTreeEffects } from '@/data/uberTree';
 import { BADGES } from '@/data/badges';
 import {
   characterRepository,
@@ -66,6 +66,8 @@ interface PlayerActions {
   unlockSkill: (skillId: string) => Promise<boolean>;
   // スキルを返却（リスペック）
   refundSkill: (skillId: string) => Promise<boolean>;
+  // Uberスキルを返却（リスペック）
+  refundUberSkill: (skillId: string) => Promise<boolean>;
   // 装備を変更（インベントリから、instanceIdで指定）
   equipItem: (instanceId: string) => Promise<void>;
   // 装備を解除（インベントリへ）
@@ -318,6 +320,24 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     set({
       unlockedUberSkills: [...state.unlockedUberSkills, nodeId],
       uberPoints: state.uberPoints - 1,
+    });
+    return true;
+  },
+
+  refundUberSkill: async (nodeId: string): Promise<boolean> => {
+    const state = get();
+    if (!state.characterId) return false;
+    if (!canRefundUberNode(nodeId, state.unlockedUberSkills)) return false;
+
+    const tokenConsumed = await settingsRepository.consumeRespecTokens(1);
+    if (!tokenConsumed) return false;
+
+    const removed = await uberTreeRepository.remove(state.characterId, nodeId);
+    if (!removed) return false;
+
+    set({
+      unlockedUberSkills: state.unlockedUberSkills.filter((id) => id !== nodeId),
+      uberPoints: state.uberPoints + 1,
     });
     return true;
   },

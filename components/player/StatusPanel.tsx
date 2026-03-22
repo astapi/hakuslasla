@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
+import { calculateUberTreeEffects } from '@/data/uberTree';
 import { combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
 import { CLASS_ABILITIES } from '@/core/player';
 import { HPBar } from '../battle/HPBar';
@@ -84,12 +85,36 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     // パッシブ効果を取得
     const passiveEffects = calculatePassiveEffects(state.unlockedSkills);
     const equipmentItems = Object.values(state.equipment);
-    const combinedMods = combineMods(equipmentItems, passiveEffects);
+    const baseMods = combineMods(equipmentItems, passiveEffects);
 
-    // 合計値を計算
-    const totalCriticalChance = combinedMods.criticalChance + (CLASS_ABILITIES[state.characterType]?.criticalChance || 0);
+    // クラス固有能力
+    const classAbility = CLASS_ABILITIES[state.characterType];
+
+    // Uberツリー効果を加算
+    const uberEffects = calculateUberTreeEffects(state.unlockedUberSkills);
+
+    // 合計値を計算（useBattle.ts の modEffects と同じロジック）
+    const combinedMods = {
+      ...baseMods,
+      igniteChance: baseMods.igniteChance + (classAbility.igniteChance ?? 0) + uberEffects.ignite_chance,
+      criticalChance: baseMods.criticalChance + (classAbility.criticalChance ?? 0) + uberEffects.critical_chance,
+      criticalDamage: baseMods.criticalDamage + uberEffects.critical_damage,
+      attackSpeedPct: baseMods.attackSpeedPct + (classAbility.attackSpeedPct ?? 0) + uberEffects.attack_speed_pct,
+      attackSpeedMorePct: [...baseMods.attackSpeedMorePct, ...uberEffects.attack_speed_more_pct],
+      poisonChance: baseMods.poisonChance + (classAbility.poisonChance ?? 0) + uberEffects.poison_chance,
+      poisonDamagePct: baseMods.poisonDamagePct + uberEffects.poison_damage_pct,
+      poisonDamageMorePct: [...baseMods.poisonDamageMorePct, ...uberEffects.poison_damage_more_pct],
+      igniteDamagePct: baseMods.igniteDamagePct + uberEffects.ignite_damage_pct,
+      igniteDamageMorePct: [...baseMods.igniteDamageMorePct, ...uberEffects.ignite_damage_more_pct],
+      chillChance: baseMods.chillChance + (classAbility.chillChance ?? 0) + uberEffects.chill_chance,
+      chillEffectPct: baseMods.chillEffectPct + uberEffects.chill_effect_pct,
+      freezeChance: baseMods.freezeChance + uberEffects.freeze_chance,
+      hpRegen: baseMods.hpRegen + uberEffects.hp_regen,
+      hpOnHit: baseMods.hpOnHit + uberEffects.hp_on_hit,
+      damageReductionPct: baseMods.damageReductionPct + uberEffects.damage_reduction_pct,
+    };
+
     const totalCriticalDamage = 150 + combinedMods.criticalDamage; // 基礎150%
-    const totalPoisonChance = combinedMods.poisonChance + (CLASS_ABILITIES[state.characterType]?.poisonChance || 0);
     const totalHpRegen = combinedMods.hpRegen;
     const totalHpRegenPct = combinedMods.hpRegenPct;
     const totalHpOnHit = combinedMods.hpOnHit;
@@ -102,11 +127,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     const poisonDamageMoreTotal = combinedMods.poisonDamageMorePct.reduce((sum, v) => sum + v, 0);
     const attackSpeedMoreTotal = combinedMods.attackSpeedMorePct.reduce((sum, v) => sum + v, 0);
     const igniteDamageMoreTotal = combinedMods.igniteDamageMorePct.reduce((sum, v) => sum + v, 0);
-    const classAttackSpeedPct = CLASS_ABILITIES[state.characterType]?.attackSpeedPct || 0;
-    const finalAttackSpeed = getAttackSpeedFromMods({
-      ...combinedMods,
-      attackSpeedPct: combinedMods.attackSpeedPct + classAttackSpeedPct,
-    });
+    const finalAttackSpeed = getAttackSpeedFromMods(combinedMods);
 
     return {
       hp: {
@@ -124,25 +145,25 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
         inc: passiveEffects.def_increased_pct + equipDefIncPct,
         more: passiveEffects.def_more_pct.reduce((sum, v) => sum + v, 0),
       },
-      criticalChance: totalCriticalChance,
+      criticalChance: combinedMods.criticalChance,
       criticalDamage: totalCriticalDamage,
-      poisonChance: totalPoisonChance,
+      poisonChance: combinedMods.poisonChance,
       poisonDamagePct: combinedMods.poisonDamagePct,
       poisonDamageMore: poisonDamageMoreTotal,
       poisonMaxStacks: combinedMods.poisonMaxStacks,
       poisonDamageReduction: combinedMods.poisonDamageReduction,
       poisonLifesteal: combinedMods.poisonLifesteal,
       noDirectDamage: combinedMods.noDirectDamage,
-      igniteChance: combinedMods.igniteChance + (CLASS_ABILITIES[state.characterType]?.igniteChance || 0),
+      igniteChance: combinedMods.igniteChance,
       igniteDamagePct: combinedMods.igniteDamagePct,
       igniteDamageMore: igniteDamageMoreTotal,
       igniteDurationPct: combinedMods.igniteDurationPct,
       igniteLifesteal: combinedMods.igniteLifesteal,
       damageReductionPct: combinedMods.damageReductionPct,
-      chillChance: combinedMods.chillChance + (CLASS_ABILITIES[state.characterType]?.chillChance || 0),
+      chillChance: combinedMods.chillChance,
       chillEffectPct: combinedMods.chillEffectPct,
       freezeChance: Math.min(combinedMods.freezeChance, 10),
-      attackSpeedPct: combinedMods.attackSpeedPct + (CLASS_ABILITIES[state.characterType]?.attackSpeedPct || 0),
+      attackSpeedPct: combinedMods.attackSpeedPct,
       attackSpeedMore: attackSpeedMoreTotal,
       finalAttackSpeed,
       hpRegenPerSecond,

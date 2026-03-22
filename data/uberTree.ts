@@ -59,6 +59,41 @@ export function canUnlockUberNode(nodeId: string, unlockedNodes: string[]): bool
 }
 
 /**
+ * Uberツリーノードを返却可能か判定
+ * - スタートノードは返却不可
+ * - 未解放ノードは返却不可
+ * - 依存している解放済みノードがある場合は返却不可
+ */
+export function canRefundUberNode(nodeId: string, unlockedNodes: string[]): boolean {
+  if (nodeId === UBER_TREE_START_NODE_ID) return false;
+  if (!unlockedNodes.includes(nodeId)) return false;
+
+  // このノードを除外した場合に、他の解放済みノードの前提が壊れないかチェック
+  const remaining = unlockedNodes.filter((id) => id !== nodeId);
+  for (const otherId of remaining) {
+    const otherNode = nodes.get(otherId);
+    if (!otherNode) continue;
+    // otherNode の requiredNodes にこのノードが含まれているか確認
+    const dependsOnThis = otherNode.requiredNodes.some(req => {
+      if (typeof req === 'string') return req === nodeId;
+      return (req as string[]).includes(nodeId);
+    });
+    if (!dependsOnThis) continue;
+    // 依存している場合、残りのノードで前提条件を満たせるかチェック
+    const stillMet = otherNode.requiredNodes.every(req => {
+      if (typeof req === 'string') {
+        return isNodeUnlocked(req, remaining);
+      }
+      // OR条件: いずれか1つが解放済みならOK
+      return (req as string[]).some(r => isNodeUnlocked(r, remaining));
+    });
+    if (!stillMet) return false;
+  }
+
+  return true;
+}
+
+/**
  * Uberツリーの効果を計算
  * パッシブツリーのcalculatePassiveEffectsと同様のパターン
  */
