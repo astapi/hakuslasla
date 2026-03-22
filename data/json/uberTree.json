@@ -1,11 +1,21 @@
 {
+  "startNodeId": "uber_start",
   "nodes": [
+    {
+      "id": "uber_start",
+      "name": "覚醒の起点",
+      "description": "ATK +3, DEF +2, HP +20",
+      "effect": { "atk": 3, "def": 2, "hp": 20 },
+      "requiredNodes": [],
+      "position": { "x": 0, "y": 0 },
+      "route": "core"
+    },
     {
       "id": "uber_atk_1",
       "name": "破壊の萌芽",
       "description": "ATK +5% increased",
       "effect": { "atk_increased_pct": 5 },
-      "requiredNodes": [],
+      "requiredNodes": ["uber_start"],
       "position": { "x": -1.5, "y": -1 },
       "route": "destruction"
     },
@@ -42,7 +52,7 @@
       "name": "不滅の礎",
       "description": "HP +10% increased",
       "effect": { "hp_increased_pct": 10 },
-      "requiredNodes": [],
+      "requiredNodes": ["uber_start"],
       "position": { "x": 1.5, "y": -1 },
       "route": "immortality"
     },
@@ -79,8 +89,8 @@
       "name": "鋭利なる刃",
       "description": "クリティカル率 +5%",
       "effect": { "critical_chance": 5 },
-      "requiredNodes": [],
-      "position": { "x": -1.5, "y": 1 },
+      "requiredNodes": ["uber_start"],
+      "position": { "x": -1, "y": 1 },
       "route": "critical"
     },
     {
@@ -89,7 +99,7 @@
       "description": "クリティカルダメージ +15%",
       "effect": { "critical_damage": 15 },
       "requiredNodes": ["uber_crit_1"],
-      "position": { "x": -1.5, "y": 2 },
+      "position": { "x": -1, "y": 2 },
       "route": "critical"
     },
     {
@@ -98,7 +108,7 @@
       "description": "クリティカル率 +3%, 攻撃速度 +5%",
       "effect": { "critical_chance": 3, "attack_speed_pct": 5 },
       "requiredNodes": ["uber_crit_2"],
-      "position": { "x": -1.5, "y": 3 },
+      "position": { "x": -1, "y": 3 },
       "route": "critical"
     },
     {
@@ -107,7 +117,7 @@
       "description": "クリティカル追撃: クリティカル時にATK100%の追撃を行う",
       "effect": { "uber_critical_follow_up": true },
       "requiredNodes": ["uber_crit_3"],
-      "position": { "x": -1.5, "y": 4 },
+      "position": { "x": -1, "y": 4 },
       "route": "critical"
     },
 
@@ -116,8 +126,8 @@
       "name": "猛毒の素養",
       "description": "毒付与率 +5%",
       "effect": { "poison_chance": 5 },
-      "requiredNodes": [],
-      "position": { "x": 1.5, "y": 1 },
+      "requiredNodes": ["uber_start"],
+      "position": { "x": 1, "y": 1 },
       "route": "venom"
     },
     {
@@ -126,7 +136,7 @@
       "description": "毒ダメージ +15%",
       "effect": { "poison_damage_pct": 15 },
       "requiredNodes": ["uber_poison_1"],
-      "position": { "x": 1.5, "y": 2 },
+      "position": { "x": 1, "y": 2 },
       "route": "venom"
     },
     {
@@ -135,7 +145,7 @@
       "description": "毒付与率 +5%, 毒ダメージ +10%",
       "effect": { "poison_chance": 5, "poison_damage_pct": 10 },
       "requiredNodes": ["uber_poison_2"],
-      "position": { "x": 1.5, "y": 3 },
+      "position": { "x": 1, "y": 3 },
       "route": "venom"
     },
     {
@@ -144,7 +154,7 @@
       "description": "猛毒の本能: 1回の毒付与で1.5スタックを与える。端数は蓄積され、1になると追加スタックが付与される。",
       "effect": { "poison_multi_stack": 1.5 },
       "requiredNodes": ["uber_poison_3"],
-      "position": { "x": 1.5, "y": 4 },
+      "position": { "x": 1, "y": 4 },
       "route": "venom"
     },
 
@@ -153,7 +163,7 @@
       "name": "業火の点火",
       "description": "発火確率 +5%",
       "effect": { "ignite_chance": 5 },
-      "requiredNodes": [],
+      "requiredNodes": ["uber_start"],
       "position": { "x": -2.5, "y": 1 },
       "route": "inferno"
     },
@@ -190,7 +200,7 @@
       "name": "氷結の息吹",
       "description": "チル付与率 +5%",
       "effect": { "chill_chance": 5 },
-      "requiredNodes": [],
+      "requiredNodes": ["uber_start"],
       "position": { "x": 2.5, "y": 1 },
       "route": "frostbite"
     },
