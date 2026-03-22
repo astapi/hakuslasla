@@ -51,7 +51,7 @@ const CharacterImage = ({ type }: { type: CharacterType }) => {
   return (
     <Image
       source={images.standing}
-      style={styles.characterImage}
+      style={[styles.characterImage, images.standingScale ? { transform: [{ scale: images.standingScale }] } : undefined]}
       resizeMode="contain"
     />
   );

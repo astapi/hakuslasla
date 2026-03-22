@@ -38,7 +38,7 @@
       "warrior": "Guerrier",
       "elementalist": "Élémentaliste",
       "ranger": "Rôdeur",
-      "ice_mage": "Mage de Glace"
+      "frostmage": "Mage de Givre"
     },
     "classAbility": "Capacité de classe",
     "ability": {

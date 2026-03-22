@@ -5,7 +5,7 @@ export type EquipmentSlot = 'weapon' | 'armor' | 'gloves' | 'boots' | 'accessory
 export type WeaponType = 'sword' | 'staff';
 
 // キャラクタークラス
-export type CharacterType = 'warrior' | 'elementalist' | 'ranger' | 'ice_mage';
+export type CharacterType = 'warrior' | 'elementalist' | 'ranger' | 'frostmage';
 
 // クラス別固有能力
 export interface ClassAbility {
@@ -13,7 +13,7 @@ export interface ClassAbility {
   criticalChance?: number;    // クリティカル率%（ウォリアー）
   attackSpeedPct?: number;    // 攻撃速度+%（ウォリアー）
   poisonChance?: number;      // 毒付与率%（レンジャー）
-  chillChance?: number;       // チル付与率%（氷系術師）
+  chillChance?: number;       // チル付与率%（フロストメイジ）
 }
 
 // ドロップフィルター設定

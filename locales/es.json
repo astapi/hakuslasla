@@ -38,7 +38,7 @@
       "warrior": "Guerrero",
       "elementalist": "Elementalista",
       "ranger": "Explorador",
-      "ice_mage": "Mago de Hielo"
+      "frostmage": "Mago de Escarcha"
     },
     "classAbility": "Habilidad de Clase",
     "ability": {

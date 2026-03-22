@@ -10,7 +10,7 @@ import { CharacterType } from '@/types';
 import { CLASS_INITIAL_STATS, CLASS_ABILITIES } from '@/core/player';
 import { characterImages } from '@/data/images';
 
-const CHARACTER_TYPES: CharacterType[] = ['warrior', 'elementalist', 'ranger', 'ice_mage'];
+const CHARACTER_TYPES: CharacterType[] = ['warrior', 'elementalist', 'ranger', 'frostmage'];
 
 export default function CharacterCreateScreen() {
   const { t } = useTranslation();
@@ -68,7 +68,7 @@ export default function CharacterCreateScreen() {
             >
               <Image
                 source={characterImages[type].standing}
-                style={styles.classImage}
+                style={[styles.classImage, characterImages[type].standingScale ? { transform: [{ scale: characterImages[type].standingScale! }] } : undefined]}
                 resizeMode="contain"
               />
               <Text
