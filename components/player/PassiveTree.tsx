@@ -23,8 +23,10 @@ import Svg, {
   LinearGradient,
 } from 'react-native-svg';
 import { ms, fs, isTablet } from '@/utils/scaling';
-import { settingsRepository } from '@/db';
-import { useFocusEffect } from 'expo-router';
+import { settingsRepository, badgeRepository } from '@/db';
+import { BADGES } from '@/data/badges';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // ノードのサイズ設定
 const NODE_SIZE_SMALL = 28;
@@ -184,19 +186,29 @@ const generateSmoothPath = (
 
 export const PassiveTree = () => {
   const { t } = useTranslation();
-  const { skillPoints, unlockedSkills, unlockSkill, refundSkill } = usePlayerStore();
+  const router = useRouter();
+  const { skillPoints, unlockedSkills, unlockSkill, refundSkill, characterId } = usePlayerStore();
   const nodes = getAllPassiveNodes();
   const [selectedNode, setSelectedNode] = useState<PassiveNode | null>(null);
   const [respecTokens, setRespecTokens] = useState(0);
+  const [hasUberBadge, setHasUberBadge] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
-      const loadTokens = async () => {
+      const loadData = async () => {
         const count = await settingsRepository.getRespecTokens();
         setRespecTokens(count);
+
+        if (characterId) {
+          const badges = await badgeRepository.getBadges(characterId);
+          const hasUber = badges.some(b =>
+            BADGES.some(bd => bd.id === b.badgeId && bd.condition.type === 'uber_boss_clear')
+          );
+          setHasUberBadge(hasUber);
+        }
       };
-      void loadTokens();
-    }, [])
+      void loadData();
+    }, [characterId])
   );
 
   // ズーム・パン用のshared values
@@ -363,7 +375,18 @@ export const PassiveTree = () => {
       {/* ヘッダー */}
       <View style={styles.header}>
         <Text style={styles.title}>{t('passiveTree.title')}</Text>
-        <Text style={styles.skillPoints}>{t('passiveTree.skillPoints', { count: skillPoints })}</Text>
+        <View style={styles.headerRight}>
+          {hasUberBadge && (
+            <Pressable
+              style={styles.uberTreeButton}
+              onPress={() => router.push('/uber-tree' as any)}
+            >
+              <MaterialCommunityIcons name="star-four-points" size={ms(16)} color="#FFD700" />
+              <Text style={styles.uberTreeButtonText}>{t('home.menu.uberTree')}</Text>
+            </Pressable>
+          )}
+          <Text style={styles.skillPoints}>{t('passiveTree.skillPoints', { count: skillPoints })}</Text>
+        </View>
       </View>
 
       {/* ズームヒント */}
@@ -648,6 +671,27 @@ const styles = StyleSheet.create({
     padding: ms(12),
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(12),
+  },
+  uberTreeButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(4),
+    backgroundColor: 'rgba(255, 215, 0, 0.15)',
+    paddingHorizontal: ms(10),
+    paddingVertical: ms(4),
+    borderRadius: ms(6),
+    borderWidth: 1,
+    borderColor: 'rgba(255, 215, 0, 0.3)',
+  },
+  uberTreeButtonText: {
+    fontSize: fs(12),
+    color: '#FFD700',
+    fontWeight: 'bold',
   },
   title: {
     fontSize: fs(16),

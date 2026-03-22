@@ -130,10 +130,6 @@ export default function HomeScreen() {
     router.push('/skills');
   };
 
-  const handleOpenUberTree = () => {
-    router.push('/uber-tree' as any);
-  };
-
   const handleOpenInventory = () => {
     router.push('/inventory');
   };
@@ -279,17 +275,6 @@ export default function HomeScreen() {
             )}
           </View>
           <Text style={[styles.menuLabel, skillPoints > 0 && styles.menuLabelHighlight]}>{t('home.menu.skills')}</Text>
-        </Pressable>
-
-        <Pressable
-          style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
-          onPress={handleOpenUberTree}
-          testID="home-menu-uber-tree"
-        >
-          <View style={styles.menuIconContainer}>
-            <MaterialCommunityIcons name="star-shooting" size={tabIconSize} color={colors.iconMuted} />
-          </View>
-          <Text style={styles.menuLabel}>{t('home.menu.uberTree')}</Text>
         </Pressable>
 
         <Pressable

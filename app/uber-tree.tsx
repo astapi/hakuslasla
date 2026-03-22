@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, ImageSourcePropType } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
@@ -140,8 +140,15 @@ const generateSmoothPath = (
 export default function UberTreeScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { unlockedUberSkills, uberPoints, unlockUberSkill } = usePlayerStore();
+  const { unlockedUberSkills, uberPoints, unlockUberSkill, refresh } = usePlayerStore();
   const [selectedNode, setSelectedNode] = useState<UberTreeNode | null>(null);
+
+  // 画面フォーカス時にuberPointsを最新に更新
+  useFocusEffect(
+    useCallback(() => {
+      void refresh();
+    }, [refresh])
+  );
 
   const allNodes = getAllUberTreeNodes();
 

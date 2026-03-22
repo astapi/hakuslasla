@@ -4,8 +4,8 @@
     {
       "id": "uber_start",
       "name": "覚醒の起点",
-      "description": "ATK +3, DEF +2, HP +20",
-      "effect": { "atk": 3, "def": 2, "hp": 20 },
+      "description": "",
+      "effect": {},
       "requiredNodes": [],
       "position": { "x": 0, "y": 0 },
       "route": "core"
@@ -188,7 +188,7 @@
     {
       "id": "uber_ignite_4",
       "name": "業火の覚醒",
-      "description": "灼熱加速: 発火の継続時間が半分になり、ダメージ間隔も半分になる。（DPS2倍）",
+      "description": "灼熱加速: 発火の継続時間が半分になり、ダメージ間隔も半分になる。",
       "effect": { "ignite_intensify": true },
       "requiredNodes": ["uber_ignite_3"],
       "position": { "x": -2.5, "y": 4 },
