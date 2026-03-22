@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-import { getAllUberTreeNodes, canUnlockUberNode, UberTreeNode, UBER_TREE_START_NODE_ID } from '@/data/uberTree';
+import { getAllUberTreeNodes, canUnlockUberNode, canRefundUberNode, UberTreeNode, UBER_TREE_START_NODE_ID } from '@/data/uberTree';
+import { settingsRepository } from '@/db';
 import { PassiveEffect } from '@/types';
 import {
   GestureDetector,
@@ -140,13 +141,15 @@ const generateSmoothPath = (
 export default function UberTreeScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { unlockedUberSkills, uberPoints, unlockUberSkill, refresh } = usePlayerStore();
+  const { unlockedUberSkills, uberPoints, unlockUberSkill, refundUberSkill, refresh } = usePlayerStore();
   const [selectedNode, setSelectedNode] = useState<UberTreeNode | null>(null);
+  const [respecTokens, setRespecTokens] = useState(0);
 
-  // 画面フォーカス時にuberPointsを最新に更新
+  // 画面フォーカス時にuberPointsとリスペックトークンを最新に更新
   useFocusEffect(
     useCallback(() => {
       void refresh();
+      void settingsRepository.getRespecTokens().then(setRespecTokens);
     }, [refresh])
   );
 
@@ -231,6 +234,14 @@ export default function UberTreeScreen() {
     const success = await unlockUberSkill(selectedNode.id);
     if (success) setSelectedNode(null);
   }, [selectedNode, unlockUberSkill]);
+
+  const handleRefundNode = useCallback(async (nodeId: string) => {
+    const success = await refundUberSkill(nodeId);
+    if (!success) return;
+    const count = await settingsRepository.getRespecTokens();
+    setRespecTokens(count);
+    setSelectedNode(null);
+  }, [refundUberSkill]);
 
   // ジェスチャー
   const pinchGesture = Gesture.Pinch()
@@ -454,6 +465,24 @@ export default function UberTreeScreen() {
                   )}
                 </View>
               )}
+
+              {isUnlocked(selectedNode.id) && selectedNode.id !== UBER_TREE_START_NODE_ID && (
+                <View style={styles.infoPanelActions}>
+                  {canRefundUberNode(selectedNode.id, unlockedUberSkills) ? (
+                    respecTokens > 0 ? (
+                      <Pressable style={styles.respecButton} onPress={() => handleRefundNode(selectedNode.id)}>
+                        <Text style={styles.respecButtonText}>
+                          {t('passiveTree.respecButton', { count: 1 })}
+                        </Text>
+                      </Pressable>
+                    ) : (
+                      <Text style={styles.noRespecText}>{t('passiveTree.noRespecToken')}</Text>
+                    )
+                  ) : (
+                    <Text style={styles.lockedText}>{t('passiveTree.cannotRespec')}</Text>
+                  )}
+                </View>
+              )}
             </>
           ) : (
             <Text style={styles.infoPanelPlaceholder}>{t('passiveTree.placeholder')}</Text>
@@ -600,6 +629,23 @@ const styles = StyleSheet.create({
     color: '#1a1a1a',
   },
   lockedText: {
+    fontSize: fs(13),
+    color: '#666',
+  },
+  respecButton: {
+    backgroundColor: '#4a7a9b',
+    paddingVertical: ms(8),
+    paddingHorizontal: ms(16),
+    borderRadius: ms(6),
+    borderWidth: 1,
+    borderColor: '#6ea2c2',
+  },
+  respecButtonText: {
+    fontSize: fs(14),
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  noRespecText: {
     fontSize: fs(13),
     color: '#666',
   },

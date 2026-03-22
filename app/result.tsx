@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { ModFilterTooltip } from '@/components/common/ModFilterTooltip';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
-import { UBER_DUNGEON_IDS, BASE_BOSS_BY_UBER } from '@/core/endContent';
+import { UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS, UBER_BY_UBER_UBER, BASE_BOSS_BY_UBER } from '@/core/endContent';
 import { Item } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 import { isRepeatDisabled } from '@/core/resultHelpers';
@@ -40,9 +40,13 @@ export default function ResultScreen() {
   // MODフィルターツールチップの表示状態
   const [showModFilterTooltip, setShowModFilterTooltip] = useState(false);
 
-  // Uber入場券の状態
-  const isUberDungeon = UBER_DUNGEON_IDS.includes(params.dungeonId ?? '');
-  const baseBossId = isUberDungeon ? BASE_BOSS_BY_UBER[params.dungeonId!] : undefined;
+  // Uber入場券の状態（UberUberも共通チケット）
+  const dungeonId = params.dungeonId ?? '';
+  const isUberUberDungeon = UBER_UBER_DUNGEON_IDS.includes(dungeonId);
+  const isUberDungeon = UBER_DUNGEON_IDS.includes(dungeonId) || isUberUberDungeon;
+  const baseBossId = isUberUberDungeon
+    ? (() => { const uberId = UBER_BY_UBER_UBER[dungeonId]; return uberId ? BASE_BOSS_BY_UBER[uberId] : undefined; })()
+    : (UBER_DUNGEON_IDS.includes(dungeonId) ? BASE_BOSS_BY_UBER[dungeonId] : undefined);
   const [uberTicketCount, setUberTicketCount] = useState<number | null>(null);
 
   useEffect(() => {

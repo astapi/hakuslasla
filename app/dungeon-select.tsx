@@ -5,8 +5,9 @@ import { DungeonCard } from '@/components/dungeon/DungeonCard';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { getDungeonList, DUNGEON_UNLOCK_ORDER, DEBUG_DUNGEON_IDS } from '@/data/dungeons';
-import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_UNLOCK_CHAIN, UBER_DUNGEON_IDS, isDimensionalRushDungeon, isDimensionalCorridorDungeon } from '@/data/endContents';
-import { settingsRepository, DungeonClearRecords } from '@/db';
+import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_UNLOCK_CHAIN, UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS, UBER_BY_UBER_UBER, isDimensionalRushDungeon, isDimensionalCorridorDungeon } from '@/data/endContents';
+import { BADGE_IDS_EXCEPT_UBER_UBER } from '@/data/badges';
+import { settingsRepository, badgeRepository, DungeonClearRecords } from '@/db';
 import { DungeonListItem } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 import { usePlayerStore } from '@/stores/usePlayerStore';
@@ -115,6 +116,32 @@ export default function DungeonSelectScreen() {
         continue;
       }
 
+      // UberUberダンジョンの処理（全バッジ所持が条件、Uberチケット共通）
+      if (UBER_UBER_DUNGEON_IDS.includes(dungeon.id)) {
+        const characterId = usePlayerStore.getState().characterId;
+        if (!characterId) continue;
+        const hasAllBadges = await badgeRepository.hasAllBadgesExcept(
+          characterId,
+          BADGE_IDS_EXCEPT_UBER_UBER,
+          []
+        );
+        if (!hasAllBadges) continue;
+        // UberUber → Uber → Base のチケットを使用
+        const uberDungeonId = UBER_BY_UBER_UBER[dungeon.id];
+        const baseBossId = uberDungeonId ? BASE_BOSS_BY_UBER[uberDungeonId] : undefined;
+        if (!baseBossId) continue;
+        const ticketCount = uberTickets[baseBossId] ?? 0;
+        result.push({
+          ...dungeon,
+          isLocked: false,
+          isCleared: clearRecords[dungeon.id] !== undefined,
+          requiresTicket: true,
+          ticketCount,
+          isDisabled: ticketCount <= 0,
+        });
+        continue;
+      }
+
       // 通常ダンジョンの処理
       const isInOrder = DUNGEON_UNLOCK_ORDER.includes(dungeon.id);
       if (!isInOrder) continue;
@@ -149,14 +176,21 @@ export default function DungeonSelectScreen() {
       if (!baseBossId) return;
       const consumed = await settingsRepository.consumeUberTicket(baseBossId);
       if (!consumed) return;
+    } else if (UBER_UBER_DUNGEON_IDS.includes(dungeonId)) {
+      const uberDungeonId = UBER_BY_UBER_UBER[dungeonId];
+      const baseBossId = uberDungeonId ? BASE_BOSS_BY_UBER[uberDungeonId] : undefined;
+      if (!baseBossId) return;
+      const consumed = await settingsRepository.consumeUberTicket(baseBossId);
+      if (!consumed) return;
     }
 
     const dungeon = dungeons.find((d) => d.id === dungeonId);
+    const isUber = UBER_DUNGEON_IDS.includes(dungeonId) || UBER_UBER_DUNGEON_IDS.includes(dungeonId);
     Analytics.logDungeonStart({
       dungeon_id: dungeonId,
       dungeon_name: dungeon?.name || dungeonId,
       player_level: usePlayerStore.getState().level,
-      is_uber: UBER_DUNGEON_IDS.includes(dungeonId),
+      is_uber: isUber,
     });
 
     // 戦闘開始時はダンジョン選択を履歴から消す

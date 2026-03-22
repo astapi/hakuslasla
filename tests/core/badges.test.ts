@@ -22,9 +22,10 @@ describe('バッジシステム', () => {
     expect(ALL_BADGE_IDS).toContain('badge_uber_uber_goblin_king');
   });
 
-  it('BADGE_IDS_EXCEPT_UBER_UBER はUberUberゴブリンキングバッジを除外する', () => {
+  it('BADGE_IDS_EXCEPT_UBER_UBER はUberUberゴブリンキングバッジと次元回廊バッジを除外する', () => {
     expect(BADGE_IDS_EXCEPT_UBER_UBER).not.toContain('badge_uber_uber_goblin_king');
-    expect(BADGE_IDS_EXCEPT_UBER_UBER.length).toBe(7);
+    expect(BADGE_IDS_EXCEPT_UBER_UBER).not.toContain('badge_dimensional_4000');
+    expect(BADGE_IDS_EXCEPT_UBER_UBER.length).toBe(6);
   });
 
   it('getBadgeById は既知のバッジを返す', () => {

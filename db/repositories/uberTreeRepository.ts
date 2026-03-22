@@ -34,6 +34,22 @@ export const uberTreeRepository = {
   },
 
   /**
+   * Uberツリーノードを個別削除
+   */
+  async remove(characterId: number, skillId: string): Promise<boolean> {
+    const db = await getDatabase();
+    await db.runAsync(
+      'DELETE FROM character_uber_skills WHERE character_id = ? AND skill_id = ?',
+      characterId,
+      skillId
+    );
+    const result = await db.getFirstAsync<{ changes: number }>(
+      'SELECT changes() as changes'
+    );
+    return (result?.changes ?? 0) > 0;
+  },
+
+  /**
    * Uberツリーノードをリセット（全削除）
    */
   async clear(characterId: number): Promise<void> {
