@@ -194,6 +194,30 @@ function calculateItemStats(
         case 'warlord_enrage':
           desc = `[${tierLabel}] ${t('modDescriptions.warlordEnrage')}`;
           break;
+        case 'critical_follow_up_attack':
+          desc = `[${tierLabel}] ${t('modDescriptions.criticalFollowUpAttack')}`;
+          break;
+        case 'ignite_lifesteal':
+          desc = `[${tierLabel}] ${t('modDescriptions.igniteLifesteal', { value: mod.value })}`;
+          break;
+        case 'hp_regen_to_atk_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.hpRegenToAtk', { value: mod.value })}`;
+          break;
+        case 'poison_damage_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.poisonDamagePct', { value: mod.value })}`;
+          break;
+        case 'poison_damage_more_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.poisonDamageMore', { value: mod.value })}`;
+          break;
+        case 'poison_damage_reduction':
+          desc = `[${tierLabel}] ${t('modDescriptions.poisonDamageReduction', { value: mod.value })}`;
+          break;
+        case 'hp_on_crit':
+          desc = `[${tierLabel}] ${t('modDescriptions.hpOnCrit', { value: mod.value })}`;
+          break;
+        case 'atk_inc_pct':
+          desc = `[${tierLabel}] ATK+${mod.value}%`;
+          break;
       }
       if (desc) {
         allMods.push({ type: mod.type, value: mod.value, tier, desc, color });
@@ -712,7 +736,7 @@ const ItemDetail = memo(({
           {stats.allMods.length > 0 && (
             <View style={styles.comparisonMods}>
               {stats.allMods.map((mod, idx) => (
-                <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={1}>{mod.desc}</Text>
+                <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={2}>{mod.desc}</Text>
               ))}
             </View>
           )}
@@ -752,7 +776,7 @@ const ItemDetail = memo(({
               {equippedStats.allMods.length > 0 && (
                 <View style={styles.comparisonMods}>
                   {equippedStats.allMods.map((mod, idx) => (
-                    <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={1}>{mod.desc}</Text>
+                    <Text key={idx} style={[styles.modText, { color: mod.color }]} numberOfLines={2}>{mod.desc}</Text>
                   ))}
                 </View>
               )}
