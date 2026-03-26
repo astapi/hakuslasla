@@ -1557,11 +1557,11 @@
     },
     "crit_1": {
       "name": "Crit Grundlagen",
-      "description": "ATK +5, Crit Rate +3%"
+      "description": "ATK +15, HP +10, Crit Rate +3%"
     },
     "crit_2": {
       "name": "Crit Zielen I",
-      "description": "Crit Rate +3%"
+      "description": "ATK +10, HP +10, Crit Rate +3%"
     },
     "crit_3": {
       "name": "Angriff erhoehen",
@@ -1569,11 +1569,11 @@
     },
     "crit_4": {
       "name": "Toedlicher Schlag I",
-      "description": "Crit DMG +15%"
+      "description": "Crit DMG +30%"
     },
     "crit_5": {
       "name": "Crit Zielen II",
-      "description": "Crit Rate +3%"
+      "description": "ATK +10, HP +10, Crit Rate +3%"
     },
     "crit_6": {
       "name": "Angriff erhoehen II",
@@ -1581,11 +1581,11 @@
     },
     "crit_7": {
       "name": "Toedlicher Schlag II",
-      "description": "Crit DMG +20%"
+      "description": "Crit DMG +50%"
     },
     "crit_key1": {
       "name": "Vernichtender Schlag",
-      "description": "Crit DMG +30%"
+      "description": "Crit DMG +80%"
     },
     "crit_8": {
       "name": "Crit Zielen III",
@@ -1597,7 +1597,7 @@
     },
     "crit_10": {
       "name": "Toedlicher Schlag III",
-      "description": "Crit DMG +20%"
+      "description": "Crit DMG +60%"
     },
     "crit_11": {
       "name": "Crit Zielen IV",
@@ -1609,7 +1609,7 @@
     },
     "crit_13": {
       "name": "Toedlicher Schlag IV",
-      "description": "Crit DMG +25%"
+      "description": "Crit DMG +80%"
     },
     "crit_a1": {
       "name": "Praezisionsschlag",
@@ -1621,11 +1621,11 @@
     },
     "crit_b1": {
       "name": "Verheerender Schlag",
-      "description": "Crit DMG +30%"
+      "description": "Crit DMG +100%"
     },
     "crit_b2": {
       "name": "Klinge der Vernichtung",
-      "description": "Crit DMG +40%"
+      "description": "Crit DMG +120%"
     },
     "crit_14": {
       "name": "Crit Zielen V",
@@ -1637,7 +1637,7 @@
     },
     "crit_16": {
       "name": "Toedlicher Schlag V",
-      "description": "Crit DMG +30%"
+      "description": "Crit DMG +130%"
     },
     "crit_17": {
       "name": "Blutdurst",
@@ -1645,11 +1645,11 @@
     },
     "crit_final1": {
       "name": "Toedliche Klinge",
-      "description": "Crit Rate +10%, Crit DMG +50%"
+      "description": "Crit Rate +10%, Crit DMG +200%"
     },
     "crit_final2": {
       "name": "Henker",
-      "description": "HP bei Crit +150, ATK 15% mehr"
+      "description": "HP bei Crit +150, ATK 15% mehr, Schadensabsorption bei Crit +30%"
     },
     "guard_1": {
       "name": "Schutz-Grundlagen",

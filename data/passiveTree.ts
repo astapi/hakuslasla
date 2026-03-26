@@ -217,6 +217,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   critical_chance: number;
   critical_damage: number;
   hp_on_crit: number;
+  critical_lifesteal_pct: number;
   hp_regen: number;
   hp_regen_pct: number;
   damage_reduction_pct: number;
@@ -263,6 +264,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   let critical_chance = 0;
   let critical_damage = 0;
   let hp_on_crit = 0;
+  let critical_lifesteal_pct = 0;
   // 回復・防御系
   let hp_regen = 0;
   let hp_regen_pct = 0;
@@ -314,6 +316,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       critical_chance += node.effect.critical_chance || 0;
       critical_damage += node.effect.critical_damage || 0;
       hp_on_crit += node.effect.hp_on_crit || 0;
+      critical_lifesteal_pct += node.effect.critical_lifesteal_pct || 0;
       // 回復・防御系
       hp_regen += node.effect.hp_regen || 0;
       hp_regen_pct += node.effect.hp_regen_pct || 0;
@@ -340,7 +343,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     poison_max_stacks, poison_damage_reduction, poison_lifesteal, no_direct_damage,
     ignite_chance, ignite_damage_pct, ignite_damage_more_pct, ignite_duration_pct, ignite_lifesteal, ignite_spread,
     ignite_stacking_damage,
-    critical_chance, critical_damage, hp_on_crit,
+    critical_chance, critical_damage, hp_on_crit, critical_lifesteal_pct,
     hp_regen, hp_regen_pct,
     damage_reduction_pct, hp_on_hit,
     attack_speed_pct, attack_speed_more_pct,

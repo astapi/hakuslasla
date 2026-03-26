@@ -56,6 +56,7 @@ export interface PassiveEffectsData {
   critical_chance: number;
   critical_damage: number;
   hp_on_crit: number;
+  critical_lifesteal_pct: number;
   hp_regen: number;
   hp_regen_pct: number;
   damage_reduction_pct: number;
@@ -100,6 +101,7 @@ export function createEmptyModEffects(): CombinedModEffects {
     criticalChance: 0,
     criticalDamage: 0,
     hpOnCrit: 0,
+    critLifestealPct: 0,
     criticalFollowUpAttack: false,
     damageReductionPct: 0,
     hpOnHit: 0,
@@ -272,6 +274,7 @@ export function combineMods(
   combined.criticalChance += passiveEffects.critical_chance;
   combined.criticalDamage += passiveEffects.critical_damage;
   combined.hpOnCrit += passiveEffects.hp_on_crit;
+  combined.critLifestealPct += passiveEffects.critical_lifesteal_pct;
   combined.damageReductionPct += passiveEffects.damage_reduction_pct;
   combined.hpOnHit += passiveEffects.hp_on_hit;
   combined.attackSpeedPct += passiveEffects.attack_speed_pct;

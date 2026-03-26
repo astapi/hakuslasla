@@ -1557,11 +1557,11 @@
     },
     "crit_1": {
       "name": "暴击基础",
-      "description": "ATK +5，Crit 几率 +3%"
+      "description": "ATK +15，HP +10，Crit 几率 +3%"
     },
     "crit_2": {
       "name": "暴击瞄准 I",
-      "description": "Crit 几率 +3%"
+      "description": "ATK +10，HP +10，Crit 几率 +3%"
     },
     "crit_3": {
       "name": "攻击提升",
@@ -1569,11 +1569,11 @@
     },
     "crit_4": {
       "name": "致命一击 I",
-      "description": "Crit DMG +15%"
+      "description": "Crit DMG +30%"
     },
     "crit_5": {
       "name": "暴击瞄准 II",
-      "description": "Crit 几率 +3%"
+      "description": "ATK +10，HP +10，Crit 几率 +3%"
     },
     "crit_6": {
       "name": "攻击提升 II",
@@ -1581,11 +1581,11 @@
     },
     "crit_7": {
       "name": "致命一击 II",
-      "description": "Crit DMG +20%"
+      "description": "Crit DMG +50%"
     },
     "crit_key1": {
       "name": "致死打击",
-      "description": "Crit DMG +30%"
+      "description": "Crit DMG +80%"
     },
     "crit_8": {
       "name": "暴击瞄准 III",
@@ -1597,7 +1597,7 @@
     },
     "crit_10": {
       "name": "致命一击 III",
-      "description": "Crit DMG +20%"
+      "description": "Crit DMG +60%"
     },
     "crit_11": {
       "name": "暴击瞄准 IV",
@@ -1609,7 +1609,7 @@
     },
     "crit_13": {
       "name": "致命一击 IV",
-      "description": "Crit DMG +25%"
+      "description": "Crit DMG +80%"
     },
     "crit_a1": {
       "name": "精准打击",
@@ -1621,11 +1621,11 @@
     },
     "crit_b1": {
       "name": "毁灭一击",
-      "description": "Crit DMG +30%"
+      "description": "Crit DMG +100%"
     },
     "crit_b2": {
       "name": "歼灭之刃",
-      "description": "Crit DMG +40%"
+      "description": "Crit DMG +120%"
     },
     "crit_14": {
       "name": "暴击瞄准 V",
@@ -1637,7 +1637,7 @@
     },
     "crit_16": {
       "name": "致命一击 V",
-      "description": "Crit DMG +30%"
+      "description": "Crit DMG +130%"
     },
     "crit_17": {
       "name": "嗜血",
@@ -1645,11 +1645,11 @@
     },
     "crit_final1": {
       "name": "致命之刃",
-      "description": "Crit 几率 +10%，Crit DMG +50%"
+      "description": "Crit 几率 +10%，Crit DMG +200%"
     },
     "crit_final2": {
       "name": "处刑者",
-      "description": "Crit 回 HP +150，ATK 15% more"
+      "description": "Crit 回 HP +150，ATK 15% more，Crit 时伤害吸收 +30%"
     },
     "guard_1": {
       "name": "防御基础",

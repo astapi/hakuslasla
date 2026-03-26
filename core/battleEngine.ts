@@ -475,7 +475,6 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         engine.rng,
         totalEnemyDamageReduction
       );
-      events.push(...attackResult.events);
 
       // チル/フリーズダメージ倍率（Uber氷結の覚醒）
       let chillFreezeMult = 1;
@@ -497,6 +496,19 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       const scaledFollowUpDamage = Math.floor(attackResult.followUpDamage * combinedMult);
       const totalDamage = scaledMainDamage + scaledFollowUpDamage;
       engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - totalDamage);
+
+      // イベントのダメージ値をスケール後の値に差し替え（UI側のHP表示と同期）
+      for (const ev of attackResult.events) {
+        const d = ev.data as Record<string, unknown>;
+        if (ev.type === 'critical_hit' || ev.type === 'player_attack') {
+          if (d.damage === attackResult.damage) {
+            d.damage = scaledMainDamage;
+          } else if (d.damage === attackResult.followUpDamage) {
+            d.damage = scaledFollowUpDamage;
+          }
+        }
+      }
+      events.push(...attackResult.events);
       engine.state.player.gauge = Math.max(0, engine.state.player.gauge - 100);
 
       // Uberクリティカル追撃（ATK100%、双撃の指輪とは別）
@@ -558,6 +570,19 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
           );
           const lifestealEvent = createLifestealEvent(engine.state.elapsedTicks, scaledLifesteal);
           if (lifestealEvent) events.push(lifestealEvent);
+        }
+      }
+
+      // クリティカル時ダメージ吸収%
+      if (attackResult.isCritical && effectiveMods.critLifestealPct > 0 && totalDamage > 0 && engine.state.player.currentHp < engine.state.player.maxHp) {
+        const critLifesteal = Math.floor(totalDamage * effectiveMods.critLifestealPct / 100 * engine.bossEffects.playerHealingMult);
+        if (critLifesteal > 0) {
+          engine.state.player.currentHp = Math.min(
+            engine.state.player.maxHp,
+            engine.state.player.currentHp + critLifesteal
+          );
+          const critLifestealEvent = createLifestealEvent(engine.state.elapsedTicks, critLifesteal);
+          if (critLifestealEvent) events.push(critLifestealEvent);
         }
       }
 

@@ -1557,11 +1557,11 @@
     },
     "crit_1": {
       "name": "Fundamentos de Crit",
-      "description": "ATK +5, Prob. Crit +3%"
+      "description": "ATK +15, HP +10, Prob. Crit +3%"
     },
     "crit_2": {
       "name": "Puntería Crítica I",
-      "description": "Prob. Crit +3%"
+      "description": "ATK +10, HP +10, Prob. Crit +3%"
     },
     "crit_3": {
       "name": "Ataque Arriba",
@@ -1569,11 +1569,11 @@
     },
     "crit_4": {
       "name": "Golpe Mortal I",
-      "description": "DMG Crit +15%"
+      "description": "DMG Crit +30%"
     },
     "crit_5": {
       "name": "Puntería Crítica II",
-      "description": "Prob. Crit +3%"
+      "description": "ATK +10, HP +10, Prob. Crit +3%"
     },
     "crit_6": {
       "name": "Ataque Arriba II",
@@ -1581,11 +1581,11 @@
     },
     "crit_7": {
       "name": "Golpe Mortal II",
-      "description": "DMG Crit +20%"
+      "description": "DMG Crit +50%"
     },
     "crit_key1": {
       "name": "Golpe Letal",
-      "description": "DMG Crit +30%"
+      "description": "DMG Crit +80%"
     },
     "crit_8": {
       "name": "Puntería Crítica III",
@@ -1597,7 +1597,7 @@
     },
     "crit_10": {
       "name": "Golpe Mortal III",
-      "description": "DMG Crit +20%"
+      "description": "DMG Crit +60%"
     },
     "crit_11": {
       "name": "Puntería Crítica IV",
@@ -1609,7 +1609,7 @@
     },
     "crit_13": {
       "name": "Golpe Mortal IV",
-      "description": "DMG Crit +25%"
+      "description": "DMG Crit +80%"
     },
     "crit_a1": {
       "name": "Golpe de Precisión",
@@ -1621,11 +1621,11 @@
     },
     "crit_b1": {
       "name": "Golpe Devastador",
-      "description": "DMG Crit +30%"
+      "description": "DMG Crit +100%"
     },
     "crit_b2": {
       "name": "Espada de Aniquilación",
-      "description": "DMG Crit +40%"
+      "description": "DMG Crit +120%"
     },
     "crit_14": {
       "name": "Puntería Crítica V",
@@ -1637,7 +1637,7 @@
     },
     "crit_16": {
       "name": "Golpe Mortal V",
-      "description": "DMG Crit +30%"
+      "description": "DMG Crit +130%"
     },
     "crit_17": {
       "name": "Sed de Sangre",
@@ -1645,11 +1645,11 @@
     },
     "crit_final1": {
       "name": "Espada Letal",
-      "description": "Prob. Crit +10%, DMG Crit +50%"
+      "description": "Prob. Crit +10%, DMG Crit +200%"
     },
     "crit_final2": {
       "name": "Ejecutor",
-      "description": "HP en Crit +150, ATK 15% more"
+      "description": "HP en Crit +150, ATK 15% more, Absorción de daño en Crit +30%"
     },
     "guard_1": {
       "name": "Fundamentos de Guardia",

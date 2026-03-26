@@ -224,6 +224,7 @@ export interface PassiveEffect {
   critical_chance?: number;    // クリティカル率（%）
   critical_damage?: number;    // クリティカルダメージ+X%
   hp_on_crit?: number;         // クリティカル時HP回復（固定値）
+  critical_lifesteal_pct?: number; // クリティカル時ダメージ吸収%
   // 回復・防御系
   hp_regen?: number;           // 毎秒HP回復
   hp_regen_pct?: number;       // 毎秒HP X%回復
