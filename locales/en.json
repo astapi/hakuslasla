@@ -1557,11 +1557,11 @@
     },
     "crit_1": {
       "name": "Critical Basics",
-      "description": "ATK +5, Critical Chance +3%"
+      "description": "ATK +15, HP +10, Critical Chance +3%"
     },
     "crit_2": {
       "name": "Critical Aim I",
-      "description": "Critical Chance +3%"
+      "description": "ATK +10, HP +10, Critical Chance +3%"
     },
     "crit_3": {
       "name": "Attack Up",
@@ -1569,11 +1569,11 @@
     },
     "crit_4": {
       "name": "Deadly Blow I",
-      "description": "Critical Damage +15%"
+      "description": "Critical Damage +30%"
     },
     "crit_5": {
       "name": "Critical Aim II",
-      "description": "Critical Chance +3%"
+      "description": "ATK +10, HP +10, Critical Chance +3%"
     },
     "crit_6": {
       "name": "Attack Up II",
@@ -1581,11 +1581,11 @@
     },
     "crit_7": {
       "name": "Deadly Blow II",
-      "description": "Critical Damage +20%"
+      "description": "Critical Damage +50%"
     },
     "crit_key1": {
       "name": "Lethal Blow",
-      "description": "Critical Damage +30%"
+      "description": "Critical Damage +80%"
     },
     "crit_8": {
       "name": "Critical Aim III",
@@ -1597,7 +1597,7 @@
     },
     "crit_10": {
       "name": "Deadly Blow III",
-      "description": "Critical Damage +20%"
+      "description": "Critical Damage +60%"
     },
     "crit_11": {
       "name": "Critical Aim IV",
@@ -1609,7 +1609,7 @@
     },
     "crit_13": {
       "name": "Deadly Blow IV",
-      "description": "Critical Damage +25%"
+      "description": "Critical Damage +80%"
     },
     "crit_a1": {
       "name": "Precision Strike",
@@ -1621,11 +1621,11 @@
     },
     "crit_b1": {
       "name": "Devastating Blow",
-      "description": "Critical Damage +30%"
+      "description": "Critical Damage +100%"
     },
     "crit_b2": {
       "name": "Blade of Annihilation",
-      "description": "Critical Damage +40%"
+      "description": "Critical Damage +120%"
     },
     "crit_14": {
       "name": "Critical Aim V",
@@ -1637,7 +1637,7 @@
     },
     "crit_16": {
       "name": "Deadly Blow V",
-      "description": "Critical Damage +30%"
+      "description": "Critical Damage +130%"
     },
     "crit_17": {
       "name": "Blood Thirst",
@@ -1645,11 +1645,11 @@
     },
     "crit_final1": {
       "name": "Lethal Blade",
-      "description": "Critical Chance +10%, Critical Damage +50%"
+      "description": "Critical Chance +10%, Critical Damage +200%"
     },
     "crit_final2": {
       "name": "Executioner",
-      "description": "HP on Crit +150, ATK 15% more"
+      "description": "HP on Crit +150, ATK 15% more, Damage Absorption on Crit +30%"
     },
     "guard_1": {
       "name": "Guard Basics",

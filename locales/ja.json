@@ -1558,11 +1558,11 @@
     },
     "crit_1": {
       "name": "急所の心得",
-      "description": "ATK +5, クリティカル率 +3%"
+      "description": "ATK +15, HP +10, クリティカル率 +3%"
     },
     "crit_2": {
       "name": "急所狙い I",
-      "description": "クリティカル率 +3%"
+      "description": "ATK +10, HP +10, クリティカル率 +3%"
     },
     "crit_3": {
       "name": "攻撃強化",
@@ -1570,11 +1570,11 @@
     },
     "crit_4": {
       "name": "致命打 I",
-      "description": "クリティカルダメージ +15%"
+      "description": "クリティカルダメージ +30%"
     },
     "crit_5": {
       "name": "急所狙い II",
-      "description": "クリティカル率 +3%"
+      "description": "ATK +10, HP +10, クリティカル率 +3%"
     },
     "crit_6": {
       "name": "攻撃強化 II",
@@ -1582,11 +1582,11 @@
     },
     "crit_7": {
       "name": "致命打 II",
-      "description": "クリティカルダメージ +20%"
+      "description": "クリティカルダメージ +50%"
     },
     "crit_key1": {
       "name": "必殺の一撃",
-      "description": "クリティカルダメージ +30%"
+      "description": "クリティカルダメージ +80%"
     },
     "crit_8": {
       "name": "急所狙い III",
@@ -1598,7 +1598,7 @@
     },
     "crit_10": {
       "name": "致命打 III",
-      "description": "クリティカルダメージ +20%"
+      "description": "クリティカルダメージ +60%"
     },
     "crit_11": {
       "name": "急所狙い IV",
@@ -1610,7 +1610,7 @@
     },
     "crit_13": {
       "name": "致命打 IV",
-      "description": "クリティカルダメージ +25%"
+      "description": "クリティカルダメージ +80%"
     },
     "crit_a1": {
       "name": "精密打撃",
@@ -1622,11 +1622,11 @@
     },
     "crit_b1": {
       "name": "破壊的一撃",
-      "description": "クリティカルダメージ +30%"
+      "description": "クリティカルダメージ +100%"
     },
     "crit_b2": {
       "name": "壊滅の刃",
-      "description": "クリティカルダメージ +40%"
+      "description": "クリティカルダメージ +120%"
     },
     "crit_14": {
       "name": "急所狙い V",
@@ -1638,7 +1638,7 @@
     },
     "crit_16": {
       "name": "致命打 V",
-      "description": "クリティカルダメージ +30%"
+      "description": "クリティカルダメージ +130%"
     },
     "crit_17": {
       "name": "血の渇望",
@@ -1646,11 +1646,11 @@
     },
     "crit_final1": {
       "name": "必殺の刃",
-      "description": "クリティカル率 +10%, クリティカルダメージ +50%"
+      "description": "クリティカル率 +10%, クリティカルダメージ +200%"
     },
     "crit_final2": {
       "name": "処刑人",
-      "description": "クリティカル時HP +150回復, ATK 15% more"
+      "description": "クリティカル時HP +150回復, ATK 15% more, クリティカル時ダメージ吸収 +30%"
     },
     "guard_1": {
       "name": "守りの心得",

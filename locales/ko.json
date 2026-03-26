@@ -1557,11 +1557,11 @@
     },
     "crit_1": {
       "name": "치명타 기초",
-      "description": "ATK +5, Crit 확률 +3%"
+      "description": "ATK +15, HP +10, Crit 확률 +3%"
     },
     "crit_2": {
       "name": "치명타 조준 I",
-      "description": "Crit 확률 +3%"
+      "description": "ATK +10, HP +10, Crit 확률 +3%"
     },
     "crit_3": {
       "name": "공격력 증가",
@@ -1569,11 +1569,11 @@
     },
     "crit_4": {
       "name": "치명타 일격 I",
-      "description": "Crit DMG +15%"
+      "description": "Crit DMG +30%"
     },
     "crit_5": {
       "name": "치명타 조준 II",
-      "description": "Crit 확률 +3%"
+      "description": "ATK +10, HP +10, Crit 확률 +3%"
     },
     "crit_6": {
       "name": "공격력 증가 II",
@@ -1581,11 +1581,11 @@
     },
     "crit_7": {
       "name": "치명타 일격 II",
-      "description": "Crit DMG +20%"
+      "description": "Crit DMG +50%"
     },
     "crit_key1": {
       "name": "필살 일격",
-      "description": "Crit DMG +30%"
+      "description": "Crit DMG +80%"
     },
     "crit_8": {
       "name": "치명타 조준 III",
@@ -1597,7 +1597,7 @@
     },
     "crit_10": {
       "name": "치명타 일격 III",
-      "description": "Crit DMG +20%"
+      "description": "Crit DMG +60%"
     },
     "crit_11": {
       "name": "치명타 조준 IV",
@@ -1609,7 +1609,7 @@
     },
     "crit_13": {
       "name": "치명타 일격 IV",
-      "description": "Crit DMG +25%"
+      "description": "Crit DMG +80%"
     },
     "crit_a1": {
       "name": "정밀 타격",
@@ -1621,11 +1621,11 @@
     },
     "crit_b1": {
       "name": "파괴적 일격",
-      "description": "Crit DMG +30%"
+      "description": "Crit DMG +100%"
     },
     "crit_b2": {
       "name": "섬멸의 칼날",
-      "description": "Crit DMG +40%"
+      "description": "Crit DMG +120%"
     },
     "crit_14": {
       "name": "치명타 조준 V",
@@ -1637,7 +1637,7 @@
     },
     "crit_16": {
       "name": "치명타 일격 V",
-      "description": "Crit DMG +30%"
+      "description": "Crit DMG +130%"
     },
     "crit_17": {
       "name": "피의 갈망",
@@ -1645,11 +1645,11 @@
     },
     "crit_final1": {
       "name": "치명의 칼날",
-      "description": "Crit 확률 +10%, Crit DMG +50%"
+      "description": "Crit 확률 +10%, Crit DMG +200%"
     },
     "crit_final2": {
       "name": "처형자",
-      "description": "Crit 시 HP +150, ATK 15% more"
+      "description": "Crit 시 HP +150, ATK 15% more, Crit 시 피해 흡수 +30%"
     },
     "guard_1": {
       "name": "방어 기초",

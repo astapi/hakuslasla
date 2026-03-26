@@ -225,6 +225,7 @@ export interface CombinedModEffects {
   criticalChance: number;    // 発生率%
   criticalDamage: number;    // ダメージ+%
   hpOnCrit: number;          // クリティカル時HP回復（固定値）
+  critLifestealPct: number;  // クリティカル時ダメージ吸収%
   criticalFollowUpAttack: boolean;  // クリティカル時追撃（ATK×0.5の追加ダメージ + HIT時効果再発動）
 
   // 防御・吸収
