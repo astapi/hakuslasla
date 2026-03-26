@@ -230,6 +230,7 @@ export interface PassiveEffect {
   hp_regen_pct?: number;       // 毎秒HP X%回復
   damage_reduction_pct?: number; // ダメージ軽減+X%
   hp_on_hit?: number;          // HIT時HP回復（固定値）
+  retaliate_def_pct?: number;  // 被ダメ時DEFのX%を反撃ダメージ
   // 攻撃速度系
   attack_speed_pct?: number;       // AS +X% increased
   attack_speed_more_pct?: number;  // AS X% more

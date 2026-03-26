@@ -61,6 +61,7 @@ export interface PassiveEffectsData {
   hp_regen_pct: number;
   damage_reduction_pct: number;
   hp_on_hit: number;
+  retaliate_def_pct: number;
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
   // チル系
@@ -105,6 +106,7 @@ export function createEmptyModEffects(): CombinedModEffects {
     criticalFollowUpAttack: false,
     damageReductionPct: 0,
     hpOnHit: 0,
+    retaliateDefPct: 0,
     hpRegenToAtkPct: 0,
     attackSpeedPct: 0,
     attackSpeedMorePct: [],
@@ -277,6 +279,7 @@ export function combineMods(
   combined.critLifestealPct += passiveEffects.critical_lifesteal_pct;
   combined.damageReductionPct += passiveEffects.damage_reduction_pct;
   combined.hpOnHit += passiveEffects.hp_on_hit;
+  combined.retaliateDefPct += passiveEffects.retaliate_def_pct;
   combined.attackSpeedPct += passiveEffects.attack_speed_pct;
   combined.attackSpeedMorePct.push(...passiveEffects.attack_speed_more_pct);
   // チル系

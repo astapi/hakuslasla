@@ -1432,6 +1432,7 @@
     "freezeApplied": "{{enemy}} est congelé ! Incapable d'agir !",
     "freezeExpired": "La congélation de {{enemy}} a expiré",
     "reflectedDamage": "La marque de {{enemy}} se reflète ! Vous subissez {{damage}} dégâts !",
+    "retaliateDamage": "Représailles ! {{damage}} dégâts infligés à {{enemy}} !",
     "enemyHealRegen": "{{enemy}} a régénéré {{amount}} HP !",
     "enemyHealOnHit": "{{enemy}} a absorbé {{amount}} HP !",
     "igniteApplied": "Ignite appliqué à {{enemy}} ! ({{damage}} dégâts × {{duration}}s)",
@@ -1652,100 +1653,136 @@
       "description": "HP sur Crit +150, ATK 15% more, Absorption de dégâts sur Crit +30%"
     },
     "guard_1": {
-      "name": "Bases de la garde",
-      "description": "DEF +5, Réduction de dégâts +2%"
+      "name": "Bases de la Garde",
+      "description": "DEF +5, Réduction de dégâts +1%"
     },
     "guard_2": {
-      "name": "Garde solide I",
-      "description": "Réduction de dégâts +2%"
+      "name": "Garde Ferme I",
+      "description": "Réduction de dégâts +1%"
     },
     "guard_3": {
-      "name": "DEF Up",
-      "description": "DEF +4"
+      "name": "Renfort de Défense",
+      "description": "DEF +4, DEF +5% increased"
     },
     "guard_4": {
-      "name": "HP Up",
+      "name": "Renfort de HP",
       "description": "HP +25"
     },
     "guard_5": {
-      "name": "Garde solide II",
-      "description": "Réduction de dégâts +2%"
+      "name": "Garde Ferme II",
+      "description": "Réduction de dégâts +1%"
     },
     "guard_6": {
-      "name": "DEF Up II",
-      "description": "DEF +5"
+      "name": "Renfort de Défense II",
+      "description": "DEF +5, DEF +5% increased"
     },
     "guard_7": {
-      "name": "HP Up II",
+      "name": "Renfort de HP II",
       "description": "HP +30"
     },
     "guard_key1": {
-      "name": "Bouclier de fer",
-      "description": "Réduction de dégâts +8%"
+      "name": "Bouclier de Fer",
+      "description": "Réduction de dégâts +3%"
     },
     "guard_8": {
-      "name": "Garde solide III",
-      "description": "Réduction de dégâts +3%"
+      "name": "Garde Ferme III",
+      "description": "Réduction de dégâts +2%"
     },
-    "guard_9": {
-      "name": "Amplification de DEF",
-      "description": "DEF +20% increased"
+    "guard_iron_1": {
+      "name": "Posture Solide",
+      "description": "DEF +8, DEF +5% increased"
     },
-    "guard_10": {
-      "name": "Amplification de vitalité",
-      "description": "HP +20% increased"
+    "guard_iron_2": {
+      "name": "Renfort de Défense III",
+      "description": "DEF +10"
     },
-    "guard_11": {
-      "name": "Garde solide IV",
-      "description": "Réduction de dégâts +3%"
+    "guard_iron_3": {
+      "name": "Amplification Défensive",
+      "description": "DEF +15% increased"
     },
-    "guard_12": {
-      "name": "DEF Up III",
-      "description": "DEF +8"
-    },
-    "guard_13": {
-      "name": "HP Up III",
-      "description": "HP +40"
-    },
-    "guard_a1": {
-      "name": "Corps d'acier",
-      "description": "DEF +25% increased"
-    },
-    "guard_a2": {
-      "name": "Forteresse immuable",
+    "guard_iron_4": {
+      "name": "Mur d'Acier",
       "description": "DEF +12"
     },
-    "guard_b1": {
-      "name": "Vie abondante",
-      "description": "HP +25% increased"
+    "guard_iron_5": {
+      "name": "Maîtrise Défensive",
+      "description": "DEF +10% increased"
     },
-    "guard_b2": {
-      "name": "Garde de la vie",
-      "description": "HP +60"
+    "guard_iron_ks": {
+      "name": "Gardien de Fer",
+      "description": "Réduction de dégâts +5%, DEF 5% more"
     },
-    "guard_14": {
-      "name": "Garde solide V",
-      "description": "Réduction de dégâts +4%"
+    "guard_fort_1": {
+      "name": "Corps Résistant",
+      "description": "HP +30"
     },
-    "guard_15": {
-      "name": "Apogée de la DEF",
-      "description": "DEF +15"
+    "guard_fort_2": {
+      "name": "Renfort de Vitalité",
+      "description": "HP +40"
     },
-    "guard_16": {
-      "name": "Garde solide VI",
-      "description": "Réduction de dégâts +5%"
+    "guard_fort_3": {
+      "name": "Amplification de Vitalité",
+      "description": "HP +10% increased"
     },
-    "guard_17": {
-      "name": "Apogée de la vie",
-      "description": "HP +80"
+    "guard_fort_4": {
+      "name": "Vitalité Profonde",
+      "description": "HP +50"
     },
-    "guard_final1": {
-      "name": "Gardien de fer",
-      "description": "Réduction de dégâts +10%, DEF 20% more"
+    "guard_fort_5": {
+      "name": "Maîtrise de Vitalité",
+      "description": "HP +15% increased"
     },
-    "guard_final2": {
-      "name": "Mur indestructible",
-      "description": "HP 20% more"
+    "guard_fort_ks": {
+      "name": "Muraille Indestructible",
+      "description": "Réduction de dégâts +3%, HP 20% more"
+    },
+    "guard_regen_1": {
+      "name": "Bases de la Récupération",
+      "description": "Régénération HP +50/s"
+    },
+    "guard_regen_2": {
+      "name": "Régénération",
+      "description": "Régénération HP +80/s"
+    },
+    "guard_regen_3": {
+      "name": "Absorption",
+      "description": "HP au toucher +20"
+    },
+    "guard_regen_4": {
+      "name": "Soin Amélioré",
+      "description": "Régénération HP +100/s"
+    },
+    "guard_regen_5": {
+      "name": "Absorption Vitale",
+      "description": "HP au toucher +30"
+    },
+    "guard_regen_ks": {
+      "name": "Source de Vie",
+      "description": "Réduction de dégâts +2%, Régénération HP +300/s, HP au toucher +100"
+    },
+    "guard_retal_1": {
+      "name": "Posture de Défi",
+      "description": "DEF +5, ATK +5"
+    },
+    "guard_retal_2": {
+      "name": "Volonté d'Acier",
+      "description": "DEF +10"
+    },
+    "guard_retal_3": {
+      "name": "Posture de Contre-attaque",
+      "description": "ATK +8"
+    },
+    "guard_retal_4": {
+      "name": "Carrure Robuste",
+      "description": "DEF +10% increased"
+    },
+    "guard_retal_5": {
+      "name": "Force de Représailles",
+      "description": "ATK +10"
+    },
+    "guard_retal_ks": {
+      "name": "Représailles d'Acier",
+      "description": "Réduction de dégâts +2%, Renvoie 30% de la DEF en dégâts lors d'un impact"
     },
     "vamp_1": {
       "name": "Bases du vol de vie",

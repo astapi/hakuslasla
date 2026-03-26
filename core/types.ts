@@ -231,6 +231,7 @@ export interface CombinedModEffects {
   // 防御・吸収
   damageReductionPct: number;  // ダメージ軽減%
   hpOnHit: number;             // HIT時HP回復（固定値）
+  retaliateDefPct: number;     // 被ダメ時DEFのX%を反撃ダメージ
 
   // HP回復変換
   hpRegenToAtkPct: number;  // 毎秒HP回復量の一定%をATKに追加
@@ -365,7 +366,8 @@ export type BattleEventType =
   | 'enemy_defeated'
   | 'warlord_enrage'
   | 'wound_applied'
-  | 'wound_decayed';
+  | 'wound_decayed'
+  | 'retaliate';
 
 /**
  * 戦闘イベント（ログ用）

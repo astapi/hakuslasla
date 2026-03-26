@@ -1432,6 +1432,7 @@
     "freezeApplied": "{{enemy}}被冻结了！无法行动！",
     "freezeExpired": "{{enemy}}的冻结状态解除了",
     "reflectedDamage": "{{enemy}} 的印记反弹了！你受到 {{damage}} 点伤害！",
+    "retaliateDamage": "反击！对{{enemy}}造成{{damage}}点伤害！",
     "enemyHealRegen": "{{enemy}} 回复了 {{amount}} HP！",
     "enemyHealOnHit": "{{enemy}} 吸取了 {{amount}} HP！",
     "igniteApplied": "对 {{enemy}} 施加了点燃！（{{damage}} 伤害 × {{duration}}秒）",
@@ -1652,100 +1653,136 @@
       "description": "Crit 回 HP +150，ATK 15% more，Crit 时伤害吸收 +30%"
     },
     "guard_1": {
-      "name": "防御基础",
-      "description": "DEF +5，减伤 +2%"
+      "name": "防御入门",
+      "description": "DEF +5, 伤害减免 +1%"
     },
     "guard_2": {
       "name": "坚守 I",
-      "description": "减伤 +2%"
+      "description": "伤害减免 +1%"
     },
     "guard_3": {
-      "name": "防御提升",
-      "description": "DEF +4"
+      "name": "防御强化",
+      "description": "DEF +4, DEF +5% increased"
     },
     "guard_4": {
-      "name": "HP提升",
+      "name": "体力强化",
       "description": "HP +25"
     },
     "guard_5": {
       "name": "坚守 II",
-      "description": "减伤 +2%"
+      "description": "伤害减免 +1%"
     },
     "guard_6": {
-      "name": "防御提升 II",
-      "description": "DEF +5"
+      "name": "防御强化 II",
+      "description": "DEF +5, DEF +5% increased"
     },
     "guard_7": {
-      "name": "HP提升 II",
+      "name": "体力强化 II",
       "description": "HP +30"
     },
     "guard_key1": {
       "name": "铁壁之盾",
-      "description": "减伤 +8%"
+      "description": "伤害减免 +3%"
     },
     "guard_8": {
       "name": "坚守 III",
-      "description": "减伤 +3%"
+      "description": "伤害减免 +2%"
     },
-    "guard_9": {
-      "name": "防御强化",
-      "description": "DEF +20% increased"
+    "guard_iron_1": {
+      "name": "坚固架势",
+      "description": "DEF +8, DEF +5% increased"
     },
-    "guard_10": {
-      "name": "生命强化",
-      "description": "HP +20% increased"
+    "guard_iron_2": {
+      "name": "防御强化 III",
+      "description": "DEF +10"
     },
-    "guard_11": {
-      "name": "坚守 IV",
-      "description": "减伤 +3%"
+    "guard_iron_3": {
+      "name": "防御增幅",
+      "description": "DEF +15% increased"
     },
-    "guard_12": {
-      "name": "防御提升 III",
-      "description": "DEF +8"
-    },
-    "guard_13": {
-      "name": "HP提升 III",
-      "description": "HP +40"
-    },
-    "guard_a1": {
-      "name": "钢铁之躯",
-      "description": "DEF +25% increased"
-    },
-    "guard_a2": {
-      "name": "不动堡垒",
+    "guard_iron_4": {
+      "name": "钢铁之壁",
       "description": "DEF +12"
     },
-    "guard_b1": {
-      "name": "丰沛生命",
-      "description": "HP +25% increased"
+    "guard_iron_5": {
+      "name": "防御磨炼",
+      "description": "DEF +10% increased"
     },
-    "guard_b2": {
-      "name": "生命守护",
-      "description": "HP +60"
-    },
-    "guard_14": {
-      "name": "坚守 V",
-      "description": "减伤 +4%"
-    },
-    "guard_15": {
-      "name": "防御巅峰",
-      "description": "DEF +15"
-    },
-    "guard_16": {
-      "name": "坚守 VI",
-      "description": "减伤 +5%"
-    },
-    "guard_17": {
-      "name": "生命巅峰",
-      "description": "HP +80"
-    },
-    "guard_final1": {
+    "guard_iron_ks": {
       "name": "铁壁守护者",
-      "description": "减伤 +10%，DEF 20% more"
+      "description": "伤害减免 +5%, DEF 5% more"
     },
-    "guard_final2": {
-      "name": "不破之墙",
-      "description": "HP 20% more"
+    "guard_fort_1": {
+      "name": "强韧之躯",
+      "description": "HP +30"
+    },
+    "guard_fort_2": {
+      "name": "生命力强化",
+      "description": "HP +40"
+    },
+    "guard_fort_3": {
+      "name": "生命力增幅",
+      "description": "HP +10% increased"
+    },
+    "guard_fort_4": {
+      "name": "生命厚度",
+      "description": "HP +50"
+    },
+    "guard_fort_5": {
+      "name": "生命力磨炼",
+      "description": "HP +15% increased"
+    },
+    "guard_fort_ks": {
+      "name": "不灭城墙",
+      "description": "伤害减免 +3%, HP 20% more"
+    },
+    "guard_regen_1": {
+      "name": "回复入门",
+      "description": "每秒HP +50回复"
+    },
+    "guard_regen_2": {
+      "name": "再生力",
+      "description": "每秒HP +80回复"
+    },
+    "guard_regen_3": {
+      "name": "吸收之技",
+      "description": "命中时HP +20回复"
+    },
+    "guard_regen_4": {
+      "name": "治愈促进",
+      "description": "每秒HP +100回复"
+    },
+    "guard_regen_5": {
+      "name": "生命吸收",
+      "description": "命中时HP +30回复"
+    },
+    "guard_regen_ks": {
+      "name": "生命之泉",
+      "description": "伤害减免 +2%, 每秒HP +300回复, 命中时HP +100回复"
+    },
+    "guard_retal_1": {
+      "name": "反骨架势",
+      "description": "DEF +5, ATK +5"
+    },
+    "guard_retal_2": {
+      "name": "钢铁意志",
+      "description": "DEF +10"
+    },
+    "guard_retal_3": {
+      "name": "反击气势",
+      "description": "ATK +8"
+    },
+    "guard_retal_4": {
+      "name": "坚强体魄",
+      "description": "DEF +10% increased"
+    },
+    "guard_retal_5": {
+      "name": "反攻之力",
+      "description": "ATK +10"
+    },
+    "guard_retal_ks": {
+      "name": "钢铁报复",
+      "description": "伤害减免 +2%, 受击时DEF的30%作为反击伤害"
     },
     "vamp_1": {
       "name": "吸血基础",

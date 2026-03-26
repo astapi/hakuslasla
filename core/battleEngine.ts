@@ -809,6 +809,19 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       engine.state.enemy.gauge = Math.max(0, engine.state.enemy.gauge - 100);
       events.push(createEnemyAttackEvent(engine.state.elapsedTicks, finalEnemyDamage));
 
+      // 反撃ダメージ: 被ダメ時DEFのX%を敵に反撃
+      if (engine.playerMods.retaliateDefPct > 0 && finalEnemyDamage > 0) {
+        const retaliateDamage = Math.floor(effectivePlayerDef * engine.playerMods.retaliateDefPct / 100);
+        if (retaliateDamage > 0) {
+          engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - retaliateDamage);
+          events.push({
+            type: 'retaliate',
+            tick: engine.state.elapsedTicks,
+            data: { damage: retaliateDamage },
+          });
+        }
+      }
+
       // 重傷スタック減衰: 敵行動4回で1スタック減少
       if (engine.playerMods.heavyStrike && engine.state.enemyWoundStacks > 0) {
         engine.state.enemyWoundActionCounter += 1;

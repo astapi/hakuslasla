@@ -1179,6 +1179,20 @@ export const useBattle = (dungeonId: string) => {
           });
           break;
         }
+        case 'retaliate': {
+          const damage = Number(data.damage ?? 0);
+          if (damage > 0) {
+            dispatch({ type: 'PLAYER_ATTACK', damage, isCritical: false });
+            dispatch({
+              type: 'ADD_LOG',
+              entry: {
+                message: i18n.t('battleLog.retaliateDamage', { enemy: state.enemy.name, damage }),
+                type: 'player_attack',
+              },
+            });
+          }
+          break;
+        }
         case 'reset_player_gauge': {
           dispatch({ type: 'RESET_PLAYER_GAUGE' });
           break;

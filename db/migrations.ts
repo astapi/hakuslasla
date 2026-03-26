@@ -214,6 +214,84 @@ export const migrations: Migration[] = [
       `);
     },
   },
+  {
+    // V6 → V7: ガードツリー再構成に伴う削除ノードの自動リスペック
+    // 削除されたノードをDBから除去し、除去数分のリスペックトークンを付与
+    version: 7,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      const removedNodeIds = [
+        'guard_9', 'guard_10', 'guard_11', 'guard_12', 'guard_13',
+        'guard_a1', 'guard_a2', 'guard_b1', 'guard_b2',
+        'guard_14', 'guard_15', 'guard_16', 'guard_17',
+        'guard_final1', 'guard_final2',
+      ];
+
+      const placeholders = removedNodeIds.map(() => '?').join(',');
+
+      // キャラクターごとの削除対象ノード数をカウント
+      const perCharacter = await db.getAllAsync<{ character_id: number; count: number }>(
+        `SELECT character_id, COUNT(*) as count FROM character_skills WHERE skill_id IN (${placeholders}) GROUP BY character_id`,
+        ...removedNodeIds
+      );
+
+      if (perCharacter.length === 0) return;
+
+      // 削除されたノードをDBから除去
+      await db.runAsync(
+        `DELETE FROM character_skills WHERE skill_id IN (${placeholders})`,
+        ...removedNodeIds
+      );
+
+      // キャラクターごとにSPを返還
+      let totalRemoved = 0;
+      for (const row of perCharacter) {
+        await db.runAsync(
+          `UPDATE characters SET skill_points = skill_points + ? WHERE id = ?`,
+          row.count,
+          row.character_id
+        );
+        totalRemoved += row.count;
+      }
+
+      // 除去数分のリスペックトークンを付与
+      const currentTokens = await db.getFirstAsync<{ value: string }>(
+        `SELECT value FROM settings WHERE key = 'respec_tokens'`
+      );
+      const current = currentTokens ? parseInt(currentTokens.value, 10) || 0 : 0;
+      const newCount = current + totalRemoved;
+      await db.runAsync(
+        `INSERT OR REPLACE INTO settings (key, value) VALUES ('respec_tokens', ?)`,
+        newCount.toString()
+      );
+    },
+  },
+  {
+    // V7 → V8: SP再計算（V7でSP返還漏れがあった場合の補正）
+    // 正しいSP = レベル - 1 - 取得済みノード数(start除く)
+    version: 8,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      const characters = await db.getAllAsync<{ id: number; level: number; skill_points: number }>(
+        `SELECT id, level, skill_points FROM characters`
+      );
+
+      for (const char of characters) {
+        const skillCount = await db.getFirstAsync<{ count: number }>(
+          `SELECT COUNT(*) as count FROM character_skills WHERE character_id = ? AND skill_id != 'start'`,
+          char.id
+        );
+        const usedPoints = skillCount?.count ?? 0;
+        const correctSP = (char.level - 1) - usedPoints;
+
+        if (correctSP !== char.skill_points) {
+          await db.runAsync(
+            `UPDATE characters SET skill_points = ? WHERE id = ?`,
+            correctSP,
+            char.id
+          );
+        }
+      }
+    },
+  },
 ];
 
 /**
