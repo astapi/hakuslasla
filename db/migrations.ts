@@ -292,6 +292,71 @@ export const migrations: Migration[] = [
       }
     },
   },
+  {
+    // V8 → V9: ユニーク装備のdamage_reduction_pctを上限5%に修正
+    // インベントリ、倉庫、装備のアイテムJSONを更新
+    version: 9,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      const DR_CAP = 5;
+
+      // アイテムJSONのdamage_reduction_pctを修正する共通関数
+      function capDamageReduction(itemJson: string): string | null {
+        const item = JSON.parse(itemJson);
+        if (!item.mods || !Array.isArray(item.mods)) return null;
+
+        let changed = false;
+        for (const mod of item.mods) {
+          if (mod.type === 'damage_reduction_pct' && mod.value > DR_CAP) {
+            mod.value = DR_CAP;
+            changed = true;
+          }
+        }
+        return changed ? JSON.stringify(item) : null;
+      }
+
+      // インベントリ
+      const invRows = await db.getAllAsync<{ id: number; item_data: string }>(
+        `SELECT id, item_data FROM character_inventory`
+      );
+      for (const row of invRows) {
+        const updated = capDamageReduction(row.item_data);
+        if (updated) {
+          await db.runAsync(
+            `UPDATE character_inventory SET item_data = ? WHERE id = ?`,
+            updated, row.id
+          );
+        }
+      }
+
+      // 倉庫
+      const storageRows = await db.getAllAsync<{ id: number; item_data: string }>(
+        `SELECT id, item_data FROM storage`
+      );
+      for (const row of storageRows) {
+        const updated = capDamageReduction(row.item_data);
+        if (updated) {
+          await db.runAsync(
+            `UPDATE storage SET item_data = ? WHERE id = ?`,
+            updated, row.id
+          );
+        }
+      }
+
+      // 装備
+      const equipRows = await db.getAllAsync<{ id: number; item_data: string }>(
+        `SELECT id, item_data FROM character_equipment WHERE item_data IS NOT NULL`
+      );
+      for (const row of equipRows) {
+        const updated = capDamageReduction(row.item_data);
+        if (updated) {
+          await db.runAsync(
+            `UPDATE character_equipment SET item_data = ? WHERE id = ?`,
+            updated, row.id
+          );
+        }
+      }
+    },
+  },
 ];
 
 /**

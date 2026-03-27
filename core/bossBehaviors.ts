@@ -259,7 +259,7 @@ export const applyEnemyAttackPreEffects = (
     bossEffects.goblinSlamCounter += 1;
     if (bossEffects.goblinSlamCounter >= 10) {
       bossEffects.goblinSlamCounter = 0;
-      bossEffects.enemyNextAttackMult = 3.0;
+      bossEffects.enemyNextAttackMult = 10.0;
       events.push(createBossSkillEvent(tick, 'goblin_kings_slam'));
     }
     // 王の咆哮: 3回に1回、毒・発火状態を解除（cleansePoisonIgniteフラグ）
