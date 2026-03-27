@@ -10,7 +10,9 @@ import {
   EquipmentSet,
 } from '@/core/equipmentSets';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-import { Item } from '@/types';
+import { characterRepository } from '@/db/repositories/characterRepository';
+import { createItemInstance } from '@/data/items';
+import { Item, CharacterType, Equipment, EquipmentSlot } from '@/types';
 
 // プリセットタイプ
 export type PresetType = keyof typeof LEVEL_BASED_PRESETS;
@@ -620,4 +622,202 @@ export async function applyEquipmentPresetToCharacter(
     console.log(`Applied equipment preset: ${equipmentSet.name}`);
   }
   return true;
+}
+
+// ========================================
+// ランキングキャラクター追加
+// ========================================
+
+const FIRESTORE_PROJECT_ID = 'lootdiveapp';
+const RANKING_COLLECTION = 'dimensional_rankings';
+
+interface FirestoreValue {
+  stringValue?: string;
+  integerValue?: string;
+  doubleValue?: number;
+  booleanValue?: boolean;
+  mapValue?: { fields: Record<string, FirestoreValue> };
+  timestampValue?: string;
+  nullValue?: string;
+  arrayValue?: { values?: FirestoreValue[] };
+}
+
+function decodeFirestoreValue(val: FirestoreValue): any {
+  if (val.stringValue !== undefined) return val.stringValue;
+  if (val.integerValue !== undefined) return parseInt(val.integerValue, 10);
+  if (val.doubleValue !== undefined) return val.doubleValue;
+  if (val.booleanValue !== undefined) return val.booleanValue;
+  if (val.timestampValue !== undefined) return val.timestampValue;
+  if (val.nullValue !== undefined) return null;
+  if (val.arrayValue) {
+    return (val.arrayValue.values || []).map(decodeFirestoreValue);
+  }
+  if (val.mapValue) {
+    const obj: Record<string, any> = {};
+    for (const [k, v] of Object.entries(val.mapValue.fields)) {
+      obj[k] = decodeFirestoreValue(v);
+    }
+    return obj;
+  }
+  return null;
+}
+
+export interface RankingCharacterInfo {
+  rank: number;
+  name: string;
+  type: CharacterType;
+  floorReached: number;
+  level: number;
+  equipment: Record<string, any>;
+  unlockedSkills: string[];
+}
+
+/**
+ * Firestore REST APIからランキングTOP Nを取得
+ */
+export async function fetchTopRankings(topN: number = 3): Promise<RankingCharacterInfo[]> {
+  const url = `https://firestore.googleapis.com/v1/projects/${FIRESTORE_PROJECT_ID}/databases/(default)/documents:runQuery`;
+
+  const body = {
+    structuredQuery: {
+      from: [{ collectionId: RANKING_COLLECTION }],
+      orderBy: [{ field: { fieldPath: 'floorReached' }, direction: 'DESCENDING' }],
+      limit: topN,
+    },
+  };
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Firestore API error (${res.status})`);
+  }
+
+  const results = await res.json();
+  const entries: RankingCharacterInfo[] = [];
+
+  for (let i = 0; i < results.length; i++) {
+    const r = results[i];
+    if (!r.document) continue;
+
+    const fields = r.document.fields || {};
+    const data: Record<string, any> = {};
+    for (const [k, v] of Object.entries(fields)) {
+      data[k] = decodeFirestoreValue(v as FirestoreValue);
+    }
+
+    const build = data.build || {};
+    let rank = i + 1;
+    if (i > 0 && entries[i - 1]?.floorReached === data.floorReached) {
+      rank = entries[i - 1].rank;
+    }
+
+    entries.push({
+      rank,
+      name: data.name || '???',
+      type: (data.type as CharacterType) || 'warrior',
+      floorReached: data.floorReached || 0,
+      level: build.level || data.stats?.level || 60,
+      equipment: build.equipment || {},
+      unlockedSkills: build.unlockedSkills || [],
+    });
+  }
+
+  return entries;
+}
+
+/**
+ * ランキングの装備データからItemインスタンスを復元
+ * Firestoreのmodsがnullの場合はfixedModsのみで生成
+ */
+function restoreEquipmentFromRanking(
+  rankingEquipment: Record<string, any>
+): Equipment {
+  const equipment: Equipment = {
+    weapon: null,
+    armor: null,
+    gloves: null,
+    boots: null,
+    accessory: null,
+  };
+
+  const slots: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
+
+  for (const slot of slots) {
+    const rawItem = rankingEquipment[slot];
+    if (!rawItem || !rawItem.id) continue;
+
+    // createItemInstanceでfixedModsを含むアイテムを生成（ランダムMODは0個）
+    const item = createItemInstance(rawItem.id, 0);
+    if (item) {
+      // ランキングデータのinstanceIdを保持
+      item.instanceId = rawItem.instanceId || item.instanceId;
+      equipment[slot] = item;
+    }
+  }
+
+  return equipment;
+}
+
+/**
+ * ランキング上位キャラクターをDBに新規キャラとして追加
+ * @returns 追加されたキャラクター数
+ */
+export async function addRankingCharacters(topN: number = 3): Promise<{
+  added: number;
+  characters: { name: string; rank: number; floorReached: number }[];
+}> {
+  const rankings = await fetchTopRankings(topN);
+  const added: { name: string; rank: number; floorReached: number }[] = [];
+
+  for (const entry of rankings) {
+    // キャラクターを新規作成
+    const character = await characterRepository.create({
+      name: `[${entry.rank}位] ${entry.name}`,
+      type: entry.type,
+    });
+
+    const characterId = character.id;
+    const store = usePlayerStore.getState();
+
+    // 一時的にこのキャラクターをロード
+    await store.loadCharacter(characterId);
+
+    // レベル設定
+    await store.setDebugLevel(entry.level);
+
+    // 装備を復元・適用
+    const equipment = restoreEquipmentFromRanking(entry.equipment);
+    const equipmentSet: EquipmentSet = {
+      name: `Ranking #${entry.rank} ${entry.name}`,
+      weapon: equipment.weapon,
+      armor: equipment.armor,
+      gloves: equipment.gloves,
+      boots: equipment.boots,
+      accessory: equipment.accessory,
+    };
+    await store.applyEquipmentPreset(equipmentSet);
+
+    // スキルがあれば適用
+    if (entry.unlockedSkills.length > 0) {
+      await store.applyPassivePreset(entry.unlockedSkills);
+    }
+
+    added.push({
+      name: entry.name,
+      rank: entry.rank,
+      floorReached: entry.floorReached,
+    });
+
+    if (__DEV__) {
+      console.log(
+        `[Debug] Added ranking character: #${entry.rank} ${entry.name} (${entry.type}, ${entry.floorReached}F)`
+      );
+    }
+  }
+
+  return { added: added.length, characters: added };
 }

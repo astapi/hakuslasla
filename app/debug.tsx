@@ -24,6 +24,7 @@ import {
   applyEquipmentPresetToCharacter,
   BUILD_PRESETS,
   applyBuildPresetToCharacter,
+  addRankingCharacters,
 } from '@/utils/debugPresets';
 import {
   settingsRepository,
@@ -179,6 +180,44 @@ export default function DebugScreen() {
               console.error(error);
             } finally {
               setIsApplyingBuild(false);
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  // ランキングキャラ追加
+  const [isAddingRanking, setIsAddingRanking] = useState(false);
+
+  const handleAddRankingCharacters = async () => {
+    Alert.alert(
+      'ランキングキャラ追加',
+      '次元回廊ランキングTOP3のキャラクターを新規キャラとしてDBに追加します。\n\n※スロット上限を無視して追加します',
+      [
+        { text: 'キャンセル', style: 'cancel' },
+        {
+          text: '追加',
+          onPress: async () => {
+            setIsAddingRanking(true);
+            try {
+              const result = await addRankingCharacters(3);
+              if (result.added > 0) {
+                const names = result.characters
+                  .map((c) => `${c.rank}位: ${c.name} (${c.floorReached}F)`)
+                  .join('\n');
+                Alert.alert(
+                  '完了',
+                  `${result.added}キャラクターを追加しました\n\n${names}\n\n※キャラ選択画面から確認できます`
+                );
+              } else {
+                Alert.alert('エラー', 'ランキングデータの取得に失敗しました');
+              }
+            } catch (error) {
+              console.error('[Debug] Add ranking characters failed:', error);
+              Alert.alert('エラー', `追加に失敗しました: ${error instanceof Error ? error.message : '不明なエラー'}`);
+            } finally {
+              setIsAddingRanking(false);
             }
           },
         },
@@ -595,6 +634,38 @@ export default function DebugScreen() {
         </View>
 
         {/* ========================================
+            ランキングキャラ追加
+           ======================================== */}
+        <View style={styles.sectionHeader}>
+          <MaterialCommunityIcons name="trophy" size={20} color="#FFD700" />
+          <Text style={styles.sectionHeaderText}>ランキングキャラ追加</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>次元回廊TOP3をキャラとして追加</Text>
+          <Text style={styles.rankingHint}>
+            Firestoreからランキング上位3名のデータを取得し、{'\n'}
+            新規キャラクターとしてDBに追加します。{'\n'}
+            装備はユニーク固有MODのみ復元されます。
+          </Text>
+          <Pressable
+            style={[styles.applyButton, styles.rankingButton, isAddingRanking && styles.applyButtonDisabled]}
+            onPress={handleAddRankingCharacters}
+            disabled={isAddingRanking}
+          >
+            <MaterialCommunityIcons
+              name="trophy"
+              size={20}
+              color="#fff"
+              style={styles.applyIcon}
+            />
+            <Text style={styles.applyButtonText}>
+              {isAddingRanking ? '取得中...' : 'TOP3キャラを追加'}
+            </Text>
+          </Pressable>
+        </View>
+
+        {/* ========================================
             ユニークアイテム追加（MOD表示確認用）
            ======================================== */}
         <View style={styles.sectionHeader}>
@@ -923,6 +994,15 @@ const styles = StyleSheet.create({
   resetButton: {
     backgroundColor: '#FF5722',
     marginTop: 12,
+  },
+  rankingButton: {
+    backgroundColor: '#FF9800',
+  },
+  rankingHint: {
+    fontSize: 12,
+    color: '#888',
+    marginBottom: 12,
+    lineHeight: 18,
   },
   uniqueItemHint: {
     fontSize: 12,

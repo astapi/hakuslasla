@@ -223,6 +223,12 @@
       "maxFloor": 1
     },
     {
+      "id": "debug_uber_uber_goblin_king",
+      "name": "DEBUG: UberUber ゴブリンキング",
+      "description": "デバッグ用。UberUberゴブリンキングが単体で出現する。チケット不要。",
+      "maxFloor": 1
+    },
+    {
       "id": "dimensional_corridor",
       "name": "次元回廊",
       "description": "無限に続く次元の狭間。深層へ進むほど敵は強くなる。",
