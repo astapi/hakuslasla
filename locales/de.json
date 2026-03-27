@@ -271,6 +271,7 @@
     "hpRegen": "HP-Regen",
     "hpOnHit": "HP bei Treffer",
     "hpOnCrit": "HP bei Crit",
+    "damageDefer": "Schadensverzögerung",
     "damageReduction": "Schadensreduzierung",
     "attackSpeed": "Angriffsgeschw.",
     "attackSpeedMore": "AG mehr",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "HP bei Treffer",
+    "damage_defer_pct": "Verzög.",
     "damage_reduction_pct": "Schadensr.",
     "attack_speed_pct": "Geschw.",
     "lifesteal": "Lebensraub",
@@ -1432,6 +1434,7 @@
     "freezeApplied": "{{enemy}} ist eingefroren! Handlungsunfähig!",
     "freezeExpired": "{{enemy}}s Einfrieren ist abgeklungen",
     "reflectedDamage": "{{enemy}}'s Mal reflektiert! Du nimmst {{damage}} Schaden!",
+    "deferredDamage": "Verzögerter Schaden {{damage}}!",
     "retaliateDamage": "Vergeltung! {{damage}} Schaden an {{enemy}}!",
     "enemyHealRegen": "{{enemy}} regeneriert {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} absorbiert {{amount}} HP!",
@@ -1502,7 +1505,7 @@
     },
     "poison_10": {
       "name": "Giftresistenz",
-      "description": "Erlittener Schaden -3% waehrend Feind vergiftet"
+      "description": "Erlittener Schaden -1% waehrend Feind vergiftet"
     },
     "poison_11": {
       "name": "Giftwissen IV",
@@ -1526,11 +1529,11 @@
     },
     "poison_b1": {
       "name": "Giftschutz",
-      "description": "Erlittener Schaden -5% waehrend Feind vergiftet"
+      "description": "Erlittener Schaden -1% waehrend Feind vergiftet"
     },
     "poison_b2": {
       "name": "Giftdrachenschuppen",
-      "description": "Erlittener Schaden -7% waehrend Feind vergiftet, HP +30"
+      "description": "Erlittener Schaden -1% waehrend Feind vergiftet, HP +30"
     },
     "poison_14": {
       "name": "Giftwissen V",
@@ -1546,7 +1549,7 @@
     },
     "poison_17": {
       "name": "Giftwache",
-      "description": "Erlittener Schaden -5% waehrend Feind vergiftet"
+      "description": "Erlittener Schaden -1% waehrend Feind vergiftet"
     },
     "poison_final1": {
       "name": "Schlangeninkarnation",
@@ -2116,6 +2119,7 @@
     "igniteDamage": "Entzuendungsschaden +{{value}}%",
     "criticalChance": "Crit Rate +{{value}}%",
     "criticalDamage": "Crit DMG +{{value}}%",
+    "damageDefer": "Schadensverzögerung {{value}}%",
     "damageReduction": "Erlittener Schaden -{{value}}%",
     "attackSpeed": "Angriffsgeschw. +{{value}}%",
     "hpOnHit": "HP bei Treffer +{{value}}",

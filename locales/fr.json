@@ -271,6 +271,7 @@
     "hpRegen": "Régén. HP",
     "hpOnHit": "HP par coup",
     "hpOnCrit": "HP sur Crit",
+    "damageDefer": "Dégâts différés",
     "damageReduction": "Réduction de dégâts",
     "attackSpeed": "Vitesse d'attaque",
     "attackSpeedMore": "VA More",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "HP par coup",
+    "damage_defer_pct": "Différé",
     "damage_reduction_pct": "Réd. dégâts",
     "attack_speed_pct": "Vitesse",
     "lifesteal": "Vol de vie",
@@ -1432,6 +1434,7 @@
     "freezeApplied": "{{enemy}} est congelé ! Incapable d'agir !",
     "freezeExpired": "La congélation de {{enemy}} a expiré",
     "reflectedDamage": "La marque de {{enemy}} se reflète ! Vous subissez {{damage}} dégâts !",
+    "deferredDamage": "Dégâts différés {{damage}} !",
     "retaliateDamage": "Représailles ! {{damage}} dégâts infligés à {{enemy}} !",
     "enemyHealRegen": "{{enemy}} a régénéré {{amount}} HP !",
     "enemyHealOnHit": "{{enemy}} a absorbé {{amount}} HP !",
@@ -1502,7 +1505,7 @@
     },
     "poison_10": {
       "name": "Résistance au poison",
-      "description": "Dégâts subis -3% quand l'ennemi est empoisonné"
+      "description": "Dégâts subis -1% quand l'ennemi est empoisonné"
     },
     "poison_11": {
       "name": "Connaissance du poison IV",
@@ -1526,11 +1529,11 @@
     },
     "poison_b1": {
       "name": "Garde empoisonnée",
-      "description": "Dégâts subis -5% quand l'ennemi est empoisonné"
+      "description": "Dégâts subis -1% quand l'ennemi est empoisonné"
     },
     "poison_b2": {
       "name": "Écailles de dragon empoisonné",
-      "description": "Dégâts subis -7% quand l'ennemi est empoisonné, HP +30"
+      "description": "Dégâts subis -1% quand l'ennemi est empoisonné, HP +30"
     },
     "poison_14": {
       "name": "Connaissance du poison V",
@@ -1546,7 +1549,7 @@
     },
     "poison_17": {
       "name": "Protection venimeuse",
-      "description": "Dégâts subis -5% quand l'ennemi est empoisonné"
+      "description": "Dégâts subis -1% quand l'ennemi est empoisonné"
     },
     "poison_final1": {
       "name": "Incarnation du serpent",
@@ -2116,6 +2119,7 @@
     "igniteDamage": "Dégâts d'Ignite +{{value}}%",
     "criticalChance": "Chance de Crit +{{value}}%",
     "criticalDamage": "DMG Crit +{{value}}%",
+    "damageDefer": "Dégâts différés {{value}}%",
     "damageReduction": "Dégâts subis -{{value}}%",
     "attackSpeed": "Vitesse d'attaque +{{value}}%",
     "hpOnHit": "HP par coup +{{value}}",

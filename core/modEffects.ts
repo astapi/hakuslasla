@@ -59,7 +59,7 @@ export interface PassiveEffectsData {
   critical_lifesteal_pct: number;
   hp_regen: number;
   hp_regen_pct: number;
-  damage_reduction_pct: number;
+  damage_defer_pct: number;
   hp_on_hit: number;
   retaliate_def_pct: number;
   attack_speed_pct: number;
@@ -104,6 +104,7 @@ export function createEmptyModEffects(): CombinedModEffects {
     hpOnCrit: 0,
     critLifestealPct: 0,
     criticalFollowUpAttack: false,
+    damageDeferPct: 0,
     damageReductionPct: 0,
     hpOnHit: 0,
     retaliateDefPct: 0,
@@ -187,6 +188,9 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
       break;
     case 'critical_follow_up_attack':
       effects.criticalFollowUpAttack = true;
+      break;
+    case 'damage_defer_pct':
+      effects.damageDeferPct += mod.value;
       break;
     case 'damage_reduction_pct':
       effects.damageReductionPct += mod.value;
@@ -277,7 +281,7 @@ export function combineMods(
   combined.criticalDamage += passiveEffects.critical_damage;
   combined.hpOnCrit += passiveEffects.hp_on_crit;
   combined.critLifestealPct += passiveEffects.critical_lifesteal_pct;
-  combined.damageReductionPct += passiveEffects.damage_reduction_pct;
+  combined.damageDeferPct += passiveEffects.damage_defer_pct;
   combined.hpOnHit += passiveEffects.hp_on_hit;
   combined.retaliateDefPct += passiveEffects.retaliate_def_pct;
   combined.attackSpeedPct += passiveEffects.attack_speed_pct;

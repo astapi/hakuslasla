@@ -22,6 +22,7 @@ const baseState: GaugeBattleState = {
   warlordEnrageActivated: false,
   enemyWoundStacks: 0,
   enemyWoundActionCounter: 0,
+  deferredDamages: [],
   poisonStackAccumulator: 0,
   elapsedTicks: 0,
   isFinished: false,

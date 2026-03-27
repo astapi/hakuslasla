@@ -220,6 +220,18 @@
       }
     },
     {
+      "type": "damage_defer_pct",
+      "weight": 5,
+      "slots": ["armor"],
+      "tiers": {
+        "5": { "min": 3, "max": 3 },
+        "4": { "min": 5, "max": 5 },
+        "3": { "min": 7, "max": 7 },
+        "2": { "min": 9, "max": 9 },
+        "1": { "min": 12, "max": 12 }
+      }
+    },
+    {
       "type": "damage_reduction_pct",
       "weight": 5,
       "slots": ["armor"],

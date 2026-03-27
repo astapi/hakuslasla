@@ -163,7 +163,7 @@ function createUltraTankBuild(): BuildPattern {
     armor: createItem('armor', [
       { type: 'def_bonus', value: 75, tier: 1 },           // T1 防具DEF
       { type: 'hp_bonus', value: 270, tier: 2 },           // T2 HP
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
       { type: 'def_increased_pct', value: 45, tier: 1 },   // T1 DEF増加
     ]),
     gloves: createItem('gloves', [
@@ -175,14 +175,14 @@ function createUltraTankBuild(): BuildPattern {
     boots: createItem('boots', [
       { type: 'def_bonus', value: 50, tier: 1 },           // T1 DEF
       { type: 'hp_bonus', value: 270, tier: 2 },           // T2 HP
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
       { type: 'hp_on_hit', value: 40, tier: 1 },           // T1 HIT時HP回復
     ]),
     accessory: createItem('accessory', [
       { type: 'def_bonus', value: 50, tier: 1 },           // T1 DEF
       { type: 'hp_bonus', value: 270, tier: 2 },           // T2 HP
       { type: 'hp_regen', value: 48, tier: 1 },            // T1 HP回復
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
     ]),
   };
 
@@ -289,7 +289,7 @@ function createPoisonTankBuild(): BuildPattern {
     armor: createItem('armor', [
       { type: 'def_bonus', value: 75, tier: 1 },           // T1 防具DEF
       { type: 'hp_bonus', value: 270, tier: 2 },           // T2 HP
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
       { type: 'poison_damage_pct', value: 80, tier: 1 },   // T1 毒ダメージ
     ]),
     gloves: createItem('gloves', [
@@ -301,14 +301,14 @@ function createPoisonTankBuild(): BuildPattern {
     boots: createItem('boots', [
       { type: 'def_bonus', value: 50, tier: 1 },           // T1 DEF
       { type: 'hp_bonus', value: 270, tier: 2 },           // T2 HP
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
       { type: 'hp_regen', value: 48, tier: 1 },            // T1 HP回復
     ]),
     accessory: createItem('accessory', [
       { type: 'poison_chance', value: 28, tier: 1 },       // T1 毒付与率
       { type: 'poison_damage_pct', value: 80, tier: 1 },   // T1 毒ダメージ
       { type: 'hp_regen', value: 48, tier: 1 },            // T1 HP回復
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
     ]),
   };
 
@@ -352,7 +352,7 @@ function createTimeAtkBuild(): BuildPattern {
     armor: createItem('armor', [
       { type: 'def_bonus', value: 75, tier: 1 },           // T1 防具DEF
       { type: 'hp_bonus', value: 270, tier: 2 },           // T2 HP
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
       { type: 'time_def_inc_pct', value: 12, tier: 1 },    // T1 時間防御増加
     ]),
     gloves: createItem('gloves', [
@@ -364,14 +364,14 @@ function createTimeAtkBuild(): BuildPattern {
     boots: createItem('boots', [
       { type: 'def_bonus', value: 50, tier: 1 },           // T1 DEF
       { type: 'hp_bonus', value: 270, tier: 2 },           // T2 HP
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
       { type: 'hp_on_hit', value: 40, tier: 1 },           // T1 HIT時HP回復
     ]),
     accessory: createItem('accessory', [
       { type: 'def_bonus', value: 50, tier: 1 },           // T1 DEF
       { type: 'hp_bonus', value: 270, tier: 2 },           // T2 HP
       { type: 'hp_regen', value: 48, tier: 1 },            // T1 HP回復
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
     ]),
   };
 
@@ -418,7 +418,7 @@ function createBalancedBuild(): BuildPattern {
     armor: createItem('armor', [
       { type: 'def_bonus', value: 75, tier: 1 },           // T1 防具DEF
       { type: 'hp_bonus', value: 270, tier: 2 },           // T2 HP
-      { type: 'damage_reduction_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
+      { type: 'damage_defer_pct', value: 14, tier: 1 }, // T1 ダメージ軽減
       { type: 'hp_regen', value: 48, tier: 1 },            // T1 HP回復
     ]),
     gloves: createItem('gloves', [
@@ -641,7 +641,7 @@ for (const pattern of BUILD_PATTERNS) {
   console.log(`  ターンHP回復: +${modEffects.hpRegen} (+${modEffects.hpRegenPct}%)`);
   console.log(`  クリティカル: ${modEffects.criticalChance}% / +${modEffects.criticalDamage}%`);
   console.log(`  攻撃速度: +${modEffects.attackSpeedPct}%`);
-  console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
   console.log(`  毒付与: ${modEffects.poisonChance}% / +${modEffects.poisonDamagePct}%`);
   if (modEffects.timeAtkIncPct > 0) {
     console.log(`  時間攻撃増加: +${modEffects.timeAtkIncPct}%`);

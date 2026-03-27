@@ -271,6 +271,7 @@
     "hpRegen": "Regen HP",
     "hpOnHit": "HP al Golpear",
     "hpOnCrit": "HP en Crit",
+    "damageDefer": "Daño Diferido",
     "damageReduction": "Reducción de Daño",
     "attackSpeed": "Velocidad de Ataque",
     "attackSpeedMore": "Vel. Ataque More",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "HP al Golpear",
+    "damage_defer_pct": "Diferido",
     "damage_reduction_pct": "Red. Daño",
     "attack_speed_pct": "Velocidad",
     "lifesteal": "Robo de Vida",
@@ -1432,6 +1434,7 @@
     "freezeApplied": "¡{{enemy}} está congelado! ¡No puede actuar!",
     "freezeExpired": "El efecto de congelación de {{enemy}} ha expirado",
     "reflectedDamage": "¡La marca de {{enemy}} reflejó! ¡Recibiste {{damage}} de daño!",
+    "deferredDamage": "Daño diferido {{damage}}!",
     "retaliateDamage": "¡Represalia! ¡{{damage}} de daño a {{enemy}}!",
     "enemyHealRegen": "¡{{enemy}} regeneró {{amount}} HP!",
     "enemyHealOnHit": "¡{{enemy}} absorbió {{amount}} HP!",
@@ -1502,7 +1505,7 @@
     },
     "poison_10": {
       "name": "Resistencia al Veneno",
-      "description": "Daño Recibido -3% mientras el enemigo está envenenado"
+      "description": "Daño Recibido -1% mientras el enemigo está envenenado"
     },
     "poison_11": {
       "name": "Conocimiento de Veneno IV",
@@ -1526,11 +1529,11 @@
     },
     "poison_b1": {
       "name": "Guardia de Veneno",
-      "description": "Daño Recibido -5% mientras el enemigo está envenenado"
+      "description": "Daño Recibido -1% mientras el enemigo está envenenado"
     },
     "poison_b2": {
       "name": "Escamas de Dragón Venenoso",
-      "description": "Daño Recibido -7% mientras el enemigo está envenenado, HP +30"
+      "description": "Daño Recibido -1% mientras el enemigo está envenenado, HP +30"
     },
     "poison_14": {
       "name": "Conocimiento de Veneno V",
@@ -1546,7 +1549,7 @@
     },
     "poison_17": {
       "name": "Barrera de Veneno",
-      "description": "Daño Recibido -5% mientras el enemigo está envenenado"
+      "description": "Daño Recibido -1% mientras el enemigo está envenenado"
     },
     "poison_final1": {
       "name": "Encarnación de la Serpiente",
@@ -2116,6 +2119,7 @@
     "igniteDamage": "Daño de Ignite +{{value}}%",
     "criticalChance": "Prob. Crit +{{value}}%",
     "criticalDamage": "DMG Crit +{{value}}%",
+    "damageDefer": "Daño Diferido {{value}}%",
     "damageReduction": "Daño Recibido -{{value}}%",
     "attackSpeed": "Velocidad de Ataque +{{value}}%",
     "hpOnHit": "HP al Golpear +{{value}}",

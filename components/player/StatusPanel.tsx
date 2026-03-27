@@ -111,7 +111,8 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       freezeChance: baseMods.freezeChance + uberEffects.freeze_chance,
       hpRegen: baseMods.hpRegen + uberEffects.hp_regen,
       hpOnHit: baseMods.hpOnHit + uberEffects.hp_on_hit,
-      damageReductionPct: baseMods.damageReductionPct + uberEffects.damage_reduction_pct,
+      damageDeferPct: baseMods.damageDeferPct + uberEffects.damage_defer_pct,
+      damageReductionPct: baseMods.damageReductionPct,
     };
 
     const totalCriticalDamage = 150 + combinedMods.criticalDamage; // 基礎150%
@@ -159,6 +160,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       igniteDamageMore: igniteDamageMoreTotal,
       igniteDurationPct: combinedMods.igniteDurationPct,
       igniteLifesteal: combinedMods.igniteLifesteal,
+      damageDeferPct: combinedMods.damageDeferPct,
       damageReductionPct: combinedMods.damageReductionPct,
       chillChance: combinedMods.chillChance,
       chillEffectPct: combinedMods.chillEffectPct,
@@ -385,6 +387,14 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.hpOnCrit > 0 ? styles.critHealText : undefined}>
                   +{breakdown.hpOnCrit}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.damageDefer')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.damageDeferPct > 0 ? styles.healText : undefined}>
+                  {breakdown.damageDeferPct}%
                 </Text>
               </Text>
             </View>

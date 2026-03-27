@@ -747,7 +747,7 @@ export const useBattle = (dungeonId: string) => {
       freezeChance: baseMods.freezeChance + uberEffects.freeze_chance,
       hpRegen: baseMods.hpRegen + uberEffects.hp_regen,
       hpOnHit: baseMods.hpOnHit + uberEffects.hp_on_hit,
-      damageReductionPct: baseMods.damageReductionPct + uberEffects.damage_reduction_pct,
+      damageDeferPct: baseMods.damageDeferPct + uberEffects.damage_defer_pct,
       // Uberツリー最終ノード固有能力
       heavyStrike: baseMods.heavyStrike || uberEffects.heavy_strike,
       defHpToAtk: baseMods.defHpToAtk || uberEffects.def_hp_to_atk,
@@ -1093,6 +1093,18 @@ export const useBattle = (dungeonId: string) => {
               type: 'PLAYER_DAMAGE',
               damage,
               message: i18n.t('battleLog.reflectedDamage', { enemy: state.enemy.name, damage }),
+              logType: 'enemy_attack',
+            });
+          }
+          break;
+        }
+        case 'deferred_damage': {
+          const damage = Number(data.damage ?? 0);
+          if (damage > 0) {
+            dispatch({
+              type: 'PLAYER_DAMAGE',
+              damage,
+              message: i18n.t('battleLog.deferredDamage', { damage }),
               logType: 'enemy_attack',
             });
           }

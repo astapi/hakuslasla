@@ -125,7 +125,7 @@ function createVampireBuild(): { name: string; description: string; equipment: E
     armor: createUberItem('uber_vampire_plate', 'Uber ヴァンパイアの甲冑', 'armor', 0, 240, [
       { type: 'hp_regen_pct', value: 2, tier: 0 },
       { type: 'hp_on_hit', value: 60, tier: 0 },
-      { type: 'damage_reduction_pct', value: 10, tier: 0 },
+      { type: 'damage_defer_pct', value: 10, tier: 0 },
     ]),
     gloves: createUberItem('uber_vampire_grip', 'Uber ヴァンパイアの篭手', 'gloves', 65, 80, [
       { type: 'critical_chance', value: 20, tier: 0 },
@@ -139,7 +139,7 @@ function createVampireBuild(): { name: string; description: string; equipment: E
     ]),
     accessory: createUberItem('uber_kraken_eye', 'Uber クラーケンの眼', 'accessory', 85, 85, [
       { type: 'poison_chance', value: 25, tier: 0 },
-      { type: 'damage_reduction_pct', value: 8, tier: 0 },
+      { type: 'damage_defer_pct', value: 8, tier: 0 },
       { type: 'hp_bonus', value: 220, tier: 0 },
     ]),
   };
@@ -179,7 +179,7 @@ function createUltraTankBuild(): { name: string; description: string; equipment:
       { type: 'critical_chance', value: 30, tier: 0 },
     ]),
     armor: createUberItem('uber_kraken_shell', 'Uber クラーケンの甲殻', 'armor', 0, 260, [
-      { type: 'damage_reduction_pct', value: 12, tier: 0 },
+      { type: 'damage_defer_pct', value: 12, tier: 0 },
       { type: 'hp_regen', value: 90, tier: 0 },
       { type: 'def_increased_pct', value: 20, tier: 0 },
     ]),
@@ -381,7 +381,7 @@ for (const pattern of BUILD_PATTERNS) {
   console.log(`  ターンHP回復: +${modEffects.hpRegen} (+${modEffects.hpRegenPct}%)`);
   console.log(`  クリティカル: ${modEffects.criticalChance}% / +${modEffects.criticalDamage}%`);
   console.log(`  攻撃速度: +${modEffects.attackSpeedPct}%`);
-  console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
   console.log(`  毒付与: ${modEffects.poisonChance}% / +${modEffects.poisonDamagePct}%`);
   if (modEffects.timeAtkIncPct > 0) {
     console.log(`  時間攻撃増加: +${modEffects.timeAtkIncPct}%`);

@@ -122,7 +122,7 @@ function createCorrectedPoisonBuild(): { name: string; description: string; equi
     ]),
     armor: createUberItem('uber_venom_plate', 'Uber 毒蛇の鱗甲（修正版）', 'armor', 0, 300, [
       { type: 'poison_damage_pct', value: 80, tier: 0 },
-      { type: 'damage_reduction_pct', value: 15, tier: 0 },
+      { type: 'damage_defer_pct', value: 15, tier: 0 },
       { type: 'hp_bonus', value: 280, tier: 0 },
     ]),
     gloves: createUberItem('uber_venom_grip', 'Uber 猛毒の篭手（修正版）', 'gloves', 75, 90, [
@@ -179,7 +179,7 @@ function createCriticalBuild(): { name: string; description: string; equipment: 
     ]),
     armor: createUberItem('uber_assassin_coat', 'Uber 暗殺者の外套', 'armor', 0, 260, [
       { type: 'critical_chance', value: 30, tier: 0 },
-      { type: 'damage_reduction_pct', value: 12, tier: 0 },
+      { type: 'damage_defer_pct', value: 12, tier: 0 },
       { type: 'hp_bonus', value: 240, tier: 0 },
     ]),
     gloves: createUberItem('uber_assassin_grip', 'Uber 暗殺者の手甲', 'gloves', 75, 85, [
@@ -236,13 +236,13 @@ function createFortressBuild(): { name: string; description: string; equipment: 
     ]),
     armor: createUberItem('uber_fortress_plate', 'Uber 要塞の鎧', 'armor', 0, 340, [
       { type: 'def_bonus', value: 90, tier: 0 },
-      { type: 'damage_reduction_pct', value: 18, tier: 0 },
+      { type: 'damage_defer_pct', value: 18, tier: 0 },
       { type: 'def_increased_pct', value: 30, tier: 0 },
     ]),
     gloves: createUberItem('uber_fortress_grip', 'Uber 要塞の篭手', 'gloves', 70, 100, [
       { type: 'def_bonus', value: 70, tier: 0 },
       { type: 'hp_bonus', value: 250, tier: 0 },
-      { type: 'damage_reduction_pct', value: 10, tier: 0 },
+      { type: 'damage_defer_pct', value: 10, tier: 0 },
     ]),
     boots: createUberItem('uber_fortress_stomp', 'Uber 要塞の足止め', 'boots', 50, 140, [
       { type: 'def_bonus', value: 80, tier: 0 },
@@ -252,7 +252,7 @@ function createFortressBuild(): { name: string; description: string; equipment: 
     accessory: createUberItem('uber_fortress_bulwark', 'Uber 要塞の護壁', 'accessory', 75, 100, [
       { type: 'def_bonus', value: 80, tier: 0 },
       { type: 'hp_bonus', value: 280, tier: 0 },
-      { type: 'damage_reduction_pct', value: 12, tier: 0 },
+      { type: 'damage_defer_pct', value: 12, tier: 0 },
     ]),
   };
 
@@ -294,7 +294,7 @@ function createSimpleBalanceBuild(): { name: string; description: string; equipm
     ]),
     armor: createUberItem('uber_fortress_plate', 'Uber 要塞の鎧', 'armor', 0, 340, [
       { type: 'def_bonus', value: 90, tier: 0 },
-      { type: 'damage_reduction_pct', value: 18, tier: 0 },
+      { type: 'damage_defer_pct', value: 18, tier: 0 },
       { type: 'def_increased_pct', value: 30, tier: 0 },
     ]),
     gloves: createUberItem('uber_vampire_grip', 'Uber ヴァンパイアの篭手', 'gloves', 65, 80, [
@@ -311,7 +311,7 @@ function createSimpleBalanceBuild(): { name: string; description: string; equipm
     accessory: createUberItem('uber_kraken_eye', 'Uber クラーケンの眼', 'accessory', 85, 85, [
       { type: 'poison_chance', value: 25, tier: 0 },
       { type: 'poison_damage_pct', value: 50, tier: 0 },
-      { type: 'damage_reduction_pct', value: 8, tier: 0 },
+      { type: 'damage_defer_pct', value: 8, tier: 0 },
       { type: 'hp_bonus', value: 220, tier: 0 },
     ]),
   };
@@ -436,7 +436,7 @@ for (const pattern of BUILD_PATTERNS) {
   console.log(`  ターンHP回復: +${modEffects.hpRegen} (+${modEffects.hpRegenPct}%)`);
   console.log(`  クリティカル: ${modEffects.criticalChance}% / +${modEffects.criticalDamage}%`);
   console.log(`  攻撃速度: +${modEffects.attackSpeedPct}%`);
-  console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
   if (modEffects.poisonChance > 0) {
     console.log(`  毒付与: ${modEffects.poisonChance}% / +${modEffects.poisonDamagePct}%`);
   }

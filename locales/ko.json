@@ -271,6 +271,7 @@
     "hpRegen": "HP 재생",
     "hpOnHit": "적중 시 HP",
     "hpOnCrit": "Crit 시 HP",
+    "damageDefer": "피해 지연",
     "damageReduction": "피해 감소",
     "attackSpeed": "공격 속도",
     "attackSpeedMore": "AS More",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "적중 시 HP",
+    "damage_defer_pct": "지연",
     "damage_reduction_pct": "피해 감소",
     "attack_speed_pct": "속도",
     "lifesteal": "흡혈",
@@ -1432,6 +1434,7 @@
     "freezeApplied": "{{enemy}}이(가) 빙결 상태! 행동 불가!",
     "freezeExpired": "{{enemy}}의 빙결 상태가 해제되었다",
     "reflectedDamage": "{{enemy}}의 표식이 반사! {{damage}} 피해를 받았다!",
+    "deferredDamage": "지연 피해 {{damage}}!",
     "retaliateDamage": "반격! {{enemy}}에게 {{damage}} 데미지!",
     "enemyHealRegen": "{{enemy}}이(가) {{amount}} HP 재생!",
     "enemyHealOnHit": "{{enemy}}이(가) {{amount}} HP 흡수!",
@@ -1502,7 +1505,7 @@
     },
     "poison_10": {
       "name": "독 저항",
-      "description": "적이 독 상태일 때 받는 피해 -3%"
+      "description": "적이 독 상태일 때 받는 피해 -1%"
     },
     "poison_11": {
       "name": "독 지식 IV",
@@ -1526,11 +1529,11 @@
     },
     "poison_b1": {
       "name": "독 방어",
-      "description": "적이 독 상태일 때 받는 피해 -5%"
+      "description": "적이 독 상태일 때 받는 피해 -1%"
     },
     "poison_b2": {
       "name": "독룡 비늘",
-      "description": "적이 독 상태일 때 받는 피해 -7%, HP +30"
+      "description": "적이 독 상태일 때 받는 피해 -1%, HP +30"
     },
     "poison_14": {
       "name": "독 지식 V",
@@ -1546,7 +1549,7 @@
     },
     "poison_17": {
       "name": "맹독 방어",
-      "description": "적이 독 상태일 때 받는 피해 -5%"
+      "description": "적이 독 상태일 때 받는 피해 -1%"
     },
     "poison_final1": {
       "name": "독사의 화신",
@@ -2116,6 +2119,7 @@
     "igniteDamage": "점화 피해 +{{value}}%",
     "criticalChance": "Crit 확률 +{{value}}%",
     "criticalDamage": "Crit DMG +{{value}}%",
+    "damageDefer": "피해 지연 {{value}}%",
     "damageReduction": "받는 피해 -{{value}}%",
     "attackSpeed": "공격 속도 +{{value}}%",
     "hpOnHit": "적중 시 HP +{{value}}",

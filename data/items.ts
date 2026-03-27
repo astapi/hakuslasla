@@ -504,6 +504,8 @@ export function getModDescription(mod: ItemMod): string {
       return `クリダメ+${mod.value}%`;
     case 'hp_on_hit':
       return `HIT時HP+${mod.value}回復`;
+    case 'damage_defer_pct':
+      return `ダメージ遅延${mod.value}%`;
     case 'damage_reduction_pct':
       return `被ダメ-${mod.value}%`;
     case 'attack_speed_pct':
@@ -548,6 +550,7 @@ export interface ModEffects {
   hpRegenPct: number;
   poisonChance: number;
   criticalChance: number;
+  damageDeferPct: number;
   damageReductionPct: number;
   hpOnHit: number;
   attackSpeedPct: number;
@@ -564,6 +567,7 @@ export function getModEffects(item: Item): ModEffects {
     hpRegenPct: 0,
     poisonChance: 0,
     criticalChance: 0,
+    damageDeferPct: 0,
     damageReductionPct: 0,
     hpOnHit: 0,
     attackSpeedPct: 0,
@@ -588,6 +592,9 @@ export function getModEffects(item: Item): ModEffects {
         break;
       case 'critical_chance':
         effects.criticalChance += mod.value;
+        break;
+      case 'damage_defer_pct':
+        effects.damageDeferPct += mod.value;
         break;
       case 'damage_reduction_pct':
         effects.damageReductionPct += mod.value;
@@ -615,6 +622,7 @@ export function combineModEffects(items: (Item | null)[]): ModEffects {
     hpRegenPct: 0,
     poisonChance: 0,
     criticalChance: 0,
+    damageDeferPct: 0,
     damageReductionPct: 0,
     hpOnHit: 0,
     attackSpeedPct: 0,
@@ -629,6 +637,7 @@ export function combineModEffects(items: (Item | null)[]): ModEffects {
       combined.hpRegenPct += effects.hpRegenPct;
       combined.poisonChance += effects.poisonChance;
       combined.criticalChance += effects.criticalChance;
+      combined.damageDeferPct += effects.damageDeferPct;
       combined.damageReductionPct += effects.damageReductionPct;
       combined.hpOnHit += effects.hpOnHit;
       combined.attackSpeedPct += effects.attackSpeedPct;

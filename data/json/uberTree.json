@@ -59,8 +59,8 @@
     {
       "id": "uber_def_2",
       "name": "鋼の意志",
-      "description": "DEF +10% increased, ダメージ軽減 +3%",
-      "effect": { "def_increased_pct": 10, "damage_reduction_pct": 3 },
+      "description": "DEF +10% increased, ダメージ遅延 +8%",
+      "effect": { "def_increased_pct": 10, "damage_defer_pct": 8 },
       "requiredNodes": ["uber_def_1"],
       "position": { "x": 1.5, "y": -2 },
       "route": "immortality"

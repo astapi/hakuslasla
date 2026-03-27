@@ -153,7 +153,7 @@ const BASE_MOD_WEIGHT_MULTIPLIER: Record<string, number> = {
   attack_speed_pct: 2.5,
   poison_chance: 2.0,
   lifesteal: 2.0,
-  damage_reduction_pct: 2.0,
+  damage_defer_pct: 2.0,
   hp_regen: 1.5,
   hp_regen_pct: 1.5,
   hp_bonus: 1.2,
@@ -171,7 +171,7 @@ const MOD_WEIGHT_MULTIPLIER: Record<string, number> = STRATEGY === 'tank_time_at
       hp_increased_pct: 2.4,
       hp_regen: 3.2,
       hp_regen_pct: 3.2,
-      damage_reduction_pct: 2.8,
+      damage_defer_pct: 2.8,
       atk_bonus: 1.2,
       atk_increased_pct: 1.0,
       critical_chance: 0.6,
@@ -524,7 +524,7 @@ function computeQuickScore(stats: { maxHp: number; atk: number; def: number }, m
   const poisonPower = 1 + (mods.poisonDamagePct / 100) + mods.poisonDamageMorePct.reduce((acc, v) => acc * (1 + v / 100), 1) - 1;
   const dpsScore = stats.atk * Math.max(0.5, attackSpeed) * critMultiplier * (1 + poisonUptime * poisonPower);
   const sustainScore = (mods.hpRegen + Math.floor(stats.maxHp * mods.hpRegenPct / 100) + mods.hpOnHit);
-  const tankScore = stats.maxHp + stats.def * (1 + mods.damageReductionPct / 100);
+  const tankScore = stats.maxHp + stats.def * (1 + mods.damageDeferPct / 100);
   return dpsScore * 0.0001 + sustainScore * 0.5 + tankScore * 0.01;
 }
 

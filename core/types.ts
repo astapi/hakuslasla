@@ -229,7 +229,8 @@ export interface CombinedModEffects {
   criticalFollowUpAttack: boolean;  // クリティカル時追撃（ATK×0.5の追加ダメージ + HIT時効果再発動）
 
   // 防御・吸収
-  damageReductionPct: number;  // ダメージ軽減%
+  damageDeferPct: number;  // ダメージ遅延%（ダメージのX%を4秒かけて受ける）
+  damageReductionPct: number;  // ダメージ軽減%（防具MOD専用）
   hpOnHit: number;             // HIT時HP回復（固定値）
   retaliateDefPct: number;     // 被ダメ時DEFのX%を反撃ダメージ
 
@@ -276,6 +277,14 @@ export interface GaugeCombatant {
   def: number;
   attackSpeed: number;  // 最終計算済みAS
   gauge: number;        // 0-100
+}
+
+/**
+ * 遅延ダメージ（ダメージのX%を4秒かけて受ける）
+ */
+export interface DeferredDamage {
+  damagePerTick: number;   // 1秒あたりのダメージ
+  remainingTicks: number;  // 残りティック数（4秒 = 4ティック）
 }
 
 /**
@@ -328,6 +337,7 @@ export interface GaugeBattleState {
   warlordEnrageActivated: boolean;  // 乱軍の王が発動済みか
   enemyWoundStacks: number;  // 重傷スタック数（重撃用、上限5）
   enemyWoundActionCounter: number;  // 敵行動カウンター（4回で重傷-1）
+  deferredDamages: DeferredDamage[];  // 遅延ダメージキュー
   poisonStackAccumulator: number;  // 毒スタック端数アキュムレータ（猛毒の覚醒用）
   elapsedTicks: number;  // 経過ティック数
   isFinished: boolean;
@@ -367,7 +377,8 @@ export type BattleEventType =
   | 'warlord_enrage'
   | 'wound_applied'
   | 'wound_decayed'
-  | 'retaliate';
+  | 'retaliate'
+  | 'deferred_damage';
 
 /**
  * 戦闘イベント（ログ用）

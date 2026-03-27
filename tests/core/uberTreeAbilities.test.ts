@@ -79,7 +79,7 @@ describe('Uberツリーデータ', () => {
     ]);
     expect(effects.hp_increased_pct).toBe(10);
     expect(effects.def_increased_pct).toBe(10);
-    expect(effects.damage_reduction_pct).toBe(3);
+    expect(effects.damage_defer_pct).toBe(8);
     expect(effects.hp_regen).toBe(5);
     expect(effects.hp_more_pct).toEqual([5]);
   });

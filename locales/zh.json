@@ -271,6 +271,7 @@
     "hpRegen": "HP 回复",
     "hpOnHit": "命中回 HP",
     "hpOnCrit": "Crit 回 HP",
+    "damageDefer": "伤害延迟",
     "damageReduction": "减伤",
     "attackSpeed": "攻击速度",
     "attackSpeedMore": "攻速加成",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "命中回 HP",
+    "damage_defer_pct": "延迟",
     "damage_reduction_pct": "减伤",
     "attack_speed_pct": "速度",
     "lifesteal": "吸血",
@@ -1432,6 +1434,7 @@
     "freezeApplied": "{{enemy}}被冻结了！无法行动！",
     "freezeExpired": "{{enemy}}的冻结状态解除了",
     "reflectedDamage": "{{enemy}} 的印记反弹了！你受到 {{damage}} 点伤害！",
+    "deferredDamage": "延迟伤害 {{damage}}!",
     "retaliateDamage": "反击！对{{enemy}}造成{{damage}}点伤害！",
     "enemyHealRegen": "{{enemy}} 回复了 {{amount}} HP！",
     "enemyHealOnHit": "{{enemy}} 吸取了 {{amount}} HP！",
@@ -1502,7 +1505,7 @@
     },
     "poison_10": {
       "name": "毒抗性",
-      "description": "敌人中毒时受伤 -3%"
+      "description": "敌人中毒时受伤 -1%"
     },
     "poison_11": {
       "name": "毒之知识 IV",
@@ -1526,11 +1529,11 @@
     },
     "poison_b1": {
       "name": "毒之守护",
-      "description": "敌人中毒时受伤 -5%"
+      "description": "敌人中毒时受伤 -1%"
     },
     "poison_b2": {
       "name": "毒龙鳞甲",
-      "description": "敌人中毒时受伤 -7%，HP +30"
+      "description": "敌人中毒时受伤 -1%，HP +30"
     },
     "poison_14": {
       "name": "毒之知识 V",
@@ -1546,7 +1549,7 @@
     },
     "poison_17": {
       "name": "剧毒防护",
-      "description": "敌人中毒时受伤 -5%"
+      "description": "敌人中毒时受伤 -1%"
     },
     "poison_final1": {
       "name": "蛇神化身",
@@ -2116,6 +2119,7 @@
     "igniteDamage": "点燃伤害 +{{value}}%",
     "criticalChance": "Crit 几率 +{{value}}%",
     "criticalDamage": "Crit DMG +{{value}}%",
+    "damageDefer": "伤害延迟 {{value}}%",
     "damageReduction": "受伤 -{{value}}%",
     "attackSpeed": "攻速 +{{value}}%",
     "hpOnHit": "命中回 HP +{{value}}",

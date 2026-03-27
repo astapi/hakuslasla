@@ -47,7 +47,7 @@ export interface RankingStats {
   hpRegen: number;
   hpOnHit: number;
   hpOnCrit: number;
-  damageReduction: number;
+  damageDefer: number;
   // 攻撃速度
   attackSpeedPct: number;
   attackSpeedMore: number;

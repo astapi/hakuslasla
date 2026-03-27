@@ -125,7 +125,7 @@ function createPureBalanceLv60(): { name: string; description: string; equipment
     ]),
     armor: createUberItem('uber_fortress_plate', 'Uber 要塞の鎧', 'armor', 0, 340, [
       { type: 'def_bonus', value: 90, tier: 0 },
-      { type: 'damage_reduction_pct', value: 18, tier: 0 },
+      { type: 'damage_defer_pct', value: 18, tier: 0 },
       { type: 'def_increased_pct', value: 30, tier: 0 },
       { type: 'hp_bonus', value: 300, tier: 0 },
     ]),
@@ -266,7 +266,7 @@ for (const pattern of BUILD_PATTERNS) {
   console.log(`  ターンHP回復: +${modEffects.hpRegen} (+${modEffects.hpRegenPct}%)`);
   console.log(`  クリティカル: ${modEffects.criticalChance}% / +${modEffects.criticalDamage}%`);
   console.log(`  攻撃速度: +${modEffects.attackSpeedPct}%`);
-  console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
   console.log(`  毒付与: ${modEffects.poisonChance}%`);
   console.log('');
 

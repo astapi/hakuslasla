@@ -103,7 +103,7 @@ const equipment: Equipment = {
   ]),
   armor: createUberItem('uber_fortress_plate', 'Uber 要塞の鎧', 'armor', 0, 340, [
     { type: 'def_bonus', value: 90, tier: 0 },
-    { type: 'damage_reduction_pct', value: 18, tier: 0 },
+    { type: 'damage_defer_pct', value: 18, tier: 0 },
     { type: 'def_increased_pct', value: 30, tier: 0 },
     { type: 'hp_bonus', value: 300, tier: 0 },
   ]),
@@ -199,7 +199,7 @@ console.log(`  DEF: ${finalStats.def}`);
 console.log(`  HIT時HP回復: ${modEffects.hpOnHit} (クリ時: ${modEffects.hpOnHit * 2})`);
 console.log(`  クリティカル率: ${modEffects.criticalChance}%`);
 console.log(`  攻撃速度: +${modEffects.attackSpeedPct}%`);
-console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
 console.log('');
 
 const boss = enemyMap.get(bossId);
@@ -220,7 +220,7 @@ if (boss) {
 
   const enemyDefReduction = finalStats.def / (finalStats.def + 500);
   const enemyBaseDmg = Math.floor(boss.atk * (1 - enemyDefReduction));
-  const enemyFinalDmg = Math.floor(enemyBaseDmg * (1 - modEffects.damageReductionPct / 100));
+  const enemyFinalDmg = Math.floor(enemyBaseDmg * (1 - modEffects.damageDeferPct / 100));
 
   console.log('【ダメージ計算】');
   console.log(`プレイヤー → ボス:`);
@@ -230,7 +230,7 @@ if (boss) {
   console.log('');
   console.log(`ボス → プレイヤー:`);
   console.log(`  DEF軽減前: ${boss.atk} → ${enemyBaseDmg} (DEF軽減 ${(enemyDefReduction * 100).toFixed(1)}%)`);
-  console.log(`  最終ダメージ: ${enemyFinalDmg} (ダメ軽減${modEffects.damageReductionPct}%)`);
+  console.log(`  最終ダメージ: ${enemyFinalDmg} (ダメ軽減${modEffects.damageDeferPct}%)`);
   console.log(`  致死攻撃回数: ${Math.ceil(finalStats.maxHp / enemyFinalDmg)}回`);
   console.log('');
 }
