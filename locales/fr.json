@@ -2135,7 +2135,12 @@
     "poisonDamagePct": "Dégâts de poison +{{value}}%",
     "poisonDamageMore": "Dégâts de poison {{value}}% more",
     "poisonDamageReduction": "Dégâts reçus -{{value}}% vs Empoisonné",
-    "hpOnCrit": "HP +{{value}} sur Critique"
+    "hpOnCrit": "HP +{{value}} sur Critique",
+    "chillChance": "Chance de Gel +{{value}}%",
+    "chillEffect": "Effet de Gel +{{value}}%",
+    "chillDuration": "Durée de Gel +{{value}}%",
+    "freezeChance": "Chance de Congélation +{{value}}%",
+    "freezeDuration": "Durée de Congélation +{{value}}%"
   },
   "boost": {
     "dropRate": {

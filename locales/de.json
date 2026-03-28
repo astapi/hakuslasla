@@ -2135,7 +2135,12 @@
     "poisonDamagePct": "Giftschaden +{{value}}%",
     "poisonDamageMore": "Giftschaden {{value}}% mehr",
     "poisonDamageReduction": "Erl. Schaden -{{value}}% bei Gift",
-    "hpOnCrit": "HP +{{value}} bei Kritisch"
+    "hpOnCrit": "HP +{{value}} bei Kritisch",
+    "chillChance": "Kälte-Chance +{{value}}%",
+    "chillEffect": "Kälte-Effekt +{{value}}%",
+    "chillDuration": "Kälte-Dauer +{{value}}%",
+    "freezeChance": "Einfrier-Chance +{{value}}%",
+    "freezeDuration": "Einfrier-Dauer +{{value}}%"
   },
   "boost": {
     "dropRate": {

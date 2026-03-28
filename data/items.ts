@@ -394,15 +394,22 @@ export function createItemInstance(itemId: string, modCount: number = 0, dungeon
   const base = getItemBase(itemId);
   if (!base) return undefined;
 
-  // 固有MODは常にT0で表示
-  const fixedMods: ItemMod[] = (base.fixedMods || []).map(mod => ({
-    ...mod,
-    tier: 0,
-  }));
+  // 固有MODは常にT0で表示（min/maxがある場合はランダム化）
+  const fixedMods: ItemMod[] = (base.fixedMods || []).map(mod => {
+    const raw = mod as Record<string, unknown>;
+    const value = (typeof raw.min === 'number' && typeof raw.max === 'number')
+      ? raw.min + Math.floor(Math.random() * (raw.max - raw.min + 1))
+      : mod.value;
+    return { type: mod.type, value, tier: 0 };
+  });
+
+  // MOD上限4: fixedModsがある場合、ランダムMOD数を制限
+  const MAX_TOTAL_MODS = 4;
+  const adjustedModCount = Math.max(0, Math.min(modCount, MAX_TOTAL_MODS - fixedMods.length));
 
   // ランダムMOD（ダンジョンのtier範囲とスロット、武器種別を考慮）
-  const randomMods = modCount > 0
-    ? generateRandomMods(modCount, dungeonId, base.slot, boosted, base.weaponType)
+  const randomMods = adjustedModCount > 0
+    ? generateRandomMods(adjustedModCount, dungeonId, base.slot, boosted, base.weaponType)
     : [];
 
   // 重複するタイプのMODを除外（固有MOD優先）
@@ -528,6 +535,16 @@ export function getModDescription(mod: ItemMod): string {
       return `HP回復量の${mod.value}%をATKに変換`;
     case 'warlord_enrage':
       return '乱軍の王（HP30%以下で1度だけ発動。攻撃速度+20%, 攻撃時HP回復+300）';
+    case 'chill_chance':
+      return `チル付与+${mod.value}%`;
+    case 'chill_effect_pct':
+      return `チル効果+${mod.value}%`;
+    case 'chill_duration_pct':
+      return `チル時間+${mod.value}%`;
+    case 'freeze_chance':
+      return `フリーズ付与+${mod.value}%`;
+    case 'freeze_duration_pct':
+      return `フリーズ時間+${mod.value}%`;
     default:
       return '';
   }

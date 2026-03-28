@@ -11,6 +11,11 @@ const MOD_COLORS: Record<string, string> = {
   hp_regen: '#00BCD4',
   poison_chance: '#9C27B0',
   critical_chance: '#FF9800',
+  chill_chance: '#64B5F6',
+  chill_effect_pct: '#64B5F6',
+  chill_duration_pct: '#64B5F6',
+  freeze_chance: '#42A5F5',
+  freeze_duration_pct: '#42A5F5',
 };
 
 interface EquipmentRowProps {
