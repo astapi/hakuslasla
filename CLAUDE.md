@@ -101,7 +101,7 @@ app/
 ### Damage Calculation
 ```typescript
 // DEF減衰式（DEFが高いほど効果が減少）
-reduction = def / (def + 100)  // DEF100で50%軽減、DEF300で75%軽減
+reduction = def / (def + 500)  // DEF500で50%軽減、DEF1500で75%軽減
 damage = Math.max(1, atk * (1 - reduction))
 ```
 

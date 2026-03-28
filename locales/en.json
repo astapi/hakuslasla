@@ -271,6 +271,7 @@
     "hpRegen": "HP Regen",
     "hpOnHit": "HP on Hit",
     "hpOnCrit": "HP on Crit",
+    "damageDefer": "Damage Defer",
     "damageReduction": "Damage Reduction",
     "attackSpeed": "Attack Speed",
     "attackSpeedMore": "AS More",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "HP on Hit",
+    "damage_defer_pct": "Defer",
     "damage_reduction_pct": "Damage Red.",
     "attack_speed_pct": "Speed",
     "lifesteal": "Lifesteal",
@@ -1432,6 +1434,8 @@
     "freezeApplied": "{{enemy}} is frozen! Unable to act!",
     "freezeExpired": "{{enemy}}'s freeze has expired",
     "reflectedDamage": "{{enemy}}'s mark reflected! You took {{damage}} damage!",
+    "deferredDamage": "Deferred damage {{damage}}!",
+    "retaliateDamage": "Retaliate! Dealt {{damage}} damage to {{enemy}}!",
     "enemyHealRegen": "{{enemy}} regenerated {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} leeched {{amount}} HP!",
     "igniteApplied": "Applied ignite to {{enemy}}! ({{damage}} damage × {{duration}}s)",
@@ -1653,15 +1657,15 @@
     },
     "guard_1": {
       "name": "Guard Basics",
-      "description": "DEF +5, Damage Reduction +2%"
+      "description": "DEF +5, Damage Reduction +1%"
     },
     "guard_2": {
       "name": "Stalwart Guard I",
-      "description": "Damage Reduction +2%"
+      "description": "Damage Reduction +1%"
     },
     "guard_3": {
       "name": "Defense Up",
-      "description": "DEF +4"
+      "description": "DEF +4, DEF +5% increased"
     },
     "guard_4": {
       "name": "HP Up",
@@ -1669,11 +1673,11 @@
     },
     "guard_5": {
       "name": "Stalwart Guard II",
-      "description": "Damage Reduction +2%"
+      "description": "Damage Reduction +1%"
     },
     "guard_6": {
       "name": "Defense Up II",
-      "description": "DEF +5"
+      "description": "DEF +5, DEF +5% increased"
     },
     "guard_7": {
       "name": "HP Up II",
@@ -1681,71 +1685,107 @@
     },
     "guard_key1": {
       "name": "Ironwall Shield",
-      "description": "Damage Reduction +8%"
+      "description": "Damage Reduction +3%"
     },
     "guard_8": {
       "name": "Stalwart Guard III",
-      "description": "Damage Reduction +3%"
+      "description": "Damage Reduction +2%"
     },
-    "guard_9": {
-      "name": "Defense Amplify",
-      "description": "DEF +20% increased"
+    "guard_iron_1": {
+      "name": "Solid Stance",
+      "description": "DEF +8, DEF +5% increased"
     },
-    "guard_10": {
-      "name": "Vitality Amplify",
-      "description": "HP +20% increased"
-    },
-    "guard_11": {
-      "name": "Stalwart Guard IV",
-      "description": "Damage Reduction +3%"
-    },
-    "guard_12": {
+    "guard_iron_2": {
       "name": "Defense Up III",
-      "description": "DEF +8"
+      "description": "DEF +10"
     },
-    "guard_13": {
-      "name": "HP Up III",
-      "description": "HP +40"
+    "guard_iron_3": {
+      "name": "Defense Amplify",
+      "description": "DEF +15% increased"
     },
-    "guard_a1": {
-      "name": "Steel Body",
-      "description": "DEF +25% increased"
-    },
-    "guard_a2": {
-      "name": "Immovable Fortress",
+    "guard_iron_4": {
+      "name": "Steel Wall",
       "description": "DEF +12"
     },
-    "guard_b1": {
-      "name": "Abundant Life",
-      "description": "HP +25% increased"
+    "guard_iron_5": {
+      "name": "Defense Mastery",
+      "description": "DEF +10% increased"
     },
-    "guard_b2": {
-      "name": "Life's Guard",
-      "description": "HP +60"
-    },
-    "guard_14": {
-      "name": "Stalwart Guard V",
-      "description": "Damage Reduction +4%"
-    },
-    "guard_15": {
-      "name": "Defense Pinnacle",
-      "description": "DEF +15"
-    },
-    "guard_16": {
-      "name": "Stalwart Guard VI",
-      "description": "Damage Reduction +5%"
-    },
-    "guard_17": {
-      "name": "Life Pinnacle",
-      "description": "HP +80"
-    },
-    "guard_final1": {
+    "guard_iron_ks": {
       "name": "Ironwall Guardian",
-      "description": "Damage Reduction +10%, DEF 20% more"
+      "description": "Damage Reduction +5%, DEF 5% more"
     },
-    "guard_final2": {
+    "guard_fort_1": {
+      "name": "Sturdy Body",
+      "description": "HP +30"
+    },
+    "guard_fort_2": {
+      "name": "Vitality Up",
+      "description": "HP +40"
+    },
+    "guard_fort_3": {
+      "name": "Vitality Amplify",
+      "description": "HP +10% increased"
+    },
+    "guard_fort_4": {
+      "name": "Deep Vitality",
+      "description": "HP +50"
+    },
+    "guard_fort_5": {
+      "name": "Vitality Mastery",
+      "description": "HP +15% increased"
+    },
+    "guard_fort_ks": {
       "name": "Indestructible Wall",
-      "description": "HP 20% more"
+      "description": "Damage Reduction +3%, HP 20% more"
+    },
+    "guard_regen_1": {
+      "name": "Recovery Basics",
+      "description": "HP Regen +50/s"
+    },
+    "guard_regen_2": {
+      "name": "Regeneration",
+      "description": "HP Regen +80/s"
+    },
+    "guard_regen_3": {
+      "name": "Absorption",
+      "description": "HP on Hit +20"
+    },
+    "guard_regen_4": {
+      "name": "Healing Boost",
+      "description": "HP Regen +100/s"
+    },
+    "guard_regen_5": {
+      "name": "Life Drain",
+      "description": "HP on Hit +30"
+    },
+    "guard_regen_ks": {
+      "name": "Wellspring of Life",
+      "description": "Damage Reduction +2%, HP Regen +300/s, HP on Hit +100"
+    },
+    "guard_retal_1": {
+      "name": "Defiant Stance",
+      "description": "DEF +5, ATK +5"
+    },
+    "guard_retal_2": {
+      "name": "Steel Resolve",
+      "description": "DEF +10"
+    },
+    "guard_retal_3": {
+      "name": "Counter Stance",
+      "description": "ATK +8"
+    },
+    "guard_retal_4": {
+      "name": "Sturdy Frame",
+      "description": "DEF +10% increased"
+    },
+    "guard_retal_5": {
+      "name": "Retaliatory Force",
+      "description": "ATK +10"
+    },
+    "guard_retal_ks": {
+      "name": "Steel Retaliation",
+      "description": "Damage Reduction +2%, Reflect 30% of DEF as damage when hit"
     },
     "vamp_1": {
       "name": "Lifesteal Basics",
@@ -2079,6 +2119,7 @@
     "igniteDamage": "Ignite Damage +{{value}}%",
     "criticalChance": "Critical Chance +{{value}}%",
     "criticalDamage": "Critical Damage +{{value}}%",
+    "damageDefer": "Damage Defer {{value}}%",
     "damageReduction": "Damage Taken -{{value}}%",
     "attackSpeed": "Attack Speed +{{value}}%",
     "hpOnHit": "HP on Hit +{{value}}",

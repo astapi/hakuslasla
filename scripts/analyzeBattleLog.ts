@@ -208,7 +208,7 @@ const durationSeconds = result.totalTicks / ticksPerSecond;
 const defeatTick = result.events.find((e) => e.type === 'player_defeated')?.tick ?? result.totalTicks;
 const timeStacks = Math.floor(defeatTick / (ticksPerSecond * 5));
 const defReduction = finalStats.def / (finalStats.def + 500);
-const totalReduction = Math.min(0.99, defReduction + modEffects.damageReductionPct / 100);
+const totalReduction = Math.min(0.99, defReduction + modEffects.damageDeferPct / 100);
 
 let playerDirect = 0;
 let playerPoison = 0;
@@ -247,7 +247,7 @@ console.log(`duration=${durationSeconds.toFixed(2)}s`);
 console.log(`time_atk_stacks=${timeStacks}`);
 console.log(`player_def=${finalStats.def}`);
 console.log(`damage_reduction_from_def=${(defReduction * 100).toFixed(1)}%`);
-console.log(`damage_reduction_mod=${modEffects.damageReductionPct.toFixed(1)}%`);
+console.log(`damage_reduction_mod=${modEffects.damageDeferPct.toFixed(1)}%`);
 console.log(`damage_reduction_total=${(totalReduction * 100).toFixed(1)}%`);
 console.log('');
 console.log('--- 与ダメ/回復 ---');

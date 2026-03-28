@@ -535,7 +535,7 @@ const VOLCANO_SETS: DungeonEquipmentSets = {
         createMod('hp_on_hit', 5, 4),
       ]),
       armor: createItem('volcano_armor', '火山の鎧', 'armor', 0, 24, [
-        createMod('hp_regen', 15, 4), createMod('def_bonus', 12, 4), createMod('damage_reduction_pct', 5, 4),
+        createMod('hp_regen', 15, 4), createMod('def_bonus', 12, 4), createMod('damage_defer_pct', 5, 4),
       ]),
       gloves: createItem('flame_gauntlets', '炎の篭手', 'gloves', 7, 10, [
         createMod('def_bonus', 8, 4), createMod('hp_regen', 8, 4),
@@ -618,7 +618,7 @@ const DARK_FOREST_SETS: DungeonEquipmentSets = {
         createMod('hp_on_hit', 8, 3),
       ]),
       armor: createItem('dark_bark_armor', '暗黒樹皮の鎧', 'armor', 0, 32, [
-        createMod('hp_regen', 25, 3), createMod('def_bonus', 18, 3), createMod('damage_reduction_pct', 8, 3),
+        createMod('hp_regen', 25, 3), createMod('def_bonus', 18, 3), createMod('damage_defer_pct', 8, 3),
       ]),
       gloves: createItem('nightmare_gauntlets', '悪夢の篭手', 'gloves', 10, 14, [
         createMod('def_bonus', 12, 3), createMod('hp_regen', 12, 3),
@@ -701,7 +701,7 @@ const SKY_TOWER_SETS: DungeonEquipmentSets = {
         createMod('hp_on_hit', 10, 2),
       ]),
       armor: createItem('cloud_armor', '雲海の鎧', 'armor', 0, 42, [
-        createMod('hp_regen', 35, 2), createMod('def_bonus', 25, 2), createMod('damage_reduction_pct', 10, 2),
+        createMod('hp_regen', 35, 2), createMod('def_bonus', 25, 2), createMod('damage_defer_pct', 10, 2),
       ]),
       gloves: createItem('storm_gauntlets', '嵐の篭手', 'gloves', 14, 18, [
         createMod('def_bonus', 18, 2), createMod('hp_regen', 18, 2),
@@ -790,7 +790,7 @@ const HELL_GATE_SETS: DungeonEquipmentSets = {
         createMod('def_bonus', 25, 1), createMod('hp_regen', 25, 1),
       ]),
       boots: createItem('hellwalker_boots', '地獄歩きのブーツ', 'boots', 14, 35, [
-        createMod('def_bonus', 25, 1), createMod('damage_reduction_pct', 12, 1),
+        createMod('def_bonus', 25, 1), createMod('damage_defer_pct', 12, 1),
       ]),
       accessory: createItem('infernal_ruby_ring', '煉獄のルビー指輪', 'accessory', 25, 25, [
         createMod('hp_regen', 30, 1), createMod('def_bonus', 20, 1),
@@ -873,7 +873,7 @@ const DRAGON_NEST_SETS: DungeonEquipmentSets = {
         createMod('def_bonus', 35, 1), createMod('hp_regen', 35, 1),
       ]),
       boots: createItem('dragon_hide_boots', '竜皮のブーツ', 'boots', 18, 48, [
-        createMod('def_bonus', 35, 1), createMod('damage_reduction_pct', 15, 1),
+        createMod('def_bonus', 35, 1), createMod('damage_defer_pct', 15, 1),
       ]),
       accessory: createItem('dragon_heart', '竜の心臓', 'accessory', 40, 40, [
         createMod('hp_regen', 80, 1), createMod('atk_bonus', 30, 1), createMod('def_bonus', 30, 1),
@@ -956,7 +956,7 @@ const SACRED_TEMPLE_SETS: DungeonEquipmentSets = {
         createMod('def_bonus', 45, 1), createMod('hp_regen', 45, 1),
       ]),
       boots: createItem('divine_boots', '神のブーツ', 'boots', 25, 65, [
-        createMod('def_bonus', 45, 1), createMod('damage_reduction_pct', 18, 1),
+        createMod('def_bonus', 45, 1), createMod('damage_defer_pct', 18, 1),
       ]),
       accessory: createItem('holy_feather', '熾天使の羽', 'accessory', 50, 50, [
         createMod('hp_regen', 100, 1), createMod('critical_chance', 40, 1),
@@ -1039,7 +1039,7 @@ const CHAOS_REALM_SETS: DungeonEquipmentSets = {
         createMod('def_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
       boots: createItem('void_boots', '虚無のブーツ', 'boots', 35, 88, [
-        createMod('def_bonus', 50, 1), createMod('damage_reduction_pct', 5, 1),
+        createMod('def_bonus', 50, 1), createMod('damage_defer_pct', 5, 1),
       ]),
       accessory: createItem('chaos_crystal_ring', '混沌水晶の指輪', 'accessory', 65, 65, [
         createMod('hp_regen', 50, 1), createMod('def_bonus', 50, 1),
@@ -1118,13 +1118,13 @@ const FINAL_LAND_SETS: DungeonEquipmentSets = {
         createMod('def_bonus', 50, 1),
       ]),
       armor: createItem('end_armor', '終末の鎧', 'armor', 0, 180, [
-        createMod('def_bonus', 75, 1), createMod('hp_regen', 50, 1), createMod('damage_reduction_pct', 5, 1),
+        createMod('def_bonus', 75, 1), createMod('hp_regen', 50, 1), createMod('damage_defer_pct', 5, 1),
       ]),
       gloves: createItem('titan_gauntlets', '泰坦の篭手', 'gloves', 70, 80, [
         createMod('def_bonus', 50, 1), createMod('hp_regen', 50, 1),
       ]),
       boots: createItem('end_walker_boots', '終末を歩む者のブーツ', 'boots', 48, 120, [
-        createMod('def_bonus', 50, 1), createMod('damage_reduction_pct', 5, 1),
+        createMod('def_bonus', 50, 1), createMod('damage_defer_pct', 5, 1),
       ]),
       accessory: createItem('oblivion_ring', '忘却の指輪', 'accessory', 88, 88, [
         createMod('hp_regen', 50, 1), createMod('def_bonus', 50, 1),

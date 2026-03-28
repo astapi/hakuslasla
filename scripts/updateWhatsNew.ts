@@ -130,49 +130,38 @@ interface VersionsResponse {
 
 // 各言語のwhatsNewテキスト
 const whatsNewByLocale: Record<string, string> = {
-  ja: `【改善】
-・同じダンジョンを連続で周回しやすいように改善
-・Uberボスを周回できるように改善`,
+  ja: `【不具合修正】
+・インベントリ画面で一部ユニーク装備のMOD効果が表示されない不具合を修正しました`,
 
-  'en-US': `[Improvements]
-• Improved ease of replaying the same dungeon consecutively
-• Improved ability to repeatedly challenge Uber bosses`,
+  'en-US': `[Bug Fixes]
+• Fixed a bug where some unique equipment MOD effects were not displayed on the inventory screen`,
 
-  'en-GB': `[Improvements]
-• Improved ease of replaying the same dungeon consecutively
-• Improved ability to repeatedly challenge Uber bosses`,
+  'en-GB': `[Bug Fixes]
+• Fixed a bug where some unique equipment MOD effects were not displayed on the inventory screen`,
 
-  'en-AU': `[Improvements]
-• Improved ease of replaying the same dungeon consecutively
-• Improved ability to repeatedly challenge Uber bosses`,
+  'en-AU': `[Bug Fixes]
+• Fixed a bug where some unique equipment MOD effects were not displayed on the inventory screen`,
 
-  'en-CA': `[Improvements]
-• Improved ease of replaying the same dungeon consecutively
-• Improved ability to repeatedly challenge Uber bosses`,
+  'en-CA': `[Bug Fixes]
+• Fixed a bug where some unique equipment MOD effects were not displayed on the inventory screen`,
 
-  'zh-Hans': `【改善】
-• 改善了连续刷同一地下城的便捷性
-• 改善了可以反复挑战Uber Boss的功能`,
+  'zh-Hans': `【问题修复】
+• 修复了物品栏界面中部分唯一装备的MOD效果未显示的问题`,
 
-  ko: `[개선]
-• 같은 던전을 연속으로 반복하기 쉽도록 개선
-• Uber 보스를 반복 도전할 수 있도록 개선`,
+  ko: `[버그 수정]
+• 인벤토리 화면에서 일부 유니크 장비의 MOD 효과가 표시되지 않던 버그를 수정했습니다`,
 
-  'es-ES': `[Mejoras]
-• Mejorada la facilidad para repetir el mismo calabozo consecutivamente
-• Mejorada la posibilidad de desafiar repetidamente a los jefes Uber`,
+  'es-ES': `[Correcciones]
+• Se corrigió un error donde algunos efectos MOD de equipamiento único no se mostraban en la pantalla de inventario`,
 
-  'es-MX': `[Mejoras]
-• Mejorada la facilidad para repetir el mismo calabozo consecutivamente
-• Mejorada la posibilidad de desafiar repetidamente a los jefes Uber`,
+  'es-MX': `[Correcciones]
+• Se corrigió un error donde algunos efectos MOD de equipamiento único no se mostraban en la pantalla de inventario`,
 
-  'fr-FR': `[Améliorations]
-• Amélioration de la facilité à rejouer le même donjon consécutivement
-• Amélioration de la possibilité de défier les boss Uber de manière répétée`,
+  'fr-FR': `[Corrections]
+• Correction d'un bug où certains effets MOD d'équipement unique n'étaient pas affichés dans l'écran d'inventaire`,
 
-  'de-DE': `[Verbesserungen]
-• Verbesserung der Moeglichkeit, denselben Dungeon hintereinander zu wiederholen
-• Verbesserung der Moeglichkeit, Uber-Bosse wiederholt herauszufordern`,
+  'de-DE': `[Fehlerbehebungen]
+• Ein Fehler wurde behoben, bei dem einige MOD-Effekte von einzigartiger Ausrüstung nicht auf dem Inventarbildschirm angezeigt wurden`,
 };
 
 // メイン処理

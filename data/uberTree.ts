@@ -117,7 +117,7 @@ export interface UberTreeEffects {
   critical_damage: number;
   hp_regen: number;
   hp_on_hit: number;
-  damage_reduction_pct: number;
+  damage_defer_pct: number;
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
   chill_chance: number;
@@ -143,7 +143,7 @@ export function calculateUberTreeEffects(unlockedNodeIds: string[]): UberTreeEff
   let ignite_chance = 0, ignite_damage_pct = 0;
   const ignite_damage_more_pct: number[] = [];
   let critical_chance = 0, critical_damage = 0;
-  let hp_regen = 0, hp_on_hit = 0, damage_reduction_pct = 0;
+  let hp_regen = 0, hp_on_hit = 0, damage_defer_pct = 0;
   let attack_speed_pct = 0;
   const attack_speed_more_pct: number[] = [];
   let chill_chance = 0, chill_effect_pct = 0, freeze_chance = 0;
@@ -183,7 +183,7 @@ export function calculateUberTreeEffects(unlockedNodeIds: string[]): UberTreeEff
     critical_damage += e.critical_damage || 0;
     hp_regen += e.hp_regen || 0;
     hp_on_hit += e.hp_on_hit || 0;
-    damage_reduction_pct += e.damage_reduction_pct || 0;
+    damage_defer_pct += e.damage_defer_pct || 0;
     attack_speed_pct += e.attack_speed_pct || 0;
     if (e.attack_speed_more_pct) attack_speed_more_pct.push(e.attack_speed_more_pct);
     chill_chance += e.chill_chance || 0;
@@ -205,7 +205,7 @@ export function calculateUberTreeEffects(unlockedNodeIds: string[]): UberTreeEff
     poison_chance, poison_damage_pct, poison_damage_more_pct,
     ignite_chance, ignite_damage_pct, ignite_damage_more_pct,
     critical_chance, critical_damage,
-    hp_regen, hp_on_hit, damage_reduction_pct,
+    hp_regen, hp_on_hit, damage_defer_pct,
     attack_speed_pct, attack_speed_more_pct,
     chill_chance, chill_effect_pct, freeze_chance,
     heavy_strike, def_hp_to_atk, uber_critical_follow_up,

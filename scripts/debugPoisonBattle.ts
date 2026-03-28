@@ -163,7 +163,7 @@ for (const build of builds) {
   console.log(`  HP回復（固定）: ${modEffects.hpRegen}/秒`);
   console.log(`  HP回復（%）: ${modEffects.hpRegenPct}%/秒`);
   console.log(`  HIT時HP回復: ${modEffects.hpOnHit}`);
-  console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
   console.log(`  敵毒時の被ダメ軽減: ${modEffects.poisonDamageReduction}%`);
 
   console.log('');
@@ -190,7 +190,7 @@ for (const build of builds) {
 
   console.log('');
   console.log('▼ 被ダメージ計算');
-  const playerDamageReduction = modEffects.damageReductionPct;
+  const playerDamageReduction = modEffects.damageDeferPct;
   const enemyDamageToPlayer = calculateDamage(enemyAtk, stats.def, playerDamageReduction);
   const enemyDamageWithPoisonReduction = calculateDamage(enemyAtk, stats.def, playerDamageReduction + modEffects.poisonDamageReduction);
   console.log(`  敵ATK ${enemyAtk} vs プレイヤーDEF ${stats.def} + 軽減${playerDamageReduction}% = ${enemyDamageToPlayer}ダメージ/攻撃`);

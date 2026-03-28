@@ -98,7 +98,7 @@ const ICON_BG_COLORS: Record<IconType, string> = {
 
 const getIconType = (effect: PassiveEffect): IconType => {
   if (effect.attack_speed_pct || effect.attack_speed_more_pct) return 'speed';
-  if (effect.damage_reduction_pct) return 'def';
+  if (effect.damage_defer_pct) return 'def';
   if (effect.hp_on_hit) return 'vamp';
   if (effect.heavy_strike || effect.def_hp_to_atk) return 'special';
   if (effect.uber_critical_follow_up) return 'crit';

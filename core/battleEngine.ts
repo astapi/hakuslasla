@@ -152,6 +152,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     warlordEnrageActivated: false,
     enemyWoundStacks: 0,
     enemyWoundActionCounter: 0,
+    deferredDamages: [],
     poisonStackAccumulator: 0,
     elapsedTicks: 0,
     isFinished: false,
@@ -354,6 +355,37 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
           );
           const regenEvent = createHpRegenEvent(engine.state.elapsedTicks, scaled);
           if (regenEvent) events.push(regenEvent);
+        }
+      }
+
+      // 遅延ダメージ処理（1秒ごと）
+      if (engine.state.deferredDamages.length > 0) {
+        let totalDeferredDamage = 0;
+        const remaining: typeof engine.state.deferredDamages = [];
+        for (const dd of engine.state.deferredDamages) {
+          totalDeferredDamage += dd.damagePerTick;
+          if (dd.remainingTicks > 1) {
+            remaining.push({ damagePerTick: dd.damagePerTick, remainingTicks: dd.remainingTicks - 1 });
+          }
+        }
+        engine.state.deferredDamages = remaining;
+        if (totalDeferredDamage > 0) {
+          engine.state.player.currentHp = Math.max(0, engine.state.player.currentHp - totalDeferredDamage);
+          events.push({
+            type: 'deferred_damage',
+            tick: engine.state.elapsedTicks,
+            data: { damage: totalDeferredDamage },
+          });
+          if (engine.state.player.currentHp <= 0) {
+            engine.state.isFinished = true;
+            engine.state.winner = 'enemy';
+            events.push({
+              type: 'player_defeated',
+              tick: engine.state.elapsedTicks,
+              data: { byDeferredDamage: true },
+            });
+            break;
+          }
         }
       }
     }
@@ -804,10 +836,41 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       );
       const enemyAttackMultiplier = engine.bossEffects.enemyAttackMult * engine.bossEffects.enemyNextAttackMult;
       const rawEnemyDamage = Math.floor(enemyDamage * enemyAttackMultiplier);
-      const finalEnemyDamage = Math.floor(rawEnemyDamage * engine.bossEffects.playerDamageTakenMult);
+      const totalEnemyDamage = Math.floor(rawEnemyDamage * engine.bossEffects.playerDamageTakenMult);
+
+      // 遅延ダメージ処理: ダメージのX%を4秒かけて受ける
+      const deferPct = Math.min(50, engine.playerMods.damageDeferPct);
+      let finalEnemyDamage: number;
+      if (deferPct > 0 && totalEnemyDamage > 0) {
+        const deferredTotal = Math.floor(totalEnemyDamage * deferPct / 100);
+        finalEnemyDamage = totalEnemyDamage - deferredTotal;
+        if (deferredTotal > 0) {
+          const damagePerTick = Math.max(1, Math.floor(deferredTotal / 4));
+          engine.state.deferredDamages.push({
+            damagePerTick,
+            remainingTicks: 4,
+          });
+        }
+      } else {
+        finalEnemyDamage = totalEnemyDamage;
+      }
+
       engine.state.player.currentHp = Math.max(0, engine.state.player.currentHp - finalEnemyDamage);
       engine.state.enemy.gauge = Math.max(0, engine.state.enemy.gauge - 100);
       events.push(createEnemyAttackEvent(engine.state.elapsedTicks, finalEnemyDamage));
+
+      // 反撃ダメージ: 被ダメ時DEFのX%を敵に反撃
+      if (engine.playerMods.retaliateDefPct > 0 && finalEnemyDamage > 0) {
+        const retaliateDamage = Math.floor(effectivePlayerDef * engine.playerMods.retaliateDefPct / 100);
+        if (retaliateDamage > 0) {
+          engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - retaliateDamage);
+          events.push({
+            type: 'retaliate',
+            tick: engine.state.elapsedTicks,
+            data: { damage: retaliateDamage },
+          });
+        }
+      }
 
       // 重傷スタック減衰: 敵行動4回で1スタック減少
       if (engine.playerMods.heavyStrike && engine.state.enemyWoundStacks > 0) {

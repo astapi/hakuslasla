@@ -497,7 +497,7 @@ export function calculateEnemyDamage(
   mods: CombinedModEffects,
   isEnemyPoisoned: boolean
 ): number {
-  // 追加ダメージ軽減
+  // 防具MODのダメージ軽減（ダメージ遅延は別処理）
   let totalDamageReduction = mods.damageReductionPct;
 
   // 敵が毒状態時の追加軽減

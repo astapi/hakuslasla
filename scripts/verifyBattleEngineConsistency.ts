@@ -41,7 +41,7 @@ const createTestMods = (): CombinedModEffects => {
     hpRegenPct: 1,
     hpOnHit: 20,
     hpOnCrit: 30,
-    damageReductionPct: 10,
+    damageDeferPct: 10,
     attackSpeedPct: 20,
   };
 };

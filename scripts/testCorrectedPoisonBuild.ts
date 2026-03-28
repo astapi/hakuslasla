@@ -126,7 +126,7 @@ function createCorrectedPoisonBuild(): { name: string; description: string; equi
     ]),
     armor: createUberItem('uber_venom_plate', 'Uber 毒蛇の鱗甲（修正版）', 'armor', 0, 300, [
       { type: 'poison_damage_pct', value: 80, tier: 0 },
-      { type: 'damage_reduction_pct', value: 15, tier: 0 },
+      { type: 'damage_defer_pct', value: 15, tier: 0 },
       { type: 'hp_bonus', value: 280, tier: 0 },
     ]),
     gloves: createUberItem('uber_venom_grip', 'Uber 猛毒の篭手（修正版）', 'gloves', 75, 90, [
@@ -266,7 +266,7 @@ for (const pattern of BUILD_PATTERNS) {
   console.log(`  ターンHP回復: +${modEffects.hpRegen} (+${modEffects.hpRegenPct}%)`);
   console.log(`  クリティカル: ${modEffects.criticalChance}% / +${modEffects.criticalDamage}%`);
   console.log(`  攻撃速度: +${modEffects.attackSpeedPct}%`);
-  console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
   console.log(`  毒付与: ${modEffects.poisonChance}%`);
   console.log(`  毒ダメージ: +${modEffects.poisonDamagePct}%`);
   if (modEffects.poisonDamageMorePct.length > 0) {

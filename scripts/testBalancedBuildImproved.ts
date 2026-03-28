@@ -122,7 +122,7 @@ function createSimpleBalanceOriginal(): { name: string; description: string; equ
     ]),
     armor: createUberItem('uber_fortress_plate', 'Uber 要塞の鎧', 'armor', 0, 340, [
       { type: 'def_bonus', value: 90, tier: 0 },
-      { type: 'damage_reduction_pct', value: 18, tier: 0 },
+      { type: 'damage_defer_pct', value: 18, tier: 0 },
       { type: 'def_increased_pct', value: 30, tier: 0 },
     ]),
     gloves: createUberItem('uber_vampire_grip', 'Uber ヴァンパイアの篭手', 'gloves', 65, 80, [
@@ -139,7 +139,7 @@ function createSimpleBalanceOriginal(): { name: string; description: string; equ
     accessory: createUberItem('uber_kraken_eye', 'Uber クラーケンの眼', 'accessory', 85, 85, [
       { type: 'poison_chance', value: 25, tier: 0 },
       { type: 'poison_damage_pct', value: 50, tier: 0 },
-      { type: 'damage_reduction_pct', value: 8, tier: 0 },
+      { type: 'damage_defer_pct', value: 8, tier: 0 },
       { type: 'hp_bonus', value: 220, tier: 0 },
     ]),
   };
@@ -182,7 +182,7 @@ function createSimpleBalanceHPBoosted(): { name: string; description: string; eq
     ]),
     armor: createUberItem('uber_fortress_plate', 'Uber 要塞の鎧（HP強化）', 'armor', 0, 340, [
       { type: 'def_bonus', value: 90, tier: 0 },
-      { type: 'damage_reduction_pct', value: 18, tier: 0 },
+      { type: 'damage_defer_pct', value: 18, tier: 0 },
       { type: 'def_increased_pct', value: 30, tier: 0 },
       { type: 'hp_bonus', value: 300, tier: 0 }, // 追加
     ]),
@@ -201,7 +201,7 @@ function createSimpleBalanceHPBoosted(): { name: string; description: string; eq
     accessory: createUberItem('uber_kraken_eye', 'Uber クラーケンの眼（HP強化）', 'accessory', 85, 85, [
       { type: 'poison_chance', value: 25, tier: 0 },
       { type: 'poison_damage_pct', value: 50, tier: 0 },
-      { type: 'damage_reduction_pct', value: 8, tier: 0 },
+      { type: 'damage_defer_pct', value: 8, tier: 0 },
       { type: 'hp_bonus', value: 300, tier: 0 }, // 220 → 300
     ]),
   };
@@ -321,7 +321,7 @@ for (const pattern of BUILD_PATTERNS) {
   console.log(`  ターンHP回復: +${modEffects.hpRegen} (+${modEffects.hpRegenPct}%)`);
   console.log(`  クリティカル: ${modEffects.criticalChance}% / +${modEffects.criticalDamage}%`);
   console.log(`  攻撃速度: +${modEffects.attackSpeedPct}%`);
-  console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
   if (modEffects.poisonChance > 0) {
     console.log(`  毒付与: ${modEffects.poisonChance}% / +${modEffects.poisonDamagePct}%`);
   }

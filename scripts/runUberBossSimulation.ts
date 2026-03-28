@@ -364,7 +364,7 @@ function formatCombinedStats(finalStats: Stats, mods: CombinedModEffects): strin
     `毒付与率${mods.poisonChance}% / 毒倍率+${mods.poisonDamagePct}% / 毒more+${poisonMoreTotal}% / 毒最大${mods.poisonMaxStacks}`,
     `毒被ダメ軽減${mods.poisonDamageReduction}% / 毒吸収${mods.poisonLifesteal}% / 直接ダメ無効${mods.noDirectDamage ? 'ON' : 'OFF'}`,
     `毎秒回復+${mods.hpRegen} / 回復%+${mods.hpRegenPct}% / HIT回復+${mods.hpOnHit} / クリ回復+${mods.hpOnCrit}`,
-    `被ダメ軽減${mods.damageReductionPct}% / 攻撃速度+${mods.attackSpeedPct}% / 攻速more+${attackSpeedMoreTotal}% / 最終AS${attackSpeedFinal.toFixed(2)}`,
+    `被ダメ軽減${mods.damageDeferPct}% / 攻撃速度+${mods.attackSpeedPct}% / 攻速more+${attackSpeedMoreTotal}% / 最終AS${attackSpeedFinal.toFixed(2)}`,
   ];
 }
 

@@ -4,7 +4,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: "LootDive",
   slug: "hakuslaDungeon",
-  version: "1.2.3",
+  version: "1.2.4",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "lootdive",

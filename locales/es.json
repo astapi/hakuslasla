@@ -271,6 +271,7 @@
     "hpRegen": "Regen HP",
     "hpOnHit": "HP al Golpear",
     "hpOnCrit": "HP en Crit",
+    "damageDefer": "Daño Diferido",
     "damageReduction": "Reducción de Daño",
     "attackSpeed": "Velocidad de Ataque",
     "attackSpeedMore": "Vel. Ataque More",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "HP al Golpear",
+    "damage_defer_pct": "Diferido",
     "damage_reduction_pct": "Red. Daño",
     "attack_speed_pct": "Velocidad",
     "lifesteal": "Robo de Vida",
@@ -1432,6 +1434,8 @@
     "freezeApplied": "¡{{enemy}} está congelado! ¡No puede actuar!",
     "freezeExpired": "El efecto de congelación de {{enemy}} ha expirado",
     "reflectedDamage": "¡La marca de {{enemy}} reflejó! ¡Recibiste {{damage}} de daño!",
+    "deferredDamage": "Daño diferido {{damage}}!",
+    "retaliateDamage": "¡Represalia! ¡{{damage}} de daño a {{enemy}}!",
     "enemyHealRegen": "¡{{enemy}} regeneró {{amount}} HP!",
     "enemyHealOnHit": "¡{{enemy}} absorbió {{amount}} HP!",
     "igniteApplied": "¡Ignite aplicado a {{enemy}}! ({{damage}} daño × {{duration}}s)",
@@ -1501,7 +1505,7 @@
     },
     "poison_10": {
       "name": "Resistencia al Veneno",
-      "description": "Daño Recibido -3% mientras el enemigo está envenenado"
+      "description": "Daño Recibido -1% mientras el enemigo está envenenado"
     },
     "poison_11": {
       "name": "Conocimiento de Veneno IV",
@@ -1525,11 +1529,11 @@
     },
     "poison_b1": {
       "name": "Guardia de Veneno",
-      "description": "Daño Recibido -5% mientras el enemigo está envenenado"
+      "description": "Daño Recibido -1% mientras el enemigo está envenenado"
     },
     "poison_b2": {
       "name": "Escamas de Dragón Venenoso",
-      "description": "Daño Recibido -7% mientras el enemigo está envenenado, HP +30"
+      "description": "Daño Recibido -1% mientras el enemigo está envenenado, HP +30"
     },
     "poison_14": {
       "name": "Conocimiento de Veneno V",
@@ -1545,7 +1549,7 @@
     },
     "poison_17": {
       "name": "Barrera de Veneno",
-      "description": "Daño Recibido -5% mientras el enemigo está envenenado"
+      "description": "Daño Recibido -1% mientras el enemigo está envenenado"
     },
     "poison_final1": {
       "name": "Encarnación de la Serpiente",
@@ -1653,99 +1657,135 @@
     },
     "guard_1": {
       "name": "Fundamentos de Guardia",
-      "description": "DEF +5, Reducción de Daño +2%"
+      "description": "DEF +5, Reducción de daño +1%"
     },
     "guard_2": {
       "name": "Guardia Firme I",
-      "description": "Reducción de Daño +2%"
+      "description": "Reducción de daño +1%"
     },
     "guard_3": {
-      "name": "Defensa Arriba",
-      "description": "DEF +4"
+      "name": "Mejora de Defensa",
+      "description": "DEF +4, DEF +5% increased"
     },
     "guard_4": {
-      "name": "HP Arriba",
+      "name": "Mejora de HP",
       "description": "HP +25"
     },
     "guard_5": {
       "name": "Guardia Firme II",
-      "description": "Reducción de Daño +2%"
+      "description": "Reducción de daño +1%"
     },
     "guard_6": {
-      "name": "Defensa Arriba II",
-      "description": "DEF +5"
+      "name": "Mejora de Defensa II",
+      "description": "DEF +5, DEF +5% increased"
     },
     "guard_7": {
-      "name": "HP Arriba II",
+      "name": "Mejora de HP II",
       "description": "HP +30"
     },
     "guard_key1": {
-      "name": "Escudo de Hierro",
-      "description": "Reducción de Daño +8%"
+      "name": "Escudo Inquebrantable",
+      "description": "Reducción de daño +3%"
     },
     "guard_8": {
       "name": "Guardia Firme III",
-      "description": "Reducción de Daño +3%"
+      "description": "Reducción de daño +2%"
     },
-    "guard_9": {
+    "guard_iron_1": {
+      "name": "Postura Sólida",
+      "description": "DEF +8, DEF +5% increased"
+    },
+    "guard_iron_2": {
+      "name": "Mejora de Defensa III",
+      "description": "DEF +10"
+    },
+    "guard_iron_3": {
       "name": "Amplificación de Defensa",
-      "description": "DEF +20% increased"
+      "description": "DEF +15% increased"
     },
-    "guard_10": {
-      "name": "Amplificación de Vitalidad",
-      "description": "HP +20% increased"
-    },
-    "guard_11": {
-      "name": "Guardia Firme IV",
-      "description": "Reducción de Daño +3%"
-    },
-    "guard_12": {
-      "name": "Defensa Arriba III",
-      "description": "DEF +8"
-    },
-    "guard_13": {
-      "name": "HP Arriba III",
-      "description": "HP +40"
-    },
-    "guard_a1": {
-      "name": "Cuerpo de Acero",
-      "description": "DEF +25% increased"
-    },
-    "guard_a2": {
-      "name": "Fortaleza Inamovible",
+    "guard_iron_4": {
+      "name": "Muro de Acero",
       "description": "DEF +12"
     },
-    "guard_b1": {
-      "name": "Vida Abundante",
-      "description": "HP +25% increased"
+    "guard_iron_5": {
+      "name": "Maestría Defensiva",
+      "description": "DEF +10% increased"
     },
-    "guard_b2": {
-      "name": "Guardia de la Vida",
-      "description": "HP +60"
+    "guard_iron_ks": {
+      "name": "Guardián Inquebrantable",
+      "description": "Reducción de daño +5%, DEF 5% more"
     },
-    "guard_14": {
-      "name": "Guardia Firme V",
-      "description": "Reducción de Daño +4%"
+    "guard_fort_1": {
+      "name": "Cuerpo Resistente",
+      "description": "HP +30"
     },
-    "guard_15": {
-      "name": "Cúspide de Defensa",
-      "description": "DEF +15"
+    "guard_fort_2": {
+      "name": "Mejora de Vitalidad",
+      "description": "HP +40"
     },
-    "guard_16": {
-      "name": "Guardia Firme VI",
-      "description": "Reducción de Daño +5%"
+    "guard_fort_3": {
+      "name": "Amplificación de Vitalidad",
+      "description": "HP +10% increased"
     },
-    "guard_17": {
-      "name": "Cúspide de la Vida",
-      "description": "HP +80"
+    "guard_fort_4": {
+      "name": "Vitalidad Profunda",
+      "description": "HP +50"
     },
-    "guard_final1": {
-      "name": "Guardián de Hierro",
-      "description": "Reducción de Daño +10%, DEF 20% more"
+    "guard_fort_5": {
+      "name": "Maestría de Vitalidad",
+      "description": "HP +15% increased"
     },
-    "guard_final2": {
-      "name": "Muro Indestructible",
-      "description": "HP 20% more"
+    "guard_fort_ks": {
+      "name": "Muralla Indestructible",
+      "description": "Reducción de daño +3%, HP 20% more"
+    },
+    "guard_regen_1": {
+      "name": "Fundamentos de Recuperación",
+      "description": "Regeneración HP +50/s"
+    },
+    "guard_regen_2": {
+      "name": "Regeneración",
+      "description": "Regeneración HP +80/s"
+    },
+    "guard_regen_3": {
+      "name": "Absorción",
+      "description": "HP al golpear +20"
+    },
+    "guard_regen_4": {
+      "name": "Curación Mejorada",
+      "description": "Regeneración HP +100/s"
+    },
+    "guard_regen_5": {
+      "name": "Absorción Vital",
+      "description": "HP al golpear +30"
+    },
+    "guard_regen_ks": {
+      "name": "Fuente de Vida",
+      "description": "Reducción de daño +2%, Regeneración HP +300/s, HP al golpear +100"
+    },
+    "guard_retal_1": {
+      "name": "Postura Desafiante",
+      "description": "DEF +5, ATK +5"
+    },
+    "guard_retal_2": {
+      "name": "Voluntad de Acero",
+      "description": "DEF +10"
+    },
+    "guard_retal_3": {
+      "name": "Postura de Contraataque",
+      "description": "ATK +8"
+    },
+    "guard_retal_4": {
+      "name": "Complexión Robusta",
+      "description": "DEF +10% increased"
+    },
+    "guard_retal_5": {
+      "name": "Fuerza de Represalia",
+      "description": "ATK +10"
+    },
+    "guard_retal_ks": {
+      "name": "Represalia de Acero",
+      "description": "Reducción de daño +2%, Refleja 30% de DEF como daño al recibir impacto"
     },
     "vamp_1": {
       "name": "Fundamentos de Robo de Vida",
@@ -2079,6 +2119,7 @@
     "igniteDamage": "Daño de Ignite +{{value}}%",
     "criticalChance": "Prob. Crit +{{value}}%",
     "criticalDamage": "DMG Crit +{{value}}%",
+    "damageDefer": "Daño Diferido {{value}}%",
     "damageReduction": "Daño Recibido -{{value}}%",
     "attackSpeed": "Velocidad de Ataque +{{value}}%",
     "hpOnHit": "HP al Golpear +{{value}}",

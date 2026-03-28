@@ -1301,7 +1301,7 @@
       "name": "UberUber ゴブリンキング",
       "image": "goblin_king",
       "maxHp": 600000,
-      "atk": 5000,
+      "atk": 4000,
       "def": 600,
       "exp": 10000,
       "attackSpeed": 1.0,

@@ -271,6 +271,7 @@
     "hpRegen": "HP回復",
     "hpOnHit": "HIT回復",
     "hpOnCrit": "クリ回復",
+    "damageDefer": "ダメージ遅延",
     "damageReduction": "被ダメ軽減",
     "attackSpeed": "攻撃速度",
     "attackSpeedMore": "攻速more",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "HIT回復",
+    "damage_defer_pct": "遅延",
     "damage_reduction_pct": "被ダメ減",
     "attack_speed_pct": "速度",
     "lifesteal": "吸収",
@@ -1433,6 +1435,8 @@
     "freezeApplied": "{{enemy}}をフリーズ状態にした！ 行動不能！",
     "freezeExpired": "{{enemy}}のフリーズ状態が解除された",
     "reflectedDamage": "{{enemy}}の刻印が反射！ プレイヤーに{{damage}}ダメージ！",
+    "deferredDamage": "遅延ダメージ {{damage}}！",
+    "retaliateDamage": "反撃！ {{enemy}}に{{damage}}ダメージ！",
     "enemyHealRegen": "{{enemy}}が再生で{{amount}}回復した！",
     "enemyHealOnHit": "{{enemy}}が吸収で{{amount}}回復した！",
     "igniteApplied": "{{enemy}}に発火を付与した！（{{damage}}ダメージ × {{duration}}秒）",
@@ -1502,7 +1506,7 @@
     },
     "poison_10": {
       "name": "毒耐性",
-      "description": "敵が毒状態時、被ダメージ -3%"
+      "description": "敵が毒状態時、被ダメージ -1%"
     },
     "poison_11": {
       "name": "毒の知識 IV",
@@ -1526,11 +1530,11 @@
     },
     "poison_b1": {
       "name": "毒の護り",
-      "description": "敵が毒状態時、被ダメージ -5%"
+      "description": "敵が毒状態時、被ダメージ -1%"
     },
     "poison_b2": {
       "name": "毒龍の鱗",
-      "description": "敵が毒状態時、被ダメージ -7%, HP +30"
+      "description": "敵が毒状態時、被ダメージ -1%, HP +30"
     },
     "poison_14": {
       "name": "毒の知識 V",
@@ -1546,7 +1550,7 @@
     },
     "poison_17": {
       "name": "猛毒の守護",
-      "description": "敵が毒状態時、被ダメージ -5%"
+      "description": "敵が毒状態時、被ダメージ -1%"
     },
     "poison_final1": {
       "name": "毒蛇の化身",
@@ -1654,15 +1658,15 @@
     },
     "guard_1": {
       "name": "守りの心得",
-      "description": "DEF +5, ダメージ軽減 +2%"
+      "description": "DEF +5, ダメージ遅延 +3%"
     },
     "guard_2": {
       "name": "堅守 I",
-      "description": "ダメージ軽減 +2%"
+      "description": "ダメージ遅延 +3%"
     },
     "guard_3": {
       "name": "防御強化",
-      "description": "DEF +4"
+      "description": "DEF +4, DEF +5% increased"
     },
     "guard_4": {
       "name": "体力強化",
@@ -1670,11 +1674,11 @@
     },
     "guard_5": {
       "name": "堅守 II",
-      "description": "ダメージ軽減 +2%"
+      "description": "ダメージ遅延 +3%"
     },
     "guard_6": {
       "name": "防御強化 II",
-      "description": "DEF +5"
+      "description": "DEF +5, DEF +5% increased"
     },
     "guard_7": {
       "name": "体力強化 II",
@@ -1682,71 +1686,107 @@
     },
     "guard_key1": {
       "name": "鉄壁の盾",
-      "description": "ダメージ軽減 +8%"
+      "description": "ダメージ遅延 +5%"
     },
     "guard_8": {
       "name": "堅守 III",
-      "description": "ダメージ軽減 +3%"
+      "description": "ダメージ遅延 +4%"
     },
-    "guard_9": {
-      "name": "防御増幅",
-      "description": "DEF +20% increased"
+    "guard_iron_1": {
+      "name": "堅固な構え",
+      "description": "DEF +8, DEF +5% increased"
     },
-    "guard_10": {
-      "name": "生命力増幅",
-      "description": "HP +20% increased"
-    },
-    "guard_11": {
-      "name": "堅守 IV",
-      "description": "ダメージ軽減 +3%"
-    },
-    "guard_12": {
+    "guard_iron_2": {
       "name": "防御強化 III",
-      "description": "DEF +8"
+      "description": "DEF +10"
     },
-    "guard_13": {
-      "name": "体力強化 III",
-      "description": "HP +40"
+    "guard_iron_3": {
+      "name": "防御増幅",
+      "description": "DEF +15% increased"
     },
-    "guard_a1": {
-      "name": "鋼の肉体",
-      "description": "DEF +25% increased"
-    },
-    "guard_a2": {
-      "name": "不動の砦",
+    "guard_iron_4": {
+      "name": "鋼の壁",
       "description": "DEF +12"
     },
-    "guard_b1": {
-      "name": "豊かな生命",
-      "description": "HP +25% increased"
+    "guard_iron_5": {
+      "name": "防御練磨",
+      "description": "DEF +10% increased"
     },
-    "guard_b2": {
-      "name": "生命の護り",
-      "description": "HP +60"
-    },
-    "guard_14": {
-      "name": "堅守 V",
-      "description": "ダメージ軽減 +4%"
-    },
-    "guard_15": {
-      "name": "防御の極み",
-      "description": "DEF +15"
-    },
-    "guard_16": {
-      "name": "堅守 VI",
-      "description": "ダメージ軽減 +5%"
-    },
-    "guard_17": {
-      "name": "生命の極み",
-      "description": "HP +80"
-    },
-    "guard_final1": {
+    "guard_iron_ks": {
       "name": "鉄壁の守護者",
-      "description": "ダメージ軽減 +10%, DEF 20% more"
+      "description": "ダメージ遅延 +8%, DEF 5% more"
     },
-    "guard_final2": {
+    "guard_fort_1": {
+      "name": "強靭な身体",
+      "description": "HP +30"
+    },
+    "guard_fort_2": {
+      "name": "生命力強化",
+      "description": "HP +40"
+    },
+    "guard_fort_3": {
+      "name": "生命力増幅",
+      "description": "HP +10% increased"
+    },
+    "guard_fort_4": {
+      "name": "生命の厚み",
+      "description": "HP +50"
+    },
+    "guard_fort_5": {
+      "name": "生命力練磨",
+      "description": "HP +15% increased"
+    },
+    "guard_fort_ks": {
       "name": "不滅の城壁",
-      "description": "HP 20% more"
+      "description": "ダメージ遅延 +6%, HP 20% more"
+    },
+    "guard_regen_1": {
+      "name": "回復の心得",
+      "description": "毎秒HP +50回復"
+    },
+    "guard_regen_2": {
+      "name": "再生力",
+      "description": "毎秒HP +80回復"
+    },
+    "guard_regen_3": {
+      "name": "吸収の技",
+      "description": "HIT時HP +20回復"
+    },
+    "guard_regen_4": {
+      "name": "治癒促進",
+      "description": "毎秒HP +100回復"
+    },
+    "guard_regen_5": {
+      "name": "生命吸収",
+      "description": "HIT時HP +30回復"
+    },
+    "guard_regen_ks": {
+      "name": "生命の泉",
+      "description": "ダメージ遅延 +5%, 毎秒HP +300回復, HIT時HP +100回復"
+    },
+    "guard_retal_1": {
+      "name": "反骨の構え",
+      "description": "DEF +5, ATK +5"
+    },
+    "guard_retal_2": {
+      "name": "鋼の意地",
+      "description": "DEF +10"
+    },
+    "guard_retal_3": {
+      "name": "反撃の気構え",
+      "description": "ATK +8"
+    },
+    "guard_retal_4": {
+      "name": "頑強な体躯",
+      "description": "DEF +10% increased"
+    },
+    "guard_retal_5": {
+      "name": "反攻の力",
+      "description": "ATK +10"
+    },
+    "guard_retal_ks": {
+      "name": "鋼の報復",
+      "description": "ダメージ遅延 +5%, 被ダメ時DEFの30%を反撃ダメージ"
     },
     "vamp_1": {
       "name": "吸血の心得",
@@ -2080,6 +2120,7 @@
     "igniteDamage": "発火ダメージ+{{value}}%",
     "criticalChance": "クリティカル+{{value}}%",
     "criticalDamage": "クリダメ+{{value}}%",
+    "damageDefer": "ダメージ遅延{{value}}%",
     "damageReduction": "被ダメ-{{value}}%",
     "attackSpeed": "攻撃速度+{{value}}%",
     "hpOnHit": "HIT時HP+{{value}}回復",

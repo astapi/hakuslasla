@@ -61,6 +61,7 @@ export const DEBUG_DIMENSIONAL_DUNGEON_IDS: string[] = [
   'debug_dimensional_kraken',
   'debug_dimensional_demon_lord',
   'debug_dimensional_true_final_boss',
+  'debug_uber_uber_goblin_king',
 ];
 
 // 元の異次元ラッシュでのボス階層（スケーリング計算に使用）

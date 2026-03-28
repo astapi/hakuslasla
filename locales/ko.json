@@ -271,6 +271,7 @@
     "hpRegen": "HP 재생",
     "hpOnHit": "적중 시 HP",
     "hpOnCrit": "Crit 시 HP",
+    "damageDefer": "피해 지연",
     "damageReduction": "피해 감소",
     "attackSpeed": "공격 속도",
     "attackSpeedMore": "AS More",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "적중 시 HP",
+    "damage_defer_pct": "지연",
     "damage_reduction_pct": "피해 감소",
     "attack_speed_pct": "속도",
     "lifesteal": "흡혈",
@@ -1432,6 +1434,8 @@
     "freezeApplied": "{{enemy}}이(가) 빙결 상태! 행동 불가!",
     "freezeExpired": "{{enemy}}의 빙결 상태가 해제되었다",
     "reflectedDamage": "{{enemy}}의 표식이 반사! {{damage}} 피해를 받았다!",
+    "deferredDamage": "지연 피해 {{damage}}!",
+    "retaliateDamage": "반격! {{enemy}}에게 {{damage}} 데미지!",
     "enemyHealRegen": "{{enemy}}이(가) {{amount}} HP 재생!",
     "enemyHealOnHit": "{{enemy}}이(가) {{amount}} HP 흡수!",
     "igniteApplied": "{{enemy}}에게 점화 적용! ({{damage}} 피해 × {{duration}}초)",
@@ -1501,7 +1505,7 @@
     },
     "poison_10": {
       "name": "독 저항",
-      "description": "적이 독 상태일 때 받는 피해 -3%"
+      "description": "적이 독 상태일 때 받는 피해 -1%"
     },
     "poison_11": {
       "name": "독 지식 IV",
@@ -1525,11 +1529,11 @@
     },
     "poison_b1": {
       "name": "독 방어",
-      "description": "적이 독 상태일 때 받는 피해 -5%"
+      "description": "적이 독 상태일 때 받는 피해 -1%"
     },
     "poison_b2": {
       "name": "독룡 비늘",
-      "description": "적이 독 상태일 때 받는 피해 -7%, HP +30"
+      "description": "적이 독 상태일 때 받는 피해 -1%, HP +30"
     },
     "poison_14": {
       "name": "독 지식 V",
@@ -1545,7 +1549,7 @@
     },
     "poison_17": {
       "name": "맹독 방어",
-      "description": "적이 독 상태일 때 받는 피해 -5%"
+      "description": "적이 독 상태일 때 받는 피해 -1%"
     },
     "poison_final1": {
       "name": "독사의 화신",
@@ -1652,100 +1656,136 @@
       "description": "Crit 시 HP +150, ATK 15% more, Crit 시 피해 흡수 +30%"
     },
     "guard_1": {
-      "name": "방어 기초",
-      "description": "DEF +5, 피해 감소 +2%"
+      "name": "수비의 기초",
+      "description": "DEF +5, 피해 감소 +1%"
     },
     "guard_2": {
-      "name": "견고한 방어 I",
-      "description": "피해 감소 +2%"
+      "name": "견고한 수비 I",
+      "description": "피해 감소 +1%"
     },
     "guard_3": {
-      "name": "방어력 증가",
-      "description": "DEF +4"
+      "name": "방어 강화",
+      "description": "DEF +4, DEF +5% increased"
     },
     "guard_4": {
-      "name": "HP 증가",
+      "name": "체력 강화",
       "description": "HP +25"
     },
     "guard_5": {
-      "name": "견고한 방어 II",
-      "description": "피해 감소 +2%"
+      "name": "견고한 수비 II",
+      "description": "피해 감소 +1%"
     },
     "guard_6": {
-      "name": "방어력 증가 II",
-      "description": "DEF +5"
+      "name": "방어 강화 II",
+      "description": "DEF +5, DEF +5% increased"
     },
     "guard_7": {
-      "name": "HP 증가 II",
+      "name": "체력 강화 II",
       "description": "HP +30"
     },
     "guard_key1": {
-      "name": "철벽 방패",
-      "description": "피해 감소 +8%"
+      "name": "철벽의 방패",
+      "description": "피해 감소 +3%"
     },
     "guard_8": {
-      "name": "견고한 방어 III",
-      "description": "피해 감소 +3%"
+      "name": "견고한 수비 III",
+      "description": "피해 감소 +2%"
     },
-    "guard_9": {
+    "guard_iron_1": {
+      "name": "견고한 자세",
+      "description": "DEF +8, DEF +5% increased"
+    },
+    "guard_iron_2": {
+      "name": "방어 강화 III",
+      "description": "DEF +10"
+    },
+    "guard_iron_3": {
       "name": "방어 증폭",
-      "description": "DEF +20% increased"
+      "description": "DEF +15% increased"
     },
-    "guard_10": {
-      "name": "생명력 증폭",
-      "description": "HP +20% increased"
-    },
-    "guard_11": {
-      "name": "견고한 방어 IV",
-      "description": "피해 감소 +3%"
-    },
-    "guard_12": {
-      "name": "방어력 증가 III",
-      "description": "DEF +8"
-    },
-    "guard_13": {
-      "name": "HP 증가 III",
-      "description": "HP +40"
-    },
-    "guard_a1": {
-      "name": "강철 육체",
-      "description": "DEF +25% increased"
-    },
-    "guard_a2": {
-      "name": "부동의 요새",
+    "guard_iron_4": {
+      "name": "강철의 벽",
       "description": "DEF +12"
     },
-    "guard_b1": {
-      "name": "풍요로운 생명",
-      "description": "HP +25% increased"
+    "guard_iron_5": {
+      "name": "방어 연마",
+      "description": "DEF +10% increased"
     },
-    "guard_b2": {
-      "name": "생명의 보루",
-      "description": "HP +60"
+    "guard_iron_ks": {
+      "name": "철벽의 수호자",
+      "description": "피해 감소 +5%, DEF 5% more"
     },
-    "guard_14": {
-      "name": "견고한 방어 V",
-      "description": "피해 감소 +4%"
+    "guard_fort_1": {
+      "name": "강인한 육체",
+      "description": "HP +30"
     },
-    "guard_15": {
-      "name": "방어 정점",
-      "description": "DEF +15"
+    "guard_fort_2": {
+      "name": "생명력 강화",
+      "description": "HP +40"
     },
-    "guard_16": {
-      "name": "견고한 방어 VI",
-      "description": "피해 감소 +5%"
+    "guard_fort_3": {
+      "name": "생명력 증폭",
+      "description": "HP +10% increased"
     },
-    "guard_17": {
-      "name": "생명 정점",
-      "description": "HP +80"
+    "guard_fort_4": {
+      "name": "생명의 두께",
+      "description": "HP +50"
     },
-    "guard_final1": {
-      "name": "철벽 수호자",
-      "description": "피해 감소 +10%, DEF 20% more"
+    "guard_fort_5": {
+      "name": "생명력 연마",
+      "description": "HP +15% increased"
     },
-    "guard_final2": {
-      "name": "불굴의 벽",
-      "description": "HP 20% more"
+    "guard_fort_ks": {
+      "name": "불멸의 성벽",
+      "description": "피해 감소 +3%, HP 20% more"
+    },
+    "guard_regen_1": {
+      "name": "회복의 기초",
+      "description": "초당 HP +50 회복"
+    },
+    "guard_regen_2": {
+      "name": "재생력",
+      "description": "초당 HP +80 회복"
+    },
+    "guard_regen_3": {
+      "name": "흡수의 기술",
+      "description": "명중 시 HP +20 회복"
+    },
+    "guard_regen_4": {
+      "name": "치유 촉진",
+      "description": "초당 HP +100 회복"
+    },
+    "guard_regen_5": {
+      "name": "생명 흡수",
+      "description": "명중 시 HP +30 회복"
+    },
+    "guard_regen_ks": {
+      "name": "생명의 샘",
+      "description": "피해 감소 +2%, 초당 HP +300 회복, 명중 시 HP +100 회복"
+    },
+    "guard_retal_1": {
+      "name": "반골의 자세",
+      "description": "DEF +5, ATK +5"
+    },
+    "guard_retal_2": {
+      "name": "강철의 의지",
+      "description": "DEF +10"
+    },
+    "guard_retal_3": {
+      "name": "반격의 기세",
+      "description": "ATK +8"
+    },
+    "guard_retal_4": {
+      "name": "견고한 체격",
+      "description": "DEF +10% increased"
+    },
+    "guard_retal_5": {
+      "name": "반공의 힘",
+      "description": "ATK +10"
+    },
+    "guard_retal_ks": {
+      "name": "강철의 보복",
+      "description": "피해 감소 +2%, 피격 시 DEF의 30%를 반격 데미지"
     },
     "vamp_1": {
       "name": "흡혈 기초",
@@ -2079,6 +2119,7 @@
     "igniteDamage": "점화 피해 +{{value}}%",
     "criticalChance": "Crit 확률 +{{value}}%",
     "criticalDamage": "Crit DMG +{{value}}%",
+    "damageDefer": "피해 지연 {{value}}%",
     "damageReduction": "받는 피해 -{{value}}%",
     "attackSpeed": "공격 속도 +{{value}}%",
     "hpOnHit": "적중 시 HP +{{value}}",

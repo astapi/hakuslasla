@@ -1219,6 +1219,25 @@
       "modTierRange": { "minTier": 10, "maxTier": 1 },
       "modCountRange": { "min": 2, "max": 4 }
     },
+    "debug_uber_uber_goblin_king": {
+      "id": "debug_uber_uber_goblin_king",
+      "name": "DEBUG: UberUber ゴブリンキング",
+      "description": "デバッグ用。UberUberゴブリンキングが単体で出現する。チケット不要。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_uber_goblin_king", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_uber_goblin_king",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [],
+        "dungeon": []
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 3, "max": 4 }
+    },
     "dimensional_corridor": {
       "id": "dimensional_corridor",
       "name": "次元回廊",

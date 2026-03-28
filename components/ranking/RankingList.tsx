@@ -116,7 +116,7 @@ const RankingRow = ({ entry, isMe }: RankingRowProps) => {
             <StatItem label={t('status.hpRegen')} value={`${entry.stats.hpRegen}${t('status.perSecond')}`} color="#4CAF50" />
             <StatItem label={t('status.hpOnHit')} value={entry.stats.hpOnHit} color="#4CAF50" />
             <StatItem label={t('status.hpOnCrit')} value={`+${entry.stats.hpOnCrit}`} color="#FF9800" />
-            <StatItem label={t('status.damageReduction')} value={`${entry.stats.damageReduction}%`} color="#4CAF50" />
+            <StatItem label={t('status.damageDefer')} value={`${entry.stats.damageDefer}%`} color="#4CAF50" />
             {/* 攻撃速度 */}
             <StatItem label={t('status.attackSpeed')} value={`+${entry.stats.attackSpeedPct}%`} color="#4FC3F7" />
             <StatItem label={t('status.attackSpeedMore')} value={`+${entry.stats.attackSpeedMore}%`} color="#4FC3F7" />

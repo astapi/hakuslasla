@@ -322,7 +322,7 @@ for (let i = 0; i < clearedBuilds.length; i++) {
   console.log(`    クリティカル時HP回復: +${build.passiveEffects.hp_on_crit}`);
   console.log(`    HP回復/ターン: +${build.passiveEffects.hp_regen}`);
   console.log(`    HP回復%/ターン: +${build.passiveEffects.hp_regen_pct}%`);
-  console.log(`    ダメージ軽減: +${build.passiveEffects.damage_reduction_pct}%`);
+  console.log(`    ダメージ軽減: +${build.passiveEffects.damage_defer_pct}%`);
   console.log(`    HIT時HP回復: +${build.passiveEffects.hp_on_hit}`);
   console.log(`    攻撃速度: +${build.passiveEffects.attack_speed_pct}% increased`);
   console.log(`    攻撃速度more: ${build.passiveEffects.attack_speed_more_pct.length > 0 ? build.passiveEffects.attack_speed_more_pct.map(v => `${v}%`).join(' × ') : 'なし'}`);
@@ -362,7 +362,7 @@ for (let i = 0; i < clearedBuilds.length; i++) {
   console.log(`  クリティカル時HP回復: ${build.combinedMods.hpOnCrit}`);
   console.log(`  HP回復/ターン: ${build.combinedMods.hpRegen}`);
   console.log(`  HP回復%/ターン: ${build.combinedMods.hpRegenPct}%`);
-  console.log(`  ダメージ軽減: ${build.combinedMods.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${build.combinedMods.damageDeferPct}%`);
   console.log(`  HIT時HP回復: ${build.combinedMods.hpOnHit}`);
   console.log(`  攻撃速度: ${build.combinedMods.attackSpeedPct}%`);
 
@@ -384,7 +384,7 @@ const avgPassiveEffects = {
   hp_on_hit: clearedBuilds.reduce((sum, b) => sum + b.passiveEffects.hp_on_hit, 0) / clearedBuilds.length,
   hp_regen: clearedBuilds.reduce((sum, b) => sum + b.passiveEffects.hp_regen, 0) / clearedBuilds.length,
   hp_regen_pct: clearedBuilds.reduce((sum, b) => sum + b.passiveEffects.hp_regen_pct, 0) / clearedBuilds.length,
-  damage_reduction_pct: clearedBuilds.reduce((sum, b) => sum + b.passiveEffects.damage_reduction_pct, 0) / clearedBuilds.length,
+  damage_defer_pct: clearedBuilds.reduce((sum, b) => sum + b.passiveEffects.damage_defer_pct, 0) / clearedBuilds.length,
   critical_chance: clearedBuilds.reduce((sum, b) => sum + b.passiveEffects.critical_chance, 0) / clearedBuilds.length,
   attack_speed_pct: clearedBuilds.reduce((sum, b) => sum + b.passiveEffects.attack_speed_pct, 0) / clearedBuilds.length,
 };
@@ -400,7 +400,7 @@ console.log('【平均パッシブ効果（主要）】');
 console.log(`  HIT時HP回復: ${avgPassiveEffects.hp_on_hit.toFixed(1)}`);
 console.log(`  HP回復/ターン: ${avgPassiveEffects.hp_regen.toFixed(1)}`);
 console.log(`  HP回復%/ターン: ${avgPassiveEffects.hp_regen_pct.toFixed(2)}%`);
-console.log(`  ダメージ軽減: ${avgPassiveEffects.damage_reduction_pct.toFixed(1)}%`);
+console.log(`  ダメージ軽減: ${avgPassiveEffects.damage_defer_pct.toFixed(1)}%`);
 console.log(`  クリティカル率: ${avgPassiveEffects.critical_chance.toFixed(1)}%`);
 console.log(`  攻撃速度: ${avgPassiveEffects.attack_speed_pct.toFixed(1)}%`);
 

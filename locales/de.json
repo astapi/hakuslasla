@@ -271,6 +271,7 @@
     "hpRegen": "HP-Regen",
     "hpOnHit": "HP bei Treffer",
     "hpOnCrit": "HP bei Crit",
+    "damageDefer": "Schadensverzögerung",
     "damageReduction": "Schadensreduzierung",
     "attackSpeed": "Angriffsgeschw.",
     "attackSpeedMore": "AG mehr",
@@ -316,6 +317,7 @@
     "hp_increased_pct": "HP",
     "hp_bonus": "HP",
     "hp_on_hit": "HP bei Treffer",
+    "damage_defer_pct": "Verzög.",
     "damage_reduction_pct": "Schadensr.",
     "attack_speed_pct": "Geschw.",
     "lifesteal": "Lebensraub",
@@ -1432,6 +1434,8 @@
     "freezeApplied": "{{enemy}} ist eingefroren! Handlungsunfähig!",
     "freezeExpired": "{{enemy}}s Einfrieren ist abgeklungen",
     "reflectedDamage": "{{enemy}}'s Mal reflektiert! Du nimmst {{damage}} Schaden!",
+    "deferredDamage": "Verzögerter Schaden {{damage}}!",
+    "retaliateDamage": "Vergeltung! {{damage}} Schaden an {{enemy}}!",
     "enemyHealRegen": "{{enemy}} regeneriert {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} absorbiert {{amount}} HP!",
     "igniteApplied": "{{enemy}} entzuendet! ({{damage}} Schaden x {{duration}}s)",
@@ -1501,7 +1505,7 @@
     },
     "poison_10": {
       "name": "Giftresistenz",
-      "description": "Erlittener Schaden -3% waehrend Feind vergiftet"
+      "description": "Erlittener Schaden -1% waehrend Feind vergiftet"
     },
     "poison_11": {
       "name": "Giftwissen IV",
@@ -1525,11 +1529,11 @@
     },
     "poison_b1": {
       "name": "Giftschutz",
-      "description": "Erlittener Schaden -5% waehrend Feind vergiftet"
+      "description": "Erlittener Schaden -1% waehrend Feind vergiftet"
     },
     "poison_b2": {
       "name": "Giftdrachenschuppen",
-      "description": "Erlittener Schaden -7% waehrend Feind vergiftet, HP +30"
+      "description": "Erlittener Schaden -1% waehrend Feind vergiftet, HP +30"
     },
     "poison_14": {
       "name": "Giftwissen V",
@@ -1545,7 +1549,7 @@
     },
     "poison_17": {
       "name": "Giftwache",
-      "description": "Erlittener Schaden -5% waehrend Feind vergiftet"
+      "description": "Erlittener Schaden -1% waehrend Feind vergiftet"
     },
     "poison_final1": {
       "name": "Schlangeninkarnation",
@@ -1652,100 +1656,136 @@
       "description": "HP bei Crit +150, ATK 15% mehr, Schadensabsorption bei Crit +30%"
     },
     "guard_1": {
-      "name": "Schutz-Grundlagen",
-      "description": "DEF +5, Schadensreduzierung +2%"
+      "name": "Grundlagen der Wache",
+      "description": "DEF +5, Schadensreduktion +1%"
     },
     "guard_2": {
       "name": "Standhafter Schutz I",
-      "description": "Schadensreduzierung +2%"
+      "description": "Schadensreduktion +1%"
     },
     "guard_3": {
-      "name": "Verteidigung erhoehen",
-      "description": "DEF +4"
+      "name": "Verteidigung stärken",
+      "description": "DEF +4, DEF +5% increased"
     },
     "guard_4": {
-      "name": "HP erhoehen",
+      "name": "HP stärken",
       "description": "HP +25"
     },
     "guard_5": {
       "name": "Standhafter Schutz II",
-      "description": "Schadensreduzierung +2%"
+      "description": "Schadensreduktion +1%"
     },
     "guard_6": {
-      "name": "Verteidigung erhoehen II",
-      "description": "DEF +5"
+      "name": "Verteidigung stärken II",
+      "description": "DEF +5, DEF +5% increased"
     },
     "guard_7": {
-      "name": "HP erhoehen II",
+      "name": "HP stärken II",
       "description": "HP +30"
     },
     "guard_key1": {
       "name": "Eiserner Schild",
-      "description": "Schadensreduzierung +8%"
+      "description": "Schadensreduktion +3%"
     },
     "guard_8": {
       "name": "Standhafter Schutz III",
-      "description": "Schadensreduzierung +3%"
+      "description": "Schadensreduktion +2%"
     },
-    "guard_9": {
-      "name": "Verteidigungsverstaerkung",
-      "description": "DEF +20% erhoehen"
+    "guard_iron_1": {
+      "name": "Feste Haltung",
+      "description": "DEF +8, DEF +5% increased"
     },
-    "guard_10": {
-      "name": "Vitalitaetsverstaerkung",
-      "description": "HP +20% erhoehen"
+    "guard_iron_2": {
+      "name": "Verteidigung stärken III",
+      "description": "DEF +10"
     },
-    "guard_11": {
-      "name": "Standhafter Schutz IV",
-      "description": "Schadensreduzierung +3%"
+    "guard_iron_3": {
+      "name": "Verteidigungsverstärkung",
+      "description": "DEF +15% increased"
     },
-    "guard_12": {
-      "name": "Verteidigung erhoehen III",
-      "description": "DEF +8"
-    },
-    "guard_13": {
-      "name": "HP erhoehen III",
-      "description": "HP +40"
-    },
-    "guard_a1": {
-      "name": "Stahlkoerper",
-      "description": "DEF +25% erhoehen"
-    },
-    "guard_a2": {
-      "name": "Unbewegliche Festung",
+    "guard_iron_4": {
+      "name": "Stahlmauer",
       "description": "DEF +12"
     },
-    "guard_b1": {
-      "name": "Reichhaltiges Leben",
-      "description": "HP +25% erhoehen"
+    "guard_iron_5": {
+      "name": "Verteidigungsmeisterung",
+      "description": "DEF +10% increased"
     },
-    "guard_b2": {
-      "name": "Lebensschutz",
-      "description": "HP +60"
+    "guard_iron_ks": {
+      "name": "Eiserner Wächter",
+      "description": "Schadensreduktion +5%, DEF 5% more"
     },
-    "guard_14": {
-      "name": "Standhafter Schutz V",
-      "description": "Schadensreduzierung +4%"
+    "guard_fort_1": {
+      "name": "Robuster Körper",
+      "description": "HP +30"
     },
-    "guard_15": {
-      "name": "Verteidigungsgipfel",
-      "description": "DEF +15"
+    "guard_fort_2": {
+      "name": "Vitalität stärken",
+      "description": "HP +40"
     },
-    "guard_16": {
-      "name": "Standhafter Schutz VI",
-      "description": "Schadensreduzierung +5%"
+    "guard_fort_3": {
+      "name": "Vitalitätsverstärkung",
+      "description": "HP +10% increased"
     },
-    "guard_17": {
-      "name": "Lebensgipfel",
-      "description": "HP +80"
+    "guard_fort_4": {
+      "name": "Tiefe Vitalität",
+      "description": "HP +50"
     },
-    "guard_final1": {
-      "name": "Eiserner Waechter",
-      "description": "Schadensreduzierung +10%, DEF 20% mehr"
+    "guard_fort_5": {
+      "name": "Vitalitätsmeisterung",
+      "description": "HP +15% increased"
     },
-    "guard_final2": {
-      "name": "Unzerstoerbare Mauer",
-      "description": "HP 20% mehr"
+    "guard_fort_ks": {
+      "name": "Unzerstörbare Mauer",
+      "description": "Schadensreduktion +3%, HP 20% more"
+    },
+    "guard_regen_1": {
+      "name": "Grundlagen der Heilung",
+      "description": "HP-Regeneration +50/s"
+    },
+    "guard_regen_2": {
+      "name": "Regeneration",
+      "description": "HP-Regeneration +80/s"
+    },
+    "guard_regen_3": {
+      "name": "Absorption",
+      "description": "HP bei Treffer +20"
+    },
+    "guard_regen_4": {
+      "name": "Heilungsverstärkung",
+      "description": "HP-Regeneration +100/s"
+    },
+    "guard_regen_5": {
+      "name": "Lebensabsorption",
+      "description": "HP bei Treffer +30"
+    },
+    "guard_regen_ks": {
+      "name": "Quelle des Lebens",
+      "description": "Schadensreduktion +2%, HP-Regeneration +300/s, HP bei Treffer +100"
+    },
+    "guard_retal_1": {
+      "name": "Trotzige Haltung",
+      "description": "DEF +5, ATK +5"
+    },
+    "guard_retal_2": {
+      "name": "Stählerner Wille",
+      "description": "DEF +10"
+    },
+    "guard_retal_3": {
+      "name": "Gegenschlag-Haltung",
+      "description": "ATK +8"
+    },
+    "guard_retal_4": {
+      "name": "Robuster Körperbau",
+      "description": "DEF +10% increased"
+    },
+    "guard_retal_5": {
+      "name": "Vergeltungskraft",
+      "description": "ATK +10"
+    },
+    "guard_retal_ks": {
+      "name": "Stählerne Vergeltung",
+      "description": "Schadensreduktion +2%, Reflektiert 30% der DEF als Schaden bei Treffer"
     },
     "vamp_1": {
       "name": "Lebensraub-Grundlagen",
@@ -2079,6 +2119,7 @@
     "igniteDamage": "Entzuendungsschaden +{{value}}%",
     "criticalChance": "Crit Rate +{{value}}%",
     "criticalDamage": "Crit DMG +{{value}}%",
+    "damageDefer": "Schadensverzögerung {{value}}%",
     "damageReduction": "Erlittener Schaden -{{value}}%",
     "attackSpeed": "Angriffsgeschw. +{{value}}%",
     "hpOnHit": "HP bei Treffer +{{value}}",

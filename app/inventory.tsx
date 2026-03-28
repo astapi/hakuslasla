@@ -149,6 +149,9 @@ function calculateItemStats(
         case 'critical_damage':
           desc = `[${tierLabel}] ${t('modDescriptions.criticalDamage', { value: mod.value })}`;
           break;
+        case 'damage_defer_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.damageDefer', { value: mod.value })}`;
+          break;
         case 'damage_reduction_pct':
           desc = `[${tierLabel}] ${t('modDescriptions.damageReduction', { value: mod.value })}`;
           break;

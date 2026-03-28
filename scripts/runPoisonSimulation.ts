@@ -344,7 +344,7 @@ for (const dungeonId of detailDungeons) {
   console.log(`  毒状態時被ダメ軽減: ${modEffects.poisonDamageReduction}%`);
   console.log(`  通常ダメージ不可: ${modEffects.noDirectDamage}`);
   console.log(`  HP回復: ${modEffects.hpRegen}/ターン + ${modEffects.hpRegenPct}%/ターン`);
-  console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
   console.log('');
 }
 

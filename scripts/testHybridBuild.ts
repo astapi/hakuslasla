@@ -121,7 +121,7 @@ function createHybridPoisonBuild(): { name: string; description: string; equipme
     ]),
     armor: createUberItem('uber_venom_plate', 'Uber 毒蛇の鱗甲', 'armor', 0, 300, [
       { type: 'poison_damage_reduction', value: 20, tier: 0 },
-      { type: 'damage_reduction_pct', value: 15, tier: 0 },
+      { type: 'damage_defer_pct', value: 15, tier: 0 },
       { type: 'hp_bonus', value: 280, tier: 0 },
     ]),
     gloves: createUberItem('uber_venom_grip', 'Uber 猛毒の篭手', 'gloves', 75, 90, [
@@ -138,7 +138,7 @@ function createHybridPoisonBuild(): { name: string; description: string; equipme
     accessory: createUberItem('uber_kraken_eye', 'Uber クラーケンの眼（強化版）', 'accessory', 85, 85, [
       { type: 'poison_chance', value: 25, tier: 0 },
       { type: 'poison_damage_pct', value: 50, tier: 0 },
-      { type: 'damage_reduction_pct', value: 8, tier: 0 },
+      { type: 'damage_defer_pct', value: 8, tier: 0 },
       { type: 'hp_bonus', value: 220, tier: 0 },
     ]),
   };
@@ -180,7 +180,7 @@ function createUltimateTankBuild(): { name: string; description: string; equipme
     ]),
     armor: createUberItem('uber_fortress_plate', 'Uber 要塞の鎧', 'armor', 0, 340, [
       { type: 'def_bonus', value: 90, tier: 0 },
-      { type: 'damage_reduction_pct', value: 18, tier: 0 },
+      { type: 'damage_defer_pct', value: 18, tier: 0 },
       { type: 'def_increased_pct', value: 30, tier: 0 },
     ]),
     gloves: createUberItem('uber_vampire_grip', 'Uber ヴァンパイアの篭手', 'gloves', 65, 80, [
@@ -315,7 +315,7 @@ for (const pattern of BUILD_PATTERNS) {
   console.log(`  ターンHP回復: +${modEffects.hpRegen} (+${modEffects.hpRegenPct}%)`);
   console.log(`  クリティカル: ${modEffects.criticalChance}% / +${modEffects.criticalDamage}%`);
   console.log(`  攻撃速度: +${modEffects.attackSpeedPct}%`);
-  console.log(`  ダメージ軽減: ${modEffects.damageReductionPct}%`);
+  console.log(`  ダメージ軽減: ${modEffects.damageDeferPct}%`);
   console.log(`  毒付与: ${modEffects.poisonChance}% / +${modEffects.poisonDamagePct}%`);
   if (modEffects.poisonDamageMorePct.length > 0) {
     const poisonMore = modEffects.poisonDamageMorePct.reduce((sum, v) => sum + v, 0);

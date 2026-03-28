@@ -220,8 +220,9 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   critical_lifesteal_pct: number;
   hp_regen: number;
   hp_regen_pct: number;
-  damage_reduction_pct: number;
+  damage_defer_pct: number;
   hp_on_hit: number;
+  retaliate_def_pct: number;
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
   // チル系
@@ -268,8 +269,9 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   // 回復・防御系
   let hp_regen = 0;
   let hp_regen_pct = 0;
-  let damage_reduction_pct = 0;
+  let damage_defer_pct = 0;
   let hp_on_hit = 0;
+  let retaliate_def_pct = 0;
   // 攻撃速度系
   let attack_speed_pct = 0;
   const attack_speed_more_pct: number[] = [];
@@ -320,8 +322,9 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       // 回復・防御系
       hp_regen += node.effect.hp_regen || 0;
       hp_regen_pct += node.effect.hp_regen_pct || 0;
-      damage_reduction_pct += node.effect.damage_reduction_pct || 0;
+      damage_defer_pct += node.effect.damage_defer_pct || 0;
       hp_on_hit += node.effect.hp_on_hit || 0;
+      retaliate_def_pct += node.effect.retaliate_def_pct || 0;
       // 攻撃速度系
       attack_speed_pct += node.effect.attack_speed_pct || 0;
       if (node.effect.attack_speed_more_pct) attack_speed_more_pct.push(node.effect.attack_speed_more_pct);
@@ -345,7 +348,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     ignite_stacking_damage,
     critical_chance, critical_damage, hp_on_crit, critical_lifesteal_pct,
     hp_regen, hp_regen_pct,
-    damage_reduction_pct, hp_on_hit,
+    damage_defer_pct, hp_on_hit, retaliate_def_pct,
     attack_speed_pct, attack_speed_more_pct,
     chill_chance, chill_effect_pct, chill_duration_pct,
     freeze_chance, freeze_duration_pct,

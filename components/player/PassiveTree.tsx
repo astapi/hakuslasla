@@ -101,7 +101,7 @@ const getIconType = (effect: PassiveEffect): IconType => {
     return 'speed';
   }
   // ダメージ軽減系
-  if (effect.damage_reduction_pct) {
+  if (effect.damage_defer_pct) {
     return 'guard';
   }
   // HIT時HP回復系
