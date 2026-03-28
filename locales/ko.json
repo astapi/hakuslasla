@@ -2135,7 +2135,12 @@
     "poisonDamagePct": "독 피해 +{{value}}%",
     "poisonDamageMore": "독 피해 {{value}}% more",
     "poisonDamageReduction": "독 상태 시 받는 피해 -{{value}}%",
-    "hpOnCrit": "크리티컬 시 HP +{{value}} 회복"
+    "hpOnCrit": "크리티컬 시 HP +{{value}} 회복",
+    "chillChance": "칠 부여 +{{value}}%",
+    "chillEffect": "칠 효과 +{{value}}%",
+    "chillDuration": "칠 지속시간 +{{value}}%",
+    "freezeChance": "동결 부여 +{{value}}%",
+    "freezeDuration": "동결 지속시간 +{{value}}%"
   },
   "boost": {
     "dropRate": {

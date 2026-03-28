@@ -117,6 +117,21 @@ function calculateItemStats(
         case 'warlord_enrage':
           desc = `[${tierLabel}] ${t('modDescriptions.warlordEnrage')}`;
           break;
+        case 'chill_chance':
+          desc = `[${tierLabel}] ${t('modDescriptions.chillChance', { value: mod.value })}`;
+          break;
+        case 'chill_effect_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.chillEffect', { value: mod.value })}`;
+          break;
+        case 'chill_duration_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.chillDuration', { value: mod.value })}`;
+          break;
+        case 'freeze_chance':
+          desc = `[${tierLabel}] ${t('modDescriptions.freezeChance', { value: mod.value })}`;
+          break;
+        case 'freeze_duration_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.freezeDuration', { value: mod.value })}`;
+          break;
       }
       if (desc) {
         otherMods.push({ type: mod.type, value: mod.value, tier, desc, color });
