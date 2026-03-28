@@ -2136,7 +2136,12 @@
     "poisonDamagePct": "毒ダメージ+{{value}}%",
     "poisonDamageMore": "毒ダメージ {{value}}% more",
     "poisonDamageReduction": "毒状態時の被ダメ-{{value}}%",
-    "hpOnCrit": "クリティカル時HP+{{value}}回復"
+    "hpOnCrit": "クリティカル時HP+{{value}}回復",
+    "chillChance": "チル付与+{{value}}%",
+    "chillEffect": "チル効果+{{value}}%",
+    "chillDuration": "チル時間+{{value}}%",
+    "freezeChance": "フリーズ付与+{{value}}%",
+    "freezeDuration": "フリーズ時間+{{value}}%"
   },
   "boost": {
     "dropRate": {

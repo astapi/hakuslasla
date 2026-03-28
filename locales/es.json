@@ -2135,7 +2135,12 @@
     "poisonDamagePct": "Daño de veneno +{{value}}%",
     "poisonDamageMore": "Daño de veneno {{value}}% more",
     "poisonDamageReduction": "Daño recibido -{{value}}% vs Envenenado",
-    "hpOnCrit": "HP +{{value}} en Crítico"
+    "hpOnCrit": "HP +{{value}} en Crítico",
+    "chillChance": "Prob. Escalofrío +{{value}}%",
+    "chillEffect": "Efecto Escalofrío +{{value}}%",
+    "chillDuration": "Duración Escalofrío +{{value}}%",
+    "freezeChance": "Prob. Congelación +{{value}}%",
+    "freezeDuration": "Duración Congelación +{{value}}%"
   },
   "boost": {
     "dropRate": {

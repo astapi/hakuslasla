@@ -2135,7 +2135,12 @@
     "poisonDamagePct": "毒伤害 +{{value}}%",
     "poisonDamageMore": "毒伤害 {{value}}% more",
     "poisonDamageReduction": "中毒时受伤 -{{value}}%",
-    "hpOnCrit": "暴击时HP +{{value}}回复"
+    "hpOnCrit": "暴击时HP +{{value}}回复",
+    "chillChance": "冰缓概率 +{{value}}%",
+    "chillEffect": "冰缓效果 +{{value}}%",
+    "chillDuration": "冰缓持续 +{{value}}%",
+    "freezeChance": "冻结概率 +{{value}}%",
+    "freezeDuration": "冻结持续 +{{value}}%"
   },
   "boost": {
     "dropRate": {

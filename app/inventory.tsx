@@ -221,6 +221,21 @@ function calculateItemStats(
         case 'atk_inc_pct':
           desc = `[${tierLabel}] ATK+${mod.value}%`;
           break;
+        case 'chill_chance':
+          desc = `[${tierLabel}] ${t('modDescriptions.chillChance', { value: mod.value })}`;
+          break;
+        case 'chill_effect_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.chillEffect', { value: mod.value })}`;
+          break;
+        case 'chill_duration_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.chillDuration', { value: mod.value })}`;
+          break;
+        case 'freeze_chance':
+          desc = `[${tierLabel}] ${t('modDescriptions.freezeChance', { value: mod.value })}`;
+          break;
+        case 'freeze_duration_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.freezeDuration', { value: mod.value })}`;
+          break;
       }
       if (desc) {
         allMods.push({ type: mod.type, value: mod.value, tier, desc, color });

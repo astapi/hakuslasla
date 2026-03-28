@@ -1350,7 +1350,7 @@
       "def": 270,
       "fixedMods": [
         { "type": "attack_speed_pct", "value": 20 },
-        { "type": "damage_reduction_pct", "value": 5 },
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
         { "type": "hp_bonus", "value": 180 },
         { "type": "hp_on_hit", "value": 40 }
       ]
@@ -1390,7 +1390,7 @@
       "fixedMods": [
         { "type": "hp_regen_pct", "value": 2 },
         { "type": "hp_on_hit", "value": 60 },
-        { "type": "damage_reduction_pct", "value": 5 },
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
         { "type": "hp_bonus", "value": 190 }
       ]
     },
@@ -1463,7 +1463,7 @@
       "atk": 0,
       "def": 320,
       "fixedMods": [
-        { "type": "damage_reduction_pct", "value": 5 },
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
         { "type": "hp_regen", "value": 90 },
         { "type": "def_increased_pct", "value": 20 },
         { "type": "hp_bonus", "value": 210 }
@@ -1517,7 +1517,7 @@
       "fixedMods": [
         { "type": "atk_bonus", "value": 80 },
         { "type": "critical_damage", "value": 60 },
-        { "type": "damage_reduction_pct", "value": 5 },
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
         { "type": "hp_bonus", "value": 240 }
       ]
     },
@@ -1528,7 +1528,7 @@
       "atk": 0,
       "def": 300,
       "fixedMods": [
-        { "type": "damage_reduction_pct", "value": 5 },
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
         { "type": "hp_bonus", "value": 260 },
         { "type": "def_increased_pct", "value": 25 },
         { "type": "hp_on_hit", "value": 60 }
@@ -1581,7 +1581,7 @@
       "def": 360,
       "fixedMods": [
         { "type": "time_def_inc_pct", "value": 10 },
-        { "type": "damage_reduction_pct", "value": 5 },
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
         { "type": "hp_bonus", "value": 320 },
         { "type": "hp_on_hit", "value": 70 }
       ]
@@ -1633,7 +1633,7 @@
       "def": 300,
       "fixedMods": [
         { "type": "poison_damage_pct", "value": 80 },
-        { "type": "damage_reduction_pct", "value": 5 },
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
         { "type": "hp_bonus", "value": 280 }
       ]
     },
@@ -1646,7 +1646,7 @@
       "fixedMods": [
         { "type": "atk_increased_pct", "value": 30 },
         { "type": "poison_damage_pct", "value": 60 },
-        { "type": "poison_damage_more_pct", "value": 20 }
+        { "type": "poison_damage_more_pct", "value": 10 }
       ]
     },
     "uber_venom_stride": {
@@ -1670,7 +1670,7 @@
       "fixedMods": [
         { "type": "poison_chance", "value": 25 },
         { "type": "poison_damage_pct", "value": 70 },
-        { "type": "poison_damage_more_pct", "value": 25 }
+        { "type": "poison_damage_more_pct", "value": 10 }
       ]
     },
 
@@ -1694,7 +1694,7 @@
       "def": 260,
       "fixedMods": [
         { "type": "critical_chance", "value": 30 },
-        { "type": "damage_reduction_pct", "value": 5 },
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
         { "type": "hp_bonus", "value": 240 }
       ]
     },
@@ -1755,7 +1755,7 @@
       "def": 340,
       "fixedMods": [
         { "type": "def_bonus", "value": 90 },
-        { "type": "damage_reduction_pct", "value": 5 },
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
         { "type": "def_increased_pct", "value": 30 }
       ]
     },
@@ -1768,7 +1768,7 @@
       "fixedMods": [
         { "type": "def_bonus", "value": 70 },
         { "type": "hp_bonus", "value": 250 },
-        { "type": "damage_reduction_pct", "value": 5 }
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 }
       ]
     },
     "uber_fortress_stomp": {
@@ -1792,7 +1792,7 @@
       "fixedMods": [
         { "type": "def_bonus", "value": 80 },
         { "type": "hp_bonus", "value": 280 },
-        { "type": "damage_reduction_pct", "value": 5 }
+        { "type": "damage_reduction_pct", "min": 1, "max": 5 }
       ]
     }
   },
