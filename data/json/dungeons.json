@@ -1268,7 +1268,7 @@
     "uber_uber_goblin_king": {
       "id": "uber_uber_goblin_king",
       "name": "UberUber ゴブリンキング",
-      "description": "究極の覚醒を遂げたゴブリンキング。全てのバッジを持つ者のみが挑める。",
+      "description": "究極の覚醒を遂げたゴブリンキング。全てのUberボスを倒した者のみが挑める。",
       "maxFloor": 1,
       "monsters": [
         { "monsterId": "uber_uber_goblin_king", "spawnRate": 100 }
