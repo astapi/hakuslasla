@@ -516,9 +516,9 @@ export function getModDescription(mod: ItemMod): string {
     case 'damage_reduction_pct':
       return `被ダメ-${mod.value}%`;
     case 'attack_speed_pct':
-      return `攻撃速度+${mod.value}%`;
+      return `攻撃速度${mod.value >= 0 ? '+' : ''}${mod.value}%`;
     case 'attack_speed_more_pct':
-      return `攻撃速度+${mod.value}% more`;
+      return `攻撃速度${mod.value >= 0 ? '+' : ''}${mod.value}% more`;
     case 'hp_increased_pct':
       return `HP+${mod.value}%`;
     case 'atk_increased_pct':

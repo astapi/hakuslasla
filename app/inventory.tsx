@@ -165,7 +165,7 @@ function calculateItemStats(
           desc = `[${tierLabel}] HP+${mod.value}%`;
           break;
         case 'attack_speed_pct':
-          desc = `[${tierLabel}] ${t('modDescriptions.attackSpeed', { value: mod.value })}`;
+          desc = `[${tierLabel}] ${t('modDescriptions.attackSpeed', { value: `${mod.value >= 0 ? '+' : ''}${mod.value}` })}`;
           break;
         case 'hp_on_hit':
           desc = `[${tierLabel}] ${t('modDescriptions.hpOnHit', { value: mod.value })}`;
@@ -183,7 +183,7 @@ function calculateItemStats(
           desc = `[${tierLabel}] HP ${mod.value}% more`;
           break;
         case 'attack_speed_more_pct':
-          desc = `[${tierLabel}] ${t('modDescriptions.attackSpeedMore', { value: mod.value })}`;
+          desc = `[${tierLabel}] ${t('modDescriptions.attackSpeedMore', { value: `${mod.value >= 0 ? '+' : ''}${mod.value}` })}`;
           break;
         case 'time_atk_inc_pct':
           desc = `[${tierLabel}] ${t('modDescriptions.timeAtkInc', { value: mod.value })}`;
