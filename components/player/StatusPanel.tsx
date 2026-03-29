@@ -410,7 +410,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
               <Text style={styles.detailLabel}>{t('status.attackSpeed')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.attackSpeedPct > 0 ? styles.critText : undefined}>
-                  +{breakdown.attackSpeedPct}%
+                  {breakdown.attackSpeedPct >= 0 ? '+' : ''}{breakdown.attackSpeedPct}%
                 </Text>
               </Text>
             </View>
