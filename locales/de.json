@@ -2175,6 +2175,15 @@
     "tooltipDescription": "Filtere unerwuenschte Gegenstaende automatisch heraus. Passe die Filtereinstellungen an, um nur die Beute zu behalten, die du brauchst.",
     "goToSettings": "Einstellungen oeffnen"
   },
+  "endContentTooltip": {
+    "title": "Endgame-Inhalte freigeschaltet!",
+    "levelCap": "Maximales Level auf 60 erhoeht",
+    "speedUnlock": "Vorspulfunktion freigeschaltet"
+  },
+  "uberTreeTooltip": {
+    "title": "Uber-Passivbaum freigeschaltet!",
+    "description": "Besiege Uber-Bosse, um Punkte zu sammeln und deinen maechtigen Uber-Passivbaum auszubauen"
+  },
   "shop": {
     "title": "Shop",
     "subtitle": "Premium-Funktionen kaufen",

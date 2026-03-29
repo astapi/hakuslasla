@@ -34,6 +34,8 @@ import {
 } from '@/db/repositories/settingsRepository';
 import { usePurchaseStore, hasSpeedBoost } from '@/stores/usePurchaseStore';
 import { getOrCreateMyInviteCode } from '@/lib/inviteCode';
+import { EndContentTooltip } from '@/components/common/EndContentTooltip';
+import { UberTreeTooltip } from '@/components/common/UberTreeTooltip';
 
 const LEVELS: PresetLevel[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
@@ -74,6 +76,10 @@ export default function DebugScreen() {
 
   // 招待コード
   const [inviteBoostActive, setInviteBoostActive] = useState(false);
+
+  // Tips表示
+  const [showEndContentTooltip, setShowEndContentTooltip] = useState(false);
+  const [showUberTreeTooltip, setShowUberTreeTooltip] = useState(false);
 
   // 戦闘速度設定・招待コード状態の読み込み
   useEffect(() => {
@@ -696,6 +702,31 @@ export default function DebugScreen() {
           </View>
         </View>
 
+        {/* ========================================
+            Tips表示テスト
+           ======================================== */}
+        <View style={styles.sectionHeader}>
+          <MaterialCommunityIcons name="tooltip-text" size={20} color="#FFD700" />
+          <Text style={styles.sectionHeaderText}>Tips表示テスト</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Pressable
+            style={[styles.applyButton, { backgroundColor: '#8B6914' }]}
+            onPress={() => setShowEndContentTooltip(true)}
+          >
+            <MaterialCommunityIcons name="star-circle" size={20} color="#fff" style={styles.applyIcon} />
+            <Text style={styles.applyButtonText}>エンドコンテンツ解放Tips</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.applyButton, { backgroundColor: '#6A1B9A', marginTop: 8 }]}
+            onPress={() => setShowUberTreeTooltip(true)}
+          >
+            <MaterialCommunityIcons name="tree" size={20} color="#fff" style={styles.applyIcon} />
+            <Text style={styles.applyButtonText}>Uberツリー解放Tips</Text>
+          </Pressable>
+        </View>
+
         {/* 注意書き */}
         <View style={styles.warningBox}>
           <MaterialCommunityIcons name="alert" size={16} color="#FFA500" />
@@ -706,6 +737,17 @@ export default function DebugScreen() {
           </Text>
         </View>
       </ScrollView>
+
+      {/* エンドコンテンツ解放ツールチップ */}
+      <EndContentTooltip
+        visible={showEndContentTooltip}
+        onDismiss={() => setShowEndContentTooltip(false)}
+      />
+      {/* Uberツリー解放ツールチップ */}
+      <UberTreeTooltip
+        visible={showUberTreeTooltip}
+        onDismiss={() => setShowUberTreeTooltip(false)}
+      />
     </View>
   );
 }

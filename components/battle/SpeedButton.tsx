@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { ms, fs } from '@/utils/scaling';
 import {
@@ -8,6 +8,7 @@ import {
   PREMIUM_BATTLE_SPEED_OPTIONS,
   DEFAULT_BATTLE_SPEED,
 } from '@/db/repositories/settingsRepository';
+import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 
 interface SpeedButtonProps {
@@ -17,11 +18,27 @@ interface SpeedButtonProps {
 
 export const SpeedButton: React.FC<SpeedButtonProps> = ({ currentSpeed, onSpeedChange }) => {
   const hasPremiumSpeed = hasSpeedBoost();
+  const [speedUnlocked, setSpeedUnlocked] = useState(false);
+
+  // 終焉の地クリア済みか確認（課金/招待がない場合のみ）
+  useEffect(() => {
+    if (hasPremiumSpeed) {
+      setSpeedUnlocked(true);
+      return;
+    }
+    const check = async () => {
+      const unlocked = await settingsRepository.getEndContentUnlocked();
+      setSpeedUnlocked(unlocked);
+    };
+    check();
+  }, [hasPremiumSpeed]);
 
   // 利用可能な速度オプションを取得
   const availableOptions = hasPremiumSpeed
     ? BATTLE_SPEED_OPTIONS
-    : FREE_BATTLE_SPEED_OPTIONS;
+    : speedUnlocked
+      ? FREE_BATTLE_SPEED_OPTIONS
+      : [DEFAULT_BATTLE_SPEED] as BattleSpeedMultiplier[];
 
   const handlePress = useCallback(() => {
     const currentIndex = availableOptions.indexOf(currentSpeed);
@@ -34,14 +51,19 @@ export const SpeedButton: React.FC<SpeedButtonProps> = ({ currentSpeed, onSpeedC
   // 課金していない場合で、現在の速度がプレミアム速度の場合は1倍にリセット
   const displaySpeed = !hasPremiumSpeed && PREMIUM_BATTLE_SPEED_OPTIONS.includes(currentSpeed)
     ? DEFAULT_BATTLE_SPEED
-    : currentSpeed;
+    : !speedUnlocked && currentSpeed !== DEFAULT_BATTLE_SPEED
+      ? DEFAULT_BATTLE_SPEED
+      : currentSpeed;
 
-  // 課金していない場合で、保存されている速度がプレミアム速度の場合は自動的にリセット
+  // 利用できない速度が設定されている場合は自動的にリセット
   React.useEffect(() => {
     if (!hasPremiumSpeed && PREMIUM_BATTLE_SPEED_OPTIONS.includes(currentSpeed)) {
       onSpeedChange(DEFAULT_BATTLE_SPEED);
     }
-  }, [hasPremiumSpeed, currentSpeed, onSpeedChange]);
+    if (!speedUnlocked && !hasPremiumSpeed && currentSpeed !== DEFAULT_BATTLE_SPEED) {
+      onSpeedChange(DEFAULT_BATTLE_SPEED);
+    }
+  }, [hasPremiumSpeed, speedUnlocked, currentSpeed, onSpeedChange]);
 
   return (
     <Pressable

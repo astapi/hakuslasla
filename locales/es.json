@@ -2175,6 +2175,15 @@
     "tooltipDescription": "Filtra automaticamente los objetos no deseados. Personaliza los ajustes del filtro para quedarte solo con el botin que necesitas.",
     "goToSettings": "Abrir Ajustes"
   },
+  "endContentTooltip": {
+    "title": "Contenido Endgame Desbloqueado!",
+    "levelCap": "Nivel maximo aumentado a 60",
+    "speedUnlock": "Funcion de avance rapido desbloqueada"
+  },
+  "uberTreeTooltip": {
+    "title": "Arbol Pasivo Uber Desbloqueado!",
+    "description": "Derrota a los jefes Uber para ganar puntos y hacer crecer tu poderoso Arbol Pasivo Uber"
+  },
   "shop": {
     "title": "Tienda",
     "subtitle": "Comprar Características Premium",

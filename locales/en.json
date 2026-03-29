@@ -2175,6 +2175,15 @@
     "tooltipDescription": "Automatically filter out unwanted items. Customize filter settings to keep only the loot you need.",
     "goToSettings": "Open Settings"
   },
+  "endContentTooltip": {
+    "title": "Endgame Content Unlocked!",
+    "levelCap": "Level cap increased to 60",
+    "speedUnlock": "Fast-forward feature unlocked"
+  },
+  "uberTreeTooltip": {
+    "title": "Uber Passive Tree Unlocked!",
+    "description": "Defeat Uber bosses to earn points and grow your powerful Uber Passive Tree"
+  },
   "shop": {
     "title": "Shop",
     "subtitle": "Purchase Premium Features",

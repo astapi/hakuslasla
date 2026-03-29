@@ -2175,6 +2175,15 @@
     "tooltipDescription": "Filtrez automatiquement les objets indesirables. Personnalisez les parametres de filtre pour garder uniquement le butin dont vous avez besoin.",
     "goToSettings": "Ouvrir les Parametres"
   },
+  "endContentTooltip": {
+    "title": "Contenu Endgame Debloque !",
+    "levelCap": "Niveau maximum augmente a 60",
+    "speedUnlock": "Fonction d'avance rapide debloquee"
+  },
+  "uberTreeTooltip": {
+    "title": "Arbre Passif Uber Debloque !",
+    "description": "Vainquez les boss Uber pour gagner des points et developper votre puissant Arbre Passif Uber"
+  },
   "shop": {
     "title": "Boutique",
     "subtitle": "Acheter des fonctionnalités premium",
