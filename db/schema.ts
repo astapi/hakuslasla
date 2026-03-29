@@ -1,4 +1,4 @@
-export const SCHEMA_VERSION = 9;
+export const SCHEMA_VERSION = 10;
 
 export const CREATE_TABLES_SQL = `
 -- キャラクター基本情報
@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS character_badges (
   character_id INTEGER NOT NULL,
   badge_id TEXT NOT NULL,
   earned_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  seen INTEGER NOT NULL DEFAULT 0,
   FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
   UNIQUE(character_id, badge_id)
 );

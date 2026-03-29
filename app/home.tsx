@@ -14,6 +14,7 @@ import { useEncyclopediaStore } from '@/stores/useEncyclopediaStore';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
 import { useAdState } from '@/hooks/useAdStore';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
+import { badgeRepository } from '@/db/repositories/badgeRepository';
 import { ENTITLEMENT_IDS } from '@/constants/purchases';
 import { characterImages } from '@/data/images';
 import { NewsModal } from '@/components/common/NewsModal';
@@ -29,8 +30,9 @@ export default function HomeScreen() {
   const router = useRouter();
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
-  const { skillPoints, characterName, characterType, isLoaded, clear, renameCharacter } = usePlayerStore();
+  const { skillPoints, characterName, characterType, characterId, isLoaded, clear, renameCharacter } = usePlayerStore();
   const loadEncyclopediaData = useEncyclopediaStore((state) => state.loadClearedDungeons);
+  const [unseenBadgeCount, setUnseenBadgeCount] = useState(0);
   const [statusExpanded, setStatusExpanded] = useState(false);
 
   // 画面フォーカス時に再レンダリングをトリガーするためのキー
@@ -123,7 +125,11 @@ export default function HomeScreen() {
       setFocusKey(prev => prev + 1);
       // 図鑑データも更新（ダンジョンクリア後に最新データを反映）
       loadEncyclopediaData();
-    }, [loadEncyclopediaData])
+      // 未読バッジ数を取得
+      if (characterId) {
+        badgeRepository.getUnseenBadgeCount(characterId).then(setUnseenBadgeCount);
+      }
+    }, [loadEncyclopediaData, characterId])
   );
 
   const handleOpenSkills = () => {
@@ -305,9 +311,19 @@ export default function HomeScreen() {
           testID="home-menu-encyclopedia"
         >
           <View style={styles.menuIconContainer}>
-            <MaterialCommunityIcons name="book-open-variant" size={tabIconSize} color={colors.iconMuted} />
+            {unseenBadgeCount > 0 && <View style={styles.menuIconRing} />}
+            <MaterialCommunityIcons
+              name="book-open-variant"
+              size={tabIconSize}
+              color={unseenBadgeCount > 0 ? colors.icon : colors.iconMuted}
+            />
+            {unseenBadgeCount > 0 && (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{unseenBadgeCount}</Text>
+              </View>
+            )}
           </View>
-          <Text style={styles.menuLabel}>{t('home.menu.encyclopedia')}</Text>
+          <Text style={[styles.menuLabel, unseenBadgeCount > 0 && styles.menuLabelHighlight]}>{t('home.menu.encyclopedia')}</Text>
         </Pressable>
 
         <Pressable

@@ -357,6 +357,15 @@ export const migrations: Migration[] = [
       }
     },
   },
+  {
+    // V9 → V10: バッジにseen（既読）カラムを追加
+    version: 10,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      await db.execAsync(`
+        ALTER TABLE character_badges ADD COLUMN seen INTEGER NOT NULL DEFAULT 1;
+      `);
+    },
+  },
 ];
 
 /**

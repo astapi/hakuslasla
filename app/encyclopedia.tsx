@@ -31,6 +31,7 @@ export default function EncyclopediaScreen() {
   const loadDungeons = useEncyclopediaStore((state) => state.loadDungeons);
   const characterId = usePlayerStore(s => s.characterId);
   const [earnedBadgeIds, setEarnedBadgeIds] = useState<Set<string>>(new Set());
+  const [unseenBadgeCount, setUnseenBadgeCount] = useState(0);
 
   // 安全策: データが空の場合は自動的にロード（開発時のホットリロードやディープリンク対策）
   useEffect(() => {
@@ -43,6 +44,8 @@ export default function EncyclopediaScreen() {
     if (!characterId) return;
     const badges = await badgeRepository.getBadges(characterId);
     setEarnedBadgeIds(new Set(badges.map(b => b.badgeId)));
+    const unseen = await badgeRepository.getUnseenBadgeCount(characterId);
+    setUnseenBadgeCount(unseen);
   }, [characterId]);
 
   useFocusEffect(
@@ -50,6 +53,14 @@ export default function EncyclopediaScreen() {
       loadBadges();
     }, [loadBadges])
   );
+
+  const handleBadgeTabPress = useCallback(async () => {
+    setActiveTab('badges');
+    if (characterId && unseenBadgeCount > 0) {
+      await badgeRepository.markBadgesAsSeen(characterId);
+      setUnseenBadgeCount(0);
+    }
+  }, [characterId, unseenBadgeCount]);
 
   const handleDungeonPress = (dungeonId: string) => {
     router.push(`/encyclopedia-detail/${dungeonId}` as any);
@@ -86,11 +97,18 @@ export default function EncyclopediaScreen() {
         </Pressable>
         <Pressable
           style={[styles.segmentTab, activeTab === 'badges' && styles.segmentTabActive]}
-          onPress={() => setActiveTab('badges')}
+          onPress={handleBadgeTabPress}
         >
-          <Text style={[styles.segmentText, activeTab === 'badges' && styles.segmentTextActive]}>
-            {t('encyclopedia.tabBadges')} ({earnedCount}/{BADGES.length})
-          </Text>
+          <View style={styles.segmentTabContent}>
+            <Text style={[styles.segmentText, activeTab === 'badges' && styles.segmentTextActive]}>
+              {t('encyclopedia.tabBadges')} ({earnedCount}/{BADGES.length})
+            </Text>
+            {unseenBadgeCount > 0 && (
+              <View style={styles.unseenBadge}>
+                <Text style={styles.unseenBadgeText}>{unseenBadgeCount}</Text>
+              </View>
+            )}
+          </View>
         </Pressable>
       </View>
 
@@ -233,6 +251,11 @@ const styles = StyleSheet.create({
   segmentTabActive: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
   },
+  segmentTabContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(6),
+  },
   segmentText: {
     fontSize: fs(13),
     fontWeight: '600',
@@ -240,6 +263,20 @@ const styles = StyleSheet.create({
   },
   segmentTextActive: {
     color: '#fff',
+  },
+  unseenBadge: {
+    backgroundColor: '#FFD700',
+    borderRadius: ms(8),
+    minWidth: ms(16),
+    height: ms(16),
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: ms(4),
+  },
+  unseenBadgeText: {
+    fontSize: fs(10),
+    fontWeight: 'bold',
+    color: '#1a1a2e',
   },
   emptyContainer: {
     justifyContent: 'center',
