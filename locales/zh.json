@@ -2175,6 +2175,15 @@
     "tooltipDescription": "自动过滤不需要的物品。自定义过滤设置，只保留你需要的战利品。",
     "goToSettings": "打开设置"
   },
+  "endContentTooltip": {
+    "title": "终局内容解锁！",
+    "levelCap": "等级上限提升至60",
+    "speedUnlock": "倍速功能已解锁"
+  },
+  "uberTreeTooltip": {
+    "title": "Uber被动树解锁！",
+    "description": "击败Uber Boss获取点数，培养强大的Uber被动树"
+  },
   "shop": {
     "title": "商店",
     "subtitle": "购买高级功能",

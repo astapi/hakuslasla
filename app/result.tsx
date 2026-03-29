@@ -6,8 +6,11 @@ import * as StoreReview from 'expo-store-review';
 import { Ionicons } from '@expo/vector-icons';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { ModFilterTooltip } from '@/components/common/ModFilterTooltip';
+import { EndContentTooltip } from '@/components/common/EndContentTooltip';
+import { UberTreeTooltip } from '@/components/common/UberTreeTooltip';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS, UBER_BY_UBER_UBER, BASE_BOSS_BY_UBER } from '@/core/endContent';
+import { getUberBossClearBadgeId } from '@/data/badges';
 import { Item } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 import { isRepeatDisabled } from '@/core/resultHelpers';
@@ -39,6 +42,10 @@ export default function ResultScreen() {
 
   // MODフィルターツールチップの表示状態
   const [showModFilterTooltip, setShowModFilterTooltip] = useState(false);
+  // エンドコンテンツ解放ツールチップの表示状態
+  const [showEndContentTooltip, setShowEndContentTooltip] = useState(false);
+  // Uberツリー解放ツールチップの表示状態
+  const [showUberTreeTooltip, setShowUberTreeTooltip] = useState(false);
 
   // Uber入場券の状態（UberUberも共通チケット）
   const dungeonId = params.dungeonId ?? '';
@@ -72,6 +79,44 @@ export default function ResultScreen() {
 
     checkModFilterTooltip();
   }, [params.dungeonId, result]);
+
+  // 終焉の地初回クリア時にエンドコンテンツ解放ツールチップを表示
+  useEffect(() => {
+    const checkEndContentTooltip = async () => {
+      if (params.dungeonId !== 'final_land') return;
+      if (result !== 'cleared') return;
+
+      if (!__DEV__) {
+        const alreadyShown = await settingsRepository.hasEndContentTooltipBeenShown();
+        if (alreadyShown) return;
+      }
+
+      setShowEndContentTooltip(true);
+    };
+
+    checkEndContentTooltip();
+  }, [params.dungeonId, result]);
+
+  // Uberボス初回クリア時にUberツリー解放ツールチップを表示
+  useEffect(() => {
+    const checkUberTreeTooltip = async () => {
+      if (result !== 'cleared') return;
+      // Uberボスダンジョンかチェック（UberUberは対象外）
+      if (!UBER_DUNGEON_IDS.includes(dungeonId)) return;
+      // バッジIDがあるか（Uberボスか）
+      const badgeId = getUberBossClearBadgeId(dungeonId);
+      if (!badgeId) return;
+
+      if (!__DEV__) {
+        const alreadyShown = await settingsRepository.hasUberTreeTooltipBeenShown();
+        if (alreadyShown) return;
+      }
+
+      setShowUberTreeTooltip(true);
+    };
+
+    checkUberTreeTooltip();
+  }, [dungeonId, result]);
 
   // 特定ダンジョン初回クリア時にストアレビューをリクエスト
   // - 魔王城（demon_castle）
@@ -133,6 +178,16 @@ export default function ResultScreen() {
       <ModFilterTooltip
         visible={showModFilterTooltip}
         onDismiss={() => setShowModFilterTooltip(false)}
+      />
+      {/* エンドコンテンツ解放ツールチップ */}
+      <EndContentTooltip
+        visible={showEndContentTooltip}
+        onDismiss={() => setShowEndContentTooltip(false)}
+      />
+      {/* Uberツリー解放ツールチップ */}
+      <UberTreeTooltip
+        visible={showUberTreeTooltip}
+        onDismiss={() => setShowUberTreeTooltip(false)}
       />
 
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>

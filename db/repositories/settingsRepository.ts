@@ -18,6 +18,8 @@ const STORE_REVIEW_REQUESTED_KEY = 'store_review_requested';
 const INVITE_SPEED_BOOST_KEY = 'invite_speed_boost';
 const MY_INVITE_CODE_KEY = 'my_invite_code';
 const NEWS_LAST_READ_KEY = 'news_last_read_date';
+const END_CONTENT_TOOLTIP_SHOWN_KEY = 'end_content_tooltip_shown';
+const UBER_TREE_TOOLTIP_SHOWN_KEY = 'uber_tree_tooltip_shown';
 
 // ダンジョンクリア記録の型
 export type DungeonClearRecord = {
@@ -362,5 +364,25 @@ export const settingsRepository = {
 
   async setNewsLastReadDate(isoDate: string): Promise<void> {
     await this.set(NEWS_LAST_READ_KEY, isoDate);
+  },
+
+  // エンドコンテンツ解放ツールチップ表示済みフラグ
+  async hasEndContentTooltipBeenShown(): Promise<boolean> {
+    const value = await this.get(END_CONTENT_TOOLTIP_SHOWN_KEY);
+    return value === '1';
+  },
+
+  async setEndContentTooltipShown(): Promise<void> {
+    await this.set(END_CONTENT_TOOLTIP_SHOWN_KEY, '1');
+  },
+
+  // Uberツリー解放ツールチップ表示済みフラグ
+  async hasUberTreeTooltipBeenShown(): Promise<boolean> {
+    const value = await this.get(UBER_TREE_TOOLTIP_SHOWN_KEY);
+    return value === '1';
+  },
+
+  async setUberTreeTooltipShown(): Promise<void> {
+    await this.set(UBER_TREE_TOOLTIP_SHOWN_KEY, '1');
   },
 };

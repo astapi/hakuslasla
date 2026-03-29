@@ -2176,6 +2176,15 @@
     "tooltipDescription": "不要なアイテムを自動で除外できます。設定画面でフィルター条件をカスタマイズしましょう。",
     "goToSettings": "設定を開く"
   },
+  "endContentTooltip": {
+    "title": "エンドコンテンツ解放！",
+    "levelCap": "レベル上限が60に上昇しました",
+    "speedUnlock": "倍速機能が解放されました"
+  },
+  "uberTreeTooltip": {
+    "title": "Uberパッシブツリー解放！",
+    "description": "Uberボスを討伐してポイントを獲得し、強力なUberパッシブツリーを成長させましょう"
+  },
   "shop": {
     "title": "ショップ",
     "subtitle": "プレミアム機能を購入",

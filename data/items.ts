@@ -396,7 +396,7 @@ export function createItemInstance(itemId: string, modCount: number = 0, dungeon
 
   // 固有MODは常にT0で表示（min/maxがある場合はランダム化）
   const fixedMods: ItemMod[] = (base.fixedMods || []).map(mod => {
-    const raw = mod as Record<string, unknown>;
+    const raw = mod as unknown as Record<string, unknown>;
     const value = (typeof raw.min === 'number' && typeof raw.max === 'number')
       ? raw.min + Math.floor(Math.random() * (raw.max - raw.min + 1))
       : mod.value;
