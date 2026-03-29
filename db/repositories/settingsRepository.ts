@@ -20,6 +20,7 @@ const MY_INVITE_CODE_KEY = 'my_invite_code';
 const NEWS_LAST_READ_KEY = 'news_last_read_date';
 const END_CONTENT_TOOLTIP_SHOWN_KEY = 'end_content_tooltip_shown';
 const UBER_TREE_TOOLTIP_SHOWN_KEY = 'uber_tree_tooltip_shown';
+const DIMENSIONAL_CORRIDOR_TOOLTIP_SHOWN_KEY = 'dimensional_corridor_tooltip_shown';
 
 // ダンジョンクリア記録の型
 export type DungeonClearRecord = {
@@ -384,5 +385,15 @@ export const settingsRepository = {
 
   async setUberTreeTooltipShown(): Promise<void> {
     await this.set(UBER_TREE_TOOLTIP_SHOWN_KEY, '1');
+  },
+
+  // 次元回廊解放ツールチップ表示済みフラグ
+  async hasDimensionalCorridorTooltipBeenShown(): Promise<boolean> {
+    const value = await this.get(DIMENSIONAL_CORRIDOR_TOOLTIP_SHOWN_KEY);
+    return value === '1';
+  },
+
+  async setDimensionalCorridorTooltipShown(): Promise<void> {
+    await this.set(DIMENSIONAL_CORRIDOR_TOOLTIP_SHOWN_KEY, '1');
   },
 };

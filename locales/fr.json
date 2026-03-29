@@ -2184,6 +2184,11 @@
     "title": "Arbre Passif Uber Debloque !",
     "description": "Vainquez les boss Uber pour gagner des points et developper votre puissant Arbre Passif Uber"
   },
+  "dimensionalCorridorTooltip": {
+    "title": "Couloir Dimensionnel Debloque !",
+    "infiniteFloors": "Etages infinis !",
+    "aimForRanking": "Visez la 1ere place du classement !"
+  },
   "shop": {
     "title": "Boutique",
     "subtitle": "Acheter des fonctionnalités premium",

@@ -36,6 +36,7 @@ import { usePurchaseStore, hasSpeedBoost } from '@/stores/usePurchaseStore';
 import { getOrCreateMyInviteCode } from '@/lib/inviteCode';
 import { EndContentTooltip } from '@/components/common/EndContentTooltip';
 import { UberTreeTooltip } from '@/components/common/UberTreeTooltip';
+import { DimensionalCorridorTooltip } from '@/components/common/DimensionalCorridorTooltip';
 
 const LEVELS: PresetLevel[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
@@ -80,6 +81,7 @@ export default function DebugScreen() {
   // Tips表示
   const [showEndContentTooltip, setShowEndContentTooltip] = useState(false);
   const [showUberTreeTooltip, setShowUberTreeTooltip] = useState(false);
+  const [showDimensionalCorridorTooltip, setShowDimensionalCorridorTooltip] = useState(false);
 
   // 戦闘速度設定・招待コード状態の読み込み
   useEffect(() => {
@@ -725,6 +727,13 @@ export default function DebugScreen() {
             <MaterialCommunityIcons name="tree" size={20} color="#fff" style={styles.applyIcon} />
             <Text style={styles.applyButtonText}>Uberツリー解放Tips</Text>
           </Pressable>
+          <Pressable
+            style={[styles.applyButton, { backgroundColor: '#00838F', marginTop: 8 }]}
+            onPress={() => setShowDimensionalCorridorTooltip(true)}
+          >
+            <MaterialCommunityIcons name="infinity" size={20} color="#fff" style={styles.applyIcon} />
+            <Text style={styles.applyButtonText}>次元回廊解放Tips</Text>
+          </Pressable>
         </View>
 
         {/* 注意書き */}
@@ -747,6 +756,11 @@ export default function DebugScreen() {
       <UberTreeTooltip
         visible={showUberTreeTooltip}
         onDismiss={() => setShowUberTreeTooltip(false)}
+      />
+      {/* 次元回廊解放ツールチップ */}
+      <DimensionalCorridorTooltip
+        visible={showDimensionalCorridorTooltip}
+        onDismiss={() => setShowDimensionalCorridorTooltip(false)}
       />
     </View>
   );

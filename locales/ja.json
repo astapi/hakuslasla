@@ -2185,6 +2185,11 @@
     "title": "Uberパッシブツリー解放！",
     "description": "Uberボスを討伐してポイントを獲得し、強力なUberパッシブツリーを成長させましょう"
   },
+  "dimensionalCorridorTooltip": {
+    "title": "次元回廊が解放された！",
+    "infiniteFloors": "階層は無限！",
+    "aimForRanking": "ランキング1位を目指せ！"
+  },
   "shop": {
     "title": "ショップ",
     "subtitle": "プレミアム機能を購入",

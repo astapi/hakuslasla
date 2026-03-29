@@ -2184,6 +2184,11 @@
     "title": "Arbol Pasivo Uber Desbloqueado!",
     "description": "Derrota a los jefes Uber para ganar puntos y hacer crecer tu poderoso Arbol Pasivo Uber"
   },
+  "dimensionalCorridorTooltip": {
+    "title": "Corredor Dimensional Desbloqueado!",
+    "infiniteFloors": "Pisos infinitos!",
+    "aimForRanking": "Apunta al puesto #1 en el ranking!"
+  },
   "shop": {
     "title": "Tienda",
     "subtitle": "Comprar Características Premium",

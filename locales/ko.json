@@ -2184,6 +2184,11 @@
     "title": "Uber 패시브 트리 해금!",
     "description": "Uber 보스를 처치하여 포인트를 획득하고 강력한 Uber 패시브 트리를 성장시키세요"
   },
+  "dimensionalCorridorTooltip": {
+    "title": "차원 회랑 해금!",
+    "infiniteFloors": "무한 층!",
+    "aimForRanking": "랭킹 1위를 목표로!"
+  },
   "shop": {
     "title": "상점",
     "subtitle": "프리미엄 기능 구매",
