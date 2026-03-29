@@ -2184,6 +2184,11 @@
     "title": "Uber被动树解锁！",
     "description": "击败Uber Boss获取点数，培养强大的Uber被动树"
   },
+  "dimensionalCorridorTooltip": {
+    "title": "次元回廊已解锁！",
+    "infiniteFloors": "楼层无限！",
+    "aimForRanking": "争夺排行榜第一名！"
+  },
   "shop": {
     "title": "商店",
     "subtitle": "购买高级功能",

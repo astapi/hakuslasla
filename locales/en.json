@@ -2184,6 +2184,11 @@
     "title": "Uber Passive Tree Unlocked!",
     "description": "Defeat Uber bosses to earn points and grow your powerful Uber Passive Tree"
   },
+  "dimensionalCorridorTooltip": {
+    "title": "Dimensional Corridor Unlocked!",
+    "infiniteFloors": "Infinite floors!",
+    "aimForRanking": "Aim for #1 in the rankings!"
+  },
   "shop": {
     "title": "Shop",
     "subtitle": "Purchase Premium Features",

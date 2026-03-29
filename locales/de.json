@@ -2184,6 +2184,11 @@
     "title": "Uber-Passivbaum freigeschaltet!",
     "description": "Besiege Uber-Bosse, um Punkte zu sammeln und deinen maechtigen Uber-Passivbaum auszubauen"
   },
+  "dimensionalCorridorTooltip": {
+    "title": "Dimensionskorridor freigeschaltet!",
+    "infiniteFloors": "Unendliche Stockwerke!",
+    "aimForRanking": "Strebe Platz 1 im Ranking an!"
+  },
   "shop": {
     "title": "Shop",
     "subtitle": "Premium-Funktionen kaufen",

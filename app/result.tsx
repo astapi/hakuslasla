@@ -8,6 +8,7 @@ import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { ModFilterTooltip } from '@/components/common/ModFilterTooltip';
 import { EndContentTooltip } from '@/components/common/EndContentTooltip';
 import { UberTreeTooltip } from '@/components/common/UberTreeTooltip';
+import { DimensionalCorridorTooltip } from '@/components/common/DimensionalCorridorTooltip';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS, UBER_BY_UBER_UBER, BASE_BOSS_BY_UBER } from '@/core/endContent';
 import { getUberBossClearBadgeId } from '@/data/badges';
@@ -46,6 +47,8 @@ export default function ResultScreen() {
   const [showEndContentTooltip, setShowEndContentTooltip] = useState(false);
   // Uberツリー解放ツールチップの表示状態
   const [showUberTreeTooltip, setShowUberTreeTooltip] = useState(false);
+  // 次元回廊解放ツールチップの表示状態
+  const [showDimensionalCorridorTooltip, setShowDimensionalCorridorTooltip] = useState(false);
 
   // Uber入場券の状態（UberUberも共通チケット）
   const dungeonId = params.dungeonId ?? '';
@@ -118,6 +121,23 @@ export default function ResultScreen() {
     checkUberTreeTooltip();
   }, [dungeonId, result]);
 
+  // 異次元ラッシュVI初回クリア時に次元回廊解放ツールチップを表示
+  useEffect(() => {
+    const checkDimensionalCorridorTooltip = async () => {
+      if (params.dungeonId !== 'dimensional_rush_6') return;
+      if (result !== 'cleared') return;
+
+      if (!__DEV__) {
+        const alreadyShown = await settingsRepository.hasDimensionalCorridorTooltipBeenShown();
+        if (alreadyShown) return;
+      }
+
+      setShowDimensionalCorridorTooltip(true);
+    };
+
+    checkDimensionalCorridorTooltip();
+  }, [params.dungeonId, result]);
+
   // 特定ダンジョン初回クリア時にストアレビューをリクエスト
   // - 魔王城（demon_castle）
   // - 異次元ラッシュⅡ（dimensional_rush_2）
@@ -188,6 +208,11 @@ export default function ResultScreen() {
       <UberTreeTooltip
         visible={showUberTreeTooltip}
         onDismiss={() => setShowUberTreeTooltip(false)}
+      />
+      {/* 次元回廊解放ツールチップ */}
+      <DimensionalCorridorTooltip
+        visible={showDimensionalCorridorTooltip}
+        onDismiss={() => setShowDimensionalCorridorTooltip(false)}
       />
 
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
