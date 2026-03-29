@@ -66,6 +66,29 @@ export const badgeRepository = {
   },
 
   /**
+   * 未読バッジ数を取得
+   */
+  async getUnseenBadgeCount(characterId: number): Promise<number> {
+    const db = await getDatabase();
+    const row = await db.getFirstAsync<{ count: number }>(
+      'SELECT COUNT(*) as count FROM character_badges WHERE character_id = ? AND seen = 0',
+      characterId
+    );
+    return row?.count ?? 0;
+  },
+
+  /**
+   * バッジを既読にする
+   */
+  async markBadgesAsSeen(characterId: number): Promise<void> {
+    const db = await getDatabase();
+    await db.runAsync(
+      'UPDATE character_badges SET seen = 1 WHERE character_id = ? AND seen = 0',
+      characterId
+    );
+  },
+
+  /**
    * 全バッジ所持チェック（UberUber入場条件用）
    * excludeBadgeIds で指定したバッジは除外してチェック
    */
