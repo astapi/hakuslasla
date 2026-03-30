@@ -15,6 +15,7 @@ import {
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
 import { CharacterType, Equipment } from '@/types';
+import { getRankingCollectionName } from './rankingSeason';
 
 // ============================================
 // Types
@@ -79,7 +80,7 @@ export interface RankingEntryWithRank extends RankingEntry {
 // Constants
 // ============================================
 
-const COLLECTION_NAME = 'dimensional_rankings';
+const getCollectionName = () => getRankingCollectionName();
 
 // ============================================
 // Device ID
@@ -110,7 +111,7 @@ export const getDeviceId = async (): Promise<string> => {
  */
 export const fetchRankings = async (): Promise<RankingEntryWithRank[]> => {
   const db = getFirestore();
-  const rankingRef = collection(db, COLLECTION_NAME);
+  const rankingRef = collection(db, getCollectionName());
   const q = query(rankingRef, orderBy('floorReached', 'desc'), limit(50));
   const snapshot = await getDocs(q);
 
@@ -162,7 +163,7 @@ export const submitScore = async (params: {
   };
 
   const db = getFirestore();
-  const docRef = doc(db, COLLECTION_NAME, docId);
+  const docRef = doc(db, getCollectionName(), docId);
   await setDoc(docRef, entry);
 };
 
@@ -174,7 +175,7 @@ export const getMyRankingEntry = async (localCharId: number): Promise<RankingEnt
   const docId = `${deviceId}_${localCharId}`;
 
   const db = getFirestore();
-  const docRef = doc(db, COLLECTION_NAME, docId);
+  const docRef = doc(db, getCollectionName(), docId);
   const docSnap = await getDoc(docRef);
 
   if (!docSnap.exists()) return null;

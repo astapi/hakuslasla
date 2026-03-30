@@ -1,5 +1,6 @@
 import { getDatabase } from '../database';
 import { DropFilterSettings, DEFAULT_DROP_FILTER } from '@/types';
+import { getSeasonKeySuffix } from '@/lib/rankingSeason';
 
 const DROP_FILTER_KEY = 'drop_filter_settings';
 const BATTLE_SPEED_KEY = 'battle_speed';
@@ -292,9 +293,10 @@ export const settingsRepository = {
     return records[dungeonId] !== undefined;
   },
 
-  // 次元回廊の最高記録（キャラクターごと）
+  // 次元回廊の最高記録（キャラクターごと・シーズンごと）
   async getDimensionalCorridorBest(characterId: number): Promise<number> {
-    const key = `${DIMENSIONAL_CORRIDOR_BEST_KEY}_${characterId}`;
+    const suffix = getSeasonKeySuffix();
+    const key = `${DIMENSIONAL_CORRIDOR_BEST_KEY}${suffix}_${characterId}`;
     const value = await this.get(key);
     if (!value) return 0;
     const parsed = parseInt(value, 10);
@@ -302,7 +304,8 @@ export const settingsRepository = {
   },
 
   async setDimensionalCorridorBest(characterId: number, floor: number): Promise<boolean> {
-    const key = `${DIMENSIONAL_CORRIDOR_BEST_KEY}_${characterId}`;
+    const suffix = getSeasonKeySuffix();
+    const key = `${DIMENSIONAL_CORRIDOR_BEST_KEY}${suffix}_${characterId}`;
     const current = await this.getDimensionalCorridorBest(characterId);
     if (floor <= current) return false; // 記録更新なし
     await this.set(key, floor.toString());

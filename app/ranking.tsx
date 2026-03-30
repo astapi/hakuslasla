@@ -8,6 +8,7 @@ import { Button } from '@/components/common/Button';
 import { RankingList } from '@/components/ranking/RankingList';
 import { getRankings, isCacheValid, getCacheRemainingTime } from '@/lib/rankingCache';
 import { getDeviceId, RankingEntryWithRank } from '@/lib/firestore';
+import { getCurrentSeason } from '@/lib/rankingSeason';
 import { ms, fs } from '@/utils/scaling';
 
 export default function RankingScreen() {
@@ -70,7 +71,10 @@ export default function RankingScreen() {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>{t('ranking.title')}</Text>
-          <Text style={styles.subtitle}>{t('ranking.dimensionalCorridor')}</Text>
+          <Text style={styles.subtitle}>
+            {t('ranking.dimensionalCorridor')}
+            {getCurrentSeason() > 1 && ` - ${t('ranking.season', { season: getCurrentSeason() })}`}
+          </Text>
           {cacheInfo && <Text style={styles.cacheInfo}>{cacheInfo}</Text>}
         </View>
 

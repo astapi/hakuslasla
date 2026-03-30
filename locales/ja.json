@@ -66,7 +66,11 @@
   "dungeonSelect": {
     "title": "ダンジョン選択",
     "subtitle": "挑戦するダンジョンを選んでください",
-    "unlockRequirement": "{{dungeonName}}をクリアで解放"
+    "unlockRequirement": "{{dungeonName}}をクリアで解放",
+    "selectStartFloor": "スタート階層を選択",
+    "startFloorLabel": "{{floor}}F",
+    "startButton": "開始",
+    "cancelButton": "キャンセル"
   },
   "encyclopedia": {
     "title": "図鑑",
@@ -2110,7 +2114,8 @@
     "loadError": "ランキングの取得に失敗しました",
     "retry": "再試行",
     "noData": "ランキングデータがありません",
-    "cacheInfo": "{{minutes}}分後に更新可能"
+    "cacheInfo": "{{minutes}}分後に更新可能",
+    "season": "Season {{season}}"
   },
   "modDescriptions": {
     "poisonChance": "毒付与+{{value}}%",

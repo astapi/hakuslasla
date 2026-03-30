@@ -2,8 +2,14 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // ランキング
+    // ランキング（Season 1）
     match /dimensional_rankings/{docId} {
+      allow read: true;
+      allow write: true;
+    }
+
+    // ランキング（Season 2+）
+    match /dimensional_rankings_s{season}/{docId} {
       allow read: true;
       allow write: true;
     }

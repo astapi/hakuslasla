@@ -2109,7 +2109,8 @@
     "loadError": "Error al cargar ranking",
     "retry": "Reintentar",
     "noData": "Sin datos de ranking",
-    "cacheInfo": "Actualización disponible en {{minutes}}min"
+    "cacheInfo": "Actualización disponible en {{minutes}}min",
+    "season": "Season {{season}}"
   },
   "modDescriptions": {
     "poisonChance": "Prob. de Veneno +{{value}}%",

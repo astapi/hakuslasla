@@ -2109,7 +2109,8 @@
     "loadError": "Échec du chargement du classement",
     "retry": "Réessayer",
     "noData": "Aucune donnée de classement",
-    "cacheInfo": "Actualisation disponible dans {{minutes}} min"
+    "cacheInfo": "Actualisation disponible dans {{minutes}} min",
+    "season": "Season {{season}}"
   },
   "modDescriptions": {
     "poisonChance": "Chance de poison +{{value}}%",
