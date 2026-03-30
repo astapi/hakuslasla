@@ -255,12 +255,12 @@ export const migrations: Migration[] = [
 
       // 除去数分のリスペックトークンを付与
       const currentTokens = await db.getFirstAsync<{ value: string }>(
-        `SELECT value FROM settings WHERE key = 'respec_tokens'`
+        `SELECT value FROM game_settings WHERE key = 'respec_tokens'`
       );
       const current = currentTokens ? parseInt(currentTokens.value, 10) || 0 : 0;
       const newCount = current + totalRemoved;
       await db.runAsync(
-        `INSERT OR REPLACE INTO settings (key, value) VALUES ('respec_tokens', ?)`,
+        `INSERT OR REPLACE INTO game_settings (key, value) VALUES ('respec_tokens', ?)`,
         newCount.toString()
       );
     },
