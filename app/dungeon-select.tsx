@@ -41,12 +41,12 @@ interface DungeonWithStatus extends DungeonListItem {
   isDisabled?: boolean;
 }
 
-// 次元回廊のスタート階層選択肢を生成（200F刻み）
+// 次元回廊のスタート階層選択肢を生成（201F, 401F, ...）
 function getFloorOptions(bestFloor: number): number[] {
   const options = [1];
   const maxTier = Math.floor((bestFloor - 1) / 200);
   for (let i = 1; i <= maxTier; i++) {
-    options.push(i * 200);
+    options.push(i * 200 + 1);
   }
   return options;
 }
