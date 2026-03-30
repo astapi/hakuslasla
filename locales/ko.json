@@ -2109,7 +2109,8 @@
     "loadError": "랭킹 로드 실패",
     "retry": "재시도",
     "noData": "랭킹 데이터 없음",
-    "cacheInfo": "{{minutes}}분 후 갱신 가능"
+    "cacheInfo": "{{minutes}}분 후 갱신 가능",
+    "season": "Season {{season}}"
   },
   "modDescriptions": {
     "poisonChance": "독 확률 +{{value}}%",

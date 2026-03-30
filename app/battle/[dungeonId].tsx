@@ -195,9 +195,10 @@ export default function BattleScreen() {
   useKeepAwake(); // 戦闘中はスリープを防止
 
   const { t } = useTranslation();
-  const { dungeonId } = useLocalSearchParams<{ dungeonId: string }>();
+  const { dungeonId, startFloor } = useLocalSearchParams<{ dungeonId: string; startFloor?: string }>();
   const router = useRouter();
-  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed } = useBattle(dungeonId || '');
+  const parsedStartFloor = startFloor ? parseInt(startFloor, 10) : 1;
+  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
   const { level, characterType } = usePlayerStore();
   const dungeon = getDungeon(dungeonId || '');
   const insets = useSafeAreaInsets();

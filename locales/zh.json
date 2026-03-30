@@ -2109,7 +2109,8 @@
     "loadError": "加载排行榜失败",
     "retry": "重试",
     "noData": "暂无排行数据",
-    "cacheInfo": "{{minutes}}分钟后可刷新"
+    "cacheInfo": "{{minutes}}分钟后可刷新",
+    "season": "Season {{season}}"
   },
   "modDescriptions": {
     "poisonChance": "毒几率 +{{value}}%",

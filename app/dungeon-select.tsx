@@ -1,18 +1,19 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Modal, Pressable } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { Picker } from '@react-native-picker/picker';
 import { DungeonCard } from '@/components/dungeon/DungeonCard';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { getDungeonList, DUNGEON_UNLOCK_ORDER, DEBUG_DUNGEON_IDS } from '@/data/dungeons';
-import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_UNLOCK_CHAIN, UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS, UBER_BY_UBER_UBER, isDimensionalRushDungeon, isDimensionalCorridorDungeon } from '@/data/endContents';
+import { BASE_BOSS_BY_UBER, DIMENSIONAL_RUSH_UNLOCK_CHAIN, UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS, UBER_BY_UBER_UBER, isDimensionalRushDungeon, isDimensionalCorridorDungeon, DIMENSIONAL_CORRIDOR_ID } from '@/data/endContents';
 import { BADGE_IDS_EXCEPT_UBER_UBER } from '@/data/badges';
 import { settingsRepository, badgeRepository, DungeonClearRecords } from '@/db';
 import { DungeonListItem } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { Analytics } from '@/lib/analytics';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 // ダンジョンが解放されているか判定
 function isDungeonUnlocked(
@@ -40,10 +41,25 @@ interface DungeonWithStatus extends DungeonListItem {
   isDisabled?: boolean;
 }
 
+// 次元回廊のスタート階層選択肢を生成（200F刻み）
+function getFloorOptions(bestFloor: number): number[] {
+  const options = [1];
+  const maxTier = Math.floor((bestFloor - 1) / 200);
+  for (let i = 1; i <= maxTier; i++) {
+    options.push(i * 200);
+  }
+  return options;
+}
+
 export default function DungeonSelectScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const [dungeons, setDungeons] = useState<DungeonWithStatus[]>([]);
+  const [dimensionalCorridorBest, setDimensionalCorridorBest] = useState(0);
+  const [showFloorSelect, setShowFloorSelect] = useState(false);
+  const [selectedStartFloor, setSelectedStartFloor] = useState(1);
+
+  const floorOptions = useMemo(() => getFloorOptions(dimensionalCorridorBest), [dimensionalCorridorBest]);
 
   const loadDungeons = useCallback(async () => {
     const all = getDungeonList();
@@ -160,6 +176,13 @@ export default function DungeonSelectScreen() {
       });
     }
 
+    // 次元回廊の最高到達階を取得
+    const characterId = usePlayerStore.getState().characterId;
+    if (characterId) {
+      const best = await settingsRepository.getDimensionalCorridorBest(characterId);
+      setDimensionalCorridorBest(best);
+    }
+
     setDungeons(result);
   }, []);
 
@@ -171,6 +194,13 @@ export default function DungeonSelectScreen() {
   );
 
   const handleDungeonSelect = async (dungeonId: string) => {
+    // 次元回廊で201F以上到達済みならスタート階層選択モーダルを表示
+    if (isDimensionalCorridorDungeon(dungeonId) && dimensionalCorridorBest >= 201) {
+      setSelectedStartFloor(floorOptions[floorOptions.length - 1]);
+      setShowFloorSelect(true);
+      return;
+    }
+
     if (UBER_DUNGEON_IDS.includes(dungeonId)) {
       const baseBossId = BASE_BOSS_BY_UBER[dungeonId];
       if (!baseBossId) return;
@@ -195,6 +225,20 @@ export default function DungeonSelectScreen() {
 
     // 戦闘開始時はダンジョン選択を履歴から消す
     router.replace(`/battle/${dungeonId}`);
+  };
+
+  const handleFloorSelectConfirm = () => {
+    setShowFloorSelect(false);
+
+    const dungeon = dungeons.find((d) => d.id === DIMENSIONAL_CORRIDOR_ID);
+    Analytics.logDungeonStart({
+      dungeon_id: DIMENSIONAL_CORRIDOR_ID,
+      dungeon_name: dungeon?.name || DIMENSIONAL_CORRIDOR_ID,
+      player_level: usePlayerStore.getState().level,
+      is_uber: false,
+    });
+
+    router.replace(`/battle/${DIMENSIONAL_CORRIDOR_ID}?startFloor=${selectedStartFloor}`);
   };
 
   const handleBack = () => {
@@ -236,6 +280,55 @@ export default function DungeonSelectScreen() {
           testID="dungeon-back-button"
         />
       </View>
+
+      {/* 次元回廊スタート階層選択モーダル */}
+      <Modal
+        visible={showFloorSelect}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowFloorSelect(false)}
+      >
+        <Pressable
+          style={styles.modalOverlay}
+          onPress={() => setShowFloorSelect(false)}
+        >
+          <Pressable style={styles.modalContent} onPress={(e) => e.stopPropagation()}>
+            <Text style={styles.modalTitle}>{t('dungeonSelect.selectStartFloor')}</Text>
+
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={selectedStartFloor}
+                onValueChange={(value) => setSelectedStartFloor(value)}
+                style={styles.picker}
+                itemStyle={styles.pickerItem}
+              >
+                {floorOptions.map((floor) => (
+                  <Picker.Item
+                    key={floor}
+                    label={t('dungeonSelect.startFloorLabel', { floor })}
+                    value={floor}
+                  />
+                ))}
+              </Picker>
+            </View>
+
+            <View style={styles.modalButtons}>
+              <Button
+                title={t('dungeonSelect.cancelButton')}
+                onPress={() => setShowFloorSelect(false)}
+                variant="secondary"
+                style={{ flex: 1 }}
+              />
+              <Button
+                title={t('dungeonSelect.startButton')}
+                onPress={handleFloorSelectConfirm}
+                variant="primary"
+                style={{ flex: 1 }}
+              />
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </ScreenWrapper>
   );
 }
@@ -270,5 +363,42 @@ const styles = StyleSheet.create({
   footer: {
     padding: ms(16),
     paddingBottom: ms(32),
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#1a1a2e',
+    borderRadius: ms(12),
+    padding: ms(20),
+    width: '85%',
+    maxWidth: 400,
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  modalTitle: {
+    fontSize: fs(18),
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: ms(8),
+  },
+  pickerContainer: {
+    marginVertical: ms(8),
+  },
+  picker: {
+    width: '100%',
+  },
+  pickerItem: {
+    color: '#fff',
+    fontSize: fs(18),
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    gap: ms(12),
+    marginTop: ms(12),
   },
 });

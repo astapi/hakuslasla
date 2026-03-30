@@ -2109,7 +2109,8 @@
     "loadError": "Rangliste konnte nicht geladen werden",
     "retry": "Wiederholen",
     "noData": "Keine Ranglistendaten",
-    "cacheInfo": "Aktualisierung in {{minutes}}min verfuegbar"
+    "cacheInfo": "Aktualisierung in {{minutes}}min verfuegbar",
+    "season": "Season {{season}}"
   },
   "modDescriptions": {
     "poisonChance": "Giftchance +{{value}}%",

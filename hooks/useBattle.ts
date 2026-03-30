@@ -154,11 +154,11 @@ const buildMimicForDungeon = (dungeon: Dungeon): Enemy | undefined => {
 };
 
 // 初期状態を作成
-const createInitialState = (dungeonId: string, playerMaxHp: number): BattleState => {
+const createInitialState = (dungeonId: string, playerMaxHp: number, startFloor: number = 1): BattleState => {
   const dungeon = getDungeon(dungeonId);
   return {
     dungeonId,
-    currentFloor: 1,
+    currentFloor: startFloor,
     maxFloor: dungeon?.maxFloor || 5,
     playerCurrentHp: playerMaxHp,
     playerMaxHp: playerMaxHp,
@@ -207,12 +207,13 @@ const createExtendedInitialState = (
   playerMaxHp: number,
   runCount: number = 1,
   grandTotalExp: number = 0,
-  grandTotalItems: Item[] = []
+  grandTotalItems: Item[] = [],
+  startFloor: number = 1
 ): ExtendedBattleState => {
   const dungeon = getDungeon(dungeonId);
   return {
     dungeonId,
-    currentFloor: 1,
+    currentFloor: startFloor,
     maxFloor: dungeon?.maxFloor || 5,
     playerCurrentHp: playerMaxHp,
     playerMaxHp: playerMaxHp,
@@ -690,7 +691,8 @@ const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] =
   });
 };
 
-export const useBattle = (dungeonId: string) => {
+export const useBattle = (dungeonId: string, options?: { startFloor?: number }) => {
+  const startFloor = options?.startFloor ?? 1;
   const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, unlockedUberSkills, setLevelCap, characterType, characterId } = usePlayerStore();
   const stats = getTotalStats();
   const { getDropRateMultiplier, isTierBoosted, checkExpiredBoosts } = useAdBoostStore();
@@ -765,7 +767,7 @@ export const useBattle = (dungeonId: string) => {
 
   const [state, dispatch] = useReducer(
     battleReducer,
-    createExtendedInitialState(dungeonId, stats.maxHp)
+    createExtendedInitialState(dungeonId, stats.maxHp, 1, 0, [], startFloor)
   );
 
   const [isPaused, setIsPaused] = useState(false);
@@ -869,7 +871,7 @@ export const useBattle = (dungeonId: string) => {
 
   // 戦闘開始
   const startBattle = useCallback(() => {
-    const enemy = getEnemyForFloor(1);
+    const enemy = getEnemyForFloor(startFloor);
     if (!enemy) return;
 
     // イグナイト伝染状態をリセット（新しいダンジョン開始）
@@ -878,7 +880,7 @@ export const useBattle = (dungeonId: string) => {
 
     // BGM再生開始
     playBattleBgm();
-  }, [getEnemyForFloor, dungeonId]);
+  }, [getEnemyForFloor, dungeonId, startFloor]);
 
 
   const handleDimensionalRushBossDefeat = useCallback((enemyId: string, enemyName: string) => {
