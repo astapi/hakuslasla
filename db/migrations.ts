@@ -366,6 +366,72 @@ export const migrations: Migration[] = [
       `);
     },
   },
+  {
+    // V10 → V11: MOD合計上限4個に制限（既存アイテムのMOD数を調整）
+    // fixedMods（tier 0）を優先し、ランダムMOD（tier > 0）を削って合計4個に
+    version: 11,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      const MAX_TOTAL_MODS = 4;
+
+      function trimMods(itemJson: string): string | null {
+        const item = JSON.parse(itemJson);
+        if (!item.mods || !Array.isArray(item.mods)) return null;
+        if (item.mods.length <= MAX_TOTAL_MODS) return null;
+
+        // fixedMods（tier 0）を優先、残りをランダムMODとして扱う
+        const fixedMods = item.mods.filter((m: { tier?: number }) => m.tier === 0);
+        const randomMods = item.mods.filter((m: { tier?: number }) => m.tier !== 0);
+
+        // ランダムMODを先頭から残す（ドロップ時の順序を維持）
+        const allowedRandomCount = Math.max(0, MAX_TOTAL_MODS - fixedMods.length);
+        item.mods = [...fixedMods, ...randomMods.slice(0, allowedRandomCount)];
+
+        return JSON.stringify(item);
+      }
+
+      // インベントリ
+      const invRows = await db.getAllAsync<{ id: number; item_data: string }>(
+        `SELECT id, item_data FROM character_inventory`
+      );
+      for (const row of invRows) {
+        const updated = trimMods(row.item_data);
+        if (updated) {
+          await db.runAsync(
+            `UPDATE character_inventory SET item_data = ? WHERE id = ?`,
+            updated, row.id
+          );
+        }
+      }
+
+      // 倉庫
+      const storageRows = await db.getAllAsync<{ id: number; item_data: string }>(
+        `SELECT id, item_data FROM storage`
+      );
+      for (const row of storageRows) {
+        const updated = trimMods(row.item_data);
+        if (updated) {
+          await db.runAsync(
+            `UPDATE storage SET item_data = ? WHERE id = ?`,
+            updated, row.id
+          );
+        }
+      }
+
+      // 装備
+      const equipRows = await db.getAllAsync<{ id: number; item_data: string }>(
+        `SELECT id, item_data FROM character_equipment WHERE item_data IS NOT NULL`
+      );
+      for (const row of equipRows) {
+        const updated = trimMods(row.item_data);
+        if (updated) {
+          await db.runAsync(
+            `UPDATE character_equipment SET item_data = ? WHERE id = ?`,
+            updated, row.id
+          );
+        }
+      }
+    },
+  },
 ];
 
 /**
