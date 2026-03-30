@@ -39,7 +39,7 @@ export const badgeRepository = {
     const db = await getDatabase();
     try {
       await db.runAsync(
-        'INSERT OR IGNORE INTO character_badges (character_id, badge_id) VALUES (?, ?)',
+        'INSERT OR IGNORE INTO character_badges (character_id, badge_id, seen) VALUES (?, ?, 0)',
         characterId,
         badgeId
       );
