@@ -202,7 +202,6 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   poison_damage_pct: number;
   poison_damage_more_pct: number[];
   poison_max_stacks: number;
-  poison_damage_reduction: number;
   poison_lifesteal: number;
   no_direct_damage: boolean;
   // 発火系
@@ -250,7 +249,6 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   let poison_damage_pct = 0;
   const poison_damage_more_pct: number[] = [];
   let poison_max_stacks = 0;
-  let poison_damage_reduction = 0;
   let poison_lifesteal = 0;
   let no_direct_damage = false;
   // 発火系
@@ -303,7 +301,6 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       poison_damage_pct += node.effect.poison_damage_pct || 0;
       if (node.effect.poison_damage_more_pct) poison_damage_more_pct.push(node.effect.poison_damage_more_pct);
       poison_max_stacks += node.effect.poison_max_stacks || 0;
-      poison_damage_reduction += node.effect.poison_damage_reduction || 0;
       poison_lifesteal += node.effect.poison_lifesteal || 0;
       if (node.effect.no_direct_damage) no_direct_damage = true;
       // 発火系
@@ -343,7 +340,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     hp_increased_pct, atk_increased_pct, def_increased_pct,
     hp_more_pct, atk_more_pct, def_more_pct,
     poison_chance, poison_damage_pct, poison_damage_more_pct,
-    poison_max_stacks, poison_damage_reduction, poison_lifesteal, no_direct_damage,
+    poison_max_stacks, poison_lifesteal, no_direct_damage,
     ignite_chance, ignite_damage_pct, ignite_damage_more_pct, ignite_duration_pct, ignite_lifesteal, ignite_spread,
     ignite_stacking_damage,
     critical_chance, critical_damage, hp_on_crit, critical_lifesteal_pct,

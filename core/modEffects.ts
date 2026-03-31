@@ -41,7 +41,6 @@ export interface PassiveEffectsData {
   poison_damage_pct: number;
   poison_damage_more_pct: number[];
   poison_max_stacks: number;
-  poison_damage_reduction: number;
   poison_lifesteal: number;
   no_direct_damage: boolean;
   // 発火系
@@ -265,7 +264,6 @@ export function combineMods(
   combined.poisonDamagePct += passiveEffects.poison_damage_pct;
   combined.poisonDamageMorePct.push(...passiveEffects.poison_damage_more_pct);
   combined.poisonMaxStacks += passiveEffects.poison_max_stacks;
-  combined.poisonDamageReduction += passiveEffects.poison_damage_reduction;
   combined.poisonLifesteal += passiveEffects.poison_lifesteal;
   combined.noDirectDamage = passiveEffects.no_direct_damage;
   // 発火系
