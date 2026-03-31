@@ -699,6 +699,18 @@
     "flame_sword": {
       "name": "Flame Sword"
     },
+    "merman_trident": {
+      "name": "Merman's Trident"
+    },
+    "orc_staff": {
+      "name": "Orc Mage's Staff"
+    },
+    "cyclops_eye": {
+      "name": "Cyclops' Evil Eye"
+    },
+    "uruk_blade": {
+      "name": "Uruk-hai War Blade"
+    },
     "shadow_blade": {
       "name": "Shadow Blade"
     },

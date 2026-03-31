@@ -634,6 +634,61 @@
       ]
     },
 
+    "_comment_underwater_cave_unique": "=== 海底洞窟 ユニークドロップ ===",
+
+    "merman_trident": {
+      "id": "merman_trident",
+      "name": "マーマンの三叉槍",
+      "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 28,
+      "def": 0,
+      "fixedMods": [
+        { "type": "atk_increased_pct", "value": 12 },
+        { "type": "hp_bonus", "value": 40 }
+      ]
+    },
+
+    "_comment_orc_fortress_unique": "=== オークの要塞 ユニークドロップ ===",
+
+    "orc_staff": {
+      "id": "orc_staff",
+      "name": "オークメイジの杖",
+      "slot": "weapon",
+      "weaponType": "staff",
+      "atk": 30,
+      "def": 0,
+      "fixedMods": [
+        { "type": "ignite_chance", "value": 55 },
+        { "type": "ignite_damage_pct", "value": 40 },
+        { "type": "def_bonus", "value": 20 }
+      ]
+    },
+    "cyclops_eye": {
+      "id": "cyclops_eye",
+      "name": "サイクロプスの魔眼",
+      "slot": "accessory",
+      "atk": 25,
+      "def": 15,
+      "fixedMods": [
+        { "type": "critical_chance", "value": 20 },
+        { "type": "critical_damage", "value": 30 }
+      ]
+    },
+    "uruk_blade": {
+      "id": "uruk_blade",
+      "name": "ウルクハイの戦刃",
+      "slot": "weapon",
+      "weaponType": "sword",
+      "atk": 38,
+      "def": 0,
+      "fixedMods": [
+        { "type": "atk_bonus", "value": 25 },
+        { "type": "critical_chance", "value": 15 },
+        { "type": "attack_speed_pct", "value": 10 }
+      ]
+    },
+
     "_comment16": "=== 深淵の森 固有ドロップ ===",
 
     "shadow_blade": {

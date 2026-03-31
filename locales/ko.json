@@ -695,6 +695,18 @@
     "flame_sword": {
       "name": "화염 검"
     },
+    "merman_trident": {
+      "name": "머맨의 삼지창"
+    },
+    "orc_staff": {
+      "name": "오크 메이지의 지팡이"
+    },
+    "cyclops_eye": {
+      "name": "사이클롭스의 마안"
+    },
+    "uruk_blade": {
+      "name": "우르크하이의 전투검"
+    },
     "shadow_blade": {
       "name": "그림자 블레이드"
     },

@@ -695,6 +695,18 @@
     "flame_sword": {
       "name": "Flammenschwert"
     },
+    "merman_trident": {
+      "name": "Dreizack des Meermanns"
+    },
+    "orc_staff": {
+      "name": "Stab des Orkmagiers"
+    },
+    "cyclops_eye": {
+      "name": "Böses Auge des Zyklopen"
+    },
+    "uruk_blade": {
+      "name": "Kriegsklinge des Uruk-hai"
+    },
     "shadow_blade": {
       "name": "Schattenklinge"
     },

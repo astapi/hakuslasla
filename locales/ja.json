@@ -700,6 +700,18 @@
     "flame_sword": {
       "name": "炎剣フレイムソード"
     },
+    "merman_trident": {
+      "name": "マーマンの三叉槍"
+    },
+    "orc_staff": {
+      "name": "オークメイジの杖"
+    },
+    "cyclops_eye": {
+      "name": "サイクロプスの魔眼"
+    },
+    "uruk_blade": {
+      "name": "ウルクハイの戦刃"
+    },
     "shadow_blade": {
       "name": "シャドウブレイド"
     },
