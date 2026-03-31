@@ -13,6 +13,8 @@ import { Analytics, CrashlyticsHelper } from '@/lib/analytics';
 import { consumePendingInviteLink, parseInviteLink, setPendingInviteLink } from '@/lib/inviteLink';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
 import { adService } from '@/services/adService';
+import { initRemoteConfig, checkAppStatus, type AppStatus } from '@/lib/remoteConfig';
+import { ForceUpdateModal } from '@/components/common/ForceUpdateModal';
 
 // スプラッシュ画面を自動で非表示にしない
 SplashScreen.preventAutoHideAsync();
@@ -22,6 +24,7 @@ export default function RootLayout() {
   const [isDbReady, setIsDbReady] = useState(false);
   const [needsLanguageSetup, setNeedsLanguageSetup] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [appStatus, setAppStatus] = useState<AppStatus>({ type: 'ok' });
   const isDbReadyRef = useRef(false);
   const needsLanguageSetupRef = useRef(false);
   const hasCheckedInitialUrlRef = useRef(false);
@@ -76,6 +79,18 @@ export default function RootLayout() {
 
         // 広告をバックグラウンドでプリロード
         adService.preloadAll();
+
+        // Remote Config初期化 & アプリ状態チェック
+        try {
+          await initRemoteConfig();
+          setAppStatus(checkAppStatus());
+        } catch (e) {
+          // Remote Configの失敗はアプリ起動をブロックしない
+          CrashlyticsHelper.recordError(
+            e instanceof Error ? e : new Error('Remote Config init failed'),
+            'Remote Config initialization failed'
+          );
+        }
 
         setIsDbReady(true);
       } catch (e) {
@@ -167,6 +182,15 @@ export default function RootLayout() {
   // DB準備中はスプラッシュ画面が表示されているので何も描画しない
   if (!isDbReady) {
     return null;
+  }
+
+  if (appStatus.type !== 'ok') {
+    return (
+      <View style={styles.appRoot} onLayout={onLayoutRootView}>
+        <ForceUpdateModal status={appStatus} />
+        <StatusBar style="light" />
+      </View>
+    );
   }
 
   return (

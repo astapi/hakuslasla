@@ -2288,5 +2288,12 @@
       "inferno": "업화의 길",
       "frostbite": "빙결의 길"
     }
+  },
+  "forceUpdate": {
+    "updateTitle": "업데이트 필요",
+    "updateMessage": "새 버전이 출시되었습니다.\n계속하려면 업데이트하세요.",
+    "updateButton": "업데이트",
+    "maintenanceTitle": "점검 중",
+    "maintenanceMessage": "현재 점검 중입니다.\n잠시 후 다시 시도해 주세요."
   }
 }

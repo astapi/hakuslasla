@@ -2288,5 +2288,12 @@
       "inferno": "Pfad des Infernos",
       "frostbite": "Pfad des Frostbiss"
     }
+  },
+  "forceUpdate": {
+    "updateTitle": "Update erforderlich",
+    "updateMessage": "Eine neue Version ist verfügbar.\nBitte aktualisiere die App, um fortzufahren.",
+    "updateButton": "Aktualisieren",
+    "maintenanceTitle": "Wartungsarbeiten",
+    "maintenanceMessage": "Die App wird gerade gewartet.\nBitte versuche es später erneut."
   }
 }

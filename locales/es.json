@@ -2288,5 +2288,12 @@
       "inferno": "Senda del Infierno",
       "frostbite": "Senda de la Escarcha"
     }
+  },
+  "forceUpdate": {
+    "updateTitle": "Actualización requerida",
+    "updateMessage": "Hay una nueva versión disponible.\nActualiza para continuar.",
+    "updateButton": "Actualizar",
+    "maintenanceTitle": "En mantenimiento",
+    "maintenanceMessage": "La app está en mantenimiento.\nInténtalo de nuevo más tarde."
   }
 }

@@ -2316,5 +2316,12 @@
       "inferno": "Path of Inferno",
       "frostbite": "Path of Frostbite"
     }
+  },
+  "forceUpdate": {
+    "updateTitle": "Update Required",
+    "updateMessage": "A new version is available.\nPlease update to continue.",
+    "updateButton": "Update",
+    "maintenanceTitle": "Under Maintenance",
+    "maintenanceMessage": "The app is currently under maintenance.\nPlease try again later."
   }
 }
