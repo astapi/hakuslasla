@@ -1517,7 +1517,7 @@
     },
     "poison_10": {
       "name": "Résistance au poison",
-      "description": "Dégâts subis -1% quand l'ennemi est empoisonné"
+      "description": "DEF +5% increased, HP +15"
     },
     "poison_11": {
       "name": "Connaissance du poison IV",
@@ -1541,11 +1541,11 @@
     },
     "poison_b1": {
       "name": "Garde empoisonnée",
-      "description": "Dégâts subis -1% quand l'ennemi est empoisonné"
+      "description": "DEF +7% increased, HP +20"
     },
     "poison_b2": {
       "name": "Écailles de dragon empoisonné",
-      "description": "Dégâts subis -1% quand l'ennemi est empoisonné, HP +30"
+      "description": "DEF +8% increased, HP +25"
     },
     "poison_14": {
       "name": "Connaissance du poison V",
@@ -1561,7 +1561,7 @@
     },
     "poison_17": {
       "name": "Protection venimeuse",
-      "description": "Dégâts subis -1% quand l'ennemi est empoisonné"
+      "description": "DEF +10% increased, HP +30"
     },
     "poison_final1": {
       "name": "Incarnation du serpent",

@@ -152,7 +152,6 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       poisonDamagePct: combinedMods.poisonDamagePct,
       poisonDamageMore: poisonDamageMoreTotal,
       poisonMaxStacks: combinedMods.poisonMaxStacks,
-      poisonDamageReduction: combinedMods.poisonDamageReduction,
       poisonLifesteal: combinedMods.poisonLifesteal,
       noDirectDamage: combinedMods.noDirectDamage,
       igniteChance: combinedMods.igniteChance,
@@ -272,14 +271,6 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.poisonMaxStacks > 0 ? styles.poisonText : undefined}>
                   {breakdown.poisonMaxStacks}
-                </Text>
-              </Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>{t('status.poisonDamageReduction')}</Text>
-              <Text style={styles.detailValue}>
-                <Text style={breakdown.poisonDamageReduction > 0 ? styles.poisonText : undefined}>
-                  {breakdown.poisonDamageReduction}%
                 </Text>
               </Text>
             </View>

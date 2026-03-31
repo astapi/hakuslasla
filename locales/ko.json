@@ -1517,7 +1517,7 @@
     },
     "poison_10": {
       "name": "독 저항",
-      "description": "적이 독 상태일 때 받는 피해 -1%"
+      "description": "DEF +5% increased, HP +15"
     },
     "poison_11": {
       "name": "독 지식 IV",
@@ -1541,11 +1541,11 @@
     },
     "poison_b1": {
       "name": "독 방어",
-      "description": "적이 독 상태일 때 받는 피해 -1%"
+      "description": "DEF +7% increased, HP +20"
     },
     "poison_b2": {
       "name": "독룡 비늘",
-      "description": "적이 독 상태일 때 받는 피해 -1%, HP +30"
+      "description": "DEF +8% increased, HP +25"
     },
     "poison_14": {
       "name": "독 지식 V",
@@ -1561,7 +1561,7 @@
     },
     "poison_17": {
       "name": "맹독 방어",
-      "description": "적이 독 상태일 때 받는 피해 -1%"
+      "description": "DEF +10% increased, HP +30"
     },
     "poison_final1": {
       "name": "독사의 화신",

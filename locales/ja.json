@@ -1522,7 +1522,7 @@
     },
     "poison_10": {
       "name": "毒耐性",
-      "description": "敵が毒状態時、被ダメージ -1%"
+      "description": "DEF +5% increased, HP +15"
     },
     "poison_11": {
       "name": "毒の知識 IV",
@@ -1546,11 +1546,11 @@
     },
     "poison_b1": {
       "name": "毒の護り",
-      "description": "敵が毒状態時、被ダメージ -1%"
+      "description": "DEF +7% increased, HP +20"
     },
     "poison_b2": {
       "name": "毒龍の鱗",
-      "description": "敵が毒状態時、被ダメージ -1%, HP +30"
+      "description": "DEF +8% increased, HP +25"
     },
     "poison_14": {
       "name": "毒の知識 V",
@@ -1566,7 +1566,7 @@
     },
     "poison_17": {
       "name": "猛毒の守護",
-      "description": "敵が毒状態時、被ダメージ -1%"
+      "description": "DEF +10% increased, HP +30"
     },
     "poison_final1": {
       "name": "毒蛇の化身",
