@@ -2317,5 +2317,12 @@
       "inferno": "業火の道",
       "frostbite": "氷結の道"
     }
+  },
+  "forceUpdate": {
+    "updateTitle": "アップデートが必要です",
+    "updateMessage": "新しいバージョンが利用可能です。\nアプリを最新版にアップデートしてください。",
+    "updateButton": "アップデート",
+    "maintenanceTitle": "メンテナンス中",
+    "maintenanceMessage": "現在メンテナンス中です。\nしばらくお待ちください。"
   }
 }

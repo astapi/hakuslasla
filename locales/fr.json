@@ -2288,5 +2288,12 @@
       "inferno": "Voie de l'Enfer",
       "frostbite": "Voie du Givre"
     }
+  },
+  "forceUpdate": {
+    "updateTitle": "Mise à jour requise",
+    "updateMessage": "Une nouvelle version est disponible.\nVeuillez mettre à jour pour continuer.",
+    "updateButton": "Mettre à jour",
+    "maintenanceTitle": "Maintenance en cours",
+    "maintenanceMessage": "L'application est en maintenance.\nVeuillez réessayer plus tard."
   }
 }
