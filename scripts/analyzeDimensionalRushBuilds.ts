@@ -334,7 +334,6 @@ for (let i = 0; i < clearedBuilds.length; i++) {
   console.log(`    毒ダメージ: +${build.passiveEffects.poison_damage_pct}% increased`);
   console.log(`    毒ダメージmore: ${build.passiveEffects.poison_damage_more_pct.length > 0 ? build.passiveEffects.poison_damage_more_pct.map(v => `${v}%`).join(' × ') : 'なし'}`);
   console.log(`    毒スタック上限: +${build.passiveEffects.poison_max_stacks}`);
-  console.log(`    毒状態時被ダメ軽減: +${build.passiveEffects.poison_damage_reduction}%`);
   console.log(`    毒吸収: +${build.passiveEffects.poison_lifesteal}%`);
   console.log(`    通常ダメージ無効: ${build.passiveEffects.no_direct_damage}`);
   console.log(`    クリティカル率: +${build.passiveEffects.critical_chance}%`);
