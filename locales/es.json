@@ -695,6 +695,18 @@
     "flame_sword": {
       "name": "Espada de Llama"
     },
+    "merman_trident": {
+      "name": "Tridente del Tritón"
+    },
+    "orc_staff": {
+      "name": "Bastón del Mago Orco"
+    },
+    "cyclops_eye": {
+      "name": "Ojo Maligno del Cíclope"
+    },
+    "uruk_blade": {
+      "name": "Espada de Guerra del Uruk-hai"
+    },
     "shadow_blade": {
       "name": "Espada de Sombra"
     },

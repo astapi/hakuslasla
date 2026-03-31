@@ -695,6 +695,18 @@
     "flame_sword": {
       "name": "Épée de flammes"
     },
+    "merman_trident": {
+      "name": "Trident de l'Homme-poisson"
+    },
+    "orc_staff": {
+      "name": "Bâton du Mage Orc"
+    },
+    "cyclops_eye": {
+      "name": "Œil Maudit du Cyclope"
+    },
+    "uruk_blade": {
+      "name": "Lame de Guerre de l'Uruk-hai"
+    },
     "shadow_blade": {
       "name": "Lame d'ombre"
     },
