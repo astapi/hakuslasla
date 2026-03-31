@@ -103,6 +103,7 @@ const RankingRow = ({ entry, isMe }: RankingRowProps) => {
             <StatItem label={t('status.poisonDamage')} value={`+${entry.stats.poisonDamagePct}%`} color="#9CCC65" />
             <StatItem label={t('status.poisonDamageMore')} value={`+${entry.stats.poisonDamageMore}%`} color="#9CCC65" />
             <StatItem label={t('status.poisonMaxStacks')} value={entry.stats.poisonMaxStacks} color="#9CCC65" />
+            <StatItem label={t('status.poisonDamageReduction')} value={`${entry.stats.poisonDamageReduction}%`} color="#9CCC65" />
             <StatItem label={t('status.poisonLifesteal')} value={`${entry.stats.poisonLifesteal}%`} color="#9CCC65" />
             <StatItem label={t('status.noDirectDamage')} value={entry.stats.noDirectDamage ? t('status.on') : t('status.off')} color="#9CCC65" />
             {/* 発火 */}
