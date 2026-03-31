@@ -897,7 +897,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
         },
       });
 
-      const ticketRoll = Math.random() * 100 < 90;
+      const ticketRoll = Math.random() * 100 < 95;
       if (ticketRoll) {
         const count = await settingsRepository.addUberTicket(enemyId);
         dispatch({
@@ -984,8 +984,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       droppedItems: filteredItems,
     });
 
-    // 異次元ラッシュまたはデバッグダンジョンでボスを倒した場合のみ Uber 版解放と入場券ドロップ
-    if (isDimensionalRushDungeon(dungeonId) || DEBUG_DIMENSIONAL_DUNGEON_IDS.includes(dungeonId)) {
+    // 異次元ラッシュ、次元回廊、またはデバッグダンジョンでボスを倒した場合 Uber 版解放と入場券ドロップ
+    if (isDimensionalRushDungeon(dungeonId) || isDimensionalCorridorDungeon(dungeonId) || DEBUG_DIMENSIONAL_DUNGEON_IDS.includes(dungeonId)) {
       handleDimensionalRushBossDefeat(state.enemy.id, state.enemy.name);
     }
 
