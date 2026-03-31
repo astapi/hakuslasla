@@ -8,8 +8,8 @@ service cloud.firestore {
       allow write: true;
     }
 
-    // ランキング（Season 2+）
-    match /dimensional_rankings_s{season}/{docId} {
+    // ランキング（Season 2）
+    match /dimensional_rankings_s2/{docId} {
       allow read: true;
       allow write: true;
     }
