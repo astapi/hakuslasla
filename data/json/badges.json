@@ -53,7 +53,7 @@
       "id": "badge_uber_uber_goblin_king",
       "nameKey": "badges.uber_uber_goblin_king.name",
       "descriptionKey": "badges.uber_uber_goblin_king.description",
-      "condition": { "type": "uber_boss_clear", "dungeonId": "uber_uber_goblin_king" },
+      "condition": { "type": "uber_uber_boss_clear", "dungeonId": "uber_uber_goblin_king" },
       "icon": "trophy"
     }
   ]
