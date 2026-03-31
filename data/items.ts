@@ -1,4 +1,4 @@
-import { Item, ItemBase, ItemMod, ItemDrop, DungeonDropTable, ModConfig, ModTierRange, ModCountRange, EquipmentSlot, WeaponType } from '@/types';
+import { Item, ItemBase, ItemMod, ItemDrop, DungeonDropTable, ModConfig, ModTierRange, ModCountRange, EquipmentSlot, WeaponType, ModType } from '@/types';
 import itemsData from './json/items.json';
 import dungeonsData from './json/dungeons.json';
 import modsData from './json/mods.json';
@@ -481,70 +481,81 @@ export const tryUniqueDrop = (itemId: string, dropRate: number, uniqueBonus: num
 /**
  * MODの効果を日本語で取得
  */
-export function getModDescription(mod: ItemMod): string {
+export function getModDescription(mod: ItemMod | { type: ModType; min: number; max: number }): string {
+  // min/maxを持つ範囲指定MOD（図鑑のマスターデータ用）
+  const raw = mod as Record<string, unknown>;
+  const val = (typeof raw.min === 'number' && typeof raw.max === 'number')
+    ? `${raw.min}~${raw.max}`
+    : String((mod as ItemMod).value);
+
   switch (mod.type) {
     case 'atk_bonus':
-      return `ATK+${mod.value}`;
+      return `ATK+${val}`;
     case 'def_bonus':
-      return `DEF+${mod.value}`;
+      return `DEF+${val}`;
     case 'hp_bonus':
-      return `HP+${mod.value}`;
+      return `HP+${val}`;
     case 'hp_regen':
-      return `毎秒HP${mod.value}回復`;
+      return `毎秒HP${val}回復`;
     case 'hp_regen_pct':
-      return `毎秒HP${mod.value}%回復`;
+      return `毎秒HP${val}%回復`;
     case 'poison_chance':
-      return `毒付与+${mod.value}%`;
+      return `毒付与+${val}%`;
     case 'ignite_chance':
-      return `発火付与+${mod.value}%`;
+      return `発火付与+${val}%`;
     case 'ignite_duration_pct':
-      return `発火時間+${mod.value}%`;
+      return `発火時間+${val}%`;
     case 'ignite_tick_speed_pct':
-      return `発火速度+${mod.value}%`;
+      return `発火速度+${val}%`;
     case 'ignite_damage_pct':
-      return `発火ダメージ+${mod.value}%`;
+      return `発火ダメージ+${val}%`;
     case 'ignite_lifesteal':
-      return `発火ダメージ吸収${mod.value}%`;
+      return `発火ダメージ吸収${val}%`;
     case 'critical_chance':
-      return `クリティカル+${mod.value}%`;
+      return `クリティカル+${val}%`;
     case 'critical_damage':
-      return `クリダメ+${mod.value}%`;
+      return `クリダメ+${val}%`;
     case 'hp_on_hit':
-      return `HIT時HP+${mod.value}回復`;
+      return `HIT時HP+${val}回復`;
     case 'damage_defer_pct':
-      return `ダメージ遅延${mod.value}%`;
+      return `ダメージ遅延${val}%`;
     case 'damage_reduction_pct':
-      return `被ダメ-${mod.value}%`;
-    case 'attack_speed_pct':
-      return `攻撃速度${mod.value >= 0 ? '+' : ''}${mod.value}%`;
-    case 'attack_speed_more_pct':
-      return `攻撃速度${mod.value >= 0 ? '+' : ''}${mod.value}% more`;
+      return `被ダメ-${val}%`;
+    case 'attack_speed_pct': {
+      const sign = typeof raw.min === 'number' ? '' : ((mod as ItemMod).value >= 0 ? '+' : '');
+      return `攻撃速度${sign}${val}%`;
+    }
+    case 'attack_speed_more_pct': {
+      const sign = typeof raw.min === 'number' ? '' : ((mod as ItemMod).value >= 0 ? '+' : '');
+      return `攻撃速度${sign}${val}% more`;
+    }
     case 'hp_increased_pct':
-      return `HP+${mod.value}%`;
+      return `HP+${val}%`;
     case 'atk_increased_pct':
-      return `ATK+${mod.value}%`;
+    case 'atk_inc_pct':
+      return `ATK+${val}%`;
     case 'def_increased_pct':
-      return `DEF+${mod.value}%`;
+      return `DEF+${val}%`;
     case 'time_atk_inc_pct':
-      return `5秒毎にATK+${mod.value}%`;
+      return `5秒毎にATK+${val}%`;
     case 'time_def_inc_pct':
-      return `5秒毎にDEF+${mod.value}%`;
+      return `5秒毎にDEF+${val}%`;
     case 'time_hp_regen':
-      return `5秒毎に毎秒HP+${mod.value}回復`;
+      return `5秒毎に毎秒HP+${val}回復`;
     case 'hp_regen_to_atk_pct':
-      return `HP回復量の${mod.value}%をATKに変換`;
+      return `HP回復量の${val}%をATKに変換`;
     case 'warlord_enrage':
       return '乱軍の王（HP30%以下で1度だけ発動。攻撃速度+20%, 攻撃時HP回復+300）';
     case 'chill_chance':
-      return `チル付与+${mod.value}%`;
+      return `チル付与+${val}%`;
     case 'chill_effect_pct':
-      return `チル効果+${mod.value}%`;
+      return `チル効果+${val}%`;
     case 'chill_duration_pct':
-      return `チル時間+${mod.value}%`;
+      return `チル時間+${val}%`;
     case 'freeze_chance':
-      return `フリーズ付与+${mod.value}%`;
+      return `フリーズ付与+${val}%`;
     case 'freeze_duration_pct':
-      return `フリーズ時間+${mod.value}%`;
+      return `フリーズ時間+${val}%`;
     default:
       return '';
   }
