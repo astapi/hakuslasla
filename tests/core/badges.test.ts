@@ -63,9 +63,15 @@ describe('バッジシステム', () => {
     expect(UBER_UBER_BADGE_ID).toBe('badge_uber_uber_goblin_king');
   });
 
-  it('uber_boss_clearバッジが7つ存在する', () => {
+  it('uber_boss_clearバッジが6つ存在する', () => {
     const uberBadges = BADGES.filter(b => b.condition.type === 'uber_boss_clear');
-    expect(uberBadges.length).toBe(7);
+    expect(uberBadges.length).toBe(6);
+  });
+
+  it('uber_uber_boss_clearバッジが1つ存在する', () => {
+    const uberUberBadges = BADGES.filter(b => b.condition.type === 'uber_uber_boss_clear');
+    expect(uberUberBadges.length).toBe(1);
+    expect(uberUberBadges[0].condition.dungeonId).toBe('uber_uber_goblin_king');
   });
 
   it('dimensional_floorバッジが1つ存在する', () => {

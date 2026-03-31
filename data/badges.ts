@@ -1,7 +1,7 @@
 import badgesData from './json/badges.json';
 
 export interface BadgeCondition {
-  type: 'uber_boss_clear' | 'dimensional_floor';
+  type: 'uber_boss_clear' | 'uber_uber_boss_clear' | 'dimensional_floor';
   dungeonId?: string;
   floor?: number;
 }
@@ -33,7 +33,7 @@ export const BADGE_IDS_EXCEPT_UBER_UBER = BADGES
 // Uberボスクリアバッジの取得
 export const getUberBossClearBadgeId = (dungeonId: string): string | undefined => {
   const badge = BADGES.find(
-    b => b.condition.type === 'uber_boss_clear' && b.condition.dungeonId === dungeonId
+    b => (b.condition.type === 'uber_boss_clear' || b.condition.type === 'uber_uber_boss_clear') && b.condition.dungeonId === dungeonId
   );
   return badge?.id;
 };
