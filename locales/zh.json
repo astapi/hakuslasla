@@ -1517,7 +1517,7 @@
     },
     "poison_10": {
       "name": "毒抗性",
-      "description": "敌人中毒时受伤 -1%"
+      "description": "DEF +5% increased, HP +15"
     },
     "poison_11": {
       "name": "毒之知识 IV",
@@ -1541,11 +1541,11 @@
     },
     "poison_b1": {
       "name": "毒之守护",
-      "description": "敌人中毒时受伤 -1%"
+      "description": "DEF +7% increased, HP +20"
     },
     "poison_b2": {
       "name": "毒龙鳞甲",
-      "description": "敌人中毒时受伤 -1%，HP +30"
+      "description": "DEF +8% increased, HP +25"
     },
     "poison_14": {
       "name": "毒之知识 V",
@@ -1561,7 +1561,7 @@
     },
     "poison_17": {
       "name": "剧毒防护",
-      "description": "敌人中毒时受伤 -1%"
+      "description": "DEF +10% increased, HP +30"
     },
     "poison_final1": {
       "name": "蛇神化身",

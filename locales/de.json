@@ -1517,7 +1517,7 @@
     },
     "poison_10": {
       "name": "Giftresistenz",
-      "description": "Erlittener Schaden -1% waehrend Feind vergiftet"
+      "description": "DEF +5% increased, HP +15"
     },
     "poison_11": {
       "name": "Giftwissen IV",
@@ -1541,11 +1541,11 @@
     },
     "poison_b1": {
       "name": "Giftschutz",
-      "description": "Erlittener Schaden -1% waehrend Feind vergiftet"
+      "description": "DEF +7% increased, HP +20"
     },
     "poison_b2": {
       "name": "Giftdrachenschuppen",
-      "description": "Erlittener Schaden -1% waehrend Feind vergiftet, HP +30"
+      "description": "DEF +8% increased, HP +25"
     },
     "poison_14": {
       "name": "Giftwissen V",
@@ -1561,7 +1561,7 @@
     },
     "poison_17": {
       "name": "Giftwache",
-      "description": "Erlittener Schaden -1% waehrend Feind vergiftet"
+      "description": "DEF +10% increased, HP +30"
     },
     "poison_final1": {
       "name": "Schlangeninkarnation",

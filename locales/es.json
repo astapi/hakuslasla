@@ -1517,7 +1517,7 @@
     },
     "poison_10": {
       "name": "Resistencia al Veneno",
-      "description": "Daño Recibido -1% mientras el enemigo está envenenado"
+      "description": "DEF +5% increased, HP +15"
     },
     "poison_11": {
       "name": "Conocimiento de Veneno IV",
@@ -1541,11 +1541,11 @@
     },
     "poison_b1": {
       "name": "Guardia de Veneno",
-      "description": "Daño Recibido -1% mientras el enemigo está envenenado"
+      "description": "DEF +7% increased, HP +20"
     },
     "poison_b2": {
       "name": "Escamas de Dragón Venenoso",
-      "description": "Daño Recibido -1% mientras el enemigo está envenenado, HP +30"
+      "description": "DEF +8% increased, HP +25"
     },
     "poison_14": {
       "name": "Conocimiento de Veneno V",
@@ -1561,7 +1561,7 @@
     },
     "poison_17": {
       "name": "Barrera de Veneno",
-      "description": "Daño Recibido -1% mientras el enemigo está envenenado"
+      "description": "DEF +10% increased, HP +30"
     },
     "poison_final1": {
       "name": "Encarnación de la Serpiente",

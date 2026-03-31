@@ -1521,7 +1521,7 @@
     },
     "poison_10": {
       "name": "Poison Resistance",
-      "description": "Damage Taken -3% while Enemy is Poisoned"
+      "description": "DEF +5% increased, HP +15"
     },
     "poison_11": {
       "name": "Poison Knowledge IV",
@@ -1545,11 +1545,11 @@
     },
     "poison_b1": {
       "name": "Poison Guard",
-      "description": "Damage Taken -5% while Enemy is Poisoned"
+      "description": "DEF +7% increased, HP +20"
     },
     "poison_b2": {
       "name": "Poison Dragon Scales",
-      "description": "Damage Taken -7% while Enemy is Poisoned, HP +30"
+      "description": "DEF +8% increased, HP +25"
     },
     "poison_14": {
       "name": "Poison Knowledge V",
@@ -1565,7 +1565,7 @@
     },
     "poison_17": {
       "name": "Venom Ward",
-      "description": "Damage Taken -5% while Enemy is Poisoned"
+      "description": "DEF +10% increased, HP +30"
     },
     "poison_final1": {
       "name": "Serpent Incarnate",
