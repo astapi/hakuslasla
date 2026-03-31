@@ -556,6 +556,24 @@ export function getModDescription(mod: ItemMod | { type: ModType; min: number; m
       return `フリーズ付与+${val}%`;
     case 'freeze_duration_pct':
       return `フリーズ時間+${val}%`;
+    case 'poison_damage_pct':
+      return `毒ダメージ+${val}%`;
+    case 'poison_damage_more_pct':
+      return `毒ダメージ${val}% more`;
+    case 'poison_damage_reduction':
+      return `毒状態の敵からの被ダメ-${val}%`;
+    case 'hp_on_crit':
+      return `クリティカル時HP+${val}回復`;
+    case 'critical_follow_up_attack':
+      return `クリティカル時追撃+${val}`;
+    case 'lifesteal':
+      return `ライフスティール${val}%`;
+    case 'atk_more_pct':
+      return `ATK ${val}% more`;
+    case 'def_more_pct':
+      return `DEF ${val}% more`;
+    case 'hp_more_pct':
+      return `HP ${val}% more`;
     default:
       return '';
   }
