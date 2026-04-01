@@ -285,6 +285,8 @@
     "chillChance": "冰缓概率",
     "chillEffect": "冰缓效果",
     "freezeChance": "冻结概率",
+    "chillDuration": "冰缓持续",
+    "freezeDuration": "冻结持续",
     "perSecond": "/秒",
     "on": "开",
     "off": "关",

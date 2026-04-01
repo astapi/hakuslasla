@@ -285,6 +285,8 @@
     "chillChance": "냉각 확률",
     "chillEffect": "냉각 효과",
     "freezeChance": "빙결 확률",
+    "chillDuration": "냉각 지속",
+    "freezeDuration": "빙결 지속",
     "perSecond": "/초",
     "on": "켜짐",
     "off": "꺼짐",
