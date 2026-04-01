@@ -38,6 +38,12 @@ export interface RankingStats {
   poisonDamageReduction: number;
   poisonLifesteal: number;
   noDirectDamage: boolean;
+  // チル・フリーズ
+  chillChance: number;
+  chillEffectPct: number;
+  chillDurationPct: number;
+  freezeChance: number;
+  freezeDurationPct: number;
   // 発火
   igniteChance: number;
   igniteDamagePct: number;

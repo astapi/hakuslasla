@@ -289,6 +289,8 @@
     "chillChance": "Chill Chance",
     "chillEffect": "Chill Effect",
     "freezeChance": "Freeze Chance",
+    "chillDuration": "Chill Duration",
+    "freezeDuration": "Freeze Duration",
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",

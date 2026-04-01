@@ -164,7 +164,9 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       damageReductionPct: combinedMods.damageReductionPct,
       chillChance: combinedMods.chillChance,
       chillEffectPct: combinedMods.chillEffectPct,
+      chillDurationPct: combinedMods.chillDurationPct,
       freezeChance: Math.min(combinedMods.freezeChance, 10),
+      freezeDurationPct: combinedMods.freezeDurationPct,
       attackSpeedPct: combinedMods.attackSpeedPct,
       attackSpeedMore: attackSpeedMoreTotal,
       finalAttackSpeed,
@@ -358,10 +360,26 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
               </Text>
             </View>
             <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.chillDuration')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.chillDurationPct > 0 ? styles.chillText : undefined}>
+                  +{breakdown.chillDurationPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>{t('status.freezeChance')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.freezeChance > 0 ? styles.chillText : undefined}>
                   {breakdown.freezeChance}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.freezeDuration')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.freezeDurationPct > 0 ? styles.chillText : undefined}>
+                  +{breakdown.freezeDurationPct}%
                 </Text>
               </Text>
             </View>

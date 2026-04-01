@@ -285,6 +285,8 @@
     "chillChance": "Kältechance",
     "chillEffect": "Kälteeffekt",
     "freezeChance": "Einfrierchance",
+    "chillDuration": "Kälte-Dauer",
+    "freezeDuration": "Einfrier-Dauer",
     "perSecond": "/s",
     "on": "AN",
     "off": "AUS",

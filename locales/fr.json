@@ -285,6 +285,8 @@
     "chillChance": "Chance de Gel",
     "chillEffect": "Effet de Gel",
     "freezeChance": "Chance de Congélation",
+    "chillDuration": "Durée de Gel",
+    "freezeDuration": "Durée de Congélation",
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",

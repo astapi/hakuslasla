@@ -59,6 +59,12 @@ export const submitDimensionalCorridorScore = async (
     poisonDamageReduction: combinedMods.poisonDamageReduction,
     poisonLifesteal: combinedMods.poisonLifesteal,
     noDirectDamage: combinedMods.noDirectDamage,
+    // チル・フリーズ
+    chillChance: combinedMods.chillChance + (classAbility.chillChance ?? 0),
+    chillEffectPct: combinedMods.chillEffectPct,
+    chillDurationPct: combinedMods.chillDurationPct,
+    freezeChance: Math.min(combinedMods.freezeChance, 10),
+    freezeDurationPct: combinedMods.freezeDurationPct,
     // 発火
     igniteChance: combinedMods.igniteChance + (classAbility.igniteChance ?? 0),
     igniteDamagePct: combinedMods.igniteDamagePct,

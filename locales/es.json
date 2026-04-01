@@ -285,6 +285,8 @@
     "chillChance": "Prob. Escalofrío",
     "chillEffect": "Efecto Frío",
     "freezeChance": "Prob. Congelar",
+    "chillDuration": "Duración Escalofrío",
+    "freezeDuration": "Duración Congelación",
     "perSecond": "/s",
     "on": "SÍ",
     "off": "NO",

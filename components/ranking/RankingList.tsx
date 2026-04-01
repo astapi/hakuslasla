@@ -106,6 +106,12 @@ const RankingRow = ({ entry, isMe }: RankingRowProps) => {
             <StatItem label={t('status.poisonDamageReduction')} value={`${entry.stats.poisonDamageReduction}%`} color="#9CCC65" />
             <StatItem label={t('status.poisonLifesteal')} value={`${entry.stats.poisonLifesteal}%`} color="#9CCC65" />
             <StatItem label={t('status.noDirectDamage')} value={entry.stats.noDirectDamage ? t('status.on') : t('status.off')} color="#9CCC65" />
+            {/* チル・フリーズ */}
+            <StatItem label={t('status.chillChance')} value={`${entry.stats.chillChance ?? 0}%`} color="#81D4FA" />
+            <StatItem label={t('status.chillEffect')} value={`+${entry.stats.chillEffectPct ?? 0}%`} color="#81D4FA" />
+            <StatItem label={t('status.chillDuration')} value={`+${entry.stats.chillDurationPct ?? 0}%`} color="#81D4FA" />
+            <StatItem label={t('status.freezeChance')} value={`${entry.stats.freezeChance ?? 0}%`} color="#81D4FA" />
+            <StatItem label={t('status.freezeDuration')} value={`+${entry.stats.freezeDurationPct ?? 0}%`} color="#81D4FA" />
             {/* 発火 */}
             <StatItem label={t('status.igniteChance')} value={`${entry.stats.igniteChance}%`} color="#FF7043" />
             <StatItem label={t('status.igniteDamage')} value={`+${entry.stats.igniteDamagePct}%`} color="#FF7043" />
