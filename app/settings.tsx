@@ -46,6 +46,7 @@ export default function SettingsScreen() {
   const [seEnabled, setSeEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
+  const [speedUnlocked, setSpeedUnlocked] = useState(false);
   const hasPremiumSpeed = hasSpeedBoost();
   const inviteCodeParam = useMemo(
     () => (Array.isArray(params.inviteCode) ? params.inviteCode[0] : params.inviteCode) ?? '',
@@ -78,17 +79,19 @@ export default function SettingsScreen() {
 
   const loadSettings = async () => {
     try {
-      const [loaded, savedLanguage, savedSpeed, savedBgm, savedSe] = await Promise.all([
+      const [loaded, savedLanguage, savedSpeed, savedBgm, savedSe, endContentUnlocked] = await Promise.all([
         settingsRepository.getDropFilter(),
         settingsRepository.getLanguage(),
         settingsRepository.getBattleSpeed(),
         settingsRepository.getBgmEnabled(),
         settingsRepository.getSeEnabled(),
+        settingsRepository.getEndContentUnlocked(),
       ]);
       setSettings(loaded);
       setLanguage(savedLanguage);
       setBgmEnabled(savedBgm);
       setSeEnabled(savedSe);
+      setSpeedUnlocked(hasSpeedBoost() || endContentUnlocked);
       // 課金していない場合で、保存されている速度がプレミアム速度の場合は無料枠（1x）にリセット
       if (!hasSpeedBoost() && PREMIUM_BATTLE_SPEED_OPTIONS.includes(savedSpeed)) {
         setBattleSpeed(DEFAULT_BATTLE_SPEED);
@@ -277,7 +280,8 @@ export default function SettingsScreen() {
           </Pressable>
         </Modal>
 
-        {/* 戦闘速度 */}
+        {/* 戦闘速度（エンドコンテンツ解放後または課金済みの場合のみ表示） */}
+        {speedUnlocked && (
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings.battleSpeed.title')}</Text>
           <Text style={styles.sectionDescription}>
@@ -326,6 +330,7 @@ export default function SettingsScreen() {
             </Text>
           )}
         </View>
+        )}
 
         {/* サウンド設定 */}
         <View style={styles.section}>
