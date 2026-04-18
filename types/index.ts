@@ -133,6 +133,9 @@ export type ModType =
   | 'freeze_chance'        // フリーズ付与確率+X%（上限10%）
   | 'freeze_duration_pct'  // フリーズ持続時間+X%
   | 'critical_follow_up_attack' // クリティカル時追撃
+  | 'follow_up_attack_pct'      // 毎攻撃時、valueパーセントのATKで追撃（UberUber双撃の指輪）
+  | 'king_slam'                 // 5回攻撃ごとにATK×3の追撃（UberUberゴブリンの踏みつけ）
+  | 'royal_roar'                // 3回攻撃ごとに自身の毒・発火・チル状態を解除
   | 'poison_damage_pct'       // 毒ダメージ+X%
   | 'poison_damage_more_pct'  // 毒ダメージ X% more
   | 'poison_damage_reduction' // 敵が毒状態時のダメージ軽減+X%

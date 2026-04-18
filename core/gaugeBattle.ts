@@ -76,6 +76,7 @@ export function createGaugeBattleState(
     enemyWoundActionCounter: 0,
     deferredDamages: [],
     poisonStackAccumulator: 0,
+    playerAttackCount: 0,
     elapsedTicks: 0,
     isFinished: false,
     winner: null,

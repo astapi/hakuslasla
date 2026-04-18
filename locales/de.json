@@ -346,6 +346,9 @@
     "poison_damage_more_pct": "Gift Schd. mehr",
     "poison_damage_reduction": "Gift Def.",
     "critical_follow_up_attack": "Krit Nachschlag",
+    "follow_up_attack_pct": "Zwillingsklinge",
+    "king_slam": "Königsschlag",
+    "royal_roar": "Königsruf",
     "atk_inc_pct": "ATK Erh.",
     "hp_on_crit": "LP bei Krit",
     "warlord_enrage": "Kriegsherr",
@@ -931,6 +934,9 @@
     "uber_goblin_stomp": {
       "name": "Uber Goblin-Stampfer"
     },
+    "uber_uber_goblin_stomp": {
+      "name": "UberUber Goblin-Stampfer"
+    },
     "uber_bandit_dagger": {
       "name": "Uber Banditenkoenig-Dolch"
     },
@@ -960,6 +966,9 @@
     },
     "uber_double_strike_ring": {
       "name": "Uber Doppelschlag-Ring"
+    },
+    "uber_uber_double_strike_ring": {
+      "name": "UberUber Doppelschlag-Ring"
     },
     "uber_kraken_shell": {
       "name": "Uber Kraken-Panzer"

@@ -103,6 +103,9 @@ export function createEmptyModEffects(): CombinedModEffects {
     hpOnCrit: 0,
     critLifestealPct: 0,
     criticalFollowUpAttack: false,
+    followUpAttackPct: 0,
+    kingSlam: false,
+    royalRoar: false,
     damageDeferPct: 0,
     damageReductionPct: 0,
     hpOnHit: 0,
@@ -187,6 +190,15 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
       break;
     case 'critical_follow_up_attack':
       effects.criticalFollowUpAttack = true;
+      break;
+    case 'follow_up_attack_pct':
+      effects.followUpAttackPct += mod.value;
+      break;
+    case 'king_slam':
+      effects.kingSlam = true;
+      break;
+    case 'royal_roar':
+      effects.royalRoar = true;
       break;
     case 'damage_defer_pct':
       effects.damageDeferPct += mod.value;

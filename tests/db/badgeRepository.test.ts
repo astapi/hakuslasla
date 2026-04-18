@@ -80,16 +80,17 @@ describe('badgeRepository.markBadgesAsSeen', () => {
 });
 
 describe('badgeRepository.awardBadge', () => {
-  it('新規バッジ付与時にseen=0で挿入される（INSERTにseenを指定しない＝スキーマデフォルト0）', async () => {
+  it('新規バッジ付与時にseen=0を明示してINSERTされる（未読通知表示のため）', async () => {
     mockDb.runAsync.mockResolvedValue(undefined);
     mockDb.getFirstAsync.mockResolvedValue({ changes: 1 });
 
     const result = await badgeRepository.awardBadge(1, 'badge_uber_goblin_king');
 
     expect(result).toBe(true);
-    // INSERTクエリにseenカラムを明示的に指定していない（スキーマのDEFAULT 0が使われる）
+    // PR #187: seen=0 を明示することで未読通知が確実に表示される
     const insertCall = mockDb.runAsync.mock.calls[0];
     expect(insertCall[0]).toContain('INSERT OR IGNORE');
-    expect(insertCall[0]).not.toContain('seen');
+    expect(insertCall[0]).toContain('seen');
+    expect(insertCall[0]).toContain('VALUES (?, ?, 0)');
   });
 });

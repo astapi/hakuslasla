@@ -1849,6 +1849,32 @@
         { "type": "hp_bonus", "value": 280 },
         { "type": "damage_reduction_pct", "min": 1, "max": 5 }
       ]
+    },
+    "uber_uber_goblin_stomp": {
+      "id": "uber_uber_goblin_stomp",
+      "name": "UberUber ゴブリンの踏みつけ",
+      "slot": "boots",
+      "atk": 120,
+      "def": 220,
+      "fixedMods": [
+        { "type": "king_slam", "value": 1 },
+        { "type": "royal_roar", "value": 1 },
+        { "type": "hp_regen", "value": 200 },
+        { "type": "hp_bonus", "value": 220 }
+      ]
+    },
+    "uber_uber_double_strike_ring": {
+      "id": "uber_uber_double_strike_ring",
+      "name": "UberUber 双撃の指輪",
+      "slot": "accessory",
+      "atk": 200,
+      "def": 200,
+      "fixedMods": [
+        { "type": "follow_up_attack_pct", "value": 100 },
+        { "type": "hp_on_hit", "value": 200 },
+        { "type": "attack_speed_pct", "value": 25 },
+        { "type": "def_bonus", "value": 150 }
+      ]
     }
   },
 

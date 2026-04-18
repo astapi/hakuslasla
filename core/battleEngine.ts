@@ -155,6 +155,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     enemyWoundActionCounter: 0,
     deferredDamages: [],
     poisonStackAccumulator: 0,
+    playerAttackCount: 0,
     elapsedTicks: 0,
     isFinished: false,
     winner: null,
@@ -557,6 +558,55 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         });
       }
 
+      // プレイヤー通常攻撃回数カウント（キングスラム・王の咆哮用）
+      engine.state.playerAttackCount += 1;
+
+      // UberUber双撃の指輪: 毎攻撃時、ATKのfollowUpAttackPct%で追撃（クリ非依存）
+      let ringFollowUpDamage = 0;
+      if (effectiveMods.followUpAttackPct > 0 && !effectiveMods.noDirectDamage) {
+        const ringAtk = effectivePlayerAtk * effectiveMods.followUpAttackPct / 100;
+        const ringBase = calculateDamage(ringAtk, engine.state.enemy.def, totalEnemyDamageReduction);
+        ringFollowUpDamage = Math.floor(ringBase * combinedMult);
+        engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - ringFollowUpDamage);
+        events.push({
+          type: 'player_attack',
+          tick: engine.state.elapsedTicks,
+          data: { damage: ringFollowUpDamage },
+        });
+      }
+
+      // UberUberゴブリンの踏みつけ: キングスラム（5回攻撃ごとにATK×3）
+      let kingSlamDamage = 0;
+      if (
+        effectiveMods.kingSlam &&
+        !effectiveMods.noDirectDamage &&
+        engine.state.playerAttackCount % 5 === 0
+      ) {
+        const slamBase = calculateDamage(effectivePlayerAtk * 3, engine.state.enemy.def, totalEnemyDamageReduction);
+        kingSlamDamage = Math.floor(slamBase * combinedMult);
+        engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - kingSlamDamage);
+        events.push({
+          type: 'player_attack',
+          tick: engine.state.elapsedTicks,
+          data: { damage: kingSlamDamage, kingSlam: true },
+        });
+      }
+
+      // UberUberゴブリンの踏みつけ: 王の咆哮（3回攻撃ごとに自身の毒・発火・チルを解除）
+      if (effectiveMods.royalRoar && engine.state.playerAttackCount % 3 === 0) {
+        const hadPoison = engine.state.playerPoisonStacks.length > 0;
+        const hadChill = engine.state.playerChillState !== null;
+        if (hadPoison) engine.state.playerPoisonStacks = [];
+        if (hadChill) engine.state.playerChillState = null;
+        if (hadPoison || hadChill) {
+          events.push({
+            type: 'player_heal',
+            tick: engine.state.elapsedTicks,
+            data: { amount: 0, source: 'royal_roar' },
+          });
+        }
+      }
+
       // 重撃: 攻撃ごとに重傷スタック付与（上限5）
       if (effectiveMods.heavyStrike && totalDamage > 0) {
         if (engine.state.enemyWoundStacks < 5) {
@@ -647,6 +697,22 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
             type: 'player_heal',
             tick: engine.state.elapsedTicks,
             data: { amount: uberFollowHeal, source: 'uber_follow_up_on_hit' },
+          });
+        }
+      }
+
+      // UberUber双撃の指輪追撃のHIT時HP回復
+      if (ringFollowUpDamage > 0 && effectiveMods.hpOnHit > 0 && engine.state.player.currentHp < engine.state.player.maxHp) {
+        const ringFollowHeal = Math.floor(effectiveMods.hpOnHit * engine.bossEffects.playerHealingMult);
+        if (ringFollowHeal > 0) {
+          engine.state.player.currentHp = Math.min(
+            engine.state.player.maxHp,
+            engine.state.player.currentHp + ringFollowHeal
+          );
+          events.push({
+            type: 'player_heal',
+            tick: engine.state.elapsedTicks,
+            data: { amount: ringFollowHeal, source: 'ring_follow_up_on_hit' },
           });
         }
       }

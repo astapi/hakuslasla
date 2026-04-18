@@ -1312,7 +1312,8 @@
         { "itemId": "uber_goblin_plate", "dropRate": 10 },
         { "itemId": "uber_goblin_grip", "dropRate": 10 },
         { "itemId": "uber_goblin_stomp", "dropRate": 10 },
-        { "itemId": "uber_kings_crown", "dropRate": 10 }
+        { "itemId": "uber_kings_crown", "dropRate": 10 },
+        { "itemId": "uber_uber_goblin_stomp", "dropRate": 20 }
       ]
     },
     "uber_uber_bandit_leader": {
@@ -1332,7 +1333,8 @@
         { "itemId": "uber_bandit_grip", "dropRate": 10 },
         { "itemId": "uber_bandit_steps", "dropRate": 10 },
         { "itemId": "uber_bandit_crown", "dropRate": 10 },
-        { "itemId": "uber_double_strike_ring", "dropRate": 15 }
+        { "itemId": "uber_double_strike_ring", "dropRate": 15 },
+        { "itemId": "uber_uber_double_strike_ring", "dropRate": 20 }
       ]
     }
   }

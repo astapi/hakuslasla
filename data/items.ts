@@ -566,6 +566,12 @@ export function getModDescription(mod: ItemMod | { type: ModType; min: number; m
       return `クリティカル時HP+${val}回復`;
     case 'critical_follow_up_attack':
       return `クリティカル時追撃+${val}`;
+    case 'follow_up_attack_pct':
+      return `双撃の刃（毎攻撃時、ATKの${val}%で追撃）`;
+    case 'king_slam':
+      return 'キングスラム（5回攻撃ごとにATK×3の追撃）';
+    case 'royal_roar':
+      return '王の咆哮（3回攻撃ごとに自身の毒・発火・チルを解除）';
     case 'lifesteal':
       return `ライフスティール${val}%`;
     case 'atk_more_pct':
