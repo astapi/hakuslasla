@@ -49,6 +49,8 @@ const BOSS_SKILL_KEY = {
     bearTrap: 'bossSkills.bandit_leader.bearTrap',
     nightAmbush: 'bossSkills.bandit_leader.nightAmbush',
     shadowBind: 'bossSkills.bandit_leader.shadowBind',
+    twinStrike: 'bossSkills.bandit_leader.twinStrike',
+    shadowGarrote: 'bossSkills.bandit_leader.shadowGarrote',
   },
   vampire: {
     bloodFeast: 'bossSkills.vampire.bloodFeast',
@@ -78,6 +80,8 @@ const BOSS_SKILL_LABEL_BY_ID: Record<BossSkillId, string | null> = {
   bandit_bear_trap: BOSS_SKILL_KEY.bandit.bearTrap,
   bandit_night_ambush: BOSS_SKILL_KEY.bandit.nightAmbush,
   bandit_shadow_bind: BOSS_SKILL_KEY.bandit.shadowBind,
+  bandit_twin_strike: BOSS_SKILL_KEY.bandit.twinStrike,
+  bandit_shadow_garrote: BOSS_SKILL_KEY.bandit.shadowGarrote,
   vampire_blood_feast: BOSS_SKILL_KEY.vampire.bloodFeast,
   vampire_night_feast: BOSS_SKILL_KEY.vampire.nightFeast,
   vampire_crimson_pact: BOSS_SKILL_KEY.vampire.crimsonPact,

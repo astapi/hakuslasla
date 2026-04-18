@@ -187,6 +187,12 @@
       "maxFloor": 1
     },
     {
+      "id": "uber_uber_bandit_leader",
+      "name": "UberUber 盗賊の頭",
+      "description": "全ての試練を乗り越えた者だけが挑める、究極の暗殺者。",
+      "maxFloor": 1
+    },
+    {
       "id": "debug_dimensional_goblin_king",
       "name": "DEBUG: 異次元ラッシュ - ゴブリンキング",
       "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
@@ -226,6 +232,12 @@
       "id": "debug_uber_uber_goblin_king",
       "name": "DEBUG: UberUber ゴブリンキング",
       "description": "デバッグ用。UberUberゴブリンキングが単体で出現する。チケット不要。",
+      "maxFloor": 1
+    },
+    {
+      "id": "debug_uber_uber_bandit_leader",
+      "name": "DEBUG: UberUber 盗賊の頭",
+      "description": "デバッグ用。UberUber盗賊の頭が単体で出現する。チケット不要。",
       "maxFloor": 1
     },
     {

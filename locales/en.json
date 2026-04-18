@@ -96,7 +96,12 @@
       "bossAbilities": "Boss Abilities",
       "regularSkills": "Regular Skills (every 3 attacks)",
       "thresholdSkills": "Threshold Skills (below 50% HP)",
-      "uberOnly": "Uber Only"
+      "persistentSkills": "Permanent Skills (active from battle start)",
+      "everyAttackSkills": "Triggers Every Attack",
+      "every10Skills": "Triggers Every 10 Attacks",
+      "uberUberPersistentSkills": "Permanent Skills (active from battle start)",
+      "uberOnly": "Uber Only",
+      "uberUberOnly": "UberUber Only"
     },
     "notCleared": "Not Cleared",
     "uberUnlocked": "Uber Unlocked"
@@ -468,6 +473,10 @@
     "uber_uber_goblin_king": {
       "name": "UberUber Goblin King",
       "description": "The ultimately awakened Goblin King. Only those who have defeated all Uber bosses may challenge."
+    },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber Bandit Leader",
+      "description": "The ultimate assassin. Only those who have defeated all Uber bosses may challenge."
     },
     "uber_bandit_leader": {
       "name": "Uber Bandit Leader",
@@ -1321,6 +1330,9 @@
     "uber_uber_goblin_king": {
       "name": "UberUber Goblin King"
     },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber Bandit Leader"
+    },
     "uber_bandit_leader": {
       "name": "Uber Bandit Leader"
     },
@@ -1370,8 +1382,10 @@
       "name": "Goblin Roar",
       "shield": "Swarm Shield",
       "shieldDesc": "20% damage reduction for 2 turns, crit and poison chance -50%",
+      "shieldDescUberUber": "20% damage reduction, crit and poison chance -50% (permanent from battle start)",
       "warlord": "Warlord of the Horde",
       "warlordDesc": "+30% attack speed, recover 500 HP on hit (triggers below 50% HP)",
+      "warlordDescUberUber": "+30% attack speed, recover 500 HP on hit (permanent from battle start)",
       "kingsSlam": "King's Slam",
       "kingsSlamDesc": "A devastating ATK×3 strike every 10 attacks",
       "kingsRoar": "King's Roar",
@@ -1381,10 +1395,16 @@
       "name": "Bear Trap",
       "bearTrap": "Bear Trap",
       "bearTrapDesc": "Player attack speed -30% for 2 turns",
+      "bearTrapDescUberUber": "Player attack speed -30% (permanent from battle start)",
       "nightAmbush": "Night Ambush",
       "nightAmbushDesc": "Next attack damage +40%",
       "shadowBind": "Shadow Bind",
-      "shadowBindDesc": "Healing permanently reduced by 50% (triggers below 50% HP)"
+      "shadowBindDesc": "Healing permanently reduced by 50% (triggers below 50% HP)",
+      "shadowBindDescUberUber": "Healing reduced by 25% (permanent from battle start)",
+      "twinStrike": "Twin Strike Blade",
+      "twinStrikeDesc": "Triggers a follow-up with the same damage as the main attack on every attack",
+      "shadowGarrote": "Shadow Garrote",
+      "shadowGarroteDesc": "Freezes the player for 0.5s every 10 attacks"
     },
     "vampire": {
       "name": "Blood Feast",
@@ -2300,6 +2320,10 @@
     "uber_uber_goblin_king": {
       "name": "True Kingslayer",
       "description": "Defeat UberUber Goblin King"
+    },
+    "uber_uber_bandit_leader": {
+      "name": "True Shadow Conqueror",
+      "description": "Defeat UberUber Bandit Leader"
     },
     "earned": "Earned",
     "notEarned": "Not Earned",

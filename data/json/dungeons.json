@@ -1238,6 +1238,25 @@
       "modTierRange": { "minTier": 10, "maxTier": 1 },
       "modCountRange": { "min": 3, "max": 4 }
     },
+    "debug_uber_uber_bandit_leader": {
+      "id": "debug_uber_uber_bandit_leader",
+      "name": "DEBUG: UberUber 盗賊の頭",
+      "description": "デバッグ用。UberUber盗賊の頭が単体で出現する。チケット不要。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_uber_bandit_leader", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_uber_bandit_leader",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [],
+        "dungeon": []
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 3, "max": 4 }
+    },
     "dimensional_corridor": {
       "id": "dimensional_corridor",
       "name": "次元回廊",
@@ -1274,6 +1293,23 @@
         { "monsterId": "uber_uber_goblin_king", "spawnRate": 100 }
       ],
       "boss": { "monsterId": "uber_uber_goblin_king", "floor": 1 },
+      "dropTable": {
+        "common": [],
+        "dungeon": []
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 3, "max": 4 },
+      "requiresTicket": true
+    },
+    "uber_uber_bandit_leader": {
+      "id": "uber_uber_bandit_leader",
+      "name": "UberUber 盗賊の頭",
+      "description": "究極の暗殺者と化した盗賊の頭。全てのUberボスを倒した者のみが挑める。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_uber_bandit_leader", "spawnRate": 100 }
+      ],
+      "boss": { "monsterId": "uber_uber_bandit_leader", "floor": 1 },
       "dropTable": {
         "common": [],
         "dungeon": []

@@ -92,7 +92,12 @@
       "bossAbilities": "보스 능력",
       "regularSkills": "일반 스킬 (3회 공격마다)",
       "thresholdSkills": "임계 스킬 (HP 50% 이하)",
-      "uberOnly": "Uber 전용"
+      "persistentSkills": "상시 발동 스킬 (전투 시작 시 발동)",
+      "everyAttackSkills": "매 공격 시 발동",
+      "every10Skills": "10회 공격마다 발동",
+      "uberUberPersistentSkills": "상시 발동 스킬 (전투 시작 시 발동)",
+      "uberOnly": "Uber 전용",
+      "uberUberOnly": "UberUber 전용"
     },
     "notCleared": "미클리어",
     "uberUnlocked": "Uber 해금됨"
@@ -464,6 +469,10 @@
     "uber_uber_goblin_king": {
       "name": "UberUber 고블린 킹",
       "description": "궁극적으로 각성한 고블린 킹."
+    },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber 산적 두목",
+      "description": "궁극의 암살자가 된 산적 두목. 모든 Uber 보스를 쓰러뜨린 자만이 도전할 수 있다."
     },
     "uber_bandit_leader": {
       "name": "Uber 산적 두목",
@@ -1317,6 +1326,9 @@
     "uber_uber_goblin_king": {
       "name": "UberUber 고블린 킹"
     },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber 산적 두목"
+    },
     "uber_bandit_leader": {
       "name": "Uber 산적 두목"
     },
@@ -1366,8 +1378,10 @@
       "name": "고블린의 포효",
       "shield": "군단 방패",
       "shieldDesc": "2턴 동안 피해 감소 20%, Crit 및 독 확률 -50%",
+      "shieldDescUberUber": "피해 감소 20%, Crit 및 독 확률 -50% (전투 시작 시부터 영구)",
       "warlord": "무리의 대장",
       "warlordDesc": "공격 속도 +30%, 적중 시 HP 500 회복 (HP 50% 이하에서 발동)",
+      "warlordDescUberUber": "공격 속도 +30%, 적중 시 HP 500 회복 (전투 시작 시부터 영구)",
       "kingsSlam": "왕의 강타",
       "kingsSlamDesc": "10회 공격마다 ATK×3의 강력한 일격",
       "kingsRoar": "왕의 포효",
@@ -1377,10 +1391,16 @@
       "name": "덫",
       "bearTrap": "덫",
       "bearTrapDesc": "플레이어 공격 속도 -30% 2턴",
+      "bearTrapDescUberUber": "플레이어 공격 속도 -30% (전투 시작 시부터 영구)",
       "nightAmbush": "야습",
       "nightAmbushDesc": "다음 공격 피해 +40%",
       "shadowBind": "그림자 속박",
-      "shadowBindDesc": "회복 영구 50% 감소 (HP 50% 이하에서 발동)"
+      "shadowBindDesc": "회복 영구 50% 감소 (HP 50% 이하에서 발동)",
+      "shadowBindDescUberUber": "회복 25% 감소 (전투 시작 시부터 영구)",
+      "twinStrike": "쌍격의 칼날",
+      "twinStrikeDesc": "매 공격마다 메인 공격과 동일한 피해의 추격을 발동",
+      "shadowGarrote": "그림자 옭아매기",
+      "shadowGarroteDesc": "10회 공격마다 플레이어를 0.5초 동안 빙결"
     },
     "vampire": {
       "name": "피의 향연",
@@ -2273,6 +2293,7 @@
     "uber_true_final_boss": { "name": "종언을 넘어선 자", "description": "Uber 최종 보스 격파" },
     "dimensional_4000": { "name": "차원의 패자", "description": "차원 회랑 4000층 도달" },
     "uber_uber_goblin_king": { "name": "진정한 왕 살해자", "description": "UberUber 고블린 킹 격파" },
+    "uber_uber_bandit_leader": { "name": "진정한 그림자 정복자", "description": "UberUber 산적 두목 격파" },
     "earned": "획득 완료",
     "notEarned": "미획득",
     "newBadge": "새로운 뱃지를 획득했습니다!"

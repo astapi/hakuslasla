@@ -1,7 +1,9 @@
 import { create } from 'zustand';
-import { settingsRepository, DungeonClearRecords } from '@/db';
+import { settingsRepository, DungeonClearRecords, badgeRepository } from '@/db';
 import { getDungeonList, DUNGEON_UNLOCK_ORDER } from '@/data/dungeons';
-import { DIMENSIONAL_RUSH_IDS, UBER_DUNGEON_IDS, isDimensionalRushDungeon, BASE_BOSS_BY_UBER } from '@/data/endContents';
+import { DIMENSIONAL_RUSH_IDS, UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS, isDimensionalRushDungeon, BASE_BOSS_BY_UBER } from '@/data/endContents';
+import { BADGE_IDS_EXCEPT_UBER_UBER } from '@/data/badges';
+import { usePlayerStore } from '@/stores/usePlayerStore';
 import { DungeonListItem } from '@/types';
 
 interface EncyclopediaDungeon extends DungeonListItem {
@@ -28,6 +30,17 @@ export const useEncyclopediaStore = create<EncyclopediaStore>((set, get) => ({
     const uberUnlocks = await settingsRepository.getUberBossUnlocks();
     const allDungeons = getDungeonList();
 
+    // UberUber解放判定（全Uberバッジ取得済み）
+    const characterId = usePlayerStore.getState().characterId;
+    let isUberUberUnlocked = false;
+    if (characterId) {
+      isUberUberUnlocked = await badgeRepository.hasAllBadgesExcept(
+        characterId,
+        BADGE_IDS_EXCEPT_UBER_UBER,
+        []
+      );
+    }
+
     const result: EncyclopediaDungeon[] = [];
     for (const dungeon of allDungeons) {
       const record = clearRecords[dungeon.id];
@@ -37,8 +50,11 @@ export const useEncyclopediaStore = create<EncyclopediaStore>((set, get) => ({
       const baseBossId = isUberDungeon ? BASE_BOSS_BY_UBER[dungeon.id] : null;
       const isUberUnlocked = baseBossId ? uberUnlocks[baseBossId] : false;
 
-      // クリア済み、またはUber解放済みなら追加
-      if (record || isUberUnlocked) {
+      // UberUberダンジョンの場合、全Uberバッジ取得済みかチェック
+      const isUberUberDungeon = UBER_UBER_DUNGEON_IDS.includes(dungeon.id);
+
+      // クリア済み、またはUber解放済み、またはUberUber解放済みなら追加
+      if (record || isUberUnlocked || (isUberUberDungeon && isUberUberUnlocked)) {
         result.push({
           ...dungeon,
           clearedAt: record?.clearedAt ?? null,
@@ -64,6 +80,10 @@ export const useEncyclopediaStore = create<EncyclopediaStore>((set, get) => ({
         // Uberダンジョン
         const uberIndex = UBER_DUNGEON_IDS.indexOf(dungeonId);
         if (uberIndex !== -1) return DUNGEON_UNLOCK_ORDER.length + DIMENSIONAL_RUSH_IDS.length + uberIndex;
+
+        // UberUberダンジョン（Uberの後ろに並べる）
+        const uberUberIndex = UBER_UBER_DUNGEON_IDS.indexOf(dungeonId);
+        if (uberUberIndex !== -1) return DUNGEON_UNLOCK_ORDER.length + DIMENSIONAL_RUSH_IDS.length + UBER_DUNGEON_IDS.length + uberUberIndex;
 
         // その他（デバッグなど）
         return 9999;

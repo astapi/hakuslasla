@@ -54,7 +54,9 @@ const backgroundImages: Record<string, ImageSourcePropType> = {
   uber_demon_lord: require('@/assets/images/backgrounds/demon_castle.jpg'),
   uber_true_final_boss: require('@/assets/images/backgrounds/final_land.jpg'),
   uber_uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
+  uber_uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
   debug_uber_uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
+  debug_uber_uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
 };
 
 type ChestRarity = 'normal' | 'magic' | 'rare' | 'unique';

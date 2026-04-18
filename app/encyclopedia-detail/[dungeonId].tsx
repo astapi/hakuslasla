@@ -8,7 +8,7 @@ import { getDungeon } from '@/data/dungeons';
 import { getEnemy } from '@/data/enemies';
 import { getItemBase, getModDescription } from '@/data/items';
 import { getMonsterImage } from '@/data/images';
-import { getBossAbilities, isUberDungeon, BossSkillInfo } from '@/data/bossSkillInfo';
+import { getBossAbilities, isUberDungeon, isUberUberDungeon, BossSkillInfo, SkillTriggerType } from '@/data/bossSkillInfo';
 import { Dungeon, Enemy, ItemBase } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 
@@ -120,16 +120,57 @@ function MonsterCard({ enemy, isBoss = false, dungeonId }: MonsterCardProps) {
   const { t } = useTranslation();
   const bossAbilities = isBoss ? getBossAbilities(enemy.id) : null;
   const isUber = dungeonId ? isUberDungeon(dungeonId) : false;
+  const isUberUber = dungeonId ? isUberUberDungeon(dungeonId) : false;
 
-  // スキルをフィルタリング（Uberでない場合はUber限定スキルを除外）
+  // スキルをフィルタリング:
+  // - 通常: isUberOnly/isUberUberOnly を除外
+  // - Uber: isUberUberOnly を除外
+  // - UberUber: 全表示
   const filterSkills = (skills: BossSkillInfo[]) => {
-    if (isUber) return skills;
-    return skills.filter((skill) => !skill.isUberOnly);
+    return skills.filter((skill) => {
+      if (skill.isUberUberOnly && !isUberUber) return false;
+      if (skill.isUberOnly && !isUber) return false;
+      return true;
+    });
   };
 
-  const regularSkills = bossAbilities ? filterSkills(bossAbilities.regularSkills) : [];
-  const thresholdSkills = bossAbilities ? filterSkills(bossAbilities.thresholdSkills) : [];
-  const hasAbilities = regularSkills.length > 0 || thresholdSkills.length > 0;
+  // UberUber時はdescKeyUberUberがあればそちらを使用
+  const resolveDescKey = (skill: BossSkillInfo): string => {
+    if (isUberUber && skill.descKeyUberUber) return skill.descKeyUberUber;
+    return skill.descKey;
+  };
+
+  // 効果的な triggerType を解決（UberUber時は triggerTypeUberUber を優先）
+  const resolveTriggerType = (skill: BossSkillInfo, defaultType: SkillTriggerType): SkillTriggerType => {
+    if (isUberUber && skill.triggerTypeUberUber) return skill.triggerTypeUberUber;
+    return skill.triggerType ?? defaultType;
+  };
+
+  // 全スキルを triggerType でグルーピング
+  const groupedSkills: Record<SkillTriggerType, BossSkillInfo[]> = {
+    persistent: [],
+    regular: [],
+    everyAttack: [],
+    every10: [],
+    threshold: [],
+  };
+  if (bossAbilities) {
+    for (const skill of filterSkills(bossAbilities.regularSkills)) {
+      groupedSkills[resolveTriggerType(skill, 'regular')].push(skill);
+    }
+    for (const skill of filterSkills(bossAbilities.thresholdSkills)) {
+      groupedSkills[resolveTriggerType(skill, 'threshold')].push(skill);
+    }
+  }
+  const sectionOrder: SkillTriggerType[] = ['persistent', 'regular', 'everyAttack', 'every10', 'threshold'];
+  const sectionTitleKey: Record<SkillTriggerType, string> = {
+    persistent: 'encyclopedia.detail.persistentSkills',
+    regular: 'encyclopedia.detail.regularSkills',
+    everyAttack: 'encyclopedia.detail.everyAttackSkills',
+    every10: 'encyclopedia.detail.every10Skills',
+    threshold: 'encyclopedia.detail.thresholdSkills',
+  };
+  const hasAbilities = sectionOrder.some((t) => groupedSkills[t].length > 0);
 
   return (
     <View style={[styles.monsterCard, isBoss && styles.monsterCardBoss]}>
@@ -172,49 +213,32 @@ function MonsterCard({ enemy, isBoss = false, dungeonId }: MonsterCardProps) {
         <View style={styles.bossAbilitiesContainer}>
           <Text style={styles.bossAbilitiesTitle}>{t('encyclopedia.detail.bossAbilities')}</Text>
 
-          {/* 通常スキル */}
-          {regularSkills.length > 0 && (
-            <View style={styles.skillSection}>
-              <Text style={styles.skillSectionTitle}>{t('encyclopedia.detail.regularSkills')}</Text>
-              {regularSkills.map((skill) => (
-                <View key={skill.skillKey} style={styles.skillItem}>
-                  <View style={styles.skillNameRow}>
-                    <Text style={styles.skillName}>
-                      {t(`bossSkills.${bossAbilities.bossId}.${skill.skillKey}`)}
+          {sectionOrder.map((trigger) => {
+            const skills = groupedSkills[trigger];
+            if (skills.length === 0) return null;
+            return (
+              <View key={trigger} style={styles.skillSection}>
+                <Text style={styles.skillSectionTitle}>{t(sectionTitleKey[trigger])}</Text>
+                {skills.map((skill) => (
+                  <View key={skill.skillKey} style={styles.skillItem}>
+                    <View style={styles.skillNameRow}>
+                      <Text style={styles.skillName}>
+                        {t(`bossSkills.${bossAbilities.bossId}.${skill.skillKey}`)}
+                      </Text>
+                      {skill.isUberUberOnly ? (
+                        <Text style={styles.uberUberOnlyBadge}>{t('encyclopedia.detail.uberUberOnly')}</Text>
+                      ) : skill.isUberOnly ? (
+                        <Text style={styles.uberOnlyBadge}>{t('encyclopedia.detail.uberOnly')}</Text>
+                      ) : null}
+                    </View>
+                    <Text style={styles.skillDesc}>
+                      {t(`bossSkills.${bossAbilities.bossId}.${resolveDescKey(skill)}`)}
                     </Text>
-                    {skill.isUberOnly && (
-                      <Text style={styles.uberOnlyBadge}>{t('encyclopedia.detail.uberOnly')}</Text>
-                    )}
                   </View>
-                  <Text style={styles.skillDesc}>
-                    {t(`bossSkills.${bossAbilities.bossId}.${skill.descKey}`)}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          )}
-
-          {/* HP50%以下スキル */}
-          {thresholdSkills.length > 0 && (
-            <View style={styles.skillSection}>
-              <Text style={styles.skillSectionTitle}>{t('encyclopedia.detail.thresholdSkills')}</Text>
-              {thresholdSkills.map((skill) => (
-                <View key={skill.skillKey} style={styles.skillItem}>
-                  <View style={styles.skillNameRow}>
-                    <Text style={styles.skillName}>
-                      {t(`bossSkills.${bossAbilities.bossId}.${skill.skillKey}`)}
-                    </Text>
-                    {skill.isUberOnly && (
-                      <Text style={styles.uberOnlyBadge}>{t('encyclopedia.detail.uberOnly')}</Text>
-                    )}
-                  </View>
-                  <Text style={styles.skillDesc}>
-                    {t(`bossSkills.${bossAbilities.bossId}.${skill.descKey}`)}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          )}
+                ))}
+              </View>
+            );
+          })}
         </View>
       )}
 
@@ -461,6 +485,15 @@ const styles = StyleSheet.create({
     fontSize: fs(9),
     color: '#9370DB',
     backgroundColor: 'rgba(147, 112, 219, 0.2)',
+    paddingHorizontal: ms(5),
+    paddingVertical: ms(2),
+    borderRadius: ms(3),
+    fontWeight: 'bold',
+  },
+  uberUberOnlyBadge: {
+    fontSize: fs(9),
+    color: '#FF6B9D',
+    backgroundColor: 'rgba(255, 107, 157, 0.2)',
     paddingHorizontal: ms(5),
     paddingVertical: ms(2),
     borderRadius: ms(3),

@@ -7,6 +7,8 @@ export type BossSkillId =
   | 'bandit_bear_trap'
   | 'bandit_night_ambush'
   | 'bandit_shadow_bind'
+  | 'bandit_twin_strike'
+  | 'bandit_shadow_garrote'
   | 'vampire_blood_feast'
   | 'vampire_night_feast'
   | 'vampire_crimson_pact'
@@ -54,6 +56,7 @@ export interface BossEffectState {
   finalEndStacks: number;
   convergenceStacks: number;
   goblinSlamCounter: number;  // UberUberゴブリンキング: キングスラムまでのカウンタ
+  banditGarroteCounter: number;  // UberUber盗賊の頭: 影縛りの絞縄までのカウンタ
 }
 
 export const createBossEffectState = (): BossEffectState => ({
@@ -87,6 +90,7 @@ export const createBossEffectState = (): BossEffectState => ({
   finalEndStacks: 0,
   convergenceStacks: 0,
   goblinSlamCounter: 0,
+  banditGarroteCounter: 0,
 });
 
 export interface BossBehaviorContext {
@@ -102,6 +106,7 @@ export interface BossBehaviorResult {
   resetPlayerGauge?: boolean;
   applyPlayerPoison?: PoisonStack;
   cleansePoisonIgnite?: boolean;  // ボスの毒・発火状態を解除
+  applyPlayerFreeze?: { remainingMs: number };  // プレイヤーをフリーズさせる
 }
 
 const createBossSkillEvent = (tick: number, skillId: BossSkillId): BattleEvent => ({
@@ -141,6 +146,24 @@ export const createBossIntroEvents = (
         goblinEnrage: true,
         enemyAttackSpeedMult: 1.3,
         enemyHpOnHitBonus: 500,
+      },
+    };
+  }
+
+  // UberUber盗賊の頭: bear_trap + shadow_bind常時（night_ambushはUber同様3回毎に発動）
+  if (isUberUberBoss(enemyId) && getBaseBossId(enemyId) === 'bandit_leader') {
+    events.push(createBossSkillEvent(tick, 'bandit_bear_trap'));
+    events.push(createBossSkillEvent(tick, 'bandit_shadow_bind'));
+    return {
+      events,
+      initBossEffects: {
+        // bandit_bear_trap常時: プレイヤー攻撃速度-30%
+        playerAttackSpeedMult: 0.7,
+        playerAttackSpeedRemaining: -1,
+        // bandit_shadow_bind常時: 回復効果-25%
+        banditShadow: true,
+        playerHealingMult: 0.75,
+        playerHealingRemaining: -1,
       },
     };
   }
@@ -268,6 +291,24 @@ export const applyEnemyAttackPreEffects = (
       return { events, cleansePoisonIgnite: true };
     }
     return { events };
+  }
+
+  // UberUber盗賊の頭: 影縛りの絞縄（10回に1回、プレイヤーを0.5秒フリーズ）
+  // 闘夜の奇襲はUber同様3回毎に発動、bear_trap/shadow_bindは常時化済み
+  if (baseBossId === 'bandit_leader' && isUberUberBoss(ctx.enemyId)) {
+    bossEffects.banditGarroteCounter += 1;
+    let freezeResult: BossBehaviorResult | null = null;
+    if (bossEffects.banditGarroteCounter >= 10) {
+      bossEffects.banditGarroteCounter = 0;
+      events.push(createBossSkillEvent(tick, 'bandit_shadow_garrote'));
+      freezeResult = { events, applyPlayerFreeze: { remainingMs: 500 } };
+    }
+    // 3回毎の闘夜の奇襲（Uber同様、次撃+40%）
+    if (bossEffects.enemyAttackCount % 3 === 0) {
+      bossEffects.enemyNextAttackMult = 1.4;
+      events.push(createBossSkillEvent(tick, 'bandit_night_ambush'));
+    }
+    return freezeResult ?? { events };
   }
 
   const shouldTrigger = bossEffects.enemyAttackCount % 3 === 0;

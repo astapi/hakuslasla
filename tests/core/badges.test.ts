@@ -11,19 +11,21 @@ import {
 } from '../../data/badges';
 
 describe('バッジシステム', () => {
-  it('8種類のバッジが定義されている', () => {
-    expect(BADGES.length).toBe(8);
+  it('9種類のバッジが定義されている', () => {
+    expect(BADGES.length).toBe(9);
   });
 
   it('ALL_BADGE_IDS は全バッジIDを含む', () => {
-    expect(ALL_BADGE_IDS.length).toBe(8);
+    expect(ALL_BADGE_IDS.length).toBe(9);
     expect(ALL_BADGE_IDS).toContain('badge_uber_goblin_king');
     expect(ALL_BADGE_IDS).toContain('badge_dimensional_4000');
     expect(ALL_BADGE_IDS).toContain('badge_uber_uber_goblin_king');
+    expect(ALL_BADGE_IDS).toContain('badge_uber_uber_bandit_leader');
   });
 
-  it('BADGE_IDS_EXCEPT_UBER_UBER はUberUberゴブリンキングバッジと次元回廊バッジを除外する', () => {
+  it('BADGE_IDS_EXCEPT_UBER_UBER はUberUberバッジと次元回廊バッジを除外する', () => {
     expect(BADGE_IDS_EXCEPT_UBER_UBER).not.toContain('badge_uber_uber_goblin_king');
+    expect(BADGE_IDS_EXCEPT_UBER_UBER).not.toContain('badge_uber_uber_bandit_leader');
     expect(BADGE_IDS_EXCEPT_UBER_UBER).not.toContain('badge_dimensional_4000');
     expect(BADGE_IDS_EXCEPT_UBER_UBER.length).toBe(6);
   });
@@ -68,10 +70,12 @@ describe('バッジシステム', () => {
     expect(uberBadges.length).toBe(6);
   });
 
-  it('uber_uber_boss_clearバッジが1つ存在する', () => {
+  it('uber_uber_boss_clearバッジが2つ存在する', () => {
     const uberUberBadges = BADGES.filter(b => b.condition.type === 'uber_uber_boss_clear');
-    expect(uberUberBadges.length).toBe(1);
-    expect(uberUberBadges[0].condition.dungeonId).toBe('uber_uber_goblin_king');
+    expect(uberUberBadges.length).toBe(2);
+    const dungeonIds = uberUberBadges.map(b => b.condition.dungeonId);
+    expect(dungeonIds).toContain('uber_uber_goblin_king');
+    expect(dungeonIds).toContain('uber_uber_bandit_leader');
   });
 
   it('dimensional_floorバッジが1つ存在する', () => {

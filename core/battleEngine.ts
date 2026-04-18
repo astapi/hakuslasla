@@ -41,6 +41,7 @@ import {
   getBaseBossId,
   isEndContentDungeon,
   isUberBoss,
+  isUberUberBoss,
   getBossSkillName,
 } from './endContent';
 import { calculateDamage } from './battle';
@@ -789,6 +790,10 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         engine.state.enemyPoisonStacks = [];
         engine.state.enemyIgniteState = null;
       }
+      if (pre.applyPlayerFreeze) {
+        engine.state.playerFreezeState = { remainingMs: pre.applyPlayerFreeze.remainingMs };
+        engine.state.playerChillState = null;
+      }
       if (pre.resetPlayerGauge) {
         engine.state.player.gauge = 0;
         events.push({
@@ -886,10 +891,30 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         }
       }
 
-      // 盗賊の頭の追撃（0.5倍ダメージ）
+      // 盗賊の頭の追撃: 通常0.5倍、UberUberは双撃の刃で1.0倍に強化
       const baseBossId = getBaseBossId(enemyId);
       if (baseBossId === 'bandit_leader') {
-        const followUpDamage = Math.floor(enemyDamage * 0.5 * enemyAttackMultiplier * engine.bossEffects.playerDamageTakenMult);
+        const isUberUber = isUberUberBoss(enemyId);
+        if (isUberUber) {
+          events.push(createBossSkillEvent(engine.state.elapsedTicks, 'bandit_twin_strike'));
+        }
+        const followUpRatio = isUberUber ? 1.0 : 0.5;
+        const followUpRaw = Math.floor(enemyDamage * followUpRatio * enemyAttackMultiplier * engine.bossEffects.playerDamageTakenMult);
+        // メイン攻撃と同じ遅延ダメージ処理を適用
+        let followUpDamage: number;
+        if (deferPct > 0 && followUpRaw > 0) {
+          const followUpDeferred = Math.floor(followUpRaw * deferPct / 100);
+          followUpDamage = followUpRaw - followUpDeferred;
+          if (followUpDeferred > 0) {
+            const damagePerTick = Math.max(1, Math.floor(followUpDeferred / 4));
+            engine.state.deferredDamages.push({
+              damagePerTick,
+              remainingTicks: 4,
+            });
+          }
+        } else {
+          followUpDamage = followUpRaw;
+        }
         engine.state.player.currentHp = Math.max(0, engine.state.player.currentHp - followUpDamage);
         events.push(createEnemyAttackEvent(engine.state.elapsedTicks, followUpDamage));
       }

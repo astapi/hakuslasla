@@ -1314,6 +1314,26 @@
         { "itemId": "uber_goblin_stomp", "dropRate": 10 },
         { "itemId": "uber_kings_crown", "dropRate": 10 }
       ]
+    },
+    "uber_uber_bandit_leader": {
+      "id": "uber_uber_bandit_leader",
+      "name": "UberUber 盗賊の頭",
+      "image": "bandit_leader",
+      "maxHp": 250000,
+      "atk": 2100,
+      "def": 1300,
+      "exp": 12000,
+      "attackSpeed": 1.4,
+      "isBoss": true,
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "uber_bandit_dagger", "dropRate": 10 },
+        { "itemId": "uber_bandit_coat", "dropRate": 10 },
+        { "itemId": "uber_bandit_grip", "dropRate": 10 },
+        { "itemId": "uber_bandit_steps", "dropRate": 10 },
+        { "itemId": "uber_bandit_crown", "dropRate": 10 },
+        { "itemId": "uber_double_strike_ring", "dropRate": 15 }
+      ]
     }
   }
 }
