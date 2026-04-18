@@ -346,6 +346,9 @@
     "poison_damage_more_pct": "Dég. poison more",
     "poison_damage_reduction": "Déf. poison",
     "critical_follow_up_attack": "Crit poursuite",
+    "follow_up_attack_pct": "Lame Jumelle",
+    "king_slam": "Frappe du Roi",
+    "royal_roar": "Rugissement Royal",
     "atk_inc_pct": "ATK augm.",
     "hp_on_crit": "PV sur crit",
     "warlord_enrage": "Seigneur de guerre",
@@ -931,6 +934,9 @@
     "uber_goblin_stomp": {
       "name": "Uber Pas gobelin"
     },
+    "uber_uber_goblin_stomp": {
+      "name": "UberUber Pas gobelin"
+    },
     "uber_bandit_dagger": {
       "name": "Uber Dague du Roi bandit"
     },
@@ -960,6 +966,9 @@
     },
     "uber_double_strike_ring": {
       "name": "Uber Anneau de double frappe"
+    },
+    "uber_uber_double_strike_ring": {
+      "name": "UberUber Anneau de double frappe"
     },
     "uber_kraken_shell": {
       "name": "Uber Carapace du Kraken"

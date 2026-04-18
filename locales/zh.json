@@ -346,6 +346,9 @@
     "poison_damage_more_pct": "毒伤more",
     "poison_damage_reduction": "中毒减伤",
     "critical_follow_up_attack": "暴击追击",
+    "follow_up_attack_pct": "双击之刃",
+    "king_slam": "国王重击",
+    "royal_roar": "王者咆哮",
     "atk_inc_pct": "ATK增加",
     "hp_on_crit": "暴击回复",
     "warlord_enrage": "战神之怒",
@@ -931,6 +934,9 @@
     "uber_goblin_stomp": {
       "name": "Uber 哥布林重靴"
     },
+    "uber_uber_goblin_stomp": {
+      "name": "UberUber 哥布林重靴"
+    },
     "uber_bandit_dagger": {
       "name": "Uber 盗王之匕"
     },
@@ -960,6 +966,9 @@
     },
     "uber_double_strike_ring": {
       "name": "Uber 连击戒指"
+    },
+    "uber_uber_double_strike_ring": {
+      "name": "UberUber 连击戒指"
     },
     "uber_kraken_shell": {
       "name": "Uber 海妖之壳"

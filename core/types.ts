@@ -227,6 +227,9 @@ export interface CombinedModEffects {
   hpOnCrit: number;          // クリティカル時HP回復（固定値）
   critLifestealPct: number;  // クリティカル時ダメージ吸収%
   criticalFollowUpAttack: boolean;  // クリティカル時追撃（ATK×0.5の追加ダメージ + HIT時効果再発動）
+  followUpAttackPct: number;        // 毎攻撃時にATKのvalueパーセントで追撃（UberUber双撃の指輪）
+  kingSlam: boolean;                // 5回攻撃ごとにATK×3の追撃
+  royalRoar: boolean;               // 3回攻撃ごとに自身の毒・発火・チル状態を解除
 
   // 防御・吸収
   damageDeferPct: number;  // ダメージ遅延%（ダメージのX%を4秒かけて受ける）
@@ -339,6 +342,7 @@ export interface GaugeBattleState {
   enemyWoundActionCounter: number;  // 敵行動カウンター（4回で重傷-1）
   deferredDamages: DeferredDamage[];  // 遅延ダメージキュー
   poisonStackAccumulator: number;  // 毒スタック端数アキュムレータ（猛毒の覚醒用）
+  playerAttackCount: number;  // プレイヤー通常攻撃回数（キングスラム・王の咆哮用）
   elapsedTicks: number;  // 経過ティック数
   isFinished: boolean;
   winner: 'player' | 'enemy' | null;

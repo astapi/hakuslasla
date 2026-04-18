@@ -346,6 +346,9 @@
     "poison_damage_more_pct": "독 피해more",
     "poison_damage_reduction": "중독 피감",
     "critical_follow_up_attack": "크리 추격",
+    "follow_up_attack_pct": "쌍격의 칼날",
+    "king_slam": "킹 슬램",
+    "royal_roar": "왕의 포효",
     "atk_inc_pct": "ATK 증가",
     "hp_on_crit": "크리 회복",
     "warlord_enrage": "전쟁군주",
@@ -931,6 +934,9 @@
     "uber_goblin_stomp": {
       "name": "Uber 고블린 스톰프"
     },
+    "uber_uber_goblin_stomp": {
+      "name": "UberUber 고블린 스톰프"
+    },
     "uber_bandit_dagger": {
       "name": "Uber 산적왕의 단검"
     },
@@ -960,6 +966,9 @@
     },
     "uber_double_strike_ring": {
       "name": "Uber 이중 타격 반지"
+    },
+    "uber_uber_double_strike_ring": {
+      "name": "UberUber 이중 타격 반지"
     },
     "uber_kraken_shell": {
       "name": "Uber 크라켄 껍질"

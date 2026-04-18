@@ -351,6 +351,9 @@
     "poison_damage_more_pct": "毒ダメmore",
     "poison_damage_reduction": "毒時被ダメ減",
     "critical_follow_up_attack": "クリ時追撃",
+    "follow_up_attack_pct": "双撃の刃",
+    "king_slam": "キングスラム",
+    "royal_roar": "王の咆哮",
     "atk_inc_pct": "ATK増加",
     "hp_on_crit": "クリ時回復",
     "warlord_enrage": "乱軍の王",
@@ -936,6 +939,9 @@
     "uber_goblin_stomp": {
       "name": "Uber ゴブリンの踏みつけ"
     },
+    "uber_uber_goblin_stomp": {
+      "name": "UberUber ゴブリンの踏みつけ"
+    },
     "uber_bandit_dagger": {
       "name": "Uber 盗賊王の短剣"
     },
@@ -965,6 +971,9 @@
     },
     "uber_double_strike_ring": {
       "name": "Uber 双撃の指輪"
+    },
+    "uber_uber_double_strike_ring": {
+      "name": "UberUber 双撃の指輪"
     },
     "uber_kraken_shell": {
       "name": "Uber クラーケンの甲殻"

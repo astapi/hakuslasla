@@ -350,6 +350,9 @@
     "poison_damage_more_pct": "Poison Dmg more",
     "poison_damage_reduction": "Poison Def",
     "critical_follow_up_attack": "Crit Follow-up",
+    "follow_up_attack_pct": "Twin Blade",
+    "king_slam": "King's Slam",
+    "royal_roar": "Royal Roar",
     "atk_inc_pct": "ATK Inc",
     "hp_on_crit": "HP on Crit",
     "warlord_enrage": "Warlord",
@@ -935,6 +938,9 @@
     "uber_goblin_stomp": {
       "name": "Uber Goblin Stomp"
     },
+    "uber_uber_goblin_stomp": {
+      "name": "UberUber Goblin Stomp"
+    },
     "uber_bandit_dagger": {
       "name": "Uber Bandit King's Dagger"
     },
@@ -964,6 +970,9 @@
     },
     "uber_double_strike_ring": {
       "name": "Uber Double Strike Ring"
+    },
+    "uber_uber_double_strike_ring": {
+      "name": "UberUber Double Strike Ring"
     },
     "uber_kraken_shell": {
       "name": "Uber Kraken Shell"

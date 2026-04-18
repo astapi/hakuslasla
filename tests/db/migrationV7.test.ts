@@ -60,7 +60,7 @@ function createMockDB() {
           (char as any).skill_points = ((char as any).skill_points ?? 0) + addCount;
         }
       }
-      if (sql.includes('INSERT OR REPLACE INTO settings')) {
+      if (sql.includes('INSERT OR REPLACE INTO game_settings')) {
         const key = 'respec_tokens';
         const value = params[0];
         const existing = tables.settings.findIndex((r) => r.key === key);

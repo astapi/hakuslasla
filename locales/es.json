@@ -346,6 +346,9 @@
     "poison_damage_more_pct": "Daño veneno more",
     "poison_damage_reduction": "Def. veneno",
     "critical_follow_up_attack": "Golpe crit",
+    "follow_up_attack_pct": "Hoja Gemela",
+    "king_slam": "Golpe del Rey",
+    "royal_roar": "Rugido Real",
     "atk_inc_pct": "ATK aum.",
     "hp_on_crit": "PV al crit",
     "warlord_enrage": "Señor de la guerra",
@@ -931,6 +934,9 @@
     "uber_goblin_stomp": {
       "name": "Uber Pisotón Goblin"
     },
+    "uber_uber_goblin_stomp": {
+      "name": "UberUber Pisotón Goblin"
+    },
     "uber_bandit_dagger": {
       "name": "Uber Daga del Rey Bandido"
     },
@@ -960,6 +966,9 @@
     },
     "uber_double_strike_ring": {
       "name": "Uber Anillo de Golpe Doble"
+    },
+    "uber_uber_double_strike_ring": {
+      "name": "UberUber Anillo de Golpe Doble"
     },
     "uber_kraken_shell": {
       "name": "Uber Caparazón de Kraken"
