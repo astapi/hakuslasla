@@ -92,7 +92,12 @@
       "bossAbilities": "Boss-Faehigkeiten",
       "regularSkills": "Regulaere Faehigkeiten (alle 3 Angriffe)",
       "thresholdSkills": "Schwellen-Faehigkeiten (unter 50% HP)",
-      "uberOnly": "Nur Uber"
+      "persistentSkills": "Permanente Faehigkeiten (von Kampfbeginn an aktiv)",
+      "everyAttackSkills": "Bei jedem Angriff",
+      "every10Skills": "Alle 10 Angriffe",
+      "uberUberPersistentSkills": "Permanente Faehigkeiten (von Kampfbeginn an aktiv)",
+      "uberOnly": "Nur Uber",
+      "uberUberOnly": "Nur UberUber"
     },
     "notCleared": "Nicht abgeschlossen",
     "uberUnlocked": "Uber freigeschaltet"
@@ -464,6 +469,10 @@
     "uber_uber_goblin_king": {
       "name": "UberUber Goblinkönig",
       "description": "Der ultimativ erwachte Goblinkönig."
+    },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber Banditenfuehrer",
+      "description": "Der ultimative Assassine. Nur jene, die alle Uber-Bosse besiegt haben, dürfen herausfordern."
     },
     "uber_bandit_leader": {
       "name": "Uber Banditenfuehrer",
@@ -1317,6 +1326,9 @@
     "uber_uber_goblin_king": {
       "name": "UberUber Goblinkönig"
     },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber Banditenfuehrer"
+    },
     "uber_bandit_leader": {
       "name": "Uber Banditenfuehrer"
     },
@@ -1366,8 +1378,10 @@
       "name": "Goblin-Gebruell",
       "shield": "Schwarmschild",
       "shieldDesc": "20% Schadensreduzierung fuer 2 Runden, Crit und Giftchance -50%",
+      "shieldDescUberUber": "20% Schadensreduzierung, Crit und Giftchance -50% (dauerhaft ab Kampfbeginn)",
       "warlord": "Kriegsfuerst der Horde",
       "warlordDesc": "+30% Angriffsgeschw., 500 HP bei Treffer heilen (unter 50% HP)",
+      "warlordDescUberUber": "+30% Angriffsgeschw., 500 HP bei Treffer heilen (dauerhaft ab Kampfbeginn)",
       "kingsSlam": "Königsschlag",
       "kingsSlamDesc": "Alle 10 Angriffe ein verheerender ATK×3-Schlag",
       "kingsRoar": "Gebrüll des Königs",
@@ -1377,10 +1391,16 @@
       "name": "Baerenfalle",
       "bearTrap": "Baerenfalle",
       "bearTrapDesc": "Spieler Angriffsgeschw. -30% fuer 2 Runden",
+      "bearTrapDescUberUber": "Spieler Angriffsgeschw. -30% (dauerhaft ab Kampfbeginn)",
       "nightAmbush": "Nachtueberfall",
       "nightAmbushDesc": "Naechster Angriffsschaden +40%",
       "shadowBind": "Schattenfesseln",
-      "shadowBindDesc": "Heilung dauerhaft um 50% reduziert (unter 50% HP)"
+      "shadowBindDesc": "Heilung dauerhaft um 50% reduziert (unter 50% HP)",
+      "shadowBindDescUberUber": "Heilung um 25% reduziert (dauerhaft ab Kampfbeginn)",
+      "twinStrike": "Doppelschlagklinge",
+      "twinStrikeDesc": "Loest bei jedem Angriff einen Folgehieb mit gleichem Schaden wie der Hauptangriff aus",
+      "shadowGarrote": "Schattengarotte",
+      "shadowGarroteDesc": "Friert den Spieler alle 10 Angriffe fuer 0,5 Sekunden ein"
     },
     "vampire": {
       "name": "Blutfest",
@@ -2273,6 +2293,7 @@
     "uber_true_final_boss": { "name": "Jenseits des Endes", "description": "Uber-Endboss besiegen" },
     "dimensional_4000": { "name": "Dimensionsherrscher", "description": "Etage 4000 im Dimensionskorridor erreichen" },
     "uber_uber_goblin_king": { "name": "Wahrer Königsmörder", "description": "UberUber-Goblin-König besiegen" },
+    "uber_uber_bandit_leader": { "name": "Wahrer Schattenbezwinger", "description": "UberUber-Banditenfuehrer besiegen" },
     "earned": "Erhalten",
     "notEarned": "Nicht erhalten",
     "newBadge": "Neues Abzeichen erhalten!"

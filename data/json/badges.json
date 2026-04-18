@@ -55,6 +55,13 @@
       "descriptionKey": "badges.uber_uber_goblin_king.description",
       "condition": { "type": "uber_uber_boss_clear", "dungeonId": "uber_uber_goblin_king" },
       "icon": "trophy"
+    },
+    {
+      "id": "badge_uber_uber_bandit_leader",
+      "nameKey": "badges.uber_uber_bandit_leader.name",
+      "descriptionKey": "badges.uber_uber_bandit_leader.description",
+      "condition": { "type": "uber_uber_boss_clear", "dungeonId": "uber_uber_bandit_leader" },
+      "icon": "trophy"
     }
   ]
 }

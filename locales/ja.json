@@ -96,7 +96,12 @@
       "bossAbilities": "ボス能力",
       "regularSkills": "通常スキル（3回攻撃ごと発動）",
       "thresholdSkills": "追加スキル（HP50%以下で発動）",
-      "uberOnly": "Uber限定"
+      "persistentSkills": "常時発動スキル（戦闘開始時から発動）",
+      "everyAttackSkills": "毎攻撃時に発動するスキル",
+      "every10Skills": "10回攻撃ごとに発動するスキル",
+      "uberUberPersistentSkills": "常時発動スキル（戦闘開始時から発動）",
+      "uberOnly": "Uber限定",
+      "uberUberOnly": "UberUber限定"
     },
     "notCleared": "未クリア",
     "uberUnlocked": "Uber解放済み"
@@ -469,6 +474,10 @@
     "uber_uber_goblin_king": {
       "name": "UberUber ゴブリンキング",
       "description": "究極の覚醒を遂げたゴブリンキング。全てのUberボスを倒した者のみが挑める。"
+    },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber 盗賊の頭",
+      "description": "究極の暗殺者と化した盗賊の頭。全てのUberボスを倒した者のみが挑める。"
     },
     "uber_bandit_leader": {
       "name": "Uber 盗賊の頭",
@@ -1322,6 +1331,9 @@
     "uber_uber_goblin_king": {
       "name": "UberUber ゴブリンキング"
     },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber 盗賊の頭"
+    },
     "uber_bandit_leader": {
       "name": "Uber 盗賊の頭"
     },
@@ -1371,8 +1383,10 @@
       "name": "ゴブリンたちの咆哮",
       "shield": "群れの盾",
       "shieldDesc": "2ターンの間ダメージ20%軽減、クリティカル・毒付与率50%低下",
+      "shieldDescUberUber": "ダメージ20%軽減、クリティカル・毒付与率50%低下（戦闘開始時から永続）",
       "warlord": "乱軍の王",
       "warlordDesc": "攻撃速度+30%、攻撃時HP500回復（HP50%以下で発動）",
+      "warlordDescUberUber": "攻撃速度+30%、攻撃時HP500回復（戦闘開始時から永続）",
       "kingsSlam": "キングスラム",
       "kingsSlamDesc": "10回攻撃ごとにATK3倍の強烈な一撃",
       "kingsRoar": "王の咆哮",
@@ -1382,10 +1396,16 @@
       "name": "ベアトラップ",
       "bearTrap": "ベアトラップ",
       "bearTrapDesc": "プレイヤーの攻撃速度30%低下（2ターン）",
+      "bearTrapDescUberUber": "プレイヤーの攻撃速度30%低下（戦闘開始時から永続）",
       "nightAmbush": "闘夜の奇襲",
       "nightAmbushDesc": "次の攻撃ダメージ+40%",
       "shadowBind": "影縫い",
-      "shadowBindDesc": "回復効果が永続50%低下（HP50%以下で発動）"
+      "shadowBindDesc": "回復効果が永続50%低下（HP50%以下で発動）",
+      "shadowBindDescUberUber": "回復効果が25%低下（戦闘開始時から永続）",
+      "twinStrike": "双撃の刃",
+      "twinStrikeDesc": "メイン攻撃と同等ダメージの追撃を毎攻撃発動",
+      "shadowGarrote": "影縛りの絞縄",
+      "shadowGarroteDesc": "10回攻撃ごとにプレイヤーを0.5秒フリーズ"
     },
     "vampire": {
       "name": "血の狂宴",
@@ -2301,6 +2321,10 @@
     "uber_uber_goblin_king": {
       "name": "真の王殺し",
       "description": "UberUberゴブリンキングを撃破"
+    },
+    "uber_uber_bandit_leader": {
+      "name": "真の影の制覇者",
+      "description": "UberUber盗賊の頭を撃破"
     },
     "earned": "獲得済み",
     "notEarned": "未獲得",

@@ -92,7 +92,12 @@
       "bossAbilities": "Habilidades del Jefe",
       "regularSkills": "Habilidades Regulares (cada 3 ataques)",
       "thresholdSkills": "Habilidades de Umbral (bajo 50% HP)",
-      "uberOnly": "Solo Uber"
+      "persistentSkills": "Habilidades Permanentes (activas desde el inicio del combate)",
+      "everyAttackSkills": "Se activa en cada ataque",
+      "every10Skills": "Se activa cada 10 ataques",
+      "uberUberPersistentSkills": "Habilidades Permanentes (activas desde el inicio del combate)",
+      "uberOnly": "Solo Uber",
+      "uberUberOnly": "Solo UberUber"
     },
     "notCleared": "No Completada",
     "uberUnlocked": "Uber Desbloqueado"
@@ -464,6 +469,10 @@
     "uber_uber_goblin_king": {
       "name": "UberUber Rey Goblin",
       "description": "El Rey Goblin definitivamente despertado."
+    },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber Líder Bandido",
+      "description": "El asesino definitivo. Solo aquellos que han derrotado a todos los jefes Uber pueden desafiarlo."
     },
     "uber_bandit_leader": {
       "name": "Uber Líder Bandido",
@@ -1317,6 +1326,9 @@
     "uber_uber_goblin_king": {
       "name": "UberUber Rey Goblin"
     },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber Líder Bandido"
+    },
     "uber_bandit_leader": {
       "name": "Uber Líder Bandido"
     },
@@ -1366,8 +1378,10 @@
       "name": "Rugido Goblin",
       "shield": "Escudo de Enjambre",
       "shieldDesc": "20% de reducción de daño por 2 turnos, prob. de crit y veneno -50%",
+      "shieldDescUberUber": "20% de reducción de daño, prob. de crit y veneno -50% (permanente desde el inicio)",
       "warlord": "Señor de la Horda",
       "warlordDesc": "+30% velocidad de ataque, recupera 500 HP al golpear (se activa bajo 50% HP)",
+      "warlordDescUberUber": "+30% velocidad de ataque, recupera 500 HP al golpear (permanente desde el inicio)",
       "kingsSlam": "Golpe del Rey",
       "kingsSlamDesc": "Un golpe devastador de ATK×3 cada 10 ataques",
       "kingsRoar": "Rugido del Rey",
@@ -1377,10 +1391,16 @@
       "name": "Trampa de Oso",
       "bearTrap": "Trampa de Oso",
       "bearTrapDesc": "Velocidad de ataque del jugador -30% por 2 turnos",
+      "bearTrapDescUberUber": "Velocidad de ataque del jugador -30% (permanente desde el inicio)",
       "nightAmbush": "Emboscada Nocturna",
       "nightAmbushDesc": "Daño del próximo ataque +40%",
       "shadowBind": "Atadura de Sombra",
-      "shadowBindDesc": "Curación permanentemente reducida 50% (se activa bajo 50% HP)"
+      "shadowBindDesc": "Curación permanentemente reducida 50% (se activa bajo 50% HP)",
+      "shadowBindDescUberUber": "Curación reducida 25% (permanente desde el inicio)",
+      "twinStrike": "Hoja de Doble Golpe",
+      "twinStrikeDesc": "Activa un ataque de seguimiento con el mismo daño que el ataque principal en cada ataque",
+      "shadowGarrote": "Garrote de Sombra",
+      "shadowGarroteDesc": "Congela al jugador 0,5 segundos cada 10 ataques"
     },
     "vampire": {
       "name": "Festín de Sangre",
@@ -2273,6 +2293,7 @@
     "uber_true_final_boss": { "name": "Más Allá del Final", "description": "Derrota al Uber Jefe Final" },
     "dimensional_4000": { "name": "Señor Dimensional", "description": "Alcanza el piso 4000 en el Corredor Dimensional" },
     "uber_uber_goblin_king": { "name": "Verdadero Regicida", "description": "Derrota al Rey Goblin UberUber" },
+    "uber_uber_bandit_leader": { "name": "Verdadero Conquistador de Sombras", "description": "Derrota al Líder Bandido UberUber" },
     "earned": "Obtenida",
     "notEarned": "No obtenida",
     "newBadge": "¡Nueva insignia obtenida!"

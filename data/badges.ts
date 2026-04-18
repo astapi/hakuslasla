@@ -25,9 +25,15 @@ export const getBadgeById = (badgeId: string): BadgeDefinition | undefined => {
 // 全バッジID一覧
 export const ALL_BADGE_IDS = BADGES.map(b => b.id);
 
+// UberUberバッジID一覧
+export const UBER_UBER_BADGE_IDS = [
+  'badge_uber_uber_goblin_king',
+  'badge_uber_uber_bandit_leader',
+];
+
 // UberUberバッジ・次元回廊バッジ以外の全バッジID（UberUber入場条件チェック用）
 export const BADGE_IDS_EXCEPT_UBER_UBER = BADGES
-  .filter(b => b.id !== 'badge_uber_uber_goblin_king' && b.id !== 'badge_dimensional_4000')
+  .filter(b => !UBER_UBER_BADGE_IDS.includes(b.id) && b.id !== 'badge_dimensional_4000')
   .map(b => b.id);
 
 // Uberボスクリアバッジの取得

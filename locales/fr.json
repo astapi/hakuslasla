@@ -92,7 +92,12 @@
       "bossAbilities": "Capacités du boss",
       "regularSkills": "Compétences régulières (toutes les 3 attaques)",
       "thresholdSkills": "Compétences de seuil (sous 50% HP)",
-      "uberOnly": "Uber uniquement"
+      "persistentSkills": "Compétences permanentes (actives dès le début du combat)",
+      "everyAttackSkills": "Se déclenche à chaque attaque",
+      "every10Skills": "Se déclenche toutes les 10 attaques",
+      "uberUberPersistentSkills": "Compétences permanentes (actives dès le début du combat)",
+      "uberOnly": "Uber uniquement",
+      "uberUberOnly": "UberUber uniquement"
     },
     "notCleared": "Non terminé",
     "uberUnlocked": "Uber débloqué"
@@ -464,6 +469,10 @@
     "uber_uber_goblin_king": {
       "name": "UberUber Roi Gobelin",
       "description": "Le Roi Gobelin définitivement éveillé."
+    },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber Chef des bandits",
+      "description": "L'assassin ultime. Seuls ceux qui ont vaincu tous les boss Uber peuvent le défier."
     },
     "uber_bandit_leader": {
       "name": "Uber Chef des bandits",
@@ -1317,6 +1326,9 @@
     "uber_uber_goblin_king": {
       "name": "UberUber Roi Gobelin"
     },
+    "uber_uber_bandit_leader": {
+      "name": "UberUber Chef des bandits"
+    },
     "uber_bandit_leader": {
       "name": "Uber Chef des bandits"
     },
@@ -1366,8 +1378,10 @@
       "name": "Rugissement gobelin",
       "shield": "Bouclier de meute",
       "shieldDesc": "Réduction de dégâts de 20% pendant 2 tours, Crit et chance de poison -50%",
+      "shieldDescUberUber": "Réduction de dégâts de 20%, Crit et chance de poison -50% (permanent dès le début du combat)",
       "warlord": "Seigneur de guerre de la horde",
       "warlordDesc": "+30% de vitesse d'attaque, récupère 500 HP par coup (se déclenche sous 50% HP)",
+      "warlordDescUberUber": "+30% de vitesse d'attaque, récupère 500 HP par coup (permanent dès le début du combat)",
       "kingsSlam": "Fracas du Roi",
       "kingsSlamDesc": "Une frappe dévastatrice ATK×3 tous les 10 attaques",
       "kingsRoar": "Rugissement du Roi",
@@ -1377,10 +1391,16 @@
       "name": "Piège à ours",
       "bearTrap": "Piège à ours",
       "bearTrapDesc": "Vitesse d'attaque du joueur -30% pendant 2 tours",
+      "bearTrapDescUberUber": "Vitesse d'attaque du joueur -30% (permanent dès le début du combat)",
       "nightAmbush": "Embuscade nocturne",
       "nightAmbushDesc": "Dégâts de la prochaine attaque +40%",
       "shadowBind": "Lien d'ombre",
-      "shadowBindDesc": "Soins réduits de 50% de façon permanente (se déclenche sous 50% HP)"
+      "shadowBindDesc": "Soins réduits de 50% de façon permanente (se déclenche sous 50% HP)",
+      "shadowBindDescUberUber": "Soins réduits de 25% (permanent dès le début du combat)",
+      "twinStrike": "Lame du Double Coup",
+      "twinStrikeDesc": "Déclenche à chaque attaque un coup de suite infligeant les mêmes dégâts que l'attaque principale",
+      "shadowGarrote": "Garrot d'ombre",
+      "shadowGarroteDesc": "Gèle le joueur 0,5 seconde toutes les 10 attaques"
     },
     "vampire": {
       "name": "Festin de sang",
@@ -2273,6 +2293,7 @@
     "uber_true_final_boss": { "name": "Au-delà de la Fin", "description": "Vaincre l'Uber Boss Final" },
     "dimensional_4000": { "name": "Seigneur Dimensionnel", "description": "Atteindre l'étage 4000 du Couloir Dimensionnel" },
     "uber_uber_goblin_king": { "name": "Vrai Régicide", "description": "Vaincre le Roi Gobelin UberUber" },
+    "uber_uber_bandit_leader": { "name": "Vrai Conquérant des Ombres", "description": "Vaincre le Chef des bandits UberUber" },
     "earned": "Obtenu",
     "notEarned": "Non obtenu",
     "newBadge": "Nouveau badge obtenu !"
