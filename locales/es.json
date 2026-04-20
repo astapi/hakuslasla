@@ -248,6 +248,9 @@
         "message": "¡Velocidad 3x desbloqueada!"
       },
       "suspended": "La función de código de invitación no está disponible temporalmente"
+    },
+    "wiki": {
+      "title": "Wiki oficial"
     }
   },
   "inviteLink": {

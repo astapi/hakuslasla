@@ -252,6 +252,9 @@
         "message": "3倍速が有効になりました！"
       },
       "suspended": "招待コード機能は一時的に停止中です"
+    },
+    "wiki": {
+      "title": "公式Wiki"
     }
   },
   "inviteLink": {

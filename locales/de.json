@@ -248,6 +248,9 @@
         "message": "3x Geschwindigkeit freigeschaltet!"
       },
       "suspended": "Die Einladungscode-Funktion ist vorübergehend nicht verfügbar"
+    },
+    "wiki": {
+      "title": "Offizielles Wiki"
     }
   },
   "inviteLink": {
