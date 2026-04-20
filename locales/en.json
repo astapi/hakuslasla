@@ -252,6 +252,9 @@
         "message": "3x speed has been unlocked!"
       },
       "suspended": "Invite code feature is temporarily unavailable"
+    },
+    "wiki": {
+      "title": "Official Wiki"
     }
   },
   "inviteLink": {

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Modal } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Modal, Linking } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState, useEffect, useMemo, useRef } from 'react';
@@ -34,8 +34,17 @@ const SLOT_ICONS: Record<EquipmentSlot, string> = {
   accessory: 'ring',
 };
 
+const WIKI_BASE_URL = 'https://wiki.astapi.net/lootdive/';
+
+function getWikiUrlForLanguage(lang: string): string {
+  if (lang === 'ja') return WIKI_BASE_URL;
+  if (lang === 'ko') return `${WIKI_BASE_URL}ko/`;
+  if (lang === 'zh') return `${WIKI_BASE_URL}zh/`;
+  return `${WIKI_BASE_URL}en/`;
+}
+
 export default function SettingsScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const params = useLocalSearchParams<{ inviteCode?: string | string[] }>();
   const scrollViewRef = useRef<ScrollView>(null);
@@ -488,6 +497,20 @@ export default function SettingsScreen() {
 
         {/* 招待コード */}
         <InviteCodeSection initialCode={inviteCodeParam} />
+
+        {/* 公式Wiki */}
+        <View style={styles.section}>
+          <Pressable
+            style={styles.newsLink}
+            onPress={() => Linking.openURL(getWikiUrlForLanguage(i18n.language))}
+          >
+            <View style={styles.newsLinkContent}>
+              <MaterialCommunityIcons name="book-open-variant" size={20} color={colors.text} />
+              <Text style={styles.newsLinkText}>{t('settings.wiki.title')}</Text>
+            </View>
+            <MaterialCommunityIcons name="open-in-new" size={20} color={colors.textMuted} />
+          </Pressable>
+        </View>
       </ScrollView>
 
       {/* フッター */}
