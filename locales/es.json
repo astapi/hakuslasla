@@ -1486,7 +1486,10 @@
     "igniteDamage": "¡Daño de Ignite! ¡{{enemy}} recibe {{damage}} de daño!{{remaining}}{{ended}}",
     "igniteRemaining": " ({{seconds}}s restantes)",
     "igniteEnded": " (ignite terminado)",
-    "hpRegen": "¡Regen de HP! ¡Recuperaste {{amount}} HP!"
+    "hpRegen": "¡Regen de HP! ¡Recuperaste {{amount}} HP!",
+    "kingSlamHit": "¡[Golpe del Rey] estalla! ¡{{damage}} de daño a {{enemy}}!",
+    "twinBladeHit": "¡[Hoja Gemela] seguimiento! ¡{{damage}} de daño a {{enemy}}!",
+    "royalRoar": "¡[Rugido Real] activado! ¡Veneno y Escalofrío disipados!"
   },
   "passiveTree": {
     "title": "Árbol Pasivo",

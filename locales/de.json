@@ -1486,7 +1486,10 @@
     "igniteDamage": "Entzuendungsschaden! {{enemy}} nimmt {{damage}} Schaden!{{remaining}}{{ended}}",
     "igniteRemaining": " ({{seconds}}s verbleibend)",
     "igniteEnded": " (Entzuendung beendet)",
-    "hpRegen": "HP-Regen! {{amount}} HP wiederhergestellt!"
+    "hpRegen": "HP-Regen! {{amount}} HP wiederhergestellt!",
+    "kingSlamHit": "[Königsschlag] ausgelöst! {{damage}} Schaden an {{enemy}}!",
+    "twinBladeHit": "[Zwillingsklinge] Folgeangriff! {{damage}} Schaden an {{enemy}}!",
+    "royalRoar": "[Königsruf] aktiviert! Gift und Kälte entfernt!"
   },
   "passiveTree": {
     "title": "Passiver Baum",

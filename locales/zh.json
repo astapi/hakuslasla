@@ -1486,7 +1486,10 @@
     "igniteDamage": "点燃伤害！{{enemy}} 受到 {{damage}} 点伤害！{{remaining}}{{ended}}",
     "igniteRemaining": "（剩余{{seconds}}秒）",
     "igniteEnded": "（点燃结束）",
-    "hpRegen": "HP回复！恢复了 {{amount}} HP！"
+    "hpRegen": "HP回复！恢复了 {{amount}} HP！",
+    "kingSlamHit": "【国王重击】爆发！对{{enemy}}造成{{damage}}伤害！",
+    "twinBladeHit": "【双击之刃】追击！对{{enemy}}造成{{damage}}伤害！",
+    "royalRoar": "【王者咆哮】发动！解除中毒与冰缓状态！"
   },
   "passiveTree": {
     "title": "被动技能树",

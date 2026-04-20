@@ -1486,7 +1486,10 @@
     "igniteDamage": "점화 피해! {{enemy}}에게 {{damage}} 피해!{{remaining}}{{ended}}",
     "igniteRemaining": " ({{seconds}}초 남음)",
     "igniteEnded": " (점화 종료)",
-    "hpRegen": "HP 재생! {{amount}} HP 회복!"
+    "hpRegen": "HP 재생! {{amount}} HP 회복!",
+    "kingSlamHit": "[킹 슬램] 작렬! {{enemy}}에게 {{damage}} 피해!",
+    "twinBladeHit": "[쌍격의 칼날] 추격! {{enemy}}에게 {{damage}} 피해!",
+    "royalRoar": "[왕의 포효] 발동! 독과 냉각 상태 해제!"
   },
   "passiveTree": {
     "title": "패시브 트리",

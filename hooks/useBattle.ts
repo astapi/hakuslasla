@@ -286,9 +286,13 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       // ダメージ0の場合（純粋毒キーストーン）は空メッセージでログ追加（モーション用）
       const attackMessage = action.damage === 0
         ? ''
-        : action.isCritical
-          ? i18n.t('battleLog.criticalHit', { enemy: state.enemy.name, damage: action.damage })
-          : i18n.t('battleLog.playerAttack', { enemy: state.enemy.name, damage: action.damage });
+        : action.source === 'king_slam'
+          ? i18n.t('battleLog.kingSlamHit', { enemy: state.enemy.name, damage: action.damage })
+          : action.source === 'twin_blade'
+            ? i18n.t('battleLog.twinBladeHit', { enemy: state.enemy.name, damage: action.damage })
+            : action.isCritical
+              ? i18n.t('battleLog.criticalHit', { enemy: state.enemy.name, damage: action.damage })
+              : i18n.t('battleLog.playerAttack', { enemy: state.enemy.name, damage: action.damage });
       return {
         ...state,
         enemy: {
@@ -1022,7 +1026,9 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       switch (event.type) {
         case 'player_attack': {
           const damage = Number(data.damage ?? 0);
-          dispatch({ type: 'PLAYER_ATTACK', damage, isCritical: false });
+          const rawSource = typeof data.source === 'string' ? data.source : undefined;
+          const source = rawSource === 'king_slam' || rawSource === 'twin_blade' ? rawSource : undefined;
+          dispatch({ type: 'PLAYER_ATTACK', damage, isCritical: false, source });
           playBattleSound('player_attack', characterType);
           break;
         }
@@ -1090,6 +1096,19 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
           const amount = Number(data.amount ?? 0);
           const source = String(data.source ?? 'regen') as 'regen' | 'on_hit';
           dispatch({ type: 'ENEMY_HEAL', amount, source });
+          break;
+        }
+        case 'player_heal': {
+          const source = typeof data.source === 'string' ? data.source : '';
+          if (source === 'royal_roar') {
+            dispatch({
+              type: 'ADD_LOG',
+              entry: {
+                message: i18n.t('battleLog.royalRoar'),
+                type: 'info',
+              },
+            });
+          }
           break;
         }
         case 'player_damage': {
