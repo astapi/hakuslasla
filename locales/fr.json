@@ -1486,7 +1486,10 @@
     "igniteDamage": "Dégâts d'Ignite ! {{enemy}} subit {{damage}} dégâts !{{remaining}}{{ended}}",
     "igniteRemaining": " ({{seconds}}s restantes)",
     "igniteEnded": " (Ignite terminé)",
-    "hpRegen": "Régénération HP ! {{amount}} HP récupérés !"
+    "hpRegen": "Régénération HP ! {{amount}} HP récupérés !",
+    "kingSlamHit": "[Frappe du Roi] déclenchée ! {{damage}} dégâts à {{enemy}} !",
+    "twinBladeHit": "[Lame Jumelle] poursuite ! {{damage}} dégâts à {{enemy}} !",
+    "royalRoar": "[Rugissement Royal] activé ! Poison et Gel dissipés !"
   },
   "passiveTree": {
     "title": "Arbre passif",

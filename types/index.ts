@@ -533,7 +533,7 @@ export interface DungeonBattleState {
 // @deprecated 新規コードでは DungeonBattleAction を使用
 export type BattleAction =
   | { type: 'START_BATTLE'; enemy: BattleEnemy }
-  | { type: 'PLAYER_ATTACK'; damage: number; isCritical?: boolean }
+  | { type: 'PLAYER_ATTACK'; damage: number; isCritical?: boolean; source?: 'king_slam' | 'twin_blade' }
   | { type: 'ENEMY_ATTACK'; damage: number }
   | { type: 'PLAYER_DAMAGE'; damage: number; message: string; logType?: BattleLogEntry['type'] }
   | { type: 'ENEMY_HEAL'; amount: number; source?: 'regen' | 'on_hit' }

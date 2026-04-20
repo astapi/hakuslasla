@@ -571,7 +571,7 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         events.push({
           type: 'player_attack',
           tick: engine.state.elapsedTicks,
-          data: { damage: ringFollowUpDamage },
+          data: { damage: ringFollowUpDamage, source: 'twin_blade' },
         });
       }
 
@@ -588,7 +588,7 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         events.push({
           type: 'player_attack',
           tick: engine.state.elapsedTicks,
-          data: { damage: kingSlamDamage, kingSlam: true },
+          data: { damage: kingSlamDamage, source: 'king_slam' },
         });
       }
 

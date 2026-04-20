@@ -1491,7 +1491,10 @@
     "igniteDamage": "発火ダメージ！ {{enemy}}に{{damage}}ダメージ！{{remaining}}{{ended}}",
     "igniteRemaining": "（残り{{seconds}}秒）",
     "igniteEnded": "（発火が切れた）",
-    "hpRegen": "HP回復！ HPが{{amount}}回復した！"
+    "hpRegen": "HP回復！ HPが{{amount}}回復した！",
+    "kingSlamHit": "【キングスラム】炸裂！ {{enemy}}に{{damage}}ダメージ！",
+    "twinBladeHit": "【双撃の刃】追撃！ {{enemy}}に{{damage}}ダメージ！",
+    "royalRoar": "【王の咆哮】発動！ 毒・チルを解除した！"
   },
   "passiveTree": {
     "title": "パッシブツリー",

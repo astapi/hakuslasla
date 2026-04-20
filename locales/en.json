@@ -1490,7 +1490,10 @@
     "igniteDamage": "Ignite damage! {{enemy}} takes {{damage}} damage!{{remaining}}{{ended}}",
     "igniteRemaining": " ({{seconds}}s remaining)",
     "igniteEnded": " (ignite ended)",
-    "hpRegen": "HP Regen! Recovered {{amount}} HP!"
+    "hpRegen": "HP Regen! Recovered {{amount}} HP!",
+    "kingSlamHit": "[King's Slam] triggered! {{damage}} damage to {{enemy}}!",
+    "twinBladeHit": "[Twin Blade] follow-up! {{damage}} damage to {{enemy}}!",
+    "royalRoar": "[Royal Roar] triggered! Cleansed poison and chill!"
   },
   "passiveTree": {
     "title": "Passive Tree",
