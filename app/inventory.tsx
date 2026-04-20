@@ -200,6 +200,15 @@ function calculateItemStats(
         case 'critical_follow_up_attack':
           desc = `[${tierLabel}] ${t('modDescriptions.criticalFollowUpAttack')}`;
           break;
+        case 'follow_up_attack_pct':
+          desc = `[${tierLabel}] ${t('mods.follow_up_attack_pct')}`;
+          break;
+        case 'king_slam':
+          desc = `[${tierLabel}] ${t('mods.king_slam')}`;
+          break;
+        case 'royal_roar':
+          desc = `[${tierLabel}] ${t('mods.royal_roar')}`;
+          break;
         case 'ignite_lifesteal':
           desc = `[${tierLabel}] ${t('modDescriptions.igniteLifesteal', { value: mod.value })}`;
           break;
