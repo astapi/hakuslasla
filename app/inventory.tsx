@@ -245,6 +245,9 @@ function calculateItemStats(
         case 'freeze_duration_pct':
           desc = `[${tierLabel}] ${t('modDescriptions.freezeDuration', { value: mod.value })}`;
           break;
+        case 'ignite_resist_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.igniteResist', { value: mod.value })}`;
+          break;
       }
       if (desc) {
         allMods.push({ type: mod.type, value: mod.value, tier, desc, color });

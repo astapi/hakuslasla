@@ -193,6 +193,12 @@
       "maxFloor": 1
     },
     {
+      "id": "uber_uber_kraken",
+      "name": "UberUber クラーケン",
+      "description": "全ての試練を乗り越えた者だけが挑める、究極のクラーケン。",
+      "maxFloor": 1
+    },
+    {
       "id": "debug_dimensional_goblin_king",
       "name": "DEBUG: 異次元ラッシュ - ゴブリンキング",
       "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
@@ -238,6 +244,12 @@
       "id": "debug_uber_uber_bandit_leader",
       "name": "DEBUG: UberUber 盗賊の頭",
       "description": "デバッグ用。UberUber盗賊の頭が単体で出現する。チケット不要。",
+      "maxFloor": 1
+    },
+    {
+      "id": "debug_uber_uber_kraken",
+      "name": "DEBUG: UberUber クラーケン",
+      "description": "デバッグ用。UberUberクラーケンが単体で出現する。チケット不要。",
       "maxFloor": 1
     },
     {

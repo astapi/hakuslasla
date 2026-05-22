@@ -1875,6 +1875,19 @@
         { "type": "attack_speed_pct", "value": 25 },
         { "type": "def_bonus", "value": 150 }
       ]
+    },
+    "uber_uber_kraken_pendant": {
+      "id": "uber_uber_kraken_pendant",
+      "name": "UberUber 深海のペンダント",
+      "slot": "accessory",
+      "atk": 100,
+      "def": 250,
+      "fixedMods": [
+        { "type": "ignite_resist_pct", "value": 33 },
+        { "type": "freeze_chance", "value": 3 },
+        { "type": "hp_regen", "value": 250 },
+        { "type": "hp_bonus", "value": 320 }
+      ]
     }
   },
 

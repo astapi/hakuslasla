@@ -359,7 +359,8 @@
     "chill_effect_pct": "Efecto frío",
     "chill_duration_pct": "Dur. frío",
     "freeze_chance": "Congelar",
-    "freeze_duration_pct": "Dur. congel."
+    "freeze_duration_pct": "Dur. congel.",
+    "ignite_resist_pct": "Res. ignición"
   },
   "dungeon": {
     "floors": "{{count}} Pisos",
@@ -479,6 +480,10 @@
     "uber_uber_bandit_leader": {
       "name": "UberUber Líder Bandido",
       "description": "El asesino definitivo. Solo aquellos que han derrotado a todos los jefes Uber pueden desafiarlo."
+    },
+    "uber_uber_kraken": {
+      "name": "UberUber Kraken",
+      "description": "El Kraken definitivo deformado en el abismo. Solo aquellos que han derrotado a todos los jefes Uber pueden desafiarlo."
     },
     "uber_bandit_leader": {
       "name": "Uber Líder Bandido",
@@ -973,6 +978,9 @@
     "uber_uber_double_strike_ring": {
       "name": "UberUber Anillo de Golpe Doble"
     },
+    "uber_uber_kraken_pendant": {
+      "name": "UberUber Colgante del Abismo"
+    },
     "uber_kraken_shell": {
       "name": "Uber Caparazón de Kraken"
     },
@@ -1340,6 +1348,9 @@
     },
     "uber_uber_bandit_leader": {
       "name": "UberUber Líder Bandido"
+    },
+    "uber_uber_kraken": {
+      "name": "UberUber Kraken"
     },
     "uber_bandit_leader": {
       "name": "Uber Líder Bandido"
@@ -2190,7 +2201,8 @@
     "chillEffect": "Efecto Escalofrío +{{value}}%",
     "chillDuration": "Duración Escalofrío +{{value}}%",
     "freezeChance": "Prob. Congelación +{{value}}%",
-    "freezeDuration": "Duración Congelación +{{value}}%"
+    "freezeDuration": "Duración Congelación +{{value}}%",
+    "igniteResist": "Daño de ignición recibido -{{value}}%"
   },
   "boost": {
     "dropRate": {
@@ -2309,6 +2321,7 @@
     "dimensional_4000": { "name": "Señor Dimensional", "description": "Alcanza el piso 4000 en el Corredor Dimensional" },
     "uber_uber_goblin_king": { "name": "Verdadero Regicida", "description": "Derrota al Rey Goblin UberUber" },
     "uber_uber_bandit_leader": { "name": "Verdadero Conquistador de Sombras", "description": "Derrota al Líder Bandido UberUber" },
+    "uber_uber_kraken": { "name": "Verdadero Conquistador del Abismo", "description": "Derrota al Kraken UberUber" },
     "earned": "Obtenida",
     "notEarned": "No obtenida",
     "newBadge": "¡Nueva insignia obtenida!"

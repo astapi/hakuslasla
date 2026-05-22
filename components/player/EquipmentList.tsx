@@ -16,6 +16,7 @@ const MOD_COLORS: Record<string, string> = {
   chill_duration_pct: '#64B5F6',
   freeze_chance: '#42A5F5',
   freeze_duration_pct: '#42A5F5',
+  ignite_resist_pct: '#26C6DA',
 };
 
 interface EquipmentRowProps {

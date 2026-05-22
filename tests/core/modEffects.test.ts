@@ -124,6 +124,7 @@ describe('core/modEffects', () => {
       poisonMultiStack: 1,
       igniteIntensify: false,
       chillFreezeDamageMult: 1,
+      igniteResistPct: 0,
     };
 
     const result = getAttackSpeedFromMods(mods, 1);

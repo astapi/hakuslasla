@@ -136,6 +136,7 @@ export type ModType =
   | 'follow_up_attack_pct'      // 毎攻撃時、valueパーセントのATKで追撃（UberUber双撃の指輪）
   | 'king_slam'                 // 5回攻撃ごとにATK×3の追撃（UberUberゴブリンの踏みつけ）
   | 'royal_roar'                // 3回攻撃ごとに自身の毒・発火・チル状態を解除
+  | 'ignite_resist_pct'         // 発火ダメージ軽減%（UberUberクラーケン由来）
   | 'poison_damage_pct'       // 毒ダメージ+X%
   | 'poison_damage_more_pct'  // 毒ダメージ X% more
   | 'poison_damage_reduction' // 敵が毒状態時のダメージ軽減+X%
@@ -459,6 +460,8 @@ export interface BattleState {
   enemyIgnite: IgniteState | null; // 敵の発火状態
   enemyChill: { speedMultiplier: number; remainingMs: number } | null; // 敵のチル状態
   enemyFreeze: { remainingMs: number } | null; // 敵のフリーズ状態
+  playerChill: { speedMultiplier: number; remainingMs: number } | null; // プレイヤーのチル状態
+  playerFreeze: { remainingMs: number } | null; // プレイヤーのフリーズ状態
   phase: BattlePhase;
   battleLog: BattleLogEntry[];
   droppedItems: Item[];
@@ -551,7 +554,7 @@ export type BattleAction =
   | { type: 'APPLY_IGNITE'; damage: number; durationMs: number; tickIntervalMs: number }
   | { type: 'APPLY_IGNITE_SPREAD'; damage: number; durationMs: number; tickIntervalMs: number }
   | { type: 'IGNITE_DAMAGE'; damage: number; remainingMs: number }
-  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number; enemyChill?: { speedMultiplier: number; remainingMs: number } | null; enemyFreeze?: { remainingMs: number } | null }
+  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number; enemyChill?: { speedMultiplier: number; remainingMs: number } | null; enemyFreeze?: { remainingMs: number } | null; playerChill?: { speedMultiplier: number; remainingMs: number } | null; playerFreeze?: { remainingMs: number } | null }
   | { type: 'RESET_PLAYER_GAUGE' }
   | { type: 'RESET_ENEMY_GAUGE' };
 
@@ -571,7 +574,7 @@ export type DungeonBattleAction =
   | { type: 'NEXT_FLOOR'; enemyInfo: EnemyDisplayInfo; enemyStats: { maxHp: number; atk: number; def: number; attackSpeed: number } }
   | { type: 'DUNGEON_CLEARED' }
   | { type: 'ADD_LOG'; entry: Omit<BattleLogEntry, 'id'> }
-  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number; enemyChill?: { speedMultiplier: number; remainingMs: number } | null; enemyFreeze?: { remainingMs: number } | null }
+  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number; enemyChill?: { speedMultiplier: number; remainingMs: number } | null; enemyFreeze?: { remainingMs: number } | null; playerChill?: { speedMultiplier: number; remainingMs: number } | null; playerFreeze?: { remainingMs: number } | null }
   | { type: 'RESET_DUNGEON'; playerMaxHp: number; playerAtk: number; playerDef: number; playerAttackSpeed: number };
 
 // 結果画面用のパラメータ

@@ -29,6 +29,7 @@ export const ALL_BADGE_IDS = BADGES.map(b => b.id);
 export const UBER_UBER_BADGE_IDS = [
   'badge_uber_uber_goblin_king',
   'badge_uber_uber_bandit_leader',
+  'badge_uber_uber_kraken',
 ];
 
 // UberUberバッジ・次元回廊バッジ以外の全バッジID（UberUber入場条件チェック用）

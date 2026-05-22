@@ -124,7 +124,8 @@
     "defeat": "敗北...",
     "cleared": "ダンジョン踏破！",
     "player": "プレイヤー",
-    "inProgress": "戦闘中"
+    "inProgress": "戦闘中",
+    "tentacleFlurryCountdown": "触手乱打まで {{count}}"
   },
   "result": {
     "cleared": "ダンジョン踏破！",
@@ -364,7 +365,8 @@
     "chill_effect_pct": "チル効果",
     "chill_duration_pct": "チル時間",
     "freeze_chance": "フリーズ",
-    "freeze_duration_pct": "フリーズ時間"
+    "freeze_duration_pct": "フリーズ時間",
+    "ignite_resist_pct": "灼熱耐性"
   },
   "dungeon": {
     "floors": "全{{count}}階",
@@ -484,6 +486,10 @@
     "uber_uber_bandit_leader": {
       "name": "UberUber 盗賊の頭",
       "description": "究極の暗殺者と化した盗賊の頭。全てのUberボスを倒した者のみが挑める。"
+    },
+    "uber_uber_kraken": {
+      "name": "UberUber クラーケン",
+      "description": "深淵で変質した究極のクラーケン。全てのUberボスを倒した者のみが挑める。"
     },
     "uber_bandit_leader": {
       "name": "Uber 盗賊の頭",
@@ -978,6 +984,9 @@
     "uber_uber_double_strike_ring": {
       "name": "UberUber 双撃の指輪"
     },
+    "uber_uber_kraken_pendant": {
+      "name": "UberUber 深海のペンダント"
+    },
     "uber_kraken_shell": {
       "name": "Uber クラーケンの甲殻"
     },
@@ -1346,6 +1355,9 @@
     "uber_uber_bandit_leader": {
       "name": "UberUber 盗賊の頭"
     },
+    "uber_uber_kraken": {
+      "name": "UberUber クラーケン"
+    },
     "uber_bandit_leader": {
       "name": "Uber 盗賊の頭"
     },
@@ -1435,7 +1447,15 @@
       "deepEmbrace": "深海の抱擁",
       "deepEmbraceDesc": "攻撃速度20%低下、回復効果30%低下（3ターン、HP50%以下で発動）",
       "abyssalEbb": "深淵の引き潮",
-      "abyssalEbbDesc": "攻撃速度15%低下（2ターン）"
+      "abyssalEbbDesc": "攻撃速度15%低下（2ターン）",
+      "tentacleFlurry": "触手乱打",
+      "tentacleFlurryDesc": "10回攻撃ごとに発動し、追加で9回連撃する（合計10回連続攻撃、追撃1回ごとに通常攻撃の1/3ダメージ）",
+      "frostAura": "氷海の波動",
+      "frostAuraDesc": "攻撃時に10%でフリーズ、20%でチルをプレイヤーに付与",
+      "freezeResist": "深海の鎧",
+      "freezeResistDesc": "フリーズ判定を受けても70%の確率で耐える",
+      "igniteResist": "灼熱耐性",
+      "igniteResistDesc": "受ける発火ダメージが2/3に軽減される"
     },
     "demon_lord": {
       "name": "デスハンド",
@@ -1481,8 +1501,10 @@
     "bossSkillActivated": "{{enemy}}の{{skill}}が発動した！",
     "warlordEnrage": "【乱軍の王】発動！ 攻撃速度+20%, HIT時HP回復+300",
     "chillApplied": "{{enemy}}をチル状態にした！ 攻撃速度低下！",
+    "chillAppliedPlayer": "プレイヤーがチル状態になった！ 攻撃速度低下！",
     "chillExpired": "{{enemy}}のチル状態が解除された",
     "freezeApplied": "{{enemy}}をフリーズ状態にした！ 行動不能！",
+    "freezeAppliedPlayer": "プレイヤーがフリーズ状態になった！ 行動不能！",
     "freezeExpired": "{{enemy}}のフリーズ状態が解除された",
     "reflectedDamage": "{{enemy}}の刻印が反射！ プレイヤーに{{damage}}ダメージ！",
     "deferredDamage": "遅延ダメージ {{damage}}！",
@@ -2195,7 +2217,8 @@
     "chillEffect": "チル効果+{{value}}%",
     "chillDuration": "チル時間+{{value}}%",
     "freezeChance": "フリーズ付与+{{value}}%",
-    "freezeDuration": "フリーズ時間+{{value}}%"
+    "freezeDuration": "フリーズ時間+{{value}}%",
+    "igniteResist": "受ける発火ダメージ-{{value}}%"
   },
   "boost": {
     "dropRate": {
@@ -2340,6 +2363,10 @@
     "uber_uber_bandit_leader": {
       "name": "真の影の制覇者",
       "description": "UberUber盗賊の頭を撃破"
+    },
+    "uber_uber_kraken": {
+      "name": "真の深淵の征服者",
+      "description": "UberUberクラーケンを撃破"
     },
     "earned": "獲得済み",
     "notEarned": "未獲得",

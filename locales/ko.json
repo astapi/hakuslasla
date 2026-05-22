@@ -359,7 +359,8 @@
     "chill_effect_pct": "냉각 효과",
     "chill_duration_pct": "냉각 시간",
     "freeze_chance": "빙결",
-    "freeze_duration_pct": "빙결 시간"
+    "freeze_duration_pct": "빙결 시간",
+    "ignite_resist_pct": "발화 저항"
   },
   "dungeon": {
     "floors": "{{count}}층",
@@ -479,6 +480,10 @@
     "uber_uber_bandit_leader": {
       "name": "UberUber 산적 두목",
       "description": "궁극의 암살자가 된 산적 두목. 모든 Uber 보스를 쓰러뜨린 자만이 도전할 수 있다."
+    },
+    "uber_uber_kraken": {
+      "name": "UberUber 크라켄",
+      "description": "심연에서 변질된 궁극의 크라켄. 모든 Uber 보스를 쓰러뜨린 자만이 도전할 수 있다."
     },
     "uber_bandit_leader": {
       "name": "Uber 산적 두목",
@@ -973,6 +978,9 @@
     "uber_uber_double_strike_ring": {
       "name": "UberUber 이중 타격 반지"
     },
+    "uber_uber_kraken_pendant": {
+      "name": "UberUber 심해의 펜던트"
+    },
     "uber_kraken_shell": {
       "name": "Uber 크라켄 껍질"
     },
@@ -1340,6 +1348,9 @@
     },
     "uber_uber_bandit_leader": {
       "name": "UberUber 산적 두목"
+    },
+    "uber_uber_kraken": {
+      "name": "UberUber 크라켄"
     },
     "uber_bandit_leader": {
       "name": "Uber 산적 두목"
@@ -2190,7 +2201,8 @@
     "chillEffect": "칠 효과 +{{value}}%",
     "chillDuration": "칠 지속시간 +{{value}}%",
     "freezeChance": "동결 부여 +{{value}}%",
-    "freezeDuration": "동결 지속시간 +{{value}}%"
+    "freezeDuration": "동결 지속시간 +{{value}}%",
+    "igniteResist": "받는 발화 데미지 -{{value}}%"
   },
   "boost": {
     "dropRate": {
@@ -2309,6 +2321,7 @@
     "dimensional_4000": { "name": "차원의 패자", "description": "차원 회랑 4000층 도달" },
     "uber_uber_goblin_king": { "name": "진정한 왕 살해자", "description": "UberUber 고블린 킹 격파" },
     "uber_uber_bandit_leader": { "name": "진정한 그림자 정복자", "description": "UberUber 산적 두목 격파" },
+    "uber_uber_kraken": { "name": "진정한 심연의 정복자", "description": "UberUber 크라켄 격파" },
     "earned": "획득 완료",
     "notEarned": "미획득",
     "newBadge": "새로운 뱃지를 획득했습니다!"

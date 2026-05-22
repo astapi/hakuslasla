@@ -55,8 +55,10 @@ const backgroundImages: Record<string, ImageSourcePropType> = {
   uber_true_final_boss: require('@/assets/images/backgrounds/final_land.jpg'),
   uber_uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
   uber_uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
+  uber_uber_kraken: require('@/assets/images/backgrounds/underwater_cave.jpg'),
   debug_uber_uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
   debug_uber_uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
+  debug_uber_uber_kraken: require('@/assets/images/backgrounds/underwater_cave.jpg'),
 };
 
 type ChestRarity = 'normal' | 'magic' | 'rare' | 'unique';
@@ -202,7 +204,7 @@ export default function BattleScreen() {
   const { dungeonId, startFloor } = useLocalSearchParams<{ dungeonId: string; startFloor?: string }>();
   const router = useRouter();
   const parsedStartFloor = startFloor ? parseInt(startFloor, 10) : 1;
-  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
+  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed, krakenFlurryCountdown } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
   const { level, characterType } = usePlayerStore();
   const dungeon = getDungeon(dungeonId || '');
   const insets = useSafeAreaInsets();
@@ -362,6 +364,14 @@ export default function BattleScreen() {
         {isAutoRunning && (
           <Text style={styles.autoRunText}>{t('battle.autoRunning')}</Text>
         )}
+        {krakenFlurryCountdown !== null && (
+          <View style={styles.flurryCounterRow}>
+            <MaterialCommunityIcons name="wave" size={ms(14)} color="#5DADE2" />
+            <Text style={styles.flurryCounterText}>
+              {t('battle.tentacleFlurryCountdown', { count: krakenFlurryCountdown })}
+            </Text>
+          </View>
+        )}
       </View>
 
       {/* 勝利/敗北/クリアテキスト */}
@@ -387,6 +397,8 @@ export default function BattleScreen() {
             characterType={characterType}
             isAttacking={playerAttacking}
             size={s(100)}
+            chillState={state.playerChill}
+            freezeState={state.playerFreeze}
             hideImage={isExiting}
           />
         </View>
@@ -613,6 +625,26 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
+  },
+  flurryCounterRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(4),
+    marginTop: ms(4),
+    paddingHorizontal: ms(8),
+    paddingVertical: ms(2),
+    backgroundColor: 'rgba(30, 80, 130, 0.5)',
+    borderRadius: ms(4),
+    borderWidth: 1,
+    borderColor: 'rgba(93, 173, 226, 0.7)',
+  },
+  flurryCounterText: {
+    fontSize: fs(12),
+    color: '#5DADE2',
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   phaseTextContainer: {
     alignItems: 'center',

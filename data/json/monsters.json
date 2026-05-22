@@ -1336,6 +1336,26 @@
         { "itemId": "uber_double_strike_ring", "dropRate": 15 },
         { "itemId": "uber_uber_double_strike_ring", "dropRate": 20 }
       ]
+    },
+    "uber_uber_kraken": {
+      "id": "uber_uber_kraken",
+      "name": "UberUber クラーケン",
+      "image": "kraken",
+      "maxHp": 1500000,
+      "atk": 4500,
+      "def": 1800,
+      "exp": 12000,
+      "attackSpeed": 1.0,
+      "isBoss": true,
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        { "itemId": "uber_kraken_tentacle", "dropRate": 10 },
+        { "itemId": "uber_kraken_shell", "dropRate": 10 },
+        { "itemId": "uber_kraken_claw", "dropRate": 10 },
+        { "itemId": "uber_kraken_fin", "dropRate": 10 },
+        { "itemId": "uber_kraken_eye", "dropRate": 10 },
+        { "itemId": "uber_uber_kraken_pendant", "dropRate": 20 }
+      ]
     }
   }
 }
