@@ -359,7 +359,8 @@
     "chill_effect_pct": "Effet gel",
     "chill_duration_pct": "Durée gel",
     "freeze_chance": "Congélation",
-    "freeze_duration_pct": "Durée congél."
+    "freeze_duration_pct": "Durée congél.",
+    "ignite_resist_pct": "Rés. ignition"
   },
   "dungeon": {
     "floors": "{{count}} étages",
@@ -479,6 +480,10 @@
     "uber_uber_bandit_leader": {
       "name": "UberUber Chef des bandits",
       "description": "L'assassin ultime. Seuls ceux qui ont vaincu tous les boss Uber peuvent le défier."
+    },
+    "uber_uber_kraken": {
+      "name": "UberUber Kraken",
+      "description": "Le Kraken ultime déformé dans l'abîme. Seuls ceux qui ont vaincu tous les boss Uber peuvent le défier."
     },
     "uber_bandit_leader": {
       "name": "Uber Chef des bandits",
@@ -973,6 +978,9 @@
     "uber_uber_double_strike_ring": {
       "name": "UberUber Anneau de double frappe"
     },
+    "uber_uber_kraken_pendant": {
+      "name": "UberUber Pendentif des Abysses"
+    },
     "uber_kraken_shell": {
       "name": "Uber Carapace du Kraken"
     },
@@ -1340,6 +1348,9 @@
     },
     "uber_uber_bandit_leader": {
       "name": "UberUber Chef des bandits"
+    },
+    "uber_uber_kraken": {
+      "name": "UberUber Kraken"
     },
     "uber_bandit_leader": {
       "name": "Uber Chef des bandits"
@@ -2190,7 +2201,8 @@
     "chillEffect": "Effet de Gel +{{value}}%",
     "chillDuration": "Durée de Gel +{{value}}%",
     "freezeChance": "Chance de Congélation +{{value}}%",
-    "freezeDuration": "Durée de Congélation +{{value}}%"
+    "freezeDuration": "Durée de Congélation +{{value}}%",
+    "igniteResist": "Dégâts d'ignition reçus -{{value}}%"
   },
   "boost": {
     "dropRate": {
@@ -2309,6 +2321,7 @@
     "dimensional_4000": { "name": "Seigneur Dimensionnel", "description": "Atteindre l'étage 4000 du Couloir Dimensionnel" },
     "uber_uber_goblin_king": { "name": "Vrai Régicide", "description": "Vaincre le Roi Gobelin UberUber" },
     "uber_uber_bandit_leader": { "name": "Vrai Conquérant des Ombres", "description": "Vaincre le Chef des bandits UberUber" },
+    "uber_uber_kraken": { "name": "Vrai Conquérant des Abysses", "description": "Vaincre le Kraken UberUber" },
     "earned": "Obtenu",
     "notEarned": "Non obtenu",
     "newBadge": "Nouveau badge obtenu !"

@@ -260,6 +260,7 @@ export interface CombinedModEffects {
   poisonMultiStack: number;          // 毒マルチスタック倍率（デフォルト1、猛毒覚醒で1.5）
   igniteIntensify: boolean;          // 灼熱加速: 発火継続時間半分+間隔半分
   chillFreezeDamageMult: number;     // チル/フリーズ中の敵へのダメージ倍率（デフォルト1）
+  igniteResistPct: number;           // 発火ダメージ軽減%（プレイヤーが受ける発火ダメージ削減、UberUberクラーケン由来）
 
   // 戦闘経過で増える効果
   timeAtkIncPct: number;   // 5秒ごとにATK increased%加算

@@ -425,13 +425,29 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       // 発火状態を先に更新（撃破時も正しい状態を保持するため）
       engine.state.enemyIgniteState = igniteResult.updatedState;
 
-      if (igniteResult.totalDamage > 0) {
-        engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - igniteResult.totalDamage);
+      // 敵の発火耐性を適用（UberUberクラーケン等）
+      const igniteMult = engine.bossEffects.enemyIgniteDamageMult;
+      const scaledIgniteDamage = igniteMult === 1
+        ? igniteResult.totalDamage
+        : Math.floor(igniteResult.totalDamage * igniteMult);
+      const scaledIgniteHeal = igniteMult === 1
+        ? igniteResult.healAmount
+        : Math.floor(igniteResult.healAmount * igniteMult);
+
+      if (scaledIgniteDamage > 0) {
+        engine.state.enemy.currentHp = Math.max(0, engine.state.enemy.currentHp - scaledIgniteDamage);
+        // イベントのダメージ値もスケール後に置き換え（UIと同期）
+        for (const ev of igniteResult.events) {
+          const d = ev.data as Record<string, unknown>;
+          if (ev.type === 'ignite_damage' && d.damage === igniteResult.totalDamage) {
+            d.damage = scaledIgniteDamage;
+          }
+        }
         events.push(...igniteResult.events);
 
-        // 発火ダメージ吸収による回復
-        if (igniteResult.healAmount > 0) {
-          const actualHeal = Math.min(igniteResult.healAmount, engine.playerStats.maxHp - engine.state.player.currentHp);
+        // 発火ダメージ吸収による回復（耐性適用後のダメージから計算）
+        if (scaledIgniteHeal > 0) {
+          const actualHeal = Math.min(scaledIgniteHeal, engine.playerStats.maxHp - engine.state.player.currentHp);
           if (actualHeal > 0) {
             engine.state.player.currentHp += actualHeal;
             const lifestealEvent = createLifestealEvent(engine.state.elapsedTicks, actualHeal);
@@ -449,6 +465,9 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
           });
           break;
         }
+      } else {
+        // ダメージ0でも expired 等のイベントは流す
+        events.push(...igniteResult.events);
       }
     }
 
@@ -770,12 +789,17 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       // フリーズ付与（独立判定、上限10%）
       const freezeResult = tryApplyFreeze(engine.state, effectiveMods, engine.config, engine.rng);
       if (freezeResult.freezeState) {
-        engine.state.enemyFreezeState = freezeResult.freezeState;
-        engine.state.enemyChillState = null;  // フリーズ中はチルを解除
-        engine.pendingEnemyChillAfterFreeze = freezeResult.chillAfterFreeze;
-        // フリーズ時にキングスラムカウンタをリセット
-        engine.bossEffects.goblinSlamCounter = 0;
-        if (freezeResult.event) events.push(freezeResult.event);
+        // 敵のフリーズ耐性: ロールに成功すれば回避
+        const resistPct = engine.bossEffects.enemyFreezeResistPct;
+        const resisted = resistPct > 0 && engine.rng() * 100 < resistPct;
+        if (!resisted) {
+          engine.state.enemyFreezeState = freezeResult.freezeState;
+          engine.state.enemyChillState = null;  // フリーズ中はチルを解除
+          engine.pendingEnemyChillAfterFreeze = freezeResult.chillAfterFreeze;
+          // フリーズ時にキングスラムカウンタをリセット
+          engine.bossEffects.goblinSlamCounter = 0;
+          if (freezeResult.event) events.push(freezeResult.event);
+        }
       }
 
       const baseBossId = getBaseBossId(enemyId);
@@ -955,6 +979,66 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
             data: { stacks: engine.state.enemyWoundStacks },
           });
         }
+      }
+
+      // UberUberクラーケン: 触手乱打（同一行動で追加で連撃、1撃あたり通常攻撃の1/3）
+      if (pre.extraEnemyAttacks && pre.extraEnemyAttacks > 0) {
+        const flurryHitRatio = 1 / 3;
+        for (let k = 0; k < pre.extraEnemyAttacks; k++) {
+          const flurryRaw = Math.floor(enemyDamage * flurryHitRatio * enemyAttackMultiplier * engine.bossEffects.playerDamageTakenMult);
+          let flurryDamage: number;
+          if (deferPct > 0 && flurryRaw > 0) {
+            const flurryDeferred = Math.floor(flurryRaw * deferPct / 100);
+            flurryDamage = flurryRaw - flurryDeferred;
+            if (flurryDeferred > 0) {
+              const damagePerTick = Math.max(1, Math.floor(flurryDeferred / 4));
+              engine.state.deferredDamages.push({
+                damagePerTick,
+                remainingTicks: 4,
+              });
+            }
+          } else {
+            flurryDamage = flurryRaw;
+          }
+          engine.state.player.currentHp = Math.max(0, engine.state.player.currentHp - flurryDamage);
+          events.push(createEnemyAttackEvent(engine.state.elapsedTicks, flurryDamage));
+          if (engine.state.player.currentHp <= 0) break;
+        }
+      }
+
+      // UberUberクラーケン: 攻撃時にプレイヤーへチル/フリーズ付与判定
+      if (
+        engine.bossEffects.enemyAttackPlayerFreezeChance > 0 &&
+        !engine.state.playerFreezeState &&
+        engine.rng() * 100 < engine.bossEffects.enemyAttackPlayerFreezeChance
+      ) {
+        const freezeDurationMs = engine.config.freezeDurationMs;
+        engine.state.playerFreezeState = { remainingMs: freezeDurationMs };
+        engine.state.playerChillState = null;
+        events.push({
+          type: 'freeze_applied',
+          tick: engine.state.elapsedTicks,
+          data: { durationMs: freezeDurationMs, target: 'player' },
+        });
+      } else if (
+        engine.bossEffects.enemyAttackPlayerChillChance > 0 &&
+        !engine.state.playerFreezeState &&
+        engine.rng() * 100 < engine.bossEffects.enemyAttackPlayerChillChance
+      ) {
+        const effectReduction = 0;
+        const speedMultiplier = Math.max(
+          engine.config.chillMinSpeedMultiplier,
+          engine.config.chillBaseSpeedMultiplier - effectReduction
+        );
+        engine.state.playerChillState = {
+          speedMultiplier,
+          remainingMs: engine.config.chillDurationMs,
+        };
+        events.push({
+          type: 'chill_applied',
+          tick: engine.state.elapsedTicks,
+          data: { speedMultiplier, durationMs: engine.config.chillDurationMs, target: 'player' },
+        });
       }
 
       // 盗賊の頭の追撃: 通常0.5倍、UberUberは双撃の刃で1.0倍に強化

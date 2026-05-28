@@ -84,6 +84,7 @@ const emptyMods: CombinedModEffects = {
   poisonMultiStack: 1,
   igniteIntensify: false,
   chillFreezeDamageMult: 1,
+  igniteResistPct: 0,
 };
 
 describe('core/combatEffects', () => {

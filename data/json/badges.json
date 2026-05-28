@@ -62,6 +62,13 @@
       "descriptionKey": "badges.uber_uber_bandit_leader.description",
       "condition": { "type": "uber_uber_boss_clear", "dungeonId": "uber_uber_bandit_leader" },
       "icon": "trophy"
+    },
+    {
+      "id": "badge_uber_uber_kraken",
+      "nameKey": "badges.uber_uber_kraken.name",
+      "descriptionKey": "badges.uber_uber_kraken.description",
+      "condition": { "type": "uber_uber_boss_clear", "dungeonId": "uber_uber_kraken" },
+      "icon": "trophy"
     }
   ]
 }

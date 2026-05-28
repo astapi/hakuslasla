@@ -64,6 +64,10 @@ const BOSS_ABILITIES_MAP: Record<string, BossAbilities> = {
     regularSkills: [
       { skillKey: 'tsunami', descKey: 'tsunamiDesc' },
       { skillKey: 'abyssalEbb', descKey: 'abyssalEbbDesc', isUberOnly: true },
+      { skillKey: 'tentacleFlurry', descKey: 'tentacleFlurryDesc', isUberUberOnly: true, triggerType: 'every10' },
+      { skillKey: 'frostAura', descKey: 'frostAuraDesc', isUberUberOnly: true, triggerType: 'persistent' },
+      { skillKey: 'freezeResist', descKey: 'freezeResistDesc', isUberUberOnly: true, triggerType: 'persistent' },
+      { skillKey: 'igniteResist', descKey: 'igniteResistDesc', isUberUberOnly: true, triggerType: 'persistent' },
     ],
     thresholdSkills: [
       { skillKey: 'deepEmbrace', descKey: 'deepEmbraceDesc', isThreshold: true },

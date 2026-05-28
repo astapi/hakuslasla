@@ -128,6 +128,7 @@ export function createEmptyModEffects(): CombinedModEffects {
     poisonMultiStack: 1,
     igniteIntensify: false,
     chillFreezeDamageMult: 1,
+    igniteResistPct: 0,
   };
 }
 
@@ -199,6 +200,9 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
       break;
     case 'royal_roar':
       effects.royalRoar = true;
+      break;
+    case 'ignite_resist_pct':
+      effects.igniteResistPct += mod.value;
       break;
     case 'damage_defer_pct':
       effects.damageDeferPct += mod.value;

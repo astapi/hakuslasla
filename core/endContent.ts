@@ -63,6 +63,7 @@ export const DEBUG_DIMENSIONAL_DUNGEON_IDS: string[] = [
   'debug_dimensional_true_final_boss',
   'debug_uber_uber_goblin_king',
   'debug_uber_uber_bandit_leader',
+  'debug_uber_uber_kraken',
 ];
 
 // 元の異次元ラッシュでのボス階層（スケーリング計算に使用）
@@ -102,6 +103,7 @@ export const BASE_BOSS_BY_UBER = Object.fromEntries(
 export const UBER_UBER_BOSS_BY_UBER: Record<string, string> = {
   uber_goblin_king: 'uber_uber_goblin_king',
   uber_bandit_leader: 'uber_uber_bandit_leader',
+  uber_kraken: 'uber_uber_kraken',
 };
 
 export const UBER_BY_UBER_UBER = Object.fromEntries(
@@ -169,7 +171,8 @@ export const getPlayerAtkMultiplier = (enemyId: string): number => {
 export const getPlayerDefMultiplier = (enemyId: string): number => {
   const baseId = getBaseBossId(enemyId);
   const uber = isUberBoss(enemyId);
-  if (baseId === 'kraken') return uber ? 0.75 : 0.85;
+  const uberUber = isUberUberBoss(enemyId);
+  if (baseId === 'kraken') return uberUber ? 0.65 : uber ? 0.75 : 0.85;
   return 1;
 };
 
@@ -187,7 +190,7 @@ export const getEnemyAtkMultiplier = (enemyId: string): number => {
   const uberUber = isUberUberBoss(enemyId);
   if (baseId === 'goblin_king') return uber ? 1.35 : 1.2;
   if (baseId === 'bandit_leader') return uberUber ? 1.3 : 1;
-  if (baseId === 'kraken') return uber ? 1.3 : 1.15;
+  if (baseId === 'kraken') return uberUber ? 1.5 : uber ? 1.3 : 1.15;
   if (baseId === 'true_final_boss') return uber ? 1.8 : 1.5;
   return 1;
 };
@@ -195,7 +198,8 @@ export const getEnemyAtkMultiplier = (enemyId: string): number => {
 export const getEnemyAttackSpeedMultiplier = (enemyId: string): number => {
   const baseId = getBaseBossId(enemyId);
   const uber = isUberBoss(enemyId);
-  if (baseId === 'kraken') return uber ? 1.35 : 1.2;
+  const uberUber = isUberUberBoss(enemyId);
+  if (baseId === 'kraken') return uberUber ? 1.5 : uber ? 1.35 : 1.2;
   return 1;
 };
 
@@ -216,8 +220,9 @@ export const getEnemyHpOnHit = (enemyId: string): number => {
 export const getEnemyRegenPerSecond = (enemyId: string): number => {
   const baseId = getBaseBossId(enemyId);
   const uber = isUberBoss(enemyId);
-  if (baseId === 'goblin_king') return isUberUberBoss(enemyId) ? 3000 : uber ? 2000 : 0;
-  if (baseId === 'kraken') return uber ? 150 : 100;
+  const uberUber = isUberUberBoss(enemyId);
+  if (baseId === 'goblin_king') return uberUber ? 3000 : uber ? 2000 : 0;
+  if (baseId === 'kraken') return uberUber ? 2500 : uber ? 150 : 100;
   if (baseId === 'demon_lord') return uber ? 1400 : 1000;
   if (baseId === 'true_final_boss') return uber ? 3000 : 2200;
   return 0;

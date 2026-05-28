@@ -572,6 +572,8 @@ export function getModDescription(mod: ItemMod | { type: ModType; min: number; m
       return 'キングスラム（5回攻撃ごとにATK×3の追撃）';
     case 'royal_roar':
       return '王の咆哮（3回攻撃ごとに自身の毒・発火・チルを解除）';
+    case 'ignite_resist_pct':
+      return `灼熱耐性（受ける発火ダメージ-${val}%）`;
     case 'lifesteal':
       return `ライフスティール${val}%`;
     case 'atk_more_pct':

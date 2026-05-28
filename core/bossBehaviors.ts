@@ -15,6 +15,7 @@ export type BossSkillId =
   | 'kraken_tsunami'
   | 'kraken_deep_embrace'
   | 'kraken_abyssal_ebb'
+  | 'kraken_tentacle_flurry'
   | 'demon_death_hand'
   | 'demon_black_flame'
   | 'demon_crown'
@@ -57,6 +58,12 @@ export interface BossEffectState {
   convergenceStacks: number;
   goblinSlamCounter: number;  // UberUberゴブリンキング: キングスラムまでのカウンタ
   banditGarroteCounter: number;  // UberUber盗賊の頭: 影縛りの絞縄までのカウンタ
+  krakenFlurryCounter: number;  // UberUberクラーケン: 触手乱打までのカウンタ
+  krakenFlurryRemaining: number;  // UberUberクラーケン: 残り連撃回数
+  enemyFreezeResistPct: number;  // 敵のフリーズ耐性（%）
+  enemyAttackPlayerChillChance: number;  // 敵攻撃時のチル付与確率（%）
+  enemyAttackPlayerFreezeChance: number;  // 敵攻撃時のフリーズ付与確率（%）
+  enemyIgniteDamageMult: number;  // 敵が受ける発火ダメージの倍率（デフォルト1、低いほど耐性）
 }
 
 export const createBossEffectState = (): BossEffectState => ({
@@ -91,6 +98,12 @@ export const createBossEffectState = (): BossEffectState => ({
   convergenceStacks: 0,
   goblinSlamCounter: 0,
   banditGarroteCounter: 0,
+  krakenFlurryCounter: 0,
+  krakenFlurryRemaining: 0,
+  enemyFreezeResistPct: 0,
+  enemyAttackPlayerChillChance: 0,
+  enemyAttackPlayerFreezeChance: 0,
+  enemyIgniteDamageMult: 1,
 });
 
 export interface BossBehaviorContext {
@@ -107,6 +120,7 @@ export interface BossBehaviorResult {
   applyPlayerPoison?: PoisonStack;
   cleansePoisonIgnite?: boolean;  // ボスの毒・発火状態を解除
   applyPlayerFreeze?: { remainingMs: number };  // プレイヤーをフリーズさせる
+  extraEnemyAttacks?: number;  // 同一行動で追加で行う攻撃回数（触手乱打）
 }
 
 const createBossSkillEvent = (tick: number, skillId: BossSkillId): BattleEvent => ({
@@ -164,6 +178,19 @@ export const createBossIntroEvents = (
         banditShadow: true,
         playerHealingMult: 0.75,
         playerHealingRemaining: -1,
+      },
+    };
+  }
+
+  // UberUberクラーケン: フリーズ耐性70% + 攻撃時チル20%/フリーズ10%付与 + 発火耐性（被ダメージ2/3）
+  if (isUberUberBoss(enemyId) && getBaseBossId(enemyId) === 'kraken') {
+    return {
+      events,
+      initBossEffects: {
+        enemyFreezeResistPct: 70,
+        enemyAttackPlayerChillChance: 20,
+        enemyAttackPlayerFreezeChance: 10,
+        enemyIgniteDamageMult: 2 / 3,
       },
     };
   }
@@ -311,9 +338,21 @@ export const applyEnemyAttackPreEffects = (
     return freezeResult ?? { events };
   }
 
+  // UberUberクラーケン: 触手乱打（10回に1回、10連撃）
+  // 通常クラーケンの津波/深淵の引き潮も継続発動
+  let krakenExtraAttacks = 0;
+  if (baseBossId === 'kraken' && isUberUberBoss(ctx.enemyId)) {
+    bossEffects.krakenFlurryCounter += 1;
+    if (bossEffects.krakenFlurryCounter >= 10) {
+      bossEffects.krakenFlurryCounter = 0;
+      krakenExtraAttacks = 9;  // 既にこの行動で1回分の攻撃をするので+9で合計10連撃
+      events.push(createBossSkillEvent(tick, 'kraken_tentacle_flurry'));
+    }
+  }
+
   const shouldTrigger = bossEffects.enemyAttackCount % 3 === 0;
   if (!shouldTrigger) {
-    return { events };
+    return krakenExtraAttacks > 0 ? { events, extraEnemyAttacks: krakenExtraAttacks } : { events };
   }
 
   if (baseBossId === 'goblin_king') {
@@ -373,7 +412,7 @@ export const applyEnemyAttackPreEffects = (
     }
   }
 
-  return { events };
+  return krakenExtraAttacks > 0 ? { events, extraEnemyAttacks: krakenExtraAttacks } : { events };
 };
 
 export const applyEnemyAttackPostEffects = (

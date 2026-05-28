@@ -61,6 +61,7 @@ const BOSS_SKILL_KEY = {
     tsunami: 'bossSkills.kraken.tsunami',
     deepEmbrace: 'bossSkills.kraken.deepEmbrace',
     abyssalEbb: 'bossSkills.kraken.abyssalEbb',
+    tentacleFlurry: 'bossSkills.kraken.tentacleFlurry',
   },
   demon: {
     deathHand: 'bossSkills.demon_lord.deathHand',
@@ -88,6 +89,7 @@ const BOSS_SKILL_LABEL_BY_ID: Record<BossSkillId, string | null> = {
   kraken_tsunami: BOSS_SKILL_KEY.kraken.tsunami,
   kraken_deep_embrace: BOSS_SKILL_KEY.kraken.deepEmbrace,
   kraken_abyssal_ebb: BOSS_SKILL_KEY.kraken.abyssalEbb,
+  kraken_tentacle_flurry: BOSS_SKILL_KEY.kraken.tentacleFlurry,
   demon_death_hand: BOSS_SKILL_KEY.demon.deathHand,
   demon_black_flame: BOSS_SKILL_KEY.demon.blackFlame,
   demon_crown: BOSS_SKILL_KEY.demon.crown,
@@ -172,6 +174,8 @@ const createInitialState = (dungeonId: string, playerMaxHp: number, startFloor: 
     enemyIgnite: null,
     enemyChill: null,
     enemyFreeze: null,
+    playerChill: null,
+    playerFreeze: null,
     phase: 'fighting',
     battleLog: [],
     droppedItems: [],
@@ -227,6 +231,8 @@ const createExtendedInitialState = (
     enemyIgnite: null,
     enemyChill: null,
     enemyFreeze: null,
+    playerChill: null,
+    playerFreeze: null,
     phase: 'fighting',
     battleLog: runCount > 1 ? [{
       id: logIdCounter++,
@@ -401,6 +407,8 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         enemyIgnite: null, // 次の敵には発火状態をリセット
         enemyChill: null,  // 次の敵にはチル状態をリセット
         enemyFreeze: null, // 次の敵にはフリーズ状態をリセット
+        playerChill: null,  // 次の敵にはプレイヤーチルもリセット
+        playerFreeze: null, // 次の敵にはプレイヤーフリーズもリセット
         playerGauge: 0,  // ゲージリセット
         enemyGauge: 0,   // ゲージリセット
         phase: 'fighting',
@@ -652,6 +660,8 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         enemyGauge: action.enemyGauge,
         enemyChill: action.enemyChill ?? null,
         enemyFreeze: action.enemyFreeze ?? null,
+        playerChill: action.playerChill ?? null,
+        playerFreeze: action.playerFreeze ?? null,
       };
 
     case 'RESET_PLAYER_GAUGE':
@@ -780,6 +790,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
 
   const [isPaused, setIsPaused] = useState(false);
   const [isAutoRunning, setIsAutoRunning] = useState(false); // 自動周回モード
+  // UberUberクラーケン: 触手乱打の残りターン数表示用
+  const [krakenFlurryCountdown, setKrakenFlurryCountdown] = useState<number | null>(null);
   const isProcessingRef = useRef(false);
   const isTransitioningRef = useRef(false);
   const battleEngineRef = useRef<ReturnType<typeof createBattleEngine>['engine'] | null>(null);
@@ -1167,10 +1179,13 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
           break;
         }
         case 'chill_applied': {
+          const targetIsPlayer = (event.data as { target?: string }).target === 'player';
           dispatch({
             type: 'ADD_LOG',
             entry: {
-              message: i18n.t('battleLog.chillApplied', { enemy: state.enemy.name }),
+              message: targetIsPlayer
+                ? i18n.t('battleLog.chillAppliedPlayer')
+                : i18n.t('battleLog.chillApplied', { enemy: state.enemy.name }),
               type: 'chill',
             },
           });
@@ -1187,10 +1202,13 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
           break;
         }
         case 'freeze_applied': {
+          const targetIsPlayer = (event.data as { target?: string }).target === 'player';
           dispatch({
             type: 'ADD_LOG',
             entry: {
-              message: i18n.t('battleLog.freezeApplied', { enemy: state.enemy.name }),
+              message: targetIsPlayer
+                ? i18n.t('battleLog.freezeAppliedPlayer')
+                : i18n.t('battleLog.freezeApplied', { enemy: state.enemy.name }),
               type: 'freeze',
             },
           });
@@ -1319,7 +1337,18 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
         enemyGauge: Math.min(100, coreState.enemy.gauge),
         enemyChill: coreState.enemyChillState,
         enemyFreeze: coreState.enemyFreezeState,
+        playerChill: coreState.playerChillState,
+        playerFreeze: coreState.playerFreezeState,
       });
+      // UberUberクラーケンの触手乱打カウントダウン更新
+      const bossEffects = engine.getBossEffects();
+      const enemyId = state.enemy?.id;
+      if (enemyId === 'uber_uber_kraken') {
+        const remaining = Math.max(0, 10 - bossEffects.krakenFlurryCounter);
+        setKrakenFlurryCountdown((prev) => (prev === remaining ? prev : remaining));
+      } else {
+        setKrakenFlurryCountdown((prev) => (prev === null ? prev : null));
+      }
       isProcessingRef.current = false;
     }, TICK_INTERVAL);
 
@@ -1458,5 +1487,6 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     retreat,
     battleSpeed,
     changeBattleSpeed,
+    krakenFlurryCountdown,
   };
 };

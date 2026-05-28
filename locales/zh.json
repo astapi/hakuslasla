@@ -359,7 +359,8 @@
     "chill_effect_pct": "冰缓效果",
     "chill_duration_pct": "冰缓时间",
     "freeze_chance": "冻结",
-    "freeze_duration_pct": "冻结时间"
+    "freeze_duration_pct": "冻结时间",
+    "ignite_resist_pct": "发火耐性"
   },
   "dungeon": {
     "floors": "{{count}} 层",
@@ -479,6 +480,10 @@
     "uber_uber_bandit_leader": {
       "name": "UberUber 山贼首领",
       "description": "化身终极刺客的山贼首领。仅打败所有Uber Boss者方可挑战。"
+    },
+    "uber_uber_kraken": {
+      "name": "UberUber 海妖",
+      "description": "在深渊中蜕变的终极海妖。仅打败所有Uber Boss者方可挑战。"
     },
     "uber_bandit_leader": {
       "name": "Uber 山贼首领",
@@ -973,6 +978,9 @@
     "uber_uber_double_strike_ring": {
       "name": "UberUber 连击戒指"
     },
+    "uber_uber_kraken_pendant": {
+      "name": "UberUber 深海垂饰"
+    },
     "uber_kraken_shell": {
       "name": "Uber 海妖之壳"
     },
@@ -1340,6 +1348,9 @@
     },
     "uber_uber_bandit_leader": {
       "name": "UberUber 山贼首领"
+    },
+    "uber_uber_kraken": {
+      "name": "UberUber 海妖"
     },
     "uber_bandit_leader": {
       "name": "Uber 山贼首领"
@@ -2190,7 +2201,8 @@
     "chillEffect": "冰缓效果 +{{value}}%",
     "chillDuration": "冰缓持续 +{{value}}%",
     "freezeChance": "冻结概率 +{{value}}%",
-    "freezeDuration": "冻结持续 +{{value}}%"
+    "freezeDuration": "冻结持续 +{{value}}%",
+    "igniteResist": "受到发火伤害 -{{value}}%"
   },
   "boost": {
     "dropRate": {
@@ -2309,6 +2321,7 @@
     "dimensional_4000": { "name": "次元霸主", "description": "在次元回廊到达4000层" },
     "uber_uber_goblin_king": { "name": "真正的弑王者", "description": "击败UberUber哥布林国王" },
     "uber_uber_bandit_leader": { "name": "真正的暗影征服者", "description": "击败UberUber山贼首领" },
+    "uber_uber_kraken": { "name": "真正的深渊征服者", "description": "击败UberUber海妖" },
     "earned": "已获得",
     "notEarned": "未获得",
     "newBadge": "获得了新徽章！"
