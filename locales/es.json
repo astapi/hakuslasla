@@ -59,9 +59,30 @@
       "adventure": "Aventura",
       "encyclopedia": "Archivo",
       "shop": "Tienda",
-      "uberTree": "Uber"
+      "uberTree": "Uber",
+      "pets": "Mascotas"
     },
     "renameCharacter": "Renombrar Personaje"
+  },
+  "pets": {
+    "pet_slime": { "name": "Slime Baby", "buff": "Regen HP +20/s" },
+    "pet_wolf": { "name": "Wolf Kid", "buff": "Vel. Ataque +10%" },
+    "pet_killer_bee": { "name": "Lil' Bee", "buff": "Prob. Veneno +15%" },
+    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
+    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Prob. Quemar +15%" },
+    "pet_ice_witch": { "name": "Tiny Witch", "buff": "Prob. Congelar +5%" },
+    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Vel. Ataque +5%, Regen HP +30/s" }
+  },
+  "petsScreen": {
+    "title": "Mascotas",
+    "active": "Activa",
+    "none": "Ninguna",
+    "setActive": "Equipar",
+    "unsetActive": "Quitar",
+    "owned": "Tienes: ×{{count}}",
+    "empty": "Aún no tienes mascotas",
+    "capacity": "Ranuras {{count}} / {{max}}",
+    "collected": "Coleccionadas {{count}} / {{total}}"
   },
   "dungeonSelect": {
     "title": "Seleccionar Mazmorra",
@@ -134,6 +155,7 @@
     "items": "Objetos Obtenidos",
     "totalItems": "Objetos Totales ({{count}})",
     "noItems": "Sin Objetos",
+    "pets": "Mascotas obtenidas",
     "returnButton": "Volver al Inicio"
   },
   "inventory": {
@@ -1469,6 +1491,8 @@
     "enemyAttack": "¡{{enemy}} ataca! ¡Recibes {{damage}} de daño!",
     "enemyDefeated": "¡{{enemy}} derrotado! ¡Ganaste {{exp}} EXP!",
     "itemDropped": "¡{{item}} obtenido!",
+    "petDrop": "¡{{name}} se hizo tu amigo!",
+    "petDropFull": "¡{{name}} apareció, pero tus ranuras de mascota están llenas!",
     "playerDefeated": "Fuiste derrotado...",
     "nextFloor": "--- Avanzando al Piso {{floor}} ---",
     "dungeonCleared": "¡Mazmorra completada!",
@@ -2276,6 +2300,10 @@
     "storageExpansion": {
       "name": "Expansión de Almacén",
       "description": "Aumenta el límite de objetos del almacén de {{from}} a {{to}}"
+    },
+    "petExpansion": {
+      "name": "Expansión de Mascotas",
+      "description": "Aumenta el límite de mascotas de {{from}} a {{to}}"
     },
     "tierFilter": {
       "name": "Filtro de Tier Bajo",

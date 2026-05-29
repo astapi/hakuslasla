@@ -1,6 +1,8 @@
 import { BattleLog } from '@/components/battle/BattleLog';
 import { CharacterAvatar } from '@/components/battle/CharacterAvatar';
 import { CharacterStatus } from '@/components/battle/CharacterStatus';
+import { PetAvatar } from '@/components/battle/PetAvatar';
+import { getPet, getPetImageKey } from '@/data/pets';
 import { BoostIndicator } from '@/components/battle/BoostIndicator';
 import { SpeedButton } from '@/components/battle/SpeedButton';
 import { Button } from '@/components/common/Button';
@@ -204,8 +206,12 @@ export default function BattleScreen() {
   const { dungeonId, startFloor } = useLocalSearchParams<{ dungeonId: string; startFloor?: string }>();
   const router = useRouter();
   const parsedStartFloor = startFloor ? parseInt(startFloor, 10) : 1;
-  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed, krakenFlurryCountdown } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
-  const { level, characterType } = usePlayerStore();
+  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed, krakenFlurryCountdown, getPetsGained } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
+  const { level, characterType, pets, activePetInstanceId } = usePlayerStore();
+  const activePet = activePetInstanceId
+    ? pets.find((p) => p.instanceId === activePetInstanceId)
+    : undefined;
+  const activePetDef = activePet ? getPet(activePet.petId) : undefined;
   const dungeon = getDungeon(dungeonId || '');
   const insets = useSafeAreaInsets();
 
@@ -330,6 +336,7 @@ export default function BattleScreen() {
             runCount: state.runCount?.toString() || '1',
             grandTotalExp: finalTotalExp.toString(),
             grandTotalItems: JSON.stringify(finalTotalItems),
+            petsGained: JSON.stringify(getPetsGained()),
           },
         });
       }, 2000);
@@ -401,6 +408,11 @@ export default function BattleScreen() {
             freezeState={state.playerFreeze}
             hideImage={isExiting}
           />
+          {activePetDef && !isExiting && (
+            <View style={styles.petSlot} pointerEvents="none">
+              <PetAvatar imageId={getPetImageKey(activePetDef)} />
+            </View>
+          )}
         </View>
         {state.enemy && (
           <>
@@ -661,6 +673,12 @@ const styles = StyleSheet.create({
   avatarContainer: {
     alignItems: 'center',
     justifyContent: 'flex-end',
+    position: 'relative',
+  },
+  petSlot: {
+    position: 'absolute',
+    left: -s(18),
+    bottom: -s(6),
   },
   hidden: {
     opacity: 0,

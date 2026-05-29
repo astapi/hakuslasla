@@ -1,8 +1,9 @@
 import { create } from 'zustand';
-import { CharacterType, Equipment, EquipmentSlot, Item } from '@/types';
+import { CharacterType, Equipment, EquipmentSlot, Item, PetInstance } from '@/types';
 import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects } from '@/data/passiveTree';
 import { canUnlockUberNode, canRefundUberNode, calculateUberTreeEffects } from '@/data/uberTree';
 import { BADGES } from '@/data/badges';
+import { getPet } from '@/data/pets';
 import {
   characterRepository,
   inventoryRepository,
@@ -11,6 +12,7 @@ import {
   settingsRepository,
   badgeRepository,
   uberTreeRepository,
+  petRepository,
 } from '@/db';
 import {
   INITIAL_STATS,
@@ -22,8 +24,8 @@ import {
 } from '@/core';
 import { CLASS_INITIAL_STATS } from '@/core/player';
 import { EquipmentSet } from '@/core/equipmentSets';
-import { INVENTORY_BASE_SIZE, INVENTORY_EXPANDED_SIZE, STORAGE_BASE_SIZE, STORAGE_EXPANDED_SIZE } from '@/constants/purchases';
-import { hasInventoryExpansion, hasStorageExpansion } from '@/stores/usePurchaseStore';
+import { INVENTORY_BASE_SIZE, INVENTORY_EXPANDED_SIZE, STORAGE_BASE_SIZE, STORAGE_EXPANDED_SIZE, PET_BASE_SIZE, PET_EXPANDED_SIZE } from '@/constants/purchases';
+import { hasInventoryExpansion, hasStorageExpansion, hasPetExpansion } from '@/stores/usePurchaseStore';
 
 // 初期装備
 const initialEquipment: Equipment = {
@@ -52,6 +54,8 @@ interface PlayerState {
   unlockedSkills: string[];
   unlockedUberSkills: string[];
   uberPoints: number;  // 使用可能なUberポイント（Uberボスバッジ数 - 使用済み数）
+  pets: PetInstance[];
+  activePetInstanceId: string | null;
   isLoaded: boolean;
 }
 
@@ -100,6 +104,16 @@ interface PlayerActions {
   setDebugLevel: (level: number) => Promise<void>;
   // デバッグ: 装備プリセットを適用
   applyEquipmentPreset: (equipmentSet: EquipmentSet) => Promise<void>;
+  // ペットをインベントリに追加（初取得時は自動でアクティブに設定）。満杯時はnull
+  addPet: (petId: string) => Promise<PetInstance | null>;
+  // アクティブペットを設定（nullで解除）
+  setActivePet: (instanceId: string | null) => Promise<void>;
+  // ペットの最大所持数（課金で拡張）
+  getPetMaxSize: () => number;
+  // ペットの空き枠数
+  getPetSpace: () => number;
+  // ペット枠が満杯かどうか
+  isPetStorageFull: () => boolean;
 }
 
 const initialState: PlayerState = {
@@ -119,6 +133,8 @@ const initialState: PlayerState = {
   unlockedSkills: [],
   unlockedUberSkills: [],
   uberPoints: 0,
+  pets: [],
+  activePetInstanceId: null,
   isLoaded: false,
 };
 
@@ -156,6 +172,10 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     ).length;
     const uberPoints = Math.max(0, uberBossBadgeCount - unlockedUberSkills.length);
 
+    // ペット読み込み
+    const pets = await petRepository.getAll(characterId);
+    const activePetInstanceId = await petRepository.getActivePetInstanceId(characterId);
+
     set({
       characterId: character.id,
       characterName: character.name,
@@ -173,6 +193,8 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       unlockedSkills,
       unlockedUberSkills,
       uberPoints,
+      pets,
+      activePetInstanceId,
       isLoaded: true,
     });
   },
@@ -494,13 +516,27 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     // 2.5. Uberツリー効果を取得
     const uberEffects = calculateUberTreeEffects(state.unlockedUberSkills);
 
-    // 3. PoE式計算で最終ステータスを算出（装備+パッシブ+Uberツリーのincreased%を合算）
+    // 2.6. アクティブペットの increased% バフを取得
+    let petAtkIncPct = 0;
+    let petDefIncPct = 0;
+    if (state.activePetInstanceId) {
+      const activePet = state.pets.find(
+        (p) => p.instanceId === state.activePetInstanceId
+      );
+      const petDef = activePet ? getPet(activePet.petId) : undefined;
+      if (petDef) {
+        petAtkIncPct += petDef.buff.atkIncreasedPct ?? 0;
+        petDefIncPct += petDef.buff.defIncreasedPct ?? 0;
+      }
+    }
+
+    // 3. PoE式計算で最終ステータスを算出（装備+パッシブ+Uberツリー+ペットのincreased%を合算）
     const finalStats = calculateFinalStats(
       { maxHp: baseMaxHp + uberEffects.hp, atk: baseAtk + uberEffects.atk, def: baseDef + uberEffects.def },
       {
         hp_increased_pct: passiveEffects.hp_increased_pct + equipHpIncPct + uberEffects.hp_increased_pct,
-        atk_increased_pct: passiveEffects.atk_increased_pct + equipAtkIncPct + uberEffects.atk_increased_pct,
-        def_increased_pct: passiveEffects.def_increased_pct + equipDefIncPct + uberEffects.def_increased_pct,
+        atk_increased_pct: passiveEffects.atk_increased_pct + equipAtkIncPct + uberEffects.atk_increased_pct + petAtkIncPct,
+        def_increased_pct: passiveEffects.def_increased_pct + equipDefIncPct + uberEffects.def_increased_pct + petDefIncPct,
         hp_more_pct: [...passiveEffects.hp_more_pct, ...uberEffects.hp_more_pct],
         atk_more_pct: [...passiveEffects.atk_more_pct, ...uberEffects.atk_more_pct],
         def_more_pct: [...passiveEffects.def_more_pct, ...uberEffects.def_more_pct],
@@ -669,5 +705,55 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       equipment: newEquipment,
       inventory: [],
     });
+  },
+
+  addPet: async (petId: string): Promise<PetInstance | null> => {
+    const state = get();
+    if (!state.characterId) return null;
+    if (!getPet(petId)) return null;
+
+    // 容量チェック（満杯ならドロップ自体を破棄）
+    if (state.pets.length >= get().getPetMaxSize()) {
+      return null;
+    }
+
+    const instance = await petRepository.add(state.characterId, petId);
+    const newPets = [...state.pets, instance];
+
+    // 初取得時は自動でアクティブに設定
+    let nextActiveId = state.activePetInstanceId;
+    if (!nextActiveId) {
+      await petRepository.setActivePet(state.characterId, instance.instanceId);
+      nextActiveId = instance.instanceId;
+    }
+
+    set({ pets: newPets, activePetInstanceId: nextActiveId });
+    return instance;
+  },
+
+  setActivePet: async (instanceId: string | null): Promise<void> => {
+    const state = get();
+    if (!state.characterId) return;
+
+    if (instanceId !== null && !state.pets.some((p) => p.instanceId === instanceId)) {
+      return;
+    }
+
+    await petRepository.setActivePet(state.characterId, instanceId);
+    set({ activePetInstanceId: instanceId });
+  },
+
+  getPetMaxSize: () => {
+    return hasPetExpansion() ? PET_EXPANDED_SIZE : PET_BASE_SIZE;
+  },
+
+  getPetSpace: () => {
+    const state = get();
+    return Math.max(0, get().getPetMaxSize() - state.pets.length);
+  },
+
+  isPetStorageFull: () => {
+    const state = get();
+    return state.pets.length >= get().getPetMaxSize();
   },
 }));

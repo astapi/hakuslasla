@@ -1,0 +1,46 @@
+{
+  "pets": {
+    "pet_slime": {
+      "id": "pet_slime",
+      "sourceMonsterId": "slime",
+      "rarity": "normal",
+      "buff": { "hpRegen": 20 }
+    },
+    "pet_wolf": {
+      "id": "pet_wolf",
+      "sourceMonsterId": "wolf",
+      "rarity": "normal",
+      "buff": { "attackSpeedPct": 10 }
+    },
+    "pet_killer_bee": {
+      "id": "pet_killer_bee",
+      "sourceMonsterId": "bee",
+      "rarity": "normal",
+      "buff": { "poisonChance": 15 }
+    },
+    "pet_gargoyle": {
+      "id": "pet_gargoyle",
+      "sourceMonsterId": "gargoyle",
+      "rarity": "normal",
+      "buff": { "defIncreasedPct": 30 }
+    },
+    "pet_goblin_shaman": {
+      "id": "pet_goblin_shaman",
+      "sourceMonsterId": "goblin_shaman",
+      "rarity": "normal",
+      "buff": { "igniteChance": 15 }
+    },
+    "pet_ice_witch": {
+      "id": "pet_ice_witch",
+      "sourceMonsterId": "ice_witch",
+      "rarity": "normal",
+      "buff": { "freezeChance": 5 }
+    },
+    "pet_goblin_king": {
+      "id": "pet_goblin_king",
+      "sourceMonsterId": "goblin_king",
+      "rarity": "boss",
+      "buff": { "atkIncreasedPct": 15, "attackSpeedPct": 5, "hpRegen": 30 }
+    }
+  }
+}

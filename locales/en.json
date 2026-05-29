@@ -59,9 +59,30 @@
       "adventure": "Adventure",
       "encyclopedia": "Archive",
       "shop": "Shop",
-      "uberTree": "Uber"
+      "uberTree": "Uber",
+      "pets": "Pets"
     },
     "renameCharacter": "Rename Character"
+  },
+  "pets": {
+    "pet_slime": { "name": "Slime Baby", "buff": "HP regen +20/s" },
+    "pet_wolf": { "name": "Wolf Kid", "buff": "Attack Speed +10%" },
+    "pet_killer_bee": { "name": "Lil' Bee", "buff": "Poison Chance +15%" },
+    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
+    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Ignite Chance +15%" },
+    "pet_ice_witch": { "name": "Tiny Witch", "buff": "Freeze Chance +5%" },
+    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Attack Speed +5%, HP regen +30/s" }
+  },
+  "petsScreen": {
+    "title": "Pets",
+    "active": "Active",
+    "none": "None",
+    "setActive": "Equip",
+    "unsetActive": "Unequip",
+    "owned": "Owned: ×{{count}}",
+    "empty": "No pets yet",
+    "capacity": "Slots {{count}} / {{max}}",
+    "collected": "Collected {{count}} / {{total}}"
   },
   "dungeonSelect": {
     "title": "Select Dungeon",
@@ -139,6 +160,7 @@
     "items": "Items Obtained",
     "totalItems": "Total Items ({{count}})",
     "noItems": "No Items",
+    "pets": "Pets Obtained",
     "returnButton": "Return to Home"
   },
   "inventory": {
@@ -1482,6 +1504,8 @@
     "enemyAttack": "{{enemy}} attacks! You take {{damage}} damage!",
     "enemyDefeated": "Defeated {{enemy}}! Gained {{exp}} EXP!",
     "itemDropped": "{{item}} dropped!",
+    "petDrop": "{{name}} became your friend!",
+    "petDropFull": "{{name}} appeared, but your pet slots are full...",
     "playerDefeated": "You were defeated...",
     "nextFloor": "--- Proceed to Floor {{floor}} ---",
     "dungeonCleared": "Dungeon cleared!",
@@ -2291,6 +2315,10 @@
     "storageExpansion": {
       "name": "Storage Expansion",
       "description": "Increases storage item limit from {{from}} to {{to}}"
+    },
+    "petExpansion": {
+      "name": "Pet Slots Expansion",
+      "description": "Increases pet slot limit from {{from}} to {{to}}"
     },
     "tierFilter": {
       "name": "Low Tier Filter",

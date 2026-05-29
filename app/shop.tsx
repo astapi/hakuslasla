@@ -14,6 +14,8 @@ import {
   INVENTORY_EXPANDED_SIZE,
   STORAGE_BASE_SIZE,
   STORAGE_EXPANDED_SIZE,
+  PET_BASE_SIZE,
+  PET_EXPANDED_SIZE,
 } from '@/constants/purchases';
 import { ms, fs } from '@/utils/scaling';
 
@@ -153,6 +155,8 @@ export default function ShopScreen() {
         return { from: INVENTORY_BASE_SIZE, to: INVENTORY_EXPANDED_SIZE };
       case 'shop.storageExpansion.description':
         return { from: STORAGE_BASE_SIZE, to: STORAGE_EXPANDED_SIZE };
+      case 'shop.petExpansion.description':
+        return { from: PET_BASE_SIZE, to: PET_EXPANDED_SIZE };
       default:
         return undefined;
     }

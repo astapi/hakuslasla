@@ -47,6 +47,9 @@ export {
   getPoisonDamageFromMods,
 } from './modEffects';
 
+// ペット効果
+export { applyPetBuff } from './petEffects';
+
 export type {
   ItemModData,
   EquipmentItemData,

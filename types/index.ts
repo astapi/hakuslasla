@@ -577,6 +577,38 @@ export type DungeonBattleAction =
   | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number; enemyChill?: { speedMultiplier: number; remainingMs: number } | null; enemyFreeze?: { remainingMs: number } | null; playerChill?: { speedMultiplier: number; remainingMs: number } | null; playerFreeze?: { remainingMs: number } | null }
   | { type: 'RESET_DUNGEON'; playerMaxHp: number; playerAtk: number; playerDef: number; playerAttackSpeed: number };
 
+// ========================================
+// Pet System Types
+// ========================================
+
+// ペットのバフ効果（CombinedModEffects と一部の getTotalStats への加算）
+export interface PetBuff {
+  hpRegen?: number;            // 毎秒HP回復（フラット）
+  attackSpeedPct?: number;     // AS +X% increased
+  poisonChance?: number;       // 毒付与率%
+  igniteChance?: number;       // 発火付与率%
+  freezeChance?: number;       // フリーズ付与率%
+  atkIncreasedPct?: number;    // ATK +X% increased（装備incと同じレイヤー）
+  defIncreasedPct?: number;    // DEF +X% increased
+}
+
+export type PetRarity = 'normal' | 'boss';
+
+// ペットマスタ定義
+export interface PetDefinition {
+  id: string;                  // "pet_slime" など
+  sourceMonsterId: string;     // 画像取得用キー（monsterImagesのキー）
+  rarity: PetRarity;
+  buff: PetBuff;
+}
+
+// プレイヤー所持ペットインスタンス
+export interface PetInstance {
+  instanceId: string;          // DB保存用ユニークID
+  petId: string;               // PetDefinition.id への参照
+  obtainedAt: string;          // ISO datetime
+}
+
 // 結果画面用のパラメータ
 export interface BattleResult {
   dungeonId: string;

@@ -250,6 +250,11 @@ export const hasStorageExpansion = (): boolean => {
   return hasEntitlement(ENTITLEMENT_IDS.EXPANDED_STORAGE);
 };
 
+// ペット枠拡張を持っているか
+export const hasPetExpansion = (): boolean => {
+  return hasEntitlement(ENTITLEMENT_IDS.EXPANDED_PETS);
+};
+
 // Tierフィルターを持っているか
 export const hasTierFilter = (): boolean => {
   return hasEntitlement(ENTITLEMENT_IDS.TIER_FILTER_ENABLED);

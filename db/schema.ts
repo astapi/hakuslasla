@@ -1,4 +1,4 @@
-export const SCHEMA_VERSION = 11;
+export const SCHEMA_VERSION = 12;
 
 export const CREATE_TABLES_SQL = `
 -- キャラクター基本情報
@@ -73,6 +73,24 @@ CREATE TABLE IF NOT EXISTS character_uber_skills (
   skill_id TEXT NOT NULL,
   FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
   UNIQUE(character_id, skill_id)
+);
+
+-- ペット所持リスト（キャラクターごと、重複所持OK）
+CREATE TABLE IF NOT EXISTS character_pets (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  character_id INTEGER NOT NULL,
+  instance_id TEXT NOT NULL,
+  pet_id TEXT NOT NULL,
+  obtained_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+  UNIQUE(character_id, instance_id)
+);
+
+-- アクティブペット（キャラクターごとに1体のみ）
+CREATE TABLE IF NOT EXISTS character_active_pet (
+  character_id INTEGER PRIMARY KEY,
+  instance_id TEXT,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
 );
 
 -- ゲーム設定

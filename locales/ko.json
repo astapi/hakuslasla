@@ -59,9 +59,30 @@
       "adventure": "모험",
       "encyclopedia": "도감",
       "shop": "상점",
-      "uberTree": "Uber"
+      "uberTree": "Uber",
+      "pets": "펫"
     },
     "renameCharacter": "캐릭터 이름 변경"
+  },
+  "pets": {
+    "pet_slime": { "name": "Slime Baby", "buff": "초당 HP 회복 +20" },
+    "pet_wolf": { "name": "Wolf Kid", "buff": "공격 속도 +10%" },
+    "pet_killer_bee": { "name": "Lil' Bee", "buff": "독 확률 +15%" },
+    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
+    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "발화 확률 +15%" },
+    "pet_ice_witch": { "name": "Tiny Witch", "buff": "동결 확률 +5%" },
+    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, 공격 속도 +5%, 초당 HP 회복 +30" }
+  },
+  "petsScreen": {
+    "title": "펫",
+    "active": "활성",
+    "none": "없음",
+    "setActive": "데려가기",
+    "unsetActive": "해제",
+    "owned": "보유: ×{{count}}",
+    "empty": "아직 펫이 없습니다",
+    "capacity": "슬롯 {{count}} / {{max}}",
+    "collected": "도감 {{count}} / {{total}}"
   },
   "dungeonSelect": {
     "title": "던전 선택",
@@ -134,6 +155,7 @@
     "items": "획득 아이템",
     "totalItems": "총 아이템 ({{count}}개)",
     "noItems": "아이템 없음",
+    "pets": "획득한 펫",
     "returnButton": "홈으로 돌아가기"
   },
   "inventory": {
@@ -1469,6 +1491,8 @@
     "enemyAttack": "{{enemy}}의 공격! {{damage}} 피해를 받았다!",
     "enemyDefeated": "{{enemy}} 처치! {{exp}} EXP 획득!",
     "itemDropped": "{{item}} 드롭!",
+    "petDrop": "{{name}}이(가) 동료가 되었다!",
+    "petDropFull": "{{name}}이(가) 나타났지만 펫 슬롯이 가득 차서 데려갈 수 없었다…",
     "playerDefeated": "쓰러졌다...",
     "nextFloor": "--- {{floor}}층으로 진행 ---",
     "dungeonCleared": "던전 클리어!",
@@ -2276,6 +2300,10 @@
     "storageExpansion": {
       "name": "창고 확장",
       "description": "창고 아이템 한도를 {{from}}개에서 {{to}}개로 증가"
+    },
+    "petExpansion": {
+      "name": "펫 슬롯 확장",
+      "description": "펫 슬롯을 {{from}}마리에서 {{to}}마리로 증가"
     },
     "tierFilter": {
       "name": "하위 티어 필터",

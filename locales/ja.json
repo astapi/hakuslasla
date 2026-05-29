@@ -59,9 +59,30 @@
       "adventure": "冒険",
       "encyclopedia": "図鑑",
       "shop": "ショップ",
-      "uberTree": "Uber"
+      "uberTree": "Uber",
+      "pets": "ペット"
     },
     "renameCharacter": "キャラクター名を変更"
+  },
+  "pets": {
+    "pet_slime": { "name": "スライムベイビー", "buff": "毎秒HP回復 +20" },
+    "pet_wolf": { "name": "ウルフキッズ", "buff": "攻撃速度 +10%" },
+    "pet_killer_bee": { "name": "ビーちゃん", "buff": "毒付与率 +15%" },
+    "pet_gargoyle": { "name": "ガーゴイルチック", "buff": "DEF +30%" },
+    "pet_goblin_shaman": { "name": "リトルシャーマン", "buff": "発火付与率 +15%" },
+    "pet_ice_witch": { "name": "ちびウィッチ", "buff": "フリーズ付与率 +5%" },
+    "pet_goblin_king": { "name": "プチキング", "buff": "ATK +15%、攻撃速度 +5%、毎秒HP回復 +30" }
+  },
+  "petsScreen": {
+    "title": "ペット",
+    "active": "アクティブ",
+    "none": "未装備",
+    "setActive": "連れて行く",
+    "unsetActive": "解除",
+    "owned": "所持: ×{{count}}",
+    "empty": "ペットはまだ仲間にしていません",
+    "capacity": "所持枠 {{count}} / {{max}}",
+    "collected": "図鑑 {{count}} / {{total}}"
   },
   "dungeonSelect": {
     "title": "ダンジョン選択",
@@ -139,6 +160,7 @@
     "items": "獲得アイテム",
     "totalItems": "累計アイテム ({{count}}個)",
     "noItems": "アイテムなし",
+    "pets": "獲得ペット",
     "returnButton": "ホームに戻る"
   },
   "inventory": {
@@ -1483,6 +1505,8 @@
     "enemyAttack": "{{enemy}}の攻撃！ {{damage}}ダメージを受けた！",
     "enemyDefeated": "{{enemy}}を倒した！ 経験値{{exp}}を獲得！",
     "itemDropped": "{{item}}をドロップした！",
+    "petDrop": "{{name}}がなついた！",
+    "petDropFull": "{{name}}が現れたが、ペット枠が満杯で連れて帰れなかった…",
     "playerDefeated": "プレイヤーは倒れた...",
     "nextFloor": "--- {{floor}}階へ進む ---",
     "dungeonCleared": "ダンジョンを踏破した！",
@@ -2292,6 +2316,10 @@
     "storageExpansion": {
       "name": "倉庫拡張",
       "description": "倉庫のアイテム数の上限を{{from}}個から{{to}}個に拡張します"
+    },
+    "petExpansion": {
+      "name": "ペット枠拡張",
+      "description": "ペットの所持上限を{{from}}匹から{{to}}匹に拡張します"
     },
     "tierFilter": {
       "name": "低Tier除外",

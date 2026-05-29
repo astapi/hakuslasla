@@ -432,6 +432,28 @@ export const migrations: Migration[] = [
       }
     },
   },
+  {
+    // V11 → V12: ペットシステム用テーブル追加
+    version: 12,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS character_pets (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          character_id INTEGER NOT NULL,
+          instance_id TEXT NOT NULL,
+          pet_id TEXT NOT NULL,
+          obtained_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+          UNIQUE(character_id, instance_id)
+        );
+        CREATE TABLE IF NOT EXISTS character_active_pet (
+          character_id INTEGER PRIMARY KEY,
+          instance_id TEXT,
+          FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+      `);
+    },
+  },
 ];
 
 /**
