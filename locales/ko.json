@@ -38,7 +38,8 @@
       "warrior": "전사",
       "elementalist": "정령술사",
       "ranger": "레인저",
-      "frostmage": "프로스트 메이지"
+      "frostmage": "프로스트 메이지",
+      "tamer": "테이머"
     },
     "classAbility": "클래스 능력",
     "ability": {
@@ -46,7 +47,9 @@
       "criticalChance": "치명타 확률 {{value}}%",
       "attackSpeedPct": "공격 속도 +{{value}}%",
       "poisonChance": "독 확률 {{value}}%",
-      "chillChance": "냉각 확률 {{value}}%"
+      "chillChance": "냉각 확률 {{value}}%",
+      "petDropRatePct": "펫 획득률 +{{value}}%",
+      "petEffectMultiplier": "펫 효과 ×{{value}}"
     },
     "initialStats": "초기 스탯"
   },
@@ -72,6 +75,17 @@
     "pet_goblin_shaman": { "name": "Little Shaman", "buff": "발화 확률 +15%" },
     "pet_ice_witch": { "name": "Tiny Witch", "buff": "동결 확률 +5%" },
     "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, 공격 속도 +5%, 초당 HP 회복 +30" }
+  },
+  "petBuff": {
+    "atkIncreasedPct": "ATK +{{value}}%",
+    "defIncreasedPct": "DEF +{{value}}%",
+    "attackSpeedPct": "공격 속도 +{{value}}%",
+    "poisonChance": "독 확률 +{{value}}%",
+    "igniteChance": "발화 확률 +{{value}}%",
+    "freezeChance": "동결 확률 +{{value}}%",
+    "hpRegen": "초당 HP 회복 +{{value}}",
+    "separator": ", ",
+    "multiplierSuffix": " (×{{value}})"
   },
   "petsScreen": {
     "title": "펫",

@@ -5,6 +5,8 @@ import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { calculateUberTreeEffects } from '@/data/uberTree';
 import { combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
+import { applyPetBuff } from '@/core/petEffects';
+import { getPet } from '@/data/pets';
 import { CLASS_ABILITIES } from '@/core/player';
 import { HPBar } from '../battle/HPBar';
 import { ms, fs } from '@/utils/scaling';
@@ -41,6 +43,8 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
   const atk = usePlayerStore((state) => state.atk);
   const def = usePlayerStore((state) => state.def);
   const characterType = usePlayerStore((state) => state.characterType);
+  const pets = usePlayerStore((state) => state.pets);
+  const activePetInstanceId = usePlayerStore((state) => state.activePetInstanceId);
 
   // useMemo でキャッシュして無限ループを防止
   // 依存配列の値は getTotalStats() 内部で使用されるため必要
@@ -48,7 +52,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     const state = usePlayerStore.getState();
     return state.getTotalStats();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [equipment, unlockedSkills, maxHp, atk, def]);
+  }, [equipment, unlockedSkills, maxHp, atk, def, pets, activePetInstanceId]);
 
   // 詳細計算用のデータを取得
   const getStatsBreakdown = () => {
@@ -93,8 +97,15 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     // Uberツリー効果を加算
     const uberEffects = calculateUberTreeEffects(state.unlockedUberSkills);
 
+    // アクティブペットのバフ（テイマーはクラス固有能力で倍化）
+    const activePet = state.activePetInstanceId
+      ? state.pets.find((p) => p.instanceId === state.activePetInstanceId)
+      : undefined;
+    const petBuff = activePet ? getPet(activePet.petId)?.buff : undefined;
+    const petMult = classAbility.petEffectMultiplier ?? 1;
+
     // 合計値を計算（useBattle.ts の modEffects と同じロジック）
-    const combinedMods = {
+    const combinedModsBeforePet = {
       ...baseMods,
       igniteChance: baseMods.igniteChance + (classAbility.igniteChance ?? 0) + uberEffects.ignite_chance,
       criticalChance: baseMods.criticalChance + (classAbility.criticalChance ?? 0) + uberEffects.critical_chance,
@@ -114,6 +125,8 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       damageDeferPct: baseMods.damageDeferPct + uberEffects.damage_defer_pct,
       damageReductionPct: baseMods.damageReductionPct,
     };
+    // ペットバフを重ねる（useBattle.ts と同じ最終処理）
+    const combinedMods = applyPetBuff(combinedModsBeforePet, petBuff, petMult);
 
     const totalCriticalDamage = 150 + combinedMods.criticalDamage; // 基礎150%
     const totalHpRegen = combinedMods.hpRegen;
@@ -138,12 +151,12 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       },
       atk: {
         base: baseAtk,
-        inc: passiveEffects.atk_increased_pct + equipAtkIncPct,
+        inc: passiveEffects.atk_increased_pct + equipAtkIncPct + (petBuff?.atkIncreasedPct ?? 0) * petMult,
         more: passiveEffects.atk_more_pct.reduce((sum, v) => sum + v, 0),
       },
       def: {
         base: baseDef,
-        inc: passiveEffects.def_increased_pct + equipDefIncPct,
+        inc: passiveEffects.def_increased_pct + equipDefIncPct + (petBuff?.defIncreasedPct ?? 0) * petMult,
         more: passiveEffects.def_more_pct.reduce((sum, v) => sum + v, 0),
       },
       criticalChance: combinedMods.criticalChance,

@@ -38,7 +38,8 @@
       "warrior": "Guerrero",
       "elementalist": "Elementalista",
       "ranger": "Explorador",
-      "frostmage": "Mago de Escarcha"
+      "frostmage": "Mago de Escarcha",
+      "tamer": "Domador"
     },
     "classAbility": "Habilidad de Clase",
     "ability": {
@@ -46,7 +47,9 @@
       "criticalChance": "Prob. de Critico {{value}}%",
       "attackSpeedPct": "Velocidad de ataque +{{value}}%",
       "poisonChance": "Prob. de Veneno {{value}}%",
-      "chillChance": "Prob. Escalofrío {{value}}%"
+      "chillChance": "Prob. Escalofrío {{value}}%",
+      "petDropRatePct": "Prob. de mascota +{{value}}%",
+      "petEffectMultiplier": "Efecto de mascota ×{{value}}"
     },
     "initialStats": "Estadísticas Iniciales"
   },
@@ -72,6 +75,17 @@
     "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Prob. Quemar +15%" },
     "pet_ice_witch": { "name": "Tiny Witch", "buff": "Prob. Congelar +5%" },
     "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Vel. Ataque +5%, Regen HP +30/s" }
+  },
+  "petBuff": {
+    "atkIncreasedPct": "ATK +{{value}}%",
+    "defIncreasedPct": "DEF +{{value}}%",
+    "attackSpeedPct": "Vel. Ataque +{{value}}%",
+    "poisonChance": "Prob. Veneno +{{value}}%",
+    "igniteChance": "Prob. Quemar +{{value}}%",
+    "freezeChance": "Prob. Congelar +{{value}}%",
+    "hpRegen": "Regen HP +{{value}}/s",
+    "separator": ", ",
+    "multiplierSuffix": " (×{{value}})"
   },
   "petsScreen": {
     "title": "Mascotas",

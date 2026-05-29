@@ -6,11 +6,11 @@ import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { characterRepository } from '@/db';
 import { ms, fs } from '@/utils/scaling';
-import { CharacterType } from '@/types';
+import { CharacterType, ClassAbility } from '@/types';
 import { CLASS_INITIAL_STATS, CLASS_ABILITIES } from '@/core/player';
 import { characterImages } from '@/data/images';
 
-const CHARACTER_TYPES: CharacterType[] = ['warrior', 'elementalist', 'ranger', 'frostmage'];
+const CHARACTER_TYPES: CharacterType[] = ['warrior', 'elementalist', 'ranger', 'frostmage', 'tamer'];
 
 export default function CharacterCreateScreen() {
   const { t } = useTranslation();
@@ -19,8 +19,18 @@ export default function CharacterCreateScreen() {
   const [selectedType, setSelectedType] = useState<CharacterType>('warrior');
   const [isCreating, setIsCreating] = useState(false);
 
-  const classStats = CLASS_INITIAL_STATS[selectedType];
-  const classAbility = CLASS_ABILITIES[selectedType];
+  // クラス固有能力を表示用テキストの配列に変換
+  const getAbilityTexts = (ability: ClassAbility): string[] => {
+    const texts: string[] = [];
+    if (ability.igniteChance) texts.push(t('characterCreate.ability.igniteChance', { value: ability.igniteChance }));
+    if (ability.criticalChance) texts.push(t('characterCreate.ability.criticalChance', { value: ability.criticalChance }));
+    if (ability.attackSpeedPct) texts.push(t('characterCreate.ability.attackSpeedPct', { value: ability.attackSpeedPct }));
+    if (ability.poisonChance) texts.push(t('characterCreate.ability.poisonChance', { value: ability.poisonChance }));
+    if (ability.chillChance) texts.push(t('characterCreate.ability.chillChance', { value: ability.chillChance }));
+    if (ability.petDropRatePct) texts.push(t('characterCreate.ability.petDropRatePct', { value: ability.petDropRatePct }));
+    if (ability.petEffectMultiplier) texts.push(t('characterCreate.ability.petEffectMultiplier', { value: ability.petEffectMultiplier }));
+    return texts;
+  };
 
   const handleCreate = async () => {
     if (!name.trim()) return;
@@ -56,85 +66,45 @@ export default function CharacterCreateScreen() {
         {/* クラス選択 */}
         <Text style={styles.label}>{t('characterCreate.classLabel')}</Text>
         <View style={styles.classSelector}>
-          {CHARACTER_TYPES.map((type) => (
-            <TouchableOpacity
-              key={type}
-              style={[
-                styles.classCard,
-                selectedType === type && styles.classCardSelected,
-              ]}
-              onPress={() => setSelectedType(type)}
-              testID={`class-select-${type}`}
-            >
-              <Image
-                source={characterImages[type].standing}
-                style={[styles.classImage, characterImages[type].standingScale ? { transform: [{ scale: characterImages[type].standingScale! }] } : undefined]}
-                resizeMode="contain"
-              />
-              <Text
+          {CHARACTER_TYPES.map((type) => {
+            const stats = CLASS_INITIAL_STATS[type];
+            const abilityTexts = getAbilityTexts(CLASS_ABILITIES[type]);
+            return (
+              <TouchableOpacity
+                key={type}
                 style={[
-                  styles.className,
-                  selectedType === type && styles.classNameSelected,
+                  styles.classCard,
+                  selectedType === type && styles.classCardSelected,
                 ]}
+                onPress={() => setSelectedType(type)}
+                testID={`class-select-${type}`}
               >
-                {t(`characterCreate.class.${type}`)}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        <View style={styles.previewSection}>
-          <Text style={styles.previewTitle}>{t('characterCreate.initialStats')}</Text>
-          <View style={styles.statsRow}>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Level</Text>
-              <Text style={styles.statValue}>1</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>HP</Text>
-              <Text style={styles.statValue}>{classStats.maxHp}</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>ATK</Text>
-              <Text style={styles.statValue}>{classStats.atk}</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>DEF</Text>
-              <Text style={styles.statValue}>{classStats.def}</Text>
-            </View>
-          </View>
-
-          {/* クラス固有能力 */}
-          {(classAbility.igniteChance || classAbility.criticalChance || classAbility.attackSpeedPct || classAbility.poisonChance || classAbility.chillChance) && (
-            <View style={styles.abilitySection}>
-              <Text style={styles.abilityLabel}>{t('characterCreate.classAbility')}</Text>
-              {classAbility.igniteChance && (
-                <Text style={styles.abilityValue}>
-                  {t('characterCreate.ability.igniteChance', { value: classAbility.igniteChance })}
-                </Text>
-              )}
-              {classAbility.criticalChance && (
-                <Text style={styles.abilityValue}>
-                  {t('characterCreate.ability.criticalChance', { value: classAbility.criticalChance })}
-                </Text>
-              )}
-              {classAbility.attackSpeedPct && (
-                <Text style={styles.abilityValue}>
-                  {t('characterCreate.ability.attackSpeedPct', { value: classAbility.attackSpeedPct })}
-                </Text>
-              )}
-              {classAbility.poisonChance && (
-                <Text style={styles.abilityValue}>
-                  {t('characterCreate.ability.poisonChance', { value: classAbility.poisonChance })}
-                </Text>
-              )}
-              {classAbility.chillChance && (
-                <Text style={styles.abilityValue}>
-                  {t('characterCreate.ability.chillChance', { value: classAbility.chillChance })}
-                </Text>
-              )}
-            </View>
-          )}
+                <Image
+                  source={characterImages[type].standing}
+                  style={[styles.classImage, characterImages[type].standingScale ? { transform: [{ scale: characterImages[type].standingScale! }] } : undefined]}
+                  resizeMode="contain"
+                />
+                <View style={styles.classInfo}>
+                  <Text
+                    style={[
+                      styles.className,
+                      selectedType === type && styles.classNameSelected,
+                    ]}
+                  >
+                    {t(`characterCreate.class.${type}`)}
+                  </Text>
+                  <Text style={styles.classStats}>
+                    HP {stats.maxHp} / ATK {stats.atk} / DEF {stats.def}
+                  </Text>
+                  {abilityTexts.map((text) => (
+                    <Text key={text} style={styles.abilityValue}>
+                      {text}
+                    </Text>
+                  ))}
+                </View>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ScrollView>
 
@@ -184,82 +154,49 @@ const styles = StyleSheet.create({
     marginBottom: ms(24),
   },
   classSelector: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: ms(16),
+    gap: ms(10),
     marginBottom: ms(24),
   },
   classCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: ms(12),
-    padding: ms(12),
+    paddingVertical: ms(8),
+    paddingHorizontal: ms(10),
+    flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: 'transparent',
-    flex: 1,
-    maxWidth: ms(120),
   },
   classCardSelected: {
     borderColor: '#FFD700',
     backgroundColor: 'rgba(255, 215, 0, 0.1)',
   },
   classImage: {
-    width: ms(80),
-    height: ms(100),
-    marginBottom: ms(8),
+    width: ms(52),
+    height: ms(60),
+    marginRight: ms(14),
+  },
+  classInfo: {
+    flex: 1,
   },
   className: {
-    fontSize: fs(14),
+    fontSize: fs(16),
     color: '#aaa',
     fontWeight: '500',
   },
   classNameSelected: {
     color: '#FFD700',
   },
-  previewSection: {
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: ms(12),
-    padding: ms(16),
-  },
-  previewTitle: {
-    fontSize: fs(14),
-    color: '#aaa',
-    marginBottom: ms(12),
-    textAlign: 'center',
-  },
-  statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  statItem: {
-    alignItems: 'center',
-  },
-  statLabel: {
+  classStats: {
     fontSize: fs(12),
-    color: '#666',
-    marginBottom: ms(4),
-  },
-  statValue: {
-    fontSize: fs(18),
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  abilitySection: {
-    marginTop: ms(16),
-    paddingTop: ms(12),
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.1)',
-    alignItems: 'center',
-  },
-  abilityLabel: {
-    fontSize: fs(12),
-    color: '#666',
-    marginBottom: ms(4),
+    color: '#888',
+    marginTop: ms(2),
   },
   abilityValue: {
-    fontSize: fs(14),
+    fontSize: fs(13),
     color: '#FF6B35',
     fontWeight: '500',
+    marginTop: ms(2),
   },
   footer: {
     flexDirection: 'row',

@@ -57,6 +57,7 @@ describe('core/player', () => {
     expect(getClassInitialStats('warrior')).toEqual({ maxHp: 120, atk: 10, def: 5 });
     expect(getClassInitialStats('elementalist')).toEqual({ maxHp: 85, atk: 10, def: 4 });
     expect(getClassInitialStats('ranger')).toEqual({ maxHp: 100, atk: 10, def: 5 });
+    expect(getClassInitialStats('tamer')).toEqual({ maxHp: 100, atk: 10, def: 4 });
   });
 
   it('getClassAbilities はクラス別固有能力を返す', () => {
@@ -65,6 +66,8 @@ describe('core/player', () => {
     expect(getClassAbilities('elementalist').igniteChance).toBe(20);
     expect(getClassAbilities('ranger').poisonChance).toBe(20);
     expect(getClassAbilities('frostmage').chillChance).toBe(25);
+    expect(getClassAbilities('tamer').petDropRatePct).toBe(0.5);
+    expect(getClassAbilities('tamer').petEffectMultiplier).toBe(2);
   });
 
   it('getClassInitialStats はフロストメイジの初期ステータスを返す', () => {

@@ -33,6 +33,31 @@ describe('core/petEffects', () => {
     expect(result.freezeChance).toBe(5);
   });
 
+  it('multiplierでバフ効果が倍化する（テイマーのペット効果2倍）', () => {
+    const base = createEmptyModEffects();
+    base.hpRegen = 10;
+    base.poisonChance = 20;
+    const buff: PetBuff = {
+      hpRegen: 20,
+      attackSpeedPct: 10,
+      poisonChance: 15,
+      igniteChance: 5,
+      freezeChance: 5,
+    };
+    const result = applyPetBuff(base, buff, 2);
+    expect(result.hpRegen).toBe(10 + 20 * 2);      // 50
+    expect(result.attackSpeedPct).toBe(10 * 2);    // 20
+    expect(result.poisonChance).toBe(20 + 15 * 2); // 50
+    expect(result.igniteChance).toBe(5 * 2);       // 10
+    expect(result.freezeChance).toBe(5 * 2);       // 10
+  });
+
+  it('multiplier省略時は等倍（1倍）として扱う', () => {
+    const base = createEmptyModEffects();
+    const buff: PetBuff = { hpRegen: 20 };
+    expect(applyPetBuff(base, buff).hpRegen).toBe(20);
+  });
+
   it('atkIncreasedPct / defIncreasedPct はCombinedModEffectsには反映されない（ステータス側で処理）', () => {
     const base = createEmptyModEffects();
     const buff: PetBuff = { atkIncreasedPct: 15, defIncreasedPct: 30 };

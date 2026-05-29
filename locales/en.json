@@ -38,7 +38,8 @@
       "warrior": "Warrior",
       "elementalist": "Elementalist",
       "ranger": "Ranger",
-      "frostmage": "Frost Mage"
+      "frostmage": "Frost Mage",
+      "tamer": "Tamer"
     },
     "classAbility": "Class Ability",
     "ability": {
@@ -46,7 +47,9 @@
       "criticalChance": "Critical Chance {{value}}%",
       "attackSpeedPct": "Attack Speed +{{value}}%",
       "poisonChance": "Poison Chance {{value}}%",
-      "chillChance": "Chill Chance {{value}}%"
+      "chillChance": "Chill Chance {{value}}%",
+      "petDropRatePct": "Pet Drop Rate +{{value}}%",
+      "petEffectMultiplier": "Pet Effect ×{{value}}"
     },
     "initialStats": "Initial Stats"
   },
@@ -72,6 +75,17 @@
     "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Ignite Chance +15%" },
     "pet_ice_witch": { "name": "Tiny Witch", "buff": "Freeze Chance +5%" },
     "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Attack Speed +5%, HP regen +30/s" }
+  },
+  "petBuff": {
+    "atkIncreasedPct": "ATK +{{value}}%",
+    "defIncreasedPct": "DEF +{{value}}%",
+    "attackSpeedPct": "Attack Speed +{{value}}%",
+    "poisonChance": "Poison Chance +{{value}}%",
+    "igniteChance": "Ignite Chance +{{value}}%",
+    "freezeChance": "Freeze Chance +{{value}}%",
+    "hpRegen": "HP regen +{{value}}/s",
+    "separator": ", ",
+    "multiplierSuffix": " (×{{value}})"
   },
   "petsScreen": {
     "title": "Pets",

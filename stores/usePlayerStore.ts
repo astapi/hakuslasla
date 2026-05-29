@@ -22,7 +22,7 @@ import {
   calculateLevelUp,
   calculateFinalStats,
 } from '@/core';
-import { CLASS_INITIAL_STATS } from '@/core/player';
+import { CLASS_INITIAL_STATS, CLASS_ABILITIES } from '@/core/player';
 import { EquipmentSet } from '@/core/equipmentSets';
 import { INVENTORY_BASE_SIZE, INVENTORY_EXPANDED_SIZE, STORAGE_BASE_SIZE, STORAGE_EXPANDED_SIZE, PET_BASE_SIZE, PET_EXPANDED_SIZE } from '@/constants/purchases';
 import { hasInventoryExpansion, hasStorageExpansion, hasPetExpansion } from '@/stores/usePurchaseStore';
@@ -525,8 +525,10 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       );
       const petDef = activePet ? getPet(activePet.petId) : undefined;
       if (petDef) {
-        petAtkIncPct += petDef.buff.atkIncreasedPct ?? 0;
-        petDefIncPct += petDef.buff.defIncreasedPct ?? 0;
+        // テイマーはクラス固有能力でペット効果が倍化する
+        const petMult = CLASS_ABILITIES[state.characterType].petEffectMultiplier ?? 1;
+        petAtkIncPct += (petDef.buff.atkIncreasedPct ?? 0) * petMult;
+        petDefIncPct += (petDef.buff.defIncreasedPct ?? 0) * petMult;
       }
     }
 

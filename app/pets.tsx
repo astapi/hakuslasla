@@ -7,19 +7,47 @@ import { Button } from '@/components/common/Button';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { getPet, getAllPets, getPetImageKey } from '@/data/pets';
 import { getMonsterImage, monsterBattleScales } from '@/data/images';
+import { CLASS_ABILITIES } from '@/core/player';
 import { ms, fs, s } from '@/utils/scaling';
-import { PetDefinition, PetInstance } from '@/types';
+import { PetBuff, PetDefinition, PetInstance } from '@/types';
 
 interface PetEntry {
   def: PetDefinition;
   instances: PetInstance[]; // 空配列なら未入手
 }
 
+// バフ文字列を組み立てる際のフィールド順（プチキングの表記順に合わせる）
+const BUFF_FIELDS: (keyof PetBuff)[] = [
+  'atkIncreasedPct',
+  'defIncreasedPct',
+  'attackSpeedPct',
+  'poisonChance',
+  'igniteChance',
+  'freezeChance',
+  'hpRegen',
+];
+
 export default function PetsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { pets, activePetInstanceId, setActivePet, getPetMaxSize } = usePlayerStore();
+  const { pets, activePetInstanceId, setActivePet, getPetMaxSize, characterType } = usePlayerStore();
   const petMaxSize = getPetMaxSize();
+
+  // テイマーなどクラス固有能力によるペット効果倍率
+  const petMultiplier = CLASS_ABILITIES[characterType].petEffectMultiplier ?? 1;
+
+  // バフ値に倍率を掛けて表示用文字列を組み立てる（テイマー用）
+  const formatBuffWithMultiplier = (buff: PetBuff, multiplier: number): string => {
+    const parts: string[] = [];
+    for (const field of BUFF_FIELDS) {
+      const raw = buff[field];
+      if (!raw) continue;
+      const value = Math.round(raw * multiplier * 10) / 10;
+      parts.push(t(`petBuff.${field}`, { value }));
+    }
+    const text = parts.join(t('petBuff.separator'));
+    return text + t('petBuff.multiplierSuffix', { value: multiplier });
+  };
 
   // 全ペット定義を取得して、所持インスタンスとマージ
   const entries = useMemo<PetEntry[]>(() => {
@@ -128,7 +156,9 @@ export default function PetsScreen() {
                   {t(`monsters.${activeDef.sourceMonsterId}.name`, { defaultValue: activeDef.sourceMonsterId })}
                 </Text>
                 <Text style={styles.activeBuff}>
-                  {t(`pets.${activeDef.id}.buff`, { defaultValue: '' })}
+                  {petMultiplier !== 1
+                    ? formatBuffWithMultiplier(activeDef.buff, petMultiplier)
+                    : t(`pets.${activeDef.id}.buff`, { defaultValue: '' })}
                 </Text>
               </View>
             </View>
