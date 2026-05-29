@@ -59,9 +59,30 @@
       "adventure": "Abenteuer",
       "encyclopedia": "Archiv",
       "shop": "Shop",
-      "uberTree": "Uber"
+      "uberTree": "Uber",
+      "pets": "Haustiere"
     },
     "renameCharacter": "Charakter umbenennen"
+  },
+  "pets": {
+    "pet_slime": { "name": "Slime Baby", "buff": "HP regen +20/s" },
+    "pet_wolf": { "name": "Wolf Kid", "buff": "Angriffsgeschw. +10%" },
+    "pet_killer_bee": { "name": "Lil' Bee", "buff": "Giftchance +15%" },
+    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
+    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Brand-Chance +15%" },
+    "pet_ice_witch": { "name": "Tiny Witch", "buff": "Frier-Chance +5%" },
+    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Angriffsgeschw. +5%, HP regen +30/s" }
+  },
+  "petsScreen": {
+    "title": "Haustiere",
+    "active": "Aktiv",
+    "none": "Keines",
+    "setActive": "Mitnehmen",
+    "unsetActive": "Entfernen",
+    "owned": "Besitz: ×{{count}}",
+    "empty": "Noch keine Haustiere",
+    "capacity": "Plätze {{count}} / {{max}}",
+    "collected": "Gesammelt {{count}} / {{total}}"
   },
   "dungeonSelect": {
     "title": "Dungeon waehlen",
@@ -135,6 +156,7 @@
     "items": "Erhaltene Gegenstaende",
     "totalItems": "Gegenstaende gesamt ({{count}})",
     "noItems": "Keine Gegenstaende",
+    "pets": "Erhaltene Haustiere",
     "returnButton": "Zurueck zum Startbildschirm"
   },
   "inventory": {
@@ -1478,6 +1500,8 @@
     "enemyAttack": "{{enemy}} greift an! Du nimmst {{damage}} Schaden!",
     "enemyDefeated": "{{enemy}} besiegt! {{exp}} EXP erhalten!",
     "itemDropped": "{{item}} erhalten!",
+    "petDrop": "{{name}} ist dir gefolgt!",
+    "petDropFull": "{{name}} ist erschienen, aber deine Haustier-Plätze sind voll...",
     "playerDefeated": "Du wurdest besiegt...",
     "nextFloor": "--- Weiter zu Stockwerk {{floor}} ---",
     "dungeonCleared": "Dungeon abgeschlossen!",
@@ -2287,6 +2311,10 @@
     "storageExpansion": {
       "name": "Lager-Erweiterung",
       "description": "Erhoeht Lagerlimit von {{from}} auf {{to}}"
+    },
+    "petExpansion": {
+      "name": "Haustier-Plätze",
+      "description": "Erhöht das Haustier-Limit von {{from}} auf {{to}}"
     },
     "tierFilter": {
       "name": "Niedriger-Tier-Filter",

@@ -17,6 +17,7 @@ export const REVENUECAT_API_KEY = Platform.select({
 export const ENTITLEMENT_IDS = {
   EXPANDED_INVENTORY: 'expanded_inventory',
   EXPANDED_STORAGE: 'expanded_storage',
+  EXPANDED_PETS: 'expanded_pets',
   TIER_FILTER_ENABLED: 'tier_filter_enabled',
   PERMANENT_BOOST: 'permanent_boost',
   CHARACTER_SLOTS: 'character_slots',
@@ -29,6 +30,9 @@ export const INVENTORY_EXPANDED_SIZE = 200; // インベントリ課金後
 
 export const STORAGE_BASE_SIZE = 20;        // 倉庫デフォルト
 export const STORAGE_EXPANDED_SIZE = 100;   // 倉庫課金後
+
+export const PET_BASE_SIZE = 20;            // ペット所持枠デフォルト
+export const PET_EXPANDED_SIZE = 100;       // ペット所持枠課金後
 
 // キャラクタースロット
 export const CHARACTER_BASE_SLOTS = 1;      // デフォルト
@@ -65,6 +69,13 @@ export const PURCHASE_PRODUCTS: PurchaseProduct[] = [
     nameKey: 'shop.storageExpansion.name',
     descriptionKey: 'shop.storageExpansion.description',
     iconName: 'warehouse',
+  },
+  {
+    packageId: 'pet_expansion',
+    entitlementId: ENTITLEMENT_IDS.EXPANDED_PETS,
+    nameKey: 'shop.petExpansion.name',
+    descriptionKey: 'shop.petExpansion.description',
+    iconName: 'paw',
   },
   {
     packageId: 'tier_filter',

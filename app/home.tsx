@@ -144,6 +144,10 @@ export default function HomeScreen() {
     router.push('/storage');
   };
 
+  const handleOpenPets = () => {
+    router.push('/pets' as '/home');
+  };
+
   const handleOpenSettings = () => {
     router.push('/settings');
   };
@@ -303,6 +307,17 @@ export default function HomeScreen() {
             <MaterialCommunityIcons name="treasure-chest" size={tabIconSize} color={colors.iconMuted} />
           </View>
           <Text style={styles.menuLabel}>{t('home.menu.storage')}</Text>
+        </Pressable>
+
+        <Pressable
+          style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
+          onPress={handleOpenPets}
+          testID="home-menu-pets"
+        >
+          <View style={styles.menuIconContainer}>
+            <MaterialCommunityIcons name="paw" size={tabIconSize} color={colors.iconMuted} />
+          </View>
+          <Text style={styles.menuLabel}>{t('home.menu.pets')}</Text>
         </Pressable>
 
         <Pressable

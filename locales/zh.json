@@ -59,9 +59,30 @@
       "adventure": "冒险",
       "encyclopedia": "图鉴",
       "shop": "商店",
-      "uberTree": "Uber"
+      "uberTree": "Uber",
+      "pets": "宠物"
     },
     "renameCharacter": "重命名角色"
+  },
+  "pets": {
+    "pet_slime": { "name": "Slime Baby", "buff": "每秒回血 +20" },
+    "pet_wolf": { "name": "Wolf Kid", "buff": "攻击速度 +10%" },
+    "pet_killer_bee": { "name": "Lil' Bee", "buff": "中毒几率 +15%" },
+    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
+    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "点燃几率 +15%" },
+    "pet_ice_witch": { "name": "Tiny Witch", "buff": "冻结几率 +5%" },
+    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, 攻击速度 +5%, 每秒回血 +30" }
+  },
+  "petsScreen": {
+    "title": "宠物",
+    "active": "出战中",
+    "none": "无",
+    "setActive": "带上",
+    "unsetActive": "取消",
+    "owned": "拥有: ×{{count}}",
+    "empty": "还没有宠物",
+    "capacity": "槽位 {{count}} / {{max}}",
+    "collected": "图鉴 {{count}} / {{total}}"
   },
   "dungeonSelect": {
     "title": "选择地下城",
@@ -134,6 +155,7 @@
     "items": "获得的物品",
     "totalItems": "总物品数（{{count}}）",
     "noItems": "无物品",
+    "pets": "获得宠物",
     "returnButton": "返回主页"
   },
   "inventory": {
@@ -1469,6 +1491,8 @@
     "enemyAttack": "{{enemy}} 攻击！你受到 {{damage}} 点伤害！",
     "enemyDefeated": "击败了 {{enemy}}！获得 {{exp}} EXP！",
     "itemDropped": "{{item}} 掉落了！",
+    "petDrop": "{{name}} 加入了你的队伍！",
+    "petDropFull": "{{name}} 出现了，但宠物槽已满，无法带回……",
     "playerDefeated": "你被击败了...",
     "nextFloor": "--- 前往第 {{floor}} 层 ---",
     "dungeonCleared": "地下城通关！",
@@ -2276,6 +2300,10 @@
     "storageExpansion": {
       "name": "仓库扩展",
       "description": "将仓库物品上限从{{from}}增加到{{to}}"
+    },
+    "petExpansion": {
+      "name": "宠物槽扩展",
+      "description": "将宠物槽上限从{{from}}增加到{{to}}"
     },
     "tierFilter": {
       "name": "低阶过滤",

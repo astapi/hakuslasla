@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { useMemo, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import * as StoreReview from 'expo-store-review';
@@ -13,8 +13,10 @@ import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS, UBER_BY_UBER_UBER, BASE_BOSS_BY_UBER } from '@/core/endContent';
 import { getUberBossClearBadgeId } from '@/data/badges';
 import { Item } from '@/types';
-import { ms, fs } from '@/utils/scaling';
+import { ms, fs, s } from '@/utils/scaling';
 import { isRepeatDisabled } from '@/core/resultHelpers';
+import { getPet, getPetImageKey } from '@/data/pets';
+import { getMonsterImage, monsterBattleScales } from '@/data/images';
 
 export default function ResultScreen() {
   const { t } = useTranslation();
@@ -30,6 +32,7 @@ export default function ResultScreen() {
     runCount: string;
     grandTotalExp: string;
     grandTotalItems: string;
+    petsGained: string;
   }>();
 
   const result = params.result as 'cleared' | 'defeat' | 'retreat';
@@ -40,6 +43,16 @@ export default function ResultScreen() {
   const runCount = parseInt(params.runCount || '1', 10);
   const grandTotalExp = parseInt(params.grandTotalExp || expGained.toString(), 10);
   const grandTotalItems: Item[] = params.grandTotalItems ? JSON.parse(params.grandTotalItems) : itemsGained;
+  const petsGained: string[] = params.petsGained ? JSON.parse(params.petsGained) : [];
+
+  // petIdごとに集計
+  const petGroups = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const id of petsGained) {
+      map.set(id, (map.get(id) ?? 0) + 1);
+    }
+    return Array.from(map.entries()).map(([petId, count]) => ({ petId, count }));
+  }, [petsGained]);
 
   // MODフィルターツールチップの表示状態
   const [showModFilterTooltip, setShowModFilterTooltip] = useState(false);
@@ -276,6 +289,37 @@ export default function ResultScreen() {
               <Text style={styles.noItemsText}>{t('result.noItems')}</Text>
             </View>
           )}
+
+          {/* 獲得ペット */}
+          {petGroups.length > 0 && (
+            <View style={styles.petsSection}>
+              <Text style={styles.itemsTitle}>{t('result.pets')}</Text>
+              <View style={styles.petsList}>
+                {petGroups.map(({ petId, count }) => {
+                  const def = getPet(petId);
+                  if (!def) return null;
+                  const imageKey = getPetImageKey(def);
+                  const scale = monsterBattleScales[imageKey] ?? 1;
+                  const size = s(40) * scale;
+                  return (
+                    <View key={petId} style={styles.petRow}>
+                      <Image
+                        source={getMonsterImage(imageKey)}
+                        style={{ width: size, height: size, marginRight: ms(8) }}
+                        resizeMode="contain"
+                      />
+                      <Text style={styles.petName} numberOfLines={1}>
+                        {t(`monsters.${def.sourceMonsterId}.name`, { defaultValue: def.sourceMonsterId })}
+                      </Text>
+                      {count > 1 && (
+                        <Text style={styles.petCount}>×{count}</Text>
+                      )}
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
 
@@ -424,6 +468,39 @@ const styles = StyleSheet.create({
   itemStats: {
     fontSize: fs(12),
     color: '#4CAF50',
+  },
+  petsSection: {
+    marginTop: ms(12),
+    paddingTop: ms(8),
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  petsList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: ms(8),
+  },
+  petRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+    borderWidth: 1,
+    borderColor: '#FFD700',
+    borderRadius: ms(8),
+    paddingHorizontal: ms(8),
+    paddingVertical: ms(4),
+  },
+  petName: {
+    fontSize: fs(13),
+    color: '#fff',
+    fontWeight: 'bold',
+    maxWidth: ms(120),
+  },
+  petCount: {
+    fontSize: fs(12),
+    color: '#FFD700',
+    marginLeft: ms(6),
+    fontWeight: 'bold',
   },
   noItems: {
     paddingVertical: ms(16),

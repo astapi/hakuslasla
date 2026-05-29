@@ -272,6 +272,12 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="pets"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="settings"
           options={{
             headerShown: false,

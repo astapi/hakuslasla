@@ -8,3 +8,4 @@ export type { DungeonClearRecord, DungeonClearRecords, AppLanguage } from './set
 export { badgeRepository } from './badgeRepository';
 export type { BadgeRecord } from './badgeRepository';
 export { uberTreeRepository } from './uberTreeRepository';
+export { petRepository } from './petRepository';

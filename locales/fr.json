@@ -59,9 +59,30 @@
       "adventure": "Aventure",
       "encyclopedia": "Archives",
       "shop": "Boutique",
-      "uberTree": "Uber"
+      "uberTree": "Uber",
+      "pets": "Familiers"
     },
     "renameCharacter": "Renommer le personnage"
+  },
+  "pets": {
+    "pet_slime": { "name": "Slime Baby", "buff": "Régén PV +20/s" },
+    "pet_wolf": { "name": "Wolf Kid", "buff": "Vit. Attaque +10%" },
+    "pet_killer_bee": { "name": "Lil' Bee", "buff": "Chance Poison +15%" },
+    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
+    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Chance Brûlure +15%" },
+    "pet_ice_witch": { "name": "Tiny Witch", "buff": "Chance Gel +5%" },
+    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Vit. Attaque +5%, Régén PV +30/s" }
+  },
+  "petsScreen": {
+    "title": "Familiers",
+    "active": "Actif",
+    "none": "Aucun",
+    "setActive": "Emmener",
+    "unsetActive": "Retirer",
+    "owned": "Possédé : ×{{count}}",
+    "empty": "Aucun familier pour le moment",
+    "capacity": "Slots {{count}} / {{max}}",
+    "collected": "Collectés {{count}} / {{total}}"
   },
   "dungeonSelect": {
     "title": "Sélection du donjon",
@@ -134,6 +155,7 @@
     "items": "Objets obtenus",
     "totalItems": "Total des objets ({{count}})",
     "noItems": "Aucun objet",
+    "pets": "Familiers obtenus",
     "returnButton": "Retour à l'accueil"
   },
   "inventory": {
@@ -1469,6 +1491,8 @@
     "enemyAttack": "{{enemy}} attaque ! Vous subissez {{damage}} dégâts !",
     "enemyDefeated": "{{enemy}} vaincu ! {{exp}} EXP gagnée !",
     "itemDropped": "{{item}} obtenu !",
+    "petDrop": "{{name}} est devenu votre ami !",
+    "petDropFull": "{{name}} est apparu, mais vos slots de familiers sont pleins...",
     "playerDefeated": "Vous avez été vaincu...",
     "nextFloor": "--- Passage à l'étage {{floor}} ---",
     "dungeonCleared": "Donjon terminé !",
@@ -2276,6 +2300,10 @@
     "storageExpansion": {
       "name": "Extension d'entrepôt",
       "description": "Augmente la limite d'objets de l'entrepôt de {{from}} à {{to}}"
+    },
+    "petExpansion": {
+      "name": "Extension des familiers",
+      "description": "Augmente la limite de familiers de {{from}} à {{to}}"
     },
     "tierFilter": {
       "name": "Filtre de palier bas",

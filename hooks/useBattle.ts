@@ -21,7 +21,9 @@ import {
   BattleEvent,
   BossSkillId,
   IgniteState,
+  applyPetBuff,
 } from '@/core';
+import { getPet, tryPetDrop } from '@/data/pets';
 import { CLASS_ABILITIES } from '@/core/player';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
 import { badgeRepository } from '@/db/repositories/badgeRepository';
@@ -711,7 +713,7 @@ const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] =
 
 export const useBattle = (dungeonId: string, options?: { startFloor?: number }) => {
   const startFloor = options?.startFloor ?? 1;
-  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, unlockedUberSkills, setLevelCap, characterType, characterId } = usePlayerStore();
+  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, unlockedUberSkills, setLevelCap, characterType, characterId, pets, activePetInstanceId, addPet } = usePlayerStore();
   const stats = getTotalStats();
   const { getDropRateMultiplier, isTierBoosted, checkExpiredBoosts } = useAdBoostStore();
 
@@ -739,7 +741,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     battleSpeedRef.current = battleSpeed;
   }, [battleSpeed]);
 
-  // 装備品+パッシブ+クラス能力+Uberツリーから戦闘時MOD効果を取得（coreロジック使用）
+  // 装備品+パッシブ+クラス能力+Uberツリー+ペットから戦闘時MOD効果を取得（coreロジック使用）
   const modEffects = useMemo((): CombinedModEffects => {
     const passiveEffects = calculatePassiveEffects(unlockedSkills);
     const baseMods = combineMods(Object.values(equipment), passiveEffects);
@@ -750,7 +752,13 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     // Uberツリー効果を加算
     const uberEffects = calculateUberTreeEffects(unlockedUberSkills);
 
-    return {
+    // アクティブペットのバフ
+    const activePet = activePetInstanceId
+      ? pets.find((p) => p.instanceId === activePetInstanceId)
+      : undefined;
+    const petBuff = activePet ? getPet(activePet.petId)?.buff : undefined;
+
+    const withClassUber = {
       ...baseMods,
       igniteChance: baseMods.igniteChance + (classAbility.igniteChance ?? 0) + uberEffects.ignite_chance,
       criticalChance: baseMods.criticalChance + (classAbility.criticalChance ?? 0) + uberEffects.critical_chance,
@@ -776,7 +784,10 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       igniteIntensify: baseMods.igniteIntensify || uberEffects.ignite_intensify,
       chillFreezeDamageMult: uberEffects.chill_freeze_damage_mult,
     };
-  }, [equipment, unlockedSkills, unlockedUberSkills, characterType]);
+
+    // ペットバフを最後に重ねる
+    return applyPetBuff(withClassUber, petBuff);
+  }, [equipment, unlockedSkills, unlockedUberSkills, characterType, pets, activePetInstanceId]);
 
   // 後方互換性のためのラッパー（将来的に直接modEffectsを使用するよう移行）
   const getCombinedModEffects = useCallback((): CombinedModEffects => {
@@ -795,6 +806,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
   const isProcessingRef = useRef(false);
   const isTransitioningRef = useRef(false);
   const battleEngineRef = useRef<ReturnType<typeof createBattleEngine>['engine'] | null>(null);
+  // 全周回累計のペットドロップ（petId配列）。リザルト画面表示用
+  const petsGainedRef = useRef<string[]>([]);
   // イグナイト伝染用: 敵撃破時の発火状態を次敵へ引き継ぐ
   const spreadIgniteRef = useRef<IgniteState | null>(null);
 
@@ -982,6 +995,37 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
 
     const filteredItems = filterDroppedItems(droppedItems, dropFilter);
 
+    // ペットドロップ判定（独自の枠で容量管理、装備インベントリには影響しない）
+    const droppedPetId = tryPetDrop(state.enemy.id);
+    if (droppedPetId) {
+      const droppedDef = getPet(droppedPetId);
+      const petName = droppedDef
+        ? i18n.t(`monsters.${droppedDef.sourceMonsterId}.name`, { defaultValue: droppedDef.sourceMonsterId })
+        : droppedPetId;
+      void (async () => {
+        const added = await addPet(droppedPetId);
+        if (added) {
+          petsGainedRef.current = [...petsGainedRef.current, droppedPetId];
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.petDrop', { name: petName }),
+              type: 'victory',
+            },
+          });
+        } else {
+          // 枠満杯で取得できなかった
+          dispatch({
+            type: 'ADD_LOG',
+            entry: {
+              message: i18n.t('battleLog.petDropFull', { name: petName }),
+              type: 'info',
+            },
+          });
+        }
+      })();
+    }
+
     handleMimicDefeat(state.enemy.id);
 
     // イグナイト伝染: 発火状態を次の敵に引き継ぐ
@@ -1029,7 +1073,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       // 新しい敵が出現したら遷移モードを解除
       battleEngineRef.current?.setTransitioning(false);
     }, transitionDelay);
-  }, [state, dungeonId, dropFilter, handleDimensionalRushBossDefeat, handleMimicDefeat, getEnemyForFloor, getCombinedModEffects]);
+  }, [state, dungeonId, dropFilter, handleDimensionalRushBossDefeat, handleMimicDefeat, getEnemyForFloor, getCombinedModEffects, addPet]);
 
   const handleBattleEvents = useCallback((events: BattleEvent[]) => {
     if (!state.enemy) return;
@@ -1476,6 +1520,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     await settingsRepository.setBattleSpeed(newSpeed);
   }, []);
 
+  const getPetsGained = useCallback((): string[] => petsGainedRef.current.slice(), []);
+
   return {
     state,
     startBattle,
@@ -1488,5 +1534,6 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     battleSpeed,
     changeBattleSpeed,
     krakenFlurryCountdown,
+    getPetsGained,
   };
 };
