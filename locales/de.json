@@ -38,7 +38,8 @@
       "warrior": "Krieger",
       "elementalist": "Elementarist",
       "ranger": "Waldläufer",
-      "frostmage": "Frostmagier"
+      "frostmage": "Frostmagier",
+      "tamer": "Zähmer"
     },
     "classAbility": "Klassenfaehigkeit",
     "ability": {
@@ -46,7 +47,9 @@
       "criticalChance": "Kritische Trefferchance {{value}}%",
       "attackSpeedPct": "Angriffsgeschwindigkeit +{{value}}%",
       "poisonChance": "Giftchance {{value}}%",
-      "chillChance": "Kältechance {{value}}%"
+      "chillChance": "Kältechance {{value}}%",
+      "petDropRatePct": "Begleiter-Fundrate +{{value}}%",
+      "petEffectMultiplier": "Begleiter-Effekt ×{{value}}"
     },
     "initialStats": "Startwerte"
   },
@@ -72,6 +75,17 @@
     "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Brand-Chance +15%" },
     "pet_ice_witch": { "name": "Tiny Witch", "buff": "Frier-Chance +5%" },
     "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Angriffsgeschw. +5%, HP regen +30/s" }
+  },
+  "petBuff": {
+    "atkIncreasedPct": "ATK +{{value}}%",
+    "defIncreasedPct": "DEF +{{value}}%",
+    "attackSpeedPct": "Angriffsgeschw. +{{value}}%",
+    "poisonChance": "Giftchance +{{value}}%",
+    "igniteChance": "Brand-Chance +{{value}}%",
+    "freezeChance": "Frier-Chance +{{value}}%",
+    "hpRegen": "HP regen +{{value}}/s",
+    "separator": ", ",
+    "multiplierSuffix": " (×{{value}})"
   },
   "petsScreen": {
     "title": "Haustiere",

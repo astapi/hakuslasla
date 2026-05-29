@@ -28,6 +28,7 @@ export const CLASS_INITIAL_STATS: Record<CharacterType, Stats> = {
   elementalist: { maxHp: 85, atk: 10, def: 4 },
   ranger: { maxHp: 100, atk: 10, def: 5 },
   frostmage: { maxHp: 80, atk: 10, def: 3 },
+  tamer: { maxHp: 100, atk: 10, def: 4 },
 };
 
 /** クラス別固有能力 */
@@ -36,6 +37,7 @@ export const CLASS_ABILITIES: Record<CharacterType, ClassAbility> = {
   elementalist: { igniteChance: 20 },  // 発火確率20%
   ranger: { poisonChance: 20 },  // 毒付与率20%
   frostmage: { chillChance: 25 },  // フロストメイジ: チル付与率25%
+  tamer: { petDropRatePct: 0.5, petEffectMultiplier: 2 },  // テイマー: ペットドロップ率+0.5%, ペット効果2倍
 };
 
 /**

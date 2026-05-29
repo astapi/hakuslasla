@@ -9,15 +9,16 @@ import { CombinedModEffects } from './types';
 
 export function applyPetBuff(
   mods: CombinedModEffects,
-  buff: PetBuff | null | undefined
+  buff: PetBuff | null | undefined,
+  multiplier = 1
 ): CombinedModEffects {
   if (!buff) return mods;
   return {
     ...mods,
-    hpRegen: mods.hpRegen + (buff.hpRegen ?? 0),
-    attackSpeedPct: mods.attackSpeedPct + (buff.attackSpeedPct ?? 0),
-    poisonChance: mods.poisonChance + (buff.poisonChance ?? 0),
-    igniteChance: mods.igniteChance + (buff.igniteChance ?? 0),
-    freezeChance: mods.freezeChance + (buff.freezeChance ?? 0),
+    hpRegen: mods.hpRegen + (buff.hpRegen ?? 0) * multiplier,
+    attackSpeedPct: mods.attackSpeedPct + (buff.attackSpeedPct ?? 0) * multiplier,
+    poisonChance: mods.poisonChance + (buff.poisonChance ?? 0) * multiplier,
+    igniteChance: mods.igniteChance + (buff.igniteChance ?? 0) * multiplier,
+    freezeChance: mods.freezeChance + (buff.freezeChance ?? 0) * multiplier,
   };
 }

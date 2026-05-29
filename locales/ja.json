@@ -38,7 +38,8 @@
       "warrior": "ウォリアー",
       "elementalist": "エレメンタリスト",
       "ranger": "レンジャー",
-      "frostmage": "フロストメイジ"
+      "frostmage": "フロストメイジ",
+      "tamer": "テイマー"
     },
     "classAbility": "クラス固有能力",
     "ability": {
@@ -46,7 +47,9 @@
       "criticalChance": "クリティカル率 {{value}}%",
       "attackSpeedPct": "攻撃速度 +{{value}}%",
       "poisonChance": "毒付与率 {{value}}%",
-      "chillChance": "チル付与率 {{value}}%"
+      "chillChance": "チル付与率 {{value}}%",
+      "petDropRatePct": "ペット入手率 +{{value}}%",
+      "petEffectMultiplier": "ペット効果 {{value}}倍"
     },
     "initialStats": "初期ステータス"
   },
@@ -72,6 +75,17 @@
     "pet_goblin_shaman": { "name": "リトルシャーマン", "buff": "発火付与率 +15%" },
     "pet_ice_witch": { "name": "ちびウィッチ", "buff": "フリーズ付与率 +5%" },
     "pet_goblin_king": { "name": "プチキング", "buff": "ATK +15%、攻撃速度 +5%、毎秒HP回復 +30" }
+  },
+  "petBuff": {
+    "atkIncreasedPct": "ATK +{{value}}%",
+    "defIncreasedPct": "DEF +{{value}}%",
+    "attackSpeedPct": "攻撃速度 +{{value}}%",
+    "poisonChance": "毒付与率 +{{value}}%",
+    "igniteChance": "発火付与率 +{{value}}%",
+    "freezeChance": "フリーズ付与率 +{{value}}%",
+    "hpRegen": "毎秒HP回復 +{{value}}",
+    "separator": "、",
+    "multiplierSuffix": "（×{{value}}倍）"
   },
   "petsScreen": {
     "title": "ペット",

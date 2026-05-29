@@ -38,13 +38,16 @@ const BOSS_DROP_RATE = 3; // %
 
 /**
  * モンスターIDからペットドロップ判定を試みる
+ * @param monsterId 撃破したモンスターのID
+ * @param bonusRatePct 加算するドロップ率ボーナス（%）。テイマーのクラス固有能力など
  * @returns ドロップしたペットID、ドロップなしならnull
  */
-export const tryPetDrop = (monsterId: string): string | null => {
+export const tryPetDrop = (monsterId: string, bonusRatePct = 0): string | null => {
   const petId = MONSTER_PET_DROPS[monsterId];
   if (!petId) return null;
   const def = getPet(petId);
   if (!def) return null;
-  const rate = def.rarity === 'boss' ? BOSS_DROP_RATE : NORMAL_DROP_RATE;
+  const baseRate = def.rarity === 'boss' ? BOSS_DROP_RATE : NORMAL_DROP_RATE;
+  const rate = baseRate + bonusRatePct;
   return Math.random() * 100 < rate ? petId : null;
 };

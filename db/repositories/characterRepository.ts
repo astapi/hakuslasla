@@ -35,6 +35,7 @@ const CLASS_BASE_STATS: Record<CharacterType, { maxHp: number; atk: number; def:
   elementalist: { maxHp: 85, atk: 10, def: 4 },
   ranger: { maxHp: 100, atk: 10, def: 5 },
   frostmage: { maxHp: 80, atk: 10, def: 3 },
+  tamer: { maxHp: 100, atk: 10, def: 4 },
 };
 
 export const characterRepository = {

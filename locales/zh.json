@@ -38,7 +38,8 @@
       "warrior": "战士",
       "elementalist": "元素师",
       "ranger": "游侠",
-      "frostmage": "霜冻法师"
+      "frostmage": "霜冻法师",
+      "tamer": "驯兽师"
     },
     "classAbility": "职业能力",
     "ability": {
@@ -46,7 +47,9 @@
       "criticalChance": "暴击率 {{value}}%",
       "attackSpeedPct": "攻击速度 +{{value}}%",
       "poisonChance": "中毒几率 {{value}}%",
-      "chillChance": "冰缓概率 {{value}}%"
+      "chillChance": "冰缓概率 {{value}}%",
+      "petDropRatePct": "宠物掉落率 +{{value}}%",
+      "petEffectMultiplier": "宠物效果 ×{{value}}"
     },
     "initialStats": "初始属性"
   },
@@ -72,6 +75,17 @@
     "pet_goblin_shaman": { "name": "Little Shaman", "buff": "点燃几率 +15%" },
     "pet_ice_witch": { "name": "Tiny Witch", "buff": "冻结几率 +5%" },
     "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, 攻击速度 +5%, 每秒回血 +30" }
+  },
+  "petBuff": {
+    "atkIncreasedPct": "ATK +{{value}}%",
+    "defIncreasedPct": "DEF +{{value}}%",
+    "attackSpeedPct": "攻击速度 +{{value}}%",
+    "poisonChance": "中毒几率 +{{value}}%",
+    "igniteChance": "点燃几率 +{{value}}%",
+    "freezeChance": "冻结几率 +{{value}}%",
+    "hpRegen": "每秒回血 +{{value}}",
+    "separator": ", ",
+    "multiplierSuffix": "（×{{value}}）"
   },
   "petsScreen": {
     "title": "宠物",

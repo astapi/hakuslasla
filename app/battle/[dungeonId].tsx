@@ -410,7 +410,7 @@ export default function BattleScreen() {
           />
           {activePetDef && !isExiting && (
             <View style={styles.petSlot} pointerEvents="none">
-              <PetAvatar imageId={getPetImageKey(activePetDef)} />
+              <PetAvatar imageId={getPetImageKey(activePetDef)} size={s(52)} />
             </View>
           )}
         </View>
@@ -676,9 +676,11 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   petSlot: {
+    // プレイヤー画像の左下に重ねて配置
     position: 'absolute',
-    left: -s(18),
-    bottom: -s(6),
+    left: s(2),
+    bottom: s(20),
+    zIndex: 2,
   },
   hidden: {
     opacity: 0,

@@ -5,7 +5,7 @@ export type EquipmentSlot = 'weapon' | 'armor' | 'gloves' | 'boots' | 'accessory
 export type WeaponType = 'sword' | 'staff';
 
 // キャラクタークラス
-export type CharacterType = 'warrior' | 'elementalist' | 'ranger' | 'frostmage';
+export type CharacterType = 'warrior' | 'elementalist' | 'ranger' | 'frostmage' | 'tamer';
 
 // クラス別固有能力
 export interface ClassAbility {
@@ -14,6 +14,8 @@ export interface ClassAbility {
   attackSpeedPct?: number;    // 攻撃速度+%（ウォリアー）
   poisonChance?: number;      // 毒付与率%（レンジャー）
   chillChance?: number;       // チル付与率%（フロストメイジ）
+  petDropRatePct?: number;    // ペットドロップ率+%（テイマー）
+  petEffectMultiplier?: number; // ペットバフ効果の倍率（テイマー: 2 = 2倍）
 }
 
 // ドロップフィルター設定

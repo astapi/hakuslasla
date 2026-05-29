@@ -13,6 +13,7 @@ const SOUND_FILES = {
     elementalist: require('@/assets/sounds/attack_elementalist.mp3'),
     ranger: require('@/assets/sounds/attack_warrior.mp3'),
     frostmage: require('@/assets/sounds/attack_frostmage.mp3'),
+    tamer: require('@/assets/sounds/attack_warrior.mp3'),
   },
   // 敵攻撃SE（共通）
   enemy_attack: require('@/assets/sounds/attack_enemy.mp3'),

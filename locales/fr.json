@@ -38,7 +38,8 @@
       "warrior": "Guerrier",
       "elementalist": "Élémentaliste",
       "ranger": "Rôdeur",
-      "frostmage": "Mage de Givre"
+      "frostmage": "Mage de Givre",
+      "tamer": "Dresseur"
     },
     "classAbility": "Capacité de classe",
     "ability": {
@@ -46,7 +47,9 @@
       "criticalChance": "Chance de Critique {{value}}%",
       "attackSpeedPct": "Vitesse d'attaque +{{value}}%",
       "poisonChance": "Chance de Poison {{value}}%",
-      "chillChance": "Chance de Gel {{value}}%"
+      "chillChance": "Chance de Gel {{value}}%",
+      "petDropRatePct": "Taux d'obtention de familier +{{value}}%",
+      "petEffectMultiplier": "Effet de familier ×{{value}}"
     },
     "initialStats": "Stats initiales"
   },
@@ -72,6 +75,17 @@
     "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Chance Brûlure +15%" },
     "pet_ice_witch": { "name": "Tiny Witch", "buff": "Chance Gel +5%" },
     "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Vit. Attaque +5%, Régén PV +30/s" }
+  },
+  "petBuff": {
+    "atkIncreasedPct": "ATK +{{value}}%",
+    "defIncreasedPct": "DEF +{{value}}%",
+    "attackSpeedPct": "Vit. Attaque +{{value}}%",
+    "poisonChance": "Chance Poison +{{value}}%",
+    "igniteChance": "Chance Brûlure +{{value}}%",
+    "freezeChance": "Chance Gel +{{value}}%",
+    "hpRegen": "Régén PV +{{value}}/s",
+    "separator": ", ",
+    "multiplierSuffix": " (×{{value}})"
   },
   "petsScreen": {
     "title": "Familiers",

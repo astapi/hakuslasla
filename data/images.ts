@@ -32,6 +32,10 @@ export const characterImages: Record<CharacterType, PlayerImageSet> = {
     standingScale: 0.75,
     battleScale: 0.75,
   },
+  tamer: {
+    standing: require('@/assets/images/characters/tamer.png') as ImageSourcePropType,
+    battle: require('@/assets/images/characters/tamer_battle.png') as ImageSourcePropType,
+  },
 };
 
 // プレイヤー画像（後方互換性のため残す、デフォルトはwarrior）

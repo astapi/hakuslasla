@@ -785,8 +785,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       chillFreezeDamageMult: uberEffects.chill_freeze_damage_mult,
     };
 
-    // ペットバフを最後に重ねる
-    return applyPetBuff(withClassUber, petBuff);
+    // ペットバフを最後に重ねる（テイマーはクラス固有能力でペット効果が倍化する）
+    return applyPetBuff(withClassUber, petBuff, classAbility.petEffectMultiplier ?? 1);
   }, [equipment, unlockedSkills, unlockedUberSkills, characterType, pets, activePetInstanceId]);
 
   // 後方互換性のためのラッパー（将来的に直接modEffectsを使用するよう移行）
@@ -996,7 +996,9 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     const filteredItems = filterDroppedItems(droppedItems, dropFilter);
 
     // ペットドロップ判定（独自の枠で容量管理、装備インベントリには影響しない）
-    const droppedPetId = tryPetDrop(state.enemy.id);
+    // クラス固有能力（テイマーのペットドロップ率+%）をボーナスとして加算
+    const petDropBonus = CLASS_ABILITIES[characterType].petDropRatePct ?? 0;
+    const droppedPetId = tryPetDrop(state.enemy.id, petDropBonus);
     if (droppedPetId) {
       const droppedDef = getPet(droppedPetId);
       const petName = droppedDef
@@ -1073,7 +1075,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       // 新しい敵が出現したら遷移モードを解除
       battleEngineRef.current?.setTransitioning(false);
     }, transitionDelay);
-  }, [state, dungeonId, dropFilter, handleDimensionalRushBossDefeat, handleMimicDefeat, getEnemyForFloor, getCombinedModEffects, addPet]);
+  }, [state, dungeonId, dropFilter, handleDimensionalRushBossDefeat, handleMimicDefeat, getEnemyForFloor, getCombinedModEffects, addPet, characterType]);
 
   const handleBattleEvents = useCallback((events: BattleEvent[]) => {
     if (!state.enemy) return;
