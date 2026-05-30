@@ -21,9 +21,13 @@ const BUFF_FIELDS: (keyof PetBuff)[] = [
   'atkIncreasedPct',
   'defIncreasedPct',
   'attackSpeedPct',
+  'maxHp',
   'poisonChance',
   'igniteChance',
   'freezeChance',
+  'freezeChanceCapPct',
+  'critChancePct',
+  'lifestealPct',
   'hpRegen',
 ];
 
@@ -126,6 +130,7 @@ export default function PetsScreen() {
         {owned && instances.length > 1 && (
           <Text style={styles.gridCount}>×{instances.length}</Text>
         )}
+        {/* Lvバッジはアクティブバッジ（左上）の真下に配置（下部の名前と重ならないように） */}
         {owned && level > 1 && (
           <View style={styles.levelBadge}>
             <Text style={styles.levelBadgeText}>Lv{level}</Text>
@@ -476,8 +481,8 @@ const styles = StyleSheet.create({
   },
   levelBadge: {
     position: 'absolute',
-    bottom: ms(4),
-    right: ms(6),
+    top: ms(24),
+    left: ms(4),
     backgroundColor: 'rgba(76, 175, 80, 0.85)',
     borderRadius: ms(4),
     paddingHorizontal: ms(4),

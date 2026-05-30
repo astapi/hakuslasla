@@ -84,6 +84,10 @@
     "igniteChance": "Chance Brûlure +{{value}}%",
     "freezeChance": "Chance Gel +{{value}}%",
     "hpRegen": "Régén PV +{{value}}/s",
+    "maxHp": "PV Max +{{value}}",
+    "freezeChanceCapPct": "Limite Gel +{{value}}%",
+    "critChancePct": "Chance Critique +{{value}}%",
+    "lifestealPct": "Vol de Vie +{{value}}%",
     "separator": ", ",
     "multiplierSuffix": " (×{{value}})"
   },

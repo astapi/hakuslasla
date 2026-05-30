@@ -84,6 +84,10 @@
     "igniteChance": "点燃几率 +{{value}}%",
     "freezeChance": "冻结几率 +{{value}}%",
     "hpRegen": "每秒回血 +{{value}}",
+    "maxHp": "最大HP +{{value}}",
+    "freezeChanceCapPct": "冻结几率上限 +{{value}}%",
+    "critChancePct": "暴击几率 +{{value}}%",
+    "lifestealPct": "生命偷取 +{{value}}%",
     "separator": ", ",
     "multiplierSuffix": "（×{{value}}）"
   },

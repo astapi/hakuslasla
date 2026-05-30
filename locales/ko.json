@@ -84,6 +84,10 @@
     "igniteChance": "발화 확률 +{{value}}%",
     "freezeChance": "동결 확률 +{{value}}%",
     "hpRegen": "초당 HP 회복 +{{value}}",
+    "maxHp": "최대 HP +{{value}}",
+    "freezeChanceCapPct": "동결 확률 상한 +{{value}}%",
+    "critChancePct": "치명타 확률 +{{value}}%",
+    "lifestealPct": "생명력 흡수 +{{value}}%",
     "separator": ", ",
     "multiplierSuffix": " (×{{value}})"
   },

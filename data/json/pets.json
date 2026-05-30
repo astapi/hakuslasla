@@ -4,43 +4,127 @@
       "id": "pet_slime",
       "sourceMonsterId": "slime",
       "rarity": "normal",
-      "buff": { "hpRegen": 20 }
+      "buff": { "hpRegen": 20, "maxHp": 20 }
     },
     "pet_wolf": {
       "id": "pet_wolf",
       "sourceMonsterId": "wolf",
       "rarity": "normal",
-      "buff": { "attackSpeedPct": 10 }
+      "buff": { "attackSpeedPct": 10, "maxHp": 20 }
     },
     "pet_killer_bee": {
       "id": "pet_killer_bee",
       "sourceMonsterId": "bee",
       "rarity": "normal",
-      "buff": { "poisonChance": 15 }
+      "buff": { "poisonChance": 15, "maxHp": 20 }
     },
     "pet_gargoyle": {
       "id": "pet_gargoyle",
       "sourceMonsterId": "gargoyle",
       "rarity": "normal",
-      "buff": { "defIncreasedPct": 30 }
+      "buff": { "defIncreasedPct": 30, "maxHp": 30 }
     },
     "pet_goblin_shaman": {
       "id": "pet_goblin_shaman",
       "sourceMonsterId": "goblin_shaman",
       "rarity": "normal",
-      "buff": { "igniteChance": 15 }
+      "buff": { "igniteChance": 15, "maxHp": 40 }
     },
     "pet_ice_witch": {
       "id": "pet_ice_witch",
       "sourceMonsterId": "ice_witch",
       "rarity": "normal",
-      "buff": { "freezeChance": 5 }
+      "buff": { "freezeChance": 0.5, "maxHp": 40 }
     },
     "pet_goblin_king": {
       "id": "pet_goblin_king",
       "sourceMonsterId": "goblin_king",
       "rarity": "boss",
-      "buff": { "atkIncreasedPct": 15, "attackSpeedPct": 5, "hpRegen": 30 }
+      "buff": { "atkIncreasedPct": 15, "attackSpeedPct": 5, "hpRegen": 30, "maxHp": 50 }
+    },
+    "pet_bat": {
+      "id": "pet_bat",
+      "sourceMonsterId": "bat",
+      "rarity": "normal",
+      "buff": { "attackSpeedPct": 8, "maxHp": 20 }
+    },
+    "pet_bandit_swordsman": {
+      "id": "pet_bandit_swordsman",
+      "sourceMonsterId": "bandit_swordsman",
+      "rarity": "normal",
+      "buff": { "critChancePct": 4, "maxHp": 30 }
+    },
+    "pet_ghoul": {
+      "id": "pet_ghoul",
+      "sourceMonsterId": "ghoul",
+      "rarity": "normal",
+      "buff": { "lifestealPct": 4, "maxHp": 30 }
+    },
+    "pet_demon": {
+      "id": "pet_demon",
+      "sourceMonsterId": "demon",
+      "rarity": "normal",
+      "buff": { "atkIncreasedPct": 10, "maxHp": 40 }
+    },
+    "pet_giant_crab": {
+      "id": "pet_giant_crab",
+      "sourceMonsterId": "giant_crab",
+      "rarity": "normal",
+      "buff": { "defIncreasedPct": 35, "maxHp": 40 }
+    },
+    "pet_phoenix": {
+      "id": "pet_phoenix",
+      "sourceMonsterId": "phoenix",
+      "rarity": "normal",
+      "buff": { "igniteChance": 18, "maxHp": 55 }
+    },
+    "pet_troll": {
+      "id": "pet_troll",
+      "sourceMonsterId": "troll",
+      "rarity": "normal",
+      "buff": { "hpRegen": 35, "maxHp": 55 }
+    },
+    "pet_forest_witch": {
+      "id": "pet_forest_witch",
+      "sourceMonsterId": "forest_witch",
+      "rarity": "normal",
+      "buff": { "poisonChance": 18, "maxHp": 70 }
+    },
+    "pet_thunder_bird": {
+      "id": "pet_thunder_bird",
+      "sourceMonsterId": "thunder_bird",
+      "rarity": "normal",
+      "buff": { "attackSpeedPct": 13, "maxHp": 70 }
+    },
+    "pet_cerberus": {
+      "id": "pet_cerberus",
+      "sourceMonsterId": "cerberus",
+      "rarity": "normal",
+      "buff": { "critChancePct": 7, "maxHp": 90 }
+    },
+    "pet_ice_dragon": {
+      "id": "pet_ice_dragon",
+      "sourceMonsterId": "ice_dragon",
+      "rarity": "normal",
+      "buff": { "freezeChance": 1.5, "freezeChanceCapPct": 1, "maxHp": 90 }
+    },
+    "pet_seraph": {
+      "id": "pet_seraph",
+      "sourceMonsterId": "seraph",
+      "rarity": "normal",
+      "buff": { "hpRegen": 50, "maxHp": 110 }
+    },
+    "pet_void_walker": {
+      "id": "pet_void_walker",
+      "sourceMonsterId": "void_walker",
+      "rarity": "normal",
+      "buff": { "critChancePct": 8, "maxHp": 110 }
+    },
+    "pet_end_bringer": {
+      "id": "pet_end_bringer",
+      "sourceMonsterId": "end_bringer",
+      "rarity": "normal",
+      "buff": { "atkIncreasedPct": 22, "maxHp": 140 }
     }
   }
 }

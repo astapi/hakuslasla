@@ -592,6 +592,10 @@ export interface PetBuff {
   freezeChance?: number;       // フリーズ付与率%
   atkIncreasedPct?: number;    // ATK +X% increased（装備incと同じレイヤー）
   defIncreasedPct?: number;    // DEF +X% increased
+  maxHp?: number;              // 最大HP +X（フラット、getTotalStats() で基礎ステータスに加算）
+  critChancePct?: number;      // クリティカル率 +X%
+  lifestealPct?: number;       // 与ダメージの X% をHP回復（全ヒット）
+  freezeChanceCapPct?: number; // フリーズ発生率の上限 +X%（既定10%を引き上げる）
 }
 
 export type PetRarity = 'normal' | 'boss';

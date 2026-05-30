@@ -526,9 +526,10 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     // 2.5. Uberツリー効果を取得
     const uberEffects = calculateUberTreeEffects(state.unlockedUberSkills);
 
-    // 2.6. アクティブペットの increased% バフを取得
+    // 2.6. アクティブペットの increased% バフ／maxHp フラットバフを取得
     let petAtkIncPct = 0;
     let petDefIncPct = 0;
+    let petMaxHpFlat = 0;
     if (state.activePetInstanceId) {
       const activePet = state.pets.find(
         (p) => p.instanceId === state.activePetInstanceId
@@ -541,6 +542,8 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
         const levelFactor = getPetLevelFactor(state.petLevels[activePet.petId] ?? 1);
         petAtkIncPct += (petDef.buff.atkIncreasedPct ?? 0) * petMult * levelFactor;
         petDefIncPct += (petDef.buff.defIncreasedPct ?? 0) * petMult * levelFactor;
+        // maxHp は increased% を通さない純粋なフラット加算（ペット倍率のみ反映）
+        petMaxHpFlat += (petDef.buff.maxHp ?? 0) * petMult * levelFactor;
       }
     }
 
@@ -556,6 +559,11 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
         def_more_pct: [...passiveEffects.def_more_pct, ...uberEffects.def_more_pct],
       }
     );
+
+    // 3.4. ペットの maxHp フラットバフを加算（increased% を通さない純粋加算）
+    if (petMaxHpFlat > 0) {
+      finalStats.maxHp += Math.floor(petMaxHpFlat);
+    }
 
     // 3.5. Uberツリー: 防御転換（DEF + maxHP/2 をATKに追加）
     if (uberEffects.def_hp_to_atk) {
