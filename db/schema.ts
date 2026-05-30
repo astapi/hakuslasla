@@ -1,4 +1,4 @@
-export const SCHEMA_VERSION = 12;
+export const SCHEMA_VERSION = 13;
 
 export const CREATE_TABLES_SQL = `
 -- キャラクター基本情報
@@ -90,6 +90,16 @@ CREATE TABLE IF NOT EXISTS character_pets (
 CREATE TABLE IF NOT EXISTS character_active_pet (
   character_id INTEGER PRIMARY KEY,
   instance_id TEXT,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+);
+
+-- ペット強化レベル（キャラクターごと、ペット種類ごとに1レコード）
+-- 重複ペットを消費して上昇。Lvに応じてバフ基礎値が倍化する。
+CREATE TABLE IF NOT EXISTS character_pet_levels (
+  character_id INTEGER NOT NULL,
+  pet_id TEXT NOT NULL,
+  level INTEGER NOT NULL DEFAULT 1,
+  PRIMARY KEY (character_id, pet_id),
   FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
 );
 

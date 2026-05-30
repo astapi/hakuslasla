@@ -31,7 +31,7 @@ export const INVENTORY_EXPANDED_SIZE = 200; // インベントリ課金後
 export const STORAGE_BASE_SIZE = 20;        // 倉庫デフォルト
 export const STORAGE_EXPANDED_SIZE = 100;   // 倉庫課金後
 
-export const PET_BASE_SIZE = 20;            // ペット所持枠デフォルト
+export const PET_BASE_SIZE = 50;            // ペット所持枠デフォルト
 export const PET_EXPANDED_SIZE = 100;       // ペット所持枠課金後
 
 // キャラクタースロット

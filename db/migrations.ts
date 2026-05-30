@@ -454,6 +454,21 @@ export const migrations: Migration[] = [
       `);
     },
   },
+  {
+    // V12 → V13: ペット強化レベルテーブル追加
+    version: 13,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS character_pet_levels (
+          character_id INTEGER NOT NULL,
+          pet_id TEXT NOT NULL,
+          level INTEGER NOT NULL DEFAULT 1,
+          PRIMARY KEY (character_id, pet_id),
+          FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+      `);
+    },
+  },
 ];
 
 /**

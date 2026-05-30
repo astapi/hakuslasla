@@ -96,7 +96,19 @@
     "owned": "보유: ×{{count}}",
     "empty": "아직 펫이 없습니다",
     "capacity": "슬롯 {{count}} / {{max}}",
-    "collected": "도감 {{count}} / {{total}}"
+    "collected": "도감 {{count}} / {{total}}",
+    "levelValue": "Lv {{level}} / {{max}}",
+    "duplicates": "중복: {{count}}마리",
+    "upgrade": "강화하기",
+    "upgradeCost": "중복 {{count}}마리 소비",
+    "upgradeMax": "최대 레벨",
+    "cannotDiscard": "마지막 1마리는 버릴 수 없습니다",
+    "discard": "버리기",
+    "close": "닫기",
+    "confirmUpgradeTitle": "펫 강화",
+    "confirmUpgradeMessage": "{{name}} 강화에 중복 {{count}}마리를 소비합니다. 계속할까요?",
+    "confirmDiscardTitle": "펫 버리기",
+    "confirmDiscardMessage": "{{name}}을(를) 1마리 버릴까요?"
   },
   "dungeonSelect": {
     "title": "던전 선택",

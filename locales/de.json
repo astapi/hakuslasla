@@ -96,7 +96,19 @@
     "owned": "Besitz: ×{{count}}",
     "empty": "Noch keine Haustiere",
     "capacity": "Plätze {{count}} / {{max}}",
-    "collected": "Gesammelt {{count}} / {{total}}"
+    "collected": "Gesammelt {{count}} / {{total}}",
+    "levelValue": "Stufe {{level}} / {{max}}",
+    "duplicates": "Duplikate: {{count}}",
+    "upgrade": "Verstärken",
+    "upgradeCost": "Verbraucht {{count}} Duplikat(e)",
+    "upgradeMax": "Maximale Stufe",
+    "cannotDiscard": "Das letzte kann nicht abgelegt werden",
+    "discard": "Ablegen",
+    "close": "Schließen",
+    "confirmUpgradeTitle": "Begleiter verstärken",
+    "confirmUpgradeMessage": "{{count}} Duplikat(e) verbrauchen, um {{name}} zu verstärken?",
+    "confirmDiscardTitle": "Begleiter ablegen",
+    "confirmDiscardMessage": "Ein {{name}} ablegen?"
   },
   "dungeonSelect": {
     "title": "Dungeon waehlen",

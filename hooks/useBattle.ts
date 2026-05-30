@@ -23,7 +23,7 @@ import {
   IgniteState,
   applyPetBuff,
 } from '@/core';
-import { getPet, tryPetDrop } from '@/data/pets';
+import { getPet, getPetLevelFactor, tryPetDrop } from '@/data/pets';
 import { CLASS_ABILITIES } from '@/core/player';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
 import { badgeRepository } from '@/db/repositories/badgeRepository';
@@ -713,7 +713,7 @@ const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] =
 
 export const useBattle = (dungeonId: string, options?: { startFloor?: number }) => {
   const startFloor = options?.startFloor ?? 1;
-  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, unlockedUberSkills, setLevelCap, characterType, characterId, pets, activePetInstanceId, addPet } = usePlayerStore();
+  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, unlockedUberSkills, setLevelCap, characterType, characterId, pets, activePetInstanceId, petLevels, addPet } = usePlayerStore();
   const stats = getTotalStats();
   const { getDropRateMultiplier, isTierBoosted, checkExpiredBoosts } = useAdBoostStore();
 
@@ -757,6 +757,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       ? pets.find((p) => p.instanceId === activePetInstanceId)
       : undefined;
     const petBuff = activePet ? getPet(activePet.petId)?.buff : undefined;
+    // 強化レベルによるバフ倍率
+    const petLevelFactor = activePet ? getPetLevelFactor(petLevels[activePet.petId] ?? 1) : 1;
 
     const withClassUber = {
       ...baseMods,
@@ -785,9 +787,9 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       chillFreezeDamageMult: uberEffects.chill_freeze_damage_mult,
     };
 
-    // ペットバフを最後に重ねる（テイマーはクラス固有能力でペット効果が倍化する）
-    return applyPetBuff(withClassUber, petBuff, classAbility.petEffectMultiplier ?? 1);
-  }, [equipment, unlockedSkills, unlockedUberSkills, characterType, pets, activePetInstanceId]);
+    // ペットバフを最後に重ねる（テイマーはクラス固有能力でペット効果が倍化する／強化レベルで倍化）
+    return applyPetBuff(withClassUber, petBuff, (classAbility.petEffectMultiplier ?? 1) * petLevelFactor);
+  }, [equipment, unlockedSkills, unlockedUberSkills, characterType, pets, activePetInstanceId, petLevels]);
 
   // 後方互換性のためのラッパー（将来的に直接modEffectsを使用するよう移行）
   const getCombinedModEffects = useCallback((): CombinedModEffects => {

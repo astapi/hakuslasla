@@ -96,7 +96,19 @@
     "owned": "所持: ×{{count}}",
     "empty": "ペットはまだ仲間にしていません",
     "capacity": "所持枠 {{count}} / {{max}}",
-    "collected": "図鑑 {{count}} / {{total}}"
+    "collected": "図鑑 {{count}} / {{total}}",
+    "levelValue": "Lv {{level}} / {{max}}",
+    "duplicates": "重複: {{count}}体",
+    "upgrade": "強化する",
+    "upgradeCost": "重複を{{count}}体消費",
+    "upgradeMax": "最大レベル",
+    "cannotDiscard": "最後の1体は破棄できません",
+    "discard": "破棄する",
+    "close": "閉じる",
+    "confirmUpgradeTitle": "ペットを強化",
+    "confirmUpgradeMessage": "{{name}} の強化に重複{{count}}体を消費します。よろしいですか？",
+    "confirmDiscardTitle": "ペットを破棄",
+    "confirmDiscardMessage": "{{name}} を1体破棄しますか？"
   },
   "dungeonSelect": {
     "title": "ダンジョン選択",
