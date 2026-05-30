@@ -96,7 +96,19 @@
     "owned": "Tienes: ×{{count}}",
     "empty": "Aún no tienes mascotas",
     "capacity": "Ranuras {{count}} / {{max}}",
-    "collected": "Coleccionadas {{count}} / {{total}}"
+    "collected": "Coleccionadas {{count}} / {{total}}",
+    "levelValue": "Nv {{level}} / {{max}}",
+    "duplicates": "Duplicados: {{count}}",
+    "upgrade": "Mejorar",
+    "upgradeCost": "Consume {{count}} duplicado(s)",
+    "upgradeMax": "Nivel máximo",
+    "cannotDiscard": "No puedes descartar el último",
+    "discard": "Descartar",
+    "close": "Cerrar",
+    "confirmUpgradeTitle": "Mejorar mascota",
+    "confirmUpgradeMessage": "¿Consumir {{count}} duplicado(s) para mejorar a {{name}}?",
+    "confirmDiscardTitle": "Descartar mascota",
+    "confirmDiscardMessage": "¿Descartar un {{name}}?"
   },
   "dungeonSelect": {
     "title": "Seleccionar Mazmorra",

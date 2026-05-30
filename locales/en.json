@@ -96,7 +96,19 @@
     "owned": "Owned: ×{{count}}",
     "empty": "No pets yet",
     "capacity": "Slots {{count}} / {{max}}",
-    "collected": "Collected {{count}} / {{total}}"
+    "collected": "Collected {{count}} / {{total}}",
+    "levelValue": "Lv {{level}} / {{max}}",
+    "duplicates": "Duplicates: {{count}}",
+    "upgrade": "Enhance",
+    "upgradeCost": "Consumes {{count}} duplicate(s)",
+    "upgradeMax": "Max Level",
+    "cannotDiscard": "Cannot discard the last one",
+    "discard": "Discard",
+    "close": "Close",
+    "confirmUpgradeTitle": "Enhance Pet",
+    "confirmUpgradeMessage": "Consume {{count}} duplicate(s) to enhance {{name}}?",
+    "confirmDiscardTitle": "Discard Pet",
+    "confirmDiscardMessage": "Discard one {{name}}?"
   },
   "dungeonSelect": {
     "title": "Select Dungeon",

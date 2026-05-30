@@ -96,7 +96,19 @@
     "owned": "Possédé : ×{{count}}",
     "empty": "Aucun familier pour le moment",
     "capacity": "Slots {{count}} / {{max}}",
-    "collected": "Collectés {{count}} / {{total}}"
+    "collected": "Collectés {{count}} / {{total}}",
+    "levelValue": "Niv {{level}} / {{max}}",
+    "duplicates": "Doublons : {{count}}",
+    "upgrade": "Améliorer",
+    "upgradeCost": "Consomme {{count}} doublon(s)",
+    "upgradeMax": "Niveau max",
+    "cannotDiscard": "Impossible de jeter le dernier",
+    "discard": "Jeter",
+    "close": "Fermer",
+    "confirmUpgradeTitle": "Améliorer le familier",
+    "confirmUpgradeMessage": "Consommer {{count}} doublon(s) pour améliorer {{name}} ?",
+    "confirmDiscardTitle": "Jeter le familier",
+    "confirmDiscardMessage": "Jeter un {{name}} ?"
   },
   "dungeonSelect": {
     "title": "Sélection du donjon",

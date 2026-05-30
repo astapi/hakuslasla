@@ -96,7 +96,19 @@
     "owned": "拥有: ×{{count}}",
     "empty": "还没有宠物",
     "capacity": "槽位 {{count}} / {{max}}",
-    "collected": "图鉴 {{count}} / {{total}}"
+    "collected": "图鉴 {{count}} / {{total}}",
+    "levelValue": "Lv {{level}} / {{max}}",
+    "duplicates": "重复: {{count}}只",
+    "upgrade": "强化",
+    "upgradeCost": "消耗{{count}}只重复",
+    "upgradeMax": "最高等级",
+    "cannotDiscard": "最后1只无法丢弃",
+    "discard": "丢弃",
+    "close": "关闭",
+    "confirmUpgradeTitle": "强化宠物",
+    "confirmUpgradeMessage": "消耗{{count}}只重复来强化{{name}}吗？",
+    "confirmDiscardTitle": "丢弃宠物",
+    "confirmDiscardMessage": "丢弃1只{{name}}吗？"
   },
   "dungeonSelect": {
     "title": "选择地下城",

@@ -3,7 +3,7 @@ import { CharacterType, Equipment, EquipmentSlot, Item, PetInstance } from '@/ty
 import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects } from '@/data/passiveTree';
 import { canUnlockUberNode, canRefundUberNode, calculateUberTreeEffects } from '@/data/uberTree';
 import { BADGES } from '@/data/badges';
-import { getPet } from '@/data/pets';
+import { getPet, getPetLevelFactor, getPetUpgradeCost, PET_MAX_LEVEL } from '@/data/pets';
 import {
   characterRepository,
   inventoryRepository,
@@ -56,6 +56,7 @@ interface PlayerState {
   uberPoints: number;  // 使用可能なUberポイント（Uberボスバッジ数 - 使用済み数）
   pets: PetInstance[];
   activePetInstanceId: string | null;
+  petLevels: Record<string, number>; // petId -> 強化レベル（未登録はLv1）
   isLoaded: boolean;
 }
 
@@ -114,6 +115,12 @@ interface PlayerActions {
   getPetSpace: () => number;
   // ペット枠が満杯かどうか
   isPetStorageFull: () => boolean;
+  // ペット種類の強化レベルを取得（未登録はLv1）
+  getPetLevel: (petId: string) => number;
+  // 重複ペットを1体破棄（最後の1体は破棄不可）。成功でtrue
+  discardPetDuplicate: (petId: string) => Promise<boolean>;
+  // 重複ペットを消費して強化（必要数を満たせばLv+1）。成功でtrue
+  upgradePet: (petId: string) => Promise<boolean>;
 }
 
 const initialState: PlayerState = {
@@ -135,6 +142,7 @@ const initialState: PlayerState = {
   uberPoints: 0,
   pets: [],
   activePetInstanceId: null,
+  petLevels: {},
   isLoaded: false,
 };
 
@@ -175,6 +183,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     // ペット読み込み
     const pets = await petRepository.getAll(characterId);
     const activePetInstanceId = await petRepository.getActivePetInstanceId(characterId);
+    const petLevels = await petRepository.getLevels(characterId);
 
     set({
       characterId: character.id,
@@ -195,6 +204,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       uberPoints,
       pets,
       activePetInstanceId,
+      petLevels,
       isLoaded: true,
     });
   },
@@ -524,11 +534,13 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
         (p) => p.instanceId === state.activePetInstanceId
       );
       const petDef = activePet ? getPet(activePet.petId) : undefined;
-      if (petDef) {
+      if (petDef && activePet) {
         // テイマーはクラス固有能力でペット効果が倍化する
         const petMult = CLASS_ABILITIES[state.characterType].petEffectMultiplier ?? 1;
-        petAtkIncPct += (petDef.buff.atkIncreasedPct ?? 0) * petMult;
-        petDefIncPct += (petDef.buff.defIncreasedPct ?? 0) * petMult;
+        // 強化レベルによるバフ倍率
+        const levelFactor = getPetLevelFactor(state.petLevels[activePet.petId] ?? 1);
+        petAtkIncPct += (petDef.buff.atkIncreasedPct ?? 0) * petMult * levelFactor;
+        petDefIncPct += (petDef.buff.defIncreasedPct ?? 0) * petMult * levelFactor;
       }
     }
 
@@ -757,5 +769,59 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
   isPetStorageFull: () => {
     const state = get();
     return state.pets.length >= get().getPetMaxSize();
+  },
+
+  getPetLevel: (petId: string) => {
+    return get().petLevels[petId] ?? 1;
+  },
+
+  discardPetDuplicate: async (petId: string): Promise<boolean> => {
+    const state = get();
+    if (!state.characterId) return false;
+
+    const instances = state.pets.filter((p) => p.petId === petId);
+    // 最後の1体は破棄不可（重複＝2体以上のときのみ）
+    if (instances.length < 2) return false;
+
+    // アクティブ個体は残し、最も新しい個体を破棄
+    const deletable = instances.filter((p) => p.instanceId !== state.activePetInstanceId);
+    const target = deletable[deletable.length - 1];
+    if (!target) return false;
+
+    await petRepository.remove(state.characterId, target.instanceId);
+    set({ pets: state.pets.filter((p) => p.instanceId !== target.instanceId) });
+    return true;
+  },
+
+  upgradePet: async (petId: string): Promise<boolean> => {
+    const state = get();
+    if (!state.characterId) return false;
+
+    const level = state.petLevels[petId] ?? 1;
+    if (level >= PET_MAX_LEVEL) return false;
+
+    const cost = getPetUpgradeCost(level);
+    if (cost === null) return false;
+
+    const instances = state.pets.filter((p) => p.petId === petId);
+    // アクティブ個体（または最低1体）は残す必要がある
+    if (instances.length - 1 < cost) return false;
+
+    // アクティブ個体を避けて、新しい個体からcost体を消費
+    const deletable = instances.filter((p) => p.instanceId !== state.activePetInstanceId);
+    const toDelete = deletable.slice(deletable.length - cost);
+    if (toDelete.length < cost) return false;
+
+    const idsToDelete = new Set(toDelete.map((p) => p.instanceId));
+    await petRepository.removeInstances(state.characterId, [...idsToDelete]);
+
+    const newLevel = level + 1;
+    await petRepository.setLevel(state.characterId, petId, newLevel);
+
+    set({
+      pets: state.pets.filter((p) => !idsToDelete.has(p.instanceId)),
+      petLevels: { ...state.petLevels, [petId]: newLevel },
+    });
+    return true;
   },
 }));

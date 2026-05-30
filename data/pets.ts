@@ -11,6 +11,36 @@ export const getPet = (id: string): PetDefinition | undefined => pets[id];
 
 export const getAllPets = (): PetDefinition[] => Object.values(pets);
 
+// ========================================
+// ペット強化（重複消費）システム
+// ========================================
+// 段階式: Lv1=基礎、Lvが上がるごとにバフ基礎値が +20% される。
+// 次のLvへ上げるのに必要な重複消費数はLvとともに増加（Lv1→2:1体, Lv2→3:2体, ...）。
+// 最大Lv6で基礎値の2倍（+100%）になる。
+
+export const PET_MIN_LEVEL = 1;
+export const PET_MAX_LEVEL = 6;
+const PET_LEVEL_STEP = 0.2; // 1Lvあたり +20%
+
+/**
+ * 強化レベルに応じたバフ倍率（基礎値に掛ける係数）。
+ * Lv1 = 1.0、Lv6 = 2.0。
+ */
+export const getPetLevelFactor = (level: number): number => {
+  const lv = Math.max(PET_MIN_LEVEL, Math.min(PET_MAX_LEVEL, level));
+  return 1 + (lv - PET_MIN_LEVEL) * PET_LEVEL_STEP;
+};
+
+/**
+ * 現在のレベルから次のレベルへ上げるのに必要な重複消費数。
+ * Lv1→2:1体, Lv2→3:2体, Lv3→4:3体 ...（= 現在のレベル）。
+ * 最大レベルに達している場合は null。
+ */
+export const getPetUpgradeCost = (level: number): number | null => {
+  if (level >= PET_MAX_LEVEL) return null;
+  return level;
+};
+
 /**
  * ペットの画像キーを取得（monsterImages のキー）。
  * sourceMonsterId が実モンスターIDで、画像キーと異なる場合（bee→killer_bee 等）に
