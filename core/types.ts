@@ -235,6 +235,7 @@ export interface CombinedModEffects {
   damageDeferPct: number;  // ダメージ遅延%（ダメージのX%を4秒かけて受ける）
   damageReductionPct: number;  // ダメージ軽減%（防具MOD専用）
   hpOnHit: number;             // HIT時HP回復（固定値）
+  lifestealPct: number;        // 与ダメージの X% をHP回復（全ヒット、ペットバフ由来）
   retaliateDefPct: number;     // 被ダメ時DEFのX%を反撃ダメージ
 
   // HP回復変換
@@ -252,6 +253,7 @@ export interface CombinedModEffects {
   // フリーズ
   freezeChance: number;          // 付与率%（上限10%のハードキャップ）
   freezeDurationPct: number;     // フリーズ持続時間+%
+  freezeChanceCapPct: number;    // フリーズ発生率の上限+%（ペットバフ由来、既定キャップ10%に加算）
 
   // Uberツリー最終ノード固有能力
   heavyStrike: boolean;              // 重撃: 攻撃速度-20%, 与ダメ100%吸収, 重傷スタック

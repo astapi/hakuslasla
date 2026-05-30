@@ -61,6 +61,21 @@ export const MONSTER_PET_DROPS: Record<string, string> = {
   goblin_shaman: 'pet_goblin_shaman',
   ice_witch: 'pet_ice_witch',
   goblin_king: 'pet_goblin_king',
+  // 各ダンジョンに最低1体のペットドロップを行き渡らせるための追加マッピング
+  bat: 'pet_bat', // 地底洞窟
+  bandit_swordsman: 'pet_bandit_swordsman', // 盗賊のアジト
+  ghoul: 'pet_ghoul', // ヴァンパイアの館
+  demon: 'pet_demon', // 魔王城
+  giant_crab: 'pet_giant_crab', // 海底洞窟
+  phoenix: 'pet_phoenix', // 灼熱の火山
+  troll: 'pet_troll', // オークの要塞
+  forest_witch: 'pet_forest_witch', // 深淵の森
+  thunder_bird: 'pet_thunder_bird', // 天空の塔
+  cerberus: 'pet_cerberus', // 地獄の門
+  ice_dragon: 'pet_ice_dragon', // 竜の巣穴
+  seraph: 'pet_seraph', // 神域の神殿
+  void_walker: 'pet_void_walker', // 混沌の領域
+  end_bringer: 'pet_end_bringer', // 終焉の地
 };
 
 const NORMAL_DROP_RATE = 0.5; // %

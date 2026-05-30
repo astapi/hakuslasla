@@ -456,6 +456,11 @@ export function calculateLifesteal(
   // HIT時HP回復（固定値）
   let totalRecovery = mods.hpOnHit;
 
+  // 与ダメージのX%回復（ライフスティール、ペットバフ由来）
+  if (mods.lifestealPct > 0) {
+    totalRecovery += Math.floor(damage * mods.lifestealPct / 100);
+  }
+
   // クリティカル時の追加HP回復（固定値）
   if (isCritical && mods.hpOnCrit > 0) {
     totalRecovery += mods.hpOnCrit;
@@ -640,8 +645,11 @@ export function tryApplyFreeze(
     return { freezeState: null, chillAfterFreeze: null, event: null };
   }
 
-  // 発生率にハードキャップ適用
-  const effectiveChance = Math.min(mods.freezeChance, config.freezeChanceCap);
+  // 発生率にハードキャップ適用（ペットバフ freezeChanceCapPct で上限を引き上げ可能）
+  const effectiveChance = Math.min(
+    mods.freezeChance,
+    config.freezeChanceCap + (mods.freezeChanceCapPct ?? 0)
+  );
   if (effectiveChance <= 0 || rng() * 100 >= effectiveChance) {
     return { freezeState: null, chillAfterFreeze: null, event: null };
   }

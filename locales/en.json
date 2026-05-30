@@ -84,6 +84,10 @@
     "igniteChance": "Ignite Chance +{{value}}%",
     "freezeChance": "Freeze Chance +{{value}}%",
     "hpRegen": "HP regen +{{value}}/s",
+    "maxHp": "Max HP +{{value}}",
+    "freezeChanceCapPct": "Freeze Chance Cap +{{value}}%",
+    "critChancePct": "Crit Chance +{{value}}%",
+    "lifestealPct": "Lifesteal +{{value}}%",
     "separator": ", ",
     "multiplierSuffix": " (×{{value}})"
   },

@@ -84,6 +84,10 @@
     "igniteChance": "Brand-Chance +{{value}}%",
     "freezeChance": "Frier-Chance +{{value}}%",
     "hpRegen": "HP regen +{{value}}/s",
+    "maxHp": "Max. HP +{{value}}",
+    "freezeChanceCapPct": "Frier-Limit +{{value}}%",
+    "critChancePct": "Krit-Chance +{{value}}%",
+    "lifestealPct": "Lebensraub +{{value}}%",
     "separator": ", ",
     "multiplierSuffix": " (×{{value}})"
   },
