@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { CharacterType, Equipment, EquipmentSlot, Item, PetInstance } from '@/types';
-import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects, setActivePassiveSeason, LATEST_PASSIVE_SEASON } from '@/data/passiveTree';
+import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects, setActivePassiveSeason, setActivePassiveClass, LATEST_PASSIVE_SEASON } from '@/data/passiveTree';
 import { canUnlockUberNode, canRefundUberNode, calculateUberTreeEffects } from '@/data/uberTree';
 import { BADGES } from '@/data/badges';
 import { getPet, getPetLevelFactor, getPetUpgradeCost, PET_MAX_LEVEL } from '@/data/pets';
@@ -158,6 +158,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     // キャラのシーズンに応じてアクティブなパッシブツリーを切り替える
     // （以降の calculatePassiveEffects / canUnlockNode 等が正しいツリーを参照する）
     setActivePassiveSeason(character.season);
+    setActivePassiveClass(character.type);
 
     // 装備を読み込み（Item JSONを直接取得）
     const equipmentRecords = await equipmentRepository.getAll(characterId);
@@ -618,6 +619,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
   clear: () => {
     // アクティブツリーも最新シーズンに戻す（次の loadCharacter で必ず上書きされるが安全策）
     setActivePassiveSeason(LATEST_PASSIVE_SEASON);
+    setActivePassiveClass(undefined);
     set(initialState);
   },
 

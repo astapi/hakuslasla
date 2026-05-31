@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable, Image, ImageSourcePropType } from 'r
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { getAllPassiveNodes, canUnlockNode, canRefundNode } from '@/data/passiveTree';
-import { PassiveNode, PassiveEffect } from '@/types';
+import { PassiveNode, PassiveEffect, PassiveIconType } from '@/types';
 import {
   GestureDetector,
   Gesture,
@@ -57,8 +57,8 @@ const COLORS = {
   glowCanUnlock: '#FFD700',
 };
 
-// アイコンタイプ
-type IconType = 'atk' | 'hp' | 'def' | 'poison' | 'crit' | 'regen' | 'guard' | 'vamp' | 'special' | 'legendary' | 'speed';
+// アイコンタイプ（型定義は @/types に集約）
+type IconType = PassiveIconType;
 
 // パッシブアイコン画像
 const ICON_IMAGES: Record<IconType, ImageSourcePropType> = {
@@ -138,6 +138,16 @@ const getIconType = (effect: PassiveEffect): IconType => {
 
 // ノードの強さを判定
 const getNodeSize = (node: PassiveNode): number => {
+  // nodeType が明示されていればそれを優先（S3型ツリー）
+  if (node.nodeType) {
+    switch (node.nodeType) {
+      case 'keystone': return NODE_SIZE_KEYSTONE;
+      case 'start':
+      case 'notable': return NODE_SIZE_LARGE;
+      case 'mastery': return NODE_SIZE_MEDIUM;
+      case 'minor': return NODE_SIZE_SMALL;
+    }
+  }
   const effect = node.effect;
   // キーストーン判定
   if (node.id.includes('final') || node.id.includes('key') || effect.no_direct_damage) {
@@ -447,7 +457,7 @@ export const PassiveTree = () => {
               const canUnlock = canUnlockNode(node.id, unlockedSkills) && skillPoints > 0;
               const position = getNodePosition(node);
               const size = getNodeSize(node);
-              const iconType = getIconType(node.effect);
+              const iconType = node.iconType ?? getIconType(node.effect);
               const isKeystone = size === NODE_SIZE_KEYSTONE;
               const iconSize = size * (isKeystone ? 1 : 0.55);
 
