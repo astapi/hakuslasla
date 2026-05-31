@@ -271,6 +271,17 @@ export interface PassiveNodePosition {
 // 例: ["a", ["b", "c"]] → a AND (b OR c)
 export type NodeRequirement = string | string[];
 
+// パッシブノードのアイコンタイプ（UI表示用）
+// 注意: 新しい値を追加したら PassiveTree.tsx の ICON_IMAGES / ICON_BG_COLORS も対応させること
+export type PassiveIconType =
+  | 'atk' | 'hp' | 'def'
+  | 'poison' | 'crit' | 'regen' | 'guard' | 'vamp' | 'speed'
+  | 'special' | 'legendary';
+
+// パッシブノードの種別（UI表示・サイズ判定用）
+// minor=小ノード / notable=大ノード / keystone=キーストーン / start=スタート / mastery=マスタリー
+export type PassiveNodeType = 'start' | 'minor' | 'notable' | 'keystone' | 'mastery';
+
 // パッシブノード定義（JSON用）
 export interface PassiveNodeData {
   id: string;
@@ -279,11 +290,18 @@ export interface PassiveNodeData {
   effect: PassiveEffect;
   requiredNodes: NodeRequirement[];  // 前提ノード条件
   position: PassiveNodePosition;
+  // --- 以下はS3型ツリー用の明示メタ情報（optional・未設定ならUI側が従来推定にフォールバック） ---
+  nodeType?: PassiveNodeType;   // ノード種別（サイズ判定を明示）
+  iconType?: PassiveIconType;   // アイコンを明示（id/effectからの推定をやめる）
+  class?: CharacterType;        // クラススタート / クラスター帰属（任意・将来のフィルタ表示用）
 }
 
 // パッシブツリー定義（JSON用）
 export interface PassiveTreeData {
   startNodeId: string;
+  // クラス別スタートノード（S3型ツリー用・optional）。
+  // 未設定なら全クラスが startNodeId を共通スタートに使う（S2ツリー互換）。
+  startNodeIds?: Partial<Record<CharacterType, string>>;
   nodes: PassiveNodeData[];
 }
 
@@ -295,6 +313,7 @@ export interface PassiveNode extends PassiveNodeData {
 // パッシブツリー（ランタイム用）
 export interface PassiveTree {
   startNodeId: string;
+  startNodeIds?: Partial<Record<CharacterType, string>>;  // クラス別スタート（S3型）
   nodes: Map<string, PassiveNode>;
 }
 

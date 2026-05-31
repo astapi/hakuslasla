@@ -1,16 +1,29 @@
 {
   "startNodeId": "start",
+  "startNodeIds": {
+    "warrior": "warrior_start",
+    "elementalist": "elementalist_start",
+    "ranger": "ranger_start",
+    "frostmage": "frostmage_start",
+    "tamer": "tamer_start"
+  },
   "nodes": [
+    {"id": "warrior_start", "name": "戦士の構え", "description": "ATK +5, HP +20", "effect": { "atk": 5, "hp": 20 }, "nodeType": "start", "iconType": "atk", "class": "warrior", "requiredNodes": [], "position": { "x": 3.5, "y": -2 }},
+    {"id": "elementalist_start", "name": "魔導の素養", "description": "ATK +5, HP +15", "effect": { "atk": 5, "hp": 15 }, "nodeType": "start", "iconType": "special", "class": "elementalist", "requiredNodes": [], "position": { "x": -5, "y": 2.5 }},
+    {"id": "ranger_start", "name": "狩人の心得", "description": "ATK +4, HP +20", "effect": { "atk": 4, "hp": 20 }, "nodeType": "start", "iconType": "poison", "class": "ranger", "requiredNodes": [], "position": { "x": 0, "y": -2.5 }},
+    {"id": "frostmage_start", "name": "氷術の素養", "description": "ATK +4, HP +20, DEF +2", "effect": { "atk": 4, "hp": 20, "def": 2 }, "nodeType": "start", "iconType": "special", "class": "frostmage", "requiredNodes": [], "position": { "x": -3, "y": -1.8 }},
+    {"id": "tamer_start", "name": "調教師の絆", "description": "HP +25, DEF +2", "effect": { "hp": 25, "def": 2 }, "nodeType": "start", "iconType": "special", "class": "tamer", "requiredNodes": [], "position": { "x": 0, "y": 3 }},
     {
       "id": "start",
       "name": "冒険者の素質",
       "description": "HP +30, ATK +5, DEF +3",
       "effect": { "hp": 30, "atk": 5, "def": 3 },
-      "requiredNodes": [],
+      "nodeType": "notable",
+      "requiredNodes": [["warrior_start", "elementalist_start", "ranger_start", "frostmage_start", "tamer_start"]],
       "position": { "x": 0, "y": 0 }
     },
 
-    {"id": "poison_1", "name": "毒の心得", "description": "HP +20, 毒付与率 +8%", "effect": { "hp": 20, "poison_chance": 8 }, "requiredNodes": [["start", "poison_2"]], "position": { "x": 0, "y": -1 }},
+    {"id": "poison_1", "name": "毒の心得", "description": "HP +20, 毒付与率 +8%", "effect": { "hp": 20, "poison_chance": 8 }, "requiredNodes": [["start", "poison_2", "ranger_start"]], "position": { "x": 0, "y": -1 }},
     {"id": "poison_2", "name": "毒の知識 I", "description": "HP +20, 毒付与率 +8%", "effect": { "hp": 20, "poison_chance": 8 }, "requiredNodes": [["poison_1", "poison_3", "poison_4"]], "position": { "x": 0, "y": -2 }},
     {"id": "poison_3", "name": "体力強化", "description": "HP +20", "effect": { "hp": 20 }, "requiredNodes": [["poison_2", "poison_5"]], "position": { "x": -1, "y": -2.5 }},
     {"id": "poison_4", "name": "防御強化", "description": "DEF +3", "effect": { "def": 3 }, "requiredNodes": [["poison_2", "poison_5"]], "position": { "x": 1, "y": -2.5 }},
@@ -35,7 +48,7 @@
     {"id": "poison_final1", "name": "毒蛇の化身", "description": "毒付与率 +15%, 毒ダメージ 20% more", "effect": { "poison_chance": 15, "poison_damage_more_pct": 20 }, "requiredNodes": ["poison_17"], "position": { "x": 0, "y": -17 }},
     {"id": "poison_final2", "name": "純粋毒【キーストーン】", "description": "通常ダメージを与えられなくなる。毒ダメージ 50% more", "effect": { "no_direct_damage": true, "poison_damage_more_pct": 50 }, "requiredNodes": ["poison_final1"], "position": { "x": 0, "y": -18 }},
 
-    {"id": "crit_1", "name": "急所の心得", "description": "ATK +15, HP +10, クリティカル率 +3%", "effect": { "atk": 15, "hp": 10, "critical_chance": 3 }, "requiredNodes": [["start", "crit_2"]], "position": { "x": 2, "y": -0.5 }},
+    {"id": "crit_1", "name": "急所の心得", "description": "ATK +15, HP +10, クリティカル率 +3%", "effect": { "atk": 15, "hp": 10, "critical_chance": 3 }, "requiredNodes": [["start", "crit_2", "warrior_start"]], "position": { "x": 2, "y": -0.5 }},
     {"id": "crit_2", "name": "急所狙い I", "description": "ATK +10, HP +10, クリティカル率 +3%", "effect": { "atk": 10, "hp": 10, "critical_chance": 3 }, "requiredNodes": [["crit_1", "crit_3", "crit_4"]], "position": { "x": 3, "y": -1 }},
     {"id": "crit_3", "name": "攻撃強化", "description": "ATK +5", "effect": { "atk": 5 }, "requiredNodes": [["crit_2", "crit_5"]], "position": { "x": 3.5, "y": -2 }},
     {"id": "crit_4", "name": "致命打 I", "description": "クリティカルダメージ +30%", "effect": { "critical_damage": 30 }, "requiredNodes": [["crit_2", "crit_5"]], "position": { "x": 4.5, "y": -1.5 }},
@@ -147,7 +160,7 @@
     {"id": "regen_final1", "name": "不死鳥の祝福", "description": "HP 25% more, 毎秒HP +25回復", "effect": { "hp_more_pct": 25, "hp_regen": 25 }, "requiredNodes": ["regen_17"], "position": { "x": -11.5, "y": -17 }},
     {"id": "regen_final2", "name": "永遠の生命", "description": "毎秒HP 4%回復", "effect": { "hp_regen_pct": 4 }, "requiredNodes": ["regen_final1"], "position": { "x": -12, "y": -18 }},
 
-    {"id": "speed_1", "name": "迅速の心得", "description": "ATK +3, 攻撃速度 +5%", "effect": { "atk": 3, "attack_speed_pct": 5 }, "requiredNodes": [["start", "speed_2"]], "position": { "x": 0, "y": 1 }},
+    {"id": "speed_1", "name": "迅速の心得", "description": "ATK +3, 攻撃速度 +5%", "effect": { "atk": 3, "attack_speed_pct": 5 }, "requiredNodes": [["start", "speed_2", "warrior_start"]], "position": { "x": 0, "y": 1 }},
     {"id": "speed_2", "name": "俊敏 I", "description": "攻撃速度 +5%", "effect": { "attack_speed_pct": 5 }, "requiredNodes": [["speed_1", "speed_3", "speed_4"]], "position": { "x": 0, "y": 2 }},
     {"id": "speed_3", "name": "素早い一撃", "description": "ATK +5", "effect": { "atk": 5 }, "requiredNodes": [["speed_2", "speed_5"]], "position": { "x": -1, "y": 2.5 }},
     {"id": "speed_4", "name": "軽快な動き", "description": "攻撃速度 +5%", "effect": { "attack_speed_pct": 5 }, "requiredNodes": [["speed_2", "speed_5"]], "position": { "x": 1, "y": 2.5 }},
@@ -164,7 +177,7 @@
     {"id": "speed_final1", "name": "電光石火", "description": "攻撃速度 15% more", "effect": { "attack_speed_more_pct": 15 }, "requiredNodes": ["speed_13"], "position": { "x": 0, "y": 11 }},
     {"id": "speed_final2", "name": "神速", "description": "攻撃速度 20% more, ATK 10% more", "effect": { "attack_speed_more_pct": 20, "atk_more_pct": 10 }, "requiredNodes": ["speed_final1"], "position": { "x": 0, "y": 12 }},
 
-    {"id": "ignite_1", "name": "発火の心得", "description": "HP +20, 発火確率 +6%, 発火ダメージ +10%", "effect": { "hp": 20, "ignite_chance": 6, "ignite_damage_pct": 10 }, "requiredNodes": ["vamp_key1"], "position": { "x": -7, "y": 5 }},
+    {"id": "ignite_1", "name": "発火の心得", "description": "HP +20, 発火確率 +6%, 発火ダメージ +10%", "effect": { "hp": 20, "ignite_chance": 6, "ignite_damage_pct": 10 }, "requiredNodes": [["vamp_key1", "elementalist_start"]], "position": { "x": -7, "y": 5 }},
     {"id": "ignite_2", "name": "発火強化 I", "description": "発火確率 +6%, 発火ダメージ +10%", "effect": { "ignite_chance": 6, "ignite_damage_pct": 10 }, "requiredNodes": [["ignite_1", "ignite_3", "ignite_4"]], "position": { "x": -8, "y": 5 }},
     {"id": "ignite_3", "name": "体力と防御 I", "description": "HP +25, DEF +10, 発火確率 +6%", "effect": { "hp": 25, "def": 10, "ignite_chance": 6 }, "requiredNodes": [["ignite_2", "ignite_5"]], "position": { "x": -8.5, "y": 4.5 }},
     {"id": "ignite_4", "name": "生命力増幅 I", "description": "DEF +10, HP +10% increased, 発火確率 +6%", "effect": { "def": 10, "hp_increased_pct": 10, "ignite_chance": 6 }, "requiredNodes": [["ignite_2", "ignite_5"]], "position": { "x": -8.5, "y": 5.5 }},
@@ -179,7 +192,7 @@
     {"id": "ignite_final1", "name": "灼熱の極み", "description": "発火確率 +6%, 発火ダメージ 25% more, HP +10% increased", "effect": { "ignite_chance": 6, "ignite_damage_more_pct": 25, "hp_increased_pct": 10 }, "requiredNodes": ["ignite_11"], "position": { "x": -17.5, "y": 5 }},
     {"id": "ignite_final2", "name": "伝染する炎", "description": "【キーストーン】発火確率 +6%, イグナイト伝染 - 発火中の敵死亡時、次の敵に発火継承。DEF +10% increased", "effect": { "ignite_chance": 6, "ignite_spread": true, "def_increased_pct": 10 }, "requiredNodes": ["ignite_final1"], "position": { "x": -18.5, "y": 5 }},
 
-    {"id": "ice_1", "name": "氷の心得", "description": "HP +15, チル付与率 +3%", "effect": { "hp": 15, "chill_chance": 3 }, "requiredNodes": [["start", "ice_2"]], "position": { "x": -1.5, "y": -0.5 }},
+    {"id": "ice_1", "name": "氷の心得", "description": "HP +15, チル付与率 +3%", "effect": { "hp": 15, "chill_chance": 3 }, "requiredNodes": [["start", "ice_2", "frostmage_start"]], "position": { "x": -1.5, "y": -0.5 }},
     {"id": "ice_2", "name": "冷気の知識 I", "description": "チル付与率 +3%", "effect": { "chill_chance": 3 }, "requiredNodes": [["ice_1", "ice_3", "ice_4"]], "position": { "x": -2, "y": -1.5 }},
     {"id": "ice_3", "name": "氷の防壁", "description": "DEF +5, チル効果 +10%", "effect": { "def": 5, "chill_effect_pct": 10 }, "requiredNodes": [["ice_2", "ice_5"]], "position": { "x": -2.5, "y": -2 }},
     {"id": "ice_4", "name": "冷気持続", "description": "チル持続時間 +20%", "effect": { "chill_duration_pct": 20 }, "requiredNodes": [["ice_2", "ice_5"]], "position": { "x": -1.5, "y": -2 }},

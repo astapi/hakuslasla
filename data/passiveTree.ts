@@ -8,6 +8,7 @@ import {
   PassiveNode,
   PassiveTree,
   NodeRequirement,
+  CharacterType,
 } from '@/types';
 
 import passiveTreeJsonLegacy from './json/passiveTree.json';
@@ -67,6 +68,7 @@ function buildPassiveTree(data: PassiveTreeData): PassiveTree {
 
   return {
     startNodeId: data.startNodeId,
+    startNodeIds: data.startNodeIds,
     nodes: nodesMap,
   };
 }
@@ -91,11 +93,58 @@ function treeForSeason(season: number): PassiveTree {
 let activeTree: PassiveTree = treeForSeason(LATEST_PASSIVE_SEASON);
 
 /**
+ * ロード中キャラのクラス（クラス別スタート解決用）
+ * 未設定 or ツリーに startNodeIds が無ければ共通 startNodeId を使う。
+ */
+let activeClass: CharacterType | undefined = undefined;
+
+/**
  * アクティブなパッシブツリーをシーズンで切り替える
  * usePlayerStore.loadCharacter から呼び出す。
  */
 export function setActivePassiveSeason(season: number): void {
   activeTree = treeForSeason(season);
+}
+
+/**
+ * ロード中キャラのクラスを設定する（クラス別スタートの解決に使用）
+ * usePlayerStore.loadCharacter から setActivePassiveSeason と並べて呼び出す。
+ */
+export function setActivePassiveClass(type: CharacterType | undefined): void {
+  activeClass = type;
+}
+
+/**
+ * 現在アクティブなクラスのスタートノードIDを取得する。
+ * - ツリーに startNodeIds があり、activeClass の対応があればそれを返す
+ * - なければ共通 startNodeId（S2互換）
+ */
+export function getStartNodeId(): string {
+  if (activeTree.startNodeIds) {
+    if (activeClass) {
+      const id = activeTree.startNodeIds[activeClass];
+      if (id) return id;
+    }
+    // activeClass 未設定（scripts/テスト/キャラ未ロード）でもクラス別スタートを持つツリーでは、
+    // 最初のクラススタートを既定起点にする（取得不能化を防ぐ）。
+    const first = Object.values(activeTree.startNodeIds).find((id) => !!id);
+    if (first) return first;
+  }
+  return activeTree.startNodeId;
+}
+
+/**
+ * 全クラスのスタートノードIDの集合を返す（リスペック保護・初期解放判定用）。
+ * startNodeIds が無ければ共通 startNodeId のみ。
+ */
+export function getAllStartNodeIds(): string[] {
+  const ids = new Set<string>([activeTree.startNodeId]);
+  if (activeTree.startNodeIds) {
+    for (const id of Object.values(activeTree.startNodeIds)) {
+      if (id) ids.add(id);
+    }
+  }
+  return Array.from(ids);
 }
 
 /**
@@ -116,7 +165,7 @@ export function getPassiveNode(id: string): PassiveNode | undefined {
  * スタートノードを取得
  */
 export function getStartNode(): PassiveNode | undefined {
-  return activeTree.nodes.get(activeTree.startNodeId);
+  return activeTree.nodes.get(getStartNodeId());
 }
 
 /**
@@ -162,8 +211,14 @@ export function canUnlockNode(nodeId: string, unlockedNodes: string[]): boolean 
   // 既に取得済み
   if (unlockedNodes.includes(nodeId)) return false;
 
-  // 前提ノードがない場合は取得可能
-  if (node.requiredNodes.length === 0) return true;
+  // 前提ノードがない（=スタート候補）の場合
+  // クラス別スタートでは複数のスタートノードが requiredNodes 空で存在しうるため、
+  // 「現在のクラスのスタートノード」だけを無条件取得可能にする。
+  // 他クラスのスタートノードは起点専用（通過点にしない）= 取得不可。
+  // startNodeIds が無いツリー（S2）では getStartNodeId() が共通 startNodeId を返すため従来挙動。
+  if (node.requiredNodes.length === 0) {
+    return nodeId === getStartNodeId();
+  }
 
   // 全ての条件がtrueである必要がある（AND条件）
   // 各条件内でOR条件が使える
@@ -180,7 +235,8 @@ export function canUnlockNode(nodeId: string, unlockedNodes: string[]): boolean 
 export function canRefundNode(nodeId: string, unlockedNodes: string[]): boolean {
   const node = getPassiveNode(nodeId);
   if (!node) return false;
-  if (nodeId === activeTree.startNodeId) return false;
+  // 全クラスのスタートノードは返却不可（他クラスのスタートも幹の通過点になりうる）
+  if (getAllStartNodeIds().includes(nodeId)) return false;
   if (!unlockedNodes.includes(nodeId)) return false;
 
   const remaining = unlockedNodes.filter((id) => id !== nodeId);
