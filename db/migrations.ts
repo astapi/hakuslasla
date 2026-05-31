@@ -469,6 +469,17 @@ export const migrations: Migration[] = [
       `);
     },
   },
+  {
+    // V13 → V14: キャラクターに season カラムを追加
+    // 既存キャラ（シーズン2以前に作成）は全員 season=2 とし、シーズン2のスキルツリー・
+    // ランキングのまま継続プレイできるようにする。新規作成キャラは作成時のシーズンを記録する。
+    version: 14,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      await db.execAsync(`
+        ALTER TABLE characters ADD COLUMN season INTEGER NOT NULL DEFAULT 2;
+      `);
+    },
+  },
 ];
 
 /**

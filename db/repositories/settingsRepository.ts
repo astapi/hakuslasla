@@ -294,8 +294,10 @@ export const settingsRepository = {
   },
 
   // 次元回廊の最高記録（キャラクターごと・シーズンごと）
-  async getDimensionalCorridorBest(characterId: number): Promise<number> {
-    const suffix = getSeasonKeySuffix();
+  // season を渡すとそのシーズンのキーを使う（省略時は getCurrentSeason()）。
+  // 旧シーズンのキャラはそのシーズンのキーで記録を引き継ぐ。
+  async getDimensionalCorridorBest(characterId: number, season?: number): Promise<number> {
+    const suffix = getSeasonKeySuffix(season);
     const key = `${DIMENSIONAL_CORRIDOR_BEST_KEY}${suffix}_${characterId}`;
     const value = await this.get(key);
     if (!value) return 0;
@@ -303,10 +305,10 @@ export const settingsRepository = {
     return Number.isFinite(parsed) ? parsed : 0;
   },
 
-  async setDimensionalCorridorBest(characterId: number, floor: number): Promise<boolean> {
-    const suffix = getSeasonKeySuffix();
+  async setDimensionalCorridorBest(characterId: number, floor: number, season?: number): Promise<boolean> {
+    const suffix = getSeasonKeySuffix(season);
     const key = `${DIMENSIONAL_CORRIDOR_BEST_KEY}${suffix}_${characterId}`;
-    const current = await this.getDimensionalCorridorBest(characterId);
+    const current = await this.getDimensionalCorridorBest(characterId, season);
     if (floor <= current) return false; // 記録更新なし
     await this.set(key, floor.toString());
     return true; // 記録更新あり

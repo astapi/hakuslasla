@@ -176,10 +176,11 @@ export default function DungeonSelectScreen() {
       });
     }
 
-    // 次元回廊の最高到達階を取得
+    // 次元回廊の最高到達階を取得（キャラのシーズンのキーで取得）
     const characterId = usePlayerStore.getState().characterId;
     if (characterId) {
-      const best = await settingsRepository.getDimensionalCorridorBest(characterId);
+      const season = usePlayerStore.getState().season;
+      const best = await settingsRepository.getDimensionalCorridorBest(characterId, season);
       setDimensionalCorridorBest(best);
     }
 

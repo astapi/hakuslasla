@@ -63,6 +63,8 @@ export interface Character {
   maxHp: number;
   atk: number;
   def: number;
+  /** キャラクターが属するシーズン（作成時に固定）。スキルツリー/ランキングの振り分けに使用 */
+  season: number;
   createdAt: string;
   updatedAt: string;
 }
