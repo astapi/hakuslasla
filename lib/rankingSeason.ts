@@ -13,7 +13,7 @@ import Constants from 'expo-constants';
  * 例: ['1.3.0'] → v1.3.0 以降は Season 2
  * 例: ['1.3.0', '1.5.0'] → v1.5.0 以降は Season 3
  */
-export const RANKING_RESET_VERSIONS: string[] = ['1.3.0'];
+export const RANKING_RESET_VERSIONS: string[] = ['1.3.0', '2.0.0'];
 
 /**
  * semver比較: a < b → -1, a == b → 0, a > b → 1
