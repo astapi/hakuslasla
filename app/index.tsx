@@ -106,7 +106,24 @@ export default function CharacterSelectScreen() {
                   resizeMode="contain"
                 />
                 <View style={styles.characterInfo}>
-                  <Text style={styles.characterName}>{character.name}</Text>
+                  <View style={styles.characterNameRow}>
+                    <Text style={styles.characterName}>{character.name}</Text>
+                    <View
+                      style={[
+                        styles.seasonBadge,
+                        character.season >= 3 ? styles.seasonBadgeS3 : styles.seasonBadgeLegacy,
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.seasonBadgeText,
+                          character.season >= 3 ? styles.seasonBadgeTextS3 : styles.seasonBadgeTextLegacy,
+                        ]}
+                      >
+                        S{character.season}
+                      </Text>
+                    </View>
+                  </View>
                   <Text style={styles.characterLevel}>Lv.{character.level}</Text>
                 </View>
                 <View style={styles.characterStats}>
@@ -210,11 +227,40 @@ const styles = StyleSheet.create({
   characterInfo: {
     flex: 1,
   },
+  characterNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: ms(4),
+  },
   characterName: {
     fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: ms(4),
+  },
+  seasonBadge: {
+    marginLeft: ms(8),
+    paddingHorizontal: ms(6),
+    paddingVertical: ms(2),
+    borderRadius: ms(4),
+    borderWidth: 1,
+  },
+  seasonBadgeS3: {
+    backgroundColor: 'rgba(255, 215, 0, 0.15)',
+    borderColor: '#FFD700',
+  },
+  seasonBadgeLegacy: {
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    borderColor: '#888',
+  },
+  seasonBadgeText: {
+    fontSize: fs(11),
+    fontWeight: 'bold',
+  },
+  seasonBadgeTextS3: {
+    color: '#FFD700',
+  },
+  seasonBadgeTextLegacy: {
+    color: '#aaa',
   },
   characterLevel: {
     fontSize: fs(14),
