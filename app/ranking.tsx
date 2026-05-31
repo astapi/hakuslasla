@@ -8,7 +8,7 @@ import { Button } from '@/components/common/Button';
 import { RankingList } from '@/components/ranking/RankingList';
 import { getRankings, isCacheValid, getCacheRemainingTime } from '@/lib/rankingCache';
 import { getDeviceId, RankingEntryWithRank } from '@/lib/firestore';
-import { getCurrentSeason } from '@/lib/rankingSeason';
+import { usePlayerStore } from '@/stores/usePlayerStore';
 import { ms, fs } from '@/utils/scaling';
 
 export default function RankingScreen() {
@@ -21,12 +21,15 @@ export default function RankingScreen() {
   const [myDeviceId, setMyDeviceId] = useState<string | undefined>();
   const [cacheInfo, setCacheInfo] = useState<string>('');
 
+  // ロード中キャラのシーズン（S2キャラはS2ランキング、S3キャラはS3ランキングを表示）
+  const viewSeason = usePlayerStore((state) => state.season);
+
   const loadRankings = useCallback(async (forceRefresh = false) => {
     setLoading(true);
     setError(null);
 
     try {
-      const data = await getRankings(forceRefresh);
+      const data = await getRankings(forceRefresh, viewSeason);
       setRankings(data);
       updateCacheInfo();
     } catch (err) {
@@ -35,7 +38,7 @@ export default function RankingScreen() {
     } finally {
       setLoading(false);
     }
-  }, [t]);
+  }, [t, viewSeason]);
 
   const updateCacheInfo = () => {
     if (isCacheValid()) {
@@ -73,7 +76,7 @@ export default function RankingScreen() {
           <Text style={styles.title}>{t('ranking.title')}</Text>
           <Text style={styles.subtitle}>
             {t('ranking.dimensionalCorridor')}
-            {getCurrentSeason() > 1 && ` - ${t('ranking.season', { season: getCurrentSeason() })}`}
+            {viewSeason > 1 && ` - ${t('ranking.season', { season: viewSeason })}`}
           </Text>
           {cacheInfo && <Text style={styles.cacheInfo}>{cacheInfo}</Text>}
         </View>

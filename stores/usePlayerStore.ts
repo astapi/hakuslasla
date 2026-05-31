@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { CharacterType, Equipment, EquipmentSlot, Item, PetInstance } from '@/types';
-import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects } from '@/data/passiveTree';
+import { getPassiveNode, canUnlockNode, canRefundNode, calculatePassiveEffects, setActivePassiveSeason, LATEST_PASSIVE_SEASON } from '@/data/passiveTree';
 import { canUnlockUberNode, canRefundUberNode, calculateUberTreeEffects } from '@/data/uberTree';
 import { BADGES } from '@/data/badges';
 import { getPet, getPetLevelFactor, getPetUpgradeCost, PET_MAX_LEVEL } from '@/data/pets';
@@ -41,6 +41,7 @@ interface PlayerState {
   characterId: number | null;
   characterName: string;
   characterType: CharacterType;
+  season: number; // ロード中キャラのシーズン（スキルツリー/ランキングの振り分けに使用）
   level: number;
   exp: number;
   expToNextLevel: number;
@@ -127,6 +128,7 @@ const initialState: PlayerState = {
   characterId: null,
   characterName: '',
   characterType: 'warrior',
+  season: LATEST_PASSIVE_SEASON,
   level: 1,
   exp: 0,
   expToNextLevel: getExpToNextLevel(1),
@@ -152,6 +154,10 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
   loadCharacter: async (characterId: number) => {
     const character = await characterRepository.getById(characterId);
     if (!character) throw new Error('Character not found');
+
+    // キャラのシーズンに応じてアクティブなパッシブツリーを切り替える
+    // （以降の calculatePassiveEffects / canUnlockNode 等が正しいツリーを参照する）
+    setActivePassiveSeason(character.season);
 
     // 装備を読み込み（Item JSONを直接取得）
     const equipmentRecords = await equipmentRepository.getAll(characterId);
@@ -189,6 +195,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       characterId: character.id,
       characterName: character.name,
       characterType: character.type,
+      season: character.season,
       level: character.level,
       exp: character.exp,
       expToNextLevel: getExpToNextLevel(character.level),
@@ -609,6 +616,8 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
   },
 
   clear: () => {
+    // アクティブツリーも最新シーズンに戻す（次の loadCharacter で必ず上書きされるが安全策）
+    setActivePassiveSeason(LATEST_PASSIVE_SEASON);
     set(initialState);
   },
 

@@ -1,5 +1,6 @@
 import { getDatabase, createCharacterWithEquipmentSlots } from '../database';
 import { Character, CharacterType, CreateCharacterInput, UpdateCharacterStats } from '@/types';
+import { getCurrentSeason } from '@/lib/rankingSeason';
 
 interface CharacterRow {
   id: number;
@@ -11,6 +12,7 @@ interface CharacterRow {
   max_hp: number;
   atk: number;
   def: number;
+  season: number;
   created_at: string;
   updated_at: string;
 }
@@ -25,6 +27,7 @@ const rowToCharacter = (row: CharacterRow): Character => ({
   maxHp: row.max_hp,
   atk: row.atk,
   def: row.def,
+  season: row.season,
   createdAt: row.created_at,
   updatedAt: row.updated_at,
 });
@@ -42,13 +45,16 @@ export const characterRepository = {
   async create(input: CreateCharacterInput): Promise<Character> {
     const db = await getDatabase();
     const baseStats = CLASS_BASE_STATS[input.type];
+    // 作成時のシーズンを固定で記録（以降このキャラはそのシーズンのツリー/ランキングを使う）
+    const season = getCurrentSeason();
     const result = await db.runAsync(
-      'INSERT INTO characters (name, type, max_hp, atk, def) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO characters (name, type, max_hp, atk, def, season) VALUES (?, ?, ?, ?, ?, ?)',
       input.name,
       input.type,
       baseStats.maxHp,
       baseStats.atk,
-      baseStats.def
+      baseStats.def,
+      season
     );
     const characterId = result.lastInsertRowId;
 

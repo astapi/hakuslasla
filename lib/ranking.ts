@@ -20,10 +20,11 @@ export const submitDimensionalCorridorScore = async (
     return false;
   }
 
-  // ローカルで記録更新チェック
+  // ローカルで記録更新チェック（キャラのシーズンのキーで記録）
   const isNewRecord = await settingsRepository.setDimensionalCorridorBest(
     state.characterId,
-    floorReached
+    floorReached,
+    state.season
   );
 
   if (!isNewRecord) {
@@ -99,6 +100,7 @@ export const submitDimensionalCorridorScore = async (
       floorReached,
       stats: rankingStats,
       build,
+      season: state.season,
     });
     console.log('[Ranking] Score submitted:', floorReached);
     return true;

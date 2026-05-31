@@ -10,10 +10,23 @@ import {
   NodeRequirement,
 } from '@/types';
 
-import passiveTreeJson from './json/passiveTree.json';
+import passiveTreeJsonLegacy from './json/passiveTree.json';
+import passiveTreeJsonS3 from './json/passiveTree_s3.json';
+
+/**
+ * シーズン別パッシブツリーの最新シーズン番号
+ * 注意: expo-constants 非依存にするためハードコード（scripts(Node実行)でも読めるように）
+ * 将来シーズンを増やす場合はこの定数・treeForSeason の分岐・新JSON・lib/rankingSeason を更新する
+ */
+export const LATEST_PASSIVE_SEASON = 3;
 
 // JSONデータの型アサーション
-const passiveTreeData: PassiveTreeData = passiveTreeJson as PassiveTreeData;
+// legacy: シーズン2以前用 / s3: シーズン3用
+const passiveTreeDataLegacy: PassiveTreeData = passiveTreeJsonLegacy as PassiveTreeData;
+const passiveTreeDataS3: PassiveTreeData = passiveTreeJsonS3 as PassiveTreeData;
+
+// 後方互換APIの参照先（旧 passiveTreeData 相当 = legacy）
+const passiveTreeData = passiveTreeDataLegacy;
 
 /**
  * NodeRequirementから全ての参照ノードIDを抽出
@@ -58,35 +71,59 @@ function buildPassiveTree(data: PassiveTreeData): PassiveTree {
   };
 }
 
-// パッシブツリーのシングルトンインスタンス
-const passiveTree: PassiveTree = buildPassiveTree(passiveTreeData);
+// シーズン別パッシブツリーのインスタンス（モジュールロード時に両方構築）
+const legacyTree: PassiveTree = buildPassiveTree(passiveTreeDataLegacy);
+const s3Tree: PassiveTree = buildPassiveTree(passiveTreeDataS3);
+
+/**
+ * シーズン番号に対応するパッシブツリーを返す
+ * season >= 3 → S3ツリー / season <= 2 → 旧（legacy）ツリー
+ */
+function treeForSeason(season: number): PassiveTree {
+  return season >= 3 ? s3Tree : legacyTree;
+}
+
+/**
+ * 現在アクティブなパッシブツリー
+ * ロード中キャラのシーズンに応じて setActivePassiveSeason で切り替える。
+ * デフォルトは最新シーズン（scripts/初期表示用）。
+ */
+let activeTree: PassiveTree = treeForSeason(LATEST_PASSIVE_SEASON);
+
+/**
+ * アクティブなパッシブツリーをシーズンで切り替える
+ * usePlayerStore.loadCharacter から呼び出す。
+ */
+export function setActivePassiveSeason(season: number): void {
+  activeTree = treeForSeason(season);
+}
 
 /**
  * パッシブツリーを取得
  */
 export function getPassiveTree(): PassiveTree {
-  return passiveTree;
+  return activeTree;
 }
 
 /**
  * ノードをIDで取得
  */
 export function getPassiveNode(id: string): PassiveNode | undefined {
-  return passiveTree.nodes.get(id);
+  return activeTree.nodes.get(id);
 }
 
 /**
  * スタートノードを取得
  */
 export function getStartNode(): PassiveNode | undefined {
-  return passiveTree.nodes.get(passiveTree.startNodeId);
+  return activeTree.nodes.get(activeTree.startNodeId);
 }
 
 /**
  * 全ノードを配列で取得
  */
 export function getAllPassiveNodes(): PassiveNode[] {
-  return Array.from(passiveTree.nodes.values());
+  return Array.from(activeTree.nodes.values());
 }
 
 /**
@@ -143,7 +180,7 @@ export function canUnlockNode(nodeId: string, unlockedNodes: string[]): boolean 
 export function canRefundNode(nodeId: string, unlockedNodes: string[]): boolean {
   const node = getPassiveNode(nodeId);
   if (!node) return false;
-  if (nodeId === passiveTree.startNodeId) return false;
+  if (nodeId === activeTree.startNodeId) return false;
   if (!unlockedNodes.includes(nodeId)) return false;
 
   const remaining = unlockedNodes.filter((id) => id !== nodeId);
@@ -175,7 +212,7 @@ export function getUnlockableNodes(unlockedNodes: string[]): PassiveNode[] {
 export function getNodeConnections(): [string, string][] {
   const connections: [string, string][] = [];
 
-  for (const node of passiveTree.nodes.values()) {
+  for (const node of activeTree.nodes.values()) {
     for (const childId of node.childNodes) {
       connections.push([node.id, childId]);
     }

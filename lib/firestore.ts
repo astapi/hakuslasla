@@ -86,7 +86,8 @@ export interface RankingEntryWithRank extends RankingEntry {
 // Constants
 // ============================================
 
-const getCollectionName = () => getRankingCollectionName();
+// season を省略した場合は getRankingCollectionName 内で getCurrentSeason() が使われる（後方互換）
+const getCollectionName = (season?: number) => getRankingCollectionName(season);
 
 // ============================================
 // Device ID
@@ -115,9 +116,9 @@ export const getDeviceId = async (): Promise<string> => {
 /**
  * ランキングを取得（上位50件）
  */
-export const fetchRankings = async (): Promise<RankingEntryWithRank[]> => {
+export const fetchRankings = async (season?: number): Promise<RankingEntryWithRank[]> => {
   const db = getFirestore();
-  const rankingRef = collection(db, getCollectionName());
+  const rankingRef = collection(db, getCollectionName(season));
   const q = query(rankingRef, orderBy('floorReached', 'desc'), limit(50));
   const snapshot = await getDocs(q);
 
@@ -147,6 +148,7 @@ export const submitScore = async (params: {
   floorReached: number;
   stats: RankingStats;
   build: RankingBuild;
+  season?: number;
 }): Promise<void> => {
   // 開発環境では送信しない
   if (__DEV__) {
@@ -169,19 +171,19 @@ export const submitScore = async (params: {
   };
 
   const db = getFirestore();
-  const docRef = doc(db, getCollectionName(), docId);
+  const docRef = doc(db, getCollectionName(params.season), docId);
   await setDoc(docRef, entry);
 };
 
 /**
  * 自分のランキングエントリを取得
  */
-export const getMyRankingEntry = async (localCharId: number): Promise<RankingEntry | null> => {
+export const getMyRankingEntry = async (localCharId: number, season?: number): Promise<RankingEntry | null> => {
   const deviceId = await getDeviceId();
   const docId = `${deviceId}_${localCharId}`;
 
   const db = getFirestore();
-  const docRef = doc(db, getCollectionName(), docId);
+  const docRef = doc(db, getCollectionName(season), docId);
   const docSnap = await getDoc(docRef);
 
   if (!docSnap.exists()) return null;
