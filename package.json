@@ -11,6 +11,7 @@
     "lint": "expo lint",
     "test": "vitest",
     "test:run": "vitest run",
+    "build:s3tree": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/buildPassiveTreeS3.ts",
     "simulation": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/runSimulation.ts",
     "simulation:uber": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/runUberBossSimulation.ts",
     "analyze:bundle": "echo '\n📊 バンドルサイズを分析します...\n' && rm -rf dist && npx expo export --platform ios && echo '\n📈 分析結果:\n' && echo '----------------------------------------' && du -sh dist && echo '----------------------------------------' && echo 'JSバンドル:' && find dist/_expo/static/js -name '*.js' -exec du -h {} \\; && echo '----------------------------------------' && echo 'アセット:' && du -sh dist/assets && echo '\n💡 詳細な分析が必要な場合は、Expo Dev Toolsのプロファイラーを使用してください。'",
