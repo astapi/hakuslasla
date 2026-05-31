@@ -1,6 +1,6 @@
 {
   "_generated": "このファイルは scripts/buildPassiveTreeS3.ts が自動生成します。手で編集しないでください（base.json または DSL を編集）。",
-  "startNodeId": "start",
+  "startNodeId": "warrior_start",
   "startNodeIds": {
     "warrior": "warrior_start",
     "ranger": "ranger_start",
@@ -9,7 +9,6 @@
     "elementalist": "elementalist_start"
   },
   "nodes": [
-    {"id": "start", "name": "冒険者の素質", "description": "HP +30, ATK +5, DEF +3", "effect": {"hp":30,"atk":5,"def":3}, "nodeType": "notable", "iconType": "special", "requiredNodes": [["warrior_start","ranger_start","tamer_start","frostmage_start","elementalist_start"]], "position": {"x":0,"y":0}},
     {"id": "warrior_start", "name": "戦士の構え", "description": "HP +20, ATK +5", "effect": {"atk":5,"hp":20}, "nodeType": "start", "iconType": "atk", "class": "warrior", "requiredNodes": [], "position": {"x":-2.08,"y":-1.2}},
     {"id": "ranger_start", "name": "狩人の心得", "description": "HP +20, ATK +4", "effect": {"atk":4,"hp":20}, "nodeType": "start", "iconType": "poison", "class": "ranger", "requiredNodes": [], "position": {"x":2.08,"y":-1.2}},
     {"id": "tamer_start", "name": "調教師の絆", "description": "HP +25, DEF +2", "effect": {"hp":25,"def":2}, "nodeType": "start", "iconType": "regen", "class": "tamer", "requiredNodes": [], "position": {"x":2.08,"y":1.2}},

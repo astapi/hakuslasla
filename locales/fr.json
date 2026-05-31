@@ -1570,7 +1570,8 @@
     "placeholder": "Appuyez sur un nœud pour voir les détails",
     "respecButton": "Respec (Coût : {{count}})",
     "noRespecToken": "Aucun objet de respec",
-    "cannotRespec": "D'autres nœuds dépendent de celui-ci"
+    "cannotRespec": "D'autres nœuds dépendent de celui-ci",
+    "startHere": "DÉPART"
   },
   "passiveNodes": {
     "start": {

@@ -1570,7 +1570,8 @@
     "placeholder": "Toca un nodo para ver detalles",
     "respecButton": "Respec (Costo: {{count}})",
     "noRespecToken": "Sin objetos de respec",
-    "cannotRespec": "Otros nodos dependen de este"
+    "cannotRespec": "Otros nodos dependen de este",
+    "startHere": "INICIO"
   },
   "passiveNodes": {
     "start": {

@@ -1585,7 +1585,8 @@
     "placeholder": "Tap a node to view details",
     "respecButton": "Respec (Cost: {{count}})",
     "noRespecToken": "No respec items",
-    "cannotRespec": "Other nodes depend on this"
+    "cannotRespec": "Other nodes depend on this",
+    "startHere": "START"
   },
   "passiveNodes": {
     "start": {
