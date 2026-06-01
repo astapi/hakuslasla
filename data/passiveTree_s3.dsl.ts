@@ -145,16 +145,14 @@ const RINGS4 = [4.5, 9.5, 14.5, 20];
 export function buildS3DslNodes(): BuildResult {
   const t = radialTree();
 
-  // 中央ノード（共通フォールバック・S2互換のため id='start'）
-  t.node({ id: 'start', name: '冒険者の素質', effect: { hp: 30, atk: 5, def: 3 }, iconType: 'special' }, { ring: 0, deg: 0 }, 'notable');
-  t.setStartNodeId('start');
+  // 中央ノードは廃止（各クラスは自分のクラススタートから開始する）。
+  // 共通フォールバック startNodeId は build() が最初のクラススタートを自動採用する。
 
   // クラススタート
   for (const sec of SECTORS) {
     if (!sec.cls) continue;
     const cs = CLASS_STARTS[sec.cls];
     t.start(sec.cls, { id: cs.id, name: cs.name, effect: cs.e, iconType: cs.ic }, { ring: START_RING, deg: sec.deg });
-    t.link('start', cs.id);
   }
 
   // 各セクター: 放射の主線（リング半径ごとのジャンクション）＋セル内の枝/派生ループ

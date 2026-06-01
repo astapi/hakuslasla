@@ -1586,7 +1586,8 @@
     "placeholder": "ノードをタップして詳細を表示",
     "respecButton": "リスペック (消費: {{count}})",
     "noRespecToken": "リスペックアイテムがありません",
-    "cannotRespec": "他のノードが依存しています"
+    "cannotRespec": "他のノードが依存しています",
+    "startHere": "スタート"
   },
   "passiveNodes": {
     "start": {

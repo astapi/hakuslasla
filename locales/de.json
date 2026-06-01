@@ -1581,7 +1581,8 @@
     "placeholder": "Tippe auf einen Knoten fuer Details",
     "respecButton": "Neuverteilen (Kosten: {{count}})",
     "noRespecToken": "Keine Neuverteilungsgegenstaende",
-    "cannotRespec": "Andere Knoten sind davon abhaengig"
+    "cannotRespec": "Andere Knoten sind davon abhaengig",
+    "startHere": "START"
   },
   "passiveNodes": {
     "start": {

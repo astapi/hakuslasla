@@ -1570,7 +1570,8 @@
     "placeholder": "点击节点查看详情",
     "respecButton": "洗点（消耗：{{count}}）",
     "noRespecToken": "没有洗点道具",
-    "cannotRespec": "其他节点依赖此节点"
+    "cannotRespec": "其他节点依赖此节点",
+    "startHere": "起点"
   },
   "passiveNodes": {
     "start": {

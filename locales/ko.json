@@ -1570,7 +1570,8 @@
     "placeholder": "노드를 탭하여 자세한 정보 확인",
     "respecButton": "리스펙 (비용: {{count}})",
     "noRespecToken": "리스펙 아이템 없음",
-    "cannotRespec": "다른 노드가 이 노드에 의존함"
+    "cannotRespec": "다른 노드가 이 노드에 의존함",
+    "startHere": "시작"
   },
   "passiveNodes": {
     "start": {

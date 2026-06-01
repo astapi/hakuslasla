@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, ImageSourcePropType } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-import { getAllPassiveNodes, canUnlockNode, canRefundNode } from '@/data/passiveTree';
+import { getAllPassiveNodes, canUnlockNode, canRefundNode, getStartNodeId } from '@/data/passiveTree';
 import { PassiveNode, PassiveEffect, PassiveIconType } from '@/types';
 import {
   GestureDetector,
@@ -199,6 +199,8 @@ export const PassiveTree = () => {
   const router = useRouter();
   const { skillPoints, unlockedSkills, unlockSkill, refundSkill, characterId } = usePlayerStore();
   const nodes = getAllPassiveNodes();
+  // 自分のクラスの起点ノード（最初に取得できるノード）を強調表示するため取得
+  const myStartNodeId = getStartNodeId();
   const [selectedNode, setSelectedNode] = useState<PassiveNode | null>(null);
   const [respecTokens, setRespecTokens] = useState(0);
   const [hasUberBadge, setHasUberBadge] = useState(false);
@@ -455,6 +457,7 @@ export const PassiveTree = () => {
             {nodes.map((node) => {
               const isUnlocked = unlockedSkills.includes(node.id);
               const canUnlock = canUnlockNode(node.id, unlockedSkills) && skillPoints > 0;
+              const isMyStart = node.id === myStartNodeId;
               const position = getNodePosition(node);
               const size = getNodeSize(node);
               const iconType = node.iconType ?? getIconType(node.effect);
@@ -509,7 +512,7 @@ export const PassiveTree = () => {
                           stopColor={
                             isUnlocked
                               ? COLORS.glowUnlocked
-                              : canUnlock
+                              : canUnlock || isMyStart
                                 ? COLORS.glowCanUnlock
                                 : 'transparent'
                           }
@@ -519,13 +522,25 @@ export const PassiveTree = () => {
                       </RadialGradient>
                     </Defs>
 
-                    {/* グロー円（選択時やアクティブ時） */}
-                    {(isSelected(node) || canUnlock) && (
+                    {/* グロー円（選択時やアクティブ時・自分の起点） */}
+                    {(isSelected(node) || canUnlock || isMyStart) && (
                       <Circle
                         cx={size / 2}
                         cy={size / 2}
                         r={size / 2}
                         fill={`url(#glow-${node.id})`}
+                      />
+                    )}
+
+                    {/* 自分のクラスの起点を示す明るいリング */}
+                    {isMyStart && (
+                      <Circle
+                        cx={size / 2}
+                        cy={size / 2}
+                        r={size / 2 - 1.5}
+                        stroke={COLORS.glowCanUnlock}
+                        strokeWidth={2.5}
+                        fill="none"
                       />
                     )}
 
@@ -600,6 +615,15 @@ export const PassiveTree = () => {
                   </View>
                   {isUnlocked && (
                     <View style={[styles.unlockedDot, { width: size * 0.22, height: size * 0.22, borderRadius: size * 0.11 }]} />
+                  )}
+                  {isMyStart && (
+                    <View style={styles.startBadgeWrap} pointerEvents="none">
+                      <View style={styles.startBadge}>
+                        <Text style={styles.startBadgeText} numberOfLines={1}>
+                          {t('passiveTree.startHere')}
+                        </Text>
+                      </View>
+                    </View>
                   )}
                 </Pressable>
               );
@@ -755,6 +779,27 @@ const styles = StyleSheet.create({
     backgroundColor: '#7cb342',
     borderWidth: 1,
     borderColor: '#1a1a24',
+  },
+  startBadgeWrap: {
+    position: 'absolute',
+    bottom: -ms(16),
+    left: -ms(40),
+    right: -ms(40),
+    alignItems: 'center',
+  },
+  startBadge: {
+    backgroundColor: COLORS.glowCanUnlock,
+    paddingHorizontal: ms(6),
+    paddingVertical: ms(1),
+    borderRadius: ms(7),
+    borderWidth: 1,
+    borderColor: '#1a1a24',
+  },
+  startBadgeText: {
+    fontSize: fs(9),
+    fontWeight: '700',
+    color: '#1a1a24',
+    textAlign: 'center',
   },
   // 下部情報パネル
   infoPanel: {
