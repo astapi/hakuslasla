@@ -21,6 +21,7 @@ export interface ItemModData {
  * 装備アイテム（簡易版）
  */
 export interface EquipmentItemData {
+  evasion?: number;
   mods?: ItemModData[];
 }
 
@@ -59,6 +60,11 @@ export interface PassiveEffectsData {
   hp_regen: number;
   hp_regen_pct: number;
   damage_defer_pct: number;
+  evasion?: number;
+  evasion_increased_pct?: number;
+  evasion_more_pct?: number[];
+  shield_on_evade_streak_hit_pct?: number;
+  hp_on_taken_hit?: number;
   hp_on_hit: number;
   lifestealPct?: number;
   retaliate_def_pct: number;
@@ -127,6 +133,11 @@ export function createEmptyModEffects(): CombinedModEffects {
     royalRoar: false,
     damageDeferPct: 0,
     damageReductionPct: 0,
+    evasion: 0,
+    evasionIncreasedPct: 0,
+    evasionMorePct: [],
+    shieldOnEvadeStreakHitPct: 0,
+    hpOnTakenHit: 0,
     hpOnHit: 0,
     lifestealPct: 0,
     retaliateDefPct: 0,
@@ -303,6 +314,21 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
     case 'damage_reduction_pct':
       effects.damageReductionPct += mod.value;
       break;
+    case 'evasion':
+      effects.evasion += mod.value;
+      break;
+    case 'evasion_increased_pct':
+      effects.evasionIncreasedPct += mod.value;
+      break;
+    case 'evasion_more_pct':
+      effects.evasionMorePct.push(mod.value);
+      break;
+    case 'shield_on_evade_streak_hit_pct':
+      effects.shieldOnEvadeStreakHitPct += mod.value;
+      break;
+    case 'hp_on_taken_hit':
+      effects.hpOnTakenHit += mod.value;
+      break;
     case 'hp_on_hit':
       effects.hpOnHit += mod.value;
       break;
@@ -359,9 +385,12 @@ export function combineMods(
 
   // 装備MODからの効果
   for (const item of equipment) {
-    if (item && item.mods) {
-      for (const mod of item.mods) {
-        applyEquipmentMod(combined, mod);
+    if (item) {
+      combined.evasion += item.evasion ?? 0;
+      if (item.mods) {
+        for (const mod of item.mods) {
+          applyEquipmentMod(combined, mod);
+        }
       }
     }
   }
@@ -389,6 +418,11 @@ export function combineMods(
   combined.hpOnCrit += passiveEffects.hp_on_crit;
   combined.critLifestealPct += passiveEffects.critical_lifesteal_pct;
   combined.damageDeferPct += passiveEffects.damage_defer_pct;
+  combined.evasion += passiveEffects.evasion ?? 0;
+  combined.evasionIncreasedPct += passiveEffects.evasion_increased_pct ?? 0;
+  combined.evasionMorePct.push(...(passiveEffects.evasion_more_pct ?? []));
+  combined.shieldOnEvadeStreakHitPct += passiveEffects.shield_on_evade_streak_hit_pct ?? 0;
+  combined.hpOnTakenHit += passiveEffects.hp_on_taken_hit ?? 0;
   combined.hpOnHit += passiveEffects.hp_on_hit;
   combined.lifestealPct += passiveEffects.lifestealPct ?? 0;
   combined.retaliateDefPct += passiveEffects.retaliate_def_pct;
@@ -428,6 +462,13 @@ export function combineMods(
   // フリーズ系
   combined.freezeChance += passiveEffects.freeze_chance;
   combined.freezeDurationPct += passiveEffects.freeze_duration_pct;
+
+  const evasionMoreTotal = combined.evasionMorePct.reduce((sum, v) => sum + v, 0);
+  combined.evasion = Math.floor(
+    combined.evasion *
+    (1 + combined.evasionIncreasedPct / 100) *
+    (1 + evasionMoreTotal / 100)
+  );
 
   return combined;
 }

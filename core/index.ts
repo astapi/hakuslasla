@@ -67,6 +67,8 @@ export {
   calculateLifesteal,
   createLifestealEvent,
   calculateEnemyDamage,
+  calculateEnemyHitChance,
+  rollEnemyHit,
   createEnemyAttackEvent,
 } from './combatEffects';
 

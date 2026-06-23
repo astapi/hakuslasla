@@ -48,7 +48,10 @@ export const ITEM_ICONS: Record<string, ImageSourcePropType> = {
   // ユニークアイテムの例（将来追加）
   // 'goblin_dagger': require('@/assets/images/items/unique/goblin_dagger.png'),
   // 'dragon_sword': require('@/assets/images/items/unique/dragon_sword.png'),
+  uber_uber_kraken_mantle: require('@/assets/images/items/unique/uber_uber_kraken_mantle.png'),
 };
+
+const EVASION_ITEM_ICON = require('@/assets/images/items/evasion.png');
 
 /**
  * アイテムのアイコンを取得
@@ -57,6 +60,9 @@ export const ITEM_ICONS: Record<string, ImageSourcePropType> = {
 export function getItemIcon(itemId: string, slot: EquipmentSlot, weaponType?: WeaponType): ImageSourcePropType {
   if (ITEM_ICONS[itemId]) {
     return ITEM_ICONS[itemId];
+  }
+  if (itemId.includes('_evasion_')) {
+    return EVASION_ITEM_ICON;
   }
   if (slot === 'weapon' && weaponType) {
     return WEAPON_TYPE_ICONS[weaponType];

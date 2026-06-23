@@ -16,6 +16,7 @@ import {
   calculateHpRegen,
   calculateLifesteal,
   calculateEnemyDamage,
+  rollEnemyHit,
   executePlayerAttack,
   processPoisonDamage,
   tryApplyPoison,
@@ -90,6 +91,7 @@ interface BattleEngineState {
   enemyAttackSpeedBase: number;
   isTransitioning: boolean;
   pendingEnemyChillAfterFreeze: ChillState | null;  // フリーズ解除後にチルに移行する状態
+  consecutiveEvades: number;
 }
 
 function restorePlayerShield(engine: BattleEngineState, amount: number): number {
@@ -153,6 +155,63 @@ function applyPlayerDamage(
   return { hpDamage, shieldDamage, blocked };
 }
 
+function applyEnemyAttackAftermath(
+  engine: BattleEngineState,
+  result: { hpDamage: number; shieldDamage: number; blocked: boolean },
+  evaded: boolean,
+  events: BattleEvent[]
+): void {
+  if (evaded) {
+    engine.consecutiveEvades += 1;
+    return;
+  }
+
+  if (result.blocked) return;
+
+  const tookDamage = result.hpDamage + result.shieldDamage > 0;
+  if (!tookDamage) {
+    engine.consecutiveEvades = 0;
+    return;
+  }
+
+  if (engine.state.player.currentHp <= 0) {
+    engine.consecutiveEvades = 0;
+    return;
+  }
+
+  if (engine.playerMods.hpOnTakenHit > 0) {
+    const before = engine.state.player.currentHp;
+    engine.state.player.currentHp = Math.min(
+      engine.state.player.maxHp,
+      engine.state.player.currentHp + engine.playerMods.hpOnTakenHit
+    );
+    const actualHeal = engine.state.player.currentHp - before;
+    const healEvent = createHpRegenEvent(engine.state.elapsedTicks, actualHeal);
+    if (healEvent) events.push(healEvent);
+  }
+
+  if (
+    engine.consecutiveEvades > 0 &&
+    engine.playerMods.shieldOnEvadeStreakHitPct > 0 &&
+    engine.state.playerMaxShield > 0
+  ) {
+    const recoverPct = Math.min(100, engine.consecutiveEvades * engine.playerMods.shieldOnEvadeStreakHitPct);
+    const recoveredShield = restorePlayerShield(
+      engine,
+      Math.floor(engine.state.playerMaxShield * recoverPct / 100)
+    );
+    if (recoveredShield > 0) {
+      events.push({
+        type: 'player_heal',
+        tick: engine.state.elapsedTicks,
+        data: { amount: recoveredShield, source: 'shield_on_evade_streak_hit' },
+      });
+    }
+  }
+
+  engine.consecutiveEvades = 0;
+}
+
 const createBossSkillEvent = (tick: number, skillId: BossSkillId): BattleEvent => ({
   type: 'boss_skill',
   tick,
@@ -201,6 +260,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
       maxHp: config.enemy.maxHp,
       atk: Math.max(1, Math.floor(config.enemy.atk * enemyAtkMultiplier)),
       def: Math.max(0, Math.floor(config.enemy.def)),
+      accuracy: config.enemy.accuracy ?? 100,
       attackSpeed: enemyAttackSpeedBase,
       gauge: 0,
     },
@@ -280,6 +340,7 @@ export const createBattleEngine = (config: BattleEngineConfig): { engine: Battle
     enemyAttackSpeedBase,
     isTransitioning: false,
     pendingEnemyChillAfterFreeze: null,
+    consecutiveEvades: 0,
   };
 
   const engine: BattleEngine = {
@@ -1069,12 +1130,13 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       const enemyAttackMultiplier = engine.bossEffects.enemyAttackMult * engine.bossEffects.enemyNextAttackMult;
       const rawEnemyDamage = Math.floor(enemyDamage * enemyAttackMultiplier);
       const totalEnemyDamage = Math.floor(rawEnemyDamage * engine.bossEffects.playerDamageTakenMult);
-      const enemyHitBlocked = rollPlayerBlock(engine);
+      const enemyHit = rollEnemyHit(engine.state.enemy.accuracy, engine.playerMods.evasion, engine.rng);
+      const enemyHitBlocked = enemyHit && rollPlayerBlock(engine);
 
       // 遅延ダメージ処理: ダメージのX%を4秒かけて受ける
       const deferPct = Math.min(50, engine.playerMods.damageDeferPct);
       let finalEnemyDamage: number;
-      if (enemyHitBlocked) {
+      if (!enemyHit || enemyHitBlocked) {
         finalEnemyDamage = 0;
       } else if (deferPct > 0 && totalEnemyDamage > 0) {
         const deferredTotal = Math.floor(totalEnemyDamage * deferPct / 100);
@@ -1095,7 +1157,10 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
       const enemyAttackEvent = createEnemyAttackEvent(engine.state.elapsedTicks, enemyDamageResult.hpDamage);
       enemyAttackEvent.data.shieldDamage = enemyDamageResult.shieldDamage;
       enemyAttackEvent.data.blocked = enemyDamageResult.blocked;
+      enemyAttackEvent.data.evaded = !enemyHit;
       events.push(enemyAttackEvent);
+      applyEnemyAttackAftermath(engine, enemyDamageResult, !enemyHit, events);
+      enemyAttackEvent.data.playerShield = engine.state.playerShield;
 
       // 反撃ダメージ: 被ダメ時DEFのX%を敵に反撃
       if (engine.playerMods.retaliateDefPct > 0 && (enemyDamageResult.hpDamage + enemyDamageResult.shieldDamage) > 0) {
@@ -1129,9 +1194,10 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         const flurryHitRatio = 1 / 3;
         for (let k = 0; k < pre.extraEnemyAttacks; k++) {
           const flurryRaw = Math.floor(enemyDamage * flurryHitRatio * enemyAttackMultiplier * engine.bossEffects.playerDamageTakenMult);
-          const flurryBlocked = rollPlayerBlock(engine);
+          const flurryHit = rollEnemyHit(engine.state.enemy.accuracy, engine.playerMods.evasion, engine.rng);
+          const flurryBlocked = flurryHit && rollPlayerBlock(engine);
           let flurryDamage: number;
-          if (flurryBlocked) {
+          if (!flurryHit || flurryBlocked) {
             flurryDamage = 0;
           } else if (deferPct > 0 && flurryRaw > 0) {
             const flurryDeferred = Math.floor(flurryRaw * deferPct / 100);
@@ -1150,7 +1216,10 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
           const flurryEvent = createEnemyAttackEvent(engine.state.elapsedTicks, flurryDamageResult.hpDamage);
           flurryEvent.data.shieldDamage = flurryDamageResult.shieldDamage;
           flurryEvent.data.blocked = flurryDamageResult.blocked;
+          flurryEvent.data.evaded = !flurryHit;
           events.push(flurryEvent);
+          applyEnemyAttackAftermath(engine, flurryDamageResult, !flurryHit, events);
+          flurryEvent.data.playerShield = engine.state.playerShield;
           if (engine.state.player.currentHp <= 0) break;
         }
       }
@@ -1201,10 +1270,11 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         }
         const followUpRatio = isUberUber ? 1.0 : 0.5;
         const followUpRaw = Math.floor(enemyDamage * followUpRatio * enemyAttackMultiplier * engine.bossEffects.playerDamageTakenMult);
-        const followUpBlocked = rollPlayerBlock(engine);
+        const followUpHit = rollEnemyHit(engine.state.enemy.accuracy, engine.playerMods.evasion, engine.rng);
+        const followUpBlocked = followUpHit && rollPlayerBlock(engine);
         // メイン攻撃と同じ遅延ダメージ処理を適用
         let followUpDamage: number;
-        if (followUpBlocked) {
+        if (!followUpHit || followUpBlocked) {
           followUpDamage = 0;
         } else if (deferPct > 0 && followUpRaw > 0) {
           const followUpDeferred = Math.floor(followUpRaw * deferPct / 100);
@@ -1223,7 +1293,10 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         const followUpEvent = createEnemyAttackEvent(engine.state.elapsedTicks, followUpDamageResult.hpDamage);
         followUpEvent.data.shieldDamage = followUpDamageResult.shieldDamage;
         followUpEvent.data.blocked = followUpDamageResult.blocked;
+        followUpEvent.data.evaded = !followUpHit;
         events.push(followUpEvent);
+        applyEnemyAttackAftermath(engine, followUpDamageResult, !followUpHit, events);
+        followUpEvent.data.playerShield = engine.state.playerShield;
       }
 
       if (enemyHpOnHitBase > 0) {

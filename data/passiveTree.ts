@@ -313,6 +313,11 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   hp_regen: number;
   hp_regen_pct: number;
   damage_defer_pct: number;
+  evasion: number;
+  evasion_increased_pct: number;
+  evasion_more_pct: number[];
+  shield_on_evade_streak_hit_pct: number;
+  hp_on_taken_hit: number;
   hp_on_hit: number;
   lifestealPct: number;
   retaliate_def_pct: number;
@@ -379,6 +384,11 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   let hp_regen = 0;
   let hp_regen_pct = 0;
   let damage_defer_pct = 0;
+  let evasion = 0;
+  let evasion_increased_pct = 0;
+  const evasion_more_pct: number[] = [];
+  let shield_on_evade_streak_hit_pct = 0;
+  let hp_on_taken_hit = 0;
   let hp_on_hit = 0;
   let lifestealPct = 0;
   let retaliate_def_pct = 0;
@@ -451,6 +461,11 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       hp_regen += node.effect.hp_regen || 0;
       hp_regen_pct += node.effect.hp_regen_pct || 0;
       damage_defer_pct += node.effect.damage_defer_pct || 0;
+      evasion += node.effect.evasion || 0;
+      evasion_increased_pct += node.effect.evasion_increased_pct || 0;
+      if (node.effect.evasion_more_pct) evasion_more_pct.push(node.effect.evasion_more_pct);
+      shield_on_evade_streak_hit_pct += node.effect.shield_on_evade_streak_hit_pct || 0;
+      hp_on_taken_hit += node.effect.hp_on_taken_hit || 0;
       hp_on_hit += node.effect.hp_on_hit || 0;
       lifestealPct += node.effect.lifestealPct || 0;
       retaliate_def_pct += node.effect.retaliate_def_pct || 0;
@@ -503,7 +518,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     ignite_stacking_damage,
     critical_chance, critical_damage, hp_on_crit, critical_lifesteal_pct,
     hp_regen, hp_regen_pct,
-    damage_defer_pct, hp_on_hit, lifestealPct, retaliate_def_pct,
+    damage_defer_pct, evasion, evasion_increased_pct, evasion_more_pct, shield_on_evade_streak_hit_pct, hp_on_taken_hit, hp_on_hit, lifestealPct, retaliate_def_pct,
     shield, shield_increased_pct, shield_more_pct, hp_to_shield,
     shield_on_10_attacks_pct, shield_recharge_delay_ms, shield_recharge_pct, shield_blocks_dot,
     pet_effect_pct, pet_drop_rate_pct,

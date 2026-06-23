@@ -30,6 +30,7 @@ interface CharacterStatusProps {
   currentShield?: number;
   maxShield?: number;
   blockChance?: number;
+  evasion?: number;
 }
 
 export const CharacterStatus = memo(({
@@ -42,9 +43,11 @@ export const CharacterStatus = memo(({
   currentShield = 0,
   maxShield = 0,
   blockChance = 0,
+  evasion = 0,
 }: CharacterStatusProps) => {
   const hasShield = isPlayer && maxShield > 0;
   const cappedBlockChance = Math.min(50, Math.max(0, blockChance));
+  const displayEvasion = Math.max(0, Math.floor(evasion));
 
   return (
     <View style={[styles.container, isPlayer ? styles.playerContainer : styles.enemyContainer]}>
@@ -78,6 +81,11 @@ export const CharacterStatus = memo(({
       {isPlayer && cappedBlockChance > 0 && (
         <View style={styles.blockRow}>
           <Text style={styles.blockText}>BLOCK {cappedBlockChance}%</Text>
+        </View>
+      )}
+      {isPlayer && displayEvasion > 0 && (
+        <View style={styles.blockRow}>
+          <Text style={styles.evasionText}>EVA {displayEvasion}</Text>
         </View>
       )}
     </View>
@@ -145,5 +153,10 @@ const styles = StyleSheet.create({
     fontSize: fs(10),
     fontWeight: '700',
     color: '#FFD54F',
+  },
+  evasionText: {
+    fontSize: fs(10),
+    fontWeight: '700',
+    color: '#80CBC4',
   },
 });

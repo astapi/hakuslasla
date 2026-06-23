@@ -213,7 +213,7 @@ describe('チル/フリーズ戦闘エンジン統合', () => {
     const modsNoChill = createMods({});
     const { engine: e1 } = createBattleEngine({
       playerStats: player, playerCurrentHp: player.maxHp,
-      playerMods: modsNoChill, enemy, rng: () => 0.99,
+      playerMods: modsNoChill, enemy, rng: () => 0.5,
     });
     e1.advanceTicks(300);
     const enemyHpNoChill = e1.getState().enemy.currentHp;

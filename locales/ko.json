@@ -68,13 +68,34 @@
     "renameCharacter": "캐릭터 이름 변경"
   },
   "pets": {
-    "pet_slime": { "name": "Slime Baby", "buff": "초당 HP 회복 +20" },
-    "pet_wolf": { "name": "Wolf Kid", "buff": "공격 속도 +10%" },
-    "pet_killer_bee": { "name": "Lil' Bee", "buff": "독 확률 +15%" },
-    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
-    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "발화 확률 +15%" },
-    "pet_ice_witch": { "name": "Tiny Witch", "buff": "동결 확률 +5%" },
-    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, 공격 속도 +5%, 초당 HP 회복 +30" }
+    "pet_slime": {
+      "name": "Slime Baby",
+      "buff": "초당 HP 회복 +20"
+    },
+    "pet_wolf": {
+      "name": "Wolf Kid",
+      "buff": "공격 속도 +10%"
+    },
+    "pet_killer_bee": {
+      "name": "Lil' Bee",
+      "buff": "독 확률 +15%"
+    },
+    "pet_gargoyle": {
+      "name": "Gargoyle Chick",
+      "buff": "DEF +30%"
+    },
+    "pet_goblin_shaman": {
+      "name": "Little Shaman",
+      "buff": "발화 확률 +15%"
+    },
+    "pet_ice_witch": {
+      "name": "Tiny Witch",
+      "buff": "동결 확률 +5%"
+    },
+    "pet_goblin_king": {
+      "name": "Petit King",
+      "buff": "ATK +15%, 공격 속도 +5%, 초당 HP 회복 +30"
+    }
   },
   "petBuff": {
     "atkIncreasedPct": "ATK +{{value}}%",
@@ -350,7 +371,8 @@
     "perSecond": "/초",
     "on": "켜짐",
     "off": "꺼짐",
-    "max": "MAX"
+    "max": "MAX",
+    "evasion": "회피"
   },
   "equipment": {
     "title": "장비",
@@ -412,7 +434,9 @@
     "chill_duration_pct": "냉각 시간",
     "freeze_chance": "빙결",
     "freeze_duration_pct": "빙결 시간",
-    "ignite_resist_pct": "발화 저항"
+    "ignite_resist_pct": "발화 저항",
+    "evasion_increased_pct": "회피",
+    "evasion_more_pct": "회피 more"
   },
   "dungeon": {
     "floors": "{{count}}층",
@@ -1113,6 +1137,24 @@
     },
     "uber_fortress_bulwark": {
       "name": "Uber 요새 방벽"
+    },
+    "uber_goblin_evasion_cloak": {
+      "name": "Uber 고블린 그림자 외투"
+    },
+    "uber_bandit_evasion_steps": {
+      "name": "Uber 도적왕의 환영 걸음"
+    },
+    "uber_vampire_evasion_charm": {
+      "name": "Uber 뱀파이어 안개 부적"
+    },
+    "uber_uber_kraken_mantle": {
+      "name": "UberUber 조류의 외투"
+    },
+    "uber_demon_evasion_grip": {
+      "name": "Uber 마왕의 환영 장갑"
+    },
+    "uber_end_evasion_crown": {
+      "name": "Uber 종언의 환관"
     }
   },
   "monsters": {
@@ -1557,7 +1599,8 @@
     "hpRegen": "HP 재생! {{amount}} HP 회복!",
     "kingSlamHit": "[킹 슬램] 작렬! {{enemy}}에게 {{damage}} 피해!",
     "twinBladeHit": "[쌍격의 칼날] 추격! {{enemy}}에게 {{damage}} 피해!",
-    "royalRoar": "[왕의 포효] 발동! 독과 냉각 상태 해제!"
+    "royalRoar": "[왕의 포효] 발동! 독과 냉각 상태 해제!",
+    "evaded": "{{enemy}}의 공격을 회피!"
   },
   "passiveTree": {
     "title": "패시브 트리",
@@ -2257,7 +2300,10 @@
     "chillDuration": "칠 지속시간 +{{value}}%",
     "freezeChance": "동결 부여 +{{value}}%",
     "freezeDuration": "동결 지속시간 +{{value}}%",
-    "igniteResist": "받는 발화 데미지 -{{value}}%"
+    "igniteResist": "받는 발화 데미지 -{{value}}%",
+    "evasion": "회피 +{{value}}%",
+    "evasionIncreased": "회피 +{{value}}%",
+    "evasionMore": "회피 {{value}}% more"
   },
   "boost": {
     "dropRate": {
@@ -2371,16 +2417,46 @@
   },
   "badges": {
     "title": "뱃지",
-    "uber_goblin_king": { "name": "왕 살해자", "description": "Uber 고블린 킹 격파" },
-    "uber_bandit_leader": { "name": "그림자 정복자", "description": "Uber 도적 두목 격파" },
-    "uber_vampire": { "name": "한낮의 사냥꾼", "description": "Uber 뱀파이어 격파" },
-    "uber_kraken": { "name": "심연의 정복자", "description": "Uber 크라켄 격파" },
-    "uber_demon_lord": { "name": "마왕 토벌자", "description": "Uber 마왕 격파" },
-    "uber_true_final_boss": { "name": "종언을 넘어선 자", "description": "Uber 최종 보스 격파" },
-    "dimensional_4000": { "name": "차원의 패자", "description": "차원 회랑 4000층 도달" },
-    "uber_uber_goblin_king": { "name": "진정한 왕 살해자", "description": "UberUber 고블린 킹 격파" },
-    "uber_uber_bandit_leader": { "name": "진정한 그림자 정복자", "description": "UberUber 산적 두목 격파" },
-    "uber_uber_kraken": { "name": "진정한 심연의 정복자", "description": "UberUber 크라켄 격파" },
+    "uber_goblin_king": {
+      "name": "왕 살해자",
+      "description": "Uber 고블린 킹 격파"
+    },
+    "uber_bandit_leader": {
+      "name": "그림자 정복자",
+      "description": "Uber 도적 두목 격파"
+    },
+    "uber_vampire": {
+      "name": "한낮의 사냥꾼",
+      "description": "Uber 뱀파이어 격파"
+    },
+    "uber_kraken": {
+      "name": "심연의 정복자",
+      "description": "Uber 크라켄 격파"
+    },
+    "uber_demon_lord": {
+      "name": "마왕 토벌자",
+      "description": "Uber 마왕 격파"
+    },
+    "uber_true_final_boss": {
+      "name": "종언을 넘어선 자",
+      "description": "Uber 최종 보스 격파"
+    },
+    "dimensional_4000": {
+      "name": "차원의 패자",
+      "description": "차원 회랑 4000층 도달"
+    },
+    "uber_uber_goblin_king": {
+      "name": "진정한 왕 살해자",
+      "description": "UberUber 고블린 킹 격파"
+    },
+    "uber_uber_bandit_leader": {
+      "name": "진정한 그림자 정복자",
+      "description": "UberUber 산적 두목 격파"
+    },
+    "uber_uber_kraken": {
+      "name": "진정한 심연의 정복자",
+      "description": "UberUber 크라켄 격파"
+    },
     "earned": "획득 완료",
     "notEarned": "미획득",
     "newBadge": "새로운 뱃지를 획득했습니다!"

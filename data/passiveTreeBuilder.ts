@@ -140,6 +140,11 @@ export function describeEffect(effect: PassiveEffect): string {
   if (effect.hp_regen) parts.push(`毎秒HP +${effect.hp_regen}回復`);
   pct(effect.hp_regen_pct, '毎秒HP回復', '%');
   pct(effect.damage_defer_pct, 'ダメージ遅延');
+  flat(effect.evasion, 'EVA');
+  inc(effect.evasion_increased_pct, 'EVA');
+  more(effect.evasion_more_pct, 'EVA');
+  pct(effect.shield_on_evade_streak_hit_pct, '連続回避後の被弾時シールド回復');
+  if (effect.hp_on_taken_hit) parts.push(`被弾時HP +${effect.hp_on_taken_hit}回復`);
   if (effect.hp_on_hit) parts.push(`HIT時HP +${effect.hp_on_hit}回復`);
   pct(effect.lifestealPct, 'ライフスティール');
   pct(effect.retaliate_def_pct, '被ダメ時DEF反撃');

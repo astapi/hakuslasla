@@ -68,13 +68,34 @@
     "renameCharacter": "重命名角色"
   },
   "pets": {
-    "pet_slime": { "name": "Slime Baby", "buff": "每秒回血 +20" },
-    "pet_wolf": { "name": "Wolf Kid", "buff": "攻击速度 +10%" },
-    "pet_killer_bee": { "name": "Lil' Bee", "buff": "中毒几率 +15%" },
-    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
-    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "点燃几率 +15%" },
-    "pet_ice_witch": { "name": "Tiny Witch", "buff": "冻结几率 +5%" },
-    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, 攻击速度 +5%, 每秒回血 +30" }
+    "pet_slime": {
+      "name": "Slime Baby",
+      "buff": "每秒回血 +20"
+    },
+    "pet_wolf": {
+      "name": "Wolf Kid",
+      "buff": "攻击速度 +10%"
+    },
+    "pet_killer_bee": {
+      "name": "Lil' Bee",
+      "buff": "中毒几率 +15%"
+    },
+    "pet_gargoyle": {
+      "name": "Gargoyle Chick",
+      "buff": "DEF +30%"
+    },
+    "pet_goblin_shaman": {
+      "name": "Little Shaman",
+      "buff": "点燃几率 +15%"
+    },
+    "pet_ice_witch": {
+      "name": "Tiny Witch",
+      "buff": "冻结几率 +5%"
+    },
+    "pet_goblin_king": {
+      "name": "Petit King",
+      "buff": "ATK +15%, 攻击速度 +5%, 每秒回血 +30"
+    }
   },
   "petBuff": {
     "atkIncreasedPct": "ATK +{{value}}%",
@@ -350,7 +371,8 @@
     "perSecond": "/秒",
     "on": "开",
     "off": "关",
-    "max": "MAX"
+    "max": "MAX",
+    "evasion": "闪避"
   },
   "equipment": {
     "title": "装备",
@@ -412,7 +434,9 @@
     "chill_duration_pct": "冰缓时间",
     "freeze_chance": "冻结",
     "freeze_duration_pct": "冻结时间",
-    "ignite_resist_pct": "发火耐性"
+    "ignite_resist_pct": "发火耐性",
+    "evasion_increased_pct": "闪避",
+    "evasion_more_pct": "闪避 more"
   },
   "dungeon": {
     "floors": "{{count}} 层",
@@ -1113,6 +1137,24 @@
     },
     "uber_fortress_bulwark": {
       "name": "Uber 堡垒壁垒"
+    },
+    "uber_goblin_evasion_cloak": {
+      "name": "Uber 哥布林影外套"
+    },
+    "uber_bandit_evasion_steps": {
+      "name": "Uber 盗贼王幻步"
+    },
+    "uber_vampire_evasion_charm": {
+      "name": "Uber 吸血鬼雾护符"
+    },
+    "uber_uber_kraken_mantle": {
+      "name": "UberUber 潮流外套"
+    },
+    "uber_demon_evasion_grip": {
+      "name": "Uber 魔王幻影手甲"
+    },
+    "uber_end_evasion_crown": {
+      "name": "Uber 终焉幻冠"
     }
   },
   "monsters": {
@@ -1557,7 +1599,8 @@
     "hpRegen": "HP回复！恢复了 {{amount}} HP！",
     "kingSlamHit": "【国王重击】爆发！对{{enemy}}造成{{damage}}伤害！",
     "twinBladeHit": "【双击之刃】追击！对{{enemy}}造成{{damage}}伤害！",
-    "royalRoar": "【王者咆哮】发动！解除中毒与冰缓状态！"
+    "royalRoar": "【王者咆哮】发动！解除中毒与冰缓状态！",
+    "evaded": "闪避了{{enemy}}的攻击！"
   },
   "passiveTree": {
     "title": "被动技能树",
@@ -2257,7 +2300,10 @@
     "chillDuration": "冰缓持续 +{{value}}%",
     "freezeChance": "冻结概率 +{{value}}%",
     "freezeDuration": "冻结持续 +{{value}}%",
-    "igniteResist": "受到发火伤害 -{{value}}%"
+    "igniteResist": "受到发火伤害 -{{value}}%",
+    "evasion": "闪避+{{value}}%",
+    "evasionIncreased": "闪避+{{value}}%",
+    "evasionMore": "闪避{{value}}% more"
   },
   "boost": {
     "dropRate": {
@@ -2371,16 +2417,46 @@
   },
   "badges": {
     "title": "徽章",
-    "uber_goblin_king": { "name": "弑王者", "description": "击败Uber哥布林王" },
-    "uber_bandit_leader": { "name": "暗影征服者", "description": "击败Uber盗贼头目" },
-    "uber_vampire": { "name": "日光猎人", "description": "击败Uber吸血鬼" },
-    "uber_kraken": { "name": "深渊征服者", "description": "击败Uber海怪" },
-    "uber_demon_lord": { "name": "魔王讨伐者", "description": "击败Uber魔王" },
-    "uber_true_final_boss": { "name": "超越终焉者", "description": "击败Uber最终Boss" },
-    "dimensional_4000": { "name": "次元霸主", "description": "在次元回廊到达4000层" },
-    "uber_uber_goblin_king": { "name": "真正的弑王者", "description": "击败UberUber哥布林国王" },
-    "uber_uber_bandit_leader": { "name": "真正的暗影征服者", "description": "击败UberUber山贼首领" },
-    "uber_uber_kraken": { "name": "真正的深渊征服者", "description": "击败UberUber海妖" },
+    "uber_goblin_king": {
+      "name": "弑王者",
+      "description": "击败Uber哥布林王"
+    },
+    "uber_bandit_leader": {
+      "name": "暗影征服者",
+      "description": "击败Uber盗贼头目"
+    },
+    "uber_vampire": {
+      "name": "日光猎人",
+      "description": "击败Uber吸血鬼"
+    },
+    "uber_kraken": {
+      "name": "深渊征服者",
+      "description": "击败Uber海怪"
+    },
+    "uber_demon_lord": {
+      "name": "魔王讨伐者",
+      "description": "击败Uber魔王"
+    },
+    "uber_true_final_boss": {
+      "name": "超越终焉者",
+      "description": "击败Uber最终Boss"
+    },
+    "dimensional_4000": {
+      "name": "次元霸主",
+      "description": "在次元回廊到达4000层"
+    },
+    "uber_uber_goblin_king": {
+      "name": "真正的弑王者",
+      "description": "击败UberUber哥布林国王"
+    },
+    "uber_uber_bandit_leader": {
+      "name": "真正的暗影征服者",
+      "description": "击败UberUber山贼首领"
+    },
+    "uber_uber_kraken": {
+      "name": "真正的深渊征服者",
+      "description": "击败UberUber海妖"
+    },
     "earned": "已获得",
     "notEarned": "未获得",
     "newBadge": "获得了新徽章！"

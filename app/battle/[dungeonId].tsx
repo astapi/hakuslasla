@@ -206,7 +206,7 @@ export default function BattleScreen() {
   const { dungeonId, startFloor } = useLocalSearchParams<{ dungeonId: string; startFloor?: string }>();
   const router = useRouter();
   const parsedStartFloor = startFloor ? parseInt(startFloor, 10) : 1;
-  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed, krakenFlurryCountdown, getPetsGained, blockChance } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
+  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed, krakenFlurryCountdown, getPetsGained, blockChance, evasion } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
   const { level, characterType, pets, activePetInstanceId } = usePlayerStore();
   const activePet = activePetInstanceId
     ? pets.find((p) => p.instanceId === activePetInstanceId)
@@ -511,6 +511,7 @@ export default function BattleScreen() {
           currentShield={state.playerShield}
           maxShield={state.playerMaxShield}
           blockChance={blockChance}
+          evasion={evasion}
         />
         {state.enemy && (
           <CharacterStatus

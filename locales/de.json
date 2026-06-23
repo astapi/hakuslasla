@@ -68,13 +68,34 @@
     "renameCharacter": "Charakter umbenennen"
   },
   "pets": {
-    "pet_slime": { "name": "Slime Baby", "buff": "HP regen +20/s" },
-    "pet_wolf": { "name": "Wolf Kid", "buff": "Angriffsgeschw. +10%" },
-    "pet_killer_bee": { "name": "Lil' Bee", "buff": "Giftchance +15%" },
-    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
-    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Brand-Chance +15%" },
-    "pet_ice_witch": { "name": "Tiny Witch", "buff": "Frier-Chance +5%" },
-    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Angriffsgeschw. +5%, HP regen +30/s" }
+    "pet_slime": {
+      "name": "Slime Baby",
+      "buff": "HP regen +20/s"
+    },
+    "pet_wolf": {
+      "name": "Wolf Kid",
+      "buff": "Angriffsgeschw. +10%"
+    },
+    "pet_killer_bee": {
+      "name": "Lil' Bee",
+      "buff": "Giftchance +15%"
+    },
+    "pet_gargoyle": {
+      "name": "Gargoyle Chick",
+      "buff": "DEF +30%"
+    },
+    "pet_goblin_shaman": {
+      "name": "Little Shaman",
+      "buff": "Brand-Chance +15%"
+    },
+    "pet_ice_witch": {
+      "name": "Tiny Witch",
+      "buff": "Frier-Chance +5%"
+    },
+    "pet_goblin_king": {
+      "name": "Petit King",
+      "buff": "ATK +15%, Angriffsgeschw. +5%, HP regen +30/s"
+    }
   },
   "petBuff": {
     "atkIncreasedPct": "ATK +{{value}}%",
@@ -351,7 +372,8 @@
     "perSecond": "/s",
     "on": "AN",
     "off": "AUS",
-    "max": "MAX"
+    "max": "MAX",
+    "evasion": "Ausweichen"
   },
   "equipment": {
     "title": "Ausruestung",
@@ -413,7 +435,9 @@
     "chill_duration_pct": "Kältedauer",
     "freeze_chance": "Einfrieren",
     "freeze_duration_pct": "Einfrierdauer",
-    "ignite_resist_pct": "Brand-Res"
+    "ignite_resist_pct": "Brand-Res",
+    "evasion_increased_pct": "Ausweichen",
+    "evasion_more_pct": "Ausweichen more"
   },
   "dungeon": {
     "floors": "{{count}} Stockwerke",
@@ -1114,6 +1138,24 @@
     },
     "uber_fortress_bulwark": {
       "name": "Uber Festungs-Bollwerk"
+    },
+    "uber_goblin_evasion_cloak": {
+      "name": "Uber Goblin-Schattenmantel"
+    },
+    "uber_bandit_evasion_steps": {
+      "name": "Uber Trugbildschritte des Banditenkonigs"
+    },
+    "uber_vampire_evasion_charm": {
+      "name": "Uber Vampir-Nebelamulett"
+    },
+    "uber_uber_kraken_mantle": {
+      "name": "UberUber Gezeitenmantel"
+    },
+    "uber_demon_evasion_grip": {
+      "name": "Uber Phantomgriff des Damonenlords"
+    },
+    "uber_end_evasion_crown": {
+      "name": "Uber Krone der letzten Trugbilds"
     }
   },
   "monsters": {
@@ -1568,7 +1610,8 @@
     "hpRegen": "HP-Regen! {{amount}} HP wiederhergestellt!",
     "kingSlamHit": "[Königsschlag] ausgelöst! {{damage}} Schaden an {{enemy}}!",
     "twinBladeHit": "[Zwillingsklinge] Folgeangriff! {{damage}} Schaden an {{enemy}}!",
-    "royalRoar": "[Königsruf] aktiviert! Gift und Kälte entfernt!"
+    "royalRoar": "[Königsruf] aktiviert! Gift und Kälte entfernt!",
+    "evaded": "Angriff von {{enemy}} ausgewichen!"
   },
   "passiveTree": {
     "title": "Passiver Baum",
@@ -2268,7 +2311,10 @@
     "chillDuration": "Kälte-Dauer +{{value}}%",
     "freezeChance": "Einfrier-Chance +{{value}}%",
     "freezeDuration": "Einfrier-Dauer +{{value}}%",
-    "igniteResist": "Erhaltener Brandschaden -{{value}}%"
+    "igniteResist": "Erhaltener Brandschaden -{{value}}%",
+    "evasion": "Ausweichen +{{value}}%",
+    "evasionIncreased": "Ausweichen +{{value}}%",
+    "evasionMore": "Ausweichen {{value}}% more"
   },
   "boost": {
     "dropRate": {
@@ -2382,16 +2428,46 @@
   },
   "badges": {
     "title": "Abzeichen",
-    "uber_goblin_king": { "name": "Königsmörder", "description": "Uber-Goblinkönig besiegen" },
-    "uber_bandit_leader": { "name": "Schatteneroberung", "description": "Uber-Banditenführer besiegen" },
-    "uber_vampire": { "name": "Tageslichtjäger", "description": "Uber-Vampir besiegen" },
-    "uber_kraken": { "name": "Abgrundbezwinger", "description": "Uber-Kraken besiegen" },
-    "uber_demon_lord": { "name": "Dämonentöter", "description": "Uber-Dämonenfürst besiegen" },
-    "uber_true_final_boss": { "name": "Jenseits des Endes", "description": "Uber-Endboss besiegen" },
-    "dimensional_4000": { "name": "Dimensionsherrscher", "description": "Etage 4000 im Dimensionskorridor erreichen" },
-    "uber_uber_goblin_king": { "name": "Wahrer Königsmörder", "description": "UberUber-Goblin-König besiegen" },
-    "uber_uber_bandit_leader": { "name": "Wahrer Schattenbezwinger", "description": "UberUber-Banditenfuehrer besiegen" },
-    "uber_uber_kraken": { "name": "Wahrer Abgrundbezwinger", "description": "UberUber-Kraken besiegen" },
+    "uber_goblin_king": {
+      "name": "Königsmörder",
+      "description": "Uber-Goblinkönig besiegen"
+    },
+    "uber_bandit_leader": {
+      "name": "Schatteneroberung",
+      "description": "Uber-Banditenführer besiegen"
+    },
+    "uber_vampire": {
+      "name": "Tageslichtjäger",
+      "description": "Uber-Vampir besiegen"
+    },
+    "uber_kraken": {
+      "name": "Abgrundbezwinger",
+      "description": "Uber-Kraken besiegen"
+    },
+    "uber_demon_lord": {
+      "name": "Dämonentöter",
+      "description": "Uber-Dämonenfürst besiegen"
+    },
+    "uber_true_final_boss": {
+      "name": "Jenseits des Endes",
+      "description": "Uber-Endboss besiegen"
+    },
+    "dimensional_4000": {
+      "name": "Dimensionsherrscher",
+      "description": "Etage 4000 im Dimensionskorridor erreichen"
+    },
+    "uber_uber_goblin_king": {
+      "name": "Wahrer Königsmörder",
+      "description": "UberUber-Goblin-König besiegen"
+    },
+    "uber_uber_bandit_leader": {
+      "name": "Wahrer Schattenbezwinger",
+      "description": "UberUber-Banditenfuehrer besiegen"
+    },
+    "uber_uber_kraken": {
+      "name": "Wahrer Abgrundbezwinger",
+      "description": "UberUber-Kraken besiegen"
+    },
     "earned": "Erhalten",
     "notEarned": "Nicht erhalten",
     "newBadge": "Neues Abzeichen erhalten!"

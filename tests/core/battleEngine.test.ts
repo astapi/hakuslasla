@@ -46,7 +46,7 @@ describe('core/battleEngine', () => {
       playerCurrentHp: player.maxHp,
       playerMods: mods,
       enemy: { ...enemy, maxHp: 999, atk: 10, attackSpeed: 1 },
-      rng: () => 0.99,
+      rng: () => 0.5,
     });
 
     engine.advanceTicks(15);
@@ -91,6 +91,70 @@ describe('core/battleEngine', () => {
 
     const events = engine.advanceTicks(30);
     expect(events.some((event) => event.type === 'enemy_attack' && event.data.blocked === true)).toBe(false);
+  });
+
+  it('回避成功時は通常被ダメージを受けず evaded イベントを出す', () => {
+    const mods = {
+      ...createEmptyModEffects(),
+      evasion: 9500,
+      shield: 50,
+    };
+    const { engine } = createBattleEngine({
+      playerStats: { ...player, atk: 0 },
+      playerCurrentHp: player.maxHp,
+      playerMods: mods,
+      enemy: { ...enemy, maxHp: 999, atk: 100, attackSpeed: 1, accuracy: 500 },
+      rng: () => 0.05,
+    });
+
+    const events = engine.advanceTicks(30);
+    const state = engine.getState();
+    expect(state.player.currentHp).toBe(player.maxHp);
+    expect(state.playerShield).toBe(state.playerMaxShield);
+    expect(events.some((event) => event.type === 'enemy_attack' && event.data.evaded === true)).toBe(true);
+  });
+
+  it('幻影蓄積は連続回避後の被弾時にシールドを回復する', () => {
+    const mods = {
+      ...createEmptyModEffects(),
+      evasion: 500,
+      shield: 100,
+      shieldOnEvadeStreakHitPct: 10,
+    };
+    const rolls = [0.6, 0.6, 0.4];
+    const { engine } = createBattleEngine({
+      playerStats: { ...player, atk: 0 },
+      playerCurrentHp: player.maxHp,
+      playerMods: mods,
+      enemy: { ...enemy, maxHp: 999, atk: 30, attackSpeed: 10, accuracy: 500 },
+      rng: () => rolls.shift() ?? 0.01,
+    });
+
+    const events = engine.advanceTicks(30);
+    const enemyAttacks = events.filter((event) => event.type === 'enemy_attack');
+
+    expect(enemyAttacks.slice(0, 2).every((event) => event.data.evaded === true)).toBe(true);
+    expect(enemyAttacks[2].data.evaded).toBe(false);
+    expect(Number(enemyAttacks[2].data.playerShield)).toBeGreaterThan(0);
+  });
+
+  it('不屈の再起は被弾時にHPを回復する', () => {
+    const mods = {
+      ...createEmptyModEffects(),
+      hpOnTakenHit: 20,
+    };
+    const { engine } = createBattleEngine({
+      playerStats: { ...player, atk: 0 },
+      playerCurrentHp: player.maxHp,
+      playerMods: mods,
+      enemy: { ...enemy, maxHp: 999, atk: 40, attackSpeed: 10, accuracy: 100 },
+      rng: () => 0.01,
+    });
+
+    const events = engine.advanceTicks(2);
+
+    expect(events.some((event) => event.type === 'enemy_attack' && event.data.evaded !== true)).toBe(true);
+    expect(events.some((event) => event.type === 'hp_regen' && event.data.amount === 20)).toBe(true);
   });
 
   it('霊体装甲は最大HPを圧縮し、変換前HPをシールドにする', () => {

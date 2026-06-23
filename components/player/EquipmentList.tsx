@@ -8,6 +8,9 @@ import { ms, fs, s } from '@/utils/scaling';
 const MOD_COLORS: Record<string, string> = {
   atk_bonus: '#FF6B6B',
   def_bonus: '#4ECDC4',
+  evasion: '#80CBC4',
+  evasion_increased_pct: '#80CBC4',
+  evasion_more_pct: '#80CBC4',
   hp_regen: '#00BCD4',
   poison_chance: '#9C27B0',
   critical_chance: '#FF9800',
@@ -29,6 +32,7 @@ const EquipmentRow = ({ slot, item, t }: EquipmentRowProps) => {
   // ATK/DEF MODを加算した合計値を計算
   let totalAtk = item?.atk || 0;
   let totalDef = item?.def || 0;
+  let totalEvasion = item?.evasion || 0;
   const otherMods: ItemMod[] = [];
 
   if (item?.mods) {
@@ -37,6 +41,8 @@ const EquipmentRow = ({ slot, item, t }: EquipmentRowProps) => {
         totalAtk += mod.value;
       } else if (mod.type === 'def_bonus') {
         totalDef += mod.value;
+      } else if (mod.type === 'evasion') {
+        totalEvasion += mod.value;
       } else {
         otherMods.push(mod);
       }
@@ -66,6 +72,9 @@ const EquipmentRow = ({ slot, item, t }: EquipmentRowProps) => {
               )}
               {totalDef > 0 && (
                 <Text style={styles.defText}>+{totalDef} DEF</Text>
+              )}
+              {totalEvasion > 0 && (
+                <Text style={styles.evasionText}>+{totalEvasion} EVA</Text>
               )}
             </View>
           </>
@@ -204,6 +213,10 @@ const styles = StyleSheet.create({
   defText: {
     fontSize: fs(11),
     color: '#4ECDC4',
+  },
+  evasionText: {
+    fontSize: fs(11),
+    color: '#80CBC4',
   },
   emptyText: {
     fontSize: fs(12),
