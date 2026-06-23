@@ -63,7 +63,7 @@ export const LEVEL_UP_BONUS = {
 };
 
 /** レベル上限 */
-export const MAX_LEVEL = 50;
+export const MAX_LEVEL = 80;
 
 /** インベントリの最大サイズ（デフォルト） */
 export const INVENTORY_MAX_SIZE = 50;

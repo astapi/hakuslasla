@@ -1,8 +1,9 @@
 /**
  * S3パッシブツリー — DSLによる全面再設計（PoE型メッシュ・主線/枝/派生ループ）
  *
- * S2のコピー（base.json）は廃し、このDSLがS3ツリー全体を生成する。
- * scripts/buildPassiveTreeS3.ts が build() の結果をそのまま passiveTree_s3.json に書き出す。
+ * レイアウトの「形状ロジック」はこのファイル、「中身データ（効果値/ノード名/テーマ/調整つまみ）」は
+ * data/passiveTree_s3.config.json に分離している。configを編集して npm run build:s3tree で再生成する。
+ * tools/tree-editor のWebエディタは buildS3DslNodes(config) を直接呼び、編集中のconfigでライブ描画する。
  *
  * ■ 設計方針
  *   - 6テーマを60°ずつのセクターに割り当て（上=DEF/左上=クリ/右上=毒/右下=ペット/下=チル/左下=発火）。
@@ -17,142 +18,139 @@
  */
 import { radialTree, type BuildResult, type ChainNodeSpec } from './passiveTreeBuilder';
 import type { CharacterType, PassiveEffect, PassiveIconType } from '../types';
+import rawConfig from './passiveTree_s3.config.json';
 
-type Lite = { n: string; e: PassiveEffect; ic?: PassiveIconType };
+/** 効果値＋表示名（＋任意アイコン）の最小単位 */
+export type Lite = { n: string; e: PassiveEffect; ic?: PassiveIconType };
 
-interface Branch {
-  at: number; // 分岐する主線インデックス
-  side: number; // 主線方向からの相対角（度・±で左右）
+/** 1本の枝（ノータブル＋派生ループの強ノード） */
+export interface BranchCfg {
   notable: Lite; // 枝先のノータブル
   strong: Lite; // 派生ループの反対側に置く強ノード
   strongKind: 'notable' | 'keystone';
-  ring?: number; // ループの小ノード数（既定4。多いほど高コスト）
+  ring?: number; // 旧ループ用の互換フィールド。現行レイアウトでは使用しない。
 }
 
-interface SectorDef {
+/** 1セクター（60°分のテーマ帯） */
+export interface SectorCfg {
   key: string;
   cls?: CharacterType; // DEFはクラス無し（メッシュ経由で到達）
   deg: number; // セクター中心角
   ic: PassiveIconType;
   spineFlavor: Lite; // 主線に散らすテーマ小ノード
-  branches: [Branch, Branch, Branch]; // 内・中・外
+  branches: BranchCfg[]; // 内・中・外（通常3本）
 }
 
-const START_RING = 2.4; // クラススタート半径
-const SPINE_STEP = 1.7; // 主線ノード間隔
-const SPINE_LEN = 6; // 主線の小ノード数
-const BR_STEP = 1.4; // 枝（connector→notable）の間隔
-const LOOP_GAP = 2.0; // ノータブルから派生ループ中心までの距離
-const LOOP_RADIUS = 1.3;
-
-// 主線に散らす汎用小ノード（ATK/HP/DEF巡回）
-const SCATTER: Lite[] = [
-  { n: '筋力', e: { atk: 6 } },
-  { n: '活力', e: { hp: 20 } },
-  { n: '頑強', e: { def: 5 } },
-];
-
-const SECTORS: SectorDef[] = [
-  // 左上: クリティカル（warrior）
-  {
-    key: 'cri', cls: 'warrior', deg: -150, ic: 'crit', spineFlavor: { n: '鍛錬', e: { atk: 5 } },
-    branches: [
-      { at: 1, side: 42, notable: { n: '戦士の技', e: { atk: 8, critical_chance: 3 } }, strong: { n: '会心の極み', e: { critical_chance: 8, critical_damage: 30 }, ic: 'crit' }, strongKind: 'notable' },
-      { at: 3, side: -42, notable: { n: '必中', e: { critical_chance: 5, critical_damage: 25 } }, strong: { n: '修羅', e: { atk: 15, critical_damage: 60 }, ic: 'crit' }, strongKind: 'notable' },
-      { at: 5, side: 42, notable: { n: '一閃', e: { atk: 12, critical_chance: 5, critical_damage: 30 } }, strong: { n: '処刑人', e: { hp_on_crit: 120, atk_more_pct: 12, critical_lifesteal_pct: 25 }, ic: 'crit' }, strongKind: 'keystone', ring: 6 },
-    ],
-  },
-  // 上: DEF（クラス無し）
-  {
-    key: 'def', deg: -90, ic: 'guard', spineFlavor: { n: '錬磨', e: { def: 4 } },
-    branches: [
-      { at: 1, side: 42, notable: { n: '鉄の意志', e: { def: 8, def_increased_pct: 8 } }, strong: { n: '鉄壁', e: { def: 12, def_increased_pct: 15 }, ic: 'guard' }, strongKind: 'notable' },
-      { at: 3, side: -42, notable: { n: '不動', e: { hp: 40, def: 10 } }, strong: { n: '巨壁', e: { hp: 50, def: 15 }, ic: 'def' }, strongKind: 'notable' },
-      { at: 5, side: 42, notable: { n: '城塞', e: { def: 12, hp: 40, damage_defer_pct: 5 }, ic: 'guard' }, strong: { n: '鉄壁の守護者', e: { damage_defer_pct: 8, def_more_pct: 8 }, ic: 'guard' }, strongKind: 'keystone' },
-    ],
-  },
-  // 右上: 毒（ranger）
-  {
-    key: 'poi', cls: 'ranger', deg: -30, ic: 'poison', spineFlavor: { n: '毒の研鑽', e: { poison_chance: 4 } },
-    branches: [
-      { at: 1, side: 42, notable: { n: '狩人の毒', e: { poison_chance: 8, poison_damage_pct: 10 } }, strong: { n: '猛毒の心得', e: { poison_chance: 10, poison_damage_pct: 20 }, ic: 'poison' }, strongKind: 'notable' },
-      { at: 3, side: -42, notable: { n: '蔓延', e: { poison_chance: 10, poison_max_stacks: 1 } }, strong: { n: '毒蛇', e: { poison_damage_pct: 30, poison_max_stacks: 1 }, ic: 'poison' }, strongKind: 'notable' },
-      { at: 5, side: 42, notable: { n: '疫病の達人', e: { poison_chance: 12, poison_damage_pct: 20 } }, strong: { n: '純粋毒', e: { no_direct_damage: true, poison_damage_more_pct: 50 }, ic: 'poison' }, strongKind: 'keystone', ring: 6 },
-    ],
-  },
-  // 右下: ペット/絆（tamer）
-  {
-    key: 'pet', cls: 'tamer', deg: 30, ic: 'regen', spineFlavor: { n: '絆', e: { hp: 18 } },
-    branches: [
-      { at: 1, side: 42, notable: { n: '調教の心得', e: { hp: 30, hp_regen: 50 } }, strong: { n: '生命の絆', e: { hp: 50, hp_regen: 80 }, ic: 'regen' }, strongKind: 'notable' },
-      { at: 3, side: -42, notable: { n: '癒やしの絆', e: { hp_regen: 80, hp_on_hit: 15 } }, strong: { n: '不屈の絆', e: { hp_on_hit: 30, hp_regen: 100 }, ic: 'regen' }, strongKind: 'notable' },
-      { at: 5, side: 42, notable: { n: '獣王の加護', e: { hp: 40, hp_regen: 80, def: 8 } }, strong: { n: '共生', e: { hp_regen: 200, hp_on_hit: 50 }, ic: 'vamp' }, strongKind: 'keystone' },
-    ],
-  },
-  // 下: チル/フリーズ（frostmage）
-  {
-    key: 'frz', cls: 'frostmage', deg: 90, ic: 'special', spineFlavor: { n: '氷の研鑽', e: { chill_effect_pct: 6 } },
-    branches: [
-      { at: 1, side: 42, notable: { n: '氷術の心得', e: { chill_chance: 8, chill_effect_pct: 12 } }, strong: { n: '氷嵐', e: { chill_chance: 10, chill_effect_pct: 25 }, ic: 'special' }, strongKind: 'notable' },
-      { at: 3, side: -42, notable: { n: '氷結', e: { freeze_chance: 3, chill_effect_pct: 18 } }, strong: { n: '凍結の極み', e: { freeze_chance: 4, freeze_duration_pct: 30 }, ic: 'special' }, strongKind: 'notable' },
-      { at: 5, side: 42, notable: { n: '永久凍土', e: { freeze_chance: 4, chill_effect_pct: 20 } }, strong: { n: '絶対零度', e: { freeze_chance: 5, freeze_duration_pct: 40 }, ic: 'special' }, strongKind: 'keystone' },
-    ],
-  },
-  // 左下: 発火（elementalist）
-  {
-    key: 'ign', cls: 'elementalist', deg: 150, ic: 'special', spineFlavor: { n: '火の研鑽', e: { ignite_damage_pct: 8 } },
-    branches: [
-      { at: 1, side: 42, notable: { n: '火術の心得', e: { ignite_chance: 8, ignite_damage_pct: 12 } }, strong: { n: '業火の心得', e: { ignite_chance: 10, ignite_damage_pct: 25 }, ic: 'special' }, strongKind: 'notable' },
-      { at: 3, side: -42, notable: { n: '業火', e: { ignite_chance: 10, ignite_damage_pct: 18 } }, strong: { n: '劫火', e: { ignite_damage_pct: 35, ignite_duration_pct: 20 }, ic: 'special' }, strongKind: 'notable' },
-      { at: 5, side: 42, notable: { n: '業火の支配', e: { ignite_chance: 12, ignite_damage_pct: 22 } }, strong: { n: '業炎天', e: { ignite_damage_more_pct: 30, ignite_spread: true }, ic: 'special' }, strongKind: 'keystone', ring: 6 },
-    ],
-  },
-];
-
-// クラススタート
-const CLASS_STARTS: Record<string, { id: string; name: string; e: PassiveEffect; ic: PassiveIconType }> = {
-  warrior: { id: 'warrior_start', name: '戦士の構え', e: { atk: 5, hp: 20 }, ic: 'atk' },
-  ranger: { id: 'ranger_start', name: '狩人の心得', e: { atk: 4, hp: 20 }, ic: 'poison' },
-  tamer: { id: 'tamer_start', name: '調教師の絆', e: { hp: 25, def: 2 }, ic: 'regen' },
-  frostmage: { id: 'frostmage_start', name: '氷術の素養', e: { atk: 4, hp: 20, def: 2 }, ic: 'special' },
-  elementalist: { id: 'elementalist_start', name: '魔導の素養', e: { atk: 5, hp: 15 }, ic: 'special' },
-};
-
-// 主線の小ノードを生成（テーマ小ノードとステ散りを交互に）
-function spineNodes(sec: SectorDef): ChainNodeSpec[] {
-  const out: ChainNodeSpec[] = [];
-  for (let i = 0; i < SPINE_LEN; i++) {
-    const s = i % 2 === 0 ? sec.spineFlavor : SCATTER[((i - 1) / 2) % SCATTER.length];
-    out.push({ id: `${sec.key}_s${i + 1}`, name: s.n, effect: s.e, class: sec.cls });
-  }
-  return out;
+/** クラススタートノード定義 */
+export interface ClassStartCfg {
+  id: string;
+  name: string;
+  e: PassiveEffect;
+  ic: PassiveIconType;
 }
 
-// 派生ループの円ノード（テーマ小ノードとステ散りを交互に）
-function loopRing(key: string, bi: number, flavor: Lite, n: number): ChainNodeSpec[] {
-  const out: ChainNodeSpec[] = [];
-  for (let i = 0; i < n; i++) {
-    const s = i % 2 === 0 ? flavor : SCATTER[((i - 1) / 2) % SCATTER.length];
-    out.push({ id: `${key}_b${bi}_g${i + 1}`, name: s.n, effect: s.e });
-  }
-  return out;
+/** 形状の調整つまみ */
+export interface TreeConstants {
+  startRing: number; // クラススタート半径
+  rings4: number[]; // 同心リングの半径（内→外）
+  ringArcNodeCounts?: number[]; // 各リングのセクター間に置く小ノード数（内→外）
+  sideOffset: number; // 枝の横ずれ距離（主線からの離れ具合）
+  notableROffset: number; // ノータブルの内寄せ（内側ジャンクション半径＋この値）
+  loopGap: number; // キーストーン別枝のノード間隔
+  loopRadius: number; // 派生ループ半径
 }
 
-// 同心リングの半径（内・中1・中2・外の4本）。枝/ループは隣り合うリング間の「セル」に収める。
-const RINGS4 = [4.5, 9.5, 14.5, 20];
+/** Webエディタ／ビルドが読む調整データ全体 */
+export interface TreeConfig {
+  constants: TreeConstants;
+  scatter: Lite[]; // 主線/リム/弧に散らす汎用小ノード（ATK/HP/DEF巡回）
+  classStarts: Record<string, ClassStartCfg>;
+  sectors: SectorCfg[];
+  linkOverrides: { add: [string, string][]; remove: [string, string][] };
+}
 
-/** S3ツリー全体をDSLからコンパイル（planar同心セル構造） */
-export function buildS3DslNodes(): BuildResult {
+/** 既定config（data/passiveTree_s3.config.json）。Webエディタは編集済みconfigを渡して上書きする。 */
+export const defaultConfig = rawConfig as unknown as TreeConfig;
+
+function statWheel(prefix: string, stat: 'hp' | 'atk' | 'def', flat: number, inc: number): ChainNodeSpec[] {
+  const flatKey = stat;
+  const incKey = `${stat}_increased_pct` as keyof PassiveEffect;
+  return [
+    { id: `${prefix}_flat1`, name: stat === 'hp' ? '巨体' : stat === 'atk' ? '剛腕' : '重装', effect: { [flatKey]: flat } },
+    { id: `${prefix}_inc1`, name: stat === 'hp' ? '生命熟達' : stat === 'atk' ? '攻撃熟達' : '防御熟達', effect: { [incKey]: inc } },
+    { id: `${prefix}_flat2`, name: stat === 'hp' ? '巨体' : stat === 'atk' ? '剛腕' : '重装', effect: { [flatKey]: flat } },
+    { id: `${prefix}_inc2`, name: stat === 'hp' ? '生命熟達' : stat === 'atk' ? '攻撃熟達' : '防御熟達', effect: { [incKey]: inc } },
+  ] as ChainNodeSpec[];
+}
+
+function sustainWheel(prefix: string, flavor: 'blood' | 'venom' | 'ember' | 'focus' | 'frost' | 'guard'): ChainNodeSpec[] {
+  const variants: Record<typeof flavor, ChainNodeSpec[]> = {
+    blood: [
+      { id: `${prefix}_hit1`, name: '吸命', effect: { hp_on_hit: 35 } },
+      { id: `${prefix}_leech1`, name: '吸血', effect: { lifestealPct: 2 } },
+      { id: `${prefix}_hit2`, name: '吸命', effect: { hp_on_hit: 45 } },
+      { id: `${prefix}_defer1`, name: '受け流し', effect: { damage_defer_pct: 3 } },
+    ],
+    venom: [
+      { id: `${prefix}_hit1`, name: '吸命', effect: { hp_on_hit: 30 } },
+      { id: `${prefix}_leech1`, name: '毒血吸収', effect: { poison_lifesteal: 8 } },
+      { id: `${prefix}_hit2`, name: '吸命', effect: { hp_on_hit: 35 } },
+      { id: `${prefix}_defer1`, name: '受け流し', effect: { damage_defer_pct: 3 } },
+    ],
+    ember: [
+      { id: `${prefix}_hit1`, name: '吸命', effect: { hp_on_hit: 30 } },
+      { id: `${prefix}_leech1`, name: '火勢吸収', effect: { ignite_lifesteal: 8 } },
+      { id: `${prefix}_hit2`, name: '吸命', effect: { hp_on_hit: 35 } },
+      { id: `${prefix}_defer1`, name: '受け流し', effect: { damage_defer_pct: 3 } },
+    ],
+    focus: [
+      { id: `${prefix}_hit1`, name: '吸命', effect: { hp_on_hit: 30 } },
+      { id: `${prefix}_leech1`, name: '会心吸収', effect: { critical_lifesteal_pct: 10 } },
+      { id: `${prefix}_hit2`, name: '吸命', effect: { hp_on_hit: 35 } },
+      { id: `${prefix}_defer1`, name: '受け流し', effect: { damage_defer_pct: 3 } },
+    ],
+    frost: [
+      { id: `${prefix}_hit1`, name: '吸命', effect: { hp_on_hit: 30 } },
+      { id: `${prefix}_leech1`, name: '凍傷吸収', effect: { lifestealPct: 2, freeze_resist_pct: 5 } },
+      { id: `${prefix}_hit2`, name: '吸命', effect: { hp_on_hit: 35 } },
+      { id: `${prefix}_defer1`, name: '受け流し', effect: { damage_defer_pct: 3 } },
+    ],
+    guard: [
+      { id: `${prefix}_hit1`, name: '吸命', effect: { hp_on_hit: 35 } },
+      { id: `${prefix}_leech1`, name: '堅守吸収', effect: { lifestealPct: 2, block_chance: 2 } },
+      { id: `${prefix}_hit2`, name: '吸命', effect: { hp_on_hit: 40 } },
+      { id: `${prefix}_defer1`, name: '受け流し', effect: { damage_defer_pct: 3 } },
+    ],
+  };
+  return variants[flavor];
+}
+
+/**
+ * S3ツリー全体をDSLからコンパイル（planar同心セル構造）。
+ * config未指定なら data/passiveTree_s3.config.json を使う。
+ */
+export function buildS3DslNodes(config: TreeConfig = defaultConfig): BuildResult {
   const t = radialTree();
+  const { constants: C, scatter: SCATTER, classStarts: CLASS_STARTS, sectors: SECTORS } = config;
+  const RINGS4 = C.rings4;
+  const ringArcNodeCounts = C.ringArcNodeCounts ?? RINGS4.map(() => 2);
+  const ringNode = (ring: number, sectorIndex: number, side: 1 | 2) => {
+    const count = Math.max(1, Math.floor(ringArcNodeCounts[ring] ?? 2));
+    return `ring${ring}_${sectorIndex}_${Math.min(side, count)}`;
+  };
+  const outwardDeg = (id: string, offset = 0) => {
+    const p = t.posOf(id);
+    return (Math.atan2(p.y, p.x) * 180) / Math.PI + offset;
+  };
 
   // 中央ノードは廃止（各クラスは自分のクラススタートから開始する）。
   // 共通フォールバック startNodeId は build() が最初のクラススタートを自動採用する。
 
   // クラススタート
-  for (const sec of SECTORS) {
+  for (const [sectorIndex, sec] of SECTORS.entries()) {
     if (!sec.cls) continue;
     const cs = CLASS_STARTS[sec.cls];
-    t.start(sec.cls, { id: cs.id, name: cs.name, effect: cs.e, iconType: cs.ic }, { ring: START_RING, deg: sec.deg });
+    t.start(sec.cls, { id: cs.id, name: cs.name, effect: cs.e, iconType: cs.ic }, { ring: C.startRing, deg: sec.deg });
   }
 
   // 各セクター: 放射の主線（リング半径ごとのジャンクション）＋セル内の枝/派生ループ
@@ -169,50 +167,93 @@ export function buildS3DslNodes(): BuildResult {
     for (let k = 0; k < js.length - 1; k++) {
       t.path({ from: js[k], to: js[k + 1], nodes: [{ id: `${sec.key}_s${k}`, name: SCATTER[k % 3].n, effect: SCATTER[k % 3].e, class: sec.cls }] });
     }
-
-    // セル(リング間)ごとに枝ノータブル＋派生ループ。主線から横(±)へ退避し、セル内に収める。
-    sec.branches.forEach((br, bi) => {
-      // ノータブルは内側ジャンクション寄りに置く（派生始めの線を短く＆ループを外側へ伸ばす余地確保）
-      const notableR = RINGS4[bi] + 1.6;
-      // 横ずれの「距離」を一定(=SIDE_OFFSET)にする。半径が大きい外側セルほど角度は小さくなり、
-      // connectorが長くなりすぎない（弧長 ≒ 半径×角度 を一定化）。符号は交互。
-      const SIDE_OFFSET = 2.6;
-      const side = (bi % 2 === 0 ? 1 : -1) * (Math.asin(Math.min(0.6, SIDE_OFFSET / notableR)) * 180) / Math.PI;
-      const notableId = t.node(
-        { id: `${sec.key}_b${bi + 1}_n`, name: br.notable.n, effect: br.notable.e, iconType: br.notable.ic ?? sec.ic, class: sec.cls },
-        { ring: notableR, deg: sec.deg + side },
-        'notable'
-      );
-      // 内側ジャンクションから枝分かれ（connector経由）
-      t.path({ from: junc[sec.key][bi], to: notableId, nodes: [{ id: `${sec.key}_b${bi + 1}_c`, name: sec.spineFlavor.n, effect: sec.spineFlavor.e, class: sec.cls }] });
-      // 派生ループ（強ノードは円の反対側）。gap>radius にして entry がノータブルと重ならないように。
-      t.branchLoop({
-        from: notableId,
-        outDeg: sec.deg + side, // ノータブルの放射方向＝セル内で外側へ
-        gap: 1.9,
-        radius: 0.85,
-        entry: { id: `${sec.key}_b${bi + 1}_e`, name: sec.spineFlavor.n, effect: sec.spineFlavor.e, class: sec.cls },
-        ring: loopRing(sec.key, bi + 1, sec.spineFlavor, br.ring ?? 4),
-        strong: { id: `${sec.key}_b${bi + 1}_k`, name: br.strong.n, effect: br.strong.e, nodeType: br.strongKind, iconType: br.strong.ic ?? sec.ic, class: sec.cls },
-      });
-    });
   }
 
   // 同心リング4本：各リング半径で隣セクターのジャンクションを円弧接続（枝はセル内なので交差しない）
   const order = SECTORS.map((s) => s.key);
   for (let k = 0; k < RINGS4.length; k++) {
     for (let i = 0; i < order.length; i++) {
+      const count = Math.max(1, Math.floor(ringArcNodeCounts[k] ?? 2));
       t.arc({
         from: junc[order[i]][k],
         to: junc[order[(i + 1) % order.length]][k],
         radius: RINGS4[k],
-        nodes: [
-          { id: `ring${k}_${i}_1`, name: SCATTER[i % 3].n, effect: SCATTER[i % 3].e },
-          { id: `ring${k}_${i}_2`, name: SCATTER[(i + 1) % 3].n, effect: SCATTER[(i + 1) % 3].e },
-        ],
+        nodes: Array.from({ length: count }, (_, idx) => {
+          const scatter = SCATTER[(i + idx) % SCATTER.length];
+          return { id: `ring${k}_${i}_${idx + 1}`, name: scatter.n, effect: scatter.e };
+        }),
       });
     }
   }
+
+  // セル(リング間)ごとにノータブル/キーストーン枝を配置。主線だけでなく円周ノードからも生やす。
+  for (const [sectorIndex, sec] of SECTORS.entries()) {
+    sec.branches.forEach((br, bi) => {
+      const keystoneBranch = br.strongKind === 'keystone';
+      const keyMainIndex = bi;
+      const notableMainIndex = bi;
+      const notableSource = ringNode(notableMainIndex, sectorIndex, 1);
+      const strongSource = ringNode(Math.min(bi + 1, RINGS4.length - 1), sectorIndex, 2);
+      const keystoneSource = ringNode(Math.min(keyMainIndex + 1, RINGS4.length - 1), sectorIndex, 2);
+      const notableR = RINGS4[notableMainIndex] + C.notableROffset;
+      const side = (bi % 2 === 0 ? 1 : -1) * (Math.asin(Math.min(0.6, C.sideOffset / notableR)) * 180) / Math.PI;
+      const notableDir = outwardDeg(notableSource, bi === 1 ? -24 : 24);
+      t.chain({
+        from: notableSource,
+        dirDeg: notableDir,
+        step: C.loopGap,
+        nodes: [
+          { id: `${sec.key}_b${bi + 1}_c`, name: sec.spineFlavor.n, effect: sec.spineFlavor.e, class: sec.cls },
+          { id: `${sec.key}_b${bi + 1}_n`, name: br.notable.n, effect: br.notable.e, nodeType: 'notable', iconType: br.notable.ic ?? sec.ic, class: sec.cls },
+        ],
+      });
+
+      if (br.strongKind === 'keystone') {
+        t.keystoneDiamond({
+          from: keystoneSource,
+          dirDeg: outwardDeg(keystoneSource, -18),
+          step: C.loopGap,
+          branch: { id: `${sec.key}_b${bi + 1}_e`, name: sec.spineFlavor.n, effect: sec.spineFlavor.e, class: sec.cls },
+          left: { id: `${sec.key}_b${bi + 1}_g1`, name: SCATTER[bi % SCATTER.length].n, effect: SCATTER[bi % SCATTER.length].e, class: sec.cls },
+          right: { id: `${sec.key}_b${bi + 1}_g2`, name: SCATTER[(bi + 1) % SCATTER.length].n, effect: SCATTER[(bi + 1) % SCATTER.length].e, class: sec.cls },
+          keystone: { id: `${sec.key}_b${bi + 1}_k`, name: br.strong.n, effect: br.strong.e, nodeType: 'keystone', iconType: br.strong.ic ?? sec.ic, class: sec.cls },
+        });
+      } else {
+        t.chain({
+          from: strongSource,
+          dirDeg: outwardDeg(strongSource, bi === 0 ? 70 : 30),
+          step: C.loopGap,
+          nodes: [
+            { id: `${sec.key}_b${bi + 1}_e`, name: sec.spineFlavor.n, effect: sec.spineFlavor.e, class: sec.cls },
+            { id: `${sec.key}_b${bi + 1}_k`, name: br.strong.n, effect: br.strong.e, nodeType: 'notable', iconType: br.strong.ic ?? sec.ic, class: sec.cls },
+          ],
+        });
+      }
+    });
+  }
+
+  // 汎用ステータスの4pt円クラスタ。メインノードを囲まず、外側へ枝として出す。
+  t.minorRingOffshoot({ from: junc.def[3], dirDeg: -90, gap: 4.6, radius: 1.25, minors: statWheel('stat_def_inc', 'def', 25, 12) });
+  t.minorRingOffshoot({ from: junc.pet[3], dirDeg: 30, gap: 4.8, radius: 1.25, minors: statWheel('stat_hp_inc', 'hp', 100, 12) });
+  t.minorRingOffshoot({ from: junc.cri[3], dirDeg: -150, gap: 4.6, radius: 1.25, minors: statWheel('stat_atk_inc', 'atk', 18, 10) });
+
+  // クラス間の円周ノードから伸びる汎用吸収クラスタ。
+  // 円周で派生がない ring1_*_3 を使い、隣系統へ移動しながらHP on hit/吸収を拾えるようにする。
+  const sustainFlavors: Array<'focus' | 'guard' | 'venom' | 'blood' | 'frost' | 'ember'> = ['focus', 'guard', 'venom', 'blood', 'frost', 'ember'];
+  for (let i = 0; i < order.length; i++) {
+    const from = `ring1_${i}_3`;
+    t.minorRingOffshoot({
+      from,
+      dirDeg: outwardDeg(from),
+      gap: 3.8,
+      radius: 1.05,
+      minors: sustainWheel(`sustain_${i}`, sustainFlavors[i]),
+    });
+  }
+
+  // 手動の接続編集（Webエディタの linkOverrides）。追加→削除の順で適用。
+  for (const [a, b] of config.linkOverrides?.add ?? []) t.link(a, b);
+  for (const [a, b] of config.linkOverrides?.remove ?? []) t.unlink(a, b);
 
   return t.build();
 }

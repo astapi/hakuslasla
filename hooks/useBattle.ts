@@ -16,6 +16,7 @@ import { usePlayerStore } from '@/stores/usePlayerStore';
 import { useAdBoostStore } from '@/stores/useAdBoostStore';
 import {
   CombinedModEffects,
+  calculateBattleHpAndShield,
   combineMods,
   createBattleEngine,
   BattleEvent,
@@ -162,7 +163,7 @@ const buildMimicForDungeon = (dungeon: Dungeon): Enemy | undefined => {
 };
 
 // 初期状態を作成
-const createInitialState = (dungeonId: string, playerMaxHp: number, startFloor: number = 1): BattleState => {
+const createInitialState = (dungeonId: string, playerMaxHp: number, startFloor: number = 1, playerMaxShield: number = 0): BattleState => {
   const dungeon = getDungeon(dungeonId);
   return {
     dungeonId,
@@ -170,6 +171,8 @@ const createInitialState = (dungeonId: string, playerMaxHp: number, startFloor: 
     maxFloor: dungeon?.maxFloor || 5,
     playerCurrentHp: playerMaxHp,
     playerMaxHp: playerMaxHp,
+    playerShield: playerMaxShield,
+    playerMaxShield,
     enemy: null,
     enemyPoison: [],
     playerPoison: [],
@@ -215,6 +218,7 @@ interface ExtendedBattleState extends BattleState {
 const createExtendedInitialState = (
   dungeonId: string,
   playerMaxHp: number,
+  playerMaxShield: number = 0,
   runCount: number = 1,
   grandTotalExp: number = 0,
   grandTotalItems: Item[] = [],
@@ -227,6 +231,8 @@ const createExtendedInitialState = (
     maxFloor: dungeon?.maxFloor || 5,
     playerCurrentHp: playerMaxHp,
     playerMaxHp: playerMaxHp,
+    playerShield: playerMaxShield,
+    playerMaxShield,
     enemy: null,
     enemyPoison: [],
     playerPoison: [],
@@ -253,7 +259,7 @@ const createExtendedInitialState = (
 };
 
 // 拡張アクション型
-type ExtendedBattleAction = BattleAction | { type: 'RESET_DUNGEON'; playerMaxHp: number } | { type: 'CLEANSE_ENEMY_POISON_IGNITE' };
+type ExtendedBattleAction = BattleAction | { type: 'RESET_DUNGEON'; playerMaxHp: number; playerMaxShield: number } | { type: 'CLEANSE_ENEMY_POISON_IGNITE' };
 
 // リデューサー
 const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction): ExtendedBattleState => {
@@ -270,6 +276,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       return createExtendedInitialState(
         state.dungeonId,
         action.playerMaxHp,
+        action.playerMaxShield,
         state.runCount + 1,
         state.grandTotalExp + state.totalExpGained,
         [...state.grandTotalItems, ...state.droppedItems]
@@ -315,10 +322,22 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       };
 
     case 'ENEMY_ATTACK':
+      if (action.blocked) {
+        return {
+          ...state,
+          battleLog: addToLog(state.battleLog, {
+            id: logIdCounter++,
+            message: i18n.t('battleLog.blocked', { enemy: state.enemy?.name ?? '', defaultValue: 'ブロック！' }),
+            type: 'block',
+          }),
+        };
+      }
       const newPlayerHp = state.playerCurrentHp - action.damage;
+      const newPlayerShield = Math.max(0, state.playerShield - (action.shieldDamage ?? 0));
       return {
         ...state,
         playerCurrentHp: Math.max(0, newPlayerHp),
+        playerShield: newPlayerShield,
         battleLog: addToLog(state.battleLog, {
           id: logIdCounter++,
           message: i18n.t('battleLog.enemyAttack', { enemy: state.enemy?.name ?? '', damage: action.damage }),
@@ -660,6 +679,8 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         ...state,
         playerGauge: action.playerGauge,
         enemyGauge: action.enemyGauge,
+        playerShield: action.playerShield ?? state.playerShield,
+        playerMaxShield: action.playerMaxShield ?? state.playerMaxShield,
         enemyChill: action.enemyChill ?? null,
         enemyFreeze: action.enemyFreeze ?? null,
         playerChill: action.playerChill ?? null,
@@ -713,7 +734,7 @@ const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] =
 
 export const useBattle = (dungeonId: string, options?: { startFloor?: number }) => {
   const startFloor = options?.startFloor ?? 1;
-  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, unlockedUberSkills, setLevelCap, characterType, characterId, pets, activePetInstanceId, petLevels, addPet } = usePlayerStore();
+  const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, unlockedUberSkills, characterType, characterId, pets, activePetInstanceId, petLevels, addPet } = usePlayerStore();
   const stats = getTotalStats();
   const { getDropRateMultiplier, isTierBoosted, checkExpiredBoosts } = useAdBoostStore();
 
@@ -723,6 +744,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
   // 戦闘速度設定
   const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
   const battleSpeedRef = useRef<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
+  const handleBattleEventsRef = useRef<(events: BattleEvent[]) => void>(() => {});
 
   // 設定の読み込み
   useEffect(() => {
@@ -788,7 +810,13 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     };
 
     // ペットバフを最後に重ねる（テイマーはクラス固有能力でペット効果が倍化する／強化レベルで倍化）
-    return applyPetBuff(withClassUber, petBuff, (classAbility.petEffectMultiplier ?? 1) * petLevelFactor);
+    return applyPetBuff(
+      withClassUber,
+      petBuff,
+      (classAbility.petEffectMultiplier ?? 1) *
+        petLevelFactor *
+        (1 + withClassUber.petEffectPct / 100)
+    );
   }, [equipment, unlockedSkills, unlockedUberSkills, characterType, pets, activePetInstanceId, petLevels]);
 
   // 後方互換性のためのラッパー（将来的に直接modEffectsを使用するよう移行）
@@ -796,9 +824,14 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     return modEffects;
   }, [modEffects]);
 
+  const battleVitals = useMemo(
+    () => calculateBattleHpAndShield(stats.maxHp, modEffects),
+    [stats.maxHp, modEffects]
+  );
+
   const [state, dispatch] = useReducer(
     battleReducer,
-    createExtendedInitialState(dungeonId, stats.maxHp, 1, 0, [], startFloor)
+    createExtendedInitialState(dungeonId, battleVitals.maxHp, battleVitals.maxShield, 1, 0, [], startFloor)
   );
 
   const [isPaused, setIsPaused] = useState(false);
@@ -999,7 +1032,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
 
     // ペットドロップ判定（独自の枠で容量管理、装備インベントリには影響しない）
     // クラス固有能力（テイマーのペットドロップ率+%）をボーナスとして加算
-    const petDropBonus = CLASS_ABILITIES[characterType].petDropRatePct ?? 0;
+    const petDropBonus = (CLASS_ABILITIES[characterType].petDropRatePct ?? 0) +
+      getCombinedModEffects().petDropRatePct;
     const droppedPetId = tryPetDrop(state.enemy.id, petDropBonus);
     if (droppedPetId) {
       const droppedDef = getPet(droppedPetId);
@@ -1100,8 +1134,10 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
         }
         case 'enemy_attack': {
           const damage = Number(data.damage ?? 0);
-          dispatch({ type: 'ENEMY_ATTACK', damage });
-          playBattleSound('enemy_attack');
+          const shieldDamage = Number(data.shieldDamage ?? 0);
+          const blocked = data.blocked === true;
+          dispatch({ type: 'ENEMY_ATTACK', damage, shieldDamage, blocked });
+          if (!blocked) playBattleSound('enemy_attack');
           break;
         }
         case 'poison_applied': {
@@ -1314,6 +1350,12 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     }
   }, [state.enemy, handleEnemyDefeated, characterType]);
 
+  useEffect(() => {
+    handleBattleEventsRef.current = handleBattleEvents;
+  }, [handleBattleEvents]);
+
+  const activeEnemyId = state.enemy?.id ?? null;
+
   // ボス戦エンジン初期化（敵切り替え時のみ）
   useEffect(() => {
     if (!state.enemy || state.phase !== 'fighting') {
@@ -1328,7 +1370,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     const mods = getCombinedModEffects();
     const { engine, events } = createBattleEngine({
       playerStats: {
-        maxHp: state.playerMaxHp,
+        maxHp: playerStats.maxHp,
         atk: playerStats.atk,
         def: playerStats.def,
       },
@@ -1351,16 +1393,16 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     battleEngineRef.current = engine;
     isTransitioningRef.current = false;
     if (events.length > 0) {
-      handleBattleEvents(events);
+      handleBattleEventsRef.current(events);
     }
-  }, [state.enemy?.id, state.currentFloor, state.phase, state.playerMaxHp, dungeonId, getCombinedModEffects, getTotalStats, handleBattleEvents]);
+  }, [state.enemy, state.currentFloor, state.phase, state.playerMaxHp, state.playerCurrentHp, dungeonId, getCombinedModEffects, getTotalStats]);
 
   // ゲージ制ゲームループ（33msごとに更新 = 約30fps）
   const TICK_INTERVAL = 33;
   const gameLoopRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    if (state.phase !== 'fighting' || !state.enemy || isPaused) {
+    if (state.phase !== 'fighting' || !activeEnemyId || isPaused) {
       if (gameLoopRef.current) {
         clearInterval(gameLoopRef.current);
         gameLoopRef.current = null;
@@ -1368,36 +1410,46 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       return;
     }
 
+    if (gameLoopRef.current) {
+      clearInterval(gameLoopRef.current);
+      gameLoopRef.current = null;
+    }
+
+    const enemyId = activeEnemyId;
     gameLoopRef.current = setInterval(() => {
       if (isProcessingRef.current) return;
       const engine = battleEngineRef.current;
       if (!engine) return;
 
       isProcessingRef.current = true;
-      const events = engine.advanceTicks(Math.max(1, Math.floor(battleSpeed)));
-      if (events.length > 0) {
-        handleBattleEvents(events);
+      try {
+        const events = engine.advanceTicks(Math.max(1, Math.floor(battleSpeedRef.current)));
+        if (events.length > 0) {
+          handleBattleEventsRef.current(events);
+        }
+        const coreState = engine.getState();
+        dispatch({
+          type: 'UPDATE_GAUGES',
+          playerGauge: Math.min(100, coreState.player.gauge),
+          enemyGauge: Math.min(100, coreState.enemy.gauge),
+          playerShield: coreState.playerShield,
+          playerMaxShield: coreState.playerMaxShield,
+          enemyChill: coreState.enemyChillState,
+          enemyFreeze: coreState.enemyFreezeState,
+          playerChill: coreState.playerChillState,
+          playerFreeze: coreState.playerFreezeState,
+        });
+        // UberUberクラーケンの触手乱打カウントダウン更新
+        const bossEffects = engine.getBossEffects();
+        if (enemyId === 'uber_uber_kraken') {
+          const remaining = Math.max(0, 10 - bossEffects.krakenFlurryCounter);
+          setKrakenFlurryCountdown((prev) => (prev === remaining ? prev : remaining));
+        } else {
+          setKrakenFlurryCountdown((prev) => (prev === null ? prev : null));
+        }
+      } finally {
+        isProcessingRef.current = false;
       }
-      const coreState = engine.getState();
-      dispatch({
-        type: 'UPDATE_GAUGES',
-        playerGauge: Math.min(100, coreState.player.gauge),
-        enemyGauge: Math.min(100, coreState.enemy.gauge),
-        enemyChill: coreState.enemyChillState,
-        enemyFreeze: coreState.enemyFreezeState,
-        playerChill: coreState.playerChillState,
-        playerFreeze: coreState.playerFreezeState,
-      });
-      // UberUberクラーケンの触手乱打カウントダウン更新
-      const bossEffects = engine.getBossEffects();
-      const enemyId = state.enemy?.id;
-      if (enemyId === 'uber_uber_kraken') {
-        const remaining = Math.max(0, 10 - bossEffects.krakenFlurryCounter);
-        setKrakenFlurryCountdown((prev) => (prev === remaining ? prev : remaining));
-      } else {
-        setKrakenFlurryCountdown((prev) => (prev === null ? prev : null));
-      }
-      isProcessingRef.current = false;
     }, TICK_INTERVAL);
 
     return () => {
@@ -1406,7 +1458,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
         gameLoopRef.current = null;
       }
     };
-  }, [state.phase, state.enemy, isPaused, battleSpeed, handleBattleEvents]);
+  }, [state.phase, activeEnemyId, isPaused]);
 
   // 戦闘終了時に経験値を付与
   useEffect(() => {
@@ -1432,7 +1484,6 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
             const alreadyUnlocked = await settingsRepository.getEndContentUnlocked();
             if (!alreadyUnlocked) {
               await settingsRepository.setEndContentUnlocked(true);
-              setLevelCap(60);
             }
           }
 
@@ -1467,7 +1518,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       }
     };
     saveResults();
-  }, [state.phase, state.dungeonId, state.totalExpGained, state.droppedItems, state.currentFloor, gainExp, addToInventory, getInventorySpace, setLevelCap]);
+  }, [state.phase, state.dungeonId, state.totalExpGained, state.droppedItems, state.currentFloor, gainExp, addToInventory, getInventorySpace]);
 
   // 自動周回処理（クリア時に次の周回を開始、敗北時は終了）
   useEffect(() => {
@@ -1483,14 +1534,16 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       // クリア時は次の周回を開始
       const timer = setTimeout(() => {
         const currentStats = getTotalStats();
+        const currentMods = getCombinedModEffects();
+        const currentVitals = calculateBattleHpAndShield(currentStats.maxHp, currentMods);
         // イグナイト伝染状態をリセット（新しい周回開始）
         spreadIgniteRef.current = null;
-        dispatch({ type: 'RESET_DUNGEON', playerMaxHp: currentStats.maxHp });
+        dispatch({ type: 'RESET_DUNGEON', playerMaxHp: currentVitals.maxHp, playerMaxShield: currentVitals.maxShield });
       }, 1500);
 
       return () => clearTimeout(timer);
     }
-  }, [state.phase, isAutoRunning, getTotalStats]);
+  }, [state.phase, isAutoRunning, getTotalStats, getCombinedModEffects]);
 
   // 戦闘SE のプリロード/アンロード & 戦闘開始
   const [soundsReady, setSoundsReady] = useState(false);
@@ -1539,5 +1592,6 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     changeBattleSpeed,
     krakenFlurryCountdown,
     getPetsGained,
+    blockChance: Math.min(50, Math.max(0, modEffects.blockChance)),
   };
 };

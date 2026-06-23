@@ -6,7 +6,7 @@ import { calculatePassiveEffects } from '@/data/passiveTree';
 import { calculateUberTreeEffects } from '@/data/uberTree';
 import { combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
 import { applyPetBuff } from '@/core/petEffects';
-import { getPet } from '@/data/pets';
+import { getPet, getPetLevelFactor } from '@/data/pets';
 import { CLASS_ABILITIES } from '@/core/player';
 import { HPBar } from '../battle/HPBar';
 import { ms, fs } from '@/utils/scaling';
@@ -102,7 +102,10 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       ? state.pets.find((p) => p.instanceId === state.activePetInstanceId)
       : undefined;
     const petBuff = activePet ? getPet(activePet.petId)?.buff : undefined;
-    const petMult = classAbility.petEffectMultiplier ?? 1;
+    const petLevelFactor = activePet ? getPetLevelFactor(state.petLevels[activePet.petId] ?? 1) : 1;
+    const petMult = (classAbility.petEffectMultiplier ?? 1) *
+      (1 + passiveEffects.pet_effect_pct / 100) *
+      petLevelFactor;
 
     // 合計値を計算（useBattle.ts の modEffects と同じロジック）
     const combinedModsBeforePet = {

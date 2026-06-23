@@ -238,6 +238,29 @@ export interface CombinedModEffects {
   lifestealPct: number;        // 与ダメージの X% をHP回復（全ヒット、ペットバフ由来）
   retaliateDefPct: number;     // 被ダメ時DEFのX%を反撃ダメージ
 
+  // シールド
+  shield: number;                  // 最大シールドのフラット加算
+  shieldIncreasedPct: number;      // シールド increased%
+  shieldMorePct: number[];         // シールド more%
+  hpToShield: boolean;             // 最大HPをシールドに変換し、戦闘時HPを圧縮
+  shieldOn10AttacksPct: number;    // 10回攻撃ごとに最大シールドのX%回復
+  shieldRechargeDelayMs: number;   // 被弾後Xmsで再構築開始
+  shieldRechargePct: number;       // 再構築中、毎秒最大シールドのX%回復
+  shieldBlocksDot: boolean;        // 毒などの継続ダメージもシールドで受ける
+
+  // ペット
+  petEffectPct: number;            // ペット効果 increased%
+  petDropRatePct: number;          // ペットドロップ率 +%
+
+  // ブロック・状態異常耐性・ボス対策
+  blockChance: number;             // ブロック率%
+  chillResistPct: number;          // チル付与率軽減%
+  freezeResistPct: number;         // フリーズ付与率軽減%
+  poisonResistPct: number;         // 毒ダメージ軽減%
+  repeatHitDamageReductionPct: number; // 短時間の連続被弾軽減%
+  lowHpDamageReductionPct: number;     // HP30%以下の被ダメージ軽減%
+  autoCleanseIntervalMs: number;       // 自動浄化間隔
+
   // HP回復変換
   hpRegenToAtkPct: number;  // 毎秒HP回復量の一定%をATKに追加
 
@@ -332,6 +355,11 @@ export interface FreezeState {
 export interface GaugeBattleState {
   player: GaugeCombatant;
   enemy: GaugeCombatant;
+  playerShield: number;
+  playerMaxShield: number;
+  playerLastShieldDamageTick: number | null;
+  playerLastHitDamageTick: number | null;
+  playerLastAutoCleanseTick: number | null;
   enemyPoisonStacks: PoisonStack[];
   playerPoisonStacks: PoisonStack[];
   enemyIgniteState: IgniteState | null;  // 発火状態（上書き式）

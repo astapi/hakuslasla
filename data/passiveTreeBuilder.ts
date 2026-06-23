@@ -20,6 +20,7 @@
  */
 import type {
   CharacterType,
+  NodeRequirement,
   PassiveEffect,
   PassiveIconType,
   PassiveNodeData,
@@ -76,6 +77,7 @@ interface InternalNode {
   iconType?: PassiveIconType;
   class?: CharacterType;
   pos: { x: number; y: number };
+  requiredNodes?: NodeRequirement[];
 }
 
 const DEG2RAD = Math.PI / 180;
@@ -139,7 +141,25 @@ export function describeEffect(effect: PassiveEffect): string {
   pct(effect.hp_regen_pct, '毎秒HP回復', '%');
   pct(effect.damage_defer_pct, 'ダメージ遅延');
   if (effect.hp_on_hit) parts.push(`HIT時HP +${effect.hp_on_hit}回復`);
+  pct(effect.lifestealPct, 'ライフスティール');
   pct(effect.retaliate_def_pct, '被ダメ時DEF反撃');
+  flat(effect.shield, 'シールド');
+  inc(effect.shield_increased_pct, 'シールド');
+  more(effect.shield_more_pct, 'シールド');
+  if (effect.hp_to_shield) parts.push('最大HPをシールドに変換');
+  pct(effect.shield_on_10_attacks_pct, '10回攻撃ごとシールド回復');
+  if (effect.shield_recharge_delay_ms) parts.push(`${effect.shield_recharge_delay_ms}ms後シールド再構築`);
+  pct(effect.shield_recharge_pct, '毎秒シールド再構築');
+  if (effect.shield_blocks_dot) parts.push('継続ダメージをシールドで受ける');
+  pct(effect.pet_effect_pct, 'ペット効果');
+  pct(effect.pet_drop_rate_pct, 'ペットドロップ率');
+  pct(effect.block_chance, 'ブロック率');
+  pct(effect.chill_resist_pct, 'チル耐性');
+  pct(effect.freeze_resist_pct, 'フリーズ耐性');
+  pct(effect.poison_resist_pct, '毒耐性');
+  pct(effect.repeat_hit_damage_reduction_pct, '連続被弾軽減');
+  pct(effect.low_hp_damage_reduction_pct, '低HP時被ダメ軽減');
+  if (effect.auto_cleanse_interval_ms) parts.push(`${effect.auto_cleanse_interval_ms}msごと状態異常解除`);
 
   pct(effect.attack_speed_pct, '攻撃速度');
   more(effect.attack_speed_more_pct, '攻撃速度');
@@ -324,6 +344,106 @@ export class RadialTreeBuilder {
   }
 
   /**
+   * メインノードから分岐する4ノード構造:
+   *   from -> branch -> left  -> keystone
+   *                  -> right -> keystone
+   * キーストーンは left/right のOR前提にして、左右どちらのルートでも3ptで取れる。
+   */
+  keystoneDiamond(opts: {
+    from: string;
+    dirDeg: number;
+    step: number;
+    spread?: number;
+    branch: ChainNodeSpec;
+    left: ChainNodeSpec;
+    right: ChainNodeSpec;
+    keystone: ChainNodeSpec;
+  }): { branchId: string; leftId: string; rightId: string; keystoneId: string } {
+    const base = this.posOf(opts.from);
+    const rad = opts.dirDeg * DEG2RAD;
+    const dx = Math.cos(rad);
+    const dy = Math.sin(rad);
+    const px = -dy;
+    const py = dx;
+    const spread = opts.spread ?? opts.step * 0.55;
+
+    const branchPos = {
+      x: round2(base.x + dx * opts.step),
+      y: round2(base.y + dy * opts.step),
+    };
+    const leftPos = {
+      x: round2(branchPos.x + dx * opts.step + px * spread),
+      y: round2(branchPos.y + dy * opts.step + py * spread),
+    };
+    const rightPos = {
+      x: round2(branchPos.x + dx * opts.step - px * spread),
+      y: round2(branchPos.y + dy * opts.step - py * spread),
+    };
+    const keyPos = {
+      x: round2(branchPos.x + dx * opts.step * 2),
+      y: round2(branchPos.y + dy * opts.step * 2),
+    };
+
+    this.addNode({
+      id: opts.branch.id,
+      name: opts.branch.name,
+      description: opts.branch.description,
+      effect: opts.branch.effect,
+      nodeType: opts.branch.nodeType ?? 'minor',
+      iconType: opts.branch.iconType,
+      class: opts.branch.class,
+      pos: branchPos,
+      requiredNodes: [opts.from],
+    });
+    this.addNode({
+      id: opts.left.id,
+      name: opts.left.name,
+      description: opts.left.description,
+      effect: opts.left.effect,
+      nodeType: opts.left.nodeType ?? 'minor',
+      iconType: opts.left.iconType,
+      class: opts.left.class,
+      pos: leftPos,
+      requiredNodes: [opts.branch.id],
+    });
+    this.addNode({
+      id: opts.right.id,
+      name: opts.right.name,
+      description: opts.right.description,
+      effect: opts.right.effect,
+      nodeType: opts.right.nodeType ?? 'minor',
+      iconType: opts.right.iconType,
+      class: opts.right.class,
+      pos: rightPos,
+      requiredNodes: [opts.branch.id],
+    });
+    this.addNode({
+      id: opts.keystone.id,
+      name: opts.keystone.name,
+      description: opts.keystone.description,
+      effect: opts.keystone.effect,
+      nodeType: 'keystone',
+      iconType: opts.keystone.iconType,
+      class: opts.keystone.class,
+      pos: keyPos,
+      requiredNodes: [[opts.left.id, opts.right.id]],
+    });
+
+    this.link(opts.from, opts.branch.id);
+    this.link(opts.branch.id, opts.left.id);
+    this.link(opts.branch.id, opts.right.id);
+    this.link(opts.left.id, opts.keystone.id);
+    this.link(opts.right.id, opts.keystone.id);
+
+    return {
+      branchId: opts.branch.id,
+      leftId: opts.left.id,
+      rightId: opts.right.id,
+      keystoneId: opts.keystone.id,
+    };
+  }
+
+  /**
    * クラスター = notable中心 ＋ 周囲minorのホイール。
    * notable↔各minor を自動接続し、minorは小オービットに円形配置。
    * linkToでnotableを外部ノード（既存ツリー含む）へ無向接続。
@@ -383,6 +503,97 @@ export class RadialTreeBuilder {
     }
 
     return { notableId, minorIds };
+  }
+
+  /**
+   * 既存ノードの周囲にminorだけの小さな円を作る。
+   * 特定テーマを4ptでまとめて取れる「小円クラスタ」に使う。
+   */
+  minorWheel(opts: {
+    center: string;
+    minors: ChainNodeSpec[];
+    orbit?: number;
+    orbitStartDeg?: number;
+    rim?: boolean;
+    linkCenter?: boolean;
+  }): string[] {
+    const center = this.posOf(opts.center);
+    const orbit = opts.orbit ?? 0.95;
+    const startDeg = opts.orbitStartDeg ?? -90;
+    const step = opts.minors.length > 0 ? 360 / opts.minors.length : 0;
+    const ids: string[] = [];
+
+    opts.minors.forEach((m, i) => {
+      const deg = startDeg + step * i;
+      this.addNode({
+        id: m.id,
+        name: m.name,
+        description: m.description,
+        effect: m.effect,
+        nodeType: m.nodeType ?? 'minor',
+        iconType: m.iconType,
+        class: m.class,
+        pos: {
+          x: round2(center.x + orbit * Math.cos(deg * DEG2RAD)),
+          y: round2(center.y + orbit * Math.sin(deg * DEG2RAD)),
+        },
+      });
+      ids.push(m.id);
+      if (opts.linkCenter !== false) this.link(opts.center, m.id);
+    });
+
+    if (opts.rim !== false && ids.length >= 3) {
+      for (let i = 0; i < ids.length; i++) this.link(ids[i], ids[(i + 1) % ids.length]);
+    }
+
+    return ids;
+  }
+
+  /**
+   * 既存ノードから外側へ枝を伸ばし、その先にminorだけの4点リングを作る。
+   * 既存ノードをリング中心にしないため、メインノードの上に四角形が被らない。
+   */
+  minorRingOffshoot(opts: {
+    from: string;
+    dirDeg: number;
+    gap: number;
+    radius?: number;
+    minors: ChainNodeSpec[];
+    entryIndex?: number;
+  }): string[] {
+    const base = this.posOf(opts.from);
+    const dir = opts.dirDeg * DEG2RAD;
+    const center = {
+      x: round2(base.x + Math.cos(dir) * opts.gap),
+      y: round2(base.y + Math.sin(dir) * opts.gap),
+    };
+    const rad = opts.radius ?? 1.15;
+    const entryIndex = opts.entryIndex ?? 0;
+    const step = opts.minors.length > 0 ? 360 / opts.minors.length : 0;
+    const ids: string[] = [];
+
+    opts.minors.forEach((m, i) => {
+      const deg = opts.dirDeg + 180 + step * i;
+      this.addNode({
+        id: m.id,
+        name: m.name,
+        description: m.description,
+        effect: m.effect,
+        nodeType: m.nodeType ?? 'minor',
+        iconType: m.iconType,
+        class: m.class,
+        pos: {
+          x: round2(center.x + rad * Math.cos(deg * DEG2RAD)),
+          y: round2(center.y + rad * Math.sin(deg * DEG2RAD)),
+        },
+      });
+      ids.push(m.id);
+    });
+
+    for (let i = 0; i < ids.length; i++) this.link(ids[i], ids[(i + 1) % ids.length]);
+    if (ids[entryIndex]) this.link(opts.from, ids[entryIndex]);
+
+    return ids;
   }
 
   /**
@@ -519,6 +730,12 @@ export class RadialTreeBuilder {
     this.edgeSet.add(key);
   }
 
+  /** 無向辺を削除（存在しなければ無視）。Webエディタの接続削除に使う */
+  unlink(a: string, b: string): void {
+    const key = a < b ? `${a}|${b}` : `${b}|${a}`;
+    this.edgeSet.delete(key);
+  }
+
   private startNodeIdValue?: string;
 
   /** 共通フォールバックのスタートID（中央ハブ）を指定 */
@@ -554,7 +771,9 @@ export class RadialTreeBuilder {
     for (const node of this.nodes.values()) {
       const neighbors = adjacency.get(node.id) ?? [];
       let requiredNodes: PassiveNodeData['requiredNodes'];
-      if (node.nodeType === 'start') {
+      if (node.requiredNodes) {
+        requiredNodes = node.requiredNodes;
+      } else if (node.nodeType === 'start') {
         requiredNodes = []; // 起点
       } else if (neighbors.length === 0) {
         throw new Error(`[DSL] 孤立ノード（辺なし）: "${node.id}"`);

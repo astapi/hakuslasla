@@ -57,7 +57,19 @@ const DEBUG_UNIQUE_ITEMS = [
 
 export default function DebugScreen() {
   const router = useRouter();
-  const { level, unlockedSkills, equipment, inventory, refresh, addToInventory } = usePlayerStore();
+  const {
+    level,
+    unlockedSkills,
+    unlockedUberSkills,
+    uberPoints,
+    equipment,
+    inventory,
+    pets,
+    activePetInstanceId,
+    petLevels,
+    refresh,
+    addToInventory,
+  } = usePlayerStore();
   const [showBuildJson, setShowBuildJson] = useState(false);
 
   // パッシブプリセット
@@ -259,11 +271,26 @@ export default function DebugScreen() {
 
   // 現在の装備数を計算
   const equippedCount = Object.values(equipment).filter(Boolean).length;
+  const activePet = pets.find((pet) => pet.instanceId === activePetInstanceId) ?? null;
   const buildJson = JSON.stringify(
     {
       level,
       equipment,
+      activePet: activePet
+        ? {
+            ...activePet,
+            level: petLevels[activePet.petId] ?? 1,
+          }
+        : null,
+      pets: pets.map((pet) => ({
+        ...pet,
+        level: petLevels[pet.petId] ?? 1,
+      })),
+      activePetInstanceId,
+      petLevels,
       unlockedSkills,
+      unlockedUberSkills,
+      uberPoints,
     },
     null,
     2

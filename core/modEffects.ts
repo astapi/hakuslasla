@@ -60,6 +60,7 @@ export interface PassiveEffectsData {
   hp_regen_pct: number;
   damage_defer_pct: number;
   hp_on_hit: number;
+  lifestealPct?: number;
   retaliate_def_pct: number;
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
@@ -70,6 +71,24 @@ export interface PassiveEffectsData {
   // フリーズ系
   freeze_chance: number;
   freeze_duration_pct: number;
+  // シールド系
+  shield?: number;
+  shield_increased_pct?: number;
+  shield_more_pct?: number[];
+  hp_to_shield?: boolean;
+  shield_on_10_attacks_pct?: number;
+  shield_recharge_delay_ms?: number;
+  shield_recharge_pct?: number;
+  shield_blocks_dot?: boolean;
+  pet_effect_pct?: number;
+  pet_drop_rate_pct?: number;
+  block_chance?: number;
+  chill_resist_pct?: number;
+  freeze_resist_pct?: number;
+  poison_resist_pct?: number;
+  repeat_hit_damage_reduction_pct?: number;
+  low_hp_damage_reduction_pct?: number;
+  auto_cleanse_interval_ms?: number;
 }
 
 // ========================================
@@ -111,6 +130,23 @@ export function createEmptyModEffects(): CombinedModEffects {
     hpOnHit: 0,
     lifestealPct: 0,
     retaliateDefPct: 0,
+    shield: 0,
+    shieldIncreasedPct: 0,
+    shieldMorePct: [],
+    hpToShield: false,
+    shieldOn10AttacksPct: 0,
+    shieldRechargeDelayMs: 0,
+    shieldRechargePct: 0,
+    shieldBlocksDot: false,
+    petEffectPct: 0,
+    petDropRatePct: 0,
+    blockChance: 0,
+    chillResistPct: 0,
+    freezeResistPct: 0,
+    poisonResistPct: 0,
+    repeatHitDamageReductionPct: 0,
+    lowHpDamageReductionPct: 0,
+    autoCleanseIntervalMs: 0,
     hpRegenToAtkPct: 0,
     attackSpeedPct: 0,
     attackSpeedMorePct: [],
@@ -206,6 +242,61 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
     case 'ignite_resist_pct':
       effects.igniteResistPct += mod.value;
       break;
+    case 'shield_bonus':
+      effects.shield += mod.value;
+      break;
+    case 'shield_increased_pct':
+      effects.shieldIncreasedPct += mod.value;
+      break;
+    case 'shield_more_pct':
+      effects.shieldMorePct.push(mod.value);
+      break;
+    case 'hp_to_shield':
+      effects.hpToShield = true;
+      break;
+    case 'shield_on_10_attacks_pct':
+      effects.shieldOn10AttacksPct += mod.value;
+      break;
+    case 'shield_recharge_delay_ms':
+      effects.shieldRechargeDelayMs = effects.shieldRechargeDelayMs === 0
+        ? mod.value
+        : Math.min(effects.shieldRechargeDelayMs, mod.value);
+      break;
+    case 'shield_recharge_pct':
+      effects.shieldRechargePct += mod.value;
+      break;
+    case 'shield_blocks_dot':
+      effects.shieldBlocksDot = true;
+      break;
+    case 'pet_effect_pct':
+      effects.petEffectPct += mod.value;
+      break;
+    case 'pet_drop_rate_pct':
+      effects.petDropRatePct += mod.value;
+      break;
+    case 'block_chance':
+      effects.blockChance += mod.value;
+      break;
+    case 'chill_resist_pct':
+      effects.chillResistPct += mod.value;
+      break;
+    case 'freeze_resist_pct':
+      effects.freezeResistPct += mod.value;
+      break;
+    case 'poison_resist_pct':
+      effects.poisonResistPct += mod.value;
+      break;
+    case 'repeat_hit_damage_reduction_pct':
+      effects.repeatHitDamageReductionPct += mod.value;
+      break;
+    case 'low_hp_damage_reduction_pct':
+      effects.lowHpDamageReductionPct += mod.value;
+      break;
+    case 'auto_cleanse_interval_ms':
+      effects.autoCleanseIntervalMs = effects.autoCleanseIntervalMs === 0
+        ? mod.value
+        : Math.min(effects.autoCleanseIntervalMs, mod.value);
+      break;
     case 'damage_defer_pct':
       effects.damageDeferPct += mod.value;
       break;
@@ -299,7 +390,35 @@ export function combineMods(
   combined.critLifestealPct += passiveEffects.critical_lifesteal_pct;
   combined.damageDeferPct += passiveEffects.damage_defer_pct;
   combined.hpOnHit += passiveEffects.hp_on_hit;
+  combined.lifestealPct += passiveEffects.lifestealPct ?? 0;
   combined.retaliateDefPct += passiveEffects.retaliate_def_pct;
+  combined.shield += passiveEffects.shield ?? 0;
+  combined.shieldIncreasedPct += passiveEffects.shield_increased_pct ?? 0;
+  combined.shieldMorePct.push(...(passiveEffects.shield_more_pct ?? []));
+  if (passiveEffects.hp_to_shield) combined.hpToShield = true;
+  combined.shieldOn10AttacksPct += passiveEffects.shield_on_10_attacks_pct ?? 0;
+  const shieldRechargeDelayMs = passiveEffects.shield_recharge_delay_ms ?? 0;
+  if (shieldRechargeDelayMs > 0) {
+    combined.shieldRechargeDelayMs = combined.shieldRechargeDelayMs === 0
+      ? shieldRechargeDelayMs
+      : Math.min(combined.shieldRechargeDelayMs, shieldRechargeDelayMs);
+  }
+  combined.shieldRechargePct += passiveEffects.shield_recharge_pct ?? 0;
+  if (passiveEffects.shield_blocks_dot) combined.shieldBlocksDot = true;
+  combined.petEffectPct += passiveEffects.pet_effect_pct ?? 0;
+  combined.petDropRatePct += passiveEffects.pet_drop_rate_pct ?? 0;
+  combined.blockChance += passiveEffects.block_chance ?? 0;
+  combined.chillResistPct += passiveEffects.chill_resist_pct ?? 0;
+  combined.freezeResistPct += passiveEffects.freeze_resist_pct ?? 0;
+  combined.poisonResistPct += passiveEffects.poison_resist_pct ?? 0;
+  combined.repeatHitDamageReductionPct += passiveEffects.repeat_hit_damage_reduction_pct ?? 0;
+  combined.lowHpDamageReductionPct += passiveEffects.low_hp_damage_reduction_pct ?? 0;
+  const autoCleanseIntervalMs = passiveEffects.auto_cleanse_interval_ms ?? 0;
+  if (autoCleanseIntervalMs > 0) {
+    combined.autoCleanseIntervalMs = combined.autoCleanseIntervalMs === 0
+      ? autoCleanseIntervalMs
+      : Math.min(combined.autoCleanseIntervalMs, autoCleanseIntervalMs);
+  }
   combined.attackSpeedPct += passiveEffects.attack_speed_pct;
   combined.attackSpeedMorePct.push(...passiveEffects.attack_speed_more_pct);
   // チル系
@@ -348,6 +467,22 @@ export function calculateAttackSpeed(
  */
 export function getAttackSpeedFromMods(mods: CombinedModEffects, baseAS: number = 1.0): number {
   return calculateAttackSpeed(baseAS, mods.attackSpeedPct, mods.attackSpeedMorePct);
+}
+
+export function calculateBattleHpAndShield(
+  maxHp: number,
+  mods: CombinedModEffects
+): { maxHp: number; maxShield: number } {
+  const hpShieldBase = mods.hpToShield ? maxHp : 0;
+  let maxShield = hpShieldBase + mods.shield;
+  maxShield *= 1 + mods.shieldIncreasedPct / 100;
+  const totalMore = mods.shieldMorePct.reduce((sum, more) => sum + more, 0);
+  maxShield *= 1 + totalMore / 100;
+
+  return {
+    maxHp: mods.hpToShield ? Math.max(1, Math.floor(maxHp * 0.3)) : maxHp,
+    maxShield: Math.max(0, Math.floor(maxShield)),
+  };
 }
 
 // ========================================

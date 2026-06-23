@@ -175,8 +175,7 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
     // スキルを読み込み
     const unlockedSkills = await skillRepository.getAll(characterId);
 
-    const endContentUnlocked = await settingsRepository.getEndContentUnlocked();
-    const levelCap = endContentUnlocked ? 60 : MAX_LEVEL;
+    const levelCap = MAX_LEVEL;
 
     // Uberツリー読み込み
     const unlockedUberSkills = await uberTreeRepository.getAll(characterId);
@@ -545,7 +544,8 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
       const petDef = activePet ? getPet(activePet.petId) : undefined;
       if (petDef && activePet) {
         // テイマーはクラス固有能力でペット効果が倍化する
-        const petMult = CLASS_ABILITIES[state.characterType].petEffectMultiplier ?? 1;
+        const petMult = (CLASS_ABILITIES[state.characterType].petEffectMultiplier ?? 1) *
+          (1 + passiveEffects.pet_effect_pct / 100);
         // 強化レベルによるバフ倍率
         const levelFactor = getPetLevelFactor(state.petLevels[activePet.petId] ?? 1);
         petAtkIncPct += (petDef.buff.atkIncreasedPct ?? 0) * petMult * levelFactor;

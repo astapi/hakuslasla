@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, ImageSourcePropType } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
-import { getAllPassiveNodes, canUnlockNode, canRefundNode, getStartNodeId } from '@/data/passiveTree';
+import { getAllPassiveNodes, getNodeConnections, canUnlockNode, canRefundNode, getStartNodeId } from '@/data/passiveTree';
 import { PassiveNode, PassiveEffect, PassiveIconType } from '@/types';
 import {
   GestureDetector,
@@ -33,7 +33,7 @@ const NODE_SIZE_SMALL = 28;
 const NODE_SIZE_MEDIUM = 36;
 const NODE_SIZE_LARGE = 46;
 const NODE_SIZE_KEYSTONE = 56;
-const GRID_SIZE = 56;
+const GRID_SIZE = 38;
 
 // ズーム設定
 const MIN_SCALE = 0.3;
@@ -288,33 +288,28 @@ export const PassiveTree = () => {
       isUnlocked: boolean;
       canUnlock: boolean;
     }[] = [];
+    const nodeMap = new Map(nodes.map((node) => [node.id, node]));
 
-    nodes.forEach((node) => {
+    getNodeConnections().forEach(([parentId, nodeId]) => {
+      const node = nodeMap.get(nodeId);
+      const parentNode = nodeMap.get(parentId);
+      if (!node || !parentNode) return;
       const nodeCenter = getNodeCenter(node);
-      node.requiredNodes.forEach((req, reqIndex) => {
-        const parentIds = Array.isArray(req) ? req : [req];
-        parentIds.forEach((parentId) => {
-          const parentNode = nodes.find(n => n.id === parentId);
-          if (!parentNode) return;
+      const parentCenter = getNodeCenter(parentNode);
+      const isUnlocked = unlockedSkills.includes(node.id) && unlockedSkills.includes(parentId);
+      const canUnlockThis = canUnlockNode(node.id, unlockedSkills) && skillPoints > 0;
+      const path = generateSmoothPath(
+        parentCenter.x,
+        parentCenter.y,
+        nodeCenter.x,
+        nodeCenter.y
+      );
 
-          const parentCenter = getNodeCenter(parentNode);
-          const isUnlocked = unlockedSkills.includes(node.id) && unlockedSkills.includes(parentId);
-          const canUnlockThis = canUnlockNode(node.id, unlockedSkills) && skillPoints > 0;
-
-          const path = generateSmoothPath(
-            parentCenter.x,
-            parentCenter.y,
-            nodeCenter.x,
-            nodeCenter.y
-          );
-
-          result.push({
-            id: `${parentId}-${node.id}-${reqIndex}`,
-            path,
-            isUnlocked,
-            canUnlock: canUnlockThis && unlockedSkills.includes(parentId),
-          });
-        });
+      result.push({
+        id: `${parentId}-${node.id}`,
+        path,
+        isUnlocked,
+        canUnlock: canUnlockThis && unlockedSkills.includes(parentId),
       });
     });
 
@@ -420,7 +415,8 @@ export const PassiveTree = () => {
             <Svg
               width={contentWidth}
               height={contentHeight}
-              style={StyleSheet.absoluteFill}
+              style={styles.connectionLayer}
+              pointerEvents="none"
             >
               <Defs>
                 {/* 接続線のグラデーション */}
@@ -446,7 +442,8 @@ export const PassiveTree = () => {
                         ? "url(#lineGradientCanUnlock)"
                         : COLORS.lineDefault
                   }
-                  strokeWidth={conn.isUnlocked ? 3 : 2}
+                  strokeOpacity={conn.isUnlocked || conn.canUnlock ? 1 : 0.75}
+                  strokeWidth={conn.isUnlocked ? 3.5 : 2.5}
                   fill="none"
                   strokeLinecap="round"
                 />
@@ -756,10 +753,15 @@ const styles = StyleSheet.create({
   treeContent: {
     position: 'relative',
   },
+  connectionLayer: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 0,
+  },
   nodeContainer: {
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 1,
   },
   nodePressed: {
     opacity: 0.8,

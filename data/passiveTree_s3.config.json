@@ -1,0 +1,583 @@
+{
+  "_doc": "S3パッシブツリーの調整データ。data/passiveTree_s3.dsl.ts がこれを読んで幾何を組み立てる。tools/tree-editor のWebエディタで編集→保存できる。値を変えたら npm run build:s3tree で passiveTree_s3.json を再生成する。",
+  "constants": {
+    "startRing": 2.8,
+    "rings4": [
+      5,
+      9.5,
+      15,
+      22
+    ],
+    "ringArcNodeCounts": [
+      4,
+      3,
+      2,
+      1
+    ],
+    "sideOffset": 3.2,
+    "notableROffset": 2.4,
+    "loopGap": 1.8,
+    "loopRadius": 0.85
+  },
+  "scatter": [
+    {
+      "n": "筋力",
+      "e": {
+        "atk": 12,
+        "attack_speed_pct": 2
+      }
+    },
+    {
+      "n": "活力",
+      "e": {
+        "hp": 55,
+        "block_chance": 1
+      }
+    },
+    {
+      "n": "頑強",
+      "e": {
+        "def": 14
+      }
+    }
+  ],
+  "classStarts": {
+    "warrior": {
+      "id": "warrior_start",
+      "name": "戦士の構え",
+      "e": {
+        "atk": 10,
+        "hp": 55
+      },
+      "ic": "atk"
+    },
+    "ranger": {
+      "id": "ranger_start",
+      "name": "狩人の心得",
+      "e": {
+        "atk": 9,
+        "hp": 55
+      },
+      "ic": "poison"
+    },
+    "tamer": {
+      "id": "tamer_start",
+      "name": "調教師の絆",
+      "e": {
+        "hp": 70,
+        "def": 8
+      },
+      "ic": "regen"
+    },
+    "frostmage": {
+      "id": "frostmage_start",
+      "name": "氷術の素養",
+      "e": {
+        "atk": 8,
+        "hp": 55,
+        "def": 8
+      },
+      "ic": "special"
+    },
+    "elementalist": {
+      "id": "elementalist_start",
+      "name": "魔導の素養",
+      "e": {
+        "atk": 10,
+        "hp": 45
+      },
+      "ic": "special"
+    }
+  },
+  "sectors": [
+    {
+      "key": "cri",
+      "cls": "warrior",
+      "deg": -150,
+      "ic": "crit",
+      "spineFlavor": {
+        "n": "鍛錬",
+        "e": {
+          "atk": 10,
+          "atk_increased_pct": 2
+        }
+      },
+      "branches": [
+        {
+          "notable": {
+            "n": "戦士の技",
+            "e": {
+              "atk": 18,
+              "critical_chance": 3
+            }
+          },
+          "strong": {
+            "n": "会心の極み",
+            "e": {
+              "critical_chance": 8,
+              "critical_damage": 35,
+              "atk_increased_pct": 8
+            },
+            "ic": "crit"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "必中",
+            "e": {
+              "critical_chance": 5,
+              "critical_damage": 25,
+              "atk": 12
+            }
+          },
+          "strong": {
+            "n": "修羅",
+            "e": {
+              "atk": 25,
+              "critical_damage": 60,
+              "attack_speed_more_pct": 5
+            },
+            "ic": "crit"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "一閃",
+            "e": {
+              "atk": 24,
+              "critical_chance": 5,
+              "critical_damage": 30
+            }
+          },
+          "strong": {
+            "n": "処刑人",
+            "e": {
+              "hp_on_crit": 120,
+              "atk_more_pct": 12,
+              "critical_lifesteal_pct": 25,
+              "atk_increased_pct": 15
+            },
+            "ic": "crit"
+          },
+          "strongKind": "keystone",
+          "ring": 6
+        }
+      ]
+    },
+    {
+      "key": "def",
+      "deg": -90,
+      "ic": "guard",
+      "spineFlavor": {
+        "n": "錬磨",
+        "e": {
+          "def": 12,
+          "damage_defer_pct": 2
+        }
+      },
+      "branches": [
+        {
+          "notable": {
+            "n": "鉄の意志",
+            "e": {
+              "def": 22,
+              "def_increased_pct": 12,
+              "block_chance": 3,
+              "damage_defer_pct": 3
+            }
+          },
+          "strong": {
+            "n": "鉄壁",
+            "e": {
+              "def": 30,
+              "def_increased_pct": 20,
+              "def_more_pct": 8,
+              "block_chance": 7,
+              "damage_defer_pct": 6
+            },
+            "ic": "guard"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "障壁形成",
+            "e": {
+              "shield": 240,
+              "shield_increased_pct": 25,
+              "damage_defer_pct": 3
+            }
+          },
+          "strong": {
+            "n": "霊体装甲",
+            "e": {
+              "hp_to_shield": true,
+              "shield_increased_pct": 35,
+              "shield_more_pct": 10,
+              "shield_blocks_dot": true
+            },
+            "ic": "guard"
+          },
+          "strongKind": "keystone",
+          "ring": 6
+        },
+        {
+          "notable": {
+            "n": "再構築装甲",
+            "e": {
+              "shield": 220,
+              "shield_recharge_delay_ms": 5000,
+              "shield_recharge_pct": 10,
+              "damage_defer_pct": 3
+            },
+            "ic": "guard"
+          },
+          "strong": {
+            "n": "反応装甲",
+            "e": {
+              "shield_more_pct": 20,
+              "shield_on_10_attacks_pct": 18,
+              "repeat_hit_damage_reduction_pct": 25,
+              "low_hp_damage_reduction_pct": 20,
+              "damage_defer_pct": 5,
+              "retaliate_def_pct": 25
+            },
+            "ic": "guard"
+          },
+          "strongKind": "keystone"
+        }
+      ]
+    },
+    {
+      "key": "poi",
+      "cls": "ranger",
+      "deg": -30,
+      "ic": "poison",
+      "spineFlavor": {
+        "n": "毒の研鑽",
+        "e": {
+          "poison_chance": 5,
+          "poison_damage_pct": 4
+        }
+      },
+      "branches": [
+        {
+          "notable": {
+            "n": "狩人の毒",
+            "e": {
+              "poison_chance": 8,
+              "poison_damage_pct": 16
+            }
+          },
+          "strong": {
+            "n": "猛毒の心得",
+            "e": {
+              "poison_chance": 10,
+              "poison_damage_pct": 28,
+              "poison_lifesteal": 12
+            },
+            "ic": "poison"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "蔓延",
+            "e": {
+              "poison_chance": 10,
+              "poison_max_stacks": 1
+            }
+          },
+          "strong": {
+            "n": "毒蛇",
+            "e": {
+              "poison_damage_pct": 30,
+              "poison_max_stacks": 1
+            },
+            "ic": "poison"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "封毒障壁",
+            "e": {
+              "poison_chance": 8,
+              "shield_increased_pct": 10,
+              "poison_resist_pct": 20,
+              "shield_blocks_dot": true,
+              "poison_lifesteal": 10
+            }
+          },
+          "strong": {
+            "n": "純粋毒",
+            "e": {
+              "no_direct_damage": true,
+              "poison_damage_more_pct": 65,
+              "poison_lifesteal": 25
+            },
+            "ic": "poison"
+          },
+          "strongKind": "keystone",
+          "ring": 6
+        }
+      ]
+    },
+    {
+      "key": "pet",
+      "cls": "tamer",
+      "deg": 30,
+      "ic": "regen",
+      "spineFlavor": {
+        "n": "絆",
+        "e": {
+          "pet_effect_pct": 4,
+          "hp": 70,
+          "def": 8
+        }
+      },
+      "branches": [
+        {
+          "notable": {
+            "n": "調教の心得",
+            "e": {
+              "pet_effect_pct": 10,
+              "pet_drop_rate_pct": 0.2,
+              "hp": 120,
+              "def": 20,
+              "hp_regen_pct": 0.8,
+              "damage_defer_pct": 3
+            }
+          },
+          "strong": {
+            "n": "生命の絆",
+            "e": {
+              "pet_effect_pct": 20,
+              "hp": 260,
+              "hp_more_pct": 16,
+              "damage_defer_pct": 5
+            },
+            "ic": "regen"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "癒やしの絆",
+            "e": {
+              "pet_effect_pct": 10,
+              "hp_on_hit": 60,
+              "hp_regen": 90,
+              "block_chance": 4
+            }
+          },
+          "strong": {
+            "n": "不屈の絆",
+            "e": {
+              "pet_effect_pct": 25,
+              "hp_on_hit": 80,
+              "block_chance": 10,
+              "hp_regen_pct": 2,
+              "damage_defer_pct": 5
+            },
+            "ic": "regen"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "獣王の加護",
+            "e": {
+              "pet_effect_pct": 15,
+              "pet_drop_rate_pct": 0.3,
+              "def": 60,
+              "def_increased_pct": 20,
+              "damage_defer_pct": 6
+            }
+          },
+          "strong": {
+            "n": "共生",
+            "e": {
+              "pet_effect_pct": 40,
+              "pet_drop_rate_pct": 0.5,
+              "hp_on_hit": 110,
+              "hp_more_pct": 25,
+              "hp_regen_pct": 3,
+              "damage_defer_pct": 6,
+              "low_hp_damage_reduction_pct": 20
+            },
+            "ic": "vamp"
+          },
+          "strongKind": "keystone"
+        }
+      ]
+    },
+    {
+      "key": "frz",
+      "cls": "frostmage",
+      "deg": 90,
+      "ic": "special",
+          "spineFlavor": {
+        "n": "氷の研鑽",
+        "e": {
+          "chill_effect_pct": 7,
+          "chill_resist_pct": 2,
+          "def": 8
+        }
+      },
+      "branches": [
+        {
+          "notable": {
+            "n": "氷術の心得",
+            "e": {
+              "chill_chance": 8,
+              "chill_effect_pct": 12,
+              "chill_resist_pct": 10,
+              "chill_duration_pct": 15,
+              "def": 16
+            }
+          },
+          "strong": {
+            "n": "氷嵐",
+            "e": {
+              "chill_chance": 10,
+              "chill_effect_pct": 25,
+              "chill_resist_pct": 20,
+              "def": 22,
+              "damage_defer_pct": 4
+            },
+            "ic": "special"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "氷結",
+            "e": {
+              "freeze_chance": 3,
+              "chill_effect_pct": 18,
+              "freeze_resist_pct": 10,
+              "def": 18
+            }
+          },
+          "strong": {
+            "n": "凍結の極み",
+            "e": {
+              "freeze_chance": 4,
+              "freeze_duration_pct": 30,
+              "freeze_resist_pct": 20,
+              "chill_duration_pct": 25,
+              "def": 18
+            },
+            "ic": "special"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "永久凍土",
+            "e": {
+              "freeze_chance": 4,
+              "chill_effect_pct": 20,
+              "freeze_resist_pct": 15,
+              "auto_cleanse_interval_ms": 12000,
+              "damage_defer_pct": 5
+            }
+          },
+          "strong": {
+            "n": "絶対零度",
+            "e": {
+              "freeze_chance": 5,
+              "freeze_duration_pct": 40,
+              "def_more_pct": 8,
+              "damage_defer_pct": 5
+            },
+            "ic": "special"
+          },
+          "strongKind": "keystone"
+        }
+      ]
+    },
+    {
+      "key": "ign",
+      "cls": "elementalist",
+      "deg": 150,
+      "ic": "special",
+      "spineFlavor": {
+        "n": "火の研鑽",
+        "e": {
+          "ignite_damage_pct": 10,
+          "ignite_chance": 2
+        }
+      },
+      "branches": [
+        {
+          "notable": {
+            "n": "火術の心得",
+            "e": {
+              "ignite_chance": 8,
+              "ignite_damage_pct": 18
+            }
+          },
+          "strong": {
+            "n": "業火の心得",
+            "e": {
+              "ignite_chance": 10,
+              "ignite_damage_pct": 30,
+              "ignite_lifesteal": 10
+            },
+            "ic": "special"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "業火",
+            "e": {
+              "ignite_chance": 10,
+              "ignite_damage_pct": 24,
+              "ignite_duration_pct": 15
+            }
+          },
+          "strong": {
+            "n": "劫火",
+            "e": {
+              "ignite_damage_pct": 35,
+              "ignite_duration_pct": 25,
+              "ignite_stacking_damage": true
+            },
+            "ic": "special"
+          },
+          "strongKind": "notable"
+        },
+        {
+          "notable": {
+            "n": "業火の支配",
+            "e": {
+              "ignite_chance": 12,
+              "ignite_damage_pct": 28,
+              "ignite_lifesteal": 10
+            }
+          },
+          "strong": {
+            "n": "業炎天",
+            "e": {
+              "ignite_damage_more_pct": 40,
+              "ignite_spread": true,
+              "ignite_stacking_damage": true
+            },
+            "ic": "special"
+          },
+          "strongKind": "keystone",
+          "ring": 6
+        }
+      ]
+    }
+  ],
+  "linkOverrides": {
+    "add": [],
+    "remove": []
+  }
+}

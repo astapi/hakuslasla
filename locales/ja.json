@@ -1533,6 +1533,7 @@
     "playerAttack": "プレイヤーの攻撃！ {{enemy}}に{{damage}}ダメージ！",
     "criticalHit": "クリティカルヒット！ {{enemy}}に{{damage}}ダメージ！",
     "enemyAttack": "{{enemy}}の攻撃！ {{damage}}ダメージを受けた！",
+    "blocked": "ブロック！ {{enemy}}の攻撃を防いだ！",
     "enemyDefeated": "{{enemy}}を倒した！ 経験値{{exp}}を獲得！",
     "itemDropped": "{{item}}をドロップした！",
     "petDrop": "{{name}}がなついた！",
@@ -2310,7 +2311,7 @@
   },
   "endContentTooltip": {
     "title": "エンドコンテンツ解放！",
-    "levelCap": "レベル上限が60に上昇しました",
+    "levelCap": "異次元ラッシュが解放されました",
     "speedUnlock": "倍速機能が解放されました"
   },
   "uberTreeTooltip": {
