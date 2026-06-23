@@ -206,7 +206,7 @@ export default function BattleScreen() {
   const { dungeonId, startFloor } = useLocalSearchParams<{ dungeonId: string; startFloor?: string }>();
   const router = useRouter();
   const parsedStartFloor = startFloor ? parseInt(startFloor, 10) : 1;
-  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed, krakenFlurryCountdown, getPetsGained } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
+  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed, krakenFlurryCountdown, getPetsGained, blockChance } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
   const { level, characterType, pets, activePetInstanceId } = usePlayerStore();
   const activePet = activePetInstanceId
     ? pets.find((p) => p.instanceId === activePetInstanceId)
@@ -218,11 +218,13 @@ export default function BattleScreen() {
   // 攻撃アニメーション用のstate
   const [playerAttacking, setPlayerAttacking] = useState(false);
   const [enemyAttacking, setEnemyAttacking] = useState(false);
+  const [playerBlocking, setPlayerBlocking] = useState(false);
   // 最後に処理したログエントリの参照を追跡（ログが切り詰められても追跡可能）
   const lastProcessedEntryRef = useRef<(typeof state.battleLog)[number] | null>(null);
   // タイマーIDを管理（古いタイマーをキャンセルするため）
   const playerAttackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const enemyAttackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const blockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 撤退確認モーダル
   const [showRetreatModal, setShowRetreatModal] = useState(false);
@@ -270,6 +272,15 @@ export default function BattleScreen() {
           setEnemyAttacking(false);
           enemyAttackTimerRef.current = null;
         }, 200);
+      } else if (entry.type === 'block') {
+        if (blockTimerRef.current) {
+          clearTimeout(blockTimerRef.current);
+        }
+        setPlayerBlocking(true);
+        blockTimerRef.current = setTimeout(() => {
+          setPlayerBlocking(false);
+          blockTimerRef.current = null;
+        }, 450);
       }
     }
 
@@ -285,6 +296,9 @@ export default function BattleScreen() {
       }
       if (enemyAttackTimerRef.current) {
         clearTimeout(enemyAttackTimerRef.current);
+      }
+      if (blockTimerRef.current) {
+        clearTimeout(blockTimerRef.current);
       }
     };
   }, []);
@@ -413,6 +427,12 @@ export default function BattleScreen() {
               <PetAvatar imageId={getPetImageKey(activePetDef)} size={s(52)} />
             </View>
           )}
+          {playerBlocking && (
+            <View style={styles.blockEffect} pointerEvents="none">
+              <MaterialCommunityIcons name="shield" size={ms(18)} color="#FFD54F" />
+              <Text style={styles.blockEffectText}>BLOCK</Text>
+            </View>
+          )}
         </View>
         {state.enemy && (
           <>
@@ -488,6 +508,9 @@ export default function BattleScreen() {
           level={level}
           isPlayer
           actionGauge={state.playerGauge}
+          currentShield={state.playerShield}
+          maxShield={state.playerMaxShield}
+          blockChance={blockChance}
         />
         {state.enemy && (
           <CharacterStatus
@@ -681,6 +704,27 @@ const styles = StyleSheet.create({
     left: s(2),
     bottom: s(20),
     zIndex: 2,
+  },
+  blockEffect: {
+    position: 'absolute',
+    top: -ms(12),
+    minWidth: ms(84),
+    paddingHorizontal: ms(8),
+    paddingVertical: ms(4),
+    borderRadius: ms(8),
+    borderWidth: 1,
+    borderColor: 'rgba(255, 213, 79, 0.9)',
+    backgroundColor: 'rgba(37, 31, 8, 0.88)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: ms(4),
+    zIndex: 3,
+  },
+  blockEffectText: {
+    fontSize: fs(12),
+    fontWeight: '900',
+    color: '#FFD54F',
   },
   hidden: {
     opacity: 0,

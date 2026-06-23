@@ -314,7 +314,25 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   hp_regen_pct: number;
   damage_defer_pct: number;
   hp_on_hit: number;
+  lifestealPct: number;
   retaliate_def_pct: number;
+  shield: number;
+  shield_increased_pct: number;
+  shield_more_pct: number[];
+  hp_to_shield: boolean;
+  shield_on_10_attacks_pct: number;
+  shield_recharge_delay_ms: number;
+  shield_recharge_pct: number;
+  shield_blocks_dot: boolean;
+  pet_effect_pct: number;
+  pet_drop_rate_pct: number;
+  block_chance: number;
+  chill_resist_pct: number;
+  freeze_resist_pct: number;
+  poison_resist_pct: number;
+  repeat_hit_damage_reduction_pct: number;
+  low_hp_damage_reduction_pct: number;
+  auto_cleanse_interval_ms: number;
   attack_speed_pct: number;
   attack_speed_more_pct: number[];
   // チル系
@@ -362,7 +380,27 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   let hp_regen_pct = 0;
   let damage_defer_pct = 0;
   let hp_on_hit = 0;
+  let lifestealPct = 0;
   let retaliate_def_pct = 0;
+  // シールド系
+  let shield = 0;
+  let shield_increased_pct = 0;
+  const shield_more_pct: number[] = [];
+  let hp_to_shield = false;
+  let shield_on_10_attacks_pct = 0;
+  let shield_recharge_delay_ms = 0;
+  let shield_recharge_pct = 0;
+  let shield_blocks_dot = false;
+  // ペット・防御補助系
+  let pet_effect_pct = 0;
+  let pet_drop_rate_pct = 0;
+  let block_chance = 0;
+  let chill_resist_pct = 0;
+  let freeze_resist_pct = 0;
+  let poison_resist_pct = 0;
+  let repeat_hit_damage_reduction_pct = 0;
+  let low_hp_damage_reduction_pct = 0;
+  let auto_cleanse_interval_ms = 0;
   // 攻撃速度系
   let attack_speed_pct = 0;
   const attack_speed_more_pct: number[] = [];
@@ -414,7 +452,34 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       hp_regen_pct += node.effect.hp_regen_pct || 0;
       damage_defer_pct += node.effect.damage_defer_pct || 0;
       hp_on_hit += node.effect.hp_on_hit || 0;
+      lifestealPct += node.effect.lifestealPct || 0;
       retaliate_def_pct += node.effect.retaliate_def_pct || 0;
+      // シールド系
+      shield += node.effect.shield || 0;
+      shield_increased_pct += node.effect.shield_increased_pct || 0;
+      if (node.effect.shield_more_pct) shield_more_pct.push(node.effect.shield_more_pct);
+      if (node.effect.hp_to_shield) hp_to_shield = true;
+      shield_on_10_attacks_pct += node.effect.shield_on_10_attacks_pct || 0;
+      if (node.effect.shield_recharge_delay_ms) {
+        shield_recharge_delay_ms = shield_recharge_delay_ms === 0
+          ? node.effect.shield_recharge_delay_ms
+          : Math.min(shield_recharge_delay_ms, node.effect.shield_recharge_delay_ms);
+      }
+      shield_recharge_pct += node.effect.shield_recharge_pct || 0;
+      if (node.effect.shield_blocks_dot) shield_blocks_dot = true;
+      pet_effect_pct += node.effect.pet_effect_pct || 0;
+      pet_drop_rate_pct += node.effect.pet_drop_rate_pct || 0;
+      block_chance += node.effect.block_chance || 0;
+      chill_resist_pct += node.effect.chill_resist_pct || 0;
+      freeze_resist_pct += node.effect.freeze_resist_pct || 0;
+      poison_resist_pct += node.effect.poison_resist_pct || 0;
+      repeat_hit_damage_reduction_pct += node.effect.repeat_hit_damage_reduction_pct || 0;
+      low_hp_damage_reduction_pct += node.effect.low_hp_damage_reduction_pct || 0;
+      if (node.effect.auto_cleanse_interval_ms) {
+        auto_cleanse_interval_ms = auto_cleanse_interval_ms === 0
+          ? node.effect.auto_cleanse_interval_ms
+          : Math.min(auto_cleanse_interval_ms, node.effect.auto_cleanse_interval_ms);
+      }
       // 攻撃速度系
       attack_speed_pct += node.effect.attack_speed_pct || 0;
       if (node.effect.attack_speed_more_pct) attack_speed_more_pct.push(node.effect.attack_speed_more_pct);
@@ -438,7 +503,12 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     ignite_stacking_damage,
     critical_chance, critical_damage, hp_on_crit, critical_lifesteal_pct,
     hp_regen, hp_regen_pct,
-    damage_defer_pct, hp_on_hit, retaliate_def_pct,
+    damage_defer_pct, hp_on_hit, lifestealPct, retaliate_def_pct,
+    shield, shield_increased_pct, shield_more_pct, hp_to_shield,
+    shield_on_10_attacks_pct, shield_recharge_delay_ms, shield_recharge_pct, shield_blocks_dot,
+    pet_effect_pct, pet_drop_rate_pct,
+    block_chance, chill_resist_pct, freeze_resist_pct, poison_resist_pct,
+    repeat_hit_damage_reduction_pct, low_hp_damage_reduction_pct, auto_cleanse_interval_ms,
     attack_speed_pct, attack_speed_more_pct,
     chill_chance, chill_effect_pct, chill_duration_pct,
     freeze_chance, freeze_duration_pct,

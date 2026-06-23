@@ -130,38 +130,38 @@ interface VersionsResponse {
 
 // 各言語のwhatsNewテキスト
 const whatsNewByLocale: Record<string, string> = {
-  ja: `【不具合修正】
-・インベントリ画面で一部ユニーク装備のMOD効果が表示されない不具合を修正しました`,
+  ja: `【更新】
+• スクリーンショットを更新しました`,
 
-  'en-US': `[Bug Fixes]
-• Fixed a bug where some unique equipment MOD effects were not displayed on the inventory screen`,
+  'en-US': `[Updates]
+• Updated screenshots`,
 
-  'en-GB': `[Bug Fixes]
-• Fixed a bug where some unique equipment MOD effects were not displayed on the inventory screen`,
+  'en-GB': `[Updates]
+• Updated screenshots`,
 
-  'en-AU': `[Bug Fixes]
-• Fixed a bug where some unique equipment MOD effects were not displayed on the inventory screen`,
+  'en-AU': `[Updates]
+• Updated screenshots`,
 
-  'en-CA': `[Bug Fixes]
-• Fixed a bug where some unique equipment MOD effects were not displayed on the inventory screen`,
+  'en-CA': `[Updates]
+• Updated screenshots`,
 
-  'zh-Hans': `【问题修复】
-• 修复了物品栏界面中部分唯一装备的MOD效果未显示的问题`,
+  'zh-Hans': `【更新】
+• 更新了截图`,
 
-  ko: `[버그 수정]
-• 인벤토리 화면에서 일부 유니크 장비의 MOD 효과가 표시되지 않던 버그를 수정했습니다`,
+  ko: `[업데이트]
+• 스크린샷을 업데이트했습니다`,
 
-  'es-ES': `[Correcciones]
-• Se corrigió un error donde algunos efectos MOD de equipamiento único no se mostraban en la pantalla de inventario`,
+  'es-ES': `[Actualizaciones]
+• Se actualizaron las capturas de pantalla`,
 
-  'es-MX': `[Correcciones]
-• Se corrigió un error donde algunos efectos MOD de equipamiento único no se mostraban en la pantalla de inventario`,
+  'es-MX': `[Actualizaciones]
+• Se actualizaron las capturas de pantalla`,
 
-  'fr-FR': `[Corrections]
-• Correction d'un bug où certains effets MOD d'équipement unique n'étaient pas affichés dans l'écran d'inventaire`,
+  'fr-FR': `[Mises à jour]
+• Mise à jour des captures d'écran`,
 
-  'de-DE': `[Fehlerbehebungen]
-• Ein Fehler wurde behoben, bei dem einige MOD-Effekte von einzigartiger Ausrüstung nicht auf dem Inventarbildschirm angezeigt wurden`,
+  'de-DE': `[Aktualisierungen]
+• Screenshots aktualisiert`,
 };
 
 // メイン処理

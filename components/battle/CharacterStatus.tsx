@@ -27,6 +27,9 @@ interface CharacterStatusProps {
   level?: number;
   isPlayer?: boolean;
   actionGauge?: number;
+  currentShield?: number;
+  maxShield?: number;
+  blockChance?: number;
 }
 
 export const CharacterStatus = memo(({
@@ -36,7 +39,13 @@ export const CharacterStatus = memo(({
   level,
   isPlayer = false,
   actionGauge = 0,
+  currentShield = 0,
+  maxShield = 0,
+  blockChance = 0,
 }: CharacterStatusProps) => {
+  const hasShield = isPlayer && maxShield > 0;
+  const cappedBlockChance = Math.min(50, Math.max(0, blockChance));
+
   return (
     <View style={[styles.container, isPlayer ? styles.playerContainer : styles.enemyContainer]}>
       {/* アクションゲージ（一番上） */}
@@ -57,6 +66,20 @@ export const CharacterStatus = memo(({
 
       {/* HPバー */}
       <HPBar current={currentHp} max={maxHp} color={isPlayer ? '#4CAF50' : '#F44336'} />
+      {hasShield && (
+        <View style={styles.subGauge}>
+          <Text style={styles.subGaugeLabel}>SH</Text>
+          <View style={styles.subGaugeBar}>
+            <HPBar current={currentShield} max={maxShield} color="#42A5F5" showText={false} />
+          </View>
+          <Text style={styles.subGaugeText}>{currentShield}/{maxShield}</Text>
+        </View>
+      )}
+      {isPlayer && cappedBlockChance > 0 && (
+        <View style={styles.blockRow}>
+          <Text style={styles.blockText}>BLOCK {cappedBlockChance}%</Text>
+        </View>
+      )}
     </View>
   );
 });
@@ -92,5 +115,35 @@ const styles = StyleSheet.create({
   level: {
     fontSize: fs(12),
     color: '#aaa',
+  },
+  subGauge: {
+    marginTop: ms(4),
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(4),
+  },
+  subGaugeLabel: {
+    width: ms(18),
+    fontSize: fs(10),
+    fontWeight: '700',
+    color: '#90CAF9',
+  },
+  subGaugeBar: {
+    flex: 1,
+  },
+  subGaugeText: {
+    minWidth: ms(50),
+    fontSize: fs(10),
+    color: '#B3E5FC',
+    textAlign: 'right',
+  },
+  blockRow: {
+    marginTop: ms(3),
+    alignItems: 'flex-end',
+  },
+  blockText: {
+    fontSize: fs(10),
+    fontWeight: '700',
+    color: '#FFD54F',
   },
 });

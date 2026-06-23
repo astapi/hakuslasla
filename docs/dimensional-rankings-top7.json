@@ -1,0 +1,1871 @@
+[
+  {
+    "rank": 1,
+    "docId": "C9BFCB04-73E1-4AE1-9A35-D5E05E324042_1",
+    "localCharId": 1,
+    "floorReached": 5600,
+    "deviceId": "C9BFCB04-73E1-4AE1-9A35-D5E05E324042",
+    "stats": {
+      "damageReduction": 33,
+      "poisonChance": 10,
+      "poisonDamageMore": 0,
+      "hpRegen": 158,
+      "atk": 1310,
+      "poisonLifesteal": 30,
+      "igniteDamageMore": 0,
+      "igniteDamagePct": 0,
+      "poisonMaxStacks": 0,
+      "critChance": 121,
+      "critDamage": 570,
+      "attackSpeed": 2.9429999999999996,
+      "def": 1354,
+      "maxHp": 3168,
+      "hpOnCrit": 330,
+      "igniteDurationPct": 0,
+      "poisonDamagePct": 20,
+      "noDirectDamage": false,
+      "hpOnHit": 10,
+      "poisonDamageReduction": 0,
+      "igniteChance": 0,
+      "attackSpeedPct": 118,
+      "level": 60,
+      "attackSpeedMore": 35
+    },
+    "type": "warrior",
+    "updatedAt": "2026-03-07T10:57:07.624Z",
+    "name": "☆★☆★☆",
+    "build": {
+      "level": 60,
+      "unlockedSkills": [
+        "speed_1",
+        "speed_2",
+        "speed_4",
+        "speed_5",
+        "speed_6",
+        "speed_7",
+        "start",
+        "speed_key1",
+        "speed_8",
+        "speed_10",
+        "speed_11",
+        "speed_12",
+        "speed_13",
+        "speed_final1",
+        "speed_final2",
+        "guard_key1",
+        "guard_8",
+        "crit_key1",
+        "poison_key1",
+        "regen_key1",
+        "regen_8",
+        "speed_9",
+        "guard_9",
+        "crit_8",
+        "crit_9",
+        "crit_10",
+        "crit_11",
+        "crit_12",
+        "crit_13",
+        "crit_b1",
+        "crit_a1",
+        "crit_a2",
+        "crit_14",
+        "crit_15",
+        "crit_16",
+        "crit_17",
+        "crit_final1",
+        "crit_final2",
+        "crit_7",
+        "crit_6",
+        "crit_5",
+        "crit_4",
+        "crit_b2",
+        "guard_10",
+        "regen_9",
+        "guard_11",
+        "guard_12",
+        "guard_13",
+        "guard_b1",
+        "guard_a1",
+        "guard_b2",
+        "guard_14",
+        "guard_15",
+        "guard_16",
+        "guard_17",
+        "guard_final1",
+        "guard_final2",
+        "vamp_8",
+        "vamp_9"
+      ],
+      "equipment": {
+        "gloves": {
+          "id": "titan_gauntlets",
+          "atk": 70,
+          "name": "泰坦の篭手",
+          "def": 80,
+          "slot": "gloves",
+          "mods": [
+            {
+              "tier": 5,
+              "value": 64,
+              "type": "critical_damage"
+            },
+            {
+              "tier": 1,
+              "value": 30,
+              "type": "attack_speed_pct"
+            },
+            {
+              "tier": 4,
+              "type": "critical_chance",
+              "value": 21
+            },
+            {
+              "tier": 3,
+              "type": "def_bonus",
+              "value": 36
+            }
+          ],
+          "instanceId": "item_1772832909273_505"
+        },
+        "accessory": {
+          "instanceId": "item_1772831480292_241",
+          "mods": [
+            {
+              "tier": 1,
+              "value": 30,
+              "type": "critical_chance"
+            },
+            {
+              "value": 44,
+              "type": "atk_bonus",
+              "tier": 2
+            },
+            {
+              "value": 26,
+              "type": "def_bonus",
+              "tier": 5
+            },
+            {
+              "tier": 5,
+              "value": 17,
+              "type": "def_increased_pct"
+            }
+          ],
+          "name": "忘却の指輪",
+          "def": 88,
+          "slot": "accessory",
+          "id": "oblivion_ring",
+          "atk": 88
+        },
+        "armor": {
+          "name": "終末の鎧",
+          "slot": "armor",
+          "def": 180,
+          "id": "end_armor",
+          "atk": 0,
+          "instanceId": "item_1772832938722_520",
+          "mods": [
+            {
+              "tier": 1,
+              "type": "critical_damage",
+              "value": 96
+            },
+            {
+              "type": "def_increased_pct",
+              "value": 28,
+              "tier": 4
+            },
+            {
+              "value": 207,
+              "type": "hp_bonus",
+              "tier": 4
+            }
+          ]
+        },
+        "weapon": {
+          "id": "apocalypse_blade",
+          "atk": 220,
+          "name": "終焉の剣",
+          "slot": "weapon",
+          "def": 0,
+          "mods": [
+            {
+              "tier": 4,
+              "value": 31,
+              "type": "atk_increased_pct"
+            },
+            {
+              "tier": 3,
+              "value": 3,
+              "type": "hp_regen_pct"
+            },
+            {
+              "value": 239,
+              "type": "hp_bonus",
+              "tier": 3
+            },
+            {
+              "type": "hp_increased_pct",
+              "value": 22,
+              "tier": 4
+            }
+          ],
+          "weaponType": "sword",
+          "instanceId": "item_1772835352226_1047"
+        },
+        "boots": {
+          "instanceId": "item_1772835788276_1164",
+          "mods": [
+            {
+              "type": "def_bonus",
+              "value": 33,
+              "tier": 4
+            },
+            {
+              "type": "critical_chance",
+              "value": 24,
+              "tier": 3
+            },
+            {
+              "value": 24,
+              "type": "atk_increased_pct",
+              "tier": 3
+            },
+            {
+              "type": "hp_bonus",
+              "value": 284,
+              "tier": 1
+            }
+          ],
+          "name": "終末を歩む者のブーツ",
+          "slot": "boots",
+          "def": 120,
+          "id": "end_walker_boots",
+          "atk": 48
+        }
+      }
+    }
+  },
+  {
+    "rank": 2,
+    "docId": "B864E7F1-3758-4938-AC66-E00A6DF5326F_1",
+    "name": "シャル",
+    "build": {
+      "unlockedSkills": [
+        "start",
+        "speed_1",
+        "speed_2",
+        "speed_4",
+        "speed_5",
+        "speed_6",
+        "speed_7",
+        "speed_key1",
+        "speed_8",
+        "speed_10",
+        "speed_11",
+        "speed_12",
+        "speed_13",
+        "speed_final1",
+        "speed_final2",
+        "crit_5",
+        "crit_6",
+        "crit_7",
+        "crit_key1",
+        "crit_8",
+        "crit_9",
+        "crit_11",
+        "crit_12",
+        "crit_13",
+        "crit_a1",
+        "crit_a2",
+        "crit_14",
+        "crit_15",
+        "crit_16",
+        "crit_17",
+        "crit_final1",
+        "crit_final2",
+        "guard_key1",
+        "guard_8",
+        "vamp_8",
+        "vamp_9",
+        "guard_9",
+        "guard_11",
+        "guard_12",
+        "guard_13",
+        "guard_a1",
+        "guard_a2",
+        "guard_b1",
+        "guard_14",
+        "guard_15",
+        "guard_16",
+        "guard_17",
+        "guard_final1",
+        "guard_final2",
+        "vamp_key1",
+        "ignite_1",
+        "ignite_2",
+        "ignite_4",
+        "ignite_5",
+        "ignite_6",
+        "ignite_7",
+        "ignite_key1",
+        "ignite_8",
+        "ignite_9"
+      ],
+      "equipment": {
+        "weapon": {
+          "weaponType": "sword",
+          "mods": [
+            {
+              "tier": 6,
+              "value": 57,
+              "type": "critical_damage"
+            },
+            {
+              "tier": 4,
+              "value": 32,
+              "type": "atk_increased_pct"
+            },
+            {
+              "type": "hp_bonus",
+              "value": 195,
+              "tier": 4
+            },
+            {
+              "tier": 6,
+              "value": 23,
+              "type": "def_bonus"
+            }
+          ],
+          "instanceId": "item_1771424926415_4255",
+          "atk": 220,
+          "id": "apocalypse_blade",
+          "def": 0,
+          "slot": "weapon",
+          "name": "終焉の剣"
+        },
+        "armor": {
+          "instanceId": "item_1771418865781_2523",
+          "mods": [
+            {
+              "type": "atk_bonus",
+              "value": 50,
+              "tier": 1
+            },
+            {
+              "type": "hp_regen",
+              "value": 12,
+              "tier": 8
+            },
+            {
+              "value": 17,
+              "type": "critical_chance",
+              "tier": 6
+            },
+            {
+              "tier": 3,
+              "type": "critical_damage",
+              "value": 82
+            }
+          ],
+          "name": "虚無の鎧",
+          "slot": "armor",
+          "def": 135,
+          "id": "void_armor",
+          "atk": 0
+        },
+        "boots": {
+          "id": "divine_boots",
+          "atk": 25,
+          "name": "神のブーツ",
+          "slot": "boots",
+          "def": 65,
+          "mods": [
+            {
+              "type": "critical_damage",
+              "value": 43,
+              "tier": 7
+            },
+            {
+              "type": "atk_increased_pct",
+              "value": 24,
+              "tier": 3
+            },
+            {
+              "tier": 3,
+              "value": 38,
+              "type": "atk_bonus"
+            },
+            {
+              "value": 35,
+              "type": "def_bonus",
+              "tier": 4
+            }
+          ],
+          "instanceId": "item_1771417269608_2099"
+        },
+        "gloves": {
+          "instanceId": "item_1771424637325_4163",
+          "mods": [
+            {
+              "type": "atk_increased_pct",
+              "value": 18,
+              "tier": 5
+            },
+            {
+              "type": "critical_chance",
+              "value": 11,
+              "tier": 8
+            },
+            {
+              "value": 22,
+              "type": "attack_speed_pct",
+              "tier": 4
+            },
+            {
+              "value": 75,
+              "type": "critical_damage",
+              "tier": 4
+            }
+          ],
+          "slot": "gloves",
+          "def": 80,
+          "name": "泰坦の篭手",
+          "atk": 70,
+          "id": "titan_gauntlets"
+        },
+        "accessory": {
+          "def": 120,
+          "slot": "accessory",
+          "name": "終焉の王冠",
+          "atk": 120,
+          "id": "crown_of_end",
+          "fixedMods": [
+            {
+              "value": 70,
+              "type": "atk_bonus"
+            },
+            {
+              "value": 70,
+              "type": "def_bonus"
+            },
+            {
+              "value": 70,
+              "type": "hp_regen"
+            },
+            {
+              "value": 45,
+              "type": "critical_chance"
+            }
+          ],
+          "instanceId": "item_1771423343657_3897",
+          "mods": [
+            {
+              "type": "atk_bonus",
+              "value": 70,
+              "tier": 0
+            },
+            {
+              "tier": 0,
+              "type": "def_bonus",
+              "value": 70
+            },
+            {
+              "tier": 0,
+              "value": 70,
+              "type": "hp_regen"
+            },
+            {
+              "tier": 0,
+              "type": "critical_chance",
+              "value": 45
+            }
+          ]
+        }
+      },
+      "level": 60
+    },
+    "updatedAt": "2026-02-18T22:02:31.214Z",
+    "deviceId": "B864E7F1-3758-4938-AC66-E00A6DF5326F",
+    "stats": {
+      "attackSpeedMore": 35,
+      "attackSpeedPct": 105,
+      "level": 60,
+      "poisonDamageReduction": 0,
+      "igniteChance": 74,
+      "poisonDamagePct": 0,
+      "igniteDurationPct": 35,
+      "hpOnCrit": 330,
+      "hpOnHit": 30,
+      "noDirectDamage": false,
+      "attackSpeed": 2.7675,
+      "critDamage": 562,
+      "maxHp": 1206,
+      "def": 1152,
+      "igniteDamageMore": 0,
+      "critChance": 119,
+      "igniteDamagePct": 55,
+      "poisonMaxStacks": 0,
+      "atk": 1743,
+      "hpRegen": 82,
+      "poisonLifesteal": 0,
+      "damageReduction": 33,
+      "poisonDamageMore": 0,
+      "poisonChance": 0
+    },
+    "type": "elementalist",
+    "floorReached": 4600,
+    "localCharId": 1
+  },
+  {
+    "rank": 3,
+    "docId": "856B2953-1C45-4D29-8B3D-C82D137D8480_1",
+    "deviceId": "856B2953-1C45-4D29-8B3D-C82D137D8480",
+    "stats": {
+      "damageReduction": 33,
+      "poisonChance": 0,
+      "poisonDamageMore": 0,
+      "hpRegen": 70,
+      "atk": 1777,
+      "poisonLifesteal": 0,
+      "igniteDamageMore": 25,
+      "critChance": 109,
+      "poisonMaxStacks": 0,
+      "igniteDamagePct": 20,
+      "critDamage": 596,
+      "attackSpeed": 2.8350000000000004,
+      "def": 1559,
+      "maxHp": 1303,
+      "hpOnCrit": 330,
+      "igniteDurationPct": 20,
+      "poisonDamagePct": 0,
+      "noDirectDamage": false,
+      "hpOnHit": 0,
+      "poisonDamageReduction": 0,
+      "igniteChance": 68,
+      "attackSpeedPct": 110,
+      "level": 60,
+      "attackSpeedMore": 35
+    },
+    "type": "elementalist",
+    "floorReached": 4400,
+    "localCharId": 1,
+    "build": {
+      "level": 60,
+      "equipment": {
+        "weapon": {
+          "atk": 220,
+          "id": "apocalypse_blade",
+          "slot": "weapon",
+          "def": 0,
+          "name": "終焉の剣",
+          "weaponType": "sword",
+          "mods": [
+            {
+              "type": "atk_increased_pct",
+              "value": 30,
+              "tier": 4
+            },
+            {
+              "tier": 2,
+              "type": "atk_bonus",
+              "value": 62
+            }
+          ],
+          "instanceId": "item_1771384105932_633"
+        },
+        "armor": {
+          "def": 180,
+          "slot": "armor",
+          "name": "終末の鎧",
+          "atk": 0,
+          "id": "end_armor",
+          "instanceId": "item_1771387270847_1146",
+          "mods": [
+            {
+              "tier": 3,
+              "type": "def_bonus",
+              "value": 54
+            },
+            {
+              "tier": 5,
+              "type": "critical_damage",
+              "value": 60
+            },
+            {
+              "tier": 9,
+              "value": 6,
+              "type": "critical_chance"
+            },
+            {
+              "type": "atk_bonus",
+              "value": 32,
+              "tier": 4
+            }
+          ]
+        },
+        "boots": {
+          "mods": [
+            {
+              "value": 24,
+              "type": "hp_increased_pct",
+              "tier": 3
+            },
+            {
+              "tier": 5,
+              "type": "atk_bonus",
+              "value": 30
+            },
+            {
+              "tier": 6,
+              "type": "critical_damage",
+              "value": 50
+            },
+            {
+              "type": "atk_increased_pct",
+              "value": 24,
+              "tier": 3
+            }
+          ],
+          "instanceId": "item_1771387810656_1314",
+          "atk": 35,
+          "id": "void_boots",
+          "slot": "boots",
+          "def": 88,
+          "name": "虚無のブーツ"
+        },
+        "gloves": {
+          "mods": [
+            {
+              "type": "critical_chance",
+              "value": 12,
+              "tier": 7
+            },
+            {
+              "tier": 4,
+              "type": "critical_damage",
+              "value": 76
+            },
+            {
+              "tier": 2,
+              "type": "atk_increased_pct",
+              "value": 26
+            },
+            {
+              "type": "attack_speed_pct",
+              "value": 22,
+              "tier": 4
+            }
+          ],
+          "instanceId": "item_1771389967344_1693",
+          "atk": 70,
+          "id": "titan_gauntlets",
+          "slot": "gloves",
+          "def": 80,
+          "name": "泰坦の篭手"
+        },
+        "accessory": {
+          "slot": "accessory",
+          "def": 120,
+          "name": "終焉の王冠",
+          "atk": 120,
+          "id": "crown_of_end",
+          "fixedMods": [
+            {
+              "value": 70,
+              "type": "atk_bonus"
+            },
+            {
+              "value": 70,
+              "type": "def_bonus"
+            },
+            {
+              "value": 70,
+              "type": "hp_regen"
+            },
+            {
+              "value": 45,
+              "type": "critical_chance"
+            }
+          ],
+          "instanceId": "item_1771388023588_1365",
+          "mods": [
+            {
+              "tier": 0,
+              "value": 70,
+              "type": "atk_bonus"
+            },
+            {
+              "type": "def_bonus",
+              "value": 70,
+              "tier": 0
+            },
+            {
+              "tier": 0,
+              "type": "hp_regen",
+              "value": 70
+            },
+            {
+              "type": "critical_chance",
+              "value": 45,
+              "tier": 0
+            }
+          ]
+        }
+      },
+      "unlockedSkills": [
+        "crit_11",
+        "crit_12",
+        "crit_13",
+        "crit_14",
+        "crit_15",
+        "crit_16",
+        "crit_17",
+        "crit_7",
+        "crit_8",
+        "crit_9",
+        "crit_b1",
+        "crit_b2",
+        "crit_final1",
+        "crit_final2",
+        "crit_key1",
+        "start",
+        "speed_4",
+        "speed_5",
+        "speed_7",
+        "speed_key1",
+        "speed_8",
+        "speed_10",
+        "speed_11",
+        "speed_12",
+        "speed_13",
+        "speed_final1",
+        "speed_final2",
+        "speed_9",
+        "crit_a1",
+        "crit_a2",
+        "crit_10",
+        "guard_8",
+        "guard_11",
+        "guard_12",
+        "guard_13",
+        "guard_14",
+        "guard_15",
+        "guard_16",
+        "guard_17",
+        "guard_final1",
+        "guard_a1",
+        "guard_9",
+        "crit_4",
+        "ignite_7",
+        "ignite_key1",
+        "ignite_8",
+        "ignite_9",
+        "ignite_10",
+        "ignite_11",
+        "ignite_final1",
+        "crit_5",
+        "ignite_final2",
+        "guard_a2",
+        "guard_final2",
+        "guard_10",
+        "guard_b1",
+        "speed_2",
+        "speed_1",
+        "guard_key1"
+      ]
+    },
+    "name": "ああああ",
+    "updatedAt": "2026-02-18T11:09:31.522Z"
+  },
+  {
+    "rank": 4,
+    "docId": "924B843E-64F7-45E3-8D2F-63E7E0D1B306_1",
+    "updatedAt": "2026-03-07T06:38:41.726Z",
+    "name": "タキオン",
+    "build": {
+      "equipment": {
+        "gloves": {
+          "mods": [
+            {
+              "tier": 4,
+              "value": 21,
+              "type": "attack_speed_pct"
+            },
+            {
+              "type": "atk_bonus",
+              "value": 25,
+              "tier": 6
+            },
+            {
+              "type": "critical_chance",
+              "value": 29,
+              "tier": 1
+            },
+            {
+              "tier": 7,
+              "value": 20,
+              "type": "def_bonus"
+            }
+          ],
+          "instanceId": "item_1772842300587_573",
+          "atk": 70,
+          "id": "titan_gauntlets",
+          "def": 80,
+          "slot": "gloves",
+          "name": "泰坦の篭手"
+        },
+        "accessory": {
+          "name": "混沌水晶の指輪",
+          "def": 65,
+          "slot": "accessory",
+          "id": "chaos_crystal_ring",
+          "atk": 65,
+          "instanceId": "item_1772842292703_567",
+          "mods": [
+            {
+              "tier": 4,
+              "value": 35,
+              "type": "poison_chance"
+            },
+            {
+              "tier": 3,
+              "type": "critical_damage",
+              "value": 87
+            },
+            {
+              "value": 28,
+              "type": "def_bonus",
+              "tier": 5
+            },
+            {
+              "value": 24,
+              "type": "atk_increased_pct",
+              "tier": 3
+            }
+          ]
+        },
+        "weapon": {
+          "id": "apocalypse_blade",
+          "atk": 220,
+          "name": "終焉の剣",
+          "slot": "weapon",
+          "def": 0,
+          "mods": [
+            {
+              "tier": 6,
+              "type": "atk_bonus",
+              "value": 35
+            },
+            {
+              "tier": 5,
+              "value": 18,
+              "type": "def_increased_pct"
+            },
+            {
+              "type": "atk_increased_pct",
+              "value": 35,
+              "tier": 3
+            },
+            {
+              "tier": 2,
+              "value": 42,
+              "type": "def_bonus"
+            }
+          ],
+          "weaponType": "sword",
+          "instanceId": "item_1772842246468_553"
+        },
+        "armor": {
+          "mods": [
+            {
+              "tier": 1,
+              "value": 97,
+              "type": "critical_damage"
+            },
+            {
+              "type": "hp_regen",
+              "value": 35,
+              "tier": 4
+            },
+            {
+              "tier": 3,
+              "value": 224,
+              "type": "hp_bonus"
+            },
+            {
+              "value": 1,
+              "type": "hp_regen_pct",
+              "tier": 7
+            }
+          ],
+          "instanceId": "item_1772841961236_479",
+          "atk": 0,
+          "id": "end_armor",
+          "slot": "armor",
+          "def": 180,
+          "name": "終末の鎧"
+        },
+        "boots": {
+          "instanceId": "item_1772842232851_546",
+          "mods": [
+            {
+              "tier": 4,
+              "value": 199,
+              "type": "hp_bonus"
+            },
+            {
+              "value": 16,
+              "type": "atk_increased_pct",
+              "tier": 5
+            },
+            {
+              "value": 53,
+              "type": "critical_damage",
+              "tier": 6
+            },
+            {
+              "type": "critical_chance",
+              "value": 29,
+              "tier": 1
+            }
+          ],
+          "def": 120,
+          "slot": "boots",
+          "name": "終末を歩む者のブーツ",
+          "atk": 48,
+          "id": "end_walker_boots"
+        }
+      },
+      "unlockedSkills": [
+        "crit_1",
+        "crit_2",
+        "crit_3",
+        "crit_4",
+        "crit_5",
+        "crit_6",
+        "crit_7",
+        "crit_8",
+        "crit_9",
+        "crit_key1",
+        "guard_key1",
+        "speed_1",
+        "speed_10",
+        "speed_11",
+        "speed_12",
+        "speed_13",
+        "speed_2",
+        "speed_3",
+        "speed_4",
+        "speed_5",
+        "speed_6",
+        "speed_7",
+        "speed_8",
+        "speed_9",
+        "speed_final1",
+        "speed_final2",
+        "speed_key1",
+        "start",
+        "vamp_8",
+        "vamp_9",
+        "crit_10",
+        "crit_11",
+        "crit_12",
+        "crit_13",
+        "crit_a1",
+        "crit_b1",
+        "crit_a2",
+        "crit_b2",
+        "crit_14",
+        "crit_15",
+        "crit_16",
+        "crit_17",
+        "crit_final1",
+        "crit_final2",
+        "guard_8",
+        "guard_10",
+        "guard_9",
+        "guard_11",
+        "guard_12",
+        "guard_13",
+        "guard_a1",
+        "guard_b1",
+        "guard_a2",
+        "guard_14",
+        "guard_15",
+        "guard_16",
+        "guard_17",
+        "guard_final1",
+        "guard_final2"
+      ],
+      "level": 60
+    },
+    "localCharId": 1,
+    "floorReached": 4012,
+    "deviceId": "924B843E-64F7-45E3-8D2F-63E7E0D1B306",
+    "stats": {
+      "poisonLifesteal": 0,
+      "hpRegen": 51,
+      "atk": 1463,
+      "poisonChance": 35,
+      "poisonDamageMore": 0,
+      "damageReduction": 33,
+      "maxHp": 1684,
+      "def": 1130,
+      "critDamage": 647,
+      "attackSpeed": 2.8215,
+      "critChance": 110,
+      "poisonMaxStacks": 0,
+      "igniteDamagePct": 0,
+      "igniteDamageMore": 0,
+      "igniteChance": 0,
+      "poisonDamageReduction": 0,
+      "attackSpeedPct": 109,
+      "level": 60,
+      "hpOnHit": 10,
+      "noDirectDamage": false,
+      "hpOnCrit": 330,
+      "igniteDurationPct": 0,
+      "poisonDamagePct": 0,
+      "attackSpeedMore": 35
+    },
+    "type": "warrior"
+  },
+  {
+    "rank": 5,
+    "docId": "39F62042-1016-4044-8939-9F07574D821A_1",
+    "localCharId": 1,
+    "floorReached": 3800,
+    "deviceId": "39F62042-1016-4044-8939-9F07574D821A",
+    "type": "warrior",
+    "stats": {
+      "damageReduction": 39,
+      "poisonDamageMore": 0,
+      "poisonChance": 0,
+      "atk": 2040,
+      "hpRegen": 71,
+      "poisonLifesteal": 0,
+      "igniteDamageMore": 0,
+      "igniteDamagePct": 0,
+      "critChance": 159,
+      "poisonMaxStacks": 0,
+      "attackSpeed": 2.403,
+      "critDamage": 584,
+      "maxHp": 1310,
+      "def": 1127,
+      "poisonDamagePct": 0,
+      "hpOnCrit": 330,
+      "igniteDurationPct": 0,
+      "noDirectDamage": false,
+      "hpOnHit": 0,
+      "attackSpeedPct": 78,
+      "level": 60,
+      "poisonDamageReduction": 0,
+      "igniteChance": 0,
+      "attackSpeedMore": 35
+    },
+    "updatedAt": "2026-03-07T09:35:12.699Z",
+    "build": {
+      "level": 60,
+      "unlockedSkills": [
+        "crit_10",
+        "crit_11",
+        "crit_12",
+        "crit_13",
+        "crit_8",
+        "crit_a1",
+        "crit_key1",
+        "speed_11",
+        "speed_12",
+        "speed_13",
+        "speed_8",
+        "speed_9",
+        "speed_final1",
+        "speed_final2",
+        "start",
+        "crit_a2",
+        "crit_14",
+        "crit_15",
+        "crit_16",
+        "crit_17",
+        "crit_final1",
+        "crit_final2",
+        "crit_7",
+        "crit_6",
+        "speed_1",
+        "speed_2",
+        "speed_4",
+        "speed_5",
+        "speed_6",
+        "speed_7",
+        "speed_key1",
+        "crit_b1",
+        "crit_b2",
+        "crit_5",
+        "crit_4",
+        "crit_2",
+        "crit_1",
+        "crit_9",
+        "speed_3",
+        "guard_8",
+        "guard_9",
+        "guard_11",
+        "guard_10",
+        "guard_12",
+        "guard_13",
+        "guard_a1",
+        "guard_a2",
+        "guard_14",
+        "guard_b1",
+        "guard_b2",
+        "guard_15",
+        "guard_16",
+        "guard_17",
+        "guard_final1",
+        "guard_final2",
+        "guard_key1",
+        "guard_7",
+        "guard_6",
+        "guard_5"
+      ],
+      "equipment": {
+        "gloves": {
+          "slot": "gloves",
+          "def": 85,
+          "name": "Uber 暗殺者の手甲",
+          "atk": 75,
+          "id": "uber_assassin_grip",
+          "fixedMods": [
+            {
+              "value": 35,
+              "type": "critical_chance"
+            },
+            {
+              "value": 90,
+              "type": "critical_damage"
+            },
+            {
+              "value": 30,
+              "type": "atk_increased_pct"
+            }
+          ],
+          "instanceId": "item_1772859088438_6438",
+          "mods": [
+            {
+              "value": 35,
+              "type": "critical_chance",
+              "tier": 0
+            },
+            {
+              "value": 90,
+              "type": "critical_damage",
+              "tier": 0
+            },
+            {
+              "tier": 0,
+              "value": 30,
+              "type": "atk_increased_pct"
+            },
+            {
+              "tier": 7,
+              "type": "hp_bonus",
+              "value": 118
+            },
+            {
+              "value": 6,
+              "type": "def_bonus",
+              "tier": 9
+            }
+          ]
+        },
+        "accessory": {
+          "instanceId": "item_1772850071134_2898",
+          "mods": [
+            {
+              "tier": 0,
+              "value": 70,
+              "type": "atk_bonus"
+            },
+            {
+              "type": "def_bonus",
+              "value": 70,
+              "tier": 0
+            },
+            {
+              "tier": 0,
+              "value": 70,
+              "type": "hp_regen"
+            },
+            {
+              "tier": 0,
+              "type": "critical_chance",
+              "value": 45
+            }
+          ],
+          "name": "終焉の王冠",
+          "def": 120,
+          "slot": "accessory",
+          "id": "crown_of_end",
+          "fixedMods": [
+            {
+              "value": 70,
+              "type": "atk_bonus"
+            },
+            {
+              "value": 70,
+              "type": "def_bonus"
+            },
+            {
+              "value": 70,
+              "type": "hp_regen"
+            },
+            {
+              "value": 45,
+              "type": "critical_chance"
+            }
+          ],
+          "atk": 120
+        },
+        "weapon": {
+          "instanceId": "item_1772848749953_2450",
+          "weaponType": "sword",
+          "mods": [
+            {
+              "tier": 5,
+              "type": "critical_chance",
+              "value": 20
+            },
+            {
+              "tier": 10,
+              "type": "hp_regen",
+              "value": 1
+            },
+            {
+              "tier": 2,
+              "type": "atk_increased_pct",
+              "value": 39
+            },
+            {
+              "tier": 8,
+              "value": 22,
+              "type": "atk_bonus"
+            }
+          ],
+          "def": 0,
+          "slot": "weapon",
+          "name": "終焉の剣",
+          "atk": 220,
+          "id": "apocalypse_blade"
+        },
+        "armor": {
+          "def": 180,
+          "slot": "armor",
+          "name": "終末の鎧",
+          "atk": 0,
+          "id": "end_armor",
+          "instanceId": "item_1772848194683_2289",
+          "mods": [
+            {
+              "type": "critical_chance",
+              "value": 7,
+              "tier": 9
+            },
+            {
+              "tier": 4,
+              "value": 31,
+              "type": "atk_bonus"
+            },
+            {
+              "type": "damage_reduction_pct",
+              "value": 4,
+              "tier": 2
+            },
+            {
+              "tier": 4,
+              "type": "atk_increased_pct",
+              "value": 20
+            }
+          ]
+        },
+        "boots": {
+          "atk": 48,
+          "id": "end_walker_boots",
+          "slot": "boots",
+          "def": 120,
+          "name": "終末を歩む者のブーツ",
+          "mods": [
+            {
+              "tier": 3,
+              "value": 84,
+              "type": "critical_damage"
+            },
+            {
+              "tier": 4,
+              "value": 20,
+              "type": "atk_increased_pct"
+            },
+            {
+              "tier": 4,
+              "value": 33,
+              "type": "atk_bonus"
+            },
+            {
+              "tier": 7,
+              "type": "def_bonus",
+              "value": 19
+            }
+          ],
+          "instanceId": "item_1772849488280_2679"
+        }
+      }
+    },
+    "name": "アラン"
+  },
+  {
+    "rank": 6,
+    "docId": "F5998BBC-9871-4E86-BD3A-A86D00272A57_1",
+    "build": {
+      "level": 60,
+      "equipment": {
+        "gloves": {
+          "instanceId": "item_1772928673450_2723",
+          "mods": [
+            {
+              "tier": 0,
+              "type": "attack_speed_pct",
+              "value": 18
+            },
+            {
+              "tier": 0,
+              "type": "critical_damage",
+              "value": 45
+            },
+            {
+              "value": 20,
+              "type": "atk_increased_pct",
+              "tier": 0
+            }
+          ],
+          "def": 90,
+          "slot": "gloves",
+          "name": "Uber クラーケンの鉤爪",
+          "atk": 70,
+          "id": "uber_kraken_claw",
+          "fixedMods": [
+            {
+              "value": 18,
+              "type": "attack_speed_pct"
+            },
+            {
+              "value": 45,
+              "type": "critical_damage"
+            },
+            {
+              "value": 20,
+              "type": "atk_increased_pct"
+            }
+          ]
+        },
+        "accessory": {
+          "instanceId": "item_1772921727204_484",
+          "mods": [
+            {
+              "tier": 0,
+              "value": 120,
+              "type": "atk_bonus"
+            },
+            {
+              "tier": 0,
+              "value": 120,
+              "type": "def_bonus"
+            },
+            {
+              "value": 200,
+              "type": "hp_regen",
+              "tier": 0
+            },
+            {
+              "tier": 0,
+              "type": "critical_chance",
+              "value": 60
+            }
+          ],
+          "slot": "accessory",
+          "def": 200,
+          "name": "Uber 終焉の王冠",
+          "atk": 200,
+          "id": "uber_crown_of_end",
+          "fixedMods": [
+            {
+              "value": 120,
+              "type": "atk_bonus"
+            },
+            {
+              "value": 120,
+              "type": "def_bonus"
+            },
+            {
+              "value": 200,
+              "type": "hp_regen"
+            },
+            {
+              "value": 60,
+              "type": "critical_chance"
+            }
+          ]
+        },
+        "armor": {
+          "mods": [
+            {
+              "value": 28,
+              "type": "poison_chance",
+              "tier": 6
+            },
+            {
+              "tier": 7,
+              "value": 16,
+              "type": "atk_bonus"
+            },
+            {
+              "type": "atk_increased_pct",
+              "value": 25,
+              "tier": 3
+            },
+            {
+              "tier": 4,
+              "type": "critical_damage",
+              "value": 76
+            }
+          ],
+          "instanceId": "item_1772887534472_825",
+          "atk": 0,
+          "id": "divine_armor",
+          "slot": "armor",
+          "def": 100,
+          "name": "神聖なる鎧"
+        },
+        "weapon": {
+          "atk": 220,
+          "id": "apocalypse_staff",
+          "slot": "weapon",
+          "def": 0,
+          "name": "終焉の杖",
+          "weaponType": "staff",
+          "mods": [
+            {
+              "tier": 2,
+              "type": "critical_chance",
+              "value": 28
+            },
+            {
+              "type": "atk_increased_pct",
+              "value": 15,
+              "tier": 7
+            },
+            {
+              "type": "def_bonus",
+              "value": 36,
+              "tier": 3
+            },
+            {
+              "value": 95,
+              "type": "critical_damage",
+              "tier": 1
+            }
+          ],
+          "instanceId": "item_1772914540952_1090"
+        },
+        "boots": {
+          "mods": [
+            {
+              "tier": 4,
+              "value": 22,
+              "type": "critical_chance"
+            },
+            {
+              "tier": 1,
+              "type": "atk_increased_pct",
+              "value": 30
+            },
+            {
+              "value": 19,
+              "type": "hp_regen",
+              "tier": 7
+            }
+          ],
+          "instanceId": "item_1772925933521_1961",
+          "id": "void_boots",
+          "atk": 35,
+          "name": "虚無のブーツ",
+          "slot": "boots",
+          "def": 88
+        }
+      },
+      "unlockedSkills": [
+        "crit_1",
+        "crit_10",
+        "crit_11",
+        "crit_12",
+        "crit_13",
+        "crit_14",
+        "crit_15",
+        "crit_16",
+        "crit_17",
+        "crit_2",
+        "crit_3",
+        "crit_4",
+        "crit_5",
+        "crit_7",
+        "crit_8",
+        "crit_9",
+        "crit_a1",
+        "crit_a2",
+        "crit_b1",
+        "crit_b2",
+        "crit_final1",
+        "crit_final2",
+        "crit_key1",
+        "guard_1",
+        "guard_10",
+        "guard_11",
+        "guard_12",
+        "guard_13",
+        "guard_14",
+        "guard_15",
+        "guard_16",
+        "guard_17",
+        "guard_2",
+        "guard_3",
+        "guard_5",
+        "guard_8",
+        "guard_9",
+        "guard_a1",
+        "guard_a2",
+        "guard_b1",
+        "guard_final1",
+        "guard_final2",
+        "guard_key1",
+        "poison_key1",
+        "speed_1",
+        "speed_10",
+        "speed_11",
+        "speed_12",
+        "speed_13",
+        "speed_2",
+        "speed_4",
+        "speed_5",
+        "speed_7",
+        "speed_8",
+        "speed_9",
+        "speed_final1",
+        "speed_final2",
+        "speed_key1",
+        "start"
+      ]
+    },
+    "name": "おしろ",
+    "updatedAt": "2026-03-08T05:20:18.919Z",
+    "floorReached": 3600,
+    "deviceId": "F5998BBC-9871-4E86-BD3A-A86D00272A57",
+    "type": "elementalist",
+    "stats": {
+      "attackSpeedMore": 35,
+      "igniteDurationPct": 0,
+      "hpOnCrit": 330,
+      "poisonDamagePct": 20,
+      "hpOnHit": 0,
+      "noDirectDamage": false,
+      "igniteChance": 20,
+      "poisonDamageReduction": 0,
+      "level": 60,
+      "attackSpeedPct": 106,
+      "igniteDamageMore": 0,
+      "critChance": 162,
+      "poisonMaxStacks": 0,
+      "igniteDamagePct": 0,
+      "critDamage": 626,
+      "attackSpeed": 2.781,
+      "maxHp": 922,
+      "def": 1191,
+      "damageReduction": 39,
+      "poisonChance": 38,
+      "poisonDamageMore": 0,
+      "hpRegen": 219,
+      "atk": 1949,
+      "poisonLifesteal": 30
+    },
+    "localCharId": 1
+  },
+  {
+    "rank": 7,
+    "docId": "7B4B8328-059F-4CF6-8C8D-D50AE5EBF76D_1",
+    "updatedAt": "2026-02-27T21:42:59.558Z",
+    "build": {
+      "unlockedSkills": [
+        "start",
+        "crit_1",
+        "crit_2",
+        "crit_3",
+        "crit_5",
+        "crit_6",
+        "crit_7",
+        "crit_key1",
+        "crit_8",
+        "crit_9",
+        "crit_11",
+        "crit_12",
+        "crit_13",
+        "crit_b1",
+        "crit_b2",
+        "crit_14",
+        "crit_15",
+        "crit_16",
+        "crit_17",
+        "crit_final1",
+        "crit_final2",
+        "crit_a1",
+        "crit_a2",
+        "speed_1",
+        "crit_10",
+        "crit_4",
+        "speed_2",
+        "speed_4",
+        "speed_5",
+        "speed_6",
+        "speed_7",
+        "speed_key1",
+        "speed_8",
+        "speed_10",
+        "speed_11",
+        "speed_12",
+        "speed_13",
+        "speed_final1",
+        "speed_final2",
+        "speed_9",
+        "guard_4",
+        "guard_5",
+        "guard_key1",
+        "guard_8",
+        "guard_10",
+        "guard_9",
+        "guard_11",
+        "guard_12",
+        "guard_13",
+        "guard_b1",
+        "guard_a1",
+        "guard_b2",
+        "guard_14",
+        "guard_15",
+        "guard_16",
+        "guard_17",
+        "guard_final1",
+        "guard_final2",
+        "vamp_1"
+      ],
+      "equipment": {
+        "boots": {
+          "mods": [
+            {
+              "type": "critical_damage",
+              "value": 85,
+              "tier": 3
+            },
+            {
+              "type": "hp_bonus",
+              "value": 202,
+              "tier": 4
+            },
+            {
+              "tier": 6,
+              "type": "hp_regen",
+              "value": 22
+            },
+            {
+              "value": 23,
+              "type": "atk_bonus",
+              "tier": 6
+            }
+          ],
+          "instanceId": "item_1772209515391_1026",
+          "atk": 48,
+          "id": "end_walker_boots",
+          "def": 120,
+          "slot": "boots",
+          "name": "終末を歩む者のブーツ"
+        },
+        "armor": {
+          "id": "end_armor",
+          "atk": 0,
+          "name": "終末の鎧",
+          "def": 180,
+          "slot": "armor",
+          "mods": [
+            {
+              "value": 39,
+              "type": "def_bonus",
+              "tier": 5
+            },
+            {
+              "tier": 3,
+              "value": 25,
+              "type": "atk_increased_pct"
+            },
+            {
+              "type": "critical_chance",
+              "value": 27,
+              "tier": 2
+            },
+            {
+              "value": 28,
+              "type": "def_increased_pct",
+              "tier": 4
+            }
+          ],
+          "instanceId": "item_1772206320333_504"
+        },
+        "weapon": {
+          "name": "終焉の剣",
+          "slot": "weapon",
+          "def": 0,
+          "id": "apocalypse_blade",
+          "atk": 220,
+          "instanceId": "item_1772208478761_704",
+          "mods": [
+            {
+              "type": "critical_chance",
+              "value": 27,
+              "tier": 2
+            },
+            {
+              "tier": 4,
+              "type": "atk_bonus",
+              "value": 48
+            },
+            {
+              "type": "atk_increased_pct",
+              "value": 27,
+              "tier": 5
+            },
+            {
+              "type": "def_increased_pct",
+              "value": 26,
+              "tier": 2
+            }
+          ],
+          "weaponType": "sword"
+        },
+        "accessory": {
+          "def": 120,
+          "slot": "accessory",
+          "name": "終焉の王冠",
+          "atk": 120,
+          "fixedMods": [
+            {
+              "value": 70,
+              "type": "atk_bonus"
+            },
+            {
+              "value": 70,
+              "type": "def_bonus"
+            },
+            {
+              "value": 70,
+              "type": "hp_regen"
+            },
+            {
+              "value": 45,
+              "type": "critical_chance"
+            }
+          ],
+          "id": "crown_of_end",
+          "instanceId": "item_1772210768742_1365",
+          "mods": [
+            {
+              "value": 70,
+              "type": "atk_bonus",
+              "tier": 0
+            },
+            {
+              "value": 70,
+              "type": "def_bonus",
+              "tier": 0
+            },
+            {
+              "tier": 0,
+              "value": 70,
+              "type": "hp_regen"
+            },
+            {
+              "value": 45,
+              "type": "critical_chance",
+              "tier": 0
+            }
+          ]
+        },
+        "gloves": {
+          "instanceId": "item_1772209437194_976",
+          "mods": [
+            {
+              "tier": 7,
+              "type": "hp_bonus",
+              "value": 119
+            },
+            {
+              "type": "critical_chance",
+              "value": 17,
+              "tier": 6
+            },
+            {
+              "tier": 2,
+              "type": "critical_damage",
+              "value": 94
+            },
+            {
+              "tier": 5,
+              "type": "atk_bonus",
+              "value": 30
+            }
+          ],
+          "def": 80,
+          "slot": "gloves",
+          "name": "泰坦の篭手",
+          "atk": 70,
+          "id": "titan_gauntlets"
+        }
+      },
+      "level": 60
+    },
+    "name": "ハマユ",
+    "localCharId": 1,
+    "stats": {
+      "attackSpeedMore": 35,
+      "attackSpeedPct": 88,
+      "level": 60,
+      "igniteChance": 0,
+      "poisonDamageReduction": 0,
+      "poisonDamagePct": 0,
+      "hpOnCrit": 330,
+      "igniteDurationPct": 0,
+      "hpOnHit": 10,
+      "noDirectDamage": false,
+      "attackSpeed": 2.538,
+      "critDamage": 589,
+      "maxHp": 1654,
+      "def": 1528,
+      "igniteDamageMore": 0,
+      "critChance": 168,
+      "igniteDamagePct": 0,
+      "poisonMaxStacks": 0,
+      "atk": 1587,
+      "hpRegen": 92,
+      "poisonLifesteal": 0,
+      "damageReduction": 35,
+      "poisonDamageMore": 0,
+      "poisonChance": 0
+    },
+    "type": "warrior",
+    "deviceId": "7B4B8328-059F-4CF6-8C8D-D50AE5EBF76D",
+    "floorReached": 2606
+  }
+]

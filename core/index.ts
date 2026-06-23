@@ -43,6 +43,7 @@ export {
   combineMods,
   calculateAttackSpeed,
   getAttackSpeedFromMods,
+  calculateBattleHpAndShield,
   calculatePoisonDamage,
   getPoisonDamageFromMods,
 } from './modEffects';

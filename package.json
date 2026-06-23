@@ -12,6 +12,14 @@
     "test": "vitest",
     "test:run": "vitest run",
     "build:s3tree": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/buildPassiveTreeS3.ts",
+    "tree:score": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/passiveTreeScoreExplorer.ts",
+    "tree:ga": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/passiveTreeGeneticExplorer.ts",
+    "tree:ga:sweep": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/passiveTreeGaDungeonSweep.ts",
+    "tree:ga:compare": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/passiveTreeClassArchetypeCompare.ts",
+    "tree:ga:neutral": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/passiveTreeNeutralGeneticExplorer.ts",
+    "tree:ga:export": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/exportPassiveTreeGaResults.ts",
+    "tree:ga:uber-check": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/checkPassiveTreeUberBossScores.ts",
+    "tree:editor": "vite tools/tree-editor",
     "simulation": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/runSimulation.ts",
     "simulation:uber": "TSX_TSCONFIG_PATH=tsconfig.scripts.json tsx scripts/runUberBossSimulation.ts",
     "analyze:bundle": "echo '\n📊 バンドルサイズを分析します...\n' && rm -rf dist && npx expo export --platform ios && echo '\n📈 分析結果:\n' && echo '----------------------------------------' && du -sh dist && echo '----------------------------------------' && echo 'JSバンドル:' && find dist/_expo/static/js -name '*.js' -exec du -h {} \\; && echo '----------------------------------------' && echo 'アセット:' && du -sh dist/assets && echo '\n💡 詳細な分析が必要な場合は、Expo Dev Toolsのプロファイラーを使用してください。'",
@@ -79,6 +87,7 @@
     "source-map-explorer": "^2.5.3",
     "tsx": "^4.19.2",
     "typescript": "~5.9.2",
+    "vite": "^5.4.0",
     "vitest": "^2.1.8"
   },
   "private": true

@@ -12,11 +12,17 @@ import {
   createLifestealEvent,
   createEnemyAttackEvent,
 } from '../../core/combatEffects';
+import { createEmptyModEffects } from '../../core/modEffects';
 import { CombinedModEffects, GaugeBattleState, DEFAULT_BATTLE_CONFIG } from '../../core/types';
 
 const baseState: GaugeBattleState = {
   player: { currentHp: 100, maxHp: 100, atk: 10, def: 5, attackSpeed: 1, gauge: 0 },
   enemy: { currentHp: 50, maxHp: 50, atk: 8, def: 2, attackSpeed: 1, gauge: 0 },
+  playerShield: 0,
+  playerMaxShield: 0,
+  playerLastShieldDamageTick: null,
+  playerLastHitDamageTick: null,
+  playerLastAutoCleanseTick: null,
   enemyPoisonStacks: [],
   playerPoisonStacks: [],
   enemyIgniteState: null,
@@ -36,58 +42,7 @@ const baseState: GaugeBattleState = {
   winner: null,
 };
 
-const emptyMods: CombinedModEffects = {
-  hpRegen: 0,
-  hpRegenPct: 0,
-  poisonChance: 0,
-  poisonDamagePct: 0,
-  poisonDamageMorePct: [],
-  poisonMaxStacks: 0,
-  poisonDamageReduction: 0,
-  poisonLifesteal: 0,
-  noDirectDamage: false,
-  criticalChance: 0,
-  criticalDamage: 0,
-  hpOnCrit: 0,
-  critLifestealPct: 0,
-  criticalFollowUpAttack: false,
-  followUpAttackPct: 0,
-  kingSlam: false,
-  royalRoar: false,
-  damageDeferPct: 0,
-  damageReductionPct: 0,
-  hpOnHit: 0,
-  lifestealPct: 0,
-  retaliateDefPct: 0,
-  hpRegenToAtkPct: 0,
-  attackSpeedPct: 0,
-  attackSpeedMorePct: [],
-  timeAtkIncPct: 0,
-  timeDefIncPct: 0,
-  timeHpRegen: 0,
-  igniteChance: 0,
-  igniteDamagePct: 0,
-  igniteDamageMorePct: [],
-  igniteDurationPct: 0,
-  igniteTickSpeedPct: 0,
-  igniteLifesteal: 0,
-  igniteSpread: false,
-  igniteStackingDamage: false,
-  chillChance: 0,
-  chillEffectPct: 0,
-  chillDurationPct: 0,
-  freezeChance: 0,
-  freezeDurationPct: 0,
-  freezeChanceCapPct: 0,
-  warlordEnrage: false,
-  heavyStrike: false,
-  defHpToAtk: false,
-  uberCriticalFollowUp: false,
-  poisonMultiStack: 1,
-  igniteIntensify: false,
-  chillFreezeDamageMult: 1,
-  igniteResistPct: 0,
-};
+const emptyMods: CombinedModEffects = createEmptyModEffects();
 
 describe('core/combatEffects', () => {
   it('executePlayerAttack はクリティカルと追撃を発動する', () => {

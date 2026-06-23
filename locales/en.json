@@ -1532,6 +1532,7 @@
     "playerAttack": "Player attacks! {{enemy}} takes {{damage}} damage!",
     "criticalHit": "Critical hit! {{enemy}} takes {{damage}} damage!",
     "enemyAttack": "{{enemy}} attacks! You take {{damage}} damage!",
+    "blocked": "Blocked! You stopped {{enemy}}'s attack!",
     "enemyDefeated": "Defeated {{enemy}}! Gained {{exp}} EXP!",
     "itemDropped": "{{item}} dropped!",
     "petDrop": "{{name}} became your friend!",
@@ -2309,7 +2310,7 @@
   },
   "endContentTooltip": {
     "title": "Endgame Content Unlocked!",
-    "levelCap": "Level cap increased to 60",
+    "levelCap": "Dimensional Rush unlocked",
     "speedUnlock": "Fast-forward feature unlocked"
   },
   "uberTreeTooltip": {

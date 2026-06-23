@@ -11,6 +11,11 @@ import { GaugeBattleState, DEFAULT_BATTLE_CONFIG, CombinedModEffects } from '../
 const baseState: GaugeBattleState = {
   player: { currentHp: 100, maxHp: 100, atk: 10, def: 5, attackSpeed: 1, gauge: 0 },
   enemy: { currentHp: 50, maxHp: 50, atk: 8, def: 2, attackSpeed: 1, gauge: 0 },
+  playerShield: 0,
+  playerMaxShield: 0,
+  playerLastShieldDamageTick: null,
+  playerLastHitDamageTick: null,
+  playerLastAutoCleanseTick: null,
   enemyPoisonStacks: [],
   playerPoisonStacks: [],
   enemyIgniteState: null,

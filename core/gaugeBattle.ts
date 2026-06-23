@@ -63,6 +63,11 @@ export function createGaugeBattleState(
   return {
     player,
     enemy: enemyCombatant,
+    playerShield: 0,
+    playerMaxShield: 0,
+    playerLastShieldDamageTick: null,
+    playerLastHitDamageTick: null,
+    playerLastAutoCleanseTick: null,
     enemyPoisonStacks: [],
     playerPoisonStacks: [],
     enemyIgniteState: null,

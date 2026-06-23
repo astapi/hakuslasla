@@ -141,6 +141,23 @@ export type ModType =
   | 'king_slam'                 // 5回攻撃ごとにATK×3の追撃（UberUberゴブリンの踏みつけ）
   | 'royal_roar'                // 3回攻撃ごとに自身の毒・発火・チル状態を解除
   | 'ignite_resist_pct'         // 発火ダメージ軽減%（UberUberクラーケン由来）
+  | 'shield_bonus'              // シールド+X (フラット)
+  | 'shield_increased_pct'      // シールド +X% increased
+  | 'shield_more_pct'           // シールド X% more
+  | 'hp_to_shield'              // 最大HPをシールドへ変換
+  | 'shield_on_10_attacks_pct'  // 10回攻撃ごとに最大シールドのX%回復
+  | 'shield_recharge_delay_ms'  // 被弾後Xmsでシールド再構築開始
+  | 'shield_recharge_pct'       // 再構築中、毎秒最大シールドのX%回復
+  | 'shield_blocks_dot'         // 毒などの継続ダメージもシールドで受ける
+  | 'pet_effect_pct'            // ペット効果 +X% increased
+  | 'pet_drop_rate_pct'         // ペットドロップ率 +X%
+  | 'block_chance'              // ブロック率 +X%
+  | 'chill_resist_pct'          // チル耐性 +X%
+  | 'freeze_resist_pct'         // フリーズ耐性 +X%
+  | 'poison_resist_pct'         // 毒ダメージ軽減 +X%
+  | 'repeat_hit_damage_reduction_pct' // 短時間の連続被弾軽減 +X%
+  | 'low_hp_damage_reduction_pct'     // 低HP時被ダメージ軽減 +X%
+  | 'auto_cleanse_interval_ms'        // 一定間隔で状態異常解除
   | 'poison_damage_pct'       // 毒ダメージ+X%
   | 'poison_damage_more_pct'  // 毒ダメージ X% more
   | 'poison_damage_reduction' // 敵が毒状態時のダメージ軽減+X%
@@ -239,7 +256,28 @@ export interface PassiveEffect {
   hp_regen_pct?: number;       // 毎秒HP X%回復
   damage_defer_pct?: number; // ダメージ遅延+X%（ダメージのX%を4秒かけて受ける）
   hp_on_hit?: number;          // HIT時HP回復（固定値）
+  lifestealPct?: number;       // 与ダメージのX%をHP回復
   retaliate_def_pct?: number;  // 被ダメ時DEFのX%を反撃ダメージ
+  // シールド系
+  shield?: number;                 // 最大シールド +X
+  shield_increased_pct?: number;   // シールド +X% increased
+  shield_more_pct?: number;        // シールド X% more
+  hp_to_shield?: boolean;          // HP系をシールドに変換（戦闘時HPを圧縮）
+  shield_on_10_attacks_pct?: number; // 10回攻撃ごとに最大シールドのX%回復
+  shield_recharge_delay_ms?: number; // 被弾後Xmsで再構築開始
+  shield_recharge_pct?: number;      // 再構築中、毎秒最大シールドのX%回復
+  shield_blocks_dot?: boolean;       // 毒などの継続ダメージもシールドで受ける
+  // ペット系
+  pet_effect_pct?: number;       // ペット効果 +X% increased
+  pet_drop_rate_pct?: number;    // ペットドロップ率 +X%
+  // ブロック・状態異常耐性・ボス対策
+  block_chance?: number;         // ブロック率 +X%
+  chill_resist_pct?: number;     // チル耐性 +X%
+  freeze_resist_pct?: number;    // フリーズ耐性 +X%
+  poison_resist_pct?: number;    // 毒ダメージ軽減 +X%
+  repeat_hit_damage_reduction_pct?: number; // 短時間の連続被弾軽減 +X%
+  low_hp_damage_reduction_pct?: number;     // 低HP時被ダメージ軽減 +X%
+  auto_cleanse_interval_ms?: number;        // 一定間隔で状態異常解除
   // 攻撃速度系
   attack_speed_pct?: number;       // AS +X% increased
   attack_speed_more_pct?: number;  // AS X% more
@@ -459,7 +497,7 @@ export interface BattleEnemy {
 export interface BattleLogEntry {
   id: number;
   message: string;
-  type: 'player_attack' | 'enemy_attack' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'ignite' | 'critical' | 'heal' | 'chill' | 'freeze';
+  type: 'player_attack' | 'enemy_attack' | 'block' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'ignite' | 'critical' | 'heal' | 'chill' | 'freeze';
 }
 
 // 発火状態
@@ -477,6 +515,8 @@ export interface BattleState {
   maxFloor: number;
   playerCurrentHp: number;
   playerMaxHp: number;
+  playerShield: number;
+  playerMaxShield: number;
   enemy: BattleEnemy | null;
   enemyPoison: PoisonState[]; // 敵の毒状態（複数スタック対応）
   playerPoison: PoisonState[]; // プレイヤーの毒状態（複数スタック対応）
@@ -560,7 +600,7 @@ export interface DungeonBattleState {
 export type BattleAction =
   | { type: 'START_BATTLE'; enemy: BattleEnemy }
   | { type: 'PLAYER_ATTACK'; damage: number; isCritical?: boolean; source?: 'king_slam' | 'twin_blade' }
-  | { type: 'ENEMY_ATTACK'; damage: number }
+  | { type: 'ENEMY_ATTACK'; damage: number; shieldDamage?: number; blocked?: boolean }
   | { type: 'PLAYER_DAMAGE'; damage: number; message: string; logType?: BattleLogEntry['type'] }
   | { type: 'ENEMY_HEAL'; amount: number; source?: 'regen' | 'on_hit' }
   | { type: 'ENEMY_DEFEATED'; exp: number; droppedItems: Item[] } // 複数アイテム対応
@@ -577,7 +617,7 @@ export type BattleAction =
   | { type: 'APPLY_IGNITE'; damage: number; durationMs: number; tickIntervalMs: number }
   | { type: 'APPLY_IGNITE_SPREAD'; damage: number; durationMs: number; tickIntervalMs: number }
   | { type: 'IGNITE_DAMAGE'; damage: number; remainingMs: number }
-  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number; enemyChill?: { speedMultiplier: number; remainingMs: number } | null; enemyFreeze?: { remainingMs: number } | null; playerChill?: { speedMultiplier: number; remainingMs: number } | null; playerFreeze?: { remainingMs: number } | null }
+  | { type: 'UPDATE_GAUGES'; playerGauge: number; enemyGauge: number; playerShield?: number; playerMaxShield?: number; enemyChill?: { speedMultiplier: number; remainingMs: number } | null; enemyFreeze?: { remainingMs: number } | null; playerChill?: { speedMultiplier: number; remainingMs: number } | null; playerFreeze?: { remainingMs: number } | null }
   | { type: 'RESET_PLAYER_GAUGE' }
   | { type: 'RESET_ENEMY_GAUGE' };
 
