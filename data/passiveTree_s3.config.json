@@ -39,12 +39,6 @@
       "e": {
         "def": 14
       }
-    },
-    {
-      "n": "身躱し",
-      "e": {
-        "evasion": 14
-      }
     }
   ],
   "classStarts": {
@@ -53,9 +47,7 @@
       "name": "戦士の構え",
       "e": {
         "atk": 10,
-        "hp": 55,
-        "def": 10,
-        "block_chance": 1
+        "hp": 55
       },
       "ic": "atk"
     },
@@ -68,15 +60,14 @@
         "evasion": 20,
         "evasion_increased_pct": 6
       },
-      "ic": "evasion"
+      "ic": "poison"
     },
     "tamer": {
       "id": "tamer_start",
       "name": "調教師の絆",
       "e": {
         "hp": 70,
-        "def": 10,
-        "block_chance": 1
+        "def": 8
       },
       "ic": "regen"
     },
@@ -86,7 +77,7 @@
       "e": {
         "atk": 8,
         "hp": 55,
-        "def": 6,
+        "def": 8,
         "evasion": 10
       },
       "ic": "special"
@@ -202,18 +193,17 @@
             }
           },
           "strong": {
-            "n": "不屈の再起",
+            "n": "鉄壁",
             "e": {
               "def": 30,
               "def_increased_pct": 20,
               "def_more_pct": 8,
               "block_chance": 7,
-              "damage_defer_pct": 6,
-              "hp_on_taken_hit": 140
+              "damage_defer_pct": 6
             },
             "ic": "guard"
           },
-          "strongKind": "keystone"
+          "strongKind": "notable"
         },
         {
           "notable": {
@@ -270,7 +260,7 @@
       "deg": -30,
       "ic": "poison",
       "spineFlavor": {
-        "n": "毒の歩法",
+        "n": "毒の研鑽",
         "e": {
           "poison_chance": 5,
           "poison_damage_pct": 4,
