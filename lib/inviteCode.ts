@@ -12,7 +12,6 @@ import {
 } from '@react-native-firebase/firestore';
 import { getDeviceId } from '@/lib/firestore';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
-import { usePurchaseStore } from '@/stores/usePurchaseStore';
 
 // ============================================
 // Constants
@@ -198,10 +197,6 @@ export const redeemInviteCode = async (inputCode: string): Promise<RedeemResult>
       }
     });
 
-    // ローカルに倍速ブーストを保存
-    await settingsRepository.setInviteSpeedBoost(true);
-    usePurchaseStore.getState().setInviteSpeedBoost(true);
-
     return { success: true };
   } catch (error: any) {
     if (isPermissionDenied(error)) {
@@ -219,14 +214,9 @@ export const redeemInviteCode = async (inputCode: string): Promise<RedeemResult>
 };
 
 /**
- * 招待者報酬を確認（自分のコードが使われたかチェック）
- * 設定画面を開いた時に呼ぶ
+ * 自分のコードが使われたかチェック
  */
 export const checkInviterReward = async (): Promise<boolean> => {
-  // 既にローカルで有効化済みなら確認不要
-  const alreadyEnabled = await settingsRepository.getInviteSpeedBoost();
-  if (alreadyEnabled) return true;
-
   try {
     const deviceId = await getDeviceId();
     const db = getFirestore();
@@ -240,14 +230,7 @@ export const checkInviterReward = async (): Promise<boolean> => {
       redeemedCode: string | null;
     };
 
-    // 自分のコードが使われた、または自分がコードを入力済み
-    if (data.usedBy !== null || data.redeemedCode !== null) {
-      await settingsRepository.setInviteSpeedBoost(true);
-      usePurchaseStore.getState().setInviteSpeedBoost(true);
-      return true;
-    }
-
-    return false;
+    return data.usedBy !== null || data.redeemedCode !== null;
   } catch (error) {
     console.error('[InviteCode] Check inviter reward failed:', error);
     return false;

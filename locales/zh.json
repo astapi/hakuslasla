@@ -294,11 +294,11 @@
     "battleSpeed": {
       "title": "战斗速度",
       "description": "更改战斗进行速度",
-      "premiumHint": "3倍速可通过邀请码解锁"
+      "premiumHint": "3倍速可在商店解锁"
     },
     "inviteCode": {
       "title": "邀请码",
-      "description": "与朋友分享邀请码，双方均可解锁3倍速",
+      "description": "邀请码功能已结束",
       "myCode": "你的邀请码",
       "copied": "已复制",
       "receivedFromLink": "链接中的邀请码已自动填入",
@@ -306,7 +306,7 @@
       "placeholder": "6位代码",
       "submit": "提交",
       "submitting": "提交中...",
-      "activated": "3倍速已激活",
+      "activated": "邀请码功能已结束",
       "shareText": "一起来 LootDive 冒险吧！打开此链接即可直接领取邀请码。\nhttps://astapi.net/lootdive/invite?code={{code}}\n如果应用没有打开，也可以手动输入邀请码 {{code}}。",
       "error": {
         "ownCode": "不能使用自己的邀请码",
@@ -318,7 +318,7 @@
       },
       "success": {
         "title": "激活成功",
-        "message": "3倍速已解锁！"
+        "message": "邀请码功能已结束"
       },
       "suspended": "邀请码功能暂时不可用"
     },
@@ -328,13 +328,13 @@
   },
   "inviteLink": {
     "title": "已收到邀请码",
-    "description": "我们已从链接中读取邀请码。应用后即可解锁 3 倍速。",
+    "description": "邀请码功能已结束。",
     "receivedCode": "收到的邀请码",
     "apply": "应用此邀请码",
     "openSettings": "打开设置",
     "goHome": "返回首页",
     "result": {
-      "alreadyActivated": "3 倍速已解锁。"
+      "alreadyActivated": "邀请码功能已结束。"
     }
   },
   "status": {
@@ -2399,9 +2399,9 @@
       "description": "解锁2倍-3倍战斗速度选项"
     },
     "inviteCodeBanner": {
-      "title": "免费解锁3倍速",
-      "description": "从设置页面分享邀请码，解锁3倍速",
-      "activated": "已通过邀请码激活3倍速"
+      "title": "解锁3倍速",
+      "description": "可在商店解锁3倍速",
+      "activated": "3倍速已激活"
     },
     "premiumBundle": {
       "name": "高级礼包",

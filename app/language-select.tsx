@@ -36,14 +36,7 @@ export default function LanguageSelectScreen() {
     changeLanguage(selectedLanguage);
     const pendingInvite = consumePendingInviteLink();
     if (pendingInvite) {
-      router.replace(
-        pendingInvite.code
-          ? {
-              pathname: '/settings',
-              params: { inviteCode: pendingInvite.code },
-            }
-          : '/settings'
-      );
+      router.replace('/settings');
       return;
     }
     router.replace('/');

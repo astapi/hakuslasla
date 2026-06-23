@@ -299,11 +299,11 @@
     "battleSpeed": {
       "title": "Battle Speed",
       "description": "Change the speed of battle progression",
-      "premiumHint": "3x speed can be unlocked with an invite code"
+      "premiumHint": "3x speed can be unlocked from the shop"
     },
     "inviteCode": {
       "title": "Invite Code",
-      "description": "Share invite codes with friends to unlock 3x speed for both of you",
+      "description": "The invite code feature has ended",
       "myCode": "Your Invite Code",
       "copied": "Copied!",
       "receivedFromLink": "The invite code from the link has been filled in",
@@ -311,7 +311,7 @@
       "placeholder": "6-character code",
       "submit": "Submit",
       "submitting": "Submitting...",
-      "activated": "3x Speed Activated",
+      "activated": "The invite code feature has ended",
       "shareText": "Let's adventure together in LootDive! Open this link to receive the invite code automatically.\nhttps://astapi.net/lootdive/invite?code={{code}}\nIf the app does not open, enter code {{code}} manually.",
       "error": {
         "ownCode": "You cannot use your own code",
@@ -323,7 +323,7 @@
       },
       "success": {
         "title": "Activated",
-        "message": "3x speed has been unlocked!"
+        "message": "The invite code feature has ended"
       },
       "suspended": "Invite code feature is temporarily unavailable"
     },
@@ -333,13 +333,13 @@
   },
   "inviteLink": {
     "title": "Invite Code Received",
-    "description": "We read an invite code from the link. Apply it to unlock 3x speed.",
+    "description": "The invite code feature has ended.",
     "receivedCode": "Received Code",
     "apply": "Apply This Code",
     "openSettings": "Open Settings",
     "goHome": "Go Home",
     "result": {
-      "alreadyActivated": "3x speed is already unlocked."
+      "alreadyActivated": "The invite code feature has ended."
     }
   },
   "status": {
@@ -2415,9 +2415,9 @@
       "description": "Unlock 2x-3x battle speed options"
     },
     "inviteCodeBanner": {
-      "title": "Unlock 3x Speed for Free",
-      "description": "Share your invite code from Settings to unlock 3x speed",
-      "activated": "3x speed activated via invite code"
+      "title": "Unlock 3x Speed",
+      "description": "Unlock 3x speed from the shop",
+      "activated": "3x speed activated"
     },
     "premiumBundle": {
       "name": "Premium Bundle",

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Modal, Linking } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
@@ -22,7 +22,6 @@ import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 import { changeLanguage } from '@/lib/i18n';
 import { updateSoundSettings } from '@/lib/sound';
 import { ms, fs } from '@/utils/scaling';
-import { InviteCodeSection } from '@/components/settings/InviteCodeSection';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -46,8 +45,6 @@ function getWikiUrlForLanguage(lang: string): string {
 export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
-  const params = useLocalSearchParams<{ inviteCode?: string | string[] }>();
-  const scrollViewRef = useRef<ScrollView>(null);
   const [settings, setSettings] = useState<DropFilterSettings>(DEFAULT_DROP_FILTER);
   const [language, setLanguage] = useState<AppLanguage>(DEFAULT_LANGUAGE);
   const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
@@ -57,10 +54,6 @@ export default function SettingsScreen() {
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
   const [speedUnlocked, setSpeedUnlocked] = useState(false);
   const hasPremiumSpeed = hasSpeedBoost();
-  const inviteCodeParam = useMemo(
-    () => (Array.isArray(params.inviteCode) ? params.inviteCode[0] : params.inviteCode) ?? '',
-    [params.inviteCode]
-  );
 
   // 言語コードからラベルを取得するヘルパー
   const getLanguageLabel = (lang: AppLanguage): string => {
@@ -73,18 +66,6 @@ export default function SettingsScreen() {
   useEffect(() => {
     loadSettings();
   }, []);
-
-  useEffect(() => {
-    if (isLoading || !inviteCodeParam) {
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      scrollViewRef.current?.scrollToEnd({ animated: true });
-    }, 250);
-
-    return () => clearTimeout(timer);
-  }, [inviteCodeParam, isLoading]);
 
   const loadSettings = async () => {
     try {
@@ -197,7 +178,6 @@ export default function SettingsScreen() {
       </View>
 
       <ScrollView
-        ref={scrollViewRef}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
@@ -494,9 +474,6 @@ export default function SettingsScreen() {
             )}
           </View>
         </View>
-
-        {/* 招待コード */}
-        <InviteCodeSection initialCode={inviteCodeParam} />
 
         {/* 公式Wiki */}
         <View style={styles.section}>

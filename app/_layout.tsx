@@ -42,14 +42,7 @@ export default function RootLayout() {
     });
 
     if (isDbReadyRef.current && !needsLanguageSetupRef.current) {
-      router.push(
-        inviteLink.code
-          ? {
-              pathname: '/settings',
-              params: { inviteCode: inviteLink.code },
-            }
-          : '/settings'
-      );
+      router.push('/settings');
       setPendingInviteLink(null);
     }
   }, []);
@@ -73,9 +66,6 @@ export default function RootLayout() {
 
         // RevenueCatを初期化
         await usePurchaseStore.getState().initialize();
-
-        // 招待コードによる倍速ブーストを読み込み
-        await usePurchaseStore.getState().loadInviteSpeedBoost();
 
         // 広告をバックグラウンドでプリロード
         adService.preloadAll();
@@ -153,14 +143,7 @@ export default function RootLayout() {
       return;
     }
 
-    router.push(
-      pendingInvite.code
-        ? {
-            pathname: '/settings',
-            params: { inviteCode: pendingInvite.code },
-          }
-        : '/settings'
-    );
+    router.push('/settings');
   }, [isDbReady, needsLanguageSetup]);
 
   // DB準備完了後にスプラッシュを非表示

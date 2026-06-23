@@ -294,11 +294,11 @@
     "battleSpeed": {
       "title": "Vitesse de combat",
       "description": "Modifier la vitesse de progression du combat",
-      "premiumHint": "Vitesse 3x disponible avec un code d'invitation"
+      "premiumHint": "Vitesse 3x disponible dans la boutique"
     },
     "inviteCode": {
       "title": "Code d'invitation",
-      "description": "Partagez des codes d'invitation avec des amis pour débloquer la vitesse 3x pour les deux",
+      "description": "La fonctionnalité de code d'invitation est terminée",
       "myCode": "Votre code d'invitation",
       "copied": "Copié !",
       "receivedFromLink": "Le code du lien a été prérempli",
@@ -306,7 +306,7 @@
       "placeholder": "Code à 6 caractères",
       "submit": "Envoyer",
       "submitting": "Envoi en cours...",
-      "activated": "Vitesse 3x activée",
+      "activated": "La fonctionnalité de code d'invitation est terminée",
       "shareText": "Partons à l'aventure ensemble dans LootDive ! Ouvrez ce lien pour recevoir automatiquement le code d'invitation.\nhttps://astapi.net/lootdive/invite?code={{code}}\nSi l'app ne s'ouvre pas, saisissez manuellement le code {{code}}.",
       "error": {
         "ownCode": "Vous ne pouvez pas utiliser votre propre code",
@@ -318,7 +318,7 @@
       },
       "success": {
         "title": "Activé",
-        "message": "Vitesse 3x débloquée !"
+        "message": "La fonctionnalité de code d'invitation est terminée"
       },
       "suspended": "La fonction de code d'invitation est temporairement indisponible"
     },
@@ -328,13 +328,13 @@
   },
   "inviteLink": {
     "title": "Code d'invitation reçu",
-    "description": "Nous avons lu un code d'invitation depuis le lien. Appliquez-le pour débloquer la vitesse 3x.",
+    "description": "La fonctionnalité de code d'invitation est terminée.",
     "receivedCode": "Code reçu",
     "apply": "Appliquer ce code",
     "openSettings": "Ouvrir les réglages",
     "goHome": "Retour à l'accueil",
     "result": {
-      "alreadyActivated": "La vitesse 3x est déjà débloquée."
+      "alreadyActivated": "La fonctionnalité de code d'invitation est terminée."
     }
   },
   "status": {
@@ -2399,9 +2399,9 @@
       "description": "Débloquez les options de vitesse de combat 2x-3x"
     },
     "inviteCodeBanner": {
-      "title": "Débloquez 3x gratuitement",
-      "description": "Partagez votre code d'invitation depuis les Paramètres pour débloquer la vitesse 3x",
-      "activated": "Vitesse 3x activée par code d'invitation"
+      "title": "Débloquez la vitesse 3x",
+      "description": "Débloquez la vitesse 3x dans la boutique",
+      "activated": "Vitesse 3x activée"
     },
     "premiumBundle": {
       "name": "Pack Premium",

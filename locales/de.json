@@ -295,11 +295,11 @@
     "battleSpeed": {
       "title": "Kampfgeschwindigkeit",
       "description": "Aendere die Geschwindigkeit des Kampfverlaufs",
-      "premiumHint": "3x Geschwindigkeit mit Einladungscode freischaltbar"
+      "premiumHint": "3x Geschwindigkeit im Shop freischaltbar"
     },
     "inviteCode": {
       "title": "Einladungscode",
-      "description": "Teile Einladungscodes mit Freunden, um 3x Geschwindigkeit fuer beide freizuschalten",
+      "description": "Die Einladungscode-Funktion wurde beendet",
       "myCode": "Dein Einladungscode",
       "copied": "Kopiert!",
       "receivedFromLink": "Der Code aus dem Link wurde vorausgefüllt",
@@ -307,7 +307,7 @@
       "placeholder": "6-stelliger Code",
       "submit": "Absenden",
       "submitting": "Wird gesendet...",
-      "activated": "3x Geschwindigkeit aktiviert",
+      "activated": "Die Einladungscode-Funktion wurde beendet",
       "shareText": "Lass uns gemeinsam in LootDive auf Abenteuer gehen! Öffne diesen Link, um den Einladungscode automatisch zu erhalten.\nhttps://astapi.net/lootdive/invite?code={{code}}\nWenn sich die App nicht öffnet, gib den Code {{code}} manuell ein.",
       "error": {
         "ownCode": "Du kannst deinen eigenen Code nicht verwenden",
@@ -319,7 +319,7 @@
       },
       "success": {
         "title": "Aktiviert",
-        "message": "3x Geschwindigkeit freigeschaltet!"
+        "message": "Die Einladungscode-Funktion wurde beendet"
       },
       "suspended": "Die Einladungscode-Funktion ist vorübergehend nicht verfügbar"
     },
@@ -329,13 +329,13 @@
   },
   "inviteLink": {
     "title": "Einladungscode erhalten",
-    "description": "Wir haben einen Einladungscode aus dem Link gelesen. Wende ihn an, um 3x-Geschwindigkeit freizuschalten.",
+    "description": "Die Einladungscode-Funktion wurde beendet.",
     "receivedCode": "Empfangener Code",
     "apply": "Diesen Code anwenden",
     "openSettings": "Einstellungen öffnen",
     "goHome": "Zur Startseite",
     "result": {
-      "alreadyActivated": "3x-Geschwindigkeit ist bereits freigeschaltet."
+      "alreadyActivated": "Die Einladungscode-Funktion wurde beendet."
     }
   },
   "status": {
@@ -2410,9 +2410,9 @@
       "description": "Schalte 2x-3x Kampfgeschwindigkeits-Optionen frei"
     },
     "inviteCodeBanner": {
-      "title": "3x Geschwindigkeit kostenlos freischalten",
-      "description": "Teile deinen Einladungscode in den Einstellungen, um 3x Geschwindigkeit freizuschalten",
-      "activated": "3x Geschwindigkeit per Einladungscode aktiviert"
+      "title": "3x Geschwindigkeit freischalten",
+      "description": "Schalte 3x Geschwindigkeit im Shop frei",
+      "activated": "3x Geschwindigkeit aktiviert"
     },
     "premiumBundle": {
       "name": "Premium-Paket",

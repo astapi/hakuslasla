@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PurchasesPackage } from 'react-native-purchases';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
-import { usePurchaseStore, hasSpeedBoost } from '@/stores/usePurchaseStore';
+import { usePurchaseStore } from '@/stores/usePurchaseStore';
 import {
   PURCHASE_PRODUCTS,
   ENTITLEMENT_IDS,
@@ -209,33 +209,6 @@ export default function ShopScreen() {
       ) : (
         <>
           <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-            {/* 招待コード案内バナー（課金で購入済みの場合は非表示） */}
-            {!hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST) && (
-              <View style={styles.inviteBanner}>
-                <MaterialCommunityIcons
-                  name="speedometer"
-                  size={ms(24)}
-                  color={hasSpeedBoost() ? '#4CAF50' : '#4ECDC4'}
-                />
-                <View style={styles.inviteBannerContent}>
-                  {hasSpeedBoost() ? (
-                    <Text style={styles.inviteBannerActivated}>
-                      {t('shop.inviteCodeBanner.activated')}
-                    </Text>
-                  ) : (
-                    <>
-                      <Text style={styles.inviteBannerTitle}>
-                        {t('shop.inviteCodeBanner.title')}
-                      </Text>
-                      <Text style={styles.inviteBannerDescription}>
-                        {t('shop.inviteCodeBanner.description')}
-                      </Text>
-                    </>
-                  )}
-                </View>
-              </View>
-            )}
-
             {availablePackages.filter(pkg => PURCHASE_PRODUCTS.some(p => p.packageId === pkg.identifier)).length === 0 ? (
               <View style={styles.emptyState}>
                 <MaterialCommunityIcons name="store-off" size={ms(48)} color="#666" />
@@ -248,11 +221,7 @@ export default function ShopScreen() {
                 const isPurchased = isBundleProduct(displayInfo.entitlementId)
                   ? isBundlePurchased()
                   : hasEntitlement(displayInfo.entitlementId);
-                // 招待コードで有効化済み（課金未購入）
-                const isInviteActivated = displayInfo.entitlementId === ENTITLEMENT_IDS.SPEED_BOOST
-                  && !hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST)
-                  && hasSpeedBoost();
-                const isDisabled = isPurchased || isInviteActivated;
+                const isDisabled = isPurchased;
                 const price = pkg.product.priceString;
 
                 return (
@@ -276,12 +245,7 @@ export default function ShopScreen() {
 
                     <View style={styles.productInfo}>
                       <Text style={styles.productName}>{displayInfo.name}</Text>
-                      {isInviteActivated ? (
-                        <View style={styles.statusRow}>
-                          <MaterialCommunityIcons name="check-circle" size={ms(14)} color="#4CAF50" />
-                          <Text style={styles.statusText}>{t('shop.inviteCodeBanner.activated')}</Text>
-                        </View>
-                      ) : isPurchased ? (
+                      {isPurchased ? (
                         <View style={styles.statusRow}>
                           <MaterialCommunityIcons name="check-circle" size={ms(14)} color="#4CAF50" />
                           <Text style={styles.statusText}>{t('shop.purchased')}</Text>
@@ -443,35 +407,6 @@ const styles = StyleSheet.create({
     fontSize: fs(11),
     color: '#4CAF50',
     fontWeight: '600',
-  },
-  inviteBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: ms(14),
-    marginBottom: ms(16),
-    backgroundColor: 'rgba(78, 205, 196, 0.08)',
-    borderRadius: ms(12),
-    borderWidth: 1,
-    borderColor: 'rgba(78, 205, 196, 0.2)',
-    gap: ms(12),
-  },
-  inviteBannerContent: {
-    flex: 1,
-  },
-  inviteBannerTitle: {
-    fontSize: fs(14),
-    fontWeight: 'bold',
-    color: '#4ECDC4',
-    marginBottom: ms(2),
-  },
-  inviteBannerDescription: {
-    fontSize: fs(12),
-    color: '#aaa',
-  },
-  inviteBannerActivated: {
-    fontSize: fs(13),
-    fontWeight: '600',
-    color: '#4CAF50',
   },
   footer: {
     padding: ms(16),
