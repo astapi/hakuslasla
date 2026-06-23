@@ -1125,7 +1125,8 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         engine.state.enemy.atk,
         effectivePlayerDef,
         engine.playerMods,
-        engine.state.enemyPoisonStacks.length > 0
+        engine.state.enemyPoisonStacks.length > 0,
+        engine.state.enemyIgniteState !== null
       );
       const enemyAttackMultiplier = engine.bossEffects.enemyAttackMult * engine.bossEffects.enemyNextAttackMult;
       const rawEnemyDamage = Math.floor(enemyDamage * enemyAttackMultiplier);

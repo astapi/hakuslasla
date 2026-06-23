@@ -303,6 +303,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   ignite_damage_more_pct: number[];
   ignite_duration_pct: number;
   ignite_lifesteal: number;
+  ignite_damage_reduction: number;
   ignite_spread: boolean;
   ignite_stacking_damage: boolean; // 緩慢なる炎キーストーン
   // クリティカル系
@@ -347,6 +348,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   // フリーズ系
   freeze_chance: number;
   freeze_duration_pct: number;
+  chill_freeze_damage_mult: number;
 } {
   // フラット加算
   let hp = 0;
@@ -373,6 +375,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   const ignite_damage_more_pct: number[] = [];
   let ignite_duration_pct = 0;
   let ignite_lifesteal = 0;
+  let ignite_damage_reduction = 0;
   let ignite_spread = false;
   let ignite_stacking_damage = false;
   // クリティカル系
@@ -421,6 +424,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
   // フリーズ系
   let freeze_chance = 0;
   let freeze_duration_pct = 0;
+  let chill_freeze_damage_mult = 1;
 
   for (const nodeId of unlockedNodeIds) {
     const node = getPassiveNode(nodeId);
@@ -450,6 +454,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       if (node.effect.ignite_damage_more_pct) ignite_damage_more_pct.push(node.effect.ignite_damage_more_pct);
       ignite_duration_pct += node.effect.ignite_duration_pct || 0;
       ignite_lifesteal += node.effect.ignite_lifesteal || 0;
+      ignite_damage_reduction += node.effect.ignite_damage_reduction || 0;
       if (node.effect.ignite_spread) ignite_spread = true;
       if (node.effect.ignite_stacking_damage) ignite_stacking_damage = true;
       // クリティカル系
@@ -505,6 +510,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
       // フリーズ系
       freeze_chance += node.effect.freeze_chance || 0;
       freeze_duration_pct += node.effect.freeze_duration_pct || 0;
+      chill_freeze_damage_mult = Math.max(chill_freeze_damage_mult, node.effect.chill_freeze_damage_mult || 1);
     }
   }
 
@@ -514,7 +520,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     hp_more_pct, atk_more_pct, def_more_pct,
     poison_chance, poison_damage_pct, poison_damage_more_pct,
     poison_max_stacks, poison_lifesteal, no_direct_damage,
-    ignite_chance, ignite_damage_pct, ignite_damage_more_pct, ignite_duration_pct, ignite_lifesteal, ignite_spread,
+    ignite_chance, ignite_damage_pct, ignite_damage_more_pct, ignite_duration_pct, ignite_lifesteal, ignite_damage_reduction, ignite_spread,
     ignite_stacking_damage,
     critical_chance, critical_damage, hp_on_crit, critical_lifesteal_pct,
     hp_regen, hp_regen_pct,
@@ -526,7 +532,7 @@ export function calculatePassiveEffects(unlockedNodeIds: string[]): {
     repeat_hit_damage_reduction_pct, low_hp_damage_reduction_pct, auto_cleanse_interval_ms,
     attack_speed_pct, attack_speed_more_pct,
     chill_chance, chill_effect_pct, chill_duration_pct,
-    freeze_chance, freeze_duration_pct,
+    freeze_chance, freeze_duration_pct, chill_freeze_damage_mult,
   };
 }
 

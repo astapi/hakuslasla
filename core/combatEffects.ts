@@ -494,13 +494,15 @@ export function createLifestealEvent(
  * @param playerDef プレイヤーの防御力
  * @param mods MOD効果
  * @param isEnemyPoisoned 敵が毒状態かどうか
+ * @param isEnemyIgnited 敵が発火状態かどうか
  * @returns ダメージ量
  */
 export function calculateEnemyDamage(
   enemyAtk: number,
   playerDef: number,
   mods: CombinedModEffects,
-  isEnemyPoisoned: boolean
+  isEnemyPoisoned: boolean,
+  isEnemyIgnited = false
 ): number {
   // 防具MODのダメージ軽減（ダメージ遅延は別処理）
   let totalDamageReduction = mods.damageReductionPct;
@@ -508,6 +510,9 @@ export function calculateEnemyDamage(
   // 敵が毒状態時の追加軽減
   if (isEnemyPoisoned) {
     totalDamageReduction += mods.poisonDamageReduction;
+  }
+  if (isEnemyIgnited) {
+    totalDamageReduction += mods.igniteDamageReduction;
   }
 
   return calculateDamage(enemyAtk, playerDef, totalDamageReduction);

@@ -111,16 +111,21 @@
           "notable": {
             "n": "戦士の技",
             "e": {
-              "atk": 18,
-              "critical_chance": 3
+          "atk": 18,
+          "critical_chance": 3,
+          "block_chance": 2,
+          "hp_on_taken_hit": 25
             }
           },
           "strong": {
             "n": "会心の極み",
             "e": {
-              "critical_chance": 8,
-              "critical_damage": 35,
-              "atk_increased_pct": 8
+          "critical_chance": 8,
+          "critical_damage": 35,
+          "atk_increased_pct": 8,
+          "block_chance": 4,
+          "hp_on_taken_hit": 35,
+          "damage_defer_pct": 3
             },
             "ic": "crit"
           },
@@ -130,17 +135,21 @@
           "notable": {
             "n": "必中",
             "e": {
-              "critical_chance": 5,
-              "critical_damage": 25,
-              "atk": 12
+          "critical_chance": 5,
+          "critical_damage": 25,
+          "atk": 12,
+          "hp_on_hit": 35
             }
           },
           "strong": {
             "n": "修羅",
             "e": {
-              "atk": 25,
-              "critical_damage": 60,
-              "attack_speed_more_pct": 5
+          "atk": 25,
+          "critical_damage": 60,
+          "attack_speed_more_pct": 5,
+          "block_chance": 5,
+          "hp_on_taken_hit": 45,
+          "damage_defer_pct": 4
             },
             "ic": "crit"
           },
@@ -150,18 +159,24 @@
           "notable": {
             "n": "一閃",
             "e": {
-              "atk": 24,
-              "critical_chance": 5,
-              "critical_damage": 30
+          "atk": 24,
+          "critical_chance": 5,
+          "critical_damage": 30,
+          "hp_on_hit": 45
             }
           },
           "strong": {
             "n": "処刑人",
             "e": {
-              "hp_on_crit": 120,
-              "atk_more_pct": 12,
-              "critical_lifesteal_pct": 25,
-              "atk_increased_pct": 15
+          "hp_on_crit": 120,
+          "hp_on_hit": 70,
+          "hp_on_taken_hit": 70,
+          "atk_more_pct": 14,
+          "critical_lifesteal_pct": 30,
+          "atk_increased_pct": 15,
+          "block_chance": 8,
+          "damage_defer_pct": 5,
+          "repeat_hit_damage_reduction_pct": 15
             },
             "ic": "crit"
           },
@@ -458,11 +473,11 @@
           "strong": {
             "n": "氷嵐",
             "e": {
-              "chill_chance": 10,
-              "chill_effect_pct": 25,
-              "chill_resist_pct": 20,
-              "def": 22,
-              "damage_defer_pct": 4
+          "chill_chance": 10,
+          "chill_effect_pct": 25,
+          "chill_resist_pct": 20,
+          "def": 22,
+          "damage_defer_pct": 7
             },
             "ic": "special"
           },
@@ -481,11 +496,12 @@
           "strong": {
             "n": "凍結の極み",
             "e": {
-              "freeze_chance": 4,
-              "freeze_duration_pct": 30,
-              "freeze_resist_pct": 20,
-              "chill_duration_pct": 25,
-              "def": 18
+          "freeze_chance": 4,
+          "freeze_duration_pct": 30,
+          "freeze_resist_pct": 20,
+          "chill_duration_pct": 25,
+          "def": 18,
+          "chill_freeze_damage_mult": 1.2
             },
             "ic": "special"
           },
@@ -495,20 +511,22 @@
           "notable": {
             "n": "永久凍土",
             "e": {
-              "freeze_chance": 4,
-              "chill_effect_pct": 20,
-              "freeze_resist_pct": 15,
-              "auto_cleanse_interval_ms": 12000,
-              "damage_defer_pct": 5
+          "freeze_chance": 4,
+          "chill_effect_pct": 20,
+          "freeze_resist_pct": 15,
+          "auto_cleanse_interval_ms": 8000,
+          "damage_defer_pct": 7,
+          "repeat_hit_damage_reduction_pct": 12
             }
           },
           "strong": {
             "n": "絶対零度",
             "e": {
-              "freeze_chance": 5,
-              "freeze_duration_pct": 40,
-              "def_more_pct": 8,
-              "damage_defer_pct": 5
+          "freeze_chance": 5,
+          "freeze_duration_pct": 40,
+          "chill_freeze_damage_mult": 1.35,
+          "def_more_pct": 10,
+          "damage_defer_pct": 8
             },
             "ic": "special"
           },
@@ -533,16 +551,18 @@
           "notable": {
             "n": "火術の心得",
             "e": {
-              "ignite_chance": 8,
-              "ignite_damage_pct": 18
+          "ignite_chance": 8,
+          "ignite_damage_pct": 18,
+          "ignite_lifesteal": 5
             }
           },
           "strong": {
             "n": "業火の心得",
             "e": {
-              "ignite_chance": 10,
-              "ignite_damage_pct": 30,
-              "ignite_lifesteal": 10
+          "ignite_chance": 10,
+          "ignite_damage_pct": 30,
+          "ignite_lifesteal": 15,
+          "ignite_damage_reduction": 6
             },
             "ic": "special"
           },
@@ -552,17 +572,21 @@
           "notable": {
             "n": "業火",
             "e": {
-              "ignite_chance": 10,
-              "ignite_damage_pct": 24,
-              "ignite_duration_pct": 15
+          "ignite_chance": 10,
+          "ignite_damage_pct": 24,
+          "ignite_duration_pct": 15,
+          "ignite_damage_reduction": 5
             }
           },
           "strong": {
             "n": "劫火",
             "e": {
-              "ignite_damage_pct": 35,
-              "ignite_duration_pct": 25,
-              "ignite_stacking_damage": true
+          "ignite_damage_pct": 35,
+          "ignite_duration_pct": 25,
+          "ignite_damage_more_pct": 12,
+          "ignite_lifesteal": 10,
+          "ignite_damage_reduction": 8,
+          "ignite_stacking_damage": true
             },
             "ic": "special"
           },
@@ -572,17 +596,21 @@
           "notable": {
             "n": "業火の支配",
             "e": {
-              "ignite_chance": 12,
-              "ignite_damage_pct": 28,
-              "ignite_lifesteal": 10
+          "ignite_chance": 12,
+          "ignite_damage_pct": 28,
+          "ignite_lifesteal": 16,
+          "ignite_damage_reduction": 8
             }
           },
           "strong": {
             "n": "業炎天",
             "e": {
-              "ignite_damage_more_pct": 40,
-              "ignite_spread": true,
-              "ignite_stacking_damage": true
+          "ignite_damage_more_pct": 40,
+          "ignite_lifesteal": 15,
+          "ignite_damage_reduction": 10,
+          "damage_defer_pct": 5,
+          "ignite_spread": true,
+          "ignite_stacking_damage": true
             },
             "ic": "special"
           },
