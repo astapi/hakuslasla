@@ -68,13 +68,34 @@
     "renameCharacter": "Rename Character"
   },
   "pets": {
-    "pet_slime": { "name": "Slime Baby", "buff": "HP regen +20/s" },
-    "pet_wolf": { "name": "Wolf Kid", "buff": "Attack Speed +10%" },
-    "pet_killer_bee": { "name": "Lil' Bee", "buff": "Poison Chance +15%" },
-    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
-    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Ignite Chance +15%" },
-    "pet_ice_witch": { "name": "Tiny Witch", "buff": "Freeze Chance +5%" },
-    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Attack Speed +5%, HP regen +30/s" }
+    "pet_slime": {
+      "name": "Slime Baby",
+      "buff": "HP regen +20/s"
+    },
+    "pet_wolf": {
+      "name": "Wolf Kid",
+      "buff": "Attack Speed +10%"
+    },
+    "pet_killer_bee": {
+      "name": "Lil' Bee",
+      "buff": "Poison Chance +15%"
+    },
+    "pet_gargoyle": {
+      "name": "Gargoyle Chick",
+      "buff": "DEF +30%"
+    },
+    "pet_goblin_shaman": {
+      "name": "Little Shaman",
+      "buff": "Ignite Chance +15%"
+    },
+    "pet_ice_witch": {
+      "name": "Tiny Witch",
+      "buff": "Freeze Chance +5%"
+    },
+    "pet_goblin_king": {
+      "name": "Petit King",
+      "buff": "ATK +15%, Attack Speed +5%, HP regen +30/s"
+    }
   },
   "petBuff": {
     "atkIncreasedPct": "ATK +{{value}}%",
@@ -355,7 +376,8 @@
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",
-    "max": "MAX"
+    "max": "MAX",
+    "evasion": "Evasion"
   },
   "equipment": {
     "title": "Equipment",
@@ -417,7 +439,9 @@
     "chill_duration_pct": "Chill Dur",
     "freeze_chance": "Freeze",
     "freeze_duration_pct": "Freeze Dur",
-    "ignite_resist_pct": "Ignite Res"
+    "ignite_resist_pct": "Ignite Res",
+    "evasion_increased_pct": "Evasion",
+    "evasion_more_pct": "Evasion more"
   },
   "dungeon": {
     "floors": "{{count}} Floors",
@@ -1118,6 +1142,24 @@
     },
     "uber_fortress_bulwark": {
       "name": "Uber Fortress Bulwark"
+    },
+    "uber_goblin_evasion_cloak": {
+      "name": "Uber Goblin Shadow Cloak"
+    },
+    "uber_bandit_evasion_steps": {
+      "name": "Uber Bandit King's Mirage Steps"
+    },
+    "uber_vampire_evasion_charm": {
+      "name": "Uber Vampire Mist Charm"
+    },
+    "uber_uber_kraken_mantle": {
+      "name": "UberUber Tidal Mantle"
+    },
+    "uber_demon_evasion_grip": {
+      "name": "Uber Demon Lord's Phantom Grip"
+    },
+    "uber_end_evasion_crown": {
+      "name": "Uber Crown of the Last Mirage"
     }
   },
   "monsters": {
@@ -1573,7 +1615,8 @@
     "hpRegen": "HP Regen! Recovered {{amount}} HP!",
     "kingSlamHit": "[King's Slam] triggered! {{damage}} damage to {{enemy}}!",
     "twinBladeHit": "[Twin Blade] follow-up! {{damage}} damage to {{enemy}}!",
-    "royalRoar": "[Royal Roar] triggered! Cleansed poison and chill!"
+    "royalRoar": "[Royal Roar] triggered! Cleansed poison and chill!",
+    "evaded": "Evaded {{enemy}}'s attack!"
   },
   "passiveTree": {
     "title": "Passive Tree",
@@ -2273,7 +2316,10 @@
     "chillDuration": "Chill Duration +{{value}}%",
     "freezeChance": "Freeze Chance +{{value}}%",
     "freezeDuration": "Freeze Duration +{{value}}%",
-    "igniteResist": "Ignite Damage Taken -{{value}}%"
+    "igniteResist": "Ignite Damage Taken -{{value}}%",
+    "evasion": "Evasion +{{value}}%",
+    "evasionIncreased": "Evasion +{{value}}%",
+    "evasionMore": "Evasion {{value}}% more"
   },
   "boost": {
     "dropRate": {

@@ -68,13 +68,34 @@
     "renameCharacter": "キャラクター名を変更"
   },
   "pets": {
-    "pet_slime": { "name": "スライムベイビー", "buff": "毎秒HP回復 +20" },
-    "pet_wolf": { "name": "ウルフキッズ", "buff": "攻撃速度 +10%" },
-    "pet_killer_bee": { "name": "ビーちゃん", "buff": "毒付与率 +15%" },
-    "pet_gargoyle": { "name": "ガーゴイルチック", "buff": "DEF +30%" },
-    "pet_goblin_shaman": { "name": "リトルシャーマン", "buff": "発火付与率 +15%" },
-    "pet_ice_witch": { "name": "ちびウィッチ", "buff": "フリーズ付与率 +5%" },
-    "pet_goblin_king": { "name": "プチキング", "buff": "ATK +15%、攻撃速度 +5%、毎秒HP回復 +30" }
+    "pet_slime": {
+      "name": "スライムベイビー",
+      "buff": "毎秒HP回復 +20"
+    },
+    "pet_wolf": {
+      "name": "ウルフキッズ",
+      "buff": "攻撃速度 +10%"
+    },
+    "pet_killer_bee": {
+      "name": "ビーちゃん",
+      "buff": "毒付与率 +15%"
+    },
+    "pet_gargoyle": {
+      "name": "ガーゴイルチック",
+      "buff": "DEF +30%"
+    },
+    "pet_goblin_shaman": {
+      "name": "リトルシャーマン",
+      "buff": "発火付与率 +15%"
+    },
+    "pet_ice_witch": {
+      "name": "ちびウィッチ",
+      "buff": "フリーズ付与率 +5%"
+    },
+    "pet_goblin_king": {
+      "name": "プチキング",
+      "buff": "ATK +15%、攻撃速度 +5%、毎秒HP回復 +30"
+    }
   },
   "petBuff": {
     "atkIncreasedPct": "ATK +{{value}}%",
@@ -355,7 +376,8 @@
     "perSecond": "/秒",
     "on": "ON",
     "off": "OFF",
-    "max": "MAX"
+    "max": "MAX",
+    "evasion": "EVA"
   },
   "equipment": {
     "title": "装備",
@@ -418,7 +440,9 @@
     "chill_duration_pct": "チル時間",
     "freeze_chance": "フリーズ",
     "freeze_duration_pct": "フリーズ時間",
-    "ignite_resist_pct": "灼熱耐性"
+    "ignite_resist_pct": "灼熱耐性",
+    "evasion_increased_pct": "EVA",
+    "evasion_more_pct": "EVA more"
   },
   "dungeon": {
     "floors": "全{{count}}階",
@@ -1119,6 +1143,24 @@
     },
     "uber_fortress_bulwark": {
       "name": "Uber 要塞の護壁"
+    },
+    "uber_goblin_evasion_cloak": {
+      "name": "Uber ゴブリンの影外套"
+    },
+    "uber_bandit_evasion_steps": {
+      "name": "Uber 盗賊王の幻歩"
+    },
+    "uber_vampire_evasion_charm": {
+      "name": "Uber ヴァンパイアの霧護符"
+    },
+    "uber_uber_kraken_mantle": {
+      "name": "UberUber 潮流の外套"
+    },
+    "uber_demon_evasion_grip": {
+      "name": "Uber 魔王の幻影篭手"
+    },
+    "uber_end_evasion_crown": {
+      "name": "Uber 終焉の幻冠"
     }
   },
   "monsters": {
@@ -1574,7 +1616,8 @@
     "hpRegen": "HP回復！ HPが{{amount}}回復した！",
     "kingSlamHit": "【キングスラム】炸裂！ {{enemy}}に{{damage}}ダメージ！",
     "twinBladeHit": "【双撃の刃】追撃！ {{enemy}}に{{damage}}ダメージ！",
-    "royalRoar": "【王の咆哮】発動！ 毒・チルを解除した！"
+    "royalRoar": "【王の咆哮】発動！ 毒・チルを解除した！",
+    "evaded": "{{enemy}}の攻撃を回避！"
   },
   "passiveTree": {
     "title": "パッシブツリー",
@@ -2274,7 +2317,10 @@
     "chillDuration": "チル時間+{{value}}%",
     "freezeChance": "フリーズ付与+{{value}}%",
     "freezeDuration": "フリーズ時間+{{value}}%",
-    "igniteResist": "受ける発火ダメージ-{{value}}%"
+    "igniteResist": "受ける発火ダメージ-{{value}}%",
+    "evasion": "EVA+{{value}}",
+    "evasionIncreased": "EVA+{{value}}%",
+    "evasionMore": "EVA {{value}}% more"
   },
   "boost": {
     "dropRate": {

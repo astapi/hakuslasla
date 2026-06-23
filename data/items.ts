@@ -521,6 +521,12 @@ export function getModDescription(mod: ItemMod | { type: ModType; min: number; m
       return `ダメージ遅延${val}%`;
     case 'damage_reduction_pct':
       return `被ダメ-${val}%`;
+    case 'evasion':
+      return `EVA+${val}`;
+    case 'evasion_increased_pct':
+      return `EVA+${val}%`;
+    case 'evasion_more_pct':
+      return `EVA ${val}% more`;
     case 'attack_speed_pct': {
       const sign = typeof raw.min === 'number' ? '' : ((mod as ItemMod).value >= 0 ? '+' : '');
       return `攻撃速度${sign}${val}%`;

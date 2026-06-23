@@ -180,7 +180,7 @@ describe('UberUber盗賊の頭 双撃の刃（battleEngine統合）', () => {
       playerMods: createEmptyModEffects(),
       enemy,
       dungeonId: 'uber_uber_bandit_leader',
-      rng: () => 0.99, // 状態異常を避ける
+      rng: () => 0.5,
     });
 
     const events = engine.advanceTicks(2000);
@@ -197,7 +197,7 @@ describe('UberUber盗賊の頭 双撃の刃（battleEngine統合）', () => {
       playerMods: createEmptyModEffects(),
       enemy: uberEnemy,
       dungeonId: 'uber_bandit_leader',
-      rng: () => 0.99,
+      rng: () => 0.5,
     });
     const uberEvents = uberEngine.advanceTicks(2000);
 

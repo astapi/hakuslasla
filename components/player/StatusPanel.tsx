@@ -189,6 +189,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       hpRegenPerSecond,
       hpOnHit: totalHpOnHit,
       hpOnCrit: totalHpOnCrit,
+      evasion: Math.max(0, combinedMods.evasion),
     };
   };
 
@@ -437,6 +438,14 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.damageReductionPct > 0 ? styles.healText : undefined}>
                   {breakdown.damageReductionPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.evasion')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.evasion > 0 ? styles.chillText : undefined}>
+                  {breakdown.evasion}
                 </Text>
               </Text>
             </View>

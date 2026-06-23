@@ -68,13 +68,34 @@
     "renameCharacter": "Renommer le personnage"
   },
   "pets": {
-    "pet_slime": { "name": "Slime Baby", "buff": "Régén PV +20/s" },
-    "pet_wolf": { "name": "Wolf Kid", "buff": "Vit. Attaque +10%" },
-    "pet_killer_bee": { "name": "Lil' Bee", "buff": "Chance Poison +15%" },
-    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
-    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Chance Brûlure +15%" },
-    "pet_ice_witch": { "name": "Tiny Witch", "buff": "Chance Gel +5%" },
-    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Vit. Attaque +5%, Régén PV +30/s" }
+    "pet_slime": {
+      "name": "Slime Baby",
+      "buff": "Régén PV +20/s"
+    },
+    "pet_wolf": {
+      "name": "Wolf Kid",
+      "buff": "Vit. Attaque +10%"
+    },
+    "pet_killer_bee": {
+      "name": "Lil' Bee",
+      "buff": "Chance Poison +15%"
+    },
+    "pet_gargoyle": {
+      "name": "Gargoyle Chick",
+      "buff": "DEF +30%"
+    },
+    "pet_goblin_shaman": {
+      "name": "Little Shaman",
+      "buff": "Chance Brûlure +15%"
+    },
+    "pet_ice_witch": {
+      "name": "Tiny Witch",
+      "buff": "Chance Gel +5%"
+    },
+    "pet_goblin_king": {
+      "name": "Petit King",
+      "buff": "ATK +15%, Vit. Attaque +5%, Régén PV +30/s"
+    }
   },
   "petBuff": {
     "atkIncreasedPct": "ATK +{{value}}%",
@@ -350,7 +371,8 @@
     "perSecond": "/s",
     "on": "ON",
     "off": "OFF",
-    "max": "MAX"
+    "max": "MAX",
+    "evasion": "Esquive"
   },
   "equipment": {
     "title": "Équipement",
@@ -412,7 +434,9 @@
     "chill_duration_pct": "Durée gel",
     "freeze_chance": "Congélation",
     "freeze_duration_pct": "Durée congél.",
-    "ignite_resist_pct": "Rés. ignition"
+    "ignite_resist_pct": "Rés. ignition",
+    "evasion_increased_pct": "Esquive",
+    "evasion_more_pct": "Esquive more"
   },
   "dungeon": {
     "floors": "{{count}} étages",
@@ -1113,6 +1137,24 @@
     },
     "uber_fortress_bulwark": {
       "name": "Uber Rempart de forteresse"
+    },
+    "uber_goblin_evasion_cloak": {
+      "name": "Uber Cape d Ombre Gobeline"
+    },
+    "uber_bandit_evasion_steps": {
+      "name": "Uber Pas Mirage du Roi Bandit"
+    },
+    "uber_vampire_evasion_charm": {
+      "name": "Uber Charme de Brume Vampire"
+    },
+    "uber_uber_kraken_mantle": {
+      "name": "UberUber Manteau des Marees"
+    },
+    "uber_demon_evasion_grip": {
+      "name": "Uber Gants Fantomes du Seigneur Demon"
+    },
+    "uber_end_evasion_crown": {
+      "name": "Uber Couronne du Mirage Final"
     }
   },
   "monsters": {
@@ -1557,7 +1599,8 @@
     "hpRegen": "Régénération HP ! {{amount}} HP récupérés !",
     "kingSlamHit": "[Frappe du Roi] déclenchée ! {{damage}} dégâts à {{enemy}} !",
     "twinBladeHit": "[Lame Jumelle] poursuite ! {{damage}} dégâts à {{enemy}} !",
-    "royalRoar": "[Rugissement Royal] activé ! Poison et Gel dissipés !"
+    "royalRoar": "[Rugissement Royal] activé ! Poison et Gel dissipés !",
+    "evaded": "Attaque de {{enemy}} esquivée !"
   },
   "passiveTree": {
     "title": "Arbre passif",
@@ -2257,7 +2300,10 @@
     "chillDuration": "Durée de Gel +{{value}}%",
     "freezeChance": "Chance de Congélation +{{value}}%",
     "freezeDuration": "Durée de Congélation +{{value}}%",
-    "igniteResist": "Dégâts d'ignition reçus -{{value}}%"
+    "igniteResist": "Dégâts d'ignition reçus -{{value}}%",
+    "evasion": "Esquive +{{value}}%",
+    "evasionIncreased": "Esquive +{{value}}%",
+    "evasionMore": "Esquive {{value}}% more"
   },
   "boost": {
     "dropRate": {
@@ -2371,16 +2417,46 @@
   },
   "badges": {
     "title": "Badges",
-    "uber_goblin_king": { "name": "Tueur de Roi", "description": "Vaincre l'Uber Roi Gobelin" },
-    "uber_bandit_leader": { "name": "Conquérant de l'Ombre", "description": "Vaincre l'Uber Chef Bandit" },
-    "uber_vampire": { "name": "Chasseur Diurne", "description": "Vaincre l'Uber Vampire" },
-    "uber_kraken": { "name": "Conquérant des Abysses", "description": "Vaincre l'Uber Kraken" },
-    "uber_demon_lord": { "name": "Pourfendeur de Démons", "description": "Vaincre l'Uber Seigneur Démon" },
-    "uber_true_final_boss": { "name": "Au-delà de la Fin", "description": "Vaincre l'Uber Boss Final" },
-    "dimensional_4000": { "name": "Seigneur Dimensionnel", "description": "Atteindre l'étage 4000 du Couloir Dimensionnel" },
-    "uber_uber_goblin_king": { "name": "Vrai Régicide", "description": "Vaincre le Roi Gobelin UberUber" },
-    "uber_uber_bandit_leader": { "name": "Vrai Conquérant des Ombres", "description": "Vaincre le Chef des bandits UberUber" },
-    "uber_uber_kraken": { "name": "Vrai Conquérant des Abysses", "description": "Vaincre le Kraken UberUber" },
+    "uber_goblin_king": {
+      "name": "Tueur de Roi",
+      "description": "Vaincre l'Uber Roi Gobelin"
+    },
+    "uber_bandit_leader": {
+      "name": "Conquérant de l'Ombre",
+      "description": "Vaincre l'Uber Chef Bandit"
+    },
+    "uber_vampire": {
+      "name": "Chasseur Diurne",
+      "description": "Vaincre l'Uber Vampire"
+    },
+    "uber_kraken": {
+      "name": "Conquérant des Abysses",
+      "description": "Vaincre l'Uber Kraken"
+    },
+    "uber_demon_lord": {
+      "name": "Pourfendeur de Démons",
+      "description": "Vaincre l'Uber Seigneur Démon"
+    },
+    "uber_true_final_boss": {
+      "name": "Au-delà de la Fin",
+      "description": "Vaincre l'Uber Boss Final"
+    },
+    "dimensional_4000": {
+      "name": "Seigneur Dimensionnel",
+      "description": "Atteindre l'étage 4000 du Couloir Dimensionnel"
+    },
+    "uber_uber_goblin_king": {
+      "name": "Vrai Régicide",
+      "description": "Vaincre le Roi Gobelin UberUber"
+    },
+    "uber_uber_bandit_leader": {
+      "name": "Vrai Conquérant des Ombres",
+      "description": "Vaincre le Chef des bandits UberUber"
+    },
+    "uber_uber_kraken": {
+      "name": "Vrai Conquérant des Abysses",
+      "description": "Vaincre le Kraken UberUber"
+    },
     "earned": "Obtenu",
     "notEarned": "Non obtenu",
     "newBadge": "Nouveau badge obtenu !"

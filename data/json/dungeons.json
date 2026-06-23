@@ -28,7 +28,11 @@
           { "itemId": "grassland_sword", "dropRate": 15 },
           { "itemId": "grassland_staff", "dropRate": 15 },
           { "itemId": "light_leather", "dropRate": 15 },
-          { "itemId": "rabbit_boots", "dropRate": 15 }
+          { "itemId": "rabbit_boots", "dropRate": 15 },
+          { "itemId": "grassland_evasion_armor", "dropRate": 8 },
+          { "itemId": "grassland_evasion_gloves", "dropRate": 8 },
+          { "itemId": "grassland_evasion_boots", "dropRate": 8 },
+          { "itemId": "grassland_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 10 },
@@ -64,7 +68,11 @@
           { "itemId": "bone_shield", "dropRate": 12 },
           { "itemId": "bat_mantle", "dropRate": 12 },
           { "itemId": "underground_charm", "dropRate": 10 },
-          { "itemId": "warrior_ring", "dropRate": 10 }
+          { "itemId": "warrior_ring", "dropRate": 10 },
+          { "itemId": "cave_evasion_armor", "dropRate": 8 },
+          { "itemId": "cave_evasion_gloves", "dropRate": 8 },
+          { "itemId": "cave_evasion_boots", "dropRate": 8 },
+          { "itemId": "cave_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 9 },
@@ -96,7 +104,11 @@
           { "itemId": "cursed_robe", "dropRate": 12 },
           { "itemId": "gargoyle_boots", "dropRate": 12 },
           { "itemId": "ancient_ring", "dropRate": 10 },
-          { "itemId": "oblivion_amulet", "dropRate": 10 }
+          { "itemId": "oblivion_amulet", "dropRate": 10 },
+          { "itemId": "ruins_evasion_armor", "dropRate": 8 },
+          { "itemId": "ruins_evasion_gloves", "dropRate": 8 },
+          { "itemId": "ruins_evasion_boots", "dropRate": 8 },
+          { "itemId": "ruins_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 8 },
@@ -134,7 +146,11 @@
           { "itemId": "goblin_mail", "dropRate": 12 },
           { "itemId": "spiked_gauntlets", "dropRate": 12 },
           { "itemId": "raider_boots", "dropRate": 10 },
-          { "itemId": "tribal_ring", "dropRate": 10 }
+          { "itemId": "tribal_ring", "dropRate": 10 },
+          { "itemId": "goblin_fort_evasion_armor", "dropRate": 8 },
+          { "itemId": "goblin_fort_evasion_gloves", "dropRate": 8 },
+          { "itemId": "goblin_fort_evasion_boots", "dropRate": 8 },
+          { "itemId": "goblin_fort_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 7 },
@@ -170,7 +186,11 @@
           { "itemId": "bandit_leather", "dropRate": 12 },
           { "itemId": "thieves_gloves", "dropRate": 12 },
           { "itemId": "shadow_boots", "dropRate": 10 },
-          { "itemId": "thieves_ring", "dropRate": 10 }
+          { "itemId": "thieves_ring", "dropRate": 10 },
+          { "itemId": "bandit_hideout_evasion_armor", "dropRate": 8 },
+          { "itemId": "bandit_hideout_evasion_gloves", "dropRate": 8 },
+          { "itemId": "bandit_hideout_evasion_boots", "dropRate": 8 },
+          { "itemId": "bandit_hideout_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 7 },
@@ -207,7 +227,11 @@
           { "itemId": "dark_plate", "dropRate": 12 },
           { "itemId": "dragon_gauntlets", "dropRate": 12 },
           { "itemId": "inferno_boots", "dropRate": 10 },
-          { "itemId": "dark_ring", "dropRate": 10 }
+          { "itemId": "dark_ring", "dropRate": 10 },
+          { "itemId": "demon_castle_evasion_armor", "dropRate": 8 },
+          { "itemId": "demon_castle_evasion_gloves", "dropRate": 8 },
+          { "itemId": "demon_castle_evasion_boots", "dropRate": 8 },
+          { "itemId": "demon_castle_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 6 },
@@ -243,7 +267,11 @@
           { "itemId": "night_cloak", "dropRate": 12 },
           { "itemId": "undead_gauntlets", "dropRate": 12 },
           { "itemId": "phantom_boots", "dropRate": 10 },
-          { "itemId": "blood_ring", "dropRate": 10 }
+          { "itemId": "blood_ring", "dropRate": 10 },
+          { "itemId": "vampire_mansion_evasion_armor", "dropRate": 8 },
+          { "itemId": "vampire_mansion_evasion_gloves", "dropRate": 8 },
+          { "itemId": "vampire_mansion_evasion_boots", "dropRate": 8 },
+          { "itemId": "vampire_mansion_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 6 },
@@ -277,7 +305,11 @@
           { "itemId": "ice_armor", "dropRate": 12 },
           { "itemId": "frozen_gauntlets", "dropRate": 12 },
           { "itemId": "blizzard_boots", "dropRate": 10 },
-          { "itemId": "ice_crystal_ring", "dropRate": 10 }
+          { "itemId": "ice_crystal_ring", "dropRate": 10 },
+          { "itemId": "ice_cave_evasion_armor", "dropRate": 8 },
+          { "itemId": "ice_cave_evasion_gloves", "dropRate": 8 },
+          { "itemId": "ice_cave_evasion_boots", "dropRate": 8 },
+          { "itemId": "ice_cave_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 5 },
@@ -314,7 +346,11 @@
           { "itemId": "sea_scale_armor", "dropRate": 12 },
           { "itemId": "coral_gauntlets", "dropRate": 12 },
           { "itemId": "tide_boots", "dropRate": 10 },
-          { "itemId": "ocean_pearl_ring", "dropRate": 10 }
+          { "itemId": "ocean_pearl_ring", "dropRate": 10 },
+          { "itemId": "underwater_cave_evasion_armor", "dropRate": 8 },
+          { "itemId": "underwater_cave_evasion_gloves", "dropRate": 8 },
+          { "itemId": "underwater_cave_evasion_boots", "dropRate": 8 },
+          { "itemId": "underwater_cave_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 5 },
@@ -348,7 +384,11 @@
           { "itemId": "volcano_armor", "dropRate": 12 },
           { "itemId": "flame_gauntlets", "dropRate": 12 },
           { "itemId": "ember_boots", "dropRate": 10 },
-          { "itemId": "fire_ruby_ring", "dropRate": 10 }
+          { "itemId": "fire_ruby_ring", "dropRate": 10 },
+          { "itemId": "volcano_evasion_armor", "dropRate": 8 },
+          { "itemId": "volcano_evasion_gloves", "dropRate": 8 },
+          { "itemId": "volcano_evasion_boots", "dropRate": 8 },
+          { "itemId": "volcano_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 4 },
@@ -384,7 +424,11 @@
           { "itemId": "war_plate", "dropRate": 12 },
           { "itemId": "beast_gauntlets", "dropRate": 12 },
           { "itemId": "warlord_boots", "dropRate": 10 },
-          { "itemId": "berserker_ring", "dropRate": 10 }
+          { "itemId": "berserker_ring", "dropRate": 10 },
+          { "itemId": "orc_fortress_evasion_armor", "dropRate": 8 },
+          { "itemId": "orc_fortress_evasion_gloves", "dropRate": 8 },
+          { "itemId": "orc_fortress_evasion_boots", "dropRate": 8 },
+          { "itemId": "orc_fortress_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 4 },
@@ -418,7 +462,11 @@
           { "itemId": "dark_bark_armor", "dropRate": 12 },
           { "itemId": "nightmare_gauntlets", "dropRate": 12 },
           { "itemId": "forest_walker_boots", "dropRate": 10 },
-          { "itemId": "cursed_eye_ring", "dropRate": 10 }
+          { "itemId": "cursed_eye_ring", "dropRate": 10 },
+          { "itemId": "dark_forest_evasion_armor", "dropRate": 8 },
+          { "itemId": "dark_forest_evasion_gloves", "dropRate": 8 },
+          { "itemId": "dark_forest_evasion_boots", "dropRate": 8 },
+          { "itemId": "dark_forest_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 3 },
@@ -452,7 +500,11 @@
           { "itemId": "cloud_armor", "dropRate": 12 },
           { "itemId": "storm_gauntlets", "dropRate": 12 },
           { "itemId": "wind_walker_boots", "dropRate": 10 },
-          { "itemId": "sky_sapphire_ring", "dropRate": 10 }
+          { "itemId": "sky_sapphire_ring", "dropRate": 10 },
+          { "itemId": "sky_tower_evasion_armor", "dropRate": 8 },
+          { "itemId": "sky_tower_evasion_gloves", "dropRate": 8 },
+          { "itemId": "sky_tower_evasion_boots", "dropRate": 8 },
+          { "itemId": "sky_tower_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 2 },
@@ -486,7 +538,11 @@
           { "itemId": "infernal_plate", "dropRate": 12 },
           { "itemId": "demon_gauntlets", "dropRate": 12 },
           { "itemId": "hellwalker_boots", "dropRate": 10 },
-          { "itemId": "infernal_ruby_ring", "dropRate": 10 }
+          { "itemId": "infernal_ruby_ring", "dropRate": 10 },
+          { "itemId": "hell_gate_evasion_armor", "dropRate": 8 },
+          { "itemId": "hell_gate_evasion_gloves", "dropRate": 8 },
+          { "itemId": "hell_gate_evasion_boots", "dropRate": 8 },
+          { "itemId": "hell_gate_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
@@ -520,7 +576,11 @@
           { "itemId": "dragon_scale_armor", "dropRate": 12 },
           { "itemId": "dragon_claw_gauntlets", "dropRate": 12 },
           { "itemId": "dragon_hide_boots", "dropRate": 10 },
-          { "itemId": "dragon_eye_ring", "dropRate": 10 }
+          { "itemId": "dragon_eye_ring", "dropRate": 10 },
+          { "itemId": "dragon_nest_evasion_armor", "dropRate": 8 },
+          { "itemId": "dragon_nest_evasion_gloves", "dropRate": 8 },
+          { "itemId": "dragon_nest_evasion_boots", "dropRate": 8 },
+          { "itemId": "dragon_nest_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
@@ -554,7 +614,11 @@
           { "itemId": "divine_armor", "dropRate": 12 },
           { "itemId": "seraph_gauntlets", "dropRate": 12 },
           { "itemId": "divine_boots", "dropRate": 10 },
-          { "itemId": "holy_diamond_ring", "dropRate": 10 }
+          { "itemId": "holy_diamond_ring", "dropRate": 10 },
+          { "itemId": "sacred_temple_evasion_armor", "dropRate": 8 },
+          { "itemId": "sacred_temple_evasion_gloves", "dropRate": 8 },
+          { "itemId": "sacred_temple_evasion_boots", "dropRate": 8 },
+          { "itemId": "sacred_temple_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
@@ -588,7 +652,11 @@
           { "itemId": "void_armor", "dropRate": 12 },
           { "itemId": "chaos_gauntlets", "dropRate": 12 },
           { "itemId": "void_boots", "dropRate": 10 },
-          { "itemId": "chaos_crystal_ring", "dropRate": 10 }
+          { "itemId": "chaos_crystal_ring", "dropRate": 10 },
+          { "itemId": "chaos_realm_evasion_armor", "dropRate": 8 },
+          { "itemId": "chaos_realm_evasion_gloves", "dropRate": 8 },
+          { "itemId": "chaos_realm_evasion_boots", "dropRate": 8 },
+          { "itemId": "chaos_realm_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
@@ -626,7 +694,11 @@
           { "itemId": "end_armor", "dropRate": 12 },
           { "itemId": "titan_gauntlets", "dropRate": 12 },
           { "itemId": "end_walker_boots", "dropRate": 10 },
-          { "itemId": "oblivion_ring", "dropRate": 10 }
+          { "itemId": "oblivion_ring", "dropRate": 10 },
+          { "itemId": "final_land_evasion_armor", "dropRate": 8 },
+          { "itemId": "final_land_evasion_gloves", "dropRate": 8 },
+          { "itemId": "final_land_evasion_boots", "dropRate": 8 },
+          { "itemId": "final_land_evasion_accessory", "dropRate": 8 }
         ]
       },
       "modTierRange": { "minTier": 10, "maxTier": 1 },
@@ -1311,7 +1383,10 @@
       "monsters": [
         { "monsterId": "uber_uber_goblin_king", "spawnRate": 100 }
       ],
-      "boss": { "monsterId": "uber_uber_goblin_king", "floor": 1 },
+      "boss": {
+        "monsterId": "uber_uber_goblin_king",
+        "floor": 1
+      },
       "dropTable": {
         "common": [],
         "dungeon": []
@@ -1328,7 +1403,10 @@
       "monsters": [
         { "monsterId": "uber_uber_bandit_leader", "spawnRate": 100 }
       ],
-      "boss": { "monsterId": "uber_uber_bandit_leader", "floor": 1 },
+      "boss": {
+        "monsterId": "uber_uber_bandit_leader",
+        "floor": 1
+      },
       "dropTable": {
         "common": [],
         "dungeon": []
@@ -1345,7 +1423,10 @@
       "monsters": [
         { "monsterId": "uber_uber_kraken", "spawnRate": 100 }
       ],
-      "boss": { "monsterId": "uber_uber_kraken", "floor": 1 },
+      "boss": {
+        "monsterId": "uber_uber_kraken",
+        "floor": 1
+      },
       "dropTable": {
         "common": [],
         "dungeon": []

@@ -70,6 +70,7 @@ const ICON_IMAGES: Record<IconType, ImageSourcePropType> = {
   regen: require('../../assets/images/passive/health_regeneration.png'),
   guard: require('../../assets/images/passive/defense.png'),
   vamp: require('../../assets/images/passive/life_steal.png'),
+  evasion: require('../../assets/images/passive/attack_speed.png'),
   special: require('../../assets/images/passive/attack_power.png'),
   legendary: require('../../assets/images/passive/attack_power.png'),
   speed: require('../../assets/images/passive/attack_speed.png'),
@@ -85,6 +86,7 @@ const ICON_BG_COLORS: Record<IconType, string> = {
   regen: '#1f4a2e',
   guard: '#2a3e4a',
   vamp: '#4a1f2e',
+  evasion: '#1f4a46',
   special: '#3a3a3a',
   legendary: '#5a4324',
   speed: '#2a3b5a',
@@ -99,6 +101,10 @@ const getIconType = (effect: PassiveEffect): IconType => {
   // 攻撃速度系
   if (effect.attack_speed_pct || effect.attack_speed_more_pct) {
     return 'speed';
+  }
+  // 回避系
+  if (effect.evasion || effect.evasion_increased_pct || effect.evasion_more_pct) {
+    return 'evasion';
   }
   // ダメージ軽減系
   if (effect.damage_defer_pct) {
@@ -154,10 +160,10 @@ const getNodeSize = (node: PassiveNode): number => {
     return NODE_SIZE_KEYSTONE;
   }
   if (effect.atk_more_pct || effect.hp_more_pct || effect.def_more_pct ||
-      effect.attack_speed_more_pct || effect.poison_damage_more_pct) {
+      effect.evasion_more_pct || effect.attack_speed_more_pct || effect.poison_damage_more_pct) {
     return NODE_SIZE_LARGE;
   }
-  if (effect.atk_increased_pct || effect.hp_increased_pct || effect.def_increased_pct) {
+  if (effect.atk_increased_pct || effect.hp_increased_pct || effect.def_increased_pct || effect.evasion_increased_pct) {
     return NODE_SIZE_MEDIUM;
   }
   const effectCount = Object.keys(effect).filter(k => (effect as Record<string, number | undefined>)[k]).length;

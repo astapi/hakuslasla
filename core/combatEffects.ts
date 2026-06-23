@@ -513,6 +513,21 @@ export function calculateEnemyDamage(
   return calculateDamage(enemyAtk, playerDef, totalDamageReduction);
 }
 
+export function calculateEnemyHitChance(enemyAccuracy: number = 100, playerEvasion: number = 0): number {
+  const accuracy = Math.max(1, enemyAccuracy);
+  const evasion = Math.max(0, playerEvasion);
+  const hitChance = Math.round((accuracy / (accuracy + evasion)) * 100);
+  return Math.min(95, Math.max(5, hitChance));
+}
+
+export function rollEnemyHit(
+  enemyAccuracy: number | undefined,
+  playerEvasion: number,
+  rng: () => number
+): boolean {
+  return rng() * 100 < calculateEnemyHitChance(enemyAccuracy ?? 100, playerEvasion);
+}
+
 /**
  * 敵攻撃イベントを生成
  */

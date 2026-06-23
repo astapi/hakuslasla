@@ -101,6 +101,7 @@ function calculateItemStats(
 ) {
   let totalAtk = item.atk;
   let totalDef = item.def;
+  let totalEvasion = item.evasion ?? 0;
   const allMods: { type: string; value: number; tier: number; desc: string; color: string }[] = [];
 
   if (item.mods) {
@@ -118,6 +119,16 @@ function calculateItemStats(
         case 'def_bonus':
           totalDef += mod.value;
           desc = `[${tierLabel}] DEF+${mod.value}`;
+          break;
+        case 'evasion':
+          totalEvasion += mod.value;
+          desc = `[${tierLabel}] ${t('modDescriptions.evasion', { value: mod.value })}`;
+          break;
+        case 'evasion_increased_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.evasionIncreased', { value: mod.value })}`;
+          break;
+        case 'evasion_more_pct':
+          desc = `[${tierLabel}] ${t('modDescriptions.evasionMore', { value: mod.value })}`;
           break;
         case 'hp_bonus':
           desc = `[${tierLabel}] HP+${mod.value}`;
@@ -255,7 +266,7 @@ function calculateItemStats(
     }
   }
 
-  return { totalAtk, totalDef, allMods };
+  return { totalAtk, totalDef, totalEvasion, allMods };
 }
 
 // グリッド設定
@@ -483,8 +494,10 @@ export default function InventoryScreen() {
         </Text>
         <Text style={styles.gridItemStats}>
           {stats.totalAtk > 0 && `A${stats.totalAtk}`}
-          {stats.totalAtk > 0 && stats.totalDef > 0 && ' '}
+          {stats.totalAtk > 0 && (stats.totalDef > 0 || stats.totalEvasion > 0) && ' '}
           {stats.totalDef > 0 && `D${stats.totalDef}`}
+          {stats.totalDef > 0 && stats.totalEvasion > 0 && ' '}
+          {stats.totalEvasion > 0 && `E${stats.totalEvasion}`}
         </Text>
       </Pressable>
     );
@@ -760,6 +773,9 @@ const ItemDetail = memo(({
                 {stats.totalDef > 0 && (
                   <Text style={styles.defText}>DEF {stats.totalDef}</Text>
                 )}
+                {stats.totalEvasion > 0 && (
+                  <Text style={styles.evasionText}>EVA {stats.totalEvasion}</Text>
+                )}
               </View>
             </View>
           </View>
@@ -799,6 +815,9 @@ const ItemDetail = memo(({
                     )}
                     {equippedStats.totalDef > 0 && (
                       <Text style={styles.defText}>DEF {equippedStats.totalDef}</Text>
+                    )}
+                    {equippedStats.totalEvasion > 0 && (
+                      <Text style={styles.evasionText}>EVA {equippedStats.totalEvasion}</Text>
                     )}
                   </View>
                 </View>
@@ -981,6 +1000,10 @@ const styles = StyleSheet.create({
   defText: {
     fontSize: fs(11),
     color: '#4ECDC4',
+  },
+  evasionText: {
+    fontSize: fs(11),
+    color: '#80CBC4',
   },
   comparisonMods: {
     marginTop: ms(6),

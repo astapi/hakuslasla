@@ -123,6 +123,7 @@ const createBattleEnemy = (enemy: Enemy, dungeonId: string): BattleEnemy => ({
   maxHp: enemy.maxHp,
   atk: enemy.atk,
   def: enemy.def,
+  accuracy: enemy.accuracy,
   exp: enemy.exp,
   attackSpeed: enemy.attackSpeed ?? 1.0,
   uniqueDrop: enemy.uniqueDrop,
@@ -146,9 +147,10 @@ const buildMimicForDungeon = (dungeon: Dungeon): Enemy | undefined => {
       acc.def += enemy.def * spawn.spawnRate;
       acc.exp += enemy.exp * spawn.spawnRate;
       acc.attackSpeed += (enemy.attackSpeed ?? 1) * spawn.spawnRate;
+      acc.accuracy += (enemy.accuracy ?? 100) * spawn.spawnRate;
       return acc;
     },
-    { totalWeight: 0, hp: 0, atk: 0, def: 0, exp: 0, attackSpeed: 0 }
+    { totalWeight: 0, hp: 0, atk: 0, def: 0, exp: 0, attackSpeed: 0, accuracy: 0 }
   );
 
   const weight = totals.totalWeight || 1;
@@ -159,6 +161,7 @@ const buildMimicForDungeon = (dungeon: Dungeon): Enemy | undefined => {
     def: Math.max(0, Math.round(totals.def / weight)),
     exp: Math.max(1, Math.round(totals.exp / weight)),
     attackSpeed: Math.max(0.1, totals.attackSpeed / weight),
+    accuracy: Math.max(5, Math.round(totals.accuracy / weight)),
   };
 };
 
@@ -322,6 +325,16 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
       };
 
     case 'ENEMY_ATTACK':
+      if (action.evaded) {
+        return {
+          ...state,
+          battleLog: addToLog(state.battleLog, {
+            id: logIdCounter++,
+            message: i18n.t('battleLog.evaded', { enemy: state.enemy?.name ?? '', defaultValue: '回避！' }),
+            type: 'block',
+          }),
+        };
+      }
       if (action.blocked) {
         return {
           ...state,
@@ -333,7 +346,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         };
       }
       const newPlayerHp = state.playerCurrentHp - action.damage;
-      const newPlayerShield = Math.max(0, state.playerShield - (action.shieldDamage ?? 0));
+      const newPlayerShield = action.playerShield ?? Math.max(0, state.playerShield - (action.shieldDamage ?? 0));
       return {
         ...state,
         playerCurrentHp: Math.max(0, newPlayerHp),
@@ -909,6 +922,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
           def: Math.max(0, Math.floor(drBoss.def * 1.2)),
           exp: Math.max(1, Math.floor(drBoss.exp * 1.2)),
           attackSpeed: Math.max(0.1, Number(((drBoss.attackSpeed ?? 1) * 1.2).toFixed(2))),
+          accuracy: Math.max(5, Math.round((drBoss.accuracy ?? uberBoss.accuracy ?? 100) * 1.02)),
         };
       }
       return uberBoss;
@@ -1136,8 +1150,10 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
           const damage = Number(data.damage ?? 0);
           const shieldDamage = Number(data.shieldDamage ?? 0);
           const blocked = data.blocked === true;
-          dispatch({ type: 'ENEMY_ATTACK', damage, shieldDamage, blocked });
-          if (!blocked) playBattleSound('enemy_attack');
+          const evaded = data.evaded === true;
+          const playerShield = typeof data.playerShield === 'number' ? data.playerShield : undefined;
+          dispatch({ type: 'ENEMY_ATTACK', damage, shieldDamage, blocked, evaded, playerShield });
+          if (!blocked && !evaded) playBattleSound('enemy_attack');
           break;
         }
         case 'poison_applied': {
@@ -1384,6 +1400,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
         def: state.enemy.def,
         exp: state.enemy.exp,
         attackSpeed: state.enemy.attackSpeed,
+        accuracy: state.enemy.accuracy,
       },
       dungeonId,
       // イグナイト伝染: 前の敵から引き継いだ発火状態を適用
@@ -1593,5 +1610,6 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     krakenFlurryCountdown,
     getPetsGained,
     blockChance: Math.min(50, Math.max(0, modEffects.blockChance)),
+    evasion: Math.max(0, modEffects.evasion),
   };
 };

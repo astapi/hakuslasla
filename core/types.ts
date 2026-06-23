@@ -72,6 +72,7 @@ export interface EnemyConfig {
   def: number;
   exp: number;
   attackSpeed?: number;
+  accuracy?: number;
 }
 
 // ========================================
@@ -234,6 +235,11 @@ export interface CombinedModEffects {
   // 防御・吸収
   damageDeferPct: number;  // ダメージ遅延%（ダメージのX%を4秒かけて受ける）
   damageReductionPct: number;  // ダメージ軽減%（防具MOD専用）
+  evasion: number;             // 敵命中率を下げるEVAレーティング
+  evasionIncreasedPct: number; // EVA increased%
+  evasionMorePct: number[];    // EVA more%
+  shieldOnEvadeStreakHitPct: number; // 連続回避後の被弾時、回避1回ごとに最大シールドのX%回復
+  hpOnTakenHit: number;         // 被弾時HP回復（固定値）
   hpOnHit: number;             // HIT時HP回復（固定値）
   lifestealPct: number;        // 与ダメージの X% をHP回復（全ヒット、ペットバフ由来）
   retaliateDefPct: number;     // 被ダメ時DEFのX%を反撃ダメージ
@@ -304,6 +310,7 @@ export interface GaugeCombatant {
   maxHp: number;
   atk: number;
   def: number;
+  accuracy?: number;
   attackSpeed: number;  // 最終計算済みAS
   gauge: number;        // 0-100
 }
@@ -385,6 +392,7 @@ export interface GaugeBattleState {
 export type BattleEventType =
   | 'player_attack'
   | 'enemy_attack'
+  | 'enemy_attack_evaded'
   | 'critical_hit'
   | 'poison_applied'
   | 'poison_damage'

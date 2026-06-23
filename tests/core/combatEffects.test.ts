@@ -8,6 +8,7 @@ import {
   calculateHpRegen,
   calculateLifesteal,
   calculateEnemyDamage,
+  calculateEnemyHitChance,
   createHpRegenEvent,
   createLifestealEvent,
   createEnemyAttackEvent,
@@ -144,6 +145,13 @@ describe('core/combatEffects', () => {
     const damagePoisoned = calculateEnemyDamage(10, 0, mods, true);
     const damageNormal = calculateEnemyDamage(10, 0, mods, false);
     expect(damagePoisoned).toBeLessThanOrEqual(damageNormal);
+  });
+
+  it('calculateEnemyHitChance はAccuracyとEVAの逓減式で命中率を計算する', () => {
+    expect(calculateEnemyHitChance(500, 0)).toBe(95);
+    expect(calculateEnemyHitChance(500, 500)).toBe(50);
+    expect(calculateEnemyHitChance(500, 9500)).toBe(5);
+    expect(calculateEnemyHitChance(410, 77)).toBe(84);
   });
 
   it('createHpRegenEvent / createLifestealEvent / createEnemyAttackEvent はイベントを返す', () => {

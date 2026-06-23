@@ -122,6 +122,11 @@ export type ModType =
   | 'critical_damage'    // クリティカルダメージ+X%
   | 'damage_defer_pct'  // ダメージ遅延+X%（鎧専用）：ダメージのX%を4秒かけて受ける
   | 'damage_reduction_pct'  // ダメージ軽減+X%（鎧専用）
+  | 'evasion'            // EVA +X
+  | 'evasion_increased_pct' // EVA +X% (increased、加算)
+  | 'evasion_more_pct'   // EVA X% more (乗算、非常に強力)
+  | 'shield_on_evade_streak_hit_pct' // 連続回避後の被弾時、回避1回ごとに最大シールドのX%回復
+  | 'hp_on_taken_hit'     // 被弾時HP回復
   | 'hp_on_hit'          // HIT時HP回復（武器専用）
   | 'lifesteal'          // ライフスティール（与ダメージの一部を回復）
   | 'attack_speed_pct'   // AS +X% (increased、加算)
@@ -194,6 +199,7 @@ export interface ItemBase {
   weaponType?: WeaponType;  // 武器種別（slot='weapon'の場合のみ）
   atk: number;
   def: number;
+  evasion?: number;
   fixedMods?: ItemMod[]; // ユニークアイテムの固有MOD
 }
 
@@ -255,6 +261,11 @@ export interface PassiveEffect {
   hp_regen?: number;           // 毎秒HP回復
   hp_regen_pct?: number;       // 毎秒HP X%回復
   damage_defer_pct?: number; // ダメージ遅延+X%（ダメージのX%を4秒かけて受ける）
+  evasion?: number;            // EVA +X
+  evasion_increased_pct?: number; // EVA +X% increased
+  evasion_more_pct?: number;    // EVA X% more
+  shield_on_evade_streak_hit_pct?: number; // 連続回避後の被弾時、回避1回ごとに最大シールドのX%回復
+  hp_on_taken_hit?: number;     // 被弾時HP回復（固定値）
   hp_on_hit?: number;          // HIT時HP回復（固定値）
   lifestealPct?: number;       // 与ダメージのX%をHP回復
   retaliate_def_pct?: number;  // 被ダメ時DEFのX%を反撃ダメージ
@@ -314,7 +325,7 @@ export type NodeRequirement = string | string[];
 export type PassiveIconType =
   | 'atk' | 'hp' | 'def'
   | 'poison' | 'crit' | 'regen' | 'guard' | 'vamp' | 'speed'
-  | 'special' | 'legendary';
+  | 'evasion' | 'special' | 'legendary';
 
 // パッシブノードの種別（UI表示・サイズ判定用）
 // minor=小ノード / notable=大ノード / keystone=キーストーン / start=スタート / mastery=マスタリー
@@ -385,6 +396,7 @@ export interface Enemy {
   def: number;
   exp: number;
   attackSpeed?: number; // 攻撃速度（デフォルト1.0）
+  accuracy?: number; // 命中精度（%）。プレイヤー攻撃は必中
   uniqueDrop: UniqueDrop | null; // モンスター固有ドロップ
   uniqueDrops?: UniqueDrop[]; // 複数ユニークドロップ（Uber用）
 }
@@ -489,6 +501,7 @@ export interface BattleEnemy {
   uniqueDrops?: UniqueDrop[];
   atk: number;
   def: number;
+  accuracy?: number;
   exp: number;
   attackSpeed: number; // 攻撃速度
 }
@@ -600,7 +613,7 @@ export interface DungeonBattleState {
 export type BattleAction =
   | { type: 'START_BATTLE'; enemy: BattleEnemy }
   | { type: 'PLAYER_ATTACK'; damage: number; isCritical?: boolean; source?: 'king_slam' | 'twin_blade' }
-  | { type: 'ENEMY_ATTACK'; damage: number; shieldDamage?: number; blocked?: boolean }
+  | { type: 'ENEMY_ATTACK'; damage: number; shieldDamage?: number; blocked?: boolean; evaded?: boolean; playerShield?: number }
   | { type: 'PLAYER_DAMAGE'; damage: number; message: string; logType?: BattleLogEntry['type'] }
   | { type: 'ENEMY_HEAL'; amount: number; source?: 'regen' | 'on_hit' }
   | { type: 'ENEMY_DEFEATED'; exp: number; droppedItems: Item[] } // 複数アイテム対応

@@ -39,6 +39,12 @@
       "e": {
         "def": 14
       }
+    },
+    {
+      "n": "身躱し",
+      "e": {
+        "evasion": 14
+      }
     }
   ],
   "classStarts": {
@@ -47,7 +53,9 @@
       "name": "戦士の構え",
       "e": {
         "atk": 10,
-        "hp": 55
+        "hp": 55,
+        "def": 10,
+        "block_chance": 1
       },
       "ic": "atk"
     },
@@ -56,16 +64,19 @@
       "name": "狩人の心得",
       "e": {
         "atk": 9,
-        "hp": 55
+        "hp": 55,
+        "evasion": 20,
+        "evasion_increased_pct": 6
       },
-      "ic": "poison"
+      "ic": "evasion"
     },
     "tamer": {
       "id": "tamer_start",
       "name": "調教師の絆",
       "e": {
         "hp": 70,
-        "def": 8
+        "def": 10,
+        "block_chance": 1
       },
       "ic": "regen"
     },
@@ -75,7 +86,8 @@
       "e": {
         "atk": 8,
         "hp": 55,
-        "def": 8
+        "def": 6,
+        "evasion": 10
       },
       "ic": "special"
     },
@@ -84,7 +96,8 @@
       "name": "魔導の素養",
       "e": {
         "atk": 10,
-        "hp": 45
+        "hp": 45,
+        "evasion": 10
       },
       "ic": "special"
     }
@@ -189,17 +202,18 @@
             }
           },
           "strong": {
-            "n": "鉄壁",
+            "n": "不屈の再起",
             "e": {
               "def": 30,
               "def_increased_pct": 20,
               "def_more_pct": 8,
               "block_chance": 7,
-              "damage_defer_pct": 6
+              "damage_defer_pct": 6,
+              "hp_on_taken_hit": 140
             },
             "ic": "guard"
           },
-          "strongKind": "notable"
+          "strongKind": "keystone"
         },
         {
           "notable": {
@@ -256,10 +270,12 @@
       "deg": -30,
       "ic": "poison",
       "spineFlavor": {
-        "n": "毒の研鑽",
+        "n": "毒の歩法",
         "e": {
           "poison_chance": 5,
-          "poison_damage_pct": 4
+          "poison_damage_pct": 4,
+          "evasion": 12,
+          "evasion_increased_pct": 2
         }
       },
       "branches": [
@@ -268,7 +284,9 @@
             "n": "狩人の毒",
             "e": {
               "poison_chance": 8,
-              "poison_damage_pct": 16
+              "poison_damage_pct": 16,
+              "evasion": 30,
+              "evasion_increased_pct": 12
             }
           },
           "strong": {
@@ -276,9 +294,11 @@
             "e": {
               "poison_chance": 10,
               "poison_damage_pct": 28,
-              "poison_lifesteal": 12
+              "poison_lifesteal": 12,
+              "evasion": 45,
+              "evasion_increased_pct": 20
             },
-            "ic": "poison"
+            "ic": "evasion"
           },
           "strongKind": "notable"
         },
@@ -287,18 +307,22 @@
             "n": "蔓延",
             "e": {
               "poison_chance": 10,
-              "poison_max_stacks": 1
+              "poison_max_stacks": 1,
+              "evasion": 35,
+              "evasion_increased_pct": 10
             }
           },
           "strong": {
-            "n": "毒蛇",
+            "n": "幻影蓄積",
             "e": {
-              "poison_damage_pct": 30,
-              "poison_max_stacks": 1
+              "evasion": 60,
+              "shield_on_evade_streak_hit_pct": 8,
+              "evasion_increased_pct": 25,
+              "evasion_more_pct": 12
             },
-            "ic": "poison"
+            "ic": "evasion"
           },
-          "strongKind": "notable"
+          "strongKind": "keystone"
         },
         {
           "notable": {
@@ -308,7 +332,9 @@
               "shield_increased_pct": 10,
               "poison_resist_pct": 20,
               "shield_blocks_dot": true,
-              "poison_lifesteal": 10
+              "poison_lifesteal": 10,
+              "evasion": 40,
+              "evasion_increased_pct": 15
             }
           },
           "strong": {
@@ -419,7 +445,7 @@
       "cls": "frostmage",
       "deg": 90,
       "ic": "special",
-          "spineFlavor": {
+      "spineFlavor": {
         "n": "氷の研鑽",
         "e": {
           "chill_effect_pct": 7,

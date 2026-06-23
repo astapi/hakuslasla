@@ -1,7 +1,6 @@
 {
   "items": {
     "_comment": "=== 共通ドロップ（全ダンジョン） ===",
-
     "rusted_sword": {
       "id": "rusted_sword",
       "name": "朽ちた剣",
@@ -60,9 +59,7 @@
       "atk": 0,
       "def": 2
     },
-
     "_comment2": "=== 始まりの草原 固有ドロップ ===",
-
     "grassland_sword": {
       "id": "grassland_sword",
       "name": "草原の剣",
@@ -93,9 +90,7 @@
       "atk": 1,
       "def": 3
     },
-
     "_comment3": "=== 始まりの草原 ユニークドロップ ===",
-
     "division_core": {
       "id": "division_core",
       "name": "分裂核",
@@ -103,7 +98,10 @@
       "atk": 2,
       "def": 2,
       "fixedMods": [
-        { "type": "hp_regen", "value": 20 }
+        {
+          "type": "hp_regen",
+          "value": 20
+        }
       ]
     },
     "wolf_fang": {
@@ -113,7 +111,10 @@
       "atk": 6,
       "def": 0,
       "fixedMods": [
-        { "type": "critical_chance", "value": 15 }
+        {
+          "type": "critical_chance",
+          "value": 15
+        }
       ]
     },
     "poison_needle_ring": {
@@ -123,12 +124,13 @@
       "atk": 4,
       "def": 0,
       "fixedMods": [
-        { "type": "poison_chance", "value": 60 }
+        {
+          "type": "poison_chance",
+          "value": 60
+        }
       ]
     },
-
     "_comment4": "=== 地底洞窟 固有ドロップ ===",
-
     "cave_iron_sword": {
       "id": "cave_iron_sword",
       "name": "洞窟の鉄剣",
@@ -173,9 +175,7 @@
       "atk": 3,
       "def": 1
     },
-
     "_comment5": "=== 地底洞窟 ユニークドロップ ===",
-
     "bone_sword": {
       "id": "bone_sword",
       "name": "骨の剣",
@@ -183,7 +183,10 @@
       "atk": 10,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 5 }
+        {
+          "type": "atk_bonus",
+          "value": 5
+        }
       ]
     },
     "war_ogre_belt": {
@@ -193,8 +196,14 @@
       "atk": 4,
       "def": 2,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 3 },
-        { "type": "def_bonus", "value": 3 }
+        {
+          "type": "atk_bonus",
+          "value": 3
+        },
+        {
+          "type": "def_bonus",
+          "value": 3
+        }
       ]
     },
     "dark_night_mantle": {
@@ -204,12 +213,13 @@
       "atk": 2,
       "def": 7,
       "fixedMods": [
-        { "type": "def_bonus", "value": 5 }
+        {
+          "type": "def_bonus",
+          "value": 5
+        }
       ]
     },
-
     "_comment6": "=== 忘却の遺跡 固有ドロップ ===",
-
     "ruins_magic_sword": {
       "id": "ruins_magic_sword",
       "name": "遺跡の魔剣",
@@ -254,9 +264,7 @@
       "atk": 2,
       "def": 6
     },
-
     "_comment7": "=== 忘却の遺跡 ユニークドロップ ===",
-
     "core_stone": {
       "id": "core_stone",
       "name": "心核石",
@@ -264,8 +272,14 @@
       "atk": 0,
       "def": 10,
       "fixedMods": [
-        { "type": "hp_regen", "value": 10 },
-        { "type": "def_bonus", "value": 5 }
+        {
+          "type": "hp_regen",
+          "value": 10
+        },
+        {
+          "type": "def_bonus",
+          "value": 5
+        }
       ]
     },
     "curse_bandage": {
@@ -275,7 +289,10 @@
       "atk": 5,
       "def": 4,
       "fixedMods": [
-        { "type": "poison_chance", "value": 30 }
+        {
+          "type": "poison_chance",
+          "value": 30
+        }
       ]
     },
     "lost_grimoire": {
@@ -285,9 +302,18 @@
       "atk": 8,
       "def": 0,
       "fixedMods": [
-        { "type": "ignite_chance", "value": 50 },
-        { "type": "poison_chance", "value": 50 },
-        { "type": "def_bonus", "value": 40 }
+        {
+          "type": "ignite_chance",
+          "value": 50
+        },
+        {
+          "type": "poison_chance",
+          "value": 50
+        },
+        {
+          "type": "def_bonus",
+          "value": 40
+        }
       ]
     },
     "stone_wing_boots": {
@@ -297,12 +323,13 @@
       "atk": 3,
       "def": 8,
       "fixedMods": [
-        { "type": "def_bonus", "value": 5 }
+        {
+          "type": "def_bonus",
+          "value": 5
+        }
       ]
     },
-
     "_comment8": "=== ゴブリンの砦 固有ドロップ ===",
-
     "goblin_blade": {
       "id": "goblin_blade",
       "name": "ゴブリンの蛮刀",
@@ -347,9 +374,7 @@
       "atk": 5,
       "def": 5
     },
-
     "_comment9": "=== ゴブリンの砦 ユニークドロップ ===",
-
     "shaman_staff": {
       "id": "shaman_staff",
       "name": "シャーマンの杖",
@@ -358,7 +383,10 @@
       "atk": 10,
       "def": 0,
       "fixedMods": [
-        { "type": "poison_chance", "value": 40 }
+        {
+          "type": "poison_chance",
+          "value": 40
+        }
       ]
     },
     "goblin_shield": {
@@ -368,7 +396,10 @@
       "atk": 0,
       "def": 14,
       "fixedMods": [
-        { "type": "def_bonus", "value": 8 }
+        {
+          "type": "def_bonus",
+          "value": 8
+        }
       ]
     },
     "champion_axe": {
@@ -378,10 +409,22 @@
       "atk": 16,
       "def": 0,
       "fixedMods": [
-        { "type": "attack_speed_pct", "value": -20 },
-        { "type": "critical_chance", "value": 30 },
-        { "type": "atk_bonus", "value": 60 },
-        { "type": "hp_bonus", "value": 100 }
+        {
+          "type": "attack_speed_pct",
+          "value": -20
+        },
+        {
+          "type": "critical_chance",
+          "value": 30
+        },
+        {
+          "type": "atk_bonus",
+          "value": 60
+        },
+        {
+          "type": "hp_bonus",
+          "value": 100
+        }
       ]
     },
     "kings_crown": {
@@ -391,14 +434,21 @@
       "atk": 10,
       "def": 10,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 10 },
-        { "type": "def_bonus", "value": 10 },
-        { "type": "hp_regen", "value": 30 }
+        {
+          "type": "atk_bonus",
+          "value": 10
+        },
+        {
+          "type": "def_bonus",
+          "value": 10
+        },
+        {
+          "type": "hp_regen",
+          "value": 30
+        }
       ]
     },
-
     "_comment10": "=== 魔王城 固有ドロップ ===",
-
     "demon_blade": {
       "id": "demon_blade",
       "name": "魔剣デモンブレイド",
@@ -443,9 +493,7 @@
       "atk": 6,
       "def": 6
     },
-
     "_comment11": "=== 魔王城 ユニークドロップ ===",
-
     "dark_grimoire": {
       "id": "dark_grimoire",
       "name": "闇の魔導書",
@@ -453,7 +501,10 @@
       "atk": 12,
       "def": 0,
       "fixedMods": [
-        { "type": "critical_chance", "value": 30 }
+        {
+          "type": "critical_chance",
+          "value": 30
+        }
       ]
     },
     "demon_horn": {
@@ -463,8 +514,14 @@
       "atk": 8,
       "def": 8,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 10 },
-        { "type": "def_bonus", "value": 10 }
+        {
+          "type": "atk_bonus",
+          "value": 10
+        },
+        {
+          "type": "def_bonus",
+          "value": 10
+        }
       ]
     },
     "wyvern_scale": {
@@ -474,7 +531,10 @@
       "atk": 5,
       "def": 16,
       "fixedMods": [
-        { "type": "def_bonus", "value": 10 }
+        {
+          "type": "def_bonus",
+          "value": 10
+        }
       ]
     },
     "demon_crown": {
@@ -484,14 +544,21 @@
       "atk": 12,
       "def": 12,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 15 },
-        { "type": "def_bonus", "value": 15 },
-        { "type": "hp_regen", "value": 40 }
+        {
+          "type": "atk_bonus",
+          "value": 15
+        },
+        {
+          "type": "def_bonus",
+          "value": 15
+        },
+        {
+          "type": "hp_regen",
+          "value": 40
+        }
       ]
     },
-
     "_comment12": "=== 氷結の洞窟 固有ドロップ ===",
-
     "frost_blade": {
       "id": "frost_blade",
       "name": "氷結の剣",
@@ -536,9 +603,7 @@
       "atk": 8,
       "def": 8
     },
-
     "_comment13": "=== 氷結の洞窟 ユニークドロップ ===",
-
     "frozen_staff": {
       "id": "frozen_staff",
       "name": "凍結の杖",
@@ -547,7 +612,10 @@
       "atk": 20,
       "def": 0,
       "fixedMods": [
-        { "type": "poison_chance", "value": 50 }
+        {
+          "type": "poison_chance",
+          "value": 50
+        }
       ]
     },
     "yeti_fur": {
@@ -557,13 +625,17 @@
       "atk": 0,
       "def": 22,
       "fixedMods": [
-        { "type": "def_bonus", "value": 15 },
-        { "type": "hp_regen", "value": 20 }
+        {
+          "type": "def_bonus",
+          "value": 15
+        },
+        {
+          "type": "hp_regen",
+          "value": 20
+        }
       ]
     },
-
     "_comment14": "=== 灼熱の火山 固有ドロップ ===",
-
     "magma_blade": {
       "id": "magma_blade",
       "name": "マグマブレイド",
@@ -608,9 +680,7 @@
       "atk": 10,
       "def": 10
     },
-
     "_comment15": "=== 灼熱の火山 ユニークドロップ ===",
-
     "magma_core": {
       "id": "magma_core",
       "name": "マグマコア",
@@ -618,9 +688,18 @@
       "atk": 30,
       "def": 30,
       "fixedMods": [
-        { "type": "ignite_chance", "value": 60 },
-        { "type": "ignite_damage_pct", "value": 50 },
-        { "type": "ignite_lifesteal", "value": 10 }
+        {
+          "type": "ignite_chance",
+          "value": 60
+        },
+        {
+          "type": "ignite_damage_pct",
+          "value": 50
+        },
+        {
+          "type": "ignite_lifesteal",
+          "value": 10
+        }
       ]
     },
     "flame_sword": {
@@ -630,12 +709,13 @@
       "atk": 32,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 15 }
+        {
+          "type": "atk_bonus",
+          "value": 15
+        }
       ]
     },
-
     "_comment_underwater_cave_unique": "=== 海底洞窟 ユニークドロップ ===",
-
     "merman_trident": {
       "id": "merman_trident",
       "name": "マーマンの三叉槍",
@@ -644,13 +724,17 @@
       "atk": 28,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_increased_pct", "value": 12 },
-        { "type": "hp_bonus", "value": 40 }
+        {
+          "type": "atk_increased_pct",
+          "value": 12
+        },
+        {
+          "type": "hp_bonus",
+          "value": 40
+        }
       ]
     },
-
     "_comment_orc_fortress_unique": "=== オークの要塞 ユニークドロップ ===",
-
     "orc_staff": {
       "id": "orc_staff",
       "name": "オークメイジの杖",
@@ -659,9 +743,18 @@
       "atk": 30,
       "def": 0,
       "fixedMods": [
-        { "type": "ignite_chance", "value": 55 },
-        { "type": "ignite_damage_pct", "value": 40 },
-        { "type": "def_bonus", "value": 20 }
+        {
+          "type": "ignite_chance",
+          "value": 55
+        },
+        {
+          "type": "ignite_damage_pct",
+          "value": 40
+        },
+        {
+          "type": "def_bonus",
+          "value": 20
+        }
       ]
     },
     "cyclops_eye": {
@@ -671,8 +764,14 @@
       "atk": 25,
       "def": 15,
       "fixedMods": [
-        { "type": "critical_chance", "value": 20 },
-        { "type": "critical_damage", "value": 30 }
+        {
+          "type": "critical_chance",
+          "value": 20
+        },
+        {
+          "type": "critical_damage",
+          "value": 30
+        }
       ]
     },
     "uruk_blade": {
@@ -683,14 +782,21 @@
       "atk": 38,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 25 },
-        { "type": "critical_chance", "value": 15 },
-        { "type": "attack_speed_pct", "value": 10 }
+        {
+          "type": "atk_bonus",
+          "value": 25
+        },
+        {
+          "type": "critical_chance",
+          "value": 15
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 10
+        }
       ]
     },
-
     "_comment16": "=== 深淵の森 固有ドロップ ===",
-
     "shadow_blade": {
       "id": "shadow_blade",
       "name": "シャドウブレイド",
@@ -735,9 +841,7 @@
       "atk": 14,
       "def": 14
     },
-
     "_comment17": "=== 深淵の森 ユニークドロップ ===",
-
     "cursed_branch": {
       "id": "cursed_branch",
       "name": "呪いの枝",
@@ -746,7 +850,10 @@
       "atk": 35,
       "def": 0,
       "fixedMods": [
-        { "type": "poison_chance", "value": 70 }
+        {
+          "type": "poison_chance",
+          "value": 70
+        }
       ]
     },
     "chimera_fang": {
@@ -756,13 +863,17 @@
       "atk": 20,
       "def": 10,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 25 },
-        { "type": "critical_chance", "value": 25 }
+        {
+          "type": "atk_bonus",
+          "value": 25
+        },
+        {
+          "type": "critical_chance",
+          "value": 25
+        }
       ]
     },
-
     "_comment18": "=== 天空の塔 固有ドロップ ===",
-
     "sky_blade": {
       "id": "sky_blade",
       "name": "天空剣",
@@ -807,9 +918,7 @@
       "atk": 18,
       "def": 18
     },
-
     "_comment19": "=== 天空の塔 ユニークドロップ ===",
-
     "thunder_feather": {
       "id": "thunder_feather",
       "name": "雷鳥の羽",
@@ -817,8 +926,14 @@
       "atk": 25,
       "def": 15,
       "fixedMods": [
-        { "type": "critical_chance", "value": 35 },
-        { "type": "atk_bonus", "value": 20 }
+        {
+          "type": "critical_chance",
+          "value": 35
+        },
+        {
+          "type": "atk_bonus",
+          "value": 20
+        }
       ]
     },
     "giant_belt": {
@@ -828,13 +943,17 @@
       "atk": 15,
       "def": 30,
       "fixedMods": [
-        { "type": "def_bonus", "value": 30 },
-        { "type": "hp_regen", "value": 40 }
+        {
+          "type": "def_bonus",
+          "value": 30
+        },
+        {
+          "type": "hp_regen",
+          "value": 40
+        }
       ]
     },
-
     "_comment20": "=== 地獄の門 固有ドロップ ===",
-
     "hellfire_blade": {
       "id": "hellfire_blade",
       "name": "獄炎剣",
@@ -879,9 +998,7 @@
       "atk": 25,
       "def": 25
     },
-
     "_comment21": "=== 地獄の門 ユニークドロップ ===",
-
     "infernal_armor": {
       "id": "infernal_armor",
       "name": "インファーナルアーマー",
@@ -889,8 +1006,14 @@
       "atk": 10,
       "def": 65,
       "fixedMods": [
-        { "type": "def_bonus", "value": 40 },
-        { "type": "hp_regen", "value": 50 }
+        {
+          "type": "def_bonus",
+          "value": 40
+        },
+        {
+          "type": "hp_regen",
+          "value": 50
+        }
       ]
     },
     "balrog_whip": {
@@ -900,13 +1023,17 @@
       "atk": 75,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 35 },
-        { "type": "critical_chance", "value": 30 }
+        {
+          "type": "atk_bonus",
+          "value": 35
+        },
+        {
+          "type": "critical_chance",
+          "value": 30
+        }
       ]
     },
-
     "_comment22": "=== 竜の巣穴 固有ドロップ ===",
-
     "dragon_slayer": {
       "id": "dragon_slayer",
       "name": "竜殺しの剣",
@@ -951,9 +1078,7 @@
       "atk": 35,
       "def": 35
     },
-
     "_comment23": "=== 竜の巣穴 ユニークドロップ ===",
-
     "fire_dragon_scale": {
       "id": "fire_dragon_scale",
       "name": "炎竜の鱗",
@@ -961,8 +1086,14 @@
       "atk": 15,
       "def": 80,
       "fixedMods": [
-        { "type": "def_bonus", "value": 50 },
-        { "type": "atk_bonus", "value": 30 }
+        {
+          "type": "def_bonus",
+          "value": 50
+        },
+        {
+          "type": "atk_bonus",
+          "value": 30
+        }
       ]
     },
     "ice_dragon_scale": {
@@ -972,8 +1103,14 @@
       "atk": 10,
       "def": 90,
       "fixedMods": [
-        { "type": "def_bonus", "value": 55 },
-        { "type": "hp_regen", "value": 55 }
+        {
+          "type": "def_bonus",
+          "value": 55
+        },
+        {
+          "type": "hp_regen",
+          "value": 55
+        }
       ]
     },
     "dragon_heart": {
@@ -983,14 +1120,21 @@
       "atk": 40,
       "def": 40,
       "fixedMods": [
-        { "type": "hp_regen", "value": 100 },
-        { "type": "hp_regen_pct", "value": 10 },
-        { "type": "hp_regen_to_atk_pct", "value": 50 }
+        {
+          "type": "hp_regen",
+          "value": 100
+        },
+        {
+          "type": "hp_regen_pct",
+          "value": 10
+        },
+        {
+          "type": "hp_regen_to_atk_pct",
+          "value": 50
+        }
       ]
     },
-
     "_comment24": "=== 神域の神殿 固有ドロップ ===",
-
     "holy_blade": {
       "id": "holy_blade",
       "name": "聖剣",
@@ -1035,9 +1179,7 @@
       "atk": 48,
       "def": 48
     },
-
     "_comment25": "=== 神域の神殿 ユニークドロップ ===",
-
     "holy_feather": {
       "id": "holy_feather",
       "name": "熾天使の羽",
@@ -1045,8 +1187,14 @@
       "atk": 50,
       "def": 50,
       "fixedMods": [
-        { "type": "hp_regen", "value": 60 },
-        { "type": "critical_chance", "value": 40 }
+        {
+          "type": "hp_regen",
+          "value": 60
+        },
+        {
+          "type": "critical_chance",
+          "value": 40
+        }
       ]
     },
     "holy_dragon_scale": {
@@ -1056,13 +1204,17 @@
       "atk": 20,
       "def": 120,
       "fixedMods": [
-        { "type": "def_bonus", "value": 60 },
-        { "type": "hp_regen", "value": 60 }
+        {
+          "type": "def_bonus",
+          "value": 60
+        },
+        {
+          "type": "hp_regen",
+          "value": 60
+        }
       ]
     },
-
     "_comment26": "=== 混沌の領域 固有ドロップ ===",
-
     "chaos_blade": {
       "id": "chaos_blade",
       "name": "混沌の剣",
@@ -1107,9 +1259,7 @@
       "atk": 65,
       "def": 65
     },
-
     "_comment27": "=== 混沌の領域 ユニークドロップ ===",
-
     "void_essence": {
       "id": "void_essence",
       "name": "虚無のエッセンス",
@@ -1117,8 +1267,14 @@
       "atk": 70,
       "def": 70,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 60 },
-        { "type": "def_bonus", "value": 60 }
+        {
+          "type": "atk_bonus",
+          "value": 60
+        },
+        {
+          "type": "def_bonus",
+          "value": 60
+        }
       ]
     },
     "chaos_scale": {
@@ -1128,13 +1284,17 @@
       "atk": 30,
       "def": 150,
       "fixedMods": [
-        { "type": "def_bonus", "value": 60 },
-        { "type": "hp_regen", "value": 60 }
+        {
+          "type": "def_bonus",
+          "value": 60
+        },
+        {
+          "type": "hp_regen",
+          "value": 60
+        }
       ]
     },
-
     "_comment28": "=== 終焉の地 固有ドロップ ===",
-
     "apocalypse_blade": {
       "id": "apocalypse_blade",
       "name": "終焉の剣",
@@ -1179,9 +1339,7 @@
       "atk": 88,
       "def": 88
     },
-
     "_comment29": "=== 終焉の地 ユニークドロップ ===",
-
     "world_fragment": {
       "id": "world_fragment",
       "name": "世界の欠片",
@@ -1189,9 +1347,18 @@
       "atk": 100,
       "def": 100,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 65 },
-        { "type": "def_bonus", "value": 65 },
-        { "type": "hp_regen", "value": 65 }
+        {
+          "type": "atk_bonus",
+          "value": 65
+        },
+        {
+          "type": "def_bonus",
+          "value": 65
+        },
+        {
+          "type": "hp_regen",
+          "value": 65
+        }
       ]
     },
     "divine_blade": {
@@ -1201,8 +1368,14 @@
       "atk": 250,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 70 },
-        { "type": "critical_chance", "value": 45 }
+        {
+          "type": "atk_bonus",
+          "value": 70
+        },
+        {
+          "type": "critical_chance",
+          "value": 45
+        }
       ]
     },
     "crown_of_end": {
@@ -1212,10 +1385,22 @@
       "atk": 120,
       "def": 120,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 70 },
-        { "type": "def_bonus", "value": 70 },
-        { "type": "hp_regen", "value": 70 },
-        { "type": "critical_chance", "value": 45 }
+        {
+          "type": "atk_bonus",
+          "value": 70
+        },
+        {
+          "type": "def_bonus",
+          "value": 70
+        },
+        {
+          "type": "hp_regen",
+          "value": 70
+        },
+        {
+          "type": "critical_chance",
+          "value": 45
+        }
       ]
     },
     "_comment_endcontents": "=== エンドコンテンツ ユニークドロップ ===",
@@ -1226,8 +1411,14 @@
       "atk": 14,
       "def": 8,
       "fixedMods": [
-        { "type": "critical_chance", "value": 20 },
-        { "type": "atk_bonus", "value": 8 }
+        {
+          "type": "critical_chance",
+          "value": 20
+        },
+        {
+          "type": "atk_bonus",
+          "value": 8
+        }
       ]
     },
     "vampire_fang": {
@@ -1237,8 +1428,14 @@
       "atk": 34,
       "def": 0,
       "fixedMods": [
-        { "type": "hp_on_hit", "value": 40 },
-        { "type": "critical_chance", "value": 18 }
+        {
+          "type": "hp_on_hit",
+          "value": 40
+        },
+        {
+          "type": "critical_chance",
+          "value": 18
+        }
       ]
     },
     "kraken_tentacle": {
@@ -1248,10 +1445,22 @@
       "atk": 36,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 30 },
-        { "type": "def_bonus", "value": 35 },
-        { "type": "hp_regen", "value": 50 },
-        { "type": "hp_regen_pct", "value": 2 }
+        {
+          "type": "atk_bonus",
+          "value": 30
+        },
+        {
+          "type": "def_bonus",
+          "value": 35
+        },
+        {
+          "type": "hp_regen",
+          "value": 50
+        },
+        {
+          "type": "hp_regen_pct",
+          "value": 2
+        }
       ]
     },
     "uber_kings_crown": {
@@ -1261,10 +1470,22 @@
       "atk": 40,
       "def": 40,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 35 },
-        { "type": "def_bonus", "value": 35 },
-        { "type": "hp_regen", "value": 80 },
-        { "type": "hp_bonus", "value": 130 }
+        {
+          "type": "atk_bonus",
+          "value": 35
+        },
+        {
+          "type": "def_bonus",
+          "value": 35
+        },
+        {
+          "type": "hp_regen",
+          "value": 80
+        },
+        {
+          "type": "hp_bonus",
+          "value": 130
+        }
       ]
     },
     "uber_bandit_crown": {
@@ -1274,10 +1495,22 @@
       "atk": 42,
       "def": 24,
       "fixedMods": [
-        { "type": "critical_chance", "value": 35 },
-        { "type": "atk_bonus", "value": 20 },
-        { "type": "hp_bonus", "value": 160 },
-        { "type": "hp_on_hit", "value": 40 }
+        {
+          "type": "critical_chance",
+          "value": 35
+        },
+        {
+          "type": "atk_bonus",
+          "value": 20
+        },
+        {
+          "type": "hp_bonus",
+          "value": 160
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 40
+        }
       ]
     },
     "uber_vampire_fang": {
@@ -1287,10 +1520,22 @@
       "atk": 140,
       "def": 0,
       "fixedMods": [
-        { "type": "hp_on_hit", "value": 120 },
-        { "type": "critical_chance", "value": 30 },
-        { "type": "attack_speed_pct", "value": 20 },
-        { "type": "hp_bonus", "value": 190 }
+        {
+          "type": "hp_on_hit",
+          "value": 120
+        },
+        {
+          "type": "critical_chance",
+          "value": 30
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 20
+        },
+        {
+          "type": "hp_bonus",
+          "value": 190
+        }
       ]
     },
     "uber_kraken_tentacle": {
@@ -1300,10 +1545,22 @@
       "atk": 150,
       "def": 0,
       "fixedMods": [
-        { "type": "hp_regen", "value": 120 },
-        { "type": "hp_regen_pct", "value": 5 },
-        { "type": "hp_bonus", "value": 210 },
-        { "type": "def_bonus", "value": 50 }
+        {
+          "type": "hp_regen",
+          "value": 120
+        },
+        {
+          "type": "hp_regen_pct",
+          "value": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 210
+        },
+        {
+          "type": "def_bonus",
+          "value": 50
+        }
       ]
     },
     "uber_demon_crown": {
@@ -1313,10 +1570,22 @@
       "atk": 70,
       "def": 70,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 60 },
-        { "type": "def_bonus", "value": 60 },
-        { "type": "hp_regen", "value": 120 },
-        { "type": "hp_bonus", "value": 240 }
+        {
+          "type": "atk_bonus",
+          "value": 60
+        },
+        {
+          "type": "def_bonus",
+          "value": 60
+        },
+        {
+          "type": "hp_regen",
+          "value": 120
+        },
+        {
+          "type": "hp_bonus",
+          "value": 240
+        }
       ]
     },
     "uber_crown_of_end": {
@@ -1326,10 +1595,22 @@
       "atk": 200,
       "def": 200,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 120 },
-        { "type": "def_bonus", "value": 120 },
-        { "type": "hp_regen", "value": 200 },
-        { "type": "critical_chance", "value": 60 }
+        {
+          "type": "atk_bonus",
+          "value": 120
+        },
+        {
+          "type": "def_bonus",
+          "value": 120
+        },
+        {
+          "type": "hp_regen",
+          "value": 200
+        },
+        {
+          "type": "critical_chance",
+          "value": 60
+        }
       ]
     },
     "uber_goblin_blade": {
@@ -1339,10 +1620,22 @@
       "atk": 150,
       "def": 0,
       "fixedMods": [
-        { "type": "time_atk_inc_pct", "value": 6 },
-        { "type": "atk_bonus", "value": 40 },
-        { "type": "attack_speed_pct", "value": 15 },
-        { "type": "hp_bonus", "value": 130 }
+        {
+          "type": "time_atk_inc_pct",
+          "value": 6
+        },
+        {
+          "type": "atk_bonus",
+          "value": 40
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 15
+        },
+        {
+          "type": "hp_bonus",
+          "value": 130
+        }
       ]
     },
     "uber_goblin_plate": {
@@ -1352,10 +1645,22 @@
       "atk": 0,
       "def": 280,
       "fixedMods": [
-        { "type": "time_def_inc_pct", "value": 6 },
-        { "type": "hp_bonus", "value": 200 },
-        { "type": "def_bonus", "value": 50 },
-        { "type": "hp_on_hit", "value": 35 }
+        {
+          "type": "time_def_inc_pct",
+          "value": 6
+        },
+        {
+          "type": "hp_bonus",
+          "value": 200
+        },
+        {
+          "type": "def_bonus",
+          "value": 50
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 35
+        }
       ]
     },
     "uber_goblin_grip": {
@@ -1365,10 +1670,22 @@
       "atk": 55,
       "def": 70,
       "fixedMods": [
-        { "type": "warlord_enrage", "value": 1 },
-        { "type": "hp_bonus", "value": 200 },
-        { "type": "atk_bonus", "value": 80 },
-        { "type": "atk_increased_pct", "value": 20 }
+        {
+          "type": "warlord_enrage",
+          "value": 1
+        },
+        {
+          "type": "hp_bonus",
+          "value": 200
+        },
+        {
+          "type": "atk_bonus",
+          "value": 80
+        },
+        {
+          "type": "atk_increased_pct",
+          "value": 20
+        }
       ]
     },
     "uber_goblin_stomp": {
@@ -1378,10 +1695,22 @@
       "atk": 40,
       "def": 110,
       "fixedMods": [
-        { "type": "attack_speed_pct", "value": 20 },
-        { "type": "hp_regen", "value": 60 },
-        { "type": "time_hp_regen", "value": 20 },
-        { "type": "hp_bonus", "value": 130 }
+        {
+          "type": "attack_speed_pct",
+          "value": 20
+        },
+        {
+          "type": "hp_regen",
+          "value": 60
+        },
+        {
+          "type": "time_hp_regen",
+          "value": 20
+        },
+        {
+          "type": "hp_bonus",
+          "value": 130
+        }
       ]
     },
     "uber_bandit_dagger": {
@@ -1391,10 +1720,22 @@
       "atk": 145,
       "def": 0,
       "fixedMods": [
-        { "type": "critical_chance", "value": 25 },
-        { "type": "attack_speed_more_pct", "value": 12 },
-        { "type": "atk_bonus", "value": 45 },
-        { "type": "hp_bonus", "value": 160 }
+        {
+          "type": "critical_chance",
+          "value": 25
+        },
+        {
+          "type": "attack_speed_more_pct",
+          "value": 12
+        },
+        {
+          "type": "atk_bonus",
+          "value": 45
+        },
+        {
+          "type": "hp_bonus",
+          "value": 160
+        }
       ]
     },
     "uber_bandit_coat": {
@@ -1404,10 +1745,23 @@
       "atk": 0,
       "def": 270,
       "fixedMods": [
-        { "type": "attack_speed_pct", "value": 20 },
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
-        { "type": "hp_bonus", "value": 180 },
-        { "type": "hp_on_hit", "value": 40 }
+        {
+          "type": "attack_speed_pct",
+          "value": 20
+        },
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 180
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 40
+        }
       ]
     },
     "uber_bandit_grip": {
@@ -1417,10 +1771,22 @@
       "atk": 60,
       "def": 70,
       "fixedMods": [
-        { "type": "critical_damage", "value": 40 },
-        { "type": "atk_increased_pct", "value": 25 },
-        { "type": "hp_on_hit", "value": 45 },
-        { "type": "hp_bonus", "value": 160 }
+        {
+          "type": "critical_damage",
+          "value": 40
+        },
+        {
+          "type": "atk_increased_pct",
+          "value": 25
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 45
+        },
+        {
+          "type": "hp_bonus",
+          "value": 160
+        }
       ]
     },
     "uber_bandit_steps": {
@@ -1430,10 +1796,22 @@
       "atk": 45,
       "def": 100,
       "fixedMods": [
-        { "type": "attack_speed_pct", "value": 20 },
-        { "type": "critical_chance", "value": 18 },
-        { "type": "def_increased_pct", "value": 12 },
-        { "type": "hp_bonus", "value": 160 }
+        {
+          "type": "attack_speed_pct",
+          "value": 20
+        },
+        {
+          "type": "critical_chance",
+          "value": 18
+        },
+        {
+          "type": "def_increased_pct",
+          "value": 12
+        },
+        {
+          "type": "hp_bonus",
+          "value": 160
+        }
       ]
     },
     "uber_vampire_plate": {
@@ -1443,10 +1821,23 @@
       "atk": 0,
       "def": 300,
       "fixedMods": [
-        { "type": "hp_regen_pct", "value": 2 },
-        { "type": "hp_on_hit", "value": 60 },
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
-        { "type": "hp_bonus", "value": 190 }
+        {
+          "type": "hp_regen_pct",
+          "value": 2
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 60
+        },
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 190
+        }
       ]
     },
     "uber_vampire_grip": {
@@ -1456,10 +1847,22 @@
       "atk": 65,
       "def": 80,
       "fixedMods": [
-        { "type": "critical_chance", "value": 20 },
-        { "type": "hp_on_hit", "value": 40 },
-        { "type": "atk_increased_pct", "value": 22 },
-        { "type": "hp_bonus", "value": 190 }
+        {
+          "type": "critical_chance",
+          "value": 20
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 40
+        },
+        {
+          "type": "atk_increased_pct",
+          "value": 22
+        },
+        {
+          "type": "hp_bonus",
+          "value": 190
+        }
       ]
     },
     "uber_vampire_stride": {
@@ -1469,10 +1872,22 @@
       "atk": 45,
       "def": 105,
       "fixedMods": [
-        { "type": "attack_speed_pct", "value": 18 },
-        { "type": "hp_regen", "value": 80 },
-        { "type": "poison_chance", "value": 20 },
-        { "type": "poison_damage_pct", "value": 40 }
+        {
+          "type": "attack_speed_pct",
+          "value": 18
+        },
+        {
+          "type": "hp_regen",
+          "value": 80
+        },
+        {
+          "type": "poison_chance",
+          "value": 20
+        },
+        {
+          "type": "poison_damage_pct",
+          "value": 40
+        }
       ]
     },
     "uber_vampire_heart": {
@@ -1482,10 +1897,22 @@
       "atk": 80,
       "def": 80,
       "fixedMods": [
-        { "type": "hp_regen", "value": 120 },
-        { "type": "critical_chance", "value": 25 },
-        { "type": "def_bonus", "value": 50 },
-        { "type": "hp_bonus", "value": 190 }
+        {
+          "type": "hp_regen",
+          "value": 120
+        },
+        {
+          "type": "critical_chance",
+          "value": 25
+        },
+        {
+          "type": "def_bonus",
+          "value": 50
+        },
+        {
+          "type": "hp_bonus",
+          "value": 190
+        }
       ]
     },
     "double_strike_ring": {
@@ -1495,7 +1922,10 @@
       "atk": 0,
       "def": 0,
       "fixedMods": [
-        { "type": "critical_follow_up_attack", "value": 1 }
+        {
+          "type": "critical_follow_up_attack",
+          "value": 1
+        }
       ]
     },
     "uber_double_strike_ring": {
@@ -1505,10 +1935,22 @@
       "atk": 95,
       "def": 70,
       "fixedMods": [
-        { "type": "critical_chance", "value": 30 },
-        { "type": "critical_follow_up_attack", "value": 1 },
-        { "type": "hp_on_hit", "value": 80 },
-        { "type": "attack_speed_pct", "value": 15 }
+        {
+          "type": "critical_chance",
+          "value": 30
+        },
+        {
+          "type": "critical_follow_up_attack",
+          "value": 1
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 80
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 15
+        }
       ]
     },
     "uber_kraken_shell": {
@@ -1518,10 +1960,23 @@
       "atk": 0,
       "def": 320,
       "fixedMods": [
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
-        { "type": "hp_regen", "value": 90 },
-        { "type": "def_increased_pct", "value": 20 },
-        { "type": "hp_bonus", "value": 210 }
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "type": "hp_regen",
+          "value": 90
+        },
+        {
+          "type": "def_increased_pct",
+          "value": 20
+        },
+        {
+          "type": "hp_bonus",
+          "value": 210
+        }
       ]
     },
     "uber_kraken_claw": {
@@ -1531,10 +1986,22 @@
       "atk": 70,
       "def": 90,
       "fixedMods": [
-        { "type": "attack_speed_pct", "value": 18 },
-        { "type": "critical_damage", "value": 45 },
-        { "type": "atk_increased_pct", "value": 20 },
-        { "type": "hp_bonus", "value": 210 }
+        {
+          "type": "attack_speed_pct",
+          "value": 18
+        },
+        {
+          "type": "critical_damage",
+          "value": 45
+        },
+        {
+          "type": "atk_increased_pct",
+          "value": 20
+        },
+        {
+          "type": "hp_bonus",
+          "value": 210
+        }
       ]
     },
     "uber_kraken_fin": {
@@ -1544,10 +2011,22 @@
       "atk": 50,
       "def": 120,
       "fixedMods": [
-        { "type": "attack_speed_pct", "value": -20 },
-        { "type": "hp_regen_pct", "value": 5 },
-        { "type": "def_bonus", "value": 80 },
-        { "type": "hp_bonus", "value": 250 }
+        {
+          "type": "attack_speed_pct",
+          "value": -20
+        },
+        {
+          "type": "hp_regen_pct",
+          "value": 5
+        },
+        {
+          "type": "def_bonus",
+          "value": 80
+        },
+        {
+          "type": "hp_bonus",
+          "value": 250
+        }
       ]
     },
     "uber_kraken_eye": {
@@ -1557,10 +2036,22 @@
       "atk": 85,
       "def": 85,
       "fixedMods": [
-        { "type": "poison_damage_pct", "value": 50 },
-        { "type": "poison_damage_reduction", "value": 5 },
-        { "type": "hp_bonus", "value": 220 },
-        { "type": "poison_damage_more_pct", "value": 5 }
+        {
+          "type": "poison_damage_pct",
+          "value": 50
+        },
+        {
+          "type": "poison_damage_reduction",
+          "value": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 220
+        },
+        {
+          "type": "poison_damage_more_pct",
+          "value": 5
+        }
       ]
     },
     "uber_demon_blade": {
@@ -1570,10 +2061,23 @@
       "atk": 150,
       "def": 0,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 80 },
-        { "type": "critical_damage", "value": 60 },
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
-        { "type": "hp_bonus", "value": 240 }
+        {
+          "type": "atk_bonus",
+          "value": 80
+        },
+        {
+          "type": "critical_damage",
+          "value": 60
+        },
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 240
+        }
       ]
     },
     "uber_demon_armor": {
@@ -1583,10 +2087,23 @@
       "atk": 0,
       "def": 300,
       "fixedMods": [
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
-        { "type": "hp_bonus", "value": 260 },
-        { "type": "def_increased_pct", "value": 25 },
-        { "type": "hp_on_hit", "value": 60 }
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 260
+        },
+        {
+          "type": "def_increased_pct",
+          "value": 25
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 60
+        }
       ]
     },
     "uber_demon_grip": {
@@ -1596,10 +2113,22 @@
       "atk": 75,
       "def": 95,
       "fixedMods": [
-        { "type": "critical_chance", "value": 22 },
-        { "type": "atk_increased_pct", "value": 25 },
-        { "type": "hp_regen", "value": 90 },
-        { "type": "hp_bonus", "value": 240 }
+        {
+          "type": "critical_chance",
+          "value": 22
+        },
+        {
+          "type": "atk_increased_pct",
+          "value": 25
+        },
+        {
+          "type": "hp_regen",
+          "value": 90
+        },
+        {
+          "type": "hp_bonus",
+          "value": 240
+        }
       ]
     },
     "uber_demon_steps": {
@@ -1609,10 +2138,22 @@
       "atk": 60,
       "def": 130,
       "fixedMods": [
-        { "type": "hp_regen_pct", "value": 3 },
-        { "type": "def_bonus", "value": 80 },
-        { "type": "atk_bonus", "value": 50 },
-        { "type": "hp_bonus", "value": 240 }
+        {
+          "type": "hp_regen_pct",
+          "value": 3
+        },
+        {
+          "type": "def_bonus",
+          "value": 80
+        },
+        {
+          "type": "atk_bonus",
+          "value": 50
+        },
+        {
+          "type": "hp_bonus",
+          "value": 240
+        }
       ]
     },
     "uber_endblade": {
@@ -1622,10 +2163,22 @@
       "atk": 190,
       "def": 0,
       "fixedMods": [
-        { "type": "time_atk_inc_pct", "value": 10 },
-        { "type": "atk_inc_pct", "value": 30 },
-        { "type": "attack_speed_pct", "value": 20 },
-        { "type": "hp_bonus", "value": 280 }
+        {
+          "type": "time_atk_inc_pct",
+          "value": 10
+        },
+        {
+          "type": "atk_inc_pct",
+          "value": 30
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 20
+        },
+        {
+          "type": "hp_bonus",
+          "value": 280
+        }
       ]
     },
     "uber_endplate": {
@@ -1635,10 +2188,23 @@
       "atk": 0,
       "def": 360,
       "fixedMods": [
-        { "type": "time_def_inc_pct", "value": 10 },
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
-        { "type": "hp_bonus", "value": 320 },
-        { "type": "hp_on_hit", "value": 70 }
+        {
+          "type": "time_def_inc_pct",
+          "value": 10
+        },
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 320
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 70
+        }
       ]
     },
     "uber_endgrasp": {
@@ -1648,10 +2214,22 @@
       "atk": 90,
       "def": 110,
       "fixedMods": [
-        { "type": "atk_increased_pct", "value": 30 },
-        { "type": "critical_damage", "value": 70 },
-        { "type": "hp_on_hit", "value": 70 },
-        { "type": "hp_bonus", "value": 280 }
+        {
+          "type": "atk_increased_pct",
+          "value": 30
+        },
+        {
+          "type": "critical_damage",
+          "value": 70
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 70
+        },
+        {
+          "type": "hp_bonus",
+          "value": 280
+        }
       ]
     },
     "uber_endstride": {
@@ -1661,13 +2239,24 @@
       "atk": 70,
       "def": 150,
       "fixedMods": [
-        { "type": "attack_speed_more_pct", "value": 15 },
-        { "type": "hp_regen_pct", "value": 3 },
-        { "type": "def_increased_pct", "value": 20 },
-        { "type": "hp_bonus", "value": 280 }
+        {
+          "type": "attack_speed_more_pct",
+          "value": 15
+        },
+        {
+          "type": "hp_regen_pct",
+          "value": 3
+        },
+        {
+          "type": "def_increased_pct",
+          "value": 20
+        },
+        {
+          "type": "hp_bonus",
+          "value": 280
+        }
       ]
     },
-
     "uber_venom_fang": {
       "id": "uber_venom_fang",
       "name": "Uber 毒蛇の牙",
@@ -1675,9 +2264,18 @@
       "atk": 160,
       "def": 0,
       "fixedMods": [
-        { "type": "poison_chance", "value": 30 },
-        { "type": "atk_bonus", "value": 60 },
-        { "type": "attack_speed_pct", "value": 25 }
+        {
+          "type": "poison_chance",
+          "value": 30
+        },
+        {
+          "type": "atk_bonus",
+          "value": 60
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 25
+        }
       ]
     },
     "uber_venom_plate": {
@@ -1687,9 +2285,19 @@
       "atk": 0,
       "def": 300,
       "fixedMods": [
-        { "type": "poison_damage_pct", "value": 80 },
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
-        { "type": "hp_bonus", "value": 280 }
+        {
+          "type": "poison_damage_pct",
+          "value": 80
+        },
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 280
+        }
       ]
     },
     "uber_venom_grip": {
@@ -1699,9 +2307,18 @@
       "atk": 75,
       "def": 90,
       "fixedMods": [
-        { "type": "atk_increased_pct", "value": 30 },
-        { "type": "poison_damage_pct", "value": 60 },
-        { "type": "poison_damage_more_pct", "value": 10 }
+        {
+          "type": "atk_increased_pct",
+          "value": 30
+        },
+        {
+          "type": "poison_damage_pct",
+          "value": 60
+        },
+        {
+          "type": "poison_damage_more_pct",
+          "value": 10
+        }
       ]
     },
     "uber_venom_stride": {
@@ -1711,9 +2328,18 @@
       "atk": 55,
       "def": 120,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 50 },
-        { "type": "attack_speed_pct", "value": 20 },
-        { "type": "hp_regen", "value": 85 }
+        {
+          "type": "atk_bonus",
+          "value": 50
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 20
+        },
+        {
+          "type": "hp_regen",
+          "value": 85
+        }
       ]
     },
     "uber_venom_heart": {
@@ -1723,12 +2349,20 @@
       "atk": 90,
       "def": 85,
       "fixedMods": [
-        { "type": "poison_chance", "value": 25 },
-        { "type": "poison_damage_pct", "value": 70 },
-        { "type": "poison_damage_more_pct", "value": 10 }
+        {
+          "type": "poison_chance",
+          "value": 25
+        },
+        {
+          "type": "poison_damage_pct",
+          "value": 70
+        },
+        {
+          "type": "poison_damage_more_pct",
+          "value": 10
+        }
       ]
     },
-
     "uber_assassin_blade": {
       "id": "uber_assassin_blade",
       "name": "Uber 暗殺者の刃",
@@ -1736,9 +2370,18 @@
       "atk": 145,
       "def": 0,
       "fixedMods": [
-        { "type": "critical_chance", "value": 40 },
-        { "type": "critical_damage", "value": 80 },
-        { "type": "attack_speed_pct", "value": 30 }
+        {
+          "type": "critical_chance",
+          "value": 40
+        },
+        {
+          "type": "critical_damage",
+          "value": 80
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 30
+        }
       ]
     },
     "uber_assassin_coat": {
@@ -1748,9 +2391,19 @@
       "atk": 0,
       "def": 260,
       "fixedMods": [
-        { "type": "critical_chance", "value": 30 },
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
-        { "type": "hp_bonus", "value": 240 }
+        {
+          "type": "critical_chance",
+          "value": 30
+        },
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 240
+        }
       ]
     },
     "uber_assassin_grip": {
@@ -1760,9 +2413,18 @@
       "atk": 75,
       "def": 85,
       "fixedMods": [
-        { "type": "critical_chance", "value": 35 },
-        { "type": "critical_damage", "value": 90 },
-        { "type": "atk_increased_pct", "value": 30 }
+        {
+          "type": "critical_chance",
+          "value": 35
+        },
+        {
+          "type": "critical_damage",
+          "value": 90
+        },
+        {
+          "type": "atk_increased_pct",
+          "value": 30
+        }
       ]
     },
     "uber_assassin_steps": {
@@ -1772,9 +2434,18 @@
       "atk": 55,
       "def": 110,
       "fixedMods": [
-        { "type": "critical_chance", "value": 28 },
-        { "type": "attack_speed_pct", "value": 25 },
-        { "type": "hp_on_crit", "value": 100 }
+        {
+          "type": "critical_chance",
+          "value": 28
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 25
+        },
+        {
+          "type": "hp_on_crit",
+          "value": 100
+        }
       ]
     },
     "uber_assassin_pendant": {
@@ -1784,12 +2455,20 @@
       "atk": 90,
       "def": 70,
       "fixedMods": [
-        { "type": "critical_chance", "value": 35 },
-        { "type": "critical_damage", "value": 100 },
-        { "type": "hp_on_hit", "value": 50 }
+        {
+          "type": "critical_chance",
+          "value": 35
+        },
+        {
+          "type": "critical_damage",
+          "value": 100
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 50
+        }
       ]
     },
-
     "uber_fortress_blade": {
       "id": "uber_fortress_blade",
       "name": "Uber 要塞の剣",
@@ -1797,9 +2476,18 @@
       "atk": 135,
       "def": 50,
       "fixedMods": [
-        { "type": "atk_bonus", "value": 60 },
-        { "type": "def_bonus", "value": 40 },
-        { "type": "hp_on_hit", "value": 80 }
+        {
+          "type": "atk_bonus",
+          "value": 60
+        },
+        {
+          "type": "def_bonus",
+          "value": 40
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 80
+        }
       ]
     },
     "uber_fortress_plate": {
@@ -1809,9 +2497,19 @@
       "atk": 0,
       "def": 340,
       "fixedMods": [
-        { "type": "def_bonus", "value": 90 },
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 },
-        { "type": "def_increased_pct", "value": 30 }
+        {
+          "type": "def_bonus",
+          "value": 90
+        },
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "type": "def_increased_pct",
+          "value": 30
+        }
       ]
     },
     "uber_fortress_grip": {
@@ -1821,9 +2519,19 @@
       "atk": 70,
       "def": 100,
       "fixedMods": [
-        { "type": "def_bonus", "value": 70 },
-        { "type": "hp_bonus", "value": 250 },
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 }
+        {
+          "type": "def_bonus",
+          "value": 70
+        },
+        {
+          "type": "hp_bonus",
+          "value": 250
+        },
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        }
       ]
     },
     "uber_fortress_stomp": {
@@ -1833,9 +2541,18 @@
       "atk": 50,
       "def": 140,
       "fixedMods": [
-        { "type": "def_bonus", "value": 80 },
-        { "type": "hp_regen", "value": 90 },
-        { "type": "hp_regen_pct", "value": 3 }
+        {
+          "type": "def_bonus",
+          "value": 80
+        },
+        {
+          "type": "hp_regen",
+          "value": 90
+        },
+        {
+          "type": "hp_regen_pct",
+          "value": 3
+        }
       ]
     },
     "uber_fortress_bulwark": {
@@ -1845,9 +2562,19 @@
       "atk": 75,
       "def": 100,
       "fixedMods": [
-        { "type": "def_bonus", "value": 80 },
-        { "type": "hp_bonus", "value": 280 },
-        { "type": "damage_reduction_pct", "min": 1, "max": 5 }
+        {
+          "type": "def_bonus",
+          "value": 80
+        },
+        {
+          "type": "hp_bonus",
+          "value": 280
+        },
+        {
+          "type": "damage_reduction_pct",
+          "min": 1,
+          "max": 5
+        }
       ]
     },
     "uber_uber_goblin_stomp": {
@@ -1857,10 +2584,22 @@
       "atk": 120,
       "def": 220,
       "fixedMods": [
-        { "type": "king_slam", "value": 1 },
-        { "type": "royal_roar", "value": 1 },
-        { "type": "hp_regen", "value": 200 },
-        { "type": "hp_bonus", "value": 220 }
+        {
+          "type": "king_slam",
+          "value": 1
+        },
+        {
+          "type": "royal_roar",
+          "value": 1
+        },
+        {
+          "type": "hp_regen",
+          "value": 200
+        },
+        {
+          "type": "hp_bonus",
+          "value": 220
+        }
       ]
     },
     "uber_uber_double_strike_ring": {
@@ -1870,10 +2609,22 @@
       "atk": 200,
       "def": 200,
       "fixedMods": [
-        { "type": "follow_up_attack_pct", "value": 100 },
-        { "type": "hp_on_hit", "value": 200 },
-        { "type": "attack_speed_pct", "value": 25 },
-        { "type": "def_bonus", "value": 150 }
+        {
+          "type": "follow_up_attack_pct",
+          "value": 100
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 200
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 25
+        },
+        {
+          "type": "def_bonus",
+          "value": 150
+        }
       ]
     },
     "uber_uber_kraken_pendant": {
@@ -1883,14 +2634,745 @@
       "atk": 100,
       "def": 250,
       "fixedMods": [
-        { "type": "ignite_resist_pct", "value": 33 },
-        { "type": "freeze_chance", "value": 3 },
-        { "type": "hp_regen", "value": 250 },
-        { "type": "hp_bonus", "value": 320 }
+        {
+          "type": "ignite_resist_pct",
+          "value": 33
+        },
+        {
+          "type": "freeze_chance",
+          "value": 3
+        },
+        {
+          "type": "hp_regen",
+          "value": 250
+        },
+        {
+          "type": "hp_bonus",
+          "value": 320
+        }
+      ]
+    },
+    "uber_uber_kraken_mantle": {
+      "id": "uber_uber_kraken_mantle",
+      "name": "UberUber 潮流の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 200,
+      "fixedMods": [
+        {
+          "type": "evasion",
+          "value": 40
+        },
+        {
+          "type": "evasion_increased_pct",
+          "value": 12
+        },
+        {
+          "type": "evasion_more_pct",
+          "value": 4
+        },
+        {
+          "type": "shield_on_evade_streak_hit_pct",
+          "value": 8
+        }
+      ]
+    },
+    "grassland_evasion_armor": {
+      "id": "grassland_evasion_armor",
+      "name": "草原の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 3
+    },
+    "grassland_evasion_gloves": {
+      "id": "grassland_evasion_gloves",
+      "name": "草原の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 2
+    },
+    "grassland_evasion_boots": {
+      "id": "grassland_evasion_boots",
+      "name": "草原の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 2
+    },
+    "grassland_evasion_accessory": {
+      "id": "grassland_evasion_accessory",
+      "name": "草原の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 1
+    },
+    "cave_evasion_armor": {
+      "id": "cave_evasion_armor",
+      "name": "地底の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 5
+    },
+    "cave_evasion_gloves": {
+      "id": "cave_evasion_gloves",
+      "name": "地底の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 3
+    },
+    "cave_evasion_boots": {
+      "id": "cave_evasion_boots",
+      "name": "地底の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 4
+    },
+    "cave_evasion_accessory": {
+      "id": "cave_evasion_accessory",
+      "name": "地底の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 3
+    },
+    "ruins_evasion_armor": {
+      "id": "ruins_evasion_armor",
+      "name": "遺跡の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 7
+    },
+    "ruins_evasion_gloves": {
+      "id": "ruins_evasion_gloves",
+      "name": "遺跡の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 5
+    },
+    "ruins_evasion_boots": {
+      "id": "ruins_evasion_boots",
+      "name": "遺跡の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 5
+    },
+    "ruins_evasion_accessory": {
+      "id": "ruins_evasion_accessory",
+      "name": "遺跡の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 4
+    },
+    "goblin_fort_evasion_armor": {
+      "id": "goblin_fort_evasion_armor",
+      "name": "砦の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 9
+    },
+    "goblin_fort_evasion_gloves": {
+      "id": "goblin_fort_evasion_gloves",
+      "name": "砦の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 6
+    },
+    "goblin_fort_evasion_boots": {
+      "id": "goblin_fort_evasion_boots",
+      "name": "砦の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 7
+    },
+    "goblin_fort_evasion_accessory": {
+      "id": "goblin_fort_evasion_accessory",
+      "name": "砦の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 5
+    },
+    "bandit_hideout_evasion_armor": {
+      "id": "bandit_hideout_evasion_armor",
+      "name": "盗賊の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 11
+    },
+    "bandit_hideout_evasion_gloves": {
+      "id": "bandit_hideout_evasion_gloves",
+      "name": "盗賊の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 7
+    },
+    "bandit_hideout_evasion_boots": {
+      "id": "bandit_hideout_evasion_boots",
+      "name": "盗賊の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 8
+    },
+    "bandit_hideout_evasion_accessory": {
+      "id": "bandit_hideout_evasion_accessory",
+      "name": "盗賊の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 7
+    },
+    "demon_castle_evasion_armor": {
+      "id": "demon_castle_evasion_armor",
+      "name": "魔城の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 13
+    },
+    "demon_castle_evasion_gloves": {
+      "id": "demon_castle_evasion_gloves",
+      "name": "魔城の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 9
+    },
+    "demon_castle_evasion_boots": {
+      "id": "demon_castle_evasion_boots",
+      "name": "魔城の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 10
+    },
+    "demon_castle_evasion_accessory": {
+      "id": "demon_castle_evasion_accessory",
+      "name": "魔城の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 8
+    },
+    "vampire_mansion_evasion_armor": {
+      "id": "vampire_mansion_evasion_armor",
+      "name": "夜館の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 15
+    },
+    "vampire_mansion_evasion_gloves": {
+      "id": "vampire_mansion_evasion_gloves",
+      "name": "夜館の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 10
+    },
+    "vampire_mansion_evasion_boots": {
+      "id": "vampire_mansion_evasion_boots",
+      "name": "夜館の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 12
+    },
+    "vampire_mansion_evasion_accessory": {
+      "id": "vampire_mansion_evasion_accessory",
+      "name": "夜館の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 10
+    },
+    "ice_cave_evasion_armor": {
+      "id": "ice_cave_evasion_armor",
+      "name": "氷結の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 18
+    },
+    "ice_cave_evasion_gloves": {
+      "id": "ice_cave_evasion_gloves",
+      "name": "氷結の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 12
+    },
+    "ice_cave_evasion_boots": {
+      "id": "ice_cave_evasion_boots",
+      "name": "氷結の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 14
+    },
+    "ice_cave_evasion_accessory": {
+      "id": "ice_cave_evasion_accessory",
+      "name": "氷結の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 12
+    },
+    "underwater_cave_evasion_armor": {
+      "id": "underwater_cave_evasion_armor",
+      "name": "海底の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 21
+    },
+    "underwater_cave_evasion_gloves": {
+      "id": "underwater_cave_evasion_gloves",
+      "name": "海底の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 14
+    },
+    "underwater_cave_evasion_boots": {
+      "id": "underwater_cave_evasion_boots",
+      "name": "海底の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 17
+    },
+    "underwater_cave_evasion_accessory": {
+      "id": "underwater_cave_evasion_accessory",
+      "name": "海底の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 14
+    },
+    "volcano_evasion_armor": {
+      "id": "volcano_evasion_armor",
+      "name": "火山の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 24
+    },
+    "volcano_evasion_gloves": {
+      "id": "volcano_evasion_gloves",
+      "name": "火山の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 16
+    },
+    "volcano_evasion_boots": {
+      "id": "volcano_evasion_boots",
+      "name": "火山の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 20
+    },
+    "volcano_evasion_accessory": {
+      "id": "volcano_evasion_accessory",
+      "name": "火山の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 16
+    },
+    "orc_fortress_evasion_armor": {
+      "id": "orc_fortress_evasion_armor",
+      "name": "要塞の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 28
+    },
+    "orc_fortress_evasion_gloves": {
+      "id": "orc_fortress_evasion_gloves",
+      "name": "要塞の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 19
+    },
+    "orc_fortress_evasion_boots": {
+      "id": "orc_fortress_evasion_boots",
+      "name": "要塞の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 23
+    },
+    "orc_fortress_evasion_accessory": {
+      "id": "orc_fortress_evasion_accessory",
+      "name": "要塞の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 19
+    },
+    "dark_forest_evasion_armor": {
+      "id": "dark_forest_evasion_armor",
+      "name": "深森の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 32
+    },
+    "dark_forest_evasion_gloves": {
+      "id": "dark_forest_evasion_gloves",
+      "name": "深森の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 22
+    },
+    "dark_forest_evasion_boots": {
+      "id": "dark_forest_evasion_boots",
+      "name": "深森の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 27
+    },
+    "dark_forest_evasion_accessory": {
+      "id": "dark_forest_evasion_accessory",
+      "name": "深森の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 22
+    },
+    "sky_tower_evasion_armor": {
+      "id": "sky_tower_evasion_armor",
+      "name": "天空の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 37
+    },
+    "sky_tower_evasion_gloves": {
+      "id": "sky_tower_evasion_gloves",
+      "name": "天空の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 26
+    },
+    "sky_tower_evasion_boots": {
+      "id": "sky_tower_evasion_boots",
+      "name": "天空の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 31
+    },
+    "sky_tower_evasion_accessory": {
+      "id": "sky_tower_evasion_accessory",
+      "name": "天空の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 25
+    },
+    "hell_gate_evasion_armor": {
+      "id": "hell_gate_evasion_armor",
+      "name": "地獄の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 43
+    },
+    "hell_gate_evasion_gloves": {
+      "id": "hell_gate_evasion_gloves",
+      "name": "地獄の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 30
+    },
+    "hell_gate_evasion_boots": {
+      "id": "hell_gate_evasion_boots",
+      "name": "地獄の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 36
+    },
+    "hell_gate_evasion_accessory": {
+      "id": "hell_gate_evasion_accessory",
+      "name": "地獄の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 30
+    },
+    "dragon_nest_evasion_armor": {
+      "id": "dragon_nest_evasion_armor",
+      "name": "竜巣の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 50
+    },
+    "dragon_nest_evasion_gloves": {
+      "id": "dragon_nest_evasion_gloves",
+      "name": "竜巣の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 35
+    },
+    "dragon_nest_evasion_boots": {
+      "id": "dragon_nest_evasion_boots",
+      "name": "竜巣の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 42
+    },
+    "dragon_nest_evasion_accessory": {
+      "id": "dragon_nest_evasion_accessory",
+      "name": "竜巣の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 35
+    },
+    "sacred_temple_evasion_armor": {
+      "id": "sacred_temple_evasion_armor",
+      "name": "神域の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 58
+    },
+    "sacred_temple_evasion_gloves": {
+      "id": "sacred_temple_evasion_gloves",
+      "name": "神域の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 41
+    },
+    "sacred_temple_evasion_boots": {
+      "id": "sacred_temple_evasion_boots",
+      "name": "神域の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 49
+    },
+    "sacred_temple_evasion_accessory": {
+      "id": "sacred_temple_evasion_accessory",
+      "name": "神域の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 40
+    },
+    "chaos_realm_evasion_armor": {
+      "id": "chaos_realm_evasion_armor",
+      "name": "混沌の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 67
+    },
+    "chaos_realm_evasion_gloves": {
+      "id": "chaos_realm_evasion_gloves",
+      "name": "混沌の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 47
+    },
+    "chaos_realm_evasion_boots": {
+      "id": "chaos_realm_evasion_boots",
+      "name": "混沌の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 57
+    },
+    "chaos_realm_evasion_accessory": {
+      "id": "chaos_realm_evasion_accessory",
+      "name": "混沌の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 46
+    },
+    "final_land_evasion_armor": {
+      "id": "final_land_evasion_armor",
+      "name": "終焉の外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 78
+    },
+    "final_land_evasion_gloves": {
+      "id": "final_land_evasion_gloves",
+      "name": "終焉の手甲",
+      "slot": "gloves",
+      "atk": 0,
+      "def": 0,
+      "evasion": 55
+    },
+    "final_land_evasion_boots": {
+      "id": "final_land_evasion_boots",
+      "name": "終焉の足袋",
+      "slot": "boots",
+      "atk": 0,
+      "def": 0,
+      "evasion": 66
+    },
+    "final_land_evasion_accessory": {
+      "id": "final_land_evasion_accessory",
+      "name": "終焉の護符",
+      "slot": "accessory",
+      "atk": 0,
+      "def": 0,
+      "evasion": 54
+    },
+    "uber_goblin_evasion_cloak": {
+      "id": "uber_goblin_evasion_cloak",
+      "name": "Uber ゴブリンの影外套",
+      "slot": "armor",
+      "atk": 0,
+      "def": 0,
+      "evasion": 170,
+      "fixedMods": [
+        {
+          "type": "evasion_increased_pct",
+          "value": 12
+        },
+        {
+          "type": "shield_on_evade_streak_hit_pct",
+          "value": 5
+        },
+        {
+          "type": "hp_bonus",
+          "value": 180
+        }
+      ]
+    },
+    "uber_bandit_evasion_steps": {
+      "id": "uber_bandit_evasion_steps",
+      "name": "Uber 盗賊王の幻歩",
+      "slot": "boots",
+      "atk": 45,
+      "def": 0,
+      "evasion": 160,
+      "fixedMods": [
+        {
+          "type": "evasion",
+          "value": 30
+        },
+        {
+          "type": "evasion_increased_pct",
+          "value": 12
+        },
+        {
+          "type": "attack_speed_pct",
+          "value": 15
+        },
+        {
+          "type": "hp_on_hit",
+          "value": 45
+        }
+      ]
+    },
+    "uber_vampire_evasion_charm": {
+      "id": "uber_vampire_evasion_charm",
+      "name": "Uber ヴァンパイアの霧護符",
+      "slot": "accessory",
+      "atk": 60,
+      "def": 0,
+      "evasion": 160,
+      "fixedMods": [
+        {
+          "type": "evasion_increased_pct",
+          "value": 12
+        },
+        {
+          "type": "hp_regen_pct",
+          "value": 2
+        },
+        {
+          "type": "hp_on_taken_hit",
+          "value": 80
+        }
+      ]
+    },
+    "uber_demon_evasion_grip": {
+      "id": "uber_demon_evasion_grip",
+      "name": "Uber 魔王の幻影篭手",
+      "slot": "gloves",
+      "atk": 70,
+      "def": 0,
+      "evasion": 170,
+      "fixedMods": [
+        {
+          "type": "evasion_increased_pct",
+          "value": 12
+        },
+        {
+          "type": "ignite_resist_pct",
+          "value": 10
+        },
+        {
+          "type": "hp_bonus",
+          "value": 240
+        }
+      ]
+    },
+    "uber_end_evasion_crown": {
+      "id": "uber_end_evasion_crown",
+      "name": "Uber 終焉の幻冠",
+      "slot": "accessory",
+      "atk": 120,
+      "def": 0,
+      "evasion": 220,
+      "fixedMods": [
+        {
+          "type": "evasion",
+          "value": 40
+        },
+        {
+          "type": "evasion_increased_pct",
+          "value": 15
+        },
+        {
+          "type": "evasion_more_pct",
+          "value": 4
+        },
+        {
+          "type": "hp_bonus",
+          "value": 280
+        }
       ]
     }
   },
-
   "commonDrops": [
     "rusted_sword",
     "cloth_clothes",

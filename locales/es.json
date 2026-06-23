@@ -68,13 +68,34 @@
     "renameCharacter": "Renombrar Personaje"
   },
   "pets": {
-    "pet_slime": { "name": "Slime Baby", "buff": "Regen HP +20/s" },
-    "pet_wolf": { "name": "Wolf Kid", "buff": "Vel. Ataque +10%" },
-    "pet_killer_bee": { "name": "Lil' Bee", "buff": "Prob. Veneno +15%" },
-    "pet_gargoyle": { "name": "Gargoyle Chick", "buff": "DEF +30%" },
-    "pet_goblin_shaman": { "name": "Little Shaman", "buff": "Prob. Quemar +15%" },
-    "pet_ice_witch": { "name": "Tiny Witch", "buff": "Prob. Congelar +5%" },
-    "pet_goblin_king": { "name": "Petit King", "buff": "ATK +15%, Vel. Ataque +5%, Regen HP +30/s" }
+    "pet_slime": {
+      "name": "Slime Baby",
+      "buff": "Regen HP +20/s"
+    },
+    "pet_wolf": {
+      "name": "Wolf Kid",
+      "buff": "Vel. Ataque +10%"
+    },
+    "pet_killer_bee": {
+      "name": "Lil' Bee",
+      "buff": "Prob. Veneno +15%"
+    },
+    "pet_gargoyle": {
+      "name": "Gargoyle Chick",
+      "buff": "DEF +30%"
+    },
+    "pet_goblin_shaman": {
+      "name": "Little Shaman",
+      "buff": "Prob. Quemar +15%"
+    },
+    "pet_ice_witch": {
+      "name": "Tiny Witch",
+      "buff": "Prob. Congelar +5%"
+    },
+    "pet_goblin_king": {
+      "name": "Petit King",
+      "buff": "ATK +15%, Vel. Ataque +5%, Regen HP +30/s"
+    }
   },
   "petBuff": {
     "atkIncreasedPct": "ATK +{{value}}%",
@@ -350,7 +371,8 @@
     "perSecond": "/s",
     "on": "SÍ",
     "off": "NO",
-    "max": "MÁX"
+    "max": "MÁX",
+    "evasion": "Evasión"
   },
   "equipment": {
     "title": "Equipamiento",
@@ -412,7 +434,9 @@
     "chill_duration_pct": "Dur. frío",
     "freeze_chance": "Congelar",
     "freeze_duration_pct": "Dur. congel.",
-    "ignite_resist_pct": "Res. ignición"
+    "ignite_resist_pct": "Res. ignición",
+    "evasion_increased_pct": "Evasión",
+    "evasion_more_pct": "Evasión more"
   },
   "dungeon": {
     "floors": "{{count}} Pisos",
@@ -1113,6 +1137,24 @@
     },
     "uber_fortress_bulwark": {
       "name": "Uber Baluarte de la Fortaleza"
+    },
+    "uber_goblin_evasion_cloak": {
+      "name": "Uber Capa Sombria Goblin"
+    },
+    "uber_bandit_evasion_steps": {
+      "name": "Uber Pasos Espejismo del Rey Bandido"
+    },
+    "uber_vampire_evasion_charm": {
+      "name": "Uber Amuleto de Niebla Vampirica"
+    },
+    "uber_uber_kraken_mantle": {
+      "name": "UberUber Manto de Marea"
+    },
+    "uber_demon_evasion_grip": {
+      "name": "Uber Guantes Fantasma del Senor Demonio"
+    },
+    "uber_end_evasion_crown": {
+      "name": "Uber Corona del Espejismo Final"
     }
   },
   "monsters": {
@@ -1557,7 +1599,8 @@
     "hpRegen": "¡Regen de HP! ¡Recuperaste {{amount}} HP!",
     "kingSlamHit": "¡[Golpe del Rey] estalla! ¡{{damage}} de daño a {{enemy}}!",
     "twinBladeHit": "¡[Hoja Gemela] seguimiento! ¡{{damage}} de daño a {{enemy}}!",
-    "royalRoar": "¡[Rugido Real] activado! ¡Veneno y Escalofrío disipados!"
+    "royalRoar": "¡[Rugido Real] activado! ¡Veneno y Escalofrío disipados!",
+    "evaded": "¡Evadiste el ataque de {{enemy}}!"
   },
   "passiveTree": {
     "title": "Árbol Pasivo",
@@ -2257,7 +2300,10 @@
     "chillDuration": "Duración Escalofrío +{{value}}%",
     "freezeChance": "Prob. Congelación +{{value}}%",
     "freezeDuration": "Duración Congelación +{{value}}%",
-    "igniteResist": "Daño de ignición recibido -{{value}}%"
+    "igniteResist": "Daño de ignición recibido -{{value}}%",
+    "evasion": "Evasión +{{value}}%",
+    "evasionIncreased": "Evasión +{{value}}%",
+    "evasionMore": "Evasión {{value}}% more"
   },
   "boost": {
     "dropRate": {
@@ -2371,16 +2417,46 @@
   },
   "badges": {
     "title": "Insignias",
-    "uber_goblin_king": { "name": "Regicida", "description": "Derrota al Uber Rey Goblin" },
-    "uber_bandit_leader": { "name": "Conquistador de Sombras", "description": "Derrota al Uber Líder Bandido" },
-    "uber_vampire": { "name": "Cazador Diurno", "description": "Derrota al Uber Vampiro" },
-    "uber_kraken": { "name": "Conquistador del Abismo", "description": "Derrota al Uber Kraken" },
-    "uber_demon_lord": { "name": "Cazador de Demonios", "description": "Derrota al Uber Rey Demonio" },
-    "uber_true_final_boss": { "name": "Más Allá del Final", "description": "Derrota al Uber Jefe Final" },
-    "dimensional_4000": { "name": "Señor Dimensional", "description": "Alcanza el piso 4000 en el Corredor Dimensional" },
-    "uber_uber_goblin_king": { "name": "Verdadero Regicida", "description": "Derrota al Rey Goblin UberUber" },
-    "uber_uber_bandit_leader": { "name": "Verdadero Conquistador de Sombras", "description": "Derrota al Líder Bandido UberUber" },
-    "uber_uber_kraken": { "name": "Verdadero Conquistador del Abismo", "description": "Derrota al Kraken UberUber" },
+    "uber_goblin_king": {
+      "name": "Regicida",
+      "description": "Derrota al Uber Rey Goblin"
+    },
+    "uber_bandit_leader": {
+      "name": "Conquistador de Sombras",
+      "description": "Derrota al Uber Líder Bandido"
+    },
+    "uber_vampire": {
+      "name": "Cazador Diurno",
+      "description": "Derrota al Uber Vampiro"
+    },
+    "uber_kraken": {
+      "name": "Conquistador del Abismo",
+      "description": "Derrota al Uber Kraken"
+    },
+    "uber_demon_lord": {
+      "name": "Cazador de Demonios",
+      "description": "Derrota al Uber Rey Demonio"
+    },
+    "uber_true_final_boss": {
+      "name": "Más Allá del Final",
+      "description": "Derrota al Uber Jefe Final"
+    },
+    "dimensional_4000": {
+      "name": "Señor Dimensional",
+      "description": "Alcanza el piso 4000 en el Corredor Dimensional"
+    },
+    "uber_uber_goblin_king": {
+      "name": "Verdadero Regicida",
+      "description": "Derrota al Rey Goblin UberUber"
+    },
+    "uber_uber_bandit_leader": {
+      "name": "Verdadero Conquistador de Sombras",
+      "description": "Derrota al Líder Bandido UberUber"
+    },
+    "uber_uber_kraken": {
+      "name": "Verdadero Conquistador del Abismo",
+      "description": "Derrota al Kraken UberUber"
+    },
     "earned": "Obtenida",
     "notEarned": "No obtenida",
     "newBadge": "¡Nueva insignia obtenida!"

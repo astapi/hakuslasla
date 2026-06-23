@@ -165,7 +165,7 @@ export function buildS3DslNodes(config: TreeConfig = defaultConfig): BuildResult
     // 主線の通り道（クラススタート→j0→j1→j2→j3 を小ノードで繋ぐ）
     if (sec.cls) t.path({ from: CLASS_STARTS[sec.cls].id, to: js[0], nodes: [{ id: `${sec.key}_si`, name: sec.spineFlavor.n, effect: sec.spineFlavor.e, class: sec.cls }] });
     for (let k = 0; k < js.length - 1; k++) {
-      t.path({ from: js[k], to: js[k + 1], nodes: [{ id: `${sec.key}_s${k}`, name: SCATTER[k % 3].n, effect: SCATTER[k % 3].e, class: sec.cls }] });
+      t.path({ from: js[k], to: js[k + 1], nodes: [{ id: `${sec.key}_s${k}`, name: SCATTER[k % SCATTER.length].n, effect: SCATTER[k % SCATTER.length].e, class: sec.cls }] });
     }
   }
 
