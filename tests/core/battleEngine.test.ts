@@ -157,6 +157,42 @@ describe('core/battleEngine', () => {
     expect(events.some((event) => event.type === 'hp_regen' && event.data.amount === 20)).toBe(true);
   });
 
+  it('発火中の敵からの通常攻撃は igniteDamageReduction で軽減される', () => {
+    const mods = {
+      ...createEmptyModEffects(),
+      igniteDamageReduction: 50,
+    };
+    const battleEnemy = { ...enemy, maxHp: 999, atk: 100, attackSpeed: 1, accuracy: 100 };
+
+    const { engine: normalEngine } = createBattleEngine({
+      playerStats: { ...player, maxHp: 1000, atk: 0, def: 0 },
+      playerCurrentHp: 1000,
+      playerMods: mods,
+      enemy: battleEnemy,
+      rng: () => 0.01,
+    });
+    normalEngine.advanceTicks(30);
+
+    const { engine: ignitedEngine } = createBattleEngine({
+      playerStats: { ...player, maxHp: 1000, atk: 0, def: 0 },
+      playerCurrentHp: 1000,
+      playerMods: mods,
+      enemy: battleEnemy,
+      initialIgniteState: {
+        damage: 0,
+        remainingMs: 999999,
+        tickIntervalMs: 999999,
+        lastTickMs: 0,
+      },
+      rng: () => 0.01,
+    });
+    ignitedEngine.advanceTicks(30);
+
+    expect(ignitedEngine.getState().player.currentHp).toBeGreaterThan(
+      normalEngine.getState().player.currentHp
+    );
+  });
+
   it('霊体装甲は最大HPを圧縮し、変換前HPをシールドにする', () => {
     const mods = {
       ...createEmptyModEffects(),

@@ -44,6 +44,7 @@ describe('core/modEffects', () => {
       ignite_damage_more_pct: [],
       ignite_duration_pct: 0,
       ignite_lifesteal: 0,
+      ignite_damage_reduction: 0,
       ignite_spread: false,
       ignite_stacking_damage: false,
       critical_chance: 0,
@@ -62,6 +63,7 @@ describe('core/modEffects', () => {
       chill_duration_pct: 0,
       freeze_chance: 0,
       freeze_duration_pct: 0,
+      chill_freeze_damage_mult: 1,
     };
 
     const combined = combineMods(equipment, passive);
@@ -93,6 +95,7 @@ describe('core/modEffects', () => {
       ignite_damage_more_pct: [],
       ignite_duration_pct: 0,
       ignite_lifesteal: 0,
+      ignite_damage_reduction: 0,
       ignite_spread: false,
       ignite_stacking_damage: false,
       critical_chance: 0,
@@ -114,6 +117,7 @@ describe('core/modEffects', () => {
       chill_duration_pct: 0,
       freeze_chance: 0,
       freeze_duration_pct: 0,
+      chill_freeze_damage_mult: 1,
     };
 
     const combined = combineMods(
@@ -124,6 +128,60 @@ describe('core/modEffects', () => {
     expect(combined.evasionIncreasedPct).toBe(50);
     expect(combined.evasionMorePct).toEqual([5, 10]);
     expect(combined.evasion).toBe(Math.floor(150 * 1.5 * 1.15));
+  });
+
+  it('combineMods は発火軽減とチル/フリーズ倍率をパッシブから反映する', () => {
+    const passive = {
+      hp: 0,
+      atk: 0,
+      def: 0,
+      hp_increased_pct: 0,
+      atk_increased_pct: 0,
+      def_increased_pct: 0,
+      hp_more_pct: [],
+      atk_more_pct: [],
+      def_more_pct: [],
+      poison_chance: 0,
+      poison_damage_pct: 0,
+      poison_damage_more_pct: [],
+      poison_max_stacks: 0,
+      poison_damage_reduction: 0,
+      poison_lifesteal: 0,
+      no_direct_damage: false,
+      ignite_chance: 0,
+      ignite_damage_pct: 0,
+      ignite_damage_more_pct: [],
+      ignite_duration_pct: 0,
+      ignite_lifesteal: 0,
+      ignite_damage_reduction: 18,
+      ignite_spread: false,
+      ignite_stacking_damage: false,
+      critical_chance: 0,
+      critical_damage: 0,
+      hp_on_crit: 0,
+      critical_lifesteal_pct: 0,
+      hp_regen: 0,
+      hp_regen_pct: 0,
+      damage_defer_pct: 0,
+      hp_on_hit: 0,
+      retaliate_def_pct: 0,
+      attack_speed_pct: 0,
+      attack_speed_more_pct: [],
+      chill_chance: 0,
+      chill_effect_pct: 0,
+      chill_duration_pct: 0,
+      freeze_chance: 0,
+      freeze_duration_pct: 0,
+      chill_freeze_damage_mult: 1.35,
+    };
+
+    const combined = combineMods(
+      [{ mods: [{ type: 'ignite_damage_reduction', value: 7 }] }],
+      passive
+    );
+
+    expect(combined.igniteDamageReduction).toBe(25);
+    expect(combined.chillFreezeDamageMult).toBe(1.35);
   });
 
   it('calculateAttackSpeed は increased/more を反映する', () => {
