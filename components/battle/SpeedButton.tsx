@@ -2,14 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { ms, fs } from '@/utils/scaling';
 import {
+  settingsRepository,
   BattleSpeedMultiplier,
   BATTLE_SPEED_OPTIONS,
   FREE_BATTLE_SPEED_OPTIONS,
   PREMIUM_BATTLE_SPEED_OPTIONS,
   DEFAULT_BATTLE_SPEED,
 } from '@/db/repositories/settingsRepository';
-import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { hasSpeedBoost } from '@/stores/usePurchaseStore';
+import { usePlayerStore } from '@/stores/usePlayerStore';
 
 interface SpeedButtonProps {
   currentSpeed: BattleSpeedMultiplier;
@@ -18,6 +19,7 @@ interface SpeedButtonProps {
 
 export const SpeedButton: React.FC<SpeedButtonProps> = ({ currentSpeed, onSpeedChange }) => {
   const hasPremiumSpeed = hasSpeedBoost();
+  const season = usePlayerStore((state) => state.season);
   const [speedUnlocked, setSpeedUnlocked] = useState(false);
 
   // 終焉の地クリア済みか確認（課金/招待がない場合のみ）
@@ -27,11 +29,11 @@ export const SpeedButton: React.FC<SpeedButtonProps> = ({ currentSpeed, onSpeedC
       return;
     }
     const check = async () => {
-      const unlocked = await settingsRepository.getEndContentUnlocked();
+      const unlocked = await settingsRepository.getEndContentUnlocked(season);
       setSpeedUnlocked(unlocked);
     };
     check();
-  }, [hasPremiumSpeed]);
+  }, [hasPremiumSpeed, season]);
 
   // 利用可能な速度オプションを取得
   const availableOptions = hasPremiumSpeed

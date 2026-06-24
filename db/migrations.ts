@@ -480,6 +480,37 @@ export const migrations: Migration[] = [
       `);
     },
   },
+  {
+    // V14 → V15: 倉庫と進行フラグをシーズン別に分離
+    // 既存データはS2以前のプレイデータとして扱い、S2キーへ退避する。
+    version: 15,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      await db.execAsync(`
+        ALTER TABLE storage ADD COLUMN season INTEGER NOT NULL DEFAULT 2;
+      `);
+
+      const settingKeys = [
+        'end_content_unlocked',
+        'uber_boss_unlocks',
+        'uber_boss_tickets',
+        'dungeon_clear_records',
+      ];
+
+      for (const key of settingKeys) {
+        await db.runAsync(
+          `
+          INSERT INTO game_settings (key, value)
+          SELECT ?, value FROM game_settings
+          WHERE key = ?
+            AND NOT EXISTS (SELECT 1 FROM game_settings WHERE key = ?)
+          `,
+          `${key}_s2`,
+          key,
+          `${key}_s2`
+        );
+      }
+    },
+  },
 ];
 
 /**

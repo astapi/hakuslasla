@@ -357,6 +357,25 @@
     "hpRegen": "Régén. HP",
     "hpOnHit": "HP par coup",
     "hpOnCrit": "HP sur Crit",
+    "hpOnTakenHit": "HP Touché",
+    "maxShield": "Bouclier Max",
+    "shieldBase": "Bouclier",
+    "shieldIncreased": "Bouclier Inc",
+    "shieldMore": "Bouclier More",
+    "shieldOn10Attacks": "Bouclier/10 Coups",
+    "shieldRecharge": "Recharge Bouclier",
+    "shieldRechargeDelay": "Délai Bouclier",
+    "shieldOnEvadeStreakHit": "Bouclier Esquive",
+    "shieldBlocksDot": "Bouclier DoT",
+    "hpToShield": "HP en Bouclier",
+    "blockChance": "Blocage",
+    "repeatHitDamageReduction": "Red. Coups",
+    "lowHpDamageReduction": "Red. HP Bas",
+    "chillResist": "Res. Frisson",
+    "freezeResist": "Res. Gel",
+    "poisonResist": "Res. Poison",
+    "autoCleanse": "Auto Purge",
+    "retaliateDef": "Riposte DEF",
     "damageDefer": "Dégâts différés",
     "damageReduction": "Réduction de dégâts",
     "attackSpeed": "Vitesse d'attaque",
@@ -1195,6 +1214,222 @@
     },
     "uber_end_evasion_crown": {
       "name": "Uber Couronne du Mirage Final"
+    },
+    "grassland_evasion_armor": {
+      "name": "Prairie - Cape"
+    },
+    "grassland_evasion_gloves": {
+      "name": "Prairie - Gantelets"
+    },
+    "grassland_evasion_boots": {
+      "name": "Prairie - Tabi"
+    },
+    "grassland_evasion_accessory": {
+      "name": "Prairie - Charme"
+    },
+    "cave_evasion_armor": {
+      "name": "Souterrain - Cape"
+    },
+    "cave_evasion_gloves": {
+      "name": "Souterrain - Gantelets"
+    },
+    "cave_evasion_boots": {
+      "name": "Souterrain - Tabi"
+    },
+    "cave_evasion_accessory": {
+      "name": "Souterrain - Charme"
+    },
+    "ruins_evasion_armor": {
+      "name": "Ruines - Cape"
+    },
+    "ruins_evasion_gloves": {
+      "name": "Ruines - Gantelets"
+    },
+    "ruins_evasion_boots": {
+      "name": "Ruines - Tabi"
+    },
+    "ruins_evasion_accessory": {
+      "name": "Ruines - Charme"
+    },
+    "goblin_fort_evasion_armor": {
+      "name": "Forteresse - Cape"
+    },
+    "goblin_fort_evasion_gloves": {
+      "name": "Forteresse - Gantelets"
+    },
+    "goblin_fort_evasion_boots": {
+      "name": "Forteresse - Tabi"
+    },
+    "goblin_fort_evasion_accessory": {
+      "name": "Forteresse - Charme"
+    },
+    "bandit_hideout_evasion_armor": {
+      "name": "Bandit - Cape"
+    },
+    "bandit_hideout_evasion_gloves": {
+      "name": "Bandit - Gantelets"
+    },
+    "bandit_hideout_evasion_boots": {
+      "name": "Bandit - Tabi"
+    },
+    "bandit_hideout_evasion_accessory": {
+      "name": "Bandit - Charme"
+    },
+    "demon_castle_evasion_armor": {
+      "name": "Château Démoniaque - Cape"
+    },
+    "demon_castle_evasion_gloves": {
+      "name": "Château Démoniaque - Gantelets"
+    },
+    "demon_castle_evasion_boots": {
+      "name": "Château Démoniaque - Tabi"
+    },
+    "demon_castle_evasion_accessory": {
+      "name": "Château Démoniaque - Charme"
+    },
+    "vampire_mansion_evasion_armor": {
+      "name": "Manoir Nocturne - Cape"
+    },
+    "vampire_mansion_evasion_gloves": {
+      "name": "Manoir Nocturne - Gantelets"
+    },
+    "vampire_mansion_evasion_boots": {
+      "name": "Manoir Nocturne - Tabi"
+    },
+    "vampire_mansion_evasion_accessory": {
+      "name": "Manoir Nocturne - Charme"
+    },
+    "ice_cave_evasion_armor": {
+      "name": "Glace - Cape"
+    },
+    "ice_cave_evasion_gloves": {
+      "name": "Glace - Gantelets"
+    },
+    "ice_cave_evasion_boots": {
+      "name": "Glace - Tabi"
+    },
+    "ice_cave_evasion_accessory": {
+      "name": "Glace - Charme"
+    },
+    "underwater_cave_evasion_armor": {
+      "name": "Fond Marin - Cape"
+    },
+    "underwater_cave_evasion_gloves": {
+      "name": "Fond Marin - Gantelets"
+    },
+    "underwater_cave_evasion_boots": {
+      "name": "Fond Marin - Tabi"
+    },
+    "underwater_cave_evasion_accessory": {
+      "name": "Fond Marin - Charme"
+    },
+    "volcano_evasion_armor": {
+      "name": "Volcan - Cape"
+    },
+    "volcano_evasion_gloves": {
+      "name": "Volcan - Gantelets"
+    },
+    "volcano_evasion_boots": {
+      "name": "Volcan - Tabi"
+    },
+    "volcano_evasion_accessory": {
+      "name": "Volcan - Charme"
+    },
+    "orc_fortress_evasion_armor": {
+      "name": "Forteresse Orque - Cape"
+    },
+    "orc_fortress_evasion_gloves": {
+      "name": "Forteresse Orque - Gantelets"
+    },
+    "orc_fortress_evasion_boots": {
+      "name": "Forteresse Orque - Tabi"
+    },
+    "orc_fortress_evasion_accessory": {
+      "name": "Forteresse Orque - Charme"
+    },
+    "dark_forest_evasion_armor": {
+      "name": "Forêt Profonde - Cape"
+    },
+    "dark_forest_evasion_gloves": {
+      "name": "Forêt Profonde - Gantelets"
+    },
+    "dark_forest_evasion_boots": {
+      "name": "Forêt Profonde - Tabi"
+    },
+    "dark_forest_evasion_accessory": {
+      "name": "Forêt Profonde - Charme"
+    },
+    "sky_tower_evasion_armor": {
+      "name": "Ciel - Cape"
+    },
+    "sky_tower_evasion_gloves": {
+      "name": "Ciel - Gantelets"
+    },
+    "sky_tower_evasion_boots": {
+      "name": "Ciel - Tabi"
+    },
+    "sky_tower_evasion_accessory": {
+      "name": "Ciel - Charme"
+    },
+    "hell_gate_evasion_armor": {
+      "name": "Enfer - Cape"
+    },
+    "hell_gate_evasion_gloves": {
+      "name": "Enfer - Gantelets"
+    },
+    "hell_gate_evasion_boots": {
+      "name": "Enfer - Tabi"
+    },
+    "hell_gate_evasion_accessory": {
+      "name": "Enfer - Charme"
+    },
+    "dragon_nest_evasion_armor": {
+      "name": "Nid de Dragon - Cape"
+    },
+    "dragon_nest_evasion_gloves": {
+      "name": "Nid de Dragon - Gantelets"
+    },
+    "dragon_nest_evasion_boots": {
+      "name": "Nid de Dragon - Tabi"
+    },
+    "dragon_nest_evasion_accessory": {
+      "name": "Nid de Dragon - Charme"
+    },
+    "sacred_temple_evasion_armor": {
+      "name": "Sacré - Cape"
+    },
+    "sacred_temple_evasion_gloves": {
+      "name": "Sacré - Gantelets"
+    },
+    "sacred_temple_evasion_boots": {
+      "name": "Sacré - Tabi"
+    },
+    "sacred_temple_evasion_accessory": {
+      "name": "Sacré - Charme"
+    },
+    "chaos_realm_evasion_armor": {
+      "name": "Chaos - Cape"
+    },
+    "chaos_realm_evasion_gloves": {
+      "name": "Chaos - Gantelets"
+    },
+    "chaos_realm_evasion_boots": {
+      "name": "Chaos - Tabi"
+    },
+    "chaos_realm_evasion_accessory": {
+      "name": "Chaos - Charme"
+    },
+    "final_land_evasion_armor": {
+      "name": "Fin - Cape"
+    },
+    "final_land_evasion_gloves": {
+      "name": "Fin - Gantelets"
+    },
+    "final_land_evasion_boots": {
+      "name": "Fin - Tabi"
+    },
+    "final_land_evasion_accessory": {
+      "name": "Fin - Charme"
     }
   },
   "monsters": {

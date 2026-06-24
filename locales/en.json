@@ -357,6 +357,25 @@
     "hpRegen": "HP Regen",
     "hpOnHit": "HP on Hit",
     "hpOnCrit": "HP on Crit",
+    "hpOnTakenHit": "HP when Hit",
+    "maxShield": "Max Shield",
+    "shieldBase": "Shield",
+    "shieldIncreased": "Shield Inc",
+    "shieldMore": "Shield More",
+    "shieldOn10Attacks": "Shield/10 Hits",
+    "shieldRecharge": "Shield Recharge",
+    "shieldRechargeDelay": "Shield Delay",
+    "shieldOnEvadeStreakHit": "Evade Shield",
+    "shieldBlocksDot": "Shield DoT",
+    "hpToShield": "HP to Shield",
+    "blockChance": "Block",
+    "repeatHitDamageReduction": "Repeat Hit DR",
+    "lowHpDamageReduction": "Low HP DR",
+    "chillResist": "Chill Resist",
+    "freezeResist": "Freeze Resist",
+    "poisonResist": "Poison Resist",
+    "autoCleanse": "Auto Cleanse",
+    "retaliateDef": "DEF Retaliate",
     "damageDefer": "Damage Defer",
     "damageReduction": "Damage Reduction",
     "attackSpeed": "Attack Speed",
@@ -1195,6 +1214,222 @@
     },
     "uber_end_evasion_crown": {
       "name": "Uber Crown of the Last Mirage"
+    },
+    "grassland_evasion_armor": {
+      "name": "Grassland Cloak"
+    },
+    "grassland_evasion_gloves": {
+      "name": "Grassland Bracers"
+    },
+    "grassland_evasion_boots": {
+      "name": "Grassland Tabi"
+    },
+    "grassland_evasion_accessory": {
+      "name": "Grassland Charm"
+    },
+    "cave_evasion_armor": {
+      "name": "Subterranean Cloak"
+    },
+    "cave_evasion_gloves": {
+      "name": "Subterranean Bracers"
+    },
+    "cave_evasion_boots": {
+      "name": "Subterranean Tabi"
+    },
+    "cave_evasion_accessory": {
+      "name": "Subterranean Charm"
+    },
+    "ruins_evasion_armor": {
+      "name": "Ruins Cloak"
+    },
+    "ruins_evasion_gloves": {
+      "name": "Ruins Bracers"
+    },
+    "ruins_evasion_boots": {
+      "name": "Ruins Tabi"
+    },
+    "ruins_evasion_accessory": {
+      "name": "Ruins Charm"
+    },
+    "goblin_fort_evasion_armor": {
+      "name": "Fortress Cloak"
+    },
+    "goblin_fort_evasion_gloves": {
+      "name": "Fortress Bracers"
+    },
+    "goblin_fort_evasion_boots": {
+      "name": "Fortress Tabi"
+    },
+    "goblin_fort_evasion_accessory": {
+      "name": "Fortress Charm"
+    },
+    "bandit_hideout_evasion_armor": {
+      "name": "Bandit Cloak"
+    },
+    "bandit_hideout_evasion_gloves": {
+      "name": "Bandit Bracers"
+    },
+    "bandit_hideout_evasion_boots": {
+      "name": "Bandit Tabi"
+    },
+    "bandit_hideout_evasion_accessory": {
+      "name": "Bandit Charm"
+    },
+    "demon_castle_evasion_armor": {
+      "name": "Demon Castle Cloak"
+    },
+    "demon_castle_evasion_gloves": {
+      "name": "Demon Castle Bracers"
+    },
+    "demon_castle_evasion_boots": {
+      "name": "Demon Castle Tabi"
+    },
+    "demon_castle_evasion_accessory": {
+      "name": "Demon Castle Charm"
+    },
+    "vampire_mansion_evasion_armor": {
+      "name": "Night Manor Cloak"
+    },
+    "vampire_mansion_evasion_gloves": {
+      "name": "Night Manor Bracers"
+    },
+    "vampire_mansion_evasion_boots": {
+      "name": "Night Manor Tabi"
+    },
+    "vampire_mansion_evasion_accessory": {
+      "name": "Night Manor Charm"
+    },
+    "ice_cave_evasion_armor": {
+      "name": "Frozen Cloak"
+    },
+    "ice_cave_evasion_gloves": {
+      "name": "Frozen Bracers"
+    },
+    "ice_cave_evasion_boots": {
+      "name": "Frozen Tabi"
+    },
+    "ice_cave_evasion_accessory": {
+      "name": "Frozen Charm"
+    },
+    "underwater_cave_evasion_armor": {
+      "name": "Seabed Cloak"
+    },
+    "underwater_cave_evasion_gloves": {
+      "name": "Seabed Bracers"
+    },
+    "underwater_cave_evasion_boots": {
+      "name": "Seabed Tabi"
+    },
+    "underwater_cave_evasion_accessory": {
+      "name": "Seabed Charm"
+    },
+    "volcano_evasion_armor": {
+      "name": "Volcanic Cloak"
+    },
+    "volcano_evasion_gloves": {
+      "name": "Volcanic Bracers"
+    },
+    "volcano_evasion_boots": {
+      "name": "Volcanic Tabi"
+    },
+    "volcano_evasion_accessory": {
+      "name": "Volcanic Charm"
+    },
+    "orc_fortress_evasion_armor": {
+      "name": "Orc Fortress Cloak"
+    },
+    "orc_fortress_evasion_gloves": {
+      "name": "Orc Fortress Bracers"
+    },
+    "orc_fortress_evasion_boots": {
+      "name": "Orc Fortress Tabi"
+    },
+    "orc_fortress_evasion_accessory": {
+      "name": "Orc Fortress Charm"
+    },
+    "dark_forest_evasion_armor": {
+      "name": "Deep Forest Cloak"
+    },
+    "dark_forest_evasion_gloves": {
+      "name": "Deep Forest Bracers"
+    },
+    "dark_forest_evasion_boots": {
+      "name": "Deep Forest Tabi"
+    },
+    "dark_forest_evasion_accessory": {
+      "name": "Deep Forest Charm"
+    },
+    "sky_tower_evasion_armor": {
+      "name": "Sky Cloak"
+    },
+    "sky_tower_evasion_gloves": {
+      "name": "Sky Bracers"
+    },
+    "sky_tower_evasion_boots": {
+      "name": "Sky Tabi"
+    },
+    "sky_tower_evasion_accessory": {
+      "name": "Sky Charm"
+    },
+    "hell_gate_evasion_armor": {
+      "name": "Hell Cloak"
+    },
+    "hell_gate_evasion_gloves": {
+      "name": "Hell Bracers"
+    },
+    "hell_gate_evasion_boots": {
+      "name": "Hell Tabi"
+    },
+    "hell_gate_evasion_accessory": {
+      "name": "Hell Charm"
+    },
+    "dragon_nest_evasion_armor": {
+      "name": "Dragon Nest Cloak"
+    },
+    "dragon_nest_evasion_gloves": {
+      "name": "Dragon Nest Bracers"
+    },
+    "dragon_nest_evasion_boots": {
+      "name": "Dragon Nest Tabi"
+    },
+    "dragon_nest_evasion_accessory": {
+      "name": "Dragon Nest Charm"
+    },
+    "sacred_temple_evasion_armor": {
+      "name": "Sacred Cloak"
+    },
+    "sacred_temple_evasion_gloves": {
+      "name": "Sacred Bracers"
+    },
+    "sacred_temple_evasion_boots": {
+      "name": "Sacred Tabi"
+    },
+    "sacred_temple_evasion_accessory": {
+      "name": "Sacred Charm"
+    },
+    "chaos_realm_evasion_armor": {
+      "name": "Chaos Cloak"
+    },
+    "chaos_realm_evasion_gloves": {
+      "name": "Chaos Bracers"
+    },
+    "chaos_realm_evasion_boots": {
+      "name": "Chaos Tabi"
+    },
+    "chaos_realm_evasion_accessory": {
+      "name": "Chaos Charm"
+    },
+    "final_land_evasion_armor": {
+      "name": "End Cloak"
+    },
+    "final_land_evasion_gloves": {
+      "name": "End Bracers"
+    },
+    "final_land_evasion_boots": {
+      "name": "End Tabi"
+    },
+    "final_land_evasion_accessory": {
+      "name": "End Charm"
     }
   },
   "monsters": {

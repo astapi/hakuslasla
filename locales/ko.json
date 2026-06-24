@@ -357,6 +357,25 @@
     "hpRegen": "HP 재생",
     "hpOnHit": "적중 시 HP",
     "hpOnCrit": "Crit 시 HP",
+    "hpOnTakenHit": "피격 HP",
+    "maxShield": "최대 실드",
+    "shieldBase": "실드",
+    "shieldIncreased": "실드 Inc",
+    "shieldMore": "실드 More",
+    "shieldOn10Attacks": "10회 실드",
+    "shieldRecharge": "실드 재충전",
+    "shieldRechargeDelay": "실드 지연",
+    "shieldOnEvadeStreakHit": "회피 실드",
+    "shieldBlocksDot": "실드 DoT",
+    "hpToShield": "HP→실드",
+    "blockChance": "블록",
+    "repeatHitDamageReduction": "연속 피격 감소",
+    "lowHpDamageReduction": "저HP 피해 감소",
+    "chillResist": "칠 저항",
+    "freezeResist": "빙결 저항",
+    "poisonResist": "독 저항",
+    "autoCleanse": "자동 정화",
+    "retaliateDef": "DEF 반격",
     "damageDefer": "피해 지연",
     "damageReduction": "피해 감소",
     "attackSpeed": "공격 속도",
@@ -1195,6 +1214,222 @@
     },
     "uber_end_evasion_crown": {
       "name": "Uber 종언의 환관"
+    },
+    "grassland_evasion_armor": {
+      "name": "초원의 외투"
+    },
+    "grassland_evasion_gloves": {
+      "name": "초원의 손목갑"
+    },
+    "grassland_evasion_boots": {
+      "name": "초원의 버선"
+    },
+    "grassland_evasion_accessory": {
+      "name": "초원의 부적"
+    },
+    "cave_evasion_armor": {
+      "name": "지저의 외투"
+    },
+    "cave_evasion_gloves": {
+      "name": "지저의 손목갑"
+    },
+    "cave_evasion_boots": {
+      "name": "지저의 버선"
+    },
+    "cave_evasion_accessory": {
+      "name": "지저의 부적"
+    },
+    "ruins_evasion_armor": {
+      "name": "유적의 외투"
+    },
+    "ruins_evasion_gloves": {
+      "name": "유적의 손목갑"
+    },
+    "ruins_evasion_boots": {
+      "name": "유적의 버선"
+    },
+    "ruins_evasion_accessory": {
+      "name": "유적의 부적"
+    },
+    "goblin_fort_evasion_armor": {
+      "name": "요새의 외투"
+    },
+    "goblin_fort_evasion_gloves": {
+      "name": "요새의 손목갑"
+    },
+    "goblin_fort_evasion_boots": {
+      "name": "요새의 버선"
+    },
+    "goblin_fort_evasion_accessory": {
+      "name": "요새의 부적"
+    },
+    "bandit_hideout_evasion_armor": {
+      "name": "도적의 외투"
+    },
+    "bandit_hideout_evasion_gloves": {
+      "name": "도적의 손목갑"
+    },
+    "bandit_hideout_evasion_boots": {
+      "name": "도적의 버선"
+    },
+    "bandit_hideout_evasion_accessory": {
+      "name": "도적의 부적"
+    },
+    "demon_castle_evasion_armor": {
+      "name": "마성의 외투"
+    },
+    "demon_castle_evasion_gloves": {
+      "name": "마성의 손목갑"
+    },
+    "demon_castle_evasion_boots": {
+      "name": "마성의 버선"
+    },
+    "demon_castle_evasion_accessory": {
+      "name": "마성의 부적"
+    },
+    "vampire_mansion_evasion_armor": {
+      "name": "밤 저택의 외투"
+    },
+    "vampire_mansion_evasion_gloves": {
+      "name": "밤 저택의 손목갑"
+    },
+    "vampire_mansion_evasion_boots": {
+      "name": "밤 저택의 버선"
+    },
+    "vampire_mansion_evasion_accessory": {
+      "name": "밤 저택의 부적"
+    },
+    "ice_cave_evasion_armor": {
+      "name": "빙결의 외투"
+    },
+    "ice_cave_evasion_gloves": {
+      "name": "빙결의 손목갑"
+    },
+    "ice_cave_evasion_boots": {
+      "name": "빙결의 버선"
+    },
+    "ice_cave_evasion_accessory": {
+      "name": "빙결의 부적"
+    },
+    "underwater_cave_evasion_armor": {
+      "name": "해저의 외투"
+    },
+    "underwater_cave_evasion_gloves": {
+      "name": "해저의 손목갑"
+    },
+    "underwater_cave_evasion_boots": {
+      "name": "해저의 버선"
+    },
+    "underwater_cave_evasion_accessory": {
+      "name": "해저의 부적"
+    },
+    "volcano_evasion_armor": {
+      "name": "화산의 외투"
+    },
+    "volcano_evasion_gloves": {
+      "name": "화산의 손목갑"
+    },
+    "volcano_evasion_boots": {
+      "name": "화산의 버선"
+    },
+    "volcano_evasion_accessory": {
+      "name": "화산의 부적"
+    },
+    "orc_fortress_evasion_armor": {
+      "name": "오크 요새의 외투"
+    },
+    "orc_fortress_evasion_gloves": {
+      "name": "오크 요새의 손목갑"
+    },
+    "orc_fortress_evasion_boots": {
+      "name": "오크 요새의 버선"
+    },
+    "orc_fortress_evasion_accessory": {
+      "name": "오크 요새의 부적"
+    },
+    "dark_forest_evasion_armor": {
+      "name": "깊은 숲의 외투"
+    },
+    "dark_forest_evasion_gloves": {
+      "name": "깊은 숲의 손목갑"
+    },
+    "dark_forest_evasion_boots": {
+      "name": "깊은 숲의 버선"
+    },
+    "dark_forest_evasion_accessory": {
+      "name": "깊은 숲의 부적"
+    },
+    "sky_tower_evasion_armor": {
+      "name": "천공의 외투"
+    },
+    "sky_tower_evasion_gloves": {
+      "name": "천공의 손목갑"
+    },
+    "sky_tower_evasion_boots": {
+      "name": "천공의 버선"
+    },
+    "sky_tower_evasion_accessory": {
+      "name": "천공의 부적"
+    },
+    "hell_gate_evasion_armor": {
+      "name": "지옥의 외투"
+    },
+    "hell_gate_evasion_gloves": {
+      "name": "지옥의 손목갑"
+    },
+    "hell_gate_evasion_boots": {
+      "name": "지옥의 버선"
+    },
+    "hell_gate_evasion_accessory": {
+      "name": "지옥의 부적"
+    },
+    "dragon_nest_evasion_armor": {
+      "name": "용 둥지의 외투"
+    },
+    "dragon_nest_evasion_gloves": {
+      "name": "용 둥지의 손목갑"
+    },
+    "dragon_nest_evasion_boots": {
+      "name": "용 둥지의 버선"
+    },
+    "dragon_nest_evasion_accessory": {
+      "name": "용 둥지의 부적"
+    },
+    "sacred_temple_evasion_armor": {
+      "name": "신역의 외투"
+    },
+    "sacred_temple_evasion_gloves": {
+      "name": "신역의 손목갑"
+    },
+    "sacred_temple_evasion_boots": {
+      "name": "신역의 버선"
+    },
+    "sacred_temple_evasion_accessory": {
+      "name": "신역의 부적"
+    },
+    "chaos_realm_evasion_armor": {
+      "name": "혼돈의 외투"
+    },
+    "chaos_realm_evasion_gloves": {
+      "name": "혼돈의 손목갑"
+    },
+    "chaos_realm_evasion_boots": {
+      "name": "혼돈의 버선"
+    },
+    "chaos_realm_evasion_accessory": {
+      "name": "혼돈의 부적"
+    },
+    "final_land_evasion_armor": {
+      "name": "종언의 외투"
+    },
+    "final_land_evasion_gloves": {
+      "name": "종언의 손목갑"
+    },
+    "final_land_evasion_boots": {
+      "name": "종언의 버선"
+    },
+    "final_land_evasion_accessory": {
+      "name": "종언의 부적"
     }
   },
   "monsters": {

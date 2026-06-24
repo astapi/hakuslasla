@@ -63,10 +63,11 @@ export default function DungeonSelectScreen() {
 
   const loadDungeons = useCallback(async () => {
     const all = getDungeonList();
-    const endContentUnlocked = await settingsRepository.getEndContentUnlocked();
-    const uberUnlocks = await settingsRepository.getUberBossUnlocks();
-    const uberTickets = await settingsRepository.getUberTickets();
-    const clearRecords = await settingsRepository.getDungeonClearRecords();
+    const season = usePlayerStore.getState().season;
+    const endContentUnlocked = await settingsRepository.getEndContentUnlocked(season);
+    const uberUnlocks = await settingsRepository.getUberBossUnlocks(season);
+    const uberTickets = await settingsRepository.getUberTickets(season);
+    const clearRecords = await settingsRepository.getDungeonClearRecords(season);
 
     const result: DungeonWithStatus[] = [];
 
@@ -205,13 +206,15 @@ export default function DungeonSelectScreen() {
     if (UBER_DUNGEON_IDS.includes(dungeonId)) {
       const baseBossId = BASE_BOSS_BY_UBER[dungeonId];
       if (!baseBossId) return;
-      const consumed = await settingsRepository.consumeUberTicket(baseBossId);
+      const season = usePlayerStore.getState().season;
+      const consumed = await settingsRepository.consumeUberTicket(baseBossId, 1, season);
       if (!consumed) return;
     } else if (UBER_UBER_DUNGEON_IDS.includes(dungeonId)) {
       const uberDungeonId = UBER_BY_UBER_UBER[dungeonId];
       const baseBossId = uberDungeonId ? BASE_BOSS_BY_UBER[uberDungeonId] : undefined;
       if (!baseBossId) return;
-      const consumed = await settingsRepository.consumeUberTicket(baseBossId);
+      const season = usePlayerStore.getState().season;
+      const consumed = await settingsRepository.consumeUberTicket(baseBossId, 1, season);
       if (!consumed) return;
     }
 

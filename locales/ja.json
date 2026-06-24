@@ -357,6 +357,25 @@
     "hpRegen": "HP回復",
     "hpOnHit": "HIT回復",
     "hpOnCrit": "クリ回復",
+    "hpOnTakenHit": "被弾回復",
+    "maxShield": "最大シールド",
+    "shieldBase": "シールド",
+    "shieldIncreased": "盾inc",
+    "shieldMore": "盾more",
+    "shieldOn10Attacks": "10撃盾",
+    "shieldRecharge": "盾再構築",
+    "shieldRechargeDelay": "盾遅延",
+    "shieldOnEvadeStreakHit": "回避盾",
+    "shieldBlocksDot": "盾DoT受け",
+    "hpToShield": "HP盾変換",
+    "blockChance": "ブロック",
+    "repeatHitDamageReduction": "連続被弾軽減",
+    "lowHpDamageReduction": "低HP軽減",
+    "chillResist": "チル耐性",
+    "freezeResist": "フリーズ耐性",
+    "poisonResist": "毒耐性",
+    "autoCleanse": "自動浄化",
+    "retaliateDef": "DEF反撃",
     "damageDefer": "ダメージ遅延",
     "damageReduction": "被ダメ軽減",
     "attackSpeed": "攻撃速度",
@@ -1195,6 +1214,222 @@
     },
     "uber_end_evasion_crown": {
       "name": "Uber 終焉の幻冠"
+    },
+    "grassland_evasion_armor": {
+      "name": "草原の外套"
+    },
+    "grassland_evasion_gloves": {
+      "name": "草原の手甲"
+    },
+    "grassland_evasion_boots": {
+      "name": "草原の足袋"
+    },
+    "grassland_evasion_accessory": {
+      "name": "草原の護符"
+    },
+    "cave_evasion_armor": {
+      "name": "地底の外套"
+    },
+    "cave_evasion_gloves": {
+      "name": "地底の手甲"
+    },
+    "cave_evasion_boots": {
+      "name": "地底の足袋"
+    },
+    "cave_evasion_accessory": {
+      "name": "地底の護符"
+    },
+    "ruins_evasion_armor": {
+      "name": "遺跡の外套"
+    },
+    "ruins_evasion_gloves": {
+      "name": "遺跡の手甲"
+    },
+    "ruins_evasion_boots": {
+      "name": "遺跡の足袋"
+    },
+    "ruins_evasion_accessory": {
+      "name": "遺跡の護符"
+    },
+    "goblin_fort_evasion_armor": {
+      "name": "砦の外套"
+    },
+    "goblin_fort_evasion_gloves": {
+      "name": "砦の手甲"
+    },
+    "goblin_fort_evasion_boots": {
+      "name": "砦の足袋"
+    },
+    "goblin_fort_evasion_accessory": {
+      "name": "砦の護符"
+    },
+    "bandit_hideout_evasion_armor": {
+      "name": "盗賊の外套"
+    },
+    "bandit_hideout_evasion_gloves": {
+      "name": "盗賊の手甲"
+    },
+    "bandit_hideout_evasion_boots": {
+      "name": "盗賊の足袋"
+    },
+    "bandit_hideout_evasion_accessory": {
+      "name": "盗賊の護符"
+    },
+    "demon_castle_evasion_armor": {
+      "name": "魔城の外套"
+    },
+    "demon_castle_evasion_gloves": {
+      "name": "魔城の手甲"
+    },
+    "demon_castle_evasion_boots": {
+      "name": "魔城の足袋"
+    },
+    "demon_castle_evasion_accessory": {
+      "name": "魔城の護符"
+    },
+    "vampire_mansion_evasion_armor": {
+      "name": "夜館の外套"
+    },
+    "vampire_mansion_evasion_gloves": {
+      "name": "夜館の手甲"
+    },
+    "vampire_mansion_evasion_boots": {
+      "name": "夜館の足袋"
+    },
+    "vampire_mansion_evasion_accessory": {
+      "name": "夜館の護符"
+    },
+    "ice_cave_evasion_armor": {
+      "name": "氷結の外套"
+    },
+    "ice_cave_evasion_gloves": {
+      "name": "氷結の手甲"
+    },
+    "ice_cave_evasion_boots": {
+      "name": "氷結の足袋"
+    },
+    "ice_cave_evasion_accessory": {
+      "name": "氷結の護符"
+    },
+    "underwater_cave_evasion_armor": {
+      "name": "海底の外套"
+    },
+    "underwater_cave_evasion_gloves": {
+      "name": "海底の手甲"
+    },
+    "underwater_cave_evasion_boots": {
+      "name": "海底の足袋"
+    },
+    "underwater_cave_evasion_accessory": {
+      "name": "海底の護符"
+    },
+    "volcano_evasion_armor": {
+      "name": "火山の外套"
+    },
+    "volcano_evasion_gloves": {
+      "name": "火山の手甲"
+    },
+    "volcano_evasion_boots": {
+      "name": "火山の足袋"
+    },
+    "volcano_evasion_accessory": {
+      "name": "火山の護符"
+    },
+    "orc_fortress_evasion_armor": {
+      "name": "要塞の外套"
+    },
+    "orc_fortress_evasion_gloves": {
+      "name": "要塞の手甲"
+    },
+    "orc_fortress_evasion_boots": {
+      "name": "要塞の足袋"
+    },
+    "orc_fortress_evasion_accessory": {
+      "name": "要塞の護符"
+    },
+    "dark_forest_evasion_armor": {
+      "name": "深森の外套"
+    },
+    "dark_forest_evasion_gloves": {
+      "name": "深森の手甲"
+    },
+    "dark_forest_evasion_boots": {
+      "name": "深森の足袋"
+    },
+    "dark_forest_evasion_accessory": {
+      "name": "深森の護符"
+    },
+    "sky_tower_evasion_armor": {
+      "name": "天空の外套"
+    },
+    "sky_tower_evasion_gloves": {
+      "name": "天空の手甲"
+    },
+    "sky_tower_evasion_boots": {
+      "name": "天空の足袋"
+    },
+    "sky_tower_evasion_accessory": {
+      "name": "天空の護符"
+    },
+    "hell_gate_evasion_armor": {
+      "name": "地獄の外套"
+    },
+    "hell_gate_evasion_gloves": {
+      "name": "地獄の手甲"
+    },
+    "hell_gate_evasion_boots": {
+      "name": "地獄の足袋"
+    },
+    "hell_gate_evasion_accessory": {
+      "name": "地獄の護符"
+    },
+    "dragon_nest_evasion_armor": {
+      "name": "竜巣の外套"
+    },
+    "dragon_nest_evasion_gloves": {
+      "name": "竜巣の手甲"
+    },
+    "dragon_nest_evasion_boots": {
+      "name": "竜巣の足袋"
+    },
+    "dragon_nest_evasion_accessory": {
+      "name": "竜巣の護符"
+    },
+    "sacred_temple_evasion_armor": {
+      "name": "神域の外套"
+    },
+    "sacred_temple_evasion_gloves": {
+      "name": "神域の手甲"
+    },
+    "sacred_temple_evasion_boots": {
+      "name": "神域の足袋"
+    },
+    "sacred_temple_evasion_accessory": {
+      "name": "神域の護符"
+    },
+    "chaos_realm_evasion_armor": {
+      "name": "混沌の外套"
+    },
+    "chaos_realm_evasion_gloves": {
+      "name": "混沌の手甲"
+    },
+    "chaos_realm_evasion_boots": {
+      "name": "混沌の足袋"
+    },
+    "chaos_realm_evasion_accessory": {
+      "name": "混沌の護符"
+    },
+    "final_land_evasion_armor": {
+      "name": "終焉の外套"
+    },
+    "final_land_evasion_gloves": {
+      "name": "終焉の手甲"
+    },
+    "final_land_evasion_boots": {
+      "name": "終焉の足袋"
+    },
+    "final_land_evasion_accessory": {
+      "name": "終焉の護符"
     }
   },
   "monsters": {

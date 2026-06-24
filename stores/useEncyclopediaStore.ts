@@ -26,8 +26,9 @@ export const useEncyclopediaStore = create<EncyclopediaStore>((set, get) => ({
   clearedDungeons: [],
 
   loadDungeons: async () => {
-    const clearRecords: DungeonClearRecords = await settingsRepository.getDungeonClearRecords();
-    const uberUnlocks = await settingsRepository.getUberBossUnlocks();
+    const season = usePlayerStore.getState().season;
+    const clearRecords: DungeonClearRecords = await settingsRepository.getDungeonClearRecords(season);
+    const uberUnlocks = await settingsRepository.getUberBossUnlocks(season);
     const allDungeons = getDungeonList();
 
     // UberUber解放判定（全Uberバッジ取得済み）

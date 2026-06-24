@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { calculateUberTreeEffects } from '@/data/uberTree';
-import { combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
+import { calculateBattleHpAndShield, combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
 import { applyPetBuff } from '@/core/petEffects';
 import { getPet, getPetLevelFactor } from '@/data/pets';
 import { CLASS_ABILITIES } from '@/core/player';
@@ -43,8 +43,10 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
   const atk = usePlayerStore((state) => state.atk);
   const def = usePlayerStore((state) => state.def);
   const characterType = usePlayerStore((state) => state.characterType);
+  const unlockedUberSkills = usePlayerStore((state) => state.unlockedUberSkills);
   const pets = usePlayerStore((state) => state.pets);
   const activePetInstanceId = usePlayerStore((state) => state.activePetInstanceId);
+  const petLevels = usePlayerStore((state) => state.petLevels);
 
   // useMemo でキャッシュして無限ループを防止
   // 依存配列の値は getTotalStats() 内部で使用されるため必要
@@ -52,7 +54,7 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     const state = usePlayerStore.getState();
     return state.getTotalStats();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [equipment, unlockedSkills, maxHp, atk, def, pets, activePetInstanceId]);
+  }, [equipment, unlockedSkills, unlockedUberSkills, maxHp, atk, def, characterType, pets, activePetInstanceId, petLevels]);
 
   // 詳細計算用のデータを取得
   const getStatsBreakdown = () => {
@@ -141,9 +143,11 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
     // 最終HPを取得（getTotalStats()の結果を使用）
     const finalMaxHp = state.getTotalStats().maxHp;
     const hpRegenPerSecond = totalHpRegen + Math.floor(finalMaxHp * totalHpRegenPct / 100);
+    const battleVitals = calculateBattleHpAndShield(finalMaxHp, combinedMods);
     const poisonDamageMoreTotal = combinedMods.poisonDamageMorePct.reduce((sum, v) => sum + v, 0);
     const attackSpeedMoreTotal = combinedMods.attackSpeedMorePct.reduce((sum, v) => sum + v, 0);
     const igniteDamageMoreTotal = combinedMods.igniteDamageMorePct.reduce((sum, v) => sum + v, 0);
+    const shieldMoreTotal = combinedMods.shieldMorePct.reduce((sum, v) => sum + v, 0);
     const finalAttackSpeed = getAttackSpeedFromMods(combinedMods);
 
     return {
@@ -190,10 +194,29 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
       hpOnHit: totalHpOnHit,
       hpOnCrit: totalHpOnCrit,
       evasion: Math.max(0, combinedMods.evasion),
+      maxShield: battleVitals.maxShield,
+      hpToShield: combinedMods.hpToShield,
+      shieldBase: combinedMods.shield,
+      shieldIncreasedPct: combinedMods.shieldIncreasedPct,
+      shieldMorePct: shieldMoreTotal,
+      shieldOn10AttacksPct: combinedMods.shieldOn10AttacksPct,
+      shieldRechargeDelayMs: combinedMods.shieldRechargeDelayMs,
+      shieldRechargePct: combinedMods.shieldRechargePct,
+      shieldBlocksDot: combinedMods.shieldBlocksDot,
+      shieldOnEvadeStreakHitPct: combinedMods.shieldOnEvadeStreakHitPct,
+      hpOnTakenHit: combinedMods.hpOnTakenHit,
+      blockChance: Math.min(50, Math.max(0, combinedMods.blockChance)),
+      chillResistPct: Math.min(90, Math.max(0, combinedMods.chillResistPct)),
+      freezeResistPct: Math.min(90, Math.max(0, combinedMods.freezeResistPct)),
+      poisonResistPct: Math.max(0, combinedMods.poisonResistPct),
+      repeatHitDamageReductionPct: Math.min(80, Math.max(0, combinedMods.repeatHitDamageReductionPct)),
+      lowHpDamageReductionPct: Math.max(0, combinedMods.lowHpDamageReductionPct),
+      autoCleanseIntervalMs: combinedMods.autoCleanseIntervalMs,
+      retaliateDefPct: Math.max(0, combinedMods.retaliateDefPct),
     };
   };
 
-  const breakdown = showDetails ? getStatsBreakdown() : null;
+  const breakdown = getStatsBreakdown();
 
   return (
     <Pressable onPress={toggleDetails}>
@@ -216,10 +239,14 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
             <Text style={styles.statLabel}>DEF</Text>
             <Text style={styles.statValue}>{stats.def}</Text>
           </View>
+          <View style={styles.statItem}>
+            <Text style={styles.statLabel}>EVA</Text>
+            <Text style={styles.statValue}>{breakdown.evasion}</Text>
+          </View>
         </View>
 
         {/* 詳細表示 */}
-        {showDetails && breakdown && (
+        {showDetails && (
           <View style={styles.detailsContainer}>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>HP</Text>
@@ -243,6 +270,14 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
                 {breakdown.def.base}
                 {breakdown.def.inc > 0 && <Text style={styles.incText}> +{breakdown.def.inc}%inc</Text>}
                 {breakdown.def.more > 0 && <Text style={styles.moreText}> +{breakdown.def.more}%more</Text>}
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.evasion')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.evasion > 0 ? styles.chillText : undefined}>
+                  {breakdown.evasion}
+                </Text>
               </Text>
             </View>
             <View style={styles.separator} />
@@ -426,6 +461,55 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
               </Text>
             </View>
             <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.hpOnTakenHit')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.hpOnTakenHit > 0 ? styles.healText : undefined}>
+                  +{breakdown.hpOnTakenHit}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.separator} />
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.maxShield')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.maxShield > 0 ? styles.shieldText : undefined}>
+                  {breakdown.maxShield}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.shieldBase')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.shieldBase > 0 ? styles.shieldText : undefined}>
+                  +{breakdown.shieldBase}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.shieldIncreased')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.shieldIncreasedPct > 0 ? styles.shieldText : undefined}>
+                  +{breakdown.shieldIncreasedPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.shieldMore')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.shieldMorePct > 0 ? styles.shieldText : undefined}>
+                  +{breakdown.shieldMorePct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.blockChance')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.blockChance > 0 ? styles.shieldText : undefined}>
+                  {breakdown.blockChance}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>{t('status.damageDefer')}</Text>
               <Text style={styles.detailValue}>
                 <Text style={breakdown.damageDeferPct > 0 ? styles.healText : undefined}>
@@ -442,13 +526,110 @@ export const StatusPanel = ({ currentHp, onDetailsChange }: StatusPanelProps) =>
               </Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>{t('status.evasion')}</Text>
+              <Text style={styles.detailLabel}>{t('status.repeatHitDamageReduction')}</Text>
               <Text style={styles.detailValue}>
-                <Text style={breakdown.evasion > 0 ? styles.chillText : undefined}>
-                  {breakdown.evasion}
+                <Text style={breakdown.repeatHitDamageReductionPct > 0 ? styles.shieldText : undefined}>
+                  {breakdown.repeatHitDamageReductionPct}%
                 </Text>
               </Text>
             </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.lowHpDamageReduction')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.lowHpDamageReductionPct > 0 ? styles.shieldText : undefined}>
+                  {breakdown.lowHpDamageReductionPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.shieldOn10Attacks')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.shieldOn10AttacksPct > 0 ? styles.shieldText : undefined}>
+                  {breakdown.shieldOn10AttacksPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.shieldRecharge')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.shieldRechargePct > 0 ? styles.shieldText : undefined}>
+                  {breakdown.shieldRechargePct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.shieldRechargeDelay')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.shieldRechargeDelayMs > 0 ? styles.shieldText : undefined}>
+                  {breakdown.shieldRechargeDelayMs > 0 ? `${(breakdown.shieldRechargeDelayMs / 1000).toFixed(1)}s` : '0s'}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.shieldOnEvadeStreakHit')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.shieldOnEvadeStreakHitPct > 0 ? styles.shieldText : undefined}>
+                  {breakdown.shieldOnEvadeStreakHitPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.retaliateDef')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.retaliateDefPct > 0 ? styles.shieldText : undefined}>
+                  {breakdown.retaliateDefPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.chillResist')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.chillResistPct > 0 ? styles.shieldText : undefined}>
+                  {breakdown.chillResistPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.freezeResist')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.freezeResistPct > 0 ? styles.shieldText : undefined}>
+                  {breakdown.freezeResistPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.poisonResist')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.poisonResistPct > 0 ? styles.shieldText : undefined}>
+                  {breakdown.poisonResistPct}%
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.autoCleanse')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.autoCleanseIntervalMs > 0 ? styles.shieldText : undefined}>
+                  {breakdown.autoCleanseIntervalMs > 0 ? `${(breakdown.autoCleanseIntervalMs / 1000).toFixed(1)}s` : t('status.off')}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.hpToShield')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.hpToShield ? styles.shieldText : undefined}>
+                  {breakdown.hpToShield ? t('status.on') : t('status.off')}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('status.shieldBlocksDot')}</Text>
+              <Text style={styles.detailValue}>
+                <Text style={breakdown.shieldBlocksDot ? styles.shieldText : undefined}>
+                  {breakdown.shieldBlocksDot ? t('status.on') : t('status.off')}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.separator} />
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>{t('status.attackSpeed')}</Text>
               <Text style={styles.detailValue}>
@@ -591,6 +772,9 @@ const styles = StyleSheet.create({
   },
   healText: {
     color: '#4CAF50',
+  },
+  shieldText: {
+    color: '#64B5F6',
   },
   critHealText: {
     color: '#FF9800',

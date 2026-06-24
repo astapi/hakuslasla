@@ -357,6 +357,25 @@
     "hpRegen": "HP 回复",
     "hpOnHit": "命中回 HP",
     "hpOnCrit": "Crit 回 HP",
+    "hpOnTakenHit": "受击回 HP",
+    "maxShield": "最大护盾",
+    "shieldBase": "护盾",
+    "shieldIncreased": "护盾Inc",
+    "shieldMore": "护盾More",
+    "shieldOn10Attacks": "10击护盾",
+    "shieldRecharge": "护盾重构",
+    "shieldRechargeDelay": "护盾延迟",
+    "shieldOnEvadeStreakHit": "闪避护盾",
+    "shieldBlocksDot": "护盾DoT",
+    "hpToShield": "HP转护盾",
+    "blockChance": "格挡",
+    "repeatHitDamageReduction": "连击减伤",
+    "lowHpDamageReduction": "低HP减伤",
+    "chillResist": "冰缓抗性",
+    "freezeResist": "冻结抗性",
+    "poisonResist": "毒抗性",
+    "autoCleanse": "自动净化",
+    "retaliateDef": "DEF反击",
     "damageDefer": "伤害延迟",
     "damageReduction": "减伤",
     "attackSpeed": "攻击速度",
@@ -1195,6 +1214,222 @@
     },
     "uber_end_evasion_crown": {
       "name": "Uber 终焉幻冠"
+    },
+    "grassland_evasion_armor": {
+      "name": "草原披风"
+    },
+    "grassland_evasion_gloves": {
+      "name": "草原手甲"
+    },
+    "grassland_evasion_boots": {
+      "name": "草原足袋"
+    },
+    "grassland_evasion_accessory": {
+      "name": "草原护符"
+    },
+    "cave_evasion_armor": {
+      "name": "地底披风"
+    },
+    "cave_evasion_gloves": {
+      "name": "地底手甲"
+    },
+    "cave_evasion_boots": {
+      "name": "地底足袋"
+    },
+    "cave_evasion_accessory": {
+      "name": "地底护符"
+    },
+    "ruins_evasion_armor": {
+      "name": "遗迹披风"
+    },
+    "ruins_evasion_gloves": {
+      "name": "遗迹手甲"
+    },
+    "ruins_evasion_boots": {
+      "name": "遗迹足袋"
+    },
+    "ruins_evasion_accessory": {
+      "name": "遗迹护符"
+    },
+    "goblin_fort_evasion_armor": {
+      "name": "要塞披风"
+    },
+    "goblin_fort_evasion_gloves": {
+      "name": "要塞手甲"
+    },
+    "goblin_fort_evasion_boots": {
+      "name": "要塞足袋"
+    },
+    "goblin_fort_evasion_accessory": {
+      "name": "要塞护符"
+    },
+    "bandit_hideout_evasion_armor": {
+      "name": "盗贼披风"
+    },
+    "bandit_hideout_evasion_gloves": {
+      "name": "盗贼手甲"
+    },
+    "bandit_hideout_evasion_boots": {
+      "name": "盗贼足袋"
+    },
+    "bandit_hideout_evasion_accessory": {
+      "name": "盗贼护符"
+    },
+    "demon_castle_evasion_armor": {
+      "name": "魔城披风"
+    },
+    "demon_castle_evasion_gloves": {
+      "name": "魔城手甲"
+    },
+    "demon_castle_evasion_boots": {
+      "name": "魔城足袋"
+    },
+    "demon_castle_evasion_accessory": {
+      "name": "魔城护符"
+    },
+    "vampire_mansion_evasion_armor": {
+      "name": "夜馆披风"
+    },
+    "vampire_mansion_evasion_gloves": {
+      "name": "夜馆手甲"
+    },
+    "vampire_mansion_evasion_boots": {
+      "name": "夜馆足袋"
+    },
+    "vampire_mansion_evasion_accessory": {
+      "name": "夜馆护符"
+    },
+    "ice_cave_evasion_armor": {
+      "name": "冰结披风"
+    },
+    "ice_cave_evasion_gloves": {
+      "name": "冰结手甲"
+    },
+    "ice_cave_evasion_boots": {
+      "name": "冰结足袋"
+    },
+    "ice_cave_evasion_accessory": {
+      "name": "冰结护符"
+    },
+    "underwater_cave_evasion_armor": {
+      "name": "海底披风"
+    },
+    "underwater_cave_evasion_gloves": {
+      "name": "海底手甲"
+    },
+    "underwater_cave_evasion_boots": {
+      "name": "海底足袋"
+    },
+    "underwater_cave_evasion_accessory": {
+      "name": "海底护符"
+    },
+    "volcano_evasion_armor": {
+      "name": "火山披风"
+    },
+    "volcano_evasion_gloves": {
+      "name": "火山手甲"
+    },
+    "volcano_evasion_boots": {
+      "name": "火山足袋"
+    },
+    "volcano_evasion_accessory": {
+      "name": "火山护符"
+    },
+    "orc_fortress_evasion_armor": {
+      "name": "兽人要塞披风"
+    },
+    "orc_fortress_evasion_gloves": {
+      "name": "兽人要塞手甲"
+    },
+    "orc_fortress_evasion_boots": {
+      "name": "兽人要塞足袋"
+    },
+    "orc_fortress_evasion_accessory": {
+      "name": "兽人要塞护符"
+    },
+    "dark_forest_evasion_armor": {
+      "name": "深森披风"
+    },
+    "dark_forest_evasion_gloves": {
+      "name": "深森手甲"
+    },
+    "dark_forest_evasion_boots": {
+      "name": "深森足袋"
+    },
+    "dark_forest_evasion_accessory": {
+      "name": "深森护符"
+    },
+    "sky_tower_evasion_armor": {
+      "name": "天空披风"
+    },
+    "sky_tower_evasion_gloves": {
+      "name": "天空手甲"
+    },
+    "sky_tower_evasion_boots": {
+      "name": "天空足袋"
+    },
+    "sky_tower_evasion_accessory": {
+      "name": "天空护符"
+    },
+    "hell_gate_evasion_armor": {
+      "name": "地狱披风"
+    },
+    "hell_gate_evasion_gloves": {
+      "name": "地狱手甲"
+    },
+    "hell_gate_evasion_boots": {
+      "name": "地狱足袋"
+    },
+    "hell_gate_evasion_accessory": {
+      "name": "地狱护符"
+    },
+    "dragon_nest_evasion_armor": {
+      "name": "龙巢披风"
+    },
+    "dragon_nest_evasion_gloves": {
+      "name": "龙巢手甲"
+    },
+    "dragon_nest_evasion_boots": {
+      "name": "龙巢足袋"
+    },
+    "dragon_nest_evasion_accessory": {
+      "name": "龙巢护符"
+    },
+    "sacred_temple_evasion_armor": {
+      "name": "神域披风"
+    },
+    "sacred_temple_evasion_gloves": {
+      "name": "神域手甲"
+    },
+    "sacred_temple_evasion_boots": {
+      "name": "神域足袋"
+    },
+    "sacred_temple_evasion_accessory": {
+      "name": "神域护符"
+    },
+    "chaos_realm_evasion_armor": {
+      "name": "混沌披风"
+    },
+    "chaos_realm_evasion_gloves": {
+      "name": "混沌手甲"
+    },
+    "chaos_realm_evasion_boots": {
+      "name": "混沌足袋"
+    },
+    "chaos_realm_evasion_accessory": {
+      "name": "混沌护符"
+    },
+    "final_land_evasion_armor": {
+      "name": "终焉披风"
+    },
+    "final_land_evasion_gloves": {
+      "name": "终焉手甲"
+    },
+    "final_land_evasion_boots": {
+      "name": "终焉足袋"
+    },
+    "final_land_evasion_accessory": {
+      "name": "终焉护符"
     }
   },
   "monsters": {

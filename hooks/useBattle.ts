@@ -331,7 +331,7 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
           battleLog: addToLog(state.battleLog, {
             id: logIdCounter++,
             message: i18n.t('battleLog.evaded', { enemy: state.enemy?.name ?? '', defaultValue: '回避！' }),
-            type: 'block',
+            type: 'evade',
           }),
         };
       }
@@ -970,7 +970,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     if (!DIMENSIONAL_RUSH_BOSS_IDS.includes(baseBossId)) return;
 
     void (async () => {
-      await settingsRepository.unlockUberBoss(enemyId);
+      const season = usePlayerStore.getState().season;
+      await settingsRepository.unlockUberBoss(enemyId, season);
       dispatch({
         type: 'ADD_LOG',
         entry: {
@@ -981,7 +982,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
 
       const ticketRoll = Math.random() * 100 < 95;
       if (ticketRoll) {
-        const count = await settingsRepository.addUberTicket(enemyId);
+        const count = await settingsRepository.addUberTicket(enemyId, 1, season);
         dispatch({
           type: 'ADD_LOG',
           entry: {
@@ -1486,9 +1487,11 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
 
         if (state.phase === 'cleared') {
           // ダンジョンクリア記録を保存
+          const season = usePlayerStore.getState().season;
           await settingsRepository.saveDungeonClearRecord(
             state.dungeonId,
-            state.maxFloor
+            state.maxFloor,
+            season
           );
 
           Analytics.logDungeonClear({
@@ -1498,9 +1501,9 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
           });
 
           if (state.dungeonId === 'final_land') {
-            const alreadyUnlocked = await settingsRepository.getEndContentUnlocked();
+            const alreadyUnlocked = await settingsRepository.getEndContentUnlocked(season);
             if (!alreadyUnlocked) {
-              await settingsRepository.setEndContentUnlocked(true);
+              await settingsRepository.setEndContentUnlocked(true, season);
             }
           }
 

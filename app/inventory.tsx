@@ -15,6 +15,7 @@ import { ms, fs } from '@/utils/scaling';
 import { UBER_BOSS_BY_BASE } from '@/data/endContents';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { calculateFinalStats } from '@/core/battle';
+import { combineMods } from '@/core/modEffects';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 type InventoryTab = 'equipment' | 'misc';
@@ -29,7 +30,7 @@ function calculatePlayerStatsWithItem(
   unlockedSkills: string[],
   newItem: Item | null,
   targetSlot: EquipmentSlot
-): { atk: number; def: number; maxHp: number } {
+): { atk: number; def: number; maxHp: number; evasion: number } {
   // 1. 装備構成をシミュレート
   const simulatedEquipment = { ...currentEquipment };
   simulatedEquipment[targetSlot] = newItem;
@@ -91,7 +92,12 @@ function calculatePlayerStatsWithItem(
     finalStats.atk += regenToAtkBonus;
   }
 
-  return finalStats;
+  const combinedMods = combineMods(Object.values(simulatedEquipment), passiveEffects);
+
+  return {
+    ...finalStats,
+    evasion: Math.max(0, combinedMods.evasion),
+  };
 }
 
 // アイテムのステータス計算
@@ -358,7 +364,8 @@ export default function InventoryScreen() {
   useFocusEffect(
     useCallback(() => {
       const loadMisc = async () => {
-        const tickets = await settingsRepository.getUberTickets();
+        const season = usePlayerStore.getState().season;
+        const tickets = await settingsRepository.getUberTickets(season);
         const tokens = await settingsRepository.getRespecTokens();
         setUberTickets(tickets);
         setRespecTokens(tokens);
@@ -435,7 +442,8 @@ export default function InventoryScreen() {
   const handleStorage = async (item: Item) => {
     const nextItem = getNextItemAfterRemoval(item.instanceId);
     // 倉庫に送る（MOD保持）
-    const result = await storageRepository.addItem(item);
+    const season = usePlayerStore.getState().season;
+    const result = await storageRepository.addItem(item, season);
     if (!result.success && result.reason === 'full') {
       alert(t('storage.storageFull'));
       return;
@@ -800,6 +808,7 @@ const ItemDetail = memo(({
           <View style={styles.diffContainer}>
             <StatDiff label="ATK" newValue={newItemPlayerStats.atk} oldValue={currentPlayerStats.atk} />
             <StatDiff label="DEF" newValue={newItemPlayerStats.def} oldValue={currentPlayerStats.def} />
+            <StatDiff label="EVA" newValue={newItemPlayerStats.evasion} oldValue={currentPlayerStats.evasion} />
           </View>
         </View>
 

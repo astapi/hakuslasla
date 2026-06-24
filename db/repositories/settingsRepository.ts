@@ -23,6 +23,10 @@ const END_CONTENT_TOOLTIP_SHOWN_KEY = 'end_content_tooltip_shown';
 const UBER_TREE_TOOLTIP_SHOWN_KEY = 'uber_tree_tooltip_shown';
 const DIMENSIONAL_CORRIDOR_TOOLTIP_SHOWN_KEY = 'dimensional_corridor_tooltip_shown';
 
+function seasonKey(baseKey: string, season?: number): string {
+  return `${baseKey}${getSeasonKeySuffix(season)}`;
+}
+
 // ダンジョンクリア記録の型
 export type DungeonClearRecord = {
   clearedAt: string;
@@ -171,17 +175,17 @@ export const settingsRepository = {
     return value !== null;
   },
 
-  async getEndContentUnlocked(): Promise<boolean> {
-    const value = await this.get(END_CONTENT_UNLOCK_KEY);
+  async getEndContentUnlocked(season?: number): Promise<boolean> {
+    const value = await this.get(seasonKey(END_CONTENT_UNLOCK_KEY, season));
     return value === '1';
   },
 
-  async setEndContentUnlocked(unlocked: boolean): Promise<void> {
-    await this.set(END_CONTENT_UNLOCK_KEY, unlocked ? '1' : '0');
+  async setEndContentUnlocked(unlocked: boolean, season?: number): Promise<void> {
+    await this.set(seasonKey(END_CONTENT_UNLOCK_KEY, season), unlocked ? '1' : '0');
   },
 
-  async getUberBossUnlocks(): Promise<Record<string, boolean>> {
-    const value = await this.get(UBER_UNLOCKS_KEY);
+  async getUberBossUnlocks(season?: number): Promise<Record<string, boolean>> {
+    const value = await this.get(seasonKey(UBER_UNLOCKS_KEY, season));
     if (!value) return {};
     try {
       return JSON.parse(value) as Record<string, boolean>;
@@ -190,15 +194,15 @@ export const settingsRepository = {
     }
   },
 
-  async unlockUberBoss(bossId: string): Promise<void> {
-    const current = await this.getUberBossUnlocks();
+  async unlockUberBoss(bossId: string, season?: number): Promise<void> {
+    const current = await this.getUberBossUnlocks(season);
     if (current[bossId]) return;
     current[bossId] = true;
-    await this.set(UBER_UNLOCKS_KEY, JSON.stringify(current));
+    await this.set(seasonKey(UBER_UNLOCKS_KEY, season), JSON.stringify(current));
   },
 
-  async getUberTickets(): Promise<Record<string, number>> {
-    const value = await this.get(UBER_TICKETS_KEY);
+  async getUberTickets(season?: number): Promise<Record<string, number>> {
+    const value = await this.get(seasonKey(UBER_TICKETS_KEY, season));
     if (!value) return {};
     try {
       return JSON.parse(value) as Record<string, number>;
@@ -207,21 +211,21 @@ export const settingsRepository = {
     }
   },
 
-  async getUberTicketCount(bossId: string): Promise<number> {
-    const current = await this.getUberTickets();
+  async getUberTicketCount(bossId: string, season?: number): Promise<number> {
+    const current = await this.getUberTickets(season);
     return current[bossId] ?? 0;
   },
 
-  async addUberTicket(bossId: string, count: number = 1): Promise<number> {
-    const current = await this.getUberTickets();
+  async addUberTicket(bossId: string, count: number = 1, season?: number): Promise<number> {
+    const current = await this.getUberTickets(season);
     const nextCount = (current[bossId] ?? 0) + count;
     current[bossId] = nextCount;
-    await this.set(UBER_TICKETS_KEY, JSON.stringify(current));
+    await this.set(seasonKey(UBER_TICKETS_KEY, season), JSON.stringify(current));
     return nextCount;
   },
 
-  async consumeUberTicket(bossId: string, count: number = 1): Promise<boolean> {
-    const current = await this.getUberTickets();
+  async consumeUberTicket(bossId: string, count: number = 1, season?: number): Promise<boolean> {
+    const current = await this.getUberTickets(season);
     const available = current[bossId] ?? 0;
     if (available < count) return false;
     const nextCount = available - count;
@@ -230,7 +234,7 @@ export const settingsRepository = {
     } else {
       current[bossId] = nextCount;
     }
-    await this.set(UBER_TICKETS_KEY, JSON.stringify(current));
+    await this.set(seasonKey(UBER_TICKETS_KEY, season), JSON.stringify(current));
     return true;
   },
 
@@ -258,8 +262,8 @@ export const settingsRepository = {
   },
 
   // ダンジョンクリア記録
-  async getDungeonClearRecords(): Promise<DungeonClearRecords> {
-    const value = await this.get(DUNGEON_CLEAR_RECORDS_KEY);
+  async getDungeonClearRecords(season?: number): Promise<DungeonClearRecords> {
+    const value = await this.get(seasonKey(DUNGEON_CLEAR_RECORDS_KEY, season));
     if (!value) return {};
     try {
       return JSON.parse(value) as DungeonClearRecords;
@@ -268,8 +272,8 @@ export const settingsRepository = {
     }
   },
 
-  async saveDungeonClearRecord(dungeonId: string, bestFloor: number): Promise<void> {
-    const current = await this.getDungeonClearRecords();
+  async saveDungeonClearRecord(dungeonId: string, bestFloor: number, season?: number): Promise<void> {
+    const current = await this.getDungeonClearRecords(season);
     const existing = current[dungeonId];
 
     // 既にクリア済みの場合、最高到達階層を更新
@@ -285,11 +289,11 @@ export const settingsRepository = {
       };
     }
 
-    await this.set(DUNGEON_CLEAR_RECORDS_KEY, JSON.stringify(current));
+    await this.set(seasonKey(DUNGEON_CLEAR_RECORDS_KEY, season), JSON.stringify(current));
   },
 
-  async isDungeonCleared(dungeonId: string): Promise<boolean> {
-    const records = await this.getDungeonClearRecords();
+  async isDungeonCleared(dungeonId: string, season?: number): Promise<boolean> {
+    const records = await this.getDungeonClearRecords(season);
     return records[dungeonId] !== undefined;
   },
 

@@ -3,6 +3,7 @@ import { Item } from '@/types';
 import { getItemBase, ensureModTiers } from '@/data/items';
 import { STORAGE_BASE_SIZE, STORAGE_EXPANDED_SIZE } from '@/constants/purchases';
 import { hasStorageExpansion } from '@/stores/usePurchaseStore';
+import { getCurrentSeason } from '@/lib/rankingSeason';
 
 interface StorageRow {
   instance_id: string;
@@ -53,10 +54,11 @@ export const storageRepository = {
   /**
    * 全アイテムを取得
    */
-  async getAll(): Promise<Item[]> {
+  async getAll(season: number = getCurrentSeason()): Promise<Item[]> {
     const db = await getDatabase();
     const rows = await db.getAllAsync<StorageRow>(
-      'SELECT instance_id, item_data FROM storage'
+      'SELECT instance_id, item_data FROM storage WHERE season = ?',
+      season
     );
     const items: Item[] = [];
     for (const row of rows) {
@@ -79,8 +81,8 @@ export const storageRepository = {
   /**
    * 倉庫の空き容量を取得
    */
-  async getAvailableSpace(): Promise<number> {
-    const currentCount = await this.getCount();
+  async getAvailableSpace(season: number = getCurrentSeason()): Promise<number> {
+    const currentCount = await this.getCount(season);
     const maxSize = this.getMaxSize();
     return Math.max(0, maxSize - currentCount);
   },
@@ -88,8 +90,8 @@ export const storageRepository = {
   /**
    * 倉庫がいっぱいかどうか
    */
-  async isFull(): Promise<boolean> {
-    const currentCount = await this.getCount();
+  async isFull(season: number = getCurrentSeason()): Promise<boolean> {
+    const currentCount = await this.getCount(season);
     const maxSize = this.getMaxSize();
     return currentCount >= maxSize;
   },
@@ -98,15 +100,16 @@ export const storageRepository = {
    * アイテムを倉庫に追加（MOD保持）
    * 容量チェック付き
    */
-  async addItem(item: Item): Promise<{ success: boolean; reason?: 'full' }> {
-    const isFull = await this.isFull();
+  async addItem(item: Item, season: number = getCurrentSeason()): Promise<{ success: boolean; reason?: 'full' }> {
+    const isFull = await this.isFull(season);
     if (isFull) {
       return { success: false, reason: 'full' };
     }
 
     const db = await getDatabase();
     await db.runAsync(
-      'INSERT INTO storage (instance_id, item_data) VALUES (?, ?)',
+      'INSERT INTO storage (season, instance_id, item_data) VALUES (?, ?, ?)',
+      season,
       item.instanceId,
       JSON.stringify(item)
     );
@@ -116,11 +119,12 @@ export const storageRepository = {
   /**
    * アイテムを倉庫から削除
    */
-  async removeItem(instanceId: string): Promise<boolean> {
+  async removeItem(instanceId: string, season: number = getCurrentSeason()): Promise<boolean> {
     const db = await getDatabase();
     const result = await db.runAsync(
-      'DELETE FROM storage WHERE instance_id = ?',
-      instanceId
+      'DELETE FROM storage WHERE instance_id = ? AND season = ?',
+      instanceId,
+      season
     );
     return result.changes > 0;
   },
@@ -128,11 +132,12 @@ export const storageRepository = {
   /**
    * 個別アイテムを取得
    */
-  async getItem(instanceId: string): Promise<Item | null> {
+  async getItem(instanceId: string, season: number = getCurrentSeason()): Promise<Item | null> {
     const db = await getDatabase();
     const row = await db.getFirstAsync<StorageRow>(
-      'SELECT instance_id, item_data FROM storage WHERE instance_id = ?',
-      instanceId
+      'SELECT instance_id, item_data FROM storage WHERE instance_id = ? AND season = ?',
+      instanceId,
+      season
     );
     if (!row) return null;
     return JSON.parse(row.item_data) as Item;
@@ -141,10 +146,11 @@ export const storageRepository = {
   /**
    * アイテム数を取得
    */
-  async getCount(): Promise<number> {
+  async getCount(season: number = getCurrentSeason()): Promise<number> {
     const db = await getDatabase();
     const row = await db.getFirstAsync<{ count: number }>(
-      'SELECT COUNT(*) as count FROM storage'
+      'SELECT COUNT(*) as count FROM storage WHERE season = ?',
+      season
     );
     return row?.count ?? 0;
   },
@@ -152,8 +158,8 @@ export const storageRepository = {
   /**
    * 倉庫をクリア
    */
-  async clear(): Promise<void> {
+  async clear(season: number = getCurrentSeason()): Promise<void> {
     const db = await getDatabase();
-    await db.runAsync('DELETE FROM storage');
+    await db.runAsync('DELETE FROM storage WHERE season = ?', season);
   },
 };
