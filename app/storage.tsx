@@ -10,7 +10,7 @@ import { storageRepository } from '@/db';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { getItemIcon, getSlotIcon } from '@/data/itemIcons';
 import { Item, EquipmentSlot } from '@/types';
-import { getTierColor, getTierDisplayName } from '@/data/items';
+import { getModDescription, getTierColor, getTierDisplayName } from '@/data/items';
 import { ms, fs } from '@/utils/scaling';
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -143,6 +143,12 @@ function calculateItemStats(
         case 'freeze_duration_pct':
           desc = `[${tierLabel}] ${t('modDescriptions.freezeDuration', { value: mod.value })}`;
           break;
+      }
+      if (!desc) {
+        const fallbackDesc = getModDescription(mod, t);
+        if (fallbackDesc) {
+          desc = `[${tierLabel}] ${fallbackDesc}`;
+        }
       }
       if (desc) {
         otherMods.push({ type: mod.type, value: mod.value, tier, desc, color });

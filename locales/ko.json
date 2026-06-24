@@ -138,7 +138,11 @@
   "dungeonSelect": {
     "title": "던전 선택",
     "subtitle": "도전할 던전을 선택하세요",
-    "unlockRequirement": "{{dungeonName}} 클리어 시 해금"
+    "unlockRequirement": "{{dungeonName}} 클리어 시 해금",
+    "selectStartFloor": "시작 층 선택",
+    "startFloorLabel": "시작 층 {{floor}}",
+    "startButton": "시작",
+    "cancelButton": "취소"
   },
   "encyclopedia": {
     "title": "도감",
@@ -192,7 +196,8 @@
     "defeat": "패배...",
     "cleared": "던전 클리어!",
     "player": "플레이어",
-    "inProgress": "전투 중"
+    "inProgress": "전투 중",
+    "tentacleFlurryCountdown": "촉수 난타까지 {{count}}회 공격"
   },
   "result": {
     "cleared": "던전 클리어!",
@@ -436,7 +441,42 @@
     "freeze_duration_pct": "빙결 시간",
     "ignite_resist_pct": "발화 저항",
     "evasion_increased_pct": "회피",
-    "evasion_more_pct": "회피 more"
+    "evasion_more_pct": "회피 more",
+    "evasion": "EVA",
+    "hp_on_taken_hit": "피격 시 HP",
+    "ignite_lifesteal": "발화 흡수",
+    "shield_on_evade_streak_hit_pct": "회피 실드",
+    "atk": "ATK",
+    "def": "DEF",
+    "hp": "HP",
+    "auto_cleanse_interval_ms": "자동 정화",
+    "block_chance": "블록",
+    "chill_freeze_damage_mult": "냉각/빙결 피해",
+    "chill_resist_pct": "냉각 저항",
+    "critical_lifesteal_pct": "치명 흡수",
+    "freeze_resist_pct": "빙결 저항",
+    "hp_to_shield": "HP→실드",
+    "ignite_damage_more_pct": "발화 more",
+    "ignite_damage_reduction": "발화 피해감소",
+    "ignite_spread": "발화 전이",
+    "ignite_stacking_damage": "발화 중첩",
+    "lifestealPct": "생명력 흡수",
+    "low_hp_damage_reduction_pct": "저HP 피해감소",
+    "no_direct_damage": "직접 피해 없음",
+    "pet_drop_rate_pct": "펫 드롭",
+    "pet_effect_pct": "펫 효과",
+    "poison_lifesteal": "독 흡수",
+    "poison_max_stacks": "독 중첩",
+    "poison_resist_pct": "독 저항",
+    "repeat_hit_damage_reduction_pct": "연속 피격 감소",
+    "retaliate_def_pct": "DEF 반격",
+    "shield": "실드",
+    "shield_blocks_dot": "실드 DoT",
+    "shield_increased_pct": "실드",
+    "shield_more_pct": "실드 more",
+    "shield_on_10_attacks_pct": "10회 실드",
+    "shield_recharge_delay_ms": "실드 지연",
+    "shield_recharge_pct": "실드 재충전"
   },
   "dungeon": {
     "floors": "{{count}}층",
@@ -1535,7 +1575,15 @@
       "deepEmbrace": "심연의 포옹",
       "deepEmbraceDesc": "3턴 동안 공격 속도 -20%, 회복 -30% (HP 50% 이하에서 발동)",
       "abyssalEbb": "심연의 썰물",
-      "abyssalEbbDesc": "2턴 동안 공격 속도 -15%"
+      "abyssalEbbDesc": "2턴 동안 공격 속도 -15%",
+      "tentacleFlurry": "촉수 난타",
+      "tentacleFlurryDesc": "10번째 공격마다 10연격으로 변합니다",
+      "frostAura": "심연의 냉기 오라",
+      "frostAuraDesc": "공격 시 플레이어에게 냉각과 빙결을 부여합니다",
+      "freezeResist": "심연의 갑옷",
+      "freezeResistDesc": "빙결 시도를 70% 확률로 저항합니다",
+      "igniteResist": "젖은 불씨",
+      "igniteResistDesc": "발화 피해를 1/3 감소시킵니다"
     },
     "demon_lord": {
       "name": "죽음의 손",
@@ -1600,7 +1648,10 @@
     "kingSlamHit": "[킹 슬램] 작렬! {{enemy}}에게 {{damage}} 피해!",
     "twinBladeHit": "[쌍격의 칼날] 추격! {{enemy}}에게 {{damage}} 피해!",
     "royalRoar": "[왕의 포효] 발동! 독과 냉각 상태 해제!",
-    "evaded": "{{enemy}}의 공격을 회피!"
+    "evaded": "{{enemy}}의 공격을 회피!",
+    "blocked": "블록! {{enemy}}의 공격을 막았다!",
+    "chillAppliedPlayer": "플레이어가 냉각 상태가 되었다! 공격 속도 감소!",
+    "freezeAppliedPlayer": "플레이어가 빙결 상태가 되었다! 행동 불가!"
   },
   "passiveTree": {
     "title": "패시브 트리",
@@ -2256,6 +2307,950 @@
     "ignite_final2": {
       "name": "불꽃 전염",
       "description": "[키스톤] 점화 확률 +6%, 점화 전이 - 점화된 적이 죽으면 다음 적에게 점화 전이. DEF +10% increased"
+    },
+    "warrior_start": {
+      "name": "전사의 자세",
+      "description": "HP +55, ATK +10"
+    },
+    "ranger_start": {
+      "name": "사냥꾼의 마음가짐",
+      "description": "HP +55, ATK +9, EVA +20, EVA +6% increased"
+    },
+    "tamer_start": {
+      "name": "조련사의 유대",
+      "description": "HP +70, DEF +8"
+    },
+    "frostmage_start": {
+      "name": "빙술의 소양",
+      "description": "HP +55, ATK +8, DEF +8, EVA +10"
+    },
+    "elementalist_start": {
+      "name": "마도의 소양",
+      "description": "HP +45, ATK +10, EVA +10"
+    },
+    "cri_j0": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j1": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j2": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j3": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_si": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_s0": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "cri_s1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "cri_s2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "def_j0": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_j1": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_j2": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_j3": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_s0": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "def_s1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "def_s2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "poi_j0": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j1": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j2": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j3": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_si": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_s0": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "poi_s1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "poi_s2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "pet_j0": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_j1": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_j2": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_j3": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_si": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_s0": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "pet_s1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "pet_s2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "frz_j0": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_j1": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_j2": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_j3": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_si": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_s0": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "frz_s1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "frz_s2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ign_j0": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_j1": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_j2": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_j3": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_si": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_s0": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ign_s1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ign_s2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring0_0_1": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring0_0_2": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring0_0_3": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring0_0_4": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring0_1_1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring0_1_2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring0_1_3": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring0_1_4": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring0_2_1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring0_2_2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring0_2_3": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring0_2_4": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring0_3_1": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring0_3_2": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring0_3_3": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring0_3_4": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring0_4_1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring0_4_2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring0_4_3": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring0_4_4": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring0_5_1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring0_5_2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring0_5_3": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring0_5_4": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring1_0_1": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring1_0_2": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring1_0_3": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring1_1_1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring1_1_2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring1_1_3": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring1_2_1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring1_2_2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring1_2_3": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring1_3_1": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring1_3_2": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring1_3_3": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring1_4_1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring1_4_2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring1_4_3": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring1_5_1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring1_5_2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring1_5_3": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring2_0_1": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring2_0_2": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring2_1_1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring2_1_2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring2_2_1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring2_2_2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring2_3_1": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring2_3_2": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring2_4_1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring2_4_2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring2_5_1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring2_5_2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring3_0_1": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring3_1_1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring3_2_1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ring3_3_1": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ring3_4_1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "ring3_5_1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "cri_b1_c": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_n": {
+      "name": "전사의 기술",
+      "description": "ATK +18, 치명타 확률 +3%, 피격 시 HP +25회복, 블록 확률 +2%"
+    },
+    "cri_b1_e": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_k": {
+      "name": "회심의 극의",
+      "description": "ATK +8% increased, 치명타 확률 +8%, 치명타 피해 +35%, 피해 지연 +3%, 피격 시 HP +35회복, 블록 확률 +4%"
+    },
+    "cri_b2_c": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_n": {
+      "name": "필중",
+      "description": "ATK +12, 치명타 확률 +5%, 치명타 피해 +25%, 명중 시 HP +35회복"
+    },
+    "cri_b2_e": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_k": {
+      "name": "수라",
+      "description": "ATK +25, 치명타 피해 +60%, 피해 지연 +4%, 피격 시 HP +45회복, 블록 확률 +5%, 공격 속도 5% more"
+    },
+    "cri_b3_c": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_n": {
+      "name": "일섬",
+      "description": "ATK +24, 치명타 확률 +5%, 치명타 피해 +30%, 명중 시 HP +45회복"
+    },
+    "cri_b3_e": {
+      "name": "단련",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_g1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "cri_b3_g2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "cri_b3_k": {
+      "name": "처형인",
+      "description": "ATK +15% increased, ATK 14% more, 치명타 시 HP +120회복, 치명타 피해 흡수 +30%, 피해 지연 +5%, 피격 시 HP +70회복, 명중 시 HP +70회복, 블록 확률 +8%, 연속 피격 피해 감소 +15%"
+    },
+    "def_b1_c": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_b1_n": {
+      "name": "강철 의지",
+      "description": "DEF +22, DEF +12% increased, 피해 지연 +3%, 블록 확률 +3%"
+    },
+    "def_b1_e": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_b1_k": {
+      "name": "철벽",
+      "description": "DEF +30, DEF +20% increased, DEF 8% more, 피해 지연 +6%, 블록 확률 +7%"
+    },
+    "def_b2_c": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_b2_n": {
+      "name": "장벽 형성",
+      "description": "피해 지연 +3%, 실드 +240, 실드 +25% increased"
+    },
+    "def_b2_e": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_b2_g1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "def_b2_g2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "def_b2_k": {
+      "name": "영체 장갑",
+      "description": "실드 +35% increased, 실드 10% more, 최대 HP를 실드로 변환, 지속 피해를 실드로 받음"
+    },
+    "def_b3_c": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_b3_n": {
+      "name": "재구축 장갑",
+      "description": "피해 지연 +3%, 실드 +220, 5000ms후실드 재충전, 毎秒실드 재충전 +10%"
+    },
+    "def_b3_e": {
+      "name": "연마",
+      "description": "DEF +12, 피해 지연 +2%"
+    },
+    "def_b3_g1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "def_b3_g2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "def_b3_k": {
+      "name": "반응 장갑",
+      "description": "피해 지연 +5%, 피격 시 DEF 반격 +25%, 실드 20% more, 10回攻撃마다실드 회복 +18%, 연속 피격 피해 감소 +25%, 낮은 HP 피해 감소 +20%"
+    },
+    "poi_b1_c": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_n": {
+      "name": "사냥꾼의 독",
+      "description": "독 확률 +8%, 독 피해 +16%, EVA +30, EVA +12% increased"
+    },
+    "poi_b1_e": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_k": {
+      "name": "맹독의 마음가짐",
+      "description": "독 확률 +10%, 독 피해 +28%, 독 피해 흡수 +12%, EVA +45, EVA +20% increased"
+    },
+    "poi_b2_c": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_n": {
+      "name": "만연",
+      "description": "독 확률 +10%, 독 중첩 +1, EVA +35, EVA +10% increased"
+    },
+    "poi_b2_e": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_g1": {
+      "name": "활력",
+      "description": "HP +55, 블록 확률 +1%"
+    },
+    "poi_b2_g2": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "poi_b2_k": {
+      "name": "환영 축적",
+      "description": "EVA +60, EVA +25% increased, EVA 12% more, 연속 회피 후 피격 시 실드 회복 +8%"
+    },
+    "poi_b3_c": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_n": {
+      "name": "봉독 장벽",
+      "description": "독 확률 +8%, 독 피해 흡수 +10%, EVA +40, EVA +15% increased, 실드 +10% increased, 지속 피해를 실드로 받음, 독 저항 +20%"
+    },
+    "poi_b3_e": {
+      "name": "독 연마",
+      "description": "독 확률 +5%, 독 피해 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_g1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "poi_b3_g2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "poi_b3_k": {
+      "name": "순수 독",
+      "description": "독 피해 65% more, 독 피해 흡수 +25%, 직접 피해 없음"
+    },
+    "pet_b1_c": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_b1_n": {
+      "name": "조련의 마음가짐",
+      "description": "HP +120, DEF +20, 초당 HP 회복 +0.8%, 피해 지연 +3%, 펫 효과 +10%, 펫 드롭률 +0.2%"
+    },
+    "pet_b1_e": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_b1_k": {
+      "name": "생명의 유대",
+      "description": "HP +260, HP 16% more, 피해 지연 +5%, 펫 효과 +20%"
+    },
+    "pet_b2_c": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_b2_n": {
+      "name": "치유의 유대",
+      "description": "초당 HP +90회복, 명중 시 HP +60회복, 펫 효과 +10%, 블록 확률 +4%"
+    },
+    "pet_b2_e": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_b2_k": {
+      "name": "불굴의 유대",
+      "description": "초당 HP 회복 +2%, 피해 지연 +5%, 명중 시 HP +80회복, 펫 효과 +25%, 블록 확률 +10%"
+    },
+    "pet_b3_c": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_b3_n": {
+      "name": "수왕의 가호",
+      "description": "DEF +60, DEF +20% increased, 피해 지연 +6%, 펫 효과 +15%, 펫 드롭률 +0.3%"
+    },
+    "pet_b3_e": {
+      "name": "유대",
+      "description": "HP +70, DEF +8, 펫 효과 +4%"
+    },
+    "pet_b3_g1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "pet_b3_g2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "pet_b3_k": {
+      "name": "공생",
+      "description": "HP 25% more, 초당 HP 회복 +3%, 피해 지연 +6%, 명중 시 HP +110회복, 펫 효과 +40%, 펫 드롭률 +0.5%, 낮은 HP 피해 감소 +20%"
+    },
+    "frz_b1_c": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_b1_n": {
+      "name": "빙술의 마음가짐",
+      "description": "DEF +16, 냉각 저항 +10%, 냉각 확률 +8%, 냉각 효과 +12%, 냉각 지속 +15%"
+    },
+    "frz_b1_e": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_b1_k": {
+      "name": "빙람",
+      "description": "DEF +22, 피해 지연 +7%, 냉각 저항 +20%, 냉각 확률 +10%, 냉각 효과 +25%"
+    },
+    "frz_b2_c": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_b2_n": {
+      "name": "빙결",
+      "description": "DEF +18, 빙결 저항 +10%, 냉각 효과 +18%, 빙결 확률 +3%"
+    },
+    "frz_b2_e": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_b2_k": {
+      "name": "빙결의 극의",
+      "description": "DEF +18, 빙결 저항 +20%, 냉각 지속 +25%, 빙결 확률 +4%, 빙결 지속 +30%, 냉각/빙결 대상 피해 x1.2"
+    },
+    "frz_b3_c": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_b3_n": {
+      "name": "영구동토",
+      "description": "피해 지연 +7%, 빙결 저항 +15%, 연속 피격 피해 감소 +12%, 8000ms마다상태 이상 해제, 냉각 효과 +20%, 빙결 확률 +4%"
+    },
+    "frz_b3_e": {
+      "name": "얼음 연마",
+      "description": "DEF +8, 냉각 저항 +2%, 냉각 효과 +7%"
+    },
+    "frz_b3_g1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "frz_b3_g2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "frz_b3_k": {
+      "name": "절대영도",
+      "description": "DEF 10% more, 피해 지연 +8%, 빙결 확률 +5%, 빙결 지속 +40%, 냉각/빙결 대상 피해 x1.35"
+    },
+    "ign_b1_c": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_b1_n": {
+      "name": "화술의 마음가짐",
+      "description": "발화 확률 +8%, 발화 피해 +18%, 발화 피해 흡수 +5%"
+    },
+    "ign_b1_e": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_b1_k": {
+      "name": "업화의 마음가짐",
+      "description": "발화 확률 +10%, 발화 피해 +30%, 발화 피해 흡수 +15%, 발화 중인 적에게 받는 피해 감소 +6%"
+    },
+    "ign_b2_c": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_b2_n": {
+      "name": "업화",
+      "description": "발화 확률 +10%, 발화 피해 +24%, 발화 지속 +15%, 발화 중인 적에게 받는 피해 감소 +5%"
+    },
+    "ign_b2_e": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_b2_k": {
+      "name": "겁화",
+      "description": "발화 피해 +35%, 발화 피해 12% more, 발화 지속 +25%, 발화 피해 흡수 +10%, 발화 중인 적에게 받는 피해 감소 +8%"
+    },
+    "ign_b3_c": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_b3_n": {
+      "name": "업화 지배",
+      "description": "발화 확률 +12%, 발화 피해 +28%, 발화 피해 흡수 +16%, 발화 중인 적에게 받는 피해 감소 +8%"
+    },
+    "ign_b3_e": {
+      "name": "불 연마",
+      "description": "발화 확률 +2%, 발화 피해 +10%"
+    },
+    "ign_b3_g1": {
+      "name": "견고",
+      "description": "DEF +14"
+    },
+    "ign_b3_g2": {
+      "name": "근력",
+      "description": "ATK +12, 공격 속도 +2%"
+    },
+    "ign_b3_k": {
+      "name": "업염천",
+      "description": "발화 피해 40% more, 발화 피해 흡수 +15%, 발화 중인 적에게 받는 피해 감소 +10%, 피해 지연 +5%"
+    },
+    "stat_def_inc_flat1": {
+      "name": "중장",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc1": {
+      "name": "방어 숙련",
+      "description": "DEF +12% increased"
+    },
+    "stat_def_inc_flat2": {
+      "name": "중장",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc2": {
+      "name": "방어 숙련",
+      "description": "DEF +12% increased"
+    },
+    "stat_hp_inc_flat1": {
+      "name": "거체",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc1": {
+      "name": "생명 숙련",
+      "description": "HP +12% increased"
+    },
+    "stat_hp_inc_flat2": {
+      "name": "거체",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc2": {
+      "name": "생명 숙련",
+      "description": "HP +12% increased"
+    },
+    "stat_atk_inc_flat1": {
+      "name": "강완",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc1": {
+      "name": "공격 숙련",
+      "description": "ATK +10% increased"
+    },
+    "stat_atk_inc_flat2": {
+      "name": "강완",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc2": {
+      "name": "공격 숙련",
+      "description": "ATK +10% increased"
+    },
+    "sustain_0_hit1": {
+      "name": "흡명",
+      "description": "명중 시 HP +30회복"
+    },
+    "sustain_0_leech1": {
+      "name": "회심 흡수",
+      "description": "치명타 피해 흡수 +10%"
+    },
+    "sustain_0_hit2": {
+      "name": "흡명",
+      "description": "명중 시 HP +35회복"
+    },
+    "sustain_0_defer1": {
+      "name": "받아넘기기",
+      "description": "피해 지연 +3%"
+    },
+    "sustain_1_hit1": {
+      "name": "흡명",
+      "description": "명중 시 HP +35회복"
+    },
+    "sustain_1_leech1": {
+      "name": "견수 흡수",
+      "description": "생명력 흡수 +2%, 블록 확률 +2%"
+    },
+    "sustain_1_hit2": {
+      "name": "흡명",
+      "description": "명중 시 HP +40회복"
+    },
+    "sustain_1_defer1": {
+      "name": "받아넘기기",
+      "description": "피해 지연 +3%"
+    },
+    "sustain_2_hit1": {
+      "name": "흡명",
+      "description": "명중 시 HP +30회복"
+    },
+    "sustain_2_leech1": {
+      "name": "독혈 흡수",
+      "description": "독 피해 흡수 +8%"
+    },
+    "sustain_2_hit2": {
+      "name": "흡명",
+      "description": "명중 시 HP +35회복"
+    },
+    "sustain_2_defer1": {
+      "name": "받아넘기기",
+      "description": "피해 지연 +3%"
+    },
+    "sustain_3_hit1": {
+      "name": "흡명",
+      "description": "명중 시 HP +35회복"
+    },
+    "sustain_3_leech1": {
+      "name": "흡혈",
+      "description": "생명력 흡수 +2%"
+    },
+    "sustain_3_hit2": {
+      "name": "흡명",
+      "description": "명중 시 HP +45회복"
+    },
+    "sustain_3_defer1": {
+      "name": "받아넘기기",
+      "description": "피해 지연 +3%"
+    },
+    "sustain_4_hit1": {
+      "name": "흡명",
+      "description": "명중 시 HP +30회복"
+    },
+    "sustain_4_leech1": {
+      "name": "동상 흡수",
+      "description": "생명력 흡수 +2%, 빙결 저항 +5%"
+    },
+    "sustain_4_hit2": {
+      "name": "흡명",
+      "description": "명중 시 HP +35회복"
+    },
+    "sustain_4_defer1": {
+      "name": "받아넘기기",
+      "description": "피해 지연 +3%"
+    },
+    "sustain_5_hit1": {
+      "name": "흡명",
+      "description": "명중 시 HP +30회복"
+    },
+    "sustain_5_leech1": {
+      "name": "화세 흡수",
+      "description": "발화 피해 흡수 +8%"
+    },
+    "sustain_5_hit2": {
+      "name": "흡명",
+      "description": "명중 시 HP +35회복"
+    },
+    "sustain_5_defer1": {
+      "name": "받아넘기기",
+      "description": "피해 지연 +3%"
     }
   },
   "ranking": {
@@ -2303,7 +3298,9 @@
     "igniteResist": "받는 발화 데미지 -{{value}}%",
     "evasion": "회피 +{{value}}%",
     "evasionIncreased": "회피 +{{value}}%",
-    "evasionMore": "회피 {{value}}% more"
+    "evasionMore": "회피 {{value}}% more",
+    "hpOnTakenHit": "피격 시 HP +{{value}} 회복",
+    "shieldOnEvadeStreakHit": "연속 회피 후 피격 시 회피 1회마다 최대 실드의 {{value}}% 회복"
   },
   "boost": {
     "dropRate": {

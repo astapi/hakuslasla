@@ -138,7 +138,11 @@
   "dungeonSelect": {
     "title": "Dungeon waehlen",
     "subtitle": "Waehle einen Dungeon zur Herausforderung",
-    "unlockRequirement": "{{dungeonName}} abschliessen zum Freischalten"
+    "unlockRequirement": "{{dungeonName}} abschliessen zum Freischalten",
+    "selectStartFloor": "Startetage wählen",
+    "startFloorLabel": "Startetage {{floor}}",
+    "startButton": "Start",
+    "cancelButton": "Abbrechen"
   },
   "encyclopedia": {
     "title": "Archiv",
@@ -193,7 +197,7 @@
     "cleared": "Dungeon abgeschlossen!",
     "player": "Spieler",
     "inProgress": "Im Kampf",
-    "tentacleFlurryCountdown": "Tentakel-Wirbel in {{count}}"
+    "tentacleFlurryCountdown": "Tentakelhagel in {{count}} Angriffen"
   },
   "result": {
     "cleared": "Dungeon abgeschlossen!",
@@ -437,7 +441,42 @@
     "freeze_duration_pct": "Einfrierdauer",
     "ignite_resist_pct": "Brand-Res",
     "evasion_increased_pct": "Ausweichen",
-    "evasion_more_pct": "Ausweichen more"
+    "evasion_more_pct": "Ausweichen more",
+    "evasion": "EVA",
+    "hp_on_taken_hit": "HP bei Treffer",
+    "ignite_lifesteal": "Brand-Abs.",
+    "shield_on_evade_streak_hit_pct": "Ausweichschild",
+    "atk": "ATK",
+    "def": "DEF",
+    "hp": "HP",
+    "auto_cleanse_interval_ms": "Auto-Reinigung",
+    "block_chance": "Block",
+    "chill_freeze_damage_mult": "Kälte/Frost-SCH",
+    "chill_resist_pct": "Kälte-Res",
+    "critical_lifesteal_pct": "Krit-Abs.",
+    "freeze_resist_pct": "Frost-Res",
+    "hp_to_shield": "HP zu Schild",
+    "ignite_damage_more_pct": "Brand more",
+    "ignite_damage_reduction": "Brand-SR",
+    "ignite_spread": "Brand-Ausbr.",
+    "ignite_stacking_damage": "Brandstapel",
+    "lifestealPct": "Lebensraub",
+    "low_hp_damage_reduction_pct": "Niedrig-HP-SR",
+    "no_direct_damage": "Kein Direkt-SCH",
+    "pet_drop_rate_pct": "Pet-Drop",
+    "pet_effect_pct": "Pet-Effekt",
+    "poison_lifesteal": "Gift-Abs.",
+    "poison_max_stacks": "Giftstapel",
+    "poison_resist_pct": "Gift-Res",
+    "repeat_hit_damage_reduction_pct": "Folgetreffer-SR",
+    "retaliate_def_pct": "DEF-Konter",
+    "shield": "Schild",
+    "shield_blocks_dot": "Schild-DoT",
+    "shield_increased_pct": "Schild",
+    "shield_more_pct": "Schild more",
+    "shield_on_10_attacks_pct": "Schild/10 Treffer",
+    "shield_recharge_delay_ms": "Schildverz.",
+    "shield_recharge_pct": "Schildaufl."
   },
   "dungeon": {
     "floors": "{{count}} Stockwerke",
@@ -1537,14 +1576,14 @@
       "deepEmbraceDesc": "-20% Angriffsgeschw., -30% Heilung fuer 3 Runden (unter 50% HP)",
       "abyssalEbb": "Abyssale Ebbe",
       "abyssalEbbDesc": "-15% Angriffsgeschw. fuer 2 Runden",
-      "tentacleFlurry": "Tentakel-Wirbel",
-      "tentacleFlurryDesc": "Loest alle 10 Angriffe aus: zusaetzliche 9 Folgehiebe (insgesamt 10 aufeinanderfolgende Angriffe, jeder Folgehieb richtet 1/3 des normalen Schadens an)",
-      "frostAura": "Frostflut",
-      "frostAuraDesc": "Jeder Angriff hat 10% Chance einzufrieren und 20% Chance Spieler zu kuehlen",
+      "tentacleFlurry": "Tentakelhagel",
+      "tentacleFlurryDesc": "Jeder 10. Angriff wird zu 10 Treffern",
+      "frostAura": "Abyssale Frostaura",
+      "frostAuraDesc": "Verlangsamt und friert den Spieler beim Angriff ein",
       "freezeResist": "Abgrundpanzer",
-      "freezeResistDesc": "70% Chance, einen Einfrierversuch abzuwehren",
-      "igniteResist": "Flammen-Resistenz",
-      "igniteResistDesc": "Erhaltener Brandschaden wird auf 2/3 reduziert"
+      "freezeResistDesc": "70% Chance, Einfrieren zu widerstehen",
+      "igniteResist": "Gedämpfte Glut",
+      "igniteResistDesc": "Reduziert Brandschaden um ein Drittel"
     },
     "demon_lord": {
       "name": "Todeshand",
@@ -1592,10 +1631,10 @@
     "bossSkillActivated": "{{enemy}} loest {{skill}} aus!",
     "warlordEnrage": "[Kriegsherr] Aktiviert! Angriffsgeschw.+20%, HP bei Treffer+300",
     "chillApplied": "{{enemy}} ist unterkühlt! Angriffsgeschwindigkeit verringert!",
-    "chillAppliedPlayer": "Du bist unterkühlt! Angriffsgeschwindigkeit verringert!",
+    "chillAppliedPlayer": "Spieler ist verlangsamt! Angriffstempo sinkt!",
     "chillExpired": "{{enemy}}s Unterkühlung ist abgeklungen",
     "freezeApplied": "{{enemy}} ist eingefroren! Handlungsunfähig!",
-    "freezeAppliedPlayer": "Du bist eingefroren! Handlungsunfähig!",
+    "freezeAppliedPlayer": "Spieler ist eingefroren! Handlungsunfähig!",
     "freezeExpired": "{{enemy}}s Einfrieren ist abgeklungen",
     "reflectedDamage": "{{enemy}}'s Mal reflektiert! Du nimmst {{damage}} Schaden!",
     "deferredDamage": "Verzögerter Schaden {{damage}}!",
@@ -1611,7 +1650,8 @@
     "kingSlamHit": "[Königsschlag] ausgelöst! {{damage}} Schaden an {{enemy}}!",
     "twinBladeHit": "[Zwillingsklinge] Folgeangriff! {{damage}} Schaden an {{enemy}}!",
     "royalRoar": "[Königsruf] aktiviert! Gift und Kälte entfernt!",
-    "evaded": "Angriff von {{enemy}} ausgewichen!"
+    "evaded": "Angriff von {{enemy}} ausgewichen!",
+    "blocked": "Geblockt! Du hast den Angriff von {{enemy}} gestoppt!"
   },
   "passiveTree": {
     "title": "Passiver Baum",
@@ -2267,6 +2307,950 @@
     "ignite_final2": {
       "name": "Ausbreitende Flammen",
       "description": "[Schluesselstein] Entzuendungschance +6%, Flammenausbreitung - Wenn entzuendeter Feind stirbt, uebertraegt Entzuendung auf naechsten Feind. DEF +10% erhoehen"
+    },
+    "warrior_start": {
+      "name": "Kriegerhaltung",
+      "description": "HP +55, ATK +10"
+    },
+    "ranger_start": {
+      "name": "Jägerdisziplin",
+      "description": "HP +55, ATK +9, EVA +20, EVA +6% increased"
+    },
+    "tamer_start": {
+      "name": "Zähmerbund",
+      "description": "HP +70, DEF +8"
+    },
+    "frostmage_start": {
+      "name": "Frostbegabung",
+      "description": "HP +55, ATK +8, DEF +8, EVA +10"
+    },
+    "elementalist_start": {
+      "name": "Arkane Begabung",
+      "description": "HP +45, ATK +10, EVA +10"
+    },
+    "cri_j0": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j1": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j2": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j3": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_si": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_s0": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "cri_s1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "cri_s2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "def_j0": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_j1": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_j2": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_j3": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_s0": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "def_s1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "def_s2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "poi_j0": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j1": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j2": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j3": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_si": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_s0": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "poi_s1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "poi_s2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "pet_j0": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_j1": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_j2": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_j3": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_si": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_s0": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "pet_s1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "pet_s2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "frz_j0": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_j1": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_j2": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_j3": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_si": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_s0": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "frz_s1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "frz_s2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ign_j0": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_j1": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_j2": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_j3": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_si": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_s0": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ign_s1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ign_s2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring0_0_1": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring0_0_2": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring0_0_3": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring0_0_4": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring0_1_1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring0_1_2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring0_1_3": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring0_1_4": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring0_2_1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring0_2_2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring0_2_3": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring0_2_4": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring0_3_1": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring0_3_2": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring0_3_3": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring0_3_4": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring0_4_1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring0_4_2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring0_4_3": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring0_4_4": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring0_5_1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring0_5_2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring0_5_3": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring0_5_4": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring1_0_1": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring1_0_2": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring1_0_3": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring1_1_1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring1_1_2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring1_1_3": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring1_2_1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring1_2_2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring1_2_3": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring1_3_1": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring1_3_2": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring1_3_3": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring1_4_1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring1_4_2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring1_4_3": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring1_5_1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring1_5_2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring1_5_3": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring2_0_1": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring2_0_2": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring2_1_1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring2_1_2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring2_2_1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring2_2_2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring2_3_1": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring2_3_2": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring2_4_1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring2_4_2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring2_5_1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring2_5_2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring3_0_1": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring3_1_1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring3_2_1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ring3_3_1": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ring3_4_1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "ring3_5_1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "cri_b1_c": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_n": {
+      "name": "Kriegertechnik",
+      "description": "ATK +18, Krit-Chance +3%, HP bei Treffer erlitten +25Heilung, Blockchance +2%"
+    },
+    "cri_b1_e": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_k": {
+      "name": "Krit-Meisterschaft",
+      "description": "ATK +8% increased, Krit-Chance +8%, Krit-Schaden +35%, Schadensverzögerung +3%, HP bei Treffer erlitten +35Heilung, Blockchance +4%"
+    },
+    "cri_b2_c": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_n": {
+      "name": "Sicherer Treffer",
+      "description": "ATK +12, Krit-Chance +5%, Krit-Schaden +25%, HP bei Treffer +35Heilung"
+    },
+    "cri_b2_e": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_k": {
+      "name": "Asura",
+      "description": "ATK +25, Krit-Schaden +60%, Schadensverzögerung +4%, HP bei Treffer erlitten +45Heilung, Blockchance +5%, Angriffstempo 5% more"
+    },
+    "cri_b3_c": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_n": {
+      "name": "Blitzschnitt",
+      "description": "ATK +24, Krit-Chance +5%, Krit-Schaden +30%, HP bei Treffer +45Heilung"
+    },
+    "cri_b3_e": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_g1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "cri_b3_g2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "cri_b3_k": {
+      "name": "Henker",
+      "description": "ATK +15% increased, ATK 14% more, HP bei Krit +120Heilung, Krit-Schadensraub +30%, Schadensverzögerung +5%, HP bei Treffer erlitten +70Heilung, HP bei Treffer +70Heilung, Blockchance +8%, Reduktion bei Folgetreffern +15%"
+    },
+    "def_b1_c": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_b1_n": {
+      "name": "Eiserner Wille",
+      "description": "DEF +22, DEF +12% increased, Schadensverzögerung +3%, Blockchance +3%"
+    },
+    "def_b1_e": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_b1_k": {
+      "name": "Eiserne Wand",
+      "description": "DEF +30, DEF +20% increased, DEF 8% more, Schadensverzögerung +6%, Blockchance +7%"
+    },
+    "def_b2_c": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_b2_n": {
+      "name": "Barrierenbildung",
+      "description": "Schadensverzögerung +3%, Schild +240, Schild +25% increased"
+    },
+    "def_b2_e": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_b2_g1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "def_b2_g2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "def_b2_k": {
+      "name": "Geisterrüstung",
+      "description": "Schild +35% increased, Schild 10% more, Max-HP in Schild umwandeln, Schild nimmt Schaden über Zeit"
+    },
+    "def_b3_c": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_b3_n": {
+      "name": "Rekonstruierte Rüstung",
+      "description": "Schadensverzögerung +3%, Schild +220, Schildaufladung nach 5000ms, Schildaufladung +10% pro Sekunde"
+    },
+    "def_b3_e": {
+      "name": "Verfeinerung",
+      "description": "DEF +12, Schadensverzögerung +2%"
+    },
+    "def_b3_g1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "def_b3_g2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "def_b3_k": {
+      "name": "Reaktive Rüstung",
+      "description": "Schadensverzögerung +5%, DEF-Gegenstoß bei Treffer +25%, Schild 20% more, Schildheilung +18% alle 10 Angriffe, Reduktion bei Folgetreffern +25%, Schadensreduktion bei niedrigen HP +20%"
+    },
+    "poi_b1_c": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_n": {
+      "name": "Jägergift",
+      "description": "Giftchance +8%, Giftschaden +16%, EVA +30, EVA +12% increased"
+    },
+    "poi_b1_e": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_k": {
+      "name": "Tödliche-Gift-Disziplin",
+      "description": "Giftchance +10%, Giftschaden +28%, Gift-Schadensraub +12%, EVA +45, EVA +20% increased"
+    },
+    "poi_b2_c": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_n": {
+      "name": "Ausbreitung",
+      "description": "Giftchance +10%, Giftstapel +1, EVA +35, EVA +10% increased"
+    },
+    "poi_b2_e": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_g1": {
+      "name": "Vitalität",
+      "description": "HP +55, Blockchance +1%"
+    },
+    "poi_b2_g2": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "poi_b2_k": {
+      "name": "Phantomaufbau",
+      "description": "EVA +60, EVA +25% increased, EVA 12% more, Schildheilung bei Treffer nach Ausweichserie +8%"
+    },
+    "poi_b3_c": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_n": {
+      "name": "Giftversiegelte Barriere",
+      "description": "Giftchance +8%, Gift-Schadensraub +10%, EVA +40, EVA +15% increased, Schild +10% increased, Schild nimmt Schaden über Zeit, Giftresistenz +20%"
+    },
+    "poi_b3_e": {
+      "name": "Gifttraining",
+      "description": "Giftchance +5%, Giftschaden +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_g1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "poi_b3_g2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "poi_b3_k": {
+      "name": "Reines Gift",
+      "description": "Giftschaden 65% more, Gift-Schadensraub +25%, Kein direkter Schaden"
+    },
+    "pet_b1_c": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_b1_n": {
+      "name": "Zähmungsdisziplin",
+      "description": "HP +120, DEF +20, HP-Regeneration/s +0.8%, Schadensverzögerung +3%, Pet-Effekt +10%, Pet-Drop-Rate +0.2%"
+    },
+    "pet_b1_e": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_b1_k": {
+      "name": "Lebensbund",
+      "description": "HP +260, HP 16% more, Schadensverzögerung +5%, Pet-Effekt +20%"
+    },
+    "pet_b2_c": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_b2_n": {
+      "name": "Heilungsbund",
+      "description": "HP-Regeneration/s +90Heilung, HP bei Treffer +60Heilung, Pet-Effekt +10%, Blockchance +4%"
+    },
+    "pet_b2_e": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_b2_k": {
+      "name": "Unbeugsamer Bund",
+      "description": "HP-Regeneration/s +2%, Schadensverzögerung +5%, HP bei Treffer +80Heilung, Pet-Effekt +25%, Blockchance +10%"
+    },
+    "pet_b3_c": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_b3_n": {
+      "name": "Gnade des Bestienkönigs",
+      "description": "DEF +60, DEF +20% increased, Schadensverzögerung +6%, Pet-Effekt +15%, Pet-Drop-Rate +0.3%"
+    },
+    "pet_b3_e": {
+      "name": "Bund",
+      "description": "HP +70, DEF +8, Pet-Effekt +4%"
+    },
+    "pet_b3_g1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "pet_b3_g2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "pet_b3_k": {
+      "name": "Symbiose",
+      "description": "HP 25% more, HP-Regeneration/s +3%, Schadensverzögerung +6%, HP bei Treffer +110Heilung, Pet-Effekt +40%, Pet-Drop-Rate +0.5%, Schadensreduktion bei niedrigen HP +20%"
+    },
+    "frz_b1_c": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_b1_n": {
+      "name": "Frostdisziplin",
+      "description": "DEF +16, Kälteresistenz +10%, Kältechance +8%, Kälteeffekt +12%, Kältedauer +15%"
+    },
+    "frz_b1_e": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_b1_k": {
+      "name": "Eissturm",
+      "description": "DEF +22, Schadensverzögerung +7%, Kälteresistenz +20%, Kältechance +10%, Kälteeffekt +25%"
+    },
+    "frz_b2_c": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_b2_n": {
+      "name": "Tiefgefrieren",
+      "description": "DEF +18, Frostresistenz +10%, Kälteeffekt +18%, Frostchance +3%"
+    },
+    "frz_b2_e": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_b2_k": {
+      "name": "Frost-Meisterschaft",
+      "description": "DEF +18, Frostresistenz +20%, Kältedauer +25%, Frostchance +4%, Frostdauer +30%, Schaden gegen verlangsamt/gefroren x1.2"
+    },
+    "frz_b3_c": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_b3_n": {
+      "name": "Permafrost",
+      "description": "Schadensverzögerung +7%, Frostresistenz +15%, Reduktion bei Folgetreffern +12%, 8000ms alle Status reinigen, Kälteeffekt +20%, Frostchance +4%"
+    },
+    "frz_b3_e": {
+      "name": "Frosttraining",
+      "description": "DEF +8, Kälteresistenz +2%, Kälteeffekt +7%"
+    },
+    "frz_b3_g1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "frz_b3_g2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "frz_b3_k": {
+      "name": "Absoluter Nullpunkt",
+      "description": "DEF 10% more, Schadensverzögerung +8%, Frostchance +5%, Frostdauer +40%, Schaden gegen verlangsamt/gefroren x1.35"
+    },
+    "ign_b1_c": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_b1_n": {
+      "name": "Feuerdisziplin",
+      "description": "Brandchance +8%, Brandschaden +18%, Brand-Schadensraub +5%"
+    },
+    "ign_b1_e": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_b1_k": {
+      "name": "Höllenfeuer-Disziplin",
+      "description": "Brandchance +10%, Brandschaden +30%, Brand-Schadensraub +15%, Schaden von brennenden Gegnern reduziert +6%"
+    },
+    "ign_b2_c": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_b2_n": {
+      "name": "Höllenfeuer",
+      "description": "Brandchance +10%, Brandschaden +24%, Branddauer +15%, Schaden von brennenden Gegnern reduziert +5%"
+    },
+    "ign_b2_e": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_b2_k": {
+      "name": "Inferno",
+      "description": "Brandschaden +35%, Brandschaden 12% more, Branddauer +25%, Brand-Schadensraub +10%, Schaden von brennenden Gegnern reduziert +8%"
+    },
+    "ign_b3_c": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_b3_n": {
+      "name": "Höllenfeuer-Herrschaft",
+      "description": "Brandchance +12%, Brandschaden +28%, Brand-Schadensraub +16%, Schaden von brennenden Gegnern reduziert +8%"
+    },
+    "ign_b3_e": {
+      "name": "Feuertraining",
+      "description": "Brandchance +2%, Brandschaden +10%"
+    },
+    "ign_b3_g1": {
+      "name": "Standhaft",
+      "description": "DEF +14"
+    },
+    "ign_b3_g2": {
+      "name": "Stärke",
+      "description": "ATK +12, Angriffstempo +2%"
+    },
+    "ign_b3_k": {
+      "name": "Himmelsbrand",
+      "description": "Brandschaden 40% more, Brand-Schadensraub +15%, Schaden von brennenden Gegnern reduziert +10%, Schadensverzögerung +5%"
+    },
+    "stat_def_inc_flat1": {
+      "name": "Schwere Rüstung",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc1": {
+      "name": "Verteidigungsmeisterschaft",
+      "description": "DEF +12% increased"
+    },
+    "stat_def_inc_flat2": {
+      "name": "Schwere Rüstung",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc2": {
+      "name": "Verteidigungsmeisterschaft",
+      "description": "DEF +12% increased"
+    },
+    "stat_hp_inc_flat1": {
+      "name": "Riesenkörper",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc1": {
+      "name": "Lebensmeisterschaft",
+      "description": "HP +12% increased"
+    },
+    "stat_hp_inc_flat2": {
+      "name": "Riesenkörper",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc2": {
+      "name": "Lebensmeisterschaft",
+      "description": "HP +12% increased"
+    },
+    "stat_atk_inc_flat1": {
+      "name": "Starker Arm",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc1": {
+      "name": "Angriffsmeisterschaft",
+      "description": "ATK +10% increased"
+    },
+    "stat_atk_inc_flat2": {
+      "name": "Starker Arm",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc2": {
+      "name": "Angriffsmeisterschaft",
+      "description": "ATK +10% increased"
+    },
+    "sustain_0_hit1": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +30Heilung"
+    },
+    "sustain_0_leech1": {
+      "name": "Krit-Absorption",
+      "description": "Krit-Schadensraub +10%"
+    },
+    "sustain_0_hit2": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +35Heilung"
+    },
+    "sustain_0_defer1": {
+      "name": "Parade",
+      "description": "Schadensverzögerung +3%"
+    },
+    "sustain_1_hit1": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +35Heilung"
+    },
+    "sustain_1_leech1": {
+      "name": "Wacht-Absorption",
+      "description": "Lebensraub +2%, Blockchance +2%"
+    },
+    "sustain_1_hit2": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +40Heilung"
+    },
+    "sustain_1_defer1": {
+      "name": "Parade",
+      "description": "Schadensverzögerung +3%"
+    },
+    "sustain_2_hit1": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +30Heilung"
+    },
+    "sustain_2_leech1": {
+      "name": "Giftblut-Absorption",
+      "description": "Gift-Schadensraub +8%"
+    },
+    "sustain_2_hit2": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +35Heilung"
+    },
+    "sustain_2_defer1": {
+      "name": "Parade",
+      "description": "Schadensverzögerung +3%"
+    },
+    "sustain_3_hit1": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +35Heilung"
+    },
+    "sustain_3_leech1": {
+      "name": "Lebensraub",
+      "description": "Lebensraub +2%"
+    },
+    "sustain_3_hit2": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +45Heilung"
+    },
+    "sustain_3_defer1": {
+      "name": "Parade",
+      "description": "Schadensverzögerung +3%"
+    },
+    "sustain_4_hit1": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +30Heilung"
+    },
+    "sustain_4_leech1": {
+      "name": "Frostbiss-Absorption",
+      "description": "Lebensraub +2%, Frostresistenz +5%"
+    },
+    "sustain_4_hit2": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +35Heilung"
+    },
+    "sustain_4_defer1": {
+      "name": "Parade",
+      "description": "Schadensverzögerung +3%"
+    },
+    "sustain_5_hit1": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +30Heilung"
+    },
+    "sustain_5_leech1": {
+      "name": "Flammenabsorption",
+      "description": "Brand-Schadensraub +8%"
+    },
+    "sustain_5_hit2": {
+      "name": "Lebensraub",
+      "description": "HP bei Treffer +35Heilung"
+    },
+    "sustain_5_defer1": {
+      "name": "Parade",
+      "description": "Schadensverzögerung +3%"
     }
   },
   "ranking": {
@@ -2314,7 +3298,9 @@
     "igniteResist": "Erhaltener Brandschaden -{{value}}%",
     "evasion": "Ausweichen +{{value}}%",
     "evasionIncreased": "Ausweichen +{{value}}%",
-    "evasionMore": "Ausweichen {{value}}% more"
+    "evasionMore": "Ausweichen {{value}}% more",
+    "hpOnTakenHit": "HP +{{value}} bei Treffer",
+    "shieldOnEvadeStreakHit": "Stellt nach einer Ausweichserie bei Treffer pro Ausweichen {{value}}% des max. Schilds wieder her"
   },
   "boost": {
     "dropRate": {

@@ -138,7 +138,11 @@
   "dungeonSelect": {
     "title": "Sélection du donjon",
     "subtitle": "Choisissez un donjon à défier",
-    "unlockRequirement": "Terminez {{dungeonName}} pour débloquer"
+    "unlockRequirement": "Terminez {{dungeonName}} pour débloquer",
+    "selectStartFloor": "Choisir l’étage de départ",
+    "startFloorLabel": "Étage de départ {{floor}}",
+    "startButton": "Démarrer",
+    "cancelButton": "Annuler"
   },
   "encyclopedia": {
     "title": "Archives",
@@ -192,7 +196,8 @@
     "defeat": "Défaite...",
     "cleared": "Donjon terminé !",
     "player": "Joueur",
-    "inProgress": "En combat"
+    "inProgress": "En combat",
+    "tentacleFlurryCountdown": "Rafale de Tentacules dans {{count}} attaques"
   },
   "result": {
     "cleared": "Donjon terminé !",
@@ -436,7 +441,42 @@
     "freeze_duration_pct": "Durée congél.",
     "ignite_resist_pct": "Rés. ignition",
     "evasion_increased_pct": "Esquive",
-    "evasion_more_pct": "Esquive more"
+    "evasion_more_pct": "Esquive more",
+    "evasion": "EVA",
+    "hp_on_taken_hit": "HP quand touché",
+    "ignite_lifesteal": "Vol embras.",
+    "shield_on_evade_streak_hit_pct": "Bouclier esquive",
+    "atk": "ATK",
+    "def": "DEF",
+    "hp": "HP",
+    "auto_cleanse_interval_ms": "Auto-purge",
+    "block_chance": "Blocage",
+    "chill_freeze_damage_mult": "Dégâts froid/gel",
+    "chill_resist_pct": "Rés. froid",
+    "critical_lifesteal_pct": "Vol crit.",
+    "freeze_resist_pct": "Rés. gel",
+    "hp_to_shield": "HP en bouclier",
+    "ignite_damage_more_pct": "Embras. more",
+    "ignite_damage_reduction": "Réduc. embras.",
+    "ignite_spread": "Propagation embras.",
+    "ignite_stacking_damage": "Embras. cumul",
+    "lifestealPct": "Vol de vie",
+    "low_hp_damage_reduction_pct": "Réduc. bas HP",
+    "no_direct_damage": "Aucun dégât direct",
+    "pet_drop_rate_pct": "Drop familier",
+    "pet_effect_pct": "Effet familier",
+    "poison_lifesteal": "Vol poison",
+    "poison_max_stacks": "Cumuls poison",
+    "poison_resist_pct": "Rés. poison",
+    "repeat_hit_damage_reduction_pct": "Réduc. coups rép.",
+    "retaliate_def_pct": "Riposte DEF",
+    "shield": "Bouclier",
+    "shield_blocks_dot": "Bouclier DoT",
+    "shield_increased_pct": "Bouclier",
+    "shield_more_pct": "Bouclier more",
+    "shield_on_10_attacks_pct": "Bouclier/10 coups",
+    "shield_recharge_delay_ms": "Délai bouclier",
+    "shield_recharge_pct": "Recharge bouclier"
   },
   "dungeon": {
     "floors": "{{count}} étages",
@@ -1535,7 +1575,15 @@
       "deepEmbrace": "Étreinte abyssale",
       "deepEmbraceDesc": "-20% de vitesse d'attaque, -30% de soins pendant 3 tours (se déclenche sous 50% HP)",
       "abyssalEbb": "Reflux abyssal",
-      "abyssalEbbDesc": "-15% de vitesse d'attaque pendant 2 tours"
+      "abyssalEbbDesc": "-15% de vitesse d'attaque pendant 2 tours",
+      "tentacleFlurry": "Rafale de Tentacules",
+      "tentacleFlurryDesc": "Chaque 10e attaque devient une rafale de 10 coups",
+      "frostAura": "Aura de Givre Abyssale",
+      "frostAuraDesc": "Inflige froid et gel au joueur lors des attaques",
+      "freezeResist": "Égide Abyssale",
+      "freezeResistDesc": "70% de chance de résister au gel",
+      "igniteResist": "Braises Étouffées",
+      "igniteResistDesc": "Réduit les dégâts d’embrasement d’un tiers"
     },
     "demon_lord": {
       "name": "Main de la mort",
@@ -1600,7 +1648,10 @@
     "kingSlamHit": "[Frappe du Roi] déclenchée ! {{damage}} dégâts à {{enemy}} !",
     "twinBladeHit": "[Lame Jumelle] poursuite ! {{damage}} dégâts à {{enemy}} !",
     "royalRoar": "[Rugissement Royal] activé ! Poison et Gel dissipés !",
-    "evaded": "Attaque de {{enemy}} esquivée !"
+    "evaded": "Attaque de {{enemy}} esquivée !",
+    "blocked": "Bloqué ! Vous avez stoppé l’attaque de {{enemy}} !",
+    "chillAppliedPlayer": "Le joueur est ralenti ! Vitesse d’attaque réduite !",
+    "freezeAppliedPlayer": "Le joueur est gelé ! Incapable d’agir !"
   },
   "passiveTree": {
     "title": "Arbre passif",
@@ -2256,6 +2307,950 @@
     "ignite_final2": {
       "name": "Flammes propagées",
       "description": "[Keystone] Chance d'Ignite +6%, Propagation d'Ignite - Quand un ennemi enflammé meurt, l'Ignite se transfère à l'ennemi suivant. DEF +10% increased"
+    },
+    "warrior_start": {
+      "name": "Posture du Guerrier",
+      "description": "HP +55, ATK +10"
+    },
+    "ranger_start": {
+      "name": "Discipline du Chasseur",
+      "description": "HP +55, ATK +9, EVA +20, EVA +6% increased"
+    },
+    "tamer_start": {
+      "name": "Lien du Dresseur",
+      "description": "HP +70, DEF +8"
+    },
+    "frostmage_start": {
+      "name": "Aptitude de Givre",
+      "description": "HP +55, ATK +8, DEF +8, EVA +10"
+    },
+    "elementalist_start": {
+      "name": "Aptitude Arcanique",
+      "description": "HP +45, ATK +10, EVA +10"
+    },
+    "cri_j0": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j1": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j2": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j3": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_si": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_s0": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "cri_s1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "cri_s2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "def_j0": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_j1": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_j2": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_j3": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_s0": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "def_s1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "def_s2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "poi_j0": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j1": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j2": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j3": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_si": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_s0": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "poi_s1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "poi_s2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "pet_j0": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_j1": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_j2": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_j3": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_si": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_s0": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "pet_s1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "pet_s2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "frz_j0": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_j1": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_j2": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_j3": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_si": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_s0": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "frz_s1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "frz_s2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ign_j0": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_j1": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_j2": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_j3": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_si": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_s0": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ign_s1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ign_s2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring0_0_1": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring0_0_2": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring0_0_3": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring0_0_4": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring0_1_1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring0_1_2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring0_1_3": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring0_1_4": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring0_2_1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring0_2_2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring0_2_3": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring0_2_4": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring0_3_1": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring0_3_2": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring0_3_3": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring0_3_4": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring0_4_1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring0_4_2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring0_4_3": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring0_4_4": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring0_5_1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring0_5_2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring0_5_3": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring0_5_4": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring1_0_1": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring1_0_2": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring1_0_3": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring1_1_1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring1_1_2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring1_1_3": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring1_2_1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring1_2_2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring1_2_3": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring1_3_1": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring1_3_2": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring1_3_3": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring1_4_1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring1_4_2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring1_4_3": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring1_5_1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring1_5_2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring1_5_3": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring2_0_1": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring2_0_2": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring2_1_1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring2_1_2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring2_2_1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring2_2_2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring2_3_1": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring2_3_2": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring2_4_1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring2_4_2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring2_5_1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring2_5_2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring3_0_1": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring3_1_1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring3_2_1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ring3_3_1": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ring3_4_1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "ring3_5_1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "cri_b1_c": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_n": {
+      "name": "Technique du Guerrier",
+      "description": "ATK +18, Chance critique +3%, HP quand touché +25soin, Chance de blocage +2%"
+    },
+    "cri_b1_e": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_k": {
+      "name": "Maîtrise Critique",
+      "description": "ATK +8% increased, Chance critique +8%, Dégâts critiques +35%, Dégâts différés +3%, HP quand touché +35soin, Chance de blocage +4%"
+    },
+    "cri_b2_c": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_n": {
+      "name": "Coup Assuré",
+      "description": "ATK +12, Chance critique +5%, Dégâts critiques +25%, HP au toucher +35soin"
+    },
+    "cri_b2_e": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_k": {
+      "name": "Asura",
+      "description": "ATK +25, Dégâts critiques +60%, Dégâts différés +4%, HP quand touché +45soin, Chance de blocage +5%, Vitesse d’attaque 5% more"
+    },
+    "cri_b3_c": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_n": {
+      "name": "Coupe Éclair",
+      "description": "ATK +24, Chance critique +5%, Dégâts critiques +30%, HP au toucher +45soin"
+    },
+    "cri_b3_e": {
+      "name": "Entraînement",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_g1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "cri_b3_g2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "cri_b3_k": {
+      "name": "Exécuteur",
+      "description": "ATK +15% increased, ATK 14% more, HP sur critique +120soin, Vol de dégâts critiques +30%, Dégâts différés +5%, HP quand touché +70soin, HP au toucher +70soin, Chance de blocage +8%, Réduction des coups répétés +15%"
+    },
+    "def_b1_c": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_b1_n": {
+      "name": "Volonté de Fer",
+      "description": "DEF +22, DEF +12% increased, Dégâts différés +3%, Chance de blocage +3%"
+    },
+    "def_b1_e": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_b1_k": {
+      "name": "Mur de Fer",
+      "description": "DEF +30, DEF +20% increased, DEF 8% more, Dégâts différés +6%, Chance de blocage +7%"
+    },
+    "def_b2_c": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_b2_n": {
+      "name": "Formation de Barrière",
+      "description": "Dégâts différés +3%, Bouclier +240, Bouclier +25% increased"
+    },
+    "def_b2_e": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_b2_g1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "def_b2_g2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "def_b2_k": {
+      "name": "Armure Spectrale",
+      "description": "Bouclier +35% increased, Bouclier 10% more, Convertit HP max en bouclier, Le bouclier subit les dégâts sur la durée"
+    },
+    "def_b3_c": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_b3_n": {
+      "name": "Armure Reconstruite",
+      "description": "Dégâts différés +3%, Bouclier +220, recharge du bouclier après 5000ms, recharge du bouclier +10% par seconde"
+    },
+    "def_b3_e": {
+      "name": "Polissage",
+      "description": "DEF +12, Dégâts différés +2%"
+    },
+    "def_b3_g1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "def_b3_g2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "def_b3_k": {
+      "name": "Armure Réactive",
+      "description": "Dégâts différés +5%, riposte DEF quand touché +25%, Bouclier 20% more, récupération du bouclier +18% toutes les 10 attaques, réduction des coups répétés +25%, réduction à bas HP +20%"
+    },
+    "poi_b1_c": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_n": {
+      "name": "Venin du Chasseur",
+      "description": "Chance de poison +8%, Dégâts de poison +16%, EVA +30, EVA +12% increased"
+    },
+    "poi_b1_e": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_k": {
+      "name": "Discipline du Venin Mortel",
+      "description": "Chance de poison +10%, Dégâts de poison +28%, Vol de dégâts de poison +12%, EVA +45, EVA +20% increased"
+    },
+    "poi_b2_c": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_n": {
+      "name": "Propagation",
+      "description": "Chance de poison +10%, Cumuls de poison +1, EVA +35, EVA +10% increased"
+    },
+    "poi_b2_e": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_g1": {
+      "name": "Vitalité",
+      "description": "HP +55, Chance de blocage +1%"
+    },
+    "poi_b2_g2": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "poi_b2_k": {
+      "name": "Accumulation Fantôme",
+      "description": "EVA +60, EVA +25% increased, EVA 12% more, Récup. bouclier quand touché après esquives +8%"
+    },
+    "poi_b3_c": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_n": {
+      "name": "Barrière Antipoison",
+      "description": "Chance de poison +8%, Vol de dégâts de poison +10%, EVA +40, EVA +15% increased, Bouclier +10% increased, Le bouclier subit les dégâts sur la durée, Rés. poison +20%"
+    },
+    "poi_b3_e": {
+      "name": "Entraînement au Poison",
+      "description": "Chance de poison +5%, Dégâts de poison +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_g1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "poi_b3_g2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "poi_b3_k": {
+      "name": "Venin Pur",
+      "description": "Dégâts de poison 65% more, Vol de dégâts de poison +25%, Aucun dégât direct"
+    },
+    "pet_b1_c": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_b1_n": {
+      "name": "Discipline de Dressage",
+      "description": "HP +120, DEF +20, Régén. HP/s +0.8%, Dégâts différés +3%, Effet familier +10%, Taux drop familier +0.2%"
+    },
+    "pet_b1_e": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_b1_k": {
+      "name": "Lien Vital",
+      "description": "HP +260, HP 16% more, Dégâts différés +5%, Effet familier +20%"
+    },
+    "pet_b2_c": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_b2_n": {
+      "name": "Lien Guérisseur",
+      "description": "Régén. HP/s +90soin, HP au toucher +60soin, Effet familier +10%, Chance de blocage +4%"
+    },
+    "pet_b2_e": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_b2_k": {
+      "name": "Lien Inflexible",
+      "description": "Régén. HP/s +2%, Dégâts différés +5%, HP au toucher +80soin, Effet familier +25%, Chance de blocage +10%"
+    },
+    "pet_b3_c": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_b3_n": {
+      "name": "Grâce du Roi-Bête",
+      "description": "DEF +60, DEF +20% increased, Dégâts différés +6%, Effet familier +15%, Taux drop familier +0.3%"
+    },
+    "pet_b3_e": {
+      "name": "Lien",
+      "description": "HP +70, DEF +8, Effet familier +4%"
+    },
+    "pet_b3_g1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "pet_b3_g2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "pet_b3_k": {
+      "name": "Symbiose",
+      "description": "HP 25% more, Régén. HP/s +3%, Dégâts différés +6%, HP au toucher +110soin, Effet familier +40%, Taux drop familier +0.5%, Réduction à bas HP +20%"
+    },
+    "frz_b1_c": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_b1_n": {
+      "name": "Discipline du Givre",
+      "description": "DEF +16, Rés. froid +10%, Chance de froid +8%, Effet de froid +12%, Durée de froid +15%"
+    },
+    "frz_b1_e": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_b1_k": {
+      "name": "Tempête de Glace",
+      "description": "DEF +22, Dégâts différés +7%, Rés. froid +20%, Chance de froid +10%, Effet de froid +25%"
+    },
+    "frz_b2_c": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_b2_n": {
+      "name": "Gel Profond",
+      "description": "DEF +18, Rés. gel +10%, Effet de froid +18%, Chance de gel +3%"
+    },
+    "frz_b2_e": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_b2_k": {
+      "name": "Maîtrise du Gel",
+      "description": "DEF +18, Rés. gel +20%, Durée de froid +25%, Chance de gel +4%, Durée de gel +30%, Dégâts contre ralenti/gelé x1.2"
+    },
+    "frz_b3_c": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_b3_n": {
+      "name": "Pergélisol",
+      "description": "Dégâts différés +7%, Rés. gel +15%, Réduction des coups répétés +12%, 8000ms toutes les purge les altérations, Effet de froid +20%, Chance de gel +4%"
+    },
+    "frz_b3_e": {
+      "name": "Entraînement au Givre",
+      "description": "DEF +8, Rés. froid +2%, Effet de froid +7%"
+    },
+    "frz_b3_g1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "frz_b3_g2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "frz_b3_k": {
+      "name": "Zéro Absolu",
+      "description": "DEF 10% more, Dégâts différés +8%, Chance de gel +5%, Durée de gel +40%, Dégâts contre ralenti/gelé x1.35"
+    },
+    "ign_b1_c": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_b1_n": {
+      "name": "Discipline du Feu",
+      "description": "Chance d’embrasement +8%, Dégâts d’embrasement +18%, Vol de dégâts d’embrasement +5%"
+    },
+    "ign_b1_e": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_b1_k": {
+      "name": "Discipline Infernale",
+      "description": "Chance d’embrasement +10%, Dégâts d’embrasement +30%, Vol de dégâts d’embrasement +15%, Dégâts reçus des ennemis enflammés réduits +6%"
+    },
+    "ign_b2_c": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_b2_n": {
+      "name": "Feu Infernal",
+      "description": "Chance d’embrasement +10%, Dégâts d’embrasement +24%, Durée d’embrasement +15%, Dégâts reçus des ennemis enflammés réduits +5%"
+    },
+    "ign_b2_e": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_b2_k": {
+      "name": "Inferno",
+      "description": "Dégâts d’embrasement +35%, Dégâts d’embrasement 12% more, Durée d’embrasement +25%, Vol de dégâts d’embrasement +10%, Dégâts reçus des ennemis enflammés réduits +8%"
+    },
+    "ign_b3_c": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_b3_n": {
+      "name": "Domination Infernale",
+      "description": "Chance d’embrasement +12%, Dégâts d’embrasement +28%, Vol de dégâts d’embrasement +16%, Dégâts reçus des ennemis enflammés réduits +8%"
+    },
+    "ign_b3_e": {
+      "name": "Entraînement au Feu",
+      "description": "Chance d’embrasement +2%, Dégâts d’embrasement +10%"
+    },
+    "ign_b3_g1": {
+      "name": "Robuste",
+      "description": "DEF +14"
+    },
+    "ign_b3_g2": {
+      "name": "Force",
+      "description": "ATK +12, Vitesse d’attaque +2%"
+    },
+    "ign_b3_k": {
+      "name": "Flamme Céleste",
+      "description": "Dégâts d’embrasement 40% more, Vol de dégâts d’embrasement +15%, Dégâts reçus des ennemis enflammés réduits +10%, Dégâts différés +5%"
+    },
+    "stat_def_inc_flat1": {
+      "name": "Armure Lourde",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc1": {
+      "name": "Maîtrise Défensive",
+      "description": "DEF +12% increased"
+    },
+    "stat_def_inc_flat2": {
+      "name": "Armure Lourde",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc2": {
+      "name": "Maîtrise Défensive",
+      "description": "DEF +12% increased"
+    },
+    "stat_hp_inc_flat1": {
+      "name": "Corps Géant",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc1": {
+      "name": "Maîtrise Vitale",
+      "description": "HP +12% increased"
+    },
+    "stat_hp_inc_flat2": {
+      "name": "Corps Géant",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc2": {
+      "name": "Maîtrise Vitale",
+      "description": "HP +12% increased"
+    },
+    "stat_atk_inc_flat1": {
+      "name": "Bras Puissant",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc1": {
+      "name": "Maîtrise d’Attaque",
+      "description": "ATK +10% increased"
+    },
+    "stat_atk_inc_flat2": {
+      "name": "Bras Puissant",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc2": {
+      "name": "Maîtrise d’Attaque",
+      "description": "ATK +10% increased"
+    },
+    "sustain_0_hit1": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +30soin"
+    },
+    "sustain_0_leech1": {
+      "name": "Absorption Critique",
+      "description": "Vol de dégâts critiques +10%"
+    },
+    "sustain_0_hit2": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +35soin"
+    },
+    "sustain_0_defer1": {
+      "name": "Déviation",
+      "description": "Dégâts différés +3%"
+    },
+    "sustain_1_hit1": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +35soin"
+    },
+    "sustain_1_leech1": {
+      "name": "Absorption de Garde",
+      "description": "Vol de vie +2%, Chance de blocage +2%"
+    },
+    "sustain_1_hit2": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +40soin"
+    },
+    "sustain_1_defer1": {
+      "name": "Déviation",
+      "description": "Dégâts différés +3%"
+    },
+    "sustain_2_hit1": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +30soin"
+    },
+    "sustain_2_leech1": {
+      "name": "Absorption de Sang Toxique",
+      "description": "Vol de dégâts de poison +8%"
+    },
+    "sustain_2_hit2": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +35soin"
+    },
+    "sustain_2_defer1": {
+      "name": "Déviation",
+      "description": "Dégâts différés +3%"
+    },
+    "sustain_3_hit1": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +35soin"
+    },
+    "sustain_3_leech1": {
+      "name": "Vol de Vie",
+      "description": "Vol de vie +2%"
+    },
+    "sustain_3_hit2": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +45soin"
+    },
+    "sustain_3_defer1": {
+      "name": "Déviation",
+      "description": "Dégâts différés +3%"
+    },
+    "sustain_4_hit1": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +30soin"
+    },
+    "sustain_4_leech1": {
+      "name": "Absorption de Givre",
+      "description": "Vol de vie +2%, Rés. gel +5%"
+    },
+    "sustain_4_hit2": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +35soin"
+    },
+    "sustain_4_defer1": {
+      "name": "Déviation",
+      "description": "Dégâts différés +3%"
+    },
+    "sustain_5_hit1": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +30soin"
+    },
+    "sustain_5_leech1": {
+      "name": "Absorption de Flamme",
+      "description": "Vol de dégâts d’embrasement +8%"
+    },
+    "sustain_5_hit2": {
+      "name": "Siphon Vital",
+      "description": "HP au toucher +35soin"
+    },
+    "sustain_5_defer1": {
+      "name": "Déviation",
+      "description": "Dégâts différés +3%"
     }
   },
   "ranking": {
@@ -2303,7 +3298,9 @@
     "igniteResist": "Dégâts d'ignition reçus -{{value}}%",
     "evasion": "Esquive +{{value}}%",
     "evasionIncreased": "Esquive +{{value}}%",
-    "evasionMore": "Esquive {{value}}% more"
+    "evasionMore": "Esquive {{value}}% more",
+    "hpOnTakenHit": "HP +{{value}} quand touché",
+    "shieldOnEvadeStreakHit": "Récupère {{value}}% du bouclier max par esquive quand touché après une série d’esquives"
   },
   "boost": {
     "dropRate": {

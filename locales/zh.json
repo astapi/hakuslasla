@@ -138,7 +138,11 @@
   "dungeonSelect": {
     "title": "选择地下城",
     "subtitle": "选择要挑战的地下城",
-    "unlockRequirement": "通关{{dungeonName}}后解锁"
+    "unlockRequirement": "通关{{dungeonName}}后解锁",
+    "selectStartFloor": "选择起始楼层",
+    "startFloorLabel": "起始楼层 {{floor}}",
+    "startButton": "开始",
+    "cancelButton": "取消"
   },
   "encyclopedia": {
     "title": "图鉴",
@@ -192,7 +196,8 @@
     "defeat": "失败...",
     "cleared": "地下城通关！",
     "player": "玩家",
-    "inProgress": "战斗中"
+    "inProgress": "战斗中",
+    "tentacleFlurryCountdown": "触手乱打还剩 {{count}} 次攻击"
   },
   "result": {
     "cleared": "地下城通关！",
@@ -436,7 +441,42 @@
     "freeze_duration_pct": "冻结时间",
     "ignite_resist_pct": "发火耐性",
     "evasion_increased_pct": "闪避",
-    "evasion_more_pct": "闪避 more"
+    "evasion_more_pct": "闪避 more",
+    "evasion": "EVA",
+    "hp_on_taken_hit": "受击HP",
+    "ignite_lifesteal": "燃烧吸收",
+    "shield_on_evade_streak_hit_pct": "闪避护盾",
+    "atk": "ATK",
+    "def": "DEF",
+    "hp": "HP",
+    "auto_cleanse_interval_ms": "自动净化",
+    "block_chance": "格挡",
+    "chill_freeze_damage_mult": "寒冷/冻结伤害",
+    "chill_resist_pct": "寒冷抗性",
+    "critical_lifesteal_pct": "暴击吸收",
+    "freeze_resist_pct": "冻结抗性",
+    "hp_to_shield": "HP转护盾",
+    "ignite_damage_more_pct": "燃烧more",
+    "ignite_damage_reduction": "燃烧减伤",
+    "ignite_spread": "燃烧扩散",
+    "ignite_stacking_damage": "燃烧叠加",
+    "lifestealPct": "生命偷取",
+    "low_hp_damage_reduction_pct": "低HP减伤",
+    "no_direct_damage": "无直接伤害",
+    "pet_drop_rate_pct": "宠物掉落",
+    "pet_effect_pct": "宠物效果",
+    "poison_lifesteal": "毒吸收",
+    "poison_max_stacks": "毒层数",
+    "poison_resist_pct": "毒抗性",
+    "repeat_hit_damage_reduction_pct": "连续受击减伤",
+    "retaliate_def_pct": "DEF反击",
+    "shield": "护盾",
+    "shield_blocks_dot": "护盾DoT",
+    "shield_increased_pct": "护盾",
+    "shield_more_pct": "护盾more",
+    "shield_on_10_attacks_pct": "10击护盾",
+    "shield_recharge_delay_ms": "护盾延迟",
+    "shield_recharge_pct": "护盾重构"
   },
   "dungeon": {
     "floors": "{{count}} 层",
@@ -1535,7 +1575,15 @@
       "deepEmbrace": "深渊拥抱",
       "deepEmbraceDesc": "攻速-20%，治疗-30%持续3回合（HP低于50%时触发）",
       "abyssalEbb": "深渊退潮",
-      "abyssalEbbDesc": "攻速-15%持续2回合"
+      "abyssalEbbDesc": "攻速-15%持续2回合",
+      "tentacleFlurry": "触手乱打",
+      "tentacleFlurryDesc": "每第10次攻击变为10连击",
+      "frostAura": "深渊冰霜光环",
+      "frostAuraDesc": "攻击时对玩家施加寒冷和冻结",
+      "freezeResist": "深渊护甲",
+      "freezeResistDesc": "70%概率抵抗冻结尝试",
+      "igniteResist": "潮湿余烬",
+      "igniteResistDesc": "燃烧伤害减少三分之一"
     },
     "demon_lord": {
       "name": "死亡之手",
@@ -1600,7 +1648,10 @@
     "kingSlamHit": "【国王重击】爆发！对{{enemy}}造成{{damage}}伤害！",
     "twinBladeHit": "【双击之刃】追击！对{{enemy}}造成{{damage}}伤害！",
     "royalRoar": "【王者咆哮】发动！解除中毒与冰缓状态！",
-    "evaded": "闪避了{{enemy}}的攻击！"
+    "evaded": "闪避了{{enemy}}的攻击！",
+    "blocked": "格挡！你挡住了{{enemy}}的攻击！",
+    "chillAppliedPlayer": "玩家陷入寒冷状态！攻击速度下降！",
+    "freezeAppliedPlayer": "玩家被冻结！无法行动！"
   },
   "passiveTree": {
     "title": "被动技能树",
@@ -2256,6 +2307,950 @@
     "ignite_final2": {
       "name": "燎原之火【核心】",
       "description": "点燃几率 +6%，点燃传播 - 点燃的敌人死亡时，点燃转移给下个敌人。DEF +10% increased"
+    },
+    "warrior_start": {
+      "name": "战士架势",
+      "description": "HP +55, ATK +10"
+    },
+    "ranger_start": {
+      "name": "猎人心得",
+      "description": "HP +55, ATK +9, EVA +20, EVA +6% increased"
+    },
+    "tamer_start": {
+      "name": "驯兽师羁绊",
+      "description": "HP +70, DEF +8"
+    },
+    "frostmage_start": {
+      "name": "冰术素养",
+      "description": "HP +55, ATK +8, DEF +8, EVA +10"
+    },
+    "elementalist_start": {
+      "name": "魔导素养",
+      "description": "HP +45, ATK +10, EVA +10"
+    },
+    "cri_j0": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j1": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j2": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j3": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_si": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "cri_s1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "cri_s2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "def_j0": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_j1": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_j2": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_j3": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "def_s1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "def_s2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "poi_j0": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j1": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j2": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j3": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_si": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "poi_s1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "poi_s2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "pet_j0": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_j1": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_j2": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_j3": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_si": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "pet_s1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "pet_s2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "frz_j0": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_j1": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_j2": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_j3": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_si": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "frz_s1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "frz_s2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ign_j0": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_j1": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_j2": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_j3": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_si": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ign_s1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ign_s2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring0_0_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring0_0_2": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring0_0_3": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring0_0_4": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring0_1_1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring0_1_2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring0_1_3": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring0_1_4": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring0_2_1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring0_2_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring0_2_3": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring0_2_4": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring0_3_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring0_3_2": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring0_3_3": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring0_3_4": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring0_4_1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring0_4_2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring0_4_3": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring0_4_4": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring0_5_1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring0_5_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring0_5_3": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring0_5_4": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring1_0_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring1_0_2": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring1_0_3": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring1_1_1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring1_1_2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring1_1_3": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring1_2_1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring1_2_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring1_2_3": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring1_3_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring1_3_2": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring1_3_3": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring1_4_1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring1_4_2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring1_4_3": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring1_5_1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring1_5_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring1_5_3": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring2_0_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring2_0_2": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring2_1_1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring2_1_2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring2_2_1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring2_2_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring2_3_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring2_3_2": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring2_4_1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring2_4_2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring2_5_1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring2_5_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring3_0_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring3_1_1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring3_2_1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ring3_3_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ring3_4_1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "ring3_5_1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "cri_b1_c": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_n": {
+      "name": "战士技艺",
+      "description": "ATK +18, 暴击率 +3%, 受击时HP +25回复, 格挡率 +2%"
+    },
+    "cri_b1_e": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_k": {
+      "name": "会心极意",
+      "description": "ATK +8% increased, 暴击率 +8%, 暴击伤害 +35%, 伤害延迟 +3%, 受击时HP +35回复, 格挡率 +4%"
+    },
+    "cri_b2_c": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_n": {
+      "name": "必中",
+      "description": "ATK +12, 暴击率 +5%, 暴击伤害 +25%, 命期间时HP +35回复"
+    },
+    "cri_b2_e": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_k": {
+      "name": "修罗",
+      "description": "ATK +25, 暴击伤害 +60%, 伤害延迟 +4%, 受击时HP +45回复, 格挡率 +5%, 攻击速度 5% more"
+    },
+    "cri_b3_c": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_n": {
+      "name": "一闪",
+      "description": "ATK +24, 暴击率 +5%, 暴击伤害 +30%, 命期间时HP +45回复"
+    },
+    "cri_b3_e": {
+      "name": "锻炼",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_g1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "cri_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "cri_b3_k": {
+      "name": "处刑人",
+      "description": "ATK +15% increased, ATK 14% more, 暴击时HP +120回复, 暴击伤害吸收 +30%, 伤害延迟 +5%, 受击时HP +70回复, 命期间时HP +70回复, 格挡率 +8%, 连续受击减伤 +15%"
+    },
+    "def_b1_c": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_b1_n": {
+      "name": "钢铁意志",
+      "description": "DEF +22, DEF +12% increased, 伤害延迟 +3%, 格挡率 +3%"
+    },
+    "def_b1_e": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_b1_k": {
+      "name": "铁壁",
+      "description": "DEF +30, DEF +20% increased, DEF 8% more, 伤害延迟 +6%, 格挡率 +7%"
+    },
+    "def_b2_c": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_b2_n": {
+      "name": "屏障形成",
+      "description": "伤害延迟 +3%, 护盾 +240, 护盾 +25% increased"
+    },
+    "def_b2_e": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_b2_g1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "def_b2_g2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "def_b2_k": {
+      "name": "灵体装甲",
+      "description": "护盾 +35% increased, 护盾 10% more, 将最大HP转换为护盾, 持续伤害由护盾承受"
+    },
+    "def_b3_c": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_b3_n": {
+      "name": "重构装甲",
+      "description": "伤害延迟 +3%, 护盾 +220, 5000ms后护盾重构, 毎秒护盾重构 +10%"
+    },
+    "def_b3_e": {
+      "name": "磨炼",
+      "description": "DEF +12, 伤害延迟 +2%"
+    },
+    "def_b3_g1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "def_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "def_b3_k": {
+      "name": "反应装甲",
+      "description": "伤害延迟 +5%, 受击时DEF反击 +25%, 护盾 20% more, 10回攻撃每护盾回复 +18%, 连续受击减伤 +25%, 低HP时减伤 +20%"
+    },
+    "poi_b1_c": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_n": {
+      "name": "猎人之毒",
+      "description": "期间毒概率 +8%, 毒伤害 +16%, EVA +30, EVA +12% increased"
+    },
+    "poi_b1_e": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_k": {
+      "name": "猛毒心得",
+      "description": "期间毒概率 +10%, 毒伤害 +28%, 毒伤害吸收 +12%, EVA +45, EVA +20% increased"
+    },
+    "poi_b2_c": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_n": {
+      "name": "蔓延",
+      "description": "期间毒概率 +10%, 毒层数 +1, EVA +35, EVA +10% increased"
+    },
+    "poi_b2_e": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_g1": {
+      "name": "活力",
+      "description": "HP +55, 格挡率 +1%"
+    },
+    "poi_b2_g2": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "poi_b2_k": {
+      "name": "幻影积蓄",
+      "description": "EVA +60, EVA +25% increased, EVA 12% more, 连续闪避后受击回复护盾 +8%"
+    },
+    "poi_b3_c": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_n": {
+      "name": "封毒屏障",
+      "description": "期间毒概率 +8%, 毒伤害吸收 +10%, EVA +40, EVA +15% increased, 护盾 +10% increased, 持续伤害由护盾承受, 毒抗性 +20%"
+    },
+    "poi_b3_e": {
+      "name": "毒之研习",
+      "description": "期间毒概率 +5%, 毒伤害 +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_g1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "poi_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "poi_b3_k": {
+      "name": "纯粹之毒",
+      "description": "毒伤害 65% more, 毒伤害吸收 +25%, 无直接伤害"
+    },
+    "pet_b1_c": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_b1_n": {
+      "name": "调教心得",
+      "description": "HP +120, DEF +20, 每秒HP回复 +0.8%, 伤害延迟 +3%, 宠物效果 +10%, 宠物掉落率 +0.2%"
+    },
+    "pet_b1_e": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_b1_k": {
+      "name": "生命羁绊",
+      "description": "HP +260, HP 16% more, 伤害延迟 +5%, 宠物效果 +20%"
+    },
+    "pet_b2_c": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_b2_n": {
+      "name": "治愈羁绊",
+      "description": "每秒HP +90回复, 命期间时HP +60回复, 宠物效果 +10%, 格挡率 +4%"
+    },
+    "pet_b2_e": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_b2_k": {
+      "name": "不屈羁绊",
+      "description": "每秒HP回复 +2%, 伤害延迟 +5%, 命期间时HP +80回复, 宠物效果 +25%, 格挡率 +10%"
+    },
+    "pet_b3_c": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_b3_n": {
+      "name": "兽王加护",
+      "description": "DEF +60, DEF +20% increased, 伤害延迟 +6%, 宠物效果 +15%, 宠物掉落率 +0.3%"
+    },
+    "pet_b3_e": {
+      "name": "羁绊",
+      "description": "HP +70, DEF +8, 宠物效果 +4%"
+    },
+    "pet_b3_g1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "pet_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "pet_b3_k": {
+      "name": "共生",
+      "description": "HP 25% more, 每秒HP回复 +3%, 伤害延迟 +6%, 命期间时HP +110回复, 宠物效果 +40%, 宠物掉落率 +0.5%, 低HP时减伤 +20%"
+    },
+    "frz_b1_c": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_b1_n": {
+      "name": "冰术心得",
+      "description": "DEF +16, 寒冷抗性 +10%, 寒冷概率 +8%, 寒冷效果 +12%, 寒冷持续 +15%"
+    },
+    "frz_b1_e": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_b1_k": {
+      "name": "冰岚",
+      "description": "DEF +22, 伤害延迟 +7%, 寒冷抗性 +20%, 寒冷概率 +10%, 寒冷效果 +25%"
+    },
+    "frz_b2_c": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_b2_n": {
+      "name": "冰结",
+      "description": "DEF +18, 冻结抗性 +10%, 寒冷效果 +18%, 冻结概率 +3%"
+    },
+    "frz_b2_e": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_b2_k": {
+      "name": "冻结极意",
+      "description": "DEF +18, 冻结抗性 +20%, 寒冷持续 +25%, 冻结概率 +4%, 冻结持续 +30%, 对寒冷/冻结目标伤害 x1.2"
+    },
+    "frz_b3_c": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_b3_n": {
+      "name": "永久冻土",
+      "description": "伤害延迟 +7%, 冻结抗性 +15%, 连续受击减伤 +12%, 8000ms每解除异常状态, 寒冷效果 +20%, 冻结概率 +4%"
+    },
+    "frz_b3_e": {
+      "name": "冰之研习",
+      "description": "DEF +8, 寒冷抗性 +2%, 寒冷效果 +7%"
+    },
+    "frz_b3_g1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "frz_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "frz_b3_k": {
+      "name": "绝对零度",
+      "description": "DEF 10% more, 伤害延迟 +8%, 冻结概率 +5%, 冻结持续 +40%, 对寒冷/冻结目标伤害 x1.35"
+    },
+    "ign_b1_c": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_b1_n": {
+      "name": "火术心得",
+      "description": "燃烧概率 +8%, 燃烧伤害 +18%, 燃烧伤害吸收 +5%"
+    },
+    "ign_b1_e": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_b1_k": {
+      "name": "业火心得",
+      "description": "燃烧概率 +10%, 燃烧伤害 +30%, 燃烧伤害吸收 +15%, 来自燃烧敌人的伤害降低 +6%"
+    },
+    "ign_b2_c": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_b2_n": {
+      "name": "业火",
+      "description": "燃烧概率 +10%, 燃烧伤害 +24%, 燃烧持续 +15%, 来自燃烧敌人的伤害降低 +5%"
+    },
+    "ign_b2_e": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_b2_k": {
+      "name": "劫火",
+      "description": "燃烧伤害 +35%, 燃烧伤害 12% more, 燃烧持续 +25%, 燃烧伤害吸收 +10%, 来自燃烧敌人的伤害降低 +8%"
+    },
+    "ign_b3_c": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_b3_n": {
+      "name": "业火支配",
+      "description": "燃烧概率 +12%, 燃烧伤害 +28%, 燃烧伤害吸收 +16%, 来自燃烧敌人的伤害降低 +8%"
+    },
+    "ign_b3_e": {
+      "name": "火之研习",
+      "description": "燃烧概率 +2%, 燃烧伤害 +10%"
+    },
+    "ign_b3_g1": {
+      "name": "顽强",
+      "description": "DEF +14"
+    },
+    "ign_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻击速度 +2%"
+    },
+    "ign_b3_k": {
+      "name": "业炎天",
+      "description": "燃烧伤害 40% more, 燃烧伤害吸收 +15%, 来自燃烧敌人的伤害降低 +10%, 伤害延迟 +5%"
+    },
+    "stat_def_inc_flat1": {
+      "name": "重装",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc1": {
+      "name": "防御精通",
+      "description": "DEF +12% increased"
+    },
+    "stat_def_inc_flat2": {
+      "name": "重装",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc2": {
+      "name": "防御精通",
+      "description": "DEF +12% increased"
+    },
+    "stat_hp_inc_flat1": {
+      "name": "巨躯",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc1": {
+      "name": "生命精通",
+      "description": "HP +12% increased"
+    },
+    "stat_hp_inc_flat2": {
+      "name": "巨躯",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc2": {
+      "name": "生命精通",
+      "description": "HP +12% increased"
+    },
+    "stat_atk_inc_flat1": {
+      "name": "刚腕",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc1": {
+      "name": "攻击精通",
+      "description": "ATK +10% increased"
+    },
+    "stat_atk_inc_flat2": {
+      "name": "刚腕",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc2": {
+      "name": "攻击精通",
+      "description": "ATK +10% increased"
+    },
+    "sustain_0_hit1": {
+      "name": "吸命",
+      "description": "命期间时HP +30回复"
+    },
+    "sustain_0_leech1": {
+      "name": "会心吸收",
+      "description": "暴击伤害吸收 +10%"
+    },
+    "sustain_0_hit2": {
+      "name": "吸命",
+      "description": "命期间时HP +35回复"
+    },
+    "sustain_0_defer1": {
+      "name": "招架",
+      "description": "伤害延迟 +3%"
+    },
+    "sustain_1_hit1": {
+      "name": "吸命",
+      "description": "命期间时HP +35回复"
+    },
+    "sustain_1_leech1": {
+      "name": "坚守吸收",
+      "description": "生命偷取 +2%, 格挡率 +2%"
+    },
+    "sustain_1_hit2": {
+      "name": "吸命",
+      "description": "命期间时HP +40回复"
+    },
+    "sustain_1_defer1": {
+      "name": "招架",
+      "description": "伤害延迟 +3%"
+    },
+    "sustain_2_hit1": {
+      "name": "吸命",
+      "description": "命期间时HP +30回复"
+    },
+    "sustain_2_leech1": {
+      "name": "毒血吸收",
+      "description": "毒伤害吸收 +8%"
+    },
+    "sustain_2_hit2": {
+      "name": "吸命",
+      "description": "命期间时HP +35回复"
+    },
+    "sustain_2_defer1": {
+      "name": "招架",
+      "description": "伤害延迟 +3%"
+    },
+    "sustain_3_hit1": {
+      "name": "吸命",
+      "description": "命期间时HP +35回复"
+    },
+    "sustain_3_leech1": {
+      "name": "吸血",
+      "description": "生命偷取 +2%"
+    },
+    "sustain_3_hit2": {
+      "name": "吸命",
+      "description": "命期间时HP +45回复"
+    },
+    "sustain_3_defer1": {
+      "name": "招架",
+      "description": "伤害延迟 +3%"
+    },
+    "sustain_4_hit1": {
+      "name": "吸命",
+      "description": "命期间时HP +30回复"
+    },
+    "sustain_4_leech1": {
+      "name": "冻伤吸收",
+      "description": "生命偷取 +2%, 冻结抗性 +5%"
+    },
+    "sustain_4_hit2": {
+      "name": "吸命",
+      "description": "命期间时HP +35回复"
+    },
+    "sustain_4_defer1": {
+      "name": "招架",
+      "description": "伤害延迟 +3%"
+    },
+    "sustain_5_hit1": {
+      "name": "吸命",
+      "description": "命期间时HP +30回复"
+    },
+    "sustain_5_leech1": {
+      "name": "火势吸收",
+      "description": "燃烧伤害吸收 +8%"
+    },
+    "sustain_5_hit2": {
+      "name": "吸命",
+      "description": "命期间时HP +35回复"
+    },
+    "sustain_5_defer1": {
+      "name": "招架",
+      "description": "伤害延迟 +3%"
     }
   },
   "ranking": {
@@ -2303,7 +3298,9 @@
     "igniteResist": "受到发火伤害 -{{value}}%",
     "evasion": "闪避+{{value}}%",
     "evasionIncreased": "闪避+{{value}}%",
-    "evasionMore": "闪避{{value}}% more"
+    "evasionMore": "闪避{{value}}% more",
+    "hpOnTakenHit": "受击时HP +{{value}}回复",
+    "shieldOnEvadeStreakHit": "连续闪避后受击时，每次闪避回复最大护盾的{{value}}%"
   },
   "boost": {
     "dropRate": {
