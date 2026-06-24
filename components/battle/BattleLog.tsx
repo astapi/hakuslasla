@@ -16,6 +16,8 @@ const getLogColor = (type: BattleLogEntry['type']): string => {
       return '#F44336';
     case 'block':
       return '#FFD54F';
+    case 'evade':
+      return '#64D8FF';
     case 'victory':
       return '#FFD700';
     case 'defeat':

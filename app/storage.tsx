@@ -162,7 +162,7 @@ function calculateItemStats(
 export default function StorageScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { addToInventory, isInventoryFull } = usePlayerStore();
+  const { addToInventory, isInventoryFull, season } = usePlayerStore();
   const [storageItems, setStorageItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSlot, setSelectedSlot] = useState<EquipmentSlot>('weapon');
@@ -172,12 +172,12 @@ export default function StorageScreen() {
   const fetchStorage = useCallback(async () => {
     setIsLoading(true);
     try {
-      const items = await storageRepository.getAll();
+      const items = await storageRepository.getAll(season);
       setStorageItems(items);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [season]);
 
   useFocusEffect(
     useCallback(() => {
@@ -223,7 +223,7 @@ export default function StorageScreen() {
     if (isInventoryFull()) {
       return;
     }
-    const success = await storageRepository.removeItem(item.instanceId);
+    const success = await storageRepository.removeItem(item.instanceId, season);
     if (success) {
       await addToInventory(item);
       await fetchStorage();
@@ -233,7 +233,7 @@ export default function StorageScreen() {
 
   const handleSell = async (instanceId: string) => {
     // TODO: お金の概念を追加したら売却金額を加算
-    const success = await storageRepository.removeItem(instanceId);
+    const success = await storageRepository.removeItem(instanceId, season);
     if (success) {
       await fetchStorage();
       setSelectedItem(null);

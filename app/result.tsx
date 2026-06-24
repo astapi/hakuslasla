@@ -17,6 +17,7 @@ import { ms, fs, s } from '@/utils/scaling';
 import { isRepeatDisabled } from '@/core/resultHelpers';
 import { getPet, getPetImageKey } from '@/data/pets';
 import { getMonsterImage, monsterBattleScales } from '@/data/images';
+import { usePlayerStore } from '@/stores/usePlayerStore';
 
 export default function ResultScreen() {
   const { t } = useTranslation();
@@ -74,7 +75,8 @@ export default function ResultScreen() {
 
   useEffect(() => {
     if (!isUberDungeon || !baseBossId) return;
-    void settingsRepository.getUberTicketCount(baseBossId).then(setUberTicketCount);
+    const season = usePlayerStore.getState().season;
+    void settingsRepository.getUberTicketCount(baseBossId, season).then(setUberTicketCount);
   }, [isUberDungeon, baseBossId]);
 
   // ゴブリンの砦初回クリア時にMODフィルターツールチップを表示
@@ -193,7 +195,8 @@ export default function ResultScreen() {
 
   const handleRepeat = async () => {
     if (isUberDungeon && baseBossId) {
-      const consumed = await settingsRepository.consumeUberTicket(baseBossId);
+      const season = usePlayerStore.getState().season;
+      const consumed = await settingsRepository.consumeUberTicket(baseBossId, 1, season);
       if (!consumed) return;
       setUberTicketCount((prev) => (prev ?? 1) - 1);
     }

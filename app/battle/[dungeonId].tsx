@@ -218,7 +218,7 @@ export default function BattleScreen() {
   // 攻撃アニメーション用のstate
   const [playerAttacking, setPlayerAttacking] = useState(false);
   const [enemyAttacking, setEnemyAttacking] = useState(false);
-  const [playerBlocking, setPlayerBlocking] = useState(false);
+  const [playerGuardEffect, setPlayerGuardEffect] = useState<'block' | 'evade' | null>(null);
   // 最後に処理したログエントリの参照を追跡（ログが切り詰められても追跡可能）
   const lastProcessedEntryRef = useRef<(typeof state.battleLog)[number] | null>(null);
   // タイマーIDを管理（古いタイマーをキャンセルするため）
@@ -272,13 +272,13 @@ export default function BattleScreen() {
           setEnemyAttacking(false);
           enemyAttackTimerRef.current = null;
         }, 200);
-      } else if (entry.type === 'block') {
+      } else if (entry.type === 'block' || entry.type === 'evade') {
         if (blockTimerRef.current) {
           clearTimeout(blockTimerRef.current);
         }
-        setPlayerBlocking(true);
+        setPlayerGuardEffect(entry.type);
         blockTimerRef.current = setTimeout(() => {
-          setPlayerBlocking(false);
+          setPlayerGuardEffect(null);
           blockTimerRef.current = null;
         }, 450);
       }
@@ -427,10 +427,27 @@ export default function BattleScreen() {
               <PetAvatar imageId={getPetImageKey(activePetDef)} size={s(52)} />
             </View>
           )}
-          {playerBlocking && (
-            <View style={styles.blockEffect} pointerEvents="none">
-              <MaterialCommunityIcons name="shield" size={ms(18)} color="#FFD54F" />
-              <Text style={styles.blockEffectText}>BLOCK</Text>
+          {playerGuardEffect && (
+            <View
+              style={[
+                styles.guardEffect,
+                playerGuardEffect === 'evade' && styles.evadeEffect,
+              ]}
+              pointerEvents="none"
+            >
+              <MaterialCommunityIcons
+                name={playerGuardEffect === 'evade' ? 'run-fast' : 'shield'}
+                size={ms(18)}
+                color={playerGuardEffect === 'evade' ? '#64D8FF' : '#FFD54F'}
+              />
+              <Text
+                style={[
+                  styles.guardEffectText,
+                  playerGuardEffect === 'evade' && styles.evadeEffectText,
+                ]}
+              >
+                {playerGuardEffect === 'evade' ? 'EVADE' : 'BLOCK'}
+              </Text>
             </View>
           )}
         </View>
@@ -706,7 +723,7 @@ const styles = StyleSheet.create({
     bottom: s(20),
     zIndex: 2,
   },
-  blockEffect: {
+  guardEffect: {
     position: 'absolute',
     top: -ms(12),
     minWidth: ms(84),
@@ -722,10 +739,17 @@ const styles = StyleSheet.create({
     gap: ms(4),
     zIndex: 3,
   },
-  blockEffectText: {
+  evadeEffect: {
+    borderColor: 'rgba(100, 216, 255, 0.9)',
+    backgroundColor: 'rgba(6, 31, 42, 0.88)',
+  },
+  guardEffectText: {
     fontSize: fs(12),
     fontWeight: '900',
     color: '#FFD54F',
+  },
+  evadeEffectText: {
+    color: '#64D8FF',
   },
   hidden: {
     opacity: 0,

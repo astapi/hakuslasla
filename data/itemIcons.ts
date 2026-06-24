@@ -87,7 +87,12 @@ export const ITEM_ICONS: Record<string, ImageSourcePropType> = {
   uber_vampire_stride: require('@/assets/images/items/unique/uber_vampire_stride.png'),
 };
 
-const EVASION_ITEM_ICON = require('@/assets/images/items/evasion.png');
+const EVASION_ITEM_ICONS: Partial<Record<EquipmentSlot, ImageSourcePropType>> = {
+  armor: require('@/assets/images/items/evasion_armor.png'),
+  gloves: require('@/assets/images/items/evasion_gloves.png'),
+  boots: require('@/assets/images/items/evasion_boots.png'),
+  accessory: require('@/assets/images/items/evasion_accessory.png'),
+};
 
 /**
  * アイテムのアイコンを取得
@@ -97,8 +102,8 @@ export function getItemIcon(itemId: string, slot: EquipmentSlot, weaponType?: We
   if (ITEM_ICONS[itemId]) {
     return ITEM_ICONS[itemId];
   }
-  if (itemId.includes('_evasion_')) {
-    return EVASION_ITEM_ICON;
+  if (itemId.includes('_evasion_') && EVASION_ITEM_ICONS[slot]) {
+    return EVASION_ITEM_ICONS[slot];
   }
   if (slot === 'weapon' && weaponType) {
     return WEAPON_TYPE_ICONS[weaponType];

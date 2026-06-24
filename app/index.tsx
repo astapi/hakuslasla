@@ -108,9 +108,13 @@ export default function CharacterSelectScreen() {
                 <View style={styles.characterInfo}>
                   <View style={styles.characterNameRow}>
                     <Text style={styles.characterName}>{character.name}</Text>
+                  </View>
+                  <View style={styles.characterMetaRow}>
+                    <Text style={styles.characterLevel}>Lv.{character.level}</Text>
                     <View
                       style={[
                         styles.seasonBadge,
+                        styles.seasonBadgeInMeta,
                         character.season >= 3 ? styles.seasonBadgeS3 : styles.seasonBadgeLegacy,
                       ]}
                     >
@@ -123,13 +127,12 @@ export default function CharacterSelectScreen() {
                         S{character.season}
                       </Text>
                     </View>
+                    <View style={styles.characterStatRow}>
+                      <Text style={styles.statText}>HP {character.maxHp}</Text>
+                      <Text style={styles.statText}>ATK {character.atk}</Text>
+                      <Text style={styles.statText}>DEF {character.def}</Text>
+                    </View>
                   </View>
-                  <Text style={styles.characterLevel}>Lv.{character.level}</Text>
-                </View>
-                <View style={styles.characterStats}>
-                  <Text style={styles.statText}>HP {character.maxHp}</Text>
-                  <Text style={styles.statText}>ATK {character.atk}</Text>
-                  <Text style={styles.statText}>DEF {character.def}</Text>
                 </View>
                 <Pressable
                   style={styles.deleteButton}
@@ -226,16 +229,28 @@ const styles = StyleSheet.create({
   },
   characterInfo: {
     flex: 1,
+    flexShrink: 1,
+    minWidth: 0,
+    marginRight: ms(8),
   },
   characterNameRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: ms(4),
+    minWidth: 0,
+  },
+  characterMetaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: ms(8),
   },
   characterName: {
     fontSize: fs(18),
     fontWeight: 'bold',
     color: '#fff',
+    flexShrink: 1,
+    minWidth: 0,
   },
   seasonBadge: {
     marginLeft: ms(8),
@@ -243,6 +258,10 @@ const styles = StyleSheet.create({
     paddingVertical: ms(2),
     borderRadius: ms(4),
     borderWidth: 1,
+    flexShrink: 0,
+  },
+  seasonBadgeInMeta: {
+    marginLeft: 0,
   },
   seasonBadgeS3: {
     backgroundColor: 'rgba(255, 215, 0, 0.15)',
@@ -267,10 +286,10 @@ const styles = StyleSheet.create({
     color: '#4CAF50',
     fontWeight: 'bold',
   },
-  characterStats: {
+  characterStatRow: {
     flexDirection: 'row',
     gap: ms(12),
-    marginRight: ms(12),
+    flexShrink: 0,
   },
   statText: {
     fontSize: fs(12),

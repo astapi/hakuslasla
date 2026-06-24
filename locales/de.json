@@ -357,6 +357,25 @@
     "hpRegen": "HP-Regen",
     "hpOnHit": "HP bei Treffer",
     "hpOnCrit": "HP bei Crit",
+    "hpOnTakenHit": "HP bei Schaden",
+    "maxShield": "Max. Schild",
+    "shieldBase": "Schild",
+    "shieldIncreased": "Schild Inc",
+    "shieldMore": "Schild More",
+    "shieldOn10Attacks": "Schild/10 Treffer",
+    "shieldRecharge": "Schildaufladung",
+    "shieldRechargeDelay": "Schildverz.",
+    "shieldOnEvadeStreakHit": "Ausweichschild",
+    "shieldBlocksDot": "Schild DoT",
+    "hpToShield": "HP zu Schild",
+    "blockChance": "Block",
+    "repeatHitDamageReduction": "Mehrfach-DR",
+    "lowHpDamageReduction": "Niedrig-HP-DR",
+    "chillResist": "Kälte-Res.",
+    "freezeResist": "Frost-Res.",
+    "poisonResist": "Gift-Res.",
+    "autoCleanse": "Auto-Reinigung",
+    "retaliateDef": "DEF-Konter",
     "damageDefer": "Schadensverzögerung",
     "damageReduction": "Schadensreduzierung",
     "attackSpeed": "Angriffsgeschw.",
@@ -1195,6 +1214,222 @@
     },
     "uber_end_evasion_crown": {
       "name": "Uber Krone der letzten Trugbilds"
+    },
+    "grassland_evasion_armor": {
+      "name": "Grasland Umhang"
+    },
+    "grassland_evasion_gloves": {
+      "name": "Grasland Panzerhandschuhe"
+    },
+    "grassland_evasion_boots": {
+      "name": "Grasland Tabi"
+    },
+    "grassland_evasion_accessory": {
+      "name": "Grasland Talisman"
+    },
+    "cave_evasion_armor": {
+      "name": "Untergrund Umhang"
+    },
+    "cave_evasion_gloves": {
+      "name": "Untergrund Panzerhandschuhe"
+    },
+    "cave_evasion_boots": {
+      "name": "Untergrund Tabi"
+    },
+    "cave_evasion_accessory": {
+      "name": "Untergrund Talisman"
+    },
+    "ruins_evasion_armor": {
+      "name": "Ruinen Umhang"
+    },
+    "ruins_evasion_gloves": {
+      "name": "Ruinen Panzerhandschuhe"
+    },
+    "ruins_evasion_boots": {
+      "name": "Ruinen Tabi"
+    },
+    "ruins_evasion_accessory": {
+      "name": "Ruinen Talisman"
+    },
+    "goblin_fort_evasion_armor": {
+      "name": "Festung Umhang"
+    },
+    "goblin_fort_evasion_gloves": {
+      "name": "Festung Panzerhandschuhe"
+    },
+    "goblin_fort_evasion_boots": {
+      "name": "Festung Tabi"
+    },
+    "goblin_fort_evasion_accessory": {
+      "name": "Festung Talisman"
+    },
+    "bandit_hideout_evasion_armor": {
+      "name": "Banditen Umhang"
+    },
+    "bandit_hideout_evasion_gloves": {
+      "name": "Banditen Panzerhandschuhe"
+    },
+    "bandit_hideout_evasion_boots": {
+      "name": "Banditen Tabi"
+    },
+    "bandit_hideout_evasion_accessory": {
+      "name": "Banditen Talisman"
+    },
+    "demon_castle_evasion_armor": {
+      "name": "Dämonenschloss Umhang"
+    },
+    "demon_castle_evasion_gloves": {
+      "name": "Dämonenschloss Panzerhandschuhe"
+    },
+    "demon_castle_evasion_boots": {
+      "name": "Dämonenschloss Tabi"
+    },
+    "demon_castle_evasion_accessory": {
+      "name": "Dämonenschloss Talisman"
+    },
+    "vampire_mansion_evasion_armor": {
+      "name": "Nachtanwesen Umhang"
+    },
+    "vampire_mansion_evasion_gloves": {
+      "name": "Nachtanwesen Panzerhandschuhe"
+    },
+    "vampire_mansion_evasion_boots": {
+      "name": "Nachtanwesen Tabi"
+    },
+    "vampire_mansion_evasion_accessory": {
+      "name": "Nachtanwesen Talisman"
+    },
+    "ice_cave_evasion_armor": {
+      "name": "Eis Umhang"
+    },
+    "ice_cave_evasion_gloves": {
+      "name": "Eis Panzerhandschuhe"
+    },
+    "ice_cave_evasion_boots": {
+      "name": "Eis Tabi"
+    },
+    "ice_cave_evasion_accessory": {
+      "name": "Eis Talisman"
+    },
+    "underwater_cave_evasion_armor": {
+      "name": "Meeresgrund Umhang"
+    },
+    "underwater_cave_evasion_gloves": {
+      "name": "Meeresgrund Panzerhandschuhe"
+    },
+    "underwater_cave_evasion_boots": {
+      "name": "Meeresgrund Tabi"
+    },
+    "underwater_cave_evasion_accessory": {
+      "name": "Meeresgrund Talisman"
+    },
+    "volcano_evasion_armor": {
+      "name": "Vulkan Umhang"
+    },
+    "volcano_evasion_gloves": {
+      "name": "Vulkan Panzerhandschuhe"
+    },
+    "volcano_evasion_boots": {
+      "name": "Vulkan Tabi"
+    },
+    "volcano_evasion_accessory": {
+      "name": "Vulkan Talisman"
+    },
+    "orc_fortress_evasion_armor": {
+      "name": "Orkfestung Umhang"
+    },
+    "orc_fortress_evasion_gloves": {
+      "name": "Orkfestung Panzerhandschuhe"
+    },
+    "orc_fortress_evasion_boots": {
+      "name": "Orkfestung Tabi"
+    },
+    "orc_fortress_evasion_accessory": {
+      "name": "Orkfestung Talisman"
+    },
+    "dark_forest_evasion_armor": {
+      "name": "Tiefer Wald Umhang"
+    },
+    "dark_forest_evasion_gloves": {
+      "name": "Tiefer Wald Panzerhandschuhe"
+    },
+    "dark_forest_evasion_boots": {
+      "name": "Tiefer Wald Tabi"
+    },
+    "dark_forest_evasion_accessory": {
+      "name": "Tiefer Wald Talisman"
+    },
+    "sky_tower_evasion_armor": {
+      "name": "Himmel Umhang"
+    },
+    "sky_tower_evasion_gloves": {
+      "name": "Himmel Panzerhandschuhe"
+    },
+    "sky_tower_evasion_boots": {
+      "name": "Himmel Tabi"
+    },
+    "sky_tower_evasion_accessory": {
+      "name": "Himmel Talisman"
+    },
+    "hell_gate_evasion_armor": {
+      "name": "Hölle Umhang"
+    },
+    "hell_gate_evasion_gloves": {
+      "name": "Hölle Panzerhandschuhe"
+    },
+    "hell_gate_evasion_boots": {
+      "name": "Hölle Tabi"
+    },
+    "hell_gate_evasion_accessory": {
+      "name": "Hölle Talisman"
+    },
+    "dragon_nest_evasion_armor": {
+      "name": "Drachennest Umhang"
+    },
+    "dragon_nest_evasion_gloves": {
+      "name": "Drachennest Panzerhandschuhe"
+    },
+    "dragon_nest_evasion_boots": {
+      "name": "Drachennest Tabi"
+    },
+    "dragon_nest_evasion_accessory": {
+      "name": "Drachennest Talisman"
+    },
+    "sacred_temple_evasion_armor": {
+      "name": "Heilig Umhang"
+    },
+    "sacred_temple_evasion_gloves": {
+      "name": "Heilig Panzerhandschuhe"
+    },
+    "sacred_temple_evasion_boots": {
+      "name": "Heilig Tabi"
+    },
+    "sacred_temple_evasion_accessory": {
+      "name": "Heilig Talisman"
+    },
+    "chaos_realm_evasion_armor": {
+      "name": "Chaos Umhang"
+    },
+    "chaos_realm_evasion_gloves": {
+      "name": "Chaos Panzerhandschuhe"
+    },
+    "chaos_realm_evasion_boots": {
+      "name": "Chaos Tabi"
+    },
+    "chaos_realm_evasion_accessory": {
+      "name": "Chaos Talisman"
+    },
+    "final_land_evasion_armor": {
+      "name": "Ende Umhang"
+    },
+    "final_land_evasion_gloves": {
+      "name": "Ende Panzerhandschuhe"
+    },
+    "final_land_evasion_boots": {
+      "name": "Ende Tabi"
+    },
+    "final_land_evasion_accessory": {
+      "name": "Ende Talisman"
     }
   },
   "monsters": {

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Modal, Linking } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
@@ -22,6 +22,7 @@ import { hasSpeedBoost } from '@/stores/usePurchaseStore';
 import { changeLanguage } from '@/lib/i18n';
 import { updateSoundSettings } from '@/lib/sound';
 import { ms, fs } from '@/utils/scaling';
+import { usePlayerStore } from '@/stores/usePlayerStore';
 
 const SLOT_ORDER: EquipmentSlot[] = ['weapon', 'armor', 'gloves', 'boots', 'accessory'];
 
@@ -54,6 +55,7 @@ export default function SettingsScreen() {
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
   const [speedUnlocked, setSpeedUnlocked] = useState(false);
   const hasPremiumSpeed = hasSpeedBoost();
+  const season = usePlayerStore((state) => state.season);
 
   // 言語コードからラベルを取得するヘルパー
   const getLanguageLabel = (lang: AppLanguage): string => {
@@ -63,11 +65,7 @@ export default function SettingsScreen() {
     return LANGUAGE_LABELS[lang];
   };
 
-  useEffect(() => {
-    loadSettings();
-  }, []);
-
-  const loadSettings = async () => {
+  const loadSettings = useCallback(async () => {
     try {
       const [loaded, savedLanguage, savedSpeed, savedBgm, savedSe, endContentUnlocked] = await Promise.all([
         settingsRepository.getDropFilter(),
@@ -75,7 +73,7 @@ export default function SettingsScreen() {
         settingsRepository.getBattleSpeed(),
         settingsRepository.getBgmEnabled(),
         settingsRepository.getSeEnabled(),
-        settingsRepository.getEndContentUnlocked(),
+        settingsRepository.getEndContentUnlocked(season),
       ]);
       setSettings(loaded);
       setLanguage(savedLanguage);
@@ -92,7 +90,11 @@ export default function SettingsScreen() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [season]);
+
+  useEffect(() => {
+    loadSettings();
+  }, [loadSettings]);
 
   const handleLanguageChange = async (newLanguage: AppLanguage) => {
     setLanguage(newLanguage);

@@ -357,6 +357,25 @@
     "hpRegen": "Regen HP",
     "hpOnHit": "HP al Golpear",
     "hpOnCrit": "HP en Crit",
+    "hpOnTakenHit": "HP al Recibir",
+    "maxShield": "Escudo Máx.",
+    "shieldBase": "Escudo",
+    "shieldIncreased": "Escudo Inc",
+    "shieldMore": "Escudo More",
+    "shieldOn10Attacks": "Escudo/10 Golpes",
+    "shieldRecharge": "Recarga Escudo",
+    "shieldRechargeDelay": "Retraso Escudo",
+    "shieldOnEvadeStreakHit": "Escudo Evasión",
+    "shieldBlocksDot": "Escudo DoT",
+    "hpToShield": "HP a Escudo",
+    "blockChance": "Bloqueo",
+    "repeatHitDamageReduction": "Red. Golpes",
+    "lowHpDamageReduction": "Red. HP Bajo",
+    "chillResist": "Res. Frío",
+    "freezeResist": "Res. Congelar",
+    "poisonResist": "Res. Veneno",
+    "autoCleanse": "Auto Limpieza",
+    "retaliateDef": "Contra DEF",
     "damageDefer": "Daño Diferido",
     "damageReduction": "Reducción de Daño",
     "attackSpeed": "Velocidad de Ataque",
@@ -1195,6 +1214,222 @@
     },
     "uber_end_evasion_crown": {
       "name": "Uber Corona del Espejismo Final"
+    },
+    "grassland_evasion_armor": {
+      "name": "Pradera - Capa"
+    },
+    "grassland_evasion_gloves": {
+      "name": "Pradera - Guanteletes"
+    },
+    "grassland_evasion_boots": {
+      "name": "Pradera - Tabi"
+    },
+    "grassland_evasion_accessory": {
+      "name": "Pradera - Amuleto"
+    },
+    "cave_evasion_armor": {
+      "name": "Subsuelo - Capa"
+    },
+    "cave_evasion_gloves": {
+      "name": "Subsuelo - Guanteletes"
+    },
+    "cave_evasion_boots": {
+      "name": "Subsuelo - Tabi"
+    },
+    "cave_evasion_accessory": {
+      "name": "Subsuelo - Amuleto"
+    },
+    "ruins_evasion_armor": {
+      "name": "Ruinas - Capa"
+    },
+    "ruins_evasion_gloves": {
+      "name": "Ruinas - Guanteletes"
+    },
+    "ruins_evasion_boots": {
+      "name": "Ruinas - Tabi"
+    },
+    "ruins_evasion_accessory": {
+      "name": "Ruinas - Amuleto"
+    },
+    "goblin_fort_evasion_armor": {
+      "name": "Fortaleza - Capa"
+    },
+    "goblin_fort_evasion_gloves": {
+      "name": "Fortaleza - Guanteletes"
+    },
+    "goblin_fort_evasion_boots": {
+      "name": "Fortaleza - Tabi"
+    },
+    "goblin_fort_evasion_accessory": {
+      "name": "Fortaleza - Amuleto"
+    },
+    "bandit_hideout_evasion_armor": {
+      "name": "Bandido - Capa"
+    },
+    "bandit_hideout_evasion_gloves": {
+      "name": "Bandido - Guanteletes"
+    },
+    "bandit_hideout_evasion_boots": {
+      "name": "Bandido - Tabi"
+    },
+    "bandit_hideout_evasion_accessory": {
+      "name": "Bandido - Amuleto"
+    },
+    "demon_castle_evasion_armor": {
+      "name": "Castillo Demoníaco - Capa"
+    },
+    "demon_castle_evasion_gloves": {
+      "name": "Castillo Demoníaco - Guanteletes"
+    },
+    "demon_castle_evasion_boots": {
+      "name": "Castillo Demoníaco - Tabi"
+    },
+    "demon_castle_evasion_accessory": {
+      "name": "Castillo Demoníaco - Amuleto"
+    },
+    "vampire_mansion_evasion_armor": {
+      "name": "Mansión Nocturna - Capa"
+    },
+    "vampire_mansion_evasion_gloves": {
+      "name": "Mansión Nocturna - Guanteletes"
+    },
+    "vampire_mansion_evasion_boots": {
+      "name": "Mansión Nocturna - Tabi"
+    },
+    "vampire_mansion_evasion_accessory": {
+      "name": "Mansión Nocturna - Amuleto"
+    },
+    "ice_cave_evasion_armor": {
+      "name": "Hielo - Capa"
+    },
+    "ice_cave_evasion_gloves": {
+      "name": "Hielo - Guanteletes"
+    },
+    "ice_cave_evasion_boots": {
+      "name": "Hielo - Tabi"
+    },
+    "ice_cave_evasion_accessory": {
+      "name": "Hielo - Amuleto"
+    },
+    "underwater_cave_evasion_armor": {
+      "name": "Fondo Marino - Capa"
+    },
+    "underwater_cave_evasion_gloves": {
+      "name": "Fondo Marino - Guanteletes"
+    },
+    "underwater_cave_evasion_boots": {
+      "name": "Fondo Marino - Tabi"
+    },
+    "underwater_cave_evasion_accessory": {
+      "name": "Fondo Marino - Amuleto"
+    },
+    "volcano_evasion_armor": {
+      "name": "Volcán - Capa"
+    },
+    "volcano_evasion_gloves": {
+      "name": "Volcán - Guanteletes"
+    },
+    "volcano_evasion_boots": {
+      "name": "Volcán - Tabi"
+    },
+    "volcano_evasion_accessory": {
+      "name": "Volcán - Amuleto"
+    },
+    "orc_fortress_evasion_armor": {
+      "name": "Fortaleza Orco - Capa"
+    },
+    "orc_fortress_evasion_gloves": {
+      "name": "Fortaleza Orco - Guanteletes"
+    },
+    "orc_fortress_evasion_boots": {
+      "name": "Fortaleza Orco - Tabi"
+    },
+    "orc_fortress_evasion_accessory": {
+      "name": "Fortaleza Orco - Amuleto"
+    },
+    "dark_forest_evasion_armor": {
+      "name": "Bosque Profundo - Capa"
+    },
+    "dark_forest_evasion_gloves": {
+      "name": "Bosque Profundo - Guanteletes"
+    },
+    "dark_forest_evasion_boots": {
+      "name": "Bosque Profundo - Tabi"
+    },
+    "dark_forest_evasion_accessory": {
+      "name": "Bosque Profundo - Amuleto"
+    },
+    "sky_tower_evasion_armor": {
+      "name": "Cielo - Capa"
+    },
+    "sky_tower_evasion_gloves": {
+      "name": "Cielo - Guanteletes"
+    },
+    "sky_tower_evasion_boots": {
+      "name": "Cielo - Tabi"
+    },
+    "sky_tower_evasion_accessory": {
+      "name": "Cielo - Amuleto"
+    },
+    "hell_gate_evasion_armor": {
+      "name": "Infierno - Capa"
+    },
+    "hell_gate_evasion_gloves": {
+      "name": "Infierno - Guanteletes"
+    },
+    "hell_gate_evasion_boots": {
+      "name": "Infierno - Tabi"
+    },
+    "hell_gate_evasion_accessory": {
+      "name": "Infierno - Amuleto"
+    },
+    "dragon_nest_evasion_armor": {
+      "name": "Nido de Dragón - Capa"
+    },
+    "dragon_nest_evasion_gloves": {
+      "name": "Nido de Dragón - Guanteletes"
+    },
+    "dragon_nest_evasion_boots": {
+      "name": "Nido de Dragón - Tabi"
+    },
+    "dragon_nest_evasion_accessory": {
+      "name": "Nido de Dragón - Amuleto"
+    },
+    "sacred_temple_evasion_armor": {
+      "name": "Sagrado - Capa"
+    },
+    "sacred_temple_evasion_gloves": {
+      "name": "Sagrado - Guanteletes"
+    },
+    "sacred_temple_evasion_boots": {
+      "name": "Sagrado - Tabi"
+    },
+    "sacred_temple_evasion_accessory": {
+      "name": "Sagrado - Amuleto"
+    },
+    "chaos_realm_evasion_armor": {
+      "name": "Caos - Capa"
+    },
+    "chaos_realm_evasion_gloves": {
+      "name": "Caos - Guanteletes"
+    },
+    "chaos_realm_evasion_boots": {
+      "name": "Caos - Tabi"
+    },
+    "chaos_realm_evasion_accessory": {
+      "name": "Caos - Amuleto"
+    },
+    "final_land_evasion_armor": {
+      "name": "Final - Capa"
+    },
+    "final_land_evasion_gloves": {
+      "name": "Final - Guanteletes"
+    },
+    "final_land_evasion_boots": {
+      "name": "Final - Tabi"
+    },
+    "final_land_evasion_accessory": {
+      "name": "Final - Amuleto"
     }
   },
   "monsters": {

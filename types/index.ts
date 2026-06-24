@@ -512,7 +512,7 @@ export interface BattleEnemy {
 export interface BattleLogEntry {
   id: number;
   message: string;
-  type: 'player_attack' | 'enemy_attack' | 'block' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'ignite' | 'critical' | 'heal' | 'chill' | 'freeze';
+  type: 'player_attack' | 'enemy_attack' | 'block' | 'evade' | 'victory' | 'defeat' | 'floor_clear' | 'info' | 'poison' | 'ignite' | 'critical' | 'heal' | 'chill' | 'freeze';
 }
 
 // 発火状態
