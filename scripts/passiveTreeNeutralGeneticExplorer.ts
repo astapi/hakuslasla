@@ -247,7 +247,7 @@ function cloneItemWithMods(item: Item | null, mods: ItemMod[]): Item | null {
   };
 }
 
-function uniqueItem(id: string, name: string, slot: Item['slot'], atk: number, def: number, mods: ItemMod[]): Item {
+function uniqueItem(id: string, name: string, slot: Item['slot'], atk: number, def: number, mods: ItemMod[], evasion = 0): Item {
   strictInstanceCounter += 1;
   return {
     id,
@@ -256,6 +256,7 @@ function uniqueItem(id: string, name: string, slot: Item['slot'], atk: number, d
     slot,
     atk,
     def,
+    evasion,
     mods,
   };
 }
@@ -285,6 +286,83 @@ function withUberUberRequiredUniques(equipment: EquipmentSet, nameSuffix = ' + U
     armor: uberEndplate(),
     accessory: uberCrownOfEnd(),
   };
+}
+
+function finalLandEvasionLoadouts(): Array<{ label: string; equipment: EquipmentSet }> {
+  return [
+    {
+      label: 'final_land:STRICT_EVASION',
+      equipment: {
+        name: '終焉の地 厳選回避型',
+        weapon: uniqueItem('apocalypse_blade', '終焉の剣', 'weapon', 220, 0, [
+          mod('atk_bonus', 75),
+          mod('atk_increased_pct', 45),
+          mod('attack_speed_pct', 30),
+          mod('hp_on_hit', 70),
+        ]),
+        armor: uniqueItem('final_land_evasion_armor', '終焉の外套', 'armor', 0, 0, [
+          mod('evasion', 80),
+          mod('evasion_increased_pct', 45),
+          mod('damage_defer_pct', 12),
+          mod('hp_bonus', 300),
+        ], 78),
+        gloves: uniqueItem('final_land_evasion_gloves', '終焉の手甲', 'gloves', 70, 0, [
+          mod('evasion', 55),
+          mod('evasion_increased_pct', 30),
+          mod('attack_speed_pct', 30),
+          mod('hp_on_hit', 70),
+        ], 55),
+        boots: uniqueItem('final_land_evasion_boots', '終焉の足袋', 'boots', 48, 0, [
+          mod('evasion', 65),
+          mod('evasion_increased_pct', 30),
+          mod('hp_bonus', 300),
+          mod('chill_resist_pct', 30),
+        ], 66),
+        accessory: uniqueItem('final_land_evasion_accessory', '終焉の護符', 'accessory', 88, 0, [
+          mod('evasion', 55),
+          mod('evasion_more_pct', 5),
+          mod('hp_regen_pct', 5),
+          mod('freeze_resist_pct', 30),
+        ], 54),
+      },
+    },
+    {
+      label: 'final_land:STRICT_UBER_EVASION',
+      equipment: {
+        name: '終焉の地 Uber回避ユニーク型',
+        weapon: uniqueItem('apocalypse_blade', '終焉の剣', 'weapon', 220, 0, [
+          mod('atk_bonus', 75),
+          mod('atk_increased_pct', 45),
+          mod('attack_speed_pct', 30),
+          mod('hp_on_hit', 70),
+        ]),
+        armor: uniqueItem('uber_goblin_evasion_cloak', 'Uber ゴブリンの影外套', 'armor', 0, 0, [
+          mod('evasion_increased_pct', 12, 0),
+          mod('shield_on_evade_streak_hit_pct', 5, 0),
+          mod('hp_bonus', 180, 0),
+          mod('damage_defer_pct', 12),
+        ], 170),
+        gloves: uniqueItem('uber_demon_evasion_grip', 'Uber 魔王の幻影篭手', 'gloves', 70, 0, [
+          mod('evasion_increased_pct', 12, 0),
+          mod('ignite_resist_pct', 10, 0),
+          mod('hp_bonus', 240, 0),
+          mod('attack_speed_pct', 30),
+        ], 170),
+        boots: uniqueItem('uber_bandit_evasion_steps', 'Uber 盗賊王の幻歩', 'boots', 45, 0, [
+          mod('evasion', 30, 0),
+          mod('evasion_increased_pct', 12, 0),
+          mod('attack_speed_pct', 15, 0),
+          mod('hp_on_hit', 45, 0),
+        ], 160),
+        accessory: uniqueItem('uber_end_evasion_crown', 'Uber 終焉の幻冠', 'accessory', 120, 0, [
+          mod('evasion', 40, 0),
+          mod('evasion_increased_pct', 15, 0),
+          mod('evasion_more_pct', 4, 0),
+          mod('hp_bonus', 280, 0),
+        ], 220),
+      },
+    },
+  ];
 }
 
 function strictFinalLandLoadouts(
@@ -401,6 +479,8 @@ function strictFinalLandLoadouts(
       },
     },
   ];
+
+  variants.push(...finalLandEvasionLoadouts());
 
   if (includeUberUberUniques) {
     variants.push(
@@ -580,6 +660,7 @@ function equipmentDefenseUtility(loadout: LoadoutCandidate): number {
   for (const item of Object.values(loadout.equipment)) {
     if (!item || typeof item === 'string') continue;
     score += item.def * 0.03;
+    score += (item.evasion ?? 0) * 0.08;
     for (const mod of item.mods ?? []) {
       switch (mod.type) {
         case 'damage_reduction_pct':
@@ -608,6 +689,25 @@ function equipmentDefenseUtility(loadout: LoadoutCandidate): number {
           break;
         case 'hp_regen_pct':
           score += mod.value * 5;
+          break;
+        case 'evasion':
+          score += mod.value * 0.12;
+          break;
+        case 'evasion_increased_pct':
+          score += mod.value * 1.2;
+          break;
+        case 'evasion_more_pct':
+          score += mod.value * 8;
+          break;
+        case 'shield_on_evade_streak_hit_pct':
+          score += mod.value * 12;
+          break;
+        case 'chill_resist_pct':
+        case 'freeze_resist_pct':
+          score += mod.value * 1.4;
+          break;
+        case 'auto_cleanse_interval_ms':
+          score += Math.max(0, 20 - mod.value / 100);
           break;
       }
     }
@@ -647,7 +747,11 @@ function selectLoadoutsForClass(
   const selected = new Map<string, LoadoutCandidate>();
   if (scenario.dungeonId.startsWith('uber_uber_')) {
     for (const entry of entries) {
-      if (entry.loadout.label.includes('UBER_UNIQUE') || entry.loadout.label.includes('STRICT_UBER_UBER')) {
+      if (
+        entry.loadout.label.includes('UBER_UNIQUE') ||
+        entry.loadout.label.includes('STRICT_UBER_UBER') ||
+        entry.loadout.label.includes('EVASION')
+      ) {
         selected.set(entry.loadout.label, entry.loadout);
       }
     }
@@ -808,6 +912,7 @@ export function mixSummary(classType: CharacterType, nodes: string[]): string {
     `Pet ${passive.pet_effect_pct ?? 0}`,
     `Shield ${passive.shield ?? 0}/${passive.shield_increased_pct ?? 0}`,
     `Block ${Math.min(50, passive.block_chance ?? 0)}`,
+    `EVA ${passive.evasion ?? 0}/${passive.evasion_increased_pct ?? 0}`,
   ];
   return parts.join(' ');
 }

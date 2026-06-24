@@ -3,6 +3,7 @@ import {
   applyPetBuff,
   calculateBattleHpAndShield,
   calculateDamage,
+  calculateEnemyHitChance,
   combineMods,
   DUNGEON_EQUIPMENT_SETS,
   EquipmentSet,
@@ -453,6 +454,7 @@ export function scoreCombat(state: BuildState, enemy: EnemyConfig, spec: BuildSp
 
   const enemyAttackSpeed = (enemy as EnemyConfig & { attackSpeed?: number }).attackSpeed ?? 1;
   const enemyAttacksPerSecond = 2 * enemyAttackSpeed * bossMods.enemyAttackSpeedMult;
+  const enemyHitRate = calculateEnemyHitChance(enemy.accuracy ?? 100, mods.evasion) / 100;
   const playerFreezeChance =
     (bossMods.playerFreezeChanceOnEnemyHit / 100) *
     (1 - Math.min(90, mods.freezeResistPct) / 100);
@@ -462,11 +464,11 @@ export function scoreCombat(state: BuildState, enemy: EnemyConfig, spec: BuildSp
   const cleanseRate = mods.autoCleanseIntervalMs > 0 ? 1000 / mods.autoCleanseIntervalMs : 0;
   const playerFreezeUptime = Math.min(
     0.65,
-    (enemyAttacksPerSecond * playerFreezeChance * 1.5) / (1 + cleanseRate * 2)
+    (enemyAttacksPerSecond * enemyHitRate * playerFreezeChance * 1.5) / (1 + cleanseRate * 2)
   );
   const playerChillUptime = Math.min(
     0.45,
-    (enemyAttacksPerSecond * playerChillChance * 3 * (1 - playerFreezeUptime)) / (1 + cleanseRate)
+    (enemyAttacksPerSecond * enemyHitRate * playerChillChance * 3 * (1 - playerFreezeUptime)) / (1 + cleanseRate)
   );
   const playerControlThroughput = Math.max(0.15, 1 - playerFreezeUptime - playerChillUptime * 0.2);
   const effectiveDirectDps = directDps * playerControlThroughput;
@@ -483,7 +485,11 @@ export function scoreCombat(state: BuildState, enemy: EnemyConfig, spec: BuildSp
     mods.poisonDamageReduction > 0
       ? Math.min(0.3, (mods.poisonDamageReduction / 100) * Math.min(1, maintainedPoisonStacks))
       : 0;
-  const damageTaken = rawDamageTaken * Math.max(0.05, 1 - blockReduction - repeatedReduction - lowHpReduction - poisonControlReduction);
+  const igniteControlReduction =
+    mods.igniteDamageReduction > 0
+      ? Math.min(0.3, (mods.igniteDamageReduction / 100) * igniteUptime)
+      : 0;
+  const damageTaken = rawDamageTaken * enemyHitRate * Math.max(0.05, 1 - blockReduction - repeatedReduction - lowHpReduction - poisonControlReduction - igniteControlReduction);
   const freezeCap = DEFAULT_BATTLE_CONFIG.freezeChanceCap + (mods.freezeChanceCapPct ?? 0);
   const freezeChance =
     (Math.min(freezeCap, Math.max(0, mods.freezeChance)) / 100) *
@@ -517,7 +523,7 @@ export function scoreCombat(state: BuildState, enemy: EnemyConfig, spec: BuildSp
       Math.min(0.25, mods.repeatHitDamageReductionPct / 160) +
       Math.min(0.15, mods.lowHpDamageReductionPct / 200)
   );
-  const ultimateIncomingDps = bossMods.ultimateIncomingDps * Math.max(0.1, 1 - ultimateMitigation);
+  const ultimateIncomingDps = bossMods.ultimateIncomingDps * enemyHitRate * Math.max(0.1, 1 - ultimateMitigation);
   const incomingDps =
     damageTaken * enemyAttacksPerSecond +
     ultimateIncomingDps +
@@ -525,6 +531,18 @@ export function scoreCombat(state: BuildState, enemy: EnemyConfig, spec: BuildSp
     effectiveDirectDps * bossMods.reflectPctOfDirectDps;
   const hpRegen = mods.hpToShield ? 0 : mods.hpRegen + mods.timeHpRegen * averageTimeStacks + (vitals.maxHp * mods.hpRegenPct) / 100;
   const hpOnHit = mods.hpToShield ? 0 : mods.hpOnHit * attacksPerSecond;
+  const hpOnTakenHit = mods.hpToShield
+    ? 0
+    : mods.hpOnTakenHit * enemyAttacksPerSecond * enemyHitRate * Math.max(0, 1 - blockReduction);
+  const expectedEvadeStreak = enemyHitRate > 0 ? Math.min(6, (1 - enemyHitRate) / enemyHitRate) : 6;
+  const shieldOnEvadeStreakHit =
+    mods.shieldOnEvadeStreakHitPct > 0 && vitals.maxShield > 0
+      ? (vitals.maxShield * mods.shieldOnEvadeStreakHitPct / 100) *
+        expectedEvadeStreak *
+        enemyAttacksPerSecond *
+        enemyHitRate *
+        Math.max(0, 1 - blockReduction)
+      : 0;
   const lifesteal =
     (effectiveDps * mods.lifestealPct) / 100 +
     (effectiveDirectDps * mods.critLifestealPct * critChance) / 100 +
@@ -533,7 +551,7 @@ export function scoreCombat(state: BuildState, enemy: EnemyConfig, spec: BuildSp
   const shieldRecharge = mods.shieldRechargePct > 0 ? (vitals.maxShield * mods.shieldRechargePct) / 100 : 0;
   const shieldOnHit = mods.shieldOn10AttacksPct > 0 ? (vitals.maxShield * mods.shieldOn10AttacksPct) / 100 * (attacksPerSecond / 10) : 0;
   const sustainPerSecond =
-    ((hpRegen + hpOnHit + lifesteal) * bossMods.playerHealingMult + shieldRecharge + shieldOnHit) *
+    ((hpRegen + hpOnHit + hpOnTakenHit + lifesteal) * bossMods.playerHealingMult + shieldRecharge + shieldOnHit + shieldOnEvadeStreakHit) *
     playerControlThroughput;
   const deferPct = Math.min(0.5, Math.max(0, mods.damageDeferPct) / 100);
   const effectivePool = vitals.maxHp + vitals.maxShield * (mods.shieldBlocksDot ? 1 : 0.92) + incomingDps * 4 * deferPct;

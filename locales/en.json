@@ -139,8 +139,8 @@
     "title": "Select Dungeon",
     "subtitle": "Choose a dungeon to challenge",
     "unlockRequirement": "Clear {{dungeonName}} to unlock",
-    "selectStartFloor": "Select Starting Floor",
-    "startFloorLabel": "{{floor}}F",
+    "selectStartFloor": "Select start floor",
+    "startFloorLabel": "Start Floor {{floor}}",
     "startButton": "Start",
     "cancelButton": "Cancel"
   },
@@ -197,7 +197,7 @@
     "cleared": "Dungeon Cleared!",
     "player": "Player",
     "inProgress": "In Battle",
-    "tentacleFlurryCountdown": "Tentacle Flurry in {{count}}"
+    "tentacleFlurryCountdown": "Tentacle Flurry in {{count}} attacks"
   },
   "result": {
     "cleared": "Dungeon Cleared!",
@@ -299,11 +299,11 @@
     "battleSpeed": {
       "title": "Battle Speed",
       "description": "Change the speed of battle progression",
-      "premiumHint": "3x speed can be unlocked with an invite code"
+      "premiumHint": "3x speed can be unlocked from the shop"
     },
     "inviteCode": {
       "title": "Invite Code",
-      "description": "Share invite codes with friends to unlock 3x speed for both of you",
+      "description": "The invite code feature has ended",
       "myCode": "Your Invite Code",
       "copied": "Copied!",
       "receivedFromLink": "The invite code from the link has been filled in",
@@ -311,7 +311,7 @@
       "placeholder": "6-character code",
       "submit": "Submit",
       "submitting": "Submitting...",
-      "activated": "3x Speed Activated",
+      "activated": "The invite code feature has ended",
       "shareText": "Let's adventure together in LootDive! Open this link to receive the invite code automatically.\nhttps://astapi.net/lootdive/invite?code={{code}}\nIf the app does not open, enter code {{code}} manually.",
       "error": {
         "ownCode": "You cannot use your own code",
@@ -323,7 +323,7 @@
       },
       "success": {
         "title": "Activated",
-        "message": "3x speed has been unlocked!"
+        "message": "The invite code feature has ended"
       },
       "suspended": "Invite code feature is temporarily unavailable"
     },
@@ -333,13 +333,13 @@
   },
   "inviteLink": {
     "title": "Invite Code Received",
-    "description": "We read an invite code from the link. Apply it to unlock 3x speed.",
+    "description": "The invite code feature has ended.",
     "receivedCode": "Received Code",
     "apply": "Apply This Code",
     "openSettings": "Open Settings",
     "goHome": "Go Home",
     "result": {
-      "alreadyActivated": "3x speed is already unlocked."
+      "alreadyActivated": "The invite code feature has ended."
     }
   },
   "status": {
@@ -441,7 +441,42 @@
     "freeze_duration_pct": "Freeze Dur",
     "ignite_resist_pct": "Ignite Res",
     "evasion_increased_pct": "Evasion",
-    "evasion_more_pct": "Evasion more"
+    "evasion_more_pct": "Evasion more",
+    "evasion": "EVA",
+    "hp_on_taken_hit": "HP when hit",
+    "ignite_lifesteal": "Ignite Leech",
+    "shield_on_evade_streak_hit_pct": "Evade Shield",
+    "atk": "ATK",
+    "def": "DEF",
+    "hp": "HP",
+    "auto_cleanse_interval_ms": "Auto Cleanse",
+    "block_chance": "Block",
+    "chill_freeze_damage_mult": "Chill/Freeze Dmg",
+    "chill_resist_pct": "Chill Res",
+    "critical_lifesteal_pct": "Crit Leech",
+    "freeze_resist_pct": "Freeze Res",
+    "hp_to_shield": "HP to Shield",
+    "ignite_damage_more_pct": "Ignite more",
+    "ignite_damage_reduction": "Ignite DR",
+    "ignite_spread": "Ignite Spread",
+    "ignite_stacking_damage": "Stacking Ignite",
+    "lifestealPct": "Lifesteal",
+    "low_hp_damage_reduction_pct": "Low HP DR",
+    "no_direct_damage": "No Direct Dmg",
+    "pet_drop_rate_pct": "Pet Drop",
+    "pet_effect_pct": "Pet Effect",
+    "poison_lifesteal": "Poison Leech",
+    "poison_max_stacks": "Poison Stacks",
+    "poison_resist_pct": "Poison Res",
+    "repeat_hit_damage_reduction_pct": "Repeat Hit DR",
+    "retaliate_def_pct": "DEF Retaliate",
+    "shield": "Shield",
+    "shield_blocks_dot": "Shield DoT",
+    "shield_increased_pct": "Shield",
+    "shield_more_pct": "Shield more",
+    "shield_on_10_attacks_pct": "Shield/10 hits",
+    "shield_recharge_delay_ms": "Shield Delay",
+    "shield_recharge_pct": "Shield Recharge"
   },
   "dungeon": {
     "floors": "{{count}} Floors",
@@ -1542,13 +1577,13 @@
       "abyssalEbb": "Abyssal Ebb",
       "abyssalEbbDesc": "-15% attack speed for 2 turns",
       "tentacleFlurry": "Tentacle Flurry",
-      "tentacleFlurryDesc": "Triggers every 10 attacks: unleashes 9 extra hits (total 10 consecutive attacks; each extra hit deals 1/3 of normal damage)",
-      "frostAura": "Frostbound Tide",
-      "frostAuraDesc": "Each attack has 10% chance to freeze and 20% chance to chill the player",
+      "tentacleFlurryDesc": "Every 10th attack becomes a 10-hit flurry",
+      "frostAura": "Abyssal Frost Aura",
+      "frostAuraDesc": "Chills and freezes the player on attack",
       "freezeResist": "Abyssal Aegis",
-      "freezeResistDesc": "70% chance to resist any freeze attempt",
-      "igniteResist": "Ignite Resistance",
-      "igniteResistDesc": "Takes only 2/3 damage from ignite"
+      "freezeResistDesc": "70% chance to resist freeze attempts",
+      "igniteResist": "Dampened Embers",
+      "igniteResistDesc": "Reduces ignite damage by one third"
     },
     "demon_lord": {
       "name": "Death Hand",
@@ -1597,10 +1632,10 @@
     "bossSkillActivated": "{{enemy}} triggered {{skill}}!",
     "warlordEnrage": "[Warlord] Activated! Attack Speed+20%, HP on Hit+300",
     "chillApplied": "{{enemy}} is chilled! Attack speed reduced!",
-    "chillAppliedPlayer": "You are chilled! Attack speed reduced!",
+    "chillAppliedPlayer": "Player is chilled! Attack speed down!",
     "chillExpired": "{{enemy}}'s chill has expired",
     "freezeApplied": "{{enemy}} is frozen! Unable to act!",
-    "freezeAppliedPlayer": "You are frozen! Unable to act!",
+    "freezeAppliedPlayer": "Player is frozen! Cannot act!",
     "freezeExpired": "{{enemy}}'s freeze has expired",
     "reflectedDamage": "{{enemy}}'s mark reflected! You took {{damage}} damage!",
     "deferredDamage": "Deferred damage {{damage}}!",
@@ -2272,6 +2307,950 @@
     "ignite_final2": {
       "name": "Spreading Flames",
       "description": "[Keystone] Ignite Chance +6%, Ignite Spread - When ignited enemy dies, ignite transfers to next enemy. DEF +10% increased"
+    },
+    "warrior_start": {
+      "name": "Warrior Stance",
+      "description": "HP +55, ATK +10"
+    },
+    "ranger_start": {
+      "name": "Hunter's Discipline",
+      "description": "HP +55, ATK +9, EVA +20, EVA +6% increased"
+    },
+    "tamer_start": {
+      "name": "Tamer Bond",
+      "description": "HP +70, DEF +8"
+    },
+    "frostmage_start": {
+      "name": "Frost Aptitude",
+      "description": "HP +55, ATK +8, DEF +8, EVA +10"
+    },
+    "elementalist_start": {
+      "name": "Arcane Aptitude",
+      "description": "HP +45, ATK +10, EVA +10"
+    },
+    "cri_j0": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j1": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j2": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j3": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_si": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_s0": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "cri_s1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "cri_s2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "def_j0": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_j1": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_j2": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_j3": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_s0": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "def_s1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "def_s2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "poi_j0": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j1": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j2": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j3": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_si": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_s0": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "poi_s1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "poi_s2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "pet_j0": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_j1": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_j2": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_j3": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_si": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_s0": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "pet_s1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "pet_s2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "frz_j0": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_j1": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_j2": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_j3": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_si": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_s0": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "frz_s1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "frz_s2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ign_j0": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_j1": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_j2": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_j3": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_si": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_s0": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ign_s1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ign_s2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring0_0_1": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring0_0_2": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring0_0_3": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring0_0_4": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring0_1_1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring0_1_2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring0_1_3": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring0_1_4": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring0_2_1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring0_2_2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring0_2_3": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring0_2_4": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring0_3_1": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring0_3_2": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring0_3_3": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring0_3_4": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring0_4_1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring0_4_2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring0_4_3": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring0_4_4": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring0_5_1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring0_5_2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring0_5_3": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring0_5_4": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring1_0_1": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring1_0_2": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring1_0_3": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring1_1_1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring1_1_2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring1_1_3": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring1_2_1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring1_2_2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring1_2_3": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring1_3_1": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring1_3_2": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring1_3_3": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring1_4_1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring1_4_2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring1_4_3": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring1_5_1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring1_5_2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring1_5_3": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring2_0_1": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring2_0_2": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring2_1_1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring2_1_2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring2_2_1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring2_2_2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring2_3_1": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring2_3_2": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring2_4_1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring2_4_2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring2_5_1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring2_5_2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring3_0_1": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring3_1_1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring3_2_1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ring3_3_1": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ring3_4_1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "ring3_5_1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "cri_b1_c": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_n": {
+      "name": "Warrior Technique",
+      "description": "ATK +18, Critical chance +3%, HP on hit taken +25recovery, Block chance +2%"
+    },
+    "cri_b1_e": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_k": {
+      "name": "Critical Mastery",
+      "description": "ATK +8% increased, Critical chance +8%, Critical damage +35%, Damage defer +3%, HP on hit taken +35recovery, Block chance +4%"
+    },
+    "cri_b2_c": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_n": {
+      "name": "Sure Hit",
+      "description": "ATK +12, Critical chance +5%, Critical damage +25%, HP on hit +35recovery"
+    },
+    "cri_b2_e": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_k": {
+      "name": "Asura",
+      "description": "ATK +25, Critical damage +60%, Damage defer +4%, HP on hit taken +45recovery, Block chance +5%, Attack speed 5% more"
+    },
+    "cri_b3_c": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_n": {
+      "name": "Flash Cut",
+      "description": "ATK +24, Critical chance +5%, Critical damage +30%, HP on hit +45recovery"
+    },
+    "cri_b3_e": {
+      "name": "Training",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_g1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "cri_b3_g2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "cri_b3_k": {
+      "name": "Executioner",
+      "description": "ATK +15% increased, ATK 14% more, HP on crit +120recovery, Critical damage lifesteal +30%, Damage defer +5%, HP on hit taken +70recovery, HP on hit +70recovery, Block chance +8%, Repeated hit damage reduction +15%"
+    },
+    "def_b1_c": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_b1_n": {
+      "name": "Iron Will",
+      "description": "DEF +22, DEF +12% increased, Damage defer +3%, Block chance +3%"
+    },
+    "def_b1_e": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_b1_k": {
+      "name": "Iron Wall",
+      "description": "DEF +30, DEF +20% increased, DEF 8% more, Damage defer +6%, Block chance +7%"
+    },
+    "def_b2_c": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_b2_n": {
+      "name": "Barrier Formation",
+      "description": "Damage defer +3%, Shield +240, Shield +25% increased"
+    },
+    "def_b2_e": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_b2_g1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "def_b2_g2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "def_b2_k": {
+      "name": "Ethereal Armor",
+      "description": "Shield +35% increased, Shield 10% more, Convert max HP to shield, Shield takes damage over time"
+    },
+    "def_b3_c": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_b3_n": {
+      "name": "Rebuilt Armor",
+      "description": "Damage defer +3%, Shield +220, start shield recharge after 5000ms, shield recharge +10% per second"
+    },
+    "def_b3_e": {
+      "name": "Polish",
+      "description": "DEF +12, Damage defer +2%"
+    },
+    "def_b3_g1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "def_b3_g2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "def_b3_k": {
+      "name": "Reactive Armor",
+      "description": "Damage defer +5%, DEF retaliation on hit +25%, Shield 20% more, shield recovery +18% every 10 attacks, repeated hit damage reduction +25%, low HP damage reduction +20%"
+    },
+    "poi_b1_c": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_n": {
+      "name": "Hunter's Venom",
+      "description": "Poison chance +8%, Poison damage +16%, EVA +30, EVA +12% increased"
+    },
+    "poi_b1_e": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_k": {
+      "name": "Deadly Venom Discipline",
+      "description": "Poison chance +10%, Poison damage +28%, Poison damage lifesteal +12%, EVA +45, EVA +20% increased"
+    },
+    "poi_b2_c": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_n": {
+      "name": "Proliferation",
+      "description": "Poison chance +10%, Poison stacks +1, EVA +35, EVA +10% increased"
+    },
+    "poi_b2_e": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_g1": {
+      "name": "Vitality",
+      "description": "HP +55, Block chance +1%"
+    },
+    "poi_b2_g2": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "poi_b2_k": {
+      "name": "Phantom Accumulation",
+      "description": "EVA +60, EVA +25% increased, EVA 12% more, Shield recovery on hit after evade streak +8%"
+    },
+    "poi_b3_c": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_n": {
+      "name": "Venom-Sealed Barrier",
+      "description": "Poison chance +8%, Poison damage lifesteal +10%, EVA +40, EVA +15% increased, Shield +10% increased, Shield takes damage over time, Poison resist +20%"
+    },
+    "poi_b3_e": {
+      "name": "Poison Training",
+      "description": "Poison chance +5%, Poison damage +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_g1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "poi_b3_g2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "poi_b3_k": {
+      "name": "Pure Venom",
+      "description": "Poison damage 65% more, Poison damage lifesteal +25%, No direct damage"
+    },
+    "pet_b1_c": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_b1_n": {
+      "name": "Taming Discipline",
+      "description": "HP +120, DEF +20, HP regen/sec +0.8%, Damage defer +3%, Pet effect +10%, Pet drop rate +0.2%"
+    },
+    "pet_b1_e": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_b1_k": {
+      "name": "Life Bond",
+      "description": "HP +260, HP 16% more, Damage defer +5%, Pet effect +20%"
+    },
+    "pet_b2_c": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_b2_n": {
+      "name": "Healing Bond",
+      "description": "HP regen/sec +90recovery, HP on hit +60recovery, Pet effect +10%, Block chance +4%"
+    },
+    "pet_b2_e": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_b2_k": {
+      "name": "Unyielding Bond",
+      "description": "HP regen/sec +2%, Damage defer +5%, HP on hit +80recovery, Pet effect +25%, Block chance +10%"
+    },
+    "pet_b3_c": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_b3_n": {
+      "name": "Beast King's Grace",
+      "description": "DEF +60, DEF +20% increased, Damage defer +6%, Pet effect +15%, Pet drop rate +0.3%"
+    },
+    "pet_b3_e": {
+      "name": "Bond",
+      "description": "HP +70, DEF +8, Pet effect +4%"
+    },
+    "pet_b3_g1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "pet_b3_g2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "pet_b3_k": {
+      "name": "Symbiosis",
+      "description": "HP 25% more, HP regen/sec +3%, Damage defer +6%, HP on hit +110recovery, Pet effect +40%, Pet drop rate +0.5%, Low HP damage reduction +20%"
+    },
+    "frz_b1_c": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_b1_n": {
+      "name": "Frost Discipline",
+      "description": "DEF +16, Chill resist +10%, Chill chance +8%, Chill effect +12%, Chill duration +15%"
+    },
+    "frz_b1_e": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_b1_k": {
+      "name": "Ice Storm",
+      "description": "DEF +22, Damage defer +7%, Chill resist +20%, Chill chance +10%, Chill effect +25%"
+    },
+    "frz_b2_c": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_b2_n": {
+      "name": "Deep Freeze",
+      "description": "DEF +18, Freeze resist +10%, Chill effect +18%, Freeze chance +3%"
+    },
+    "frz_b2_e": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_b2_k": {
+      "name": "Freeze Mastery",
+      "description": "DEF +18, Freeze resist +20%, Chill duration +25%, Freeze chance +4%, Freeze duration +30%, Damage vs chilled/frozen x1.2"
+    },
+    "frz_b3_c": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_b3_n": {
+      "name": "Permafrost",
+      "description": "Damage defer +7%, Freeze resist +15%, Repeated hit damage reduction +12%, 8000ms every cleanse status ailments, Chill effect +20%, Freeze chance +4%"
+    },
+    "frz_b3_e": {
+      "name": "Frost Training",
+      "description": "DEF +8, Chill resist +2%, Chill effect +7%"
+    },
+    "frz_b3_g1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "frz_b3_g2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "frz_b3_k": {
+      "name": "Absolute Zero",
+      "description": "DEF 10% more, Damage defer +8%, Freeze chance +5%, Freeze duration +40%, Damage vs chilled/frozen x1.35"
+    },
+    "ign_b1_c": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_b1_n": {
+      "name": "Fire Discipline",
+      "description": "Ignite chance +8%, Ignite damage +18%, Ignite damage lifesteal +5%"
+    },
+    "ign_b1_e": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_b1_k": {
+      "name": "Hellfire Discipline",
+      "description": "Ignite chance +10%, Ignite damage +30%, Ignite damage lifesteal +15%, Damage taken from ignited enemies reduced +6%"
+    },
+    "ign_b2_c": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_b2_n": {
+      "name": "Hellfire",
+      "description": "Ignite chance +10%, Ignite damage +24%, Ignite duration +15%, Damage taken from ignited enemies reduced +5%"
+    },
+    "ign_b2_e": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_b2_k": {
+      "name": "Inferno",
+      "description": "Ignite damage +35%, Ignite damage 12% more, Ignite duration +25%, Ignite damage lifesteal +10%, Damage taken from ignited enemies reduced +8%"
+    },
+    "ign_b3_c": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_b3_n": {
+      "name": "Hellfire Dominion",
+      "description": "Ignite chance +12%, Ignite damage +28%, Ignite damage lifesteal +16%, Damage taken from ignited enemies reduced +8%"
+    },
+    "ign_b3_e": {
+      "name": "Fire Training",
+      "description": "Ignite chance +2%, Ignite damage +10%"
+    },
+    "ign_b3_g1": {
+      "name": "Stalwart",
+      "description": "DEF +14"
+    },
+    "ign_b3_g2": {
+      "name": "Strength",
+      "description": "ATK +12, Attack speed +2%"
+    },
+    "ign_b3_k": {
+      "name": "Heavenly Blaze",
+      "description": "Ignite damage 40% more, Ignite damage lifesteal +15%, Damage taken from ignited enemies reduced +10%, Damage defer +5%"
+    },
+    "stat_def_inc_flat1": {
+      "name": "Heavy Armor",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc1": {
+      "name": "Defense Mastery",
+      "description": "DEF +12% increased"
+    },
+    "stat_def_inc_flat2": {
+      "name": "Heavy Armor",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc2": {
+      "name": "Defense Mastery",
+      "description": "DEF +12% increased"
+    },
+    "stat_hp_inc_flat1": {
+      "name": "Giant Frame",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc1": {
+      "name": "Life Mastery",
+      "description": "HP +12% increased"
+    },
+    "stat_hp_inc_flat2": {
+      "name": "Giant Frame",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc2": {
+      "name": "Life Mastery",
+      "description": "HP +12% increased"
+    },
+    "stat_atk_inc_flat1": {
+      "name": "Mighty Arm",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc1": {
+      "name": "Attack Mastery",
+      "description": "ATK +10% increased"
+    },
+    "stat_atk_inc_flat2": {
+      "name": "Mighty Arm",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc2": {
+      "name": "Attack Mastery",
+      "description": "ATK +10% increased"
+    },
+    "sustain_0_hit1": {
+      "name": "Life Tap",
+      "description": "HP on hit +30recovery"
+    },
+    "sustain_0_leech1": {
+      "name": "Critical Leech",
+      "description": "Critical damage lifesteal +10%"
+    },
+    "sustain_0_hit2": {
+      "name": "Life Tap",
+      "description": "HP on hit +35recovery"
+    },
+    "sustain_0_defer1": {
+      "name": "Deflection",
+      "description": "Damage defer +3%"
+    },
+    "sustain_1_hit1": {
+      "name": "Life Tap",
+      "description": "HP on hit +35recovery"
+    },
+    "sustain_1_leech1": {
+      "name": "Guard Leech",
+      "description": "Lifesteal +2%, Block chance +2%"
+    },
+    "sustain_1_hit2": {
+      "name": "Life Tap",
+      "description": "HP on hit +40recovery"
+    },
+    "sustain_1_defer1": {
+      "name": "Deflection",
+      "description": "Damage defer +3%"
+    },
+    "sustain_2_hit1": {
+      "name": "Life Tap",
+      "description": "HP on hit +30recovery"
+    },
+    "sustain_2_leech1": {
+      "name": "Toxic Blood Leech",
+      "description": "Poison damage lifesteal +8%"
+    },
+    "sustain_2_hit2": {
+      "name": "Life Tap",
+      "description": "HP on hit +35recovery"
+    },
+    "sustain_2_defer1": {
+      "name": "Deflection",
+      "description": "Damage defer +3%"
+    },
+    "sustain_3_hit1": {
+      "name": "Life Tap",
+      "description": "HP on hit +35recovery"
+    },
+    "sustain_3_leech1": {
+      "name": "Lifesteal",
+      "description": "Lifesteal +2%"
+    },
+    "sustain_3_hit2": {
+      "name": "Life Tap",
+      "description": "HP on hit +45recovery"
+    },
+    "sustain_3_defer1": {
+      "name": "Deflection",
+      "description": "Damage defer +3%"
+    },
+    "sustain_4_hit1": {
+      "name": "Life Tap",
+      "description": "HP on hit +30recovery"
+    },
+    "sustain_4_leech1": {
+      "name": "Frostbite Leech",
+      "description": "Lifesteal +2%, Freeze resist +5%"
+    },
+    "sustain_4_hit2": {
+      "name": "Life Tap",
+      "description": "HP on hit +35recovery"
+    },
+    "sustain_4_defer1": {
+      "name": "Deflection",
+      "description": "Damage defer +3%"
+    },
+    "sustain_5_hit1": {
+      "name": "Life Tap",
+      "description": "HP on hit +30recovery"
+    },
+    "sustain_5_leech1": {
+      "name": "Flame Leech",
+      "description": "Ignite damage lifesteal +8%"
+    },
+    "sustain_5_hit2": {
+      "name": "Life Tap",
+      "description": "HP on hit +35recovery"
+    },
+    "sustain_5_defer1": {
+      "name": "Deflection",
+      "description": "Damage defer +3%"
     }
   },
   "ranking": {
@@ -2319,7 +3298,9 @@
     "igniteResist": "Ignite Damage Taken -{{value}}%",
     "evasion": "Evasion +{{value}}%",
     "evasionIncreased": "Evasion +{{value}}%",
-    "evasionMore": "Evasion {{value}}% more"
+    "evasionMore": "Evasion {{value}}% more",
+    "hpOnTakenHit": "HP +{{value}} when hit",
+    "shieldOnEvadeStreakHit": "Recover {{value}}% of max shield per evade when hit after an evade streak"
   },
   "boost": {
     "dropRate": {
@@ -2415,9 +3396,9 @@
       "description": "Unlock 2x-3x battle speed options"
     },
     "inviteCodeBanner": {
-      "title": "Unlock 3x Speed for Free",
-      "description": "Share your invite code from Settings to unlock 3x speed",
-      "activated": "3x speed activated via invite code"
+      "title": "Unlock 3x Speed",
+      "description": "Unlock 3x speed from the shop",
+      "activated": "3x speed activated"
     },
     "premiumBundle": {
       "name": "Premium Bundle",

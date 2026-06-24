@@ -10,7 +10,7 @@ import { EquipmentSlot, Item } from '@/types';
 import { getItemIcon, getSlotIcon } from '@/data/itemIcons';
 import { storageRepository } from '@/db/repositories/storageRepository';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
-import { getTierColor, getTierDisplayName } from '@/data/items';
+import { getModDescription, getTierColor, getTierDisplayName } from '@/data/items';
 import { ms, fs } from '@/utils/scaling';
 import { UBER_BOSS_BY_BASE } from '@/data/endContents';
 import { calculatePassiveEffects } from '@/data/passiveTree';
@@ -259,6 +259,12 @@ function calculateItemStats(
         case 'ignite_resist_pct':
           desc = `[${tierLabel}] ${t('modDescriptions.igniteResist', { value: mod.value })}`;
           break;
+      }
+      if (!desc) {
+        const fallbackDesc = getModDescription(mod, t);
+        if (fallbackDesc) {
+          desc = `[${tierLabel}] ${fallbackDesc}`;
+        }
       }
       if (desc) {
         allMods.push({ type: mod.type, value: mod.value, tier, desc, color });

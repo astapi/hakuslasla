@@ -33,7 +33,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| ツリーデータ | `data/json/passiveTree.json`（S2以前=legacy）/ `data/json/passiveTree_s3.json`（S3用、**現状はS2の複製**） |
+| ツリーデータ | `data/json/passiveTree.json`（S2以前=legacy）/ `data/json/passiveTree_s3.json`（S3用、PoE型ツリーとして構築済み） |
 | 切替ロジック | `data/passiveTree.ts` の `treeForSeason(season)`：`season >= 3 → s3Tree` / `season <= 2 → legacyTree` |
 | アクティブ切替 | `setActivePassiveSeason(season)` を `usePlayerStore.loadCharacter()` で呼出。`getPassiveNode` / `canUnlockNode` / `calculatePassiveEffects` 等は全てアクティブツリーを参照 |
 | ランキング連動 | キャラの `season` を `getRankingCollectionName(season)` / `getSeasonKeySuffix(season)` に渡す（`lib/firestore.ts` / `lib/ranking.ts` / `lib/rankingCache.ts`：シーズン別キャッシュ無効化 / `settingsRepository.ts` / `app/ranking.tsx` / `app/dungeon-select.tsx`） |
@@ -112,23 +112,26 @@
 - ダメージ軽減：DEF減衰式 `ATK × 100/(100+DEF)`、`damageReductionPct`、`damageDeferPct`（最大50%・4秒遅延）、`poisonDamageReduction`、`retaliateDefPct`（反撃）、`igniteResistPct`
 - HP回復：`hpRegen` / `hpRegenPct` / `hpOnHit` / `hpOnCrit` / `lifestealPct` / `poisonLifesteal` / `igniteLifesteal` / `critLifestealPct`
 - 浄化/緊急：`royalRoar`（3回攻撃ごと毒・チル解除）、`warlordEnrage`（HP30%↓で攻撃速度+20%/HP on Hit+300）、重撃・重傷スタック
-- 状態異常：チル（AS低下）・フリーズ（行動不能、時間経過でチルへ移行）。**プレイヤー側のチル/フリーズ耐性ステは未実装**（ボス側のみ `enemyFreezeResistPct`）。
+- 状態異常：チル（AS低下）・フリーズ（行動不能、時間経過でチルへ移行）。プレイヤー側のチル/フリーズ耐性ステもS3防御機構として実装済み。
 
 ---
 
-## 4. 🟡 タスク：シーズン3用スキルツリーの調整
+## 4. 🟢 実装済み：シーズン3用スキルツリーの調整
 
 **目的**：`passiveTree_s3.json` をS2複製から脱却し、シーズン3独自の構成にする。S2キャラには影響させない。
 
+現在は新防御機構を含めたS3用パッシブツリーを構築済み。ツリー検証・型チェック対象外の既知エラーを除く確認・バランス検証・i18n/表示確認も完了済み。
+
 ### 4.1 作業項目
 
-- [ ] `data/json/passiveTree_s3.json` の構成を確定（S2の既存系統 poison/crit/guard/vamp/regen/speed/ignite/ice をベースに調整）
-- [ ] リバランス方針の決定（強すぎる純粋毒・処刑人などのキーストーン調整、弱い系統の底上げ）
-- [ ] 新キーストーン / 新ノードの追加（後述の新防御機構・新ギミックと連動）
-- [ ] 新規 `PassiveEffect` フィールドを使う場合 → `types/index.ts` と `data/passiveTree.ts` の `calculatePassiveEffects()` に集計処理を追加（**両ツリー共通の集計ロジック**なので注意）
-- [ ] i18n（ノード名・説明）の全ロケール追加
-- [ ] `tests/data/passiveTreeSeason.test.ts` を拡張（S3固有ノードの存在確認、ノード数差分の検証）
-- [ ] シミュレーションスクリプトでバランス検証（`npm run simulation` 等）
+- [x] `data/json/passiveTree_s3.json` の構成を確定（PoE型ツリー・クラス別スタート・S3独自構成）
+- [x] リバランス方針の決定（新防御機構を含めたS3向け調整）
+- [x] 新キーストーン / 新ノードの追加（新防御機構と連動）
+- [x] 新規 `PassiveEffect` フィールドの集計処理追加（`types/index.ts` / `data/passiveTree.ts`）
+- [x] i18n（ノード名・説明）の全ロケール追加
+- [x] 装備MOD欄・図鑑MOD欄を含むMOD表示の翻訳確認
+- [x] `tests/data/passiveTreeSeason.test.ts` を拡張（S3固有ノードの存在確認、ノード数差分の検証）
+- [x] シミュレーションスクリプトでバランス検証
 
 ### 4.2 注意点
 
@@ -190,20 +193,21 @@
 
 ---
 
-## 7. 💡 考案：シーズン3用 プレイヤー側 防御機構
+## 7. 🟢 実装済み：シーズン3用 プレイヤー側 防御機構
 
-UberUberクラーケンの「チル/フリーズ連打・10連撃・高HP再生」に代表される高難度ギミックに対し、**回復一辺倒ではない防御の選択肢**を増やす。
+UberUberクラーケンの「チル/フリーズ連打・10連撃・高HP再生」に代表される高難度ギミックに対し、**回復一辺倒ではない防御の選択肢**を増やす。S3ツリーには、シールド・ブロック・ダメージ遅延・チル/フリーズ耐性・自動浄化・連続被弾軽減などを反映済み。
 
 ### 7.1 新防御機構案
 
-| 名称 | 効果 | 既存との差別化 | 実装の足がかり |
+| 名称 | 効果 | 既存との差別化 | 状態 |
 |------|------|---------------|---------------|
-| **吸収シールド** | 一定量のダメージを肩代わりする一時シールド（HP回復とは別レイヤー）。被弾で消費、一定間隔で再付与 | フリーズ中でも機能。即死/連撃の頭を抑える | `CombinedModEffects` にシールド最大値/再生を追加、ダメージ適用前に控除 |
-| **ブロック（確率カット）** | 一定確率で被ダメージを大幅カット（例：被ダメ-70%） | DEF減衰とは独立した確率防御層 | ダメージ計算前に確率判定 → 倍率適用 |
-| **被ダメージ上限（キャップ）** | 1撃のダメージにHP%上限を設定 | 処刑/10連撃の各撃を緩和 | ダメージ確定後に `min(dmg, maxHp×cap%)` |
-| **チル/フリーズ耐性** | プレイヤー側のチル/フリーズ付与確率を軽減/無効化 | 現状ボス側のみ耐性ステを持つ。プレイヤー側に新設 | 敵→プレイヤーの状態異常付与判定（`battleEngine.ts`）に耐性%を導入 |
-| **不屈（即死耐性）** | HPが0になる致命ダメージをHP1で耐える（クールダウンあり） | エンレイジ/処刑への保険 | プレイヤーHP0判定前にフラグ+CD管理 |
-| **自動浄化** | 一定間隔で自身のデバフ（チル/累積デバフ）を解除 | royalRoarは攻撃回数依存。時間依存版 | `advanceTicks` の経過tickで定期解除 |
+| **吸収シールド** | 一定量のダメージを肩代わりする一時シールド（HP回復とは別レイヤー）。被弾で消費、一定間隔で再付与 | フリーズ中でも機能。即死/連撃の頭を抑える | 実装済み |
+| **ブロック（確率カット）** | 一定確率で被ダメージを大幅カット | DEF減衰とは独立した確率防御層 | 実装済み |
+| **被ダメージ上限（キャップ）** | 1撃のダメージにHP%上限を設定 | 処刑/10連撃の各撃を緩和 | 未採用（必要なら将来実装） |
+| **チル/フリーズ耐性** | プレイヤー側のチル/フリーズ付与確率を軽減/無効化 | ボス側耐性とは別にプレイヤー側へ新設 | 実装済み |
+| **連続被弾軽減 / 低HP時被ダメ軽減** | 短時間の連続被弾や低HP時の被ダメージを軽減 | 連撃や崩れ始めた局面への防御層 | 実装済み |
+| **自動浄化** | 一定間隔で自身のデバフ（チル/累積デバフ）を解除 | royalRoarは攻撃回数依存。時間依存版 | 実装済み |
+| **不屈（即死耐性）** | HPが0になる致命ダメージをHP1で耐える（クールダウンあり） | エンレイジ/処刑への保険 | 未採用（必要なら将来実装） |
 
 ### 7.2 実装ガイド
 
@@ -215,15 +219,15 @@ UberUberクラーケンの「チル/フリーズ連打・10連撃・高HP再生�
 
 ---
 
-## 8. 想定実装順序
+## 8. 実装状況
 
-| 順序 | タスク | 依存 | 主な変更範囲 |
-|------|--------|------|------------|
-| 1 | 新防御機構の実装（§7） | なし | `core/modEffects.ts`, `core/battleEngine.ts`, `types/index.ts` |
-| 2 | 新戦闘ギミックの実装（§6） | なし（1と並行可） | `core/bossBehaviors.ts`, `core/battleEngine.ts` |
-| 3 | UberUber残り3体 + シーズン3ユニーク（§5） | 1,2（新効果を固定MODに使う場合） | `data/json/items.json`, `monsters.json`, `dungeons.json` |
-| 4 | S3スキルツリー調整（§4） | 1,2（新効果ノードを置く場合） | `data/json/passiveTree_s3.json`, `data/passiveTree.ts` |
-| 5 | i18n / バランス検証 / テスト | 1〜4 | `i18n/`, `scripts/`, `tests/` |
+| 状態 | タスク | 主な変更範囲 |
+|------|--------|------------|
+| ✅ 完了 | 新防御機構の実装（§7） | `core/modEffects.ts`, `core/battleEngine.ts`, `types/index.ts` |
+| ✅ 完了 | S3スキルツリー調整（§4） | `data/json/passiveTree_s3.json`, `data/passiveTree.ts` |
+| ✅ 完了 | i18n / MOD表示確認 / バランス検証 / テスト | `locales/`, `data/items.ts`, `scripts/`, `tests/` |
+| ⏳ 未完 | UberUber残り3体 + シーズン3ユニーク（§5） | `data/json/items.json`, `monsters.json`, `dungeons.json` |
+| ⏳ 未完 | S3リリース準備（§9） | 告知、更新内容、スクリーンショット、App Store Connect |
 
 ### 注意事項
 
@@ -231,3 +235,14 @@ UberUberクラーケンの「チル/フリーズ連打・10連撃・高HP再生�
 - `calculatePassiveEffects()` / `combineMods()` はシーズン共通ロジック。新フィールド追加はS2/S3双方に影響するが、S2ノードが新フィールドを持たなければ実効果はゼロ。
 - 各機能完了後にシミュレーションでバランス検証（特にUberUber・次元回廊）。
 - 画像/SEアセットが必要な新ボス・新ペットはプレースホルダー運用の可否を確認（参考：`docs/content-expansion-plan.md` のアセット一覧）。
+
+---
+
+## 9. 🟡 タスク：S3リリース準備
+
+S3コンテンツ実装後、ストア公開前に必要な告知・メタデータ・提出準備を整理する。
+
+- [ ] S3リリースの事前お知らせ作成
+- [ ] S3でのupdate内容の整理
+- [ ] S3用にApp Store用のスクリーンショットを見直し
+- [ ] App Store Connectでリリースバージョンを作成

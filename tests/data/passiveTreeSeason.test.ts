@@ -7,6 +7,7 @@ import {
   getStartNode,
   getStartNodeId,
   getPassiveNode,
+  calculatePassiveEffects,
   LATEST_PASSIVE_SEASON,
 } from '../../data/passiveTree';
 import legacyJson from '../../data/json/passiveTree.json';
@@ -61,5 +62,40 @@ describe('data/passiveTree シーズン別ツリー切替', () => {
     setActivePassiveSeason(3);
     const firstNodeId = s3Json.nodes[0].id;
     expect(getPassiveNode(firstNodeId)?.id).toBe(firstNodeId);
+  });
+
+  it('S3のウォリアー強化ノードは被弾回復・ブロック・遅延を集計する', () => {
+    setActivePassiveSeason(3);
+    setActivePassiveClass('warrior');
+
+    const effects = calculatePassiveEffects(['cri_b1_n', 'cri_b1_k', 'cri_b2_k', 'cri_b3_k']);
+
+    expect(effects.hp_on_taken_hit).toBe(175);
+    expect(effects.block_chance).toBe(19);
+    expect(effects.damage_defer_pct).toBe(12);
+    expect(effects.repeat_hit_damage_reduction_pct).toBe(15);
+  });
+
+  it('S3の発火強化ノードは吸収と発火中被ダメ軽減を集計する', () => {
+    setActivePassiveSeason(3);
+    setActivePassiveClass('elementalist');
+
+    const effects = calculatePassiveEffects(['ign_b1_n', 'ign_b1_k', 'ign_b2_n', 'ign_b2_k', 'ign_b3_n', 'ign_b3_k']);
+
+    expect(effects.ignite_lifesteal).toBe(61);
+    expect(effects.ignite_damage_reduction).toBe(37);
+    expect(effects.ignite_damage_more_pct).toEqual([12, 40]);
+  });
+
+  it('S3のフロスト強化ノードは最大チル/フリーズ倍率と防御効果を集計する', () => {
+    setActivePassiveSeason(3);
+    setActivePassiveClass('frostmage');
+
+    const effects = calculatePassiveEffects(['frz_b1_k', 'frz_b2_k', 'frz_b3_n', 'frz_b3_k']);
+
+    expect(effects.chill_freeze_damage_mult).toBe(1.35);
+    expect(effects.damage_defer_pct).toBe(22);
+    expect(effects.repeat_hit_damage_reduction_pct).toBe(12);
+    expect(effects.auto_cleanse_interval_ms).toBe(8000);
   });
 });

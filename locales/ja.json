@@ -299,11 +299,11 @@
     "battleSpeed": {
       "title": "戦闘速度",
       "description": "戦闘の進行速度を変更します",
-      "premiumHint": "3倍速は招待コードで有効化できます"
+      "premiumHint": "3倍速はショップで購入すると有効化できます"
     },
     "inviteCode": {
       "title": "招待コード",
-      "description": "友達と招待コードを共有して、お互いに3倍速を有効化しましょう",
+      "description": "招待コード機能は終了しました",
       "myCode": "あなたの招待コード",
       "copied": "コピーしました",
       "receivedFromLink": "招待リンクのコードを入力欄にセットしました",
@@ -311,7 +311,7 @@
       "placeholder": "6文字のコード",
       "submit": "送信",
       "submitting": "送信中...",
-      "activated": "3倍速が有効化済み",
+      "activated": "招待コード機能は終了しました",
       "shareText": "ルートダイブで一緒に冒険しよう！このリンクを開くと招待コードがそのまま受け取れます。\nhttps://astapi.net/lootdive/invite?code={{code}}\nうまく開けない場合は招待コード {{code}} を入力してください。",
       "error": {
         "ownCode": "自分のコードは入力できません",
@@ -323,7 +323,7 @@
       },
       "success": {
         "title": "有効化完了",
-        "message": "3倍速が有効になりました！"
+        "message": "招待コード機能は終了しました"
       },
       "suspended": "招待コード機能は一時的に停止中です"
     },
@@ -333,13 +333,13 @@
   },
   "inviteLink": {
     "title": "招待コードを受け取りました",
-    "description": "リンクから招待コードを読み込みました。適用すると3倍速を解放できます。",
+    "description": "招待コード機能は終了しました。",
     "receivedCode": "受け取ったコード",
     "apply": "このコードを適用",
     "openSettings": "設定画面で確認する",
     "goHome": "ホームへ戻る",
     "result": {
-      "alreadyActivated": "すでに3倍速は解放済みです。"
+      "alreadyActivated": "招待コード機能は終了しました。"
     }
   },
   "status": {
@@ -442,7 +442,41 @@
     "freeze_duration_pct": "フリーズ時間",
     "ignite_resist_pct": "灼熱耐性",
     "evasion_increased_pct": "EVA",
-    "evasion_more_pct": "EVA more"
+    "evasion_more_pct": "EVA more",
+    "evasion": "EVA",
+    "hp_on_taken_hit": "被弾回復",
+    "shield_on_evade_streak_hit_pct": "回避盾",
+    "atk": "ATK",
+    "def": "DEF",
+    "hp": "HP",
+    "auto_cleanse_interval_ms": "自動浄化",
+    "block_chance": "ブロック",
+    "chill_freeze_damage_mult": "チル凍結ダメ",
+    "chill_resist_pct": "チル耐性",
+    "critical_lifesteal_pct": "会心吸収",
+    "freeze_resist_pct": "凍結耐性",
+    "hp_to_shield": "HP盾変換",
+    "ignite_damage_more_pct": "発火more",
+    "ignite_damage_reduction": "発火被ダメ減",
+    "ignite_spread": "発火伝播",
+    "ignite_stacking_damage": "発火蓄積",
+    "lifestealPct": "吸収",
+    "low_hp_damage_reduction_pct": "低HP被ダメ減",
+    "no_direct_damage": "直撃無効",
+    "pet_drop_rate_pct": "ペット泥率",
+    "pet_effect_pct": "ペット効果",
+    "poison_lifesteal": "毒吸収",
+    "poison_max_stacks": "毒スタック",
+    "poison_resist_pct": "毒耐性",
+    "repeat_hit_damage_reduction_pct": "連続被弾減",
+    "retaliate_def_pct": "DEF反撃",
+    "shield": "シールド",
+    "shield_blocks_dot": "盾DoT受け",
+    "shield_increased_pct": "シールド",
+    "shield_more_pct": "盾more",
+    "shield_on_10_attacks_pct": "10撃盾",
+    "shield_recharge_delay_ms": "盾遅延",
+    "shield_recharge_pct": "盾再構築"
   },
   "dungeon": {
     "floors": "全{{count}}階",
@@ -2273,6 +2307,950 @@
     "ignite_final2": {
       "name": "伝染する炎",
       "description": "【キーストーン】発火確率 +6%, イグナイト伝染 - 発火中の敵死亡時、次の敵に発火継承。DEF +10% increased"
+    },
+    "warrior_start": {
+      "name": "戦士の構え",
+      "description": "HP +55, ATK +10"
+    },
+    "ranger_start": {
+      "name": "狩人の心得",
+      "description": "HP +55, ATK +9, EVA +20, EVA +6% increased"
+    },
+    "tamer_start": {
+      "name": "調教師の絆",
+      "description": "HP +70, DEF +8"
+    },
+    "frostmage_start": {
+      "name": "氷術の素養",
+      "description": "HP +55, ATK +8, DEF +8, EVA +10"
+    },
+    "elementalist_start": {
+      "name": "魔導の素養",
+      "description": "HP +45, ATK +10, EVA +10"
+    },
+    "cri_j0": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j1": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j2": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j3": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_si": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "cri_s1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "cri_s2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "def_j0": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_j1": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_j2": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_j3": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "def_s1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "def_s2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "poi_j0": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j1": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j2": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j3": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_si": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "poi_s1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "poi_s2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "pet_j0": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_j1": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_j2": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_j3": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_si": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "pet_s1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "pet_s2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "frz_j0": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_j1": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_j2": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_j3": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_si": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "frz_s1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "frz_s2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ign_j0": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_j1": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_j2": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_j3": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_si": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_s0": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ign_s1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ign_s2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring0_0_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring0_0_2": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring0_0_3": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring0_0_4": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring0_1_1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring0_1_2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring0_1_3": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring0_1_4": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring0_2_1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring0_2_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring0_2_3": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring0_2_4": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring0_3_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring0_3_2": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring0_3_3": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring0_3_4": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring0_4_1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring0_4_2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring0_4_3": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring0_4_4": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring0_5_1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring0_5_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring0_5_3": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring0_5_4": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring1_0_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring1_0_2": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring1_0_3": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring1_1_1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring1_1_2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring1_1_3": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring1_2_1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring1_2_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring1_2_3": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring1_3_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring1_3_2": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring1_3_3": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring1_4_1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring1_4_2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring1_4_3": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring1_5_1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring1_5_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring1_5_3": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring2_0_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring2_0_2": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring2_1_1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring2_1_2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring2_2_1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring2_2_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring2_3_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring2_3_2": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring2_4_1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring2_4_2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring2_5_1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring2_5_2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring3_0_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring3_1_1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring3_2_1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ring3_3_1": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ring3_4_1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "ring3_5_1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "cri_b1_c": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_n": {
+      "name": "戦士の技",
+      "description": "ATK +18, クリティカル率 +3%, 被弾時HP +25回復, ブロック率 +2%"
+    },
+    "cri_b1_e": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_k": {
+      "name": "会心の極み",
+      "description": "ATK +8% increased, クリティカル率 +8%, クリティカルダメージ +35%, ダメージ遅延 +3%, 被弾時HP +35回復, ブロック率 +4%"
+    },
+    "cri_b2_c": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_n": {
+      "name": "必中",
+      "description": "ATK +12, クリティカル率 +5%, クリティカルダメージ +25%, HIT時HP +35回復"
+    },
+    "cri_b2_e": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_k": {
+      "name": "修羅",
+      "description": "ATK +25, クリティカルダメージ +60%, ダメージ遅延 +4%, 被弾時HP +45回復, ブロック率 +5%, 攻撃速度 5% more"
+    },
+    "cri_b3_c": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_n": {
+      "name": "一閃",
+      "description": "ATK +24, クリティカル率 +5%, クリティカルダメージ +30%, HIT時HP +45回復"
+    },
+    "cri_b3_e": {
+      "name": "鍛錬",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_g1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "cri_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "cri_b3_k": {
+      "name": "処刑人",
+      "description": "ATK +15% increased, ATK 14% more, クリティカル時HP +120回復, クリティカル時ダメージ吸収 +30%, ダメージ遅延 +5%, 被弾時HP +70回復, HIT時HP +70回復, ブロック率 +8%, 連続被弾軽減 +15%"
+    },
+    "def_b1_c": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_b1_n": {
+      "name": "鉄の意志",
+      "description": "DEF +22, DEF +12% increased, ダメージ遅延 +3%, ブロック率 +3%"
+    },
+    "def_b1_e": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_b1_k": {
+      "name": "鉄壁",
+      "description": "DEF +30, DEF +20% increased, DEF 8% more, ダメージ遅延 +6%, ブロック率 +7%"
+    },
+    "def_b2_c": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_b2_n": {
+      "name": "障壁形成",
+      "description": "ダメージ遅延 +3%, シールド +240, シールド +25% increased"
+    },
+    "def_b2_e": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_b2_g1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "def_b2_g2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "def_b2_k": {
+      "name": "霊体装甲",
+      "description": "シールド +35% increased, シールド 10% more, 最大HPをシールドに変換, 継続ダメージをシールドで受ける"
+    },
+    "def_b3_c": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_b3_n": {
+      "name": "再構築装甲",
+      "description": "ダメージ遅延 +3%, シールド +220, 5000ms後シールド再構築, 毎秒シールド再構築 +10%"
+    },
+    "def_b3_e": {
+      "name": "錬磨",
+      "description": "DEF +12, ダメージ遅延 +2%"
+    },
+    "def_b3_g1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "def_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "def_b3_k": {
+      "name": "反応装甲",
+      "description": "ダメージ遅延 +5%, 被ダメ時DEF反撃 +25%, シールド 20% more, 10回攻撃ごとシールド回復 +18%, 連続被弾軽減 +25%, 低HP時被ダメ軽減 +20%"
+    },
+    "poi_b1_c": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_n": {
+      "name": "狩人の毒",
+      "description": "毒付与率 +8%, 毒ダメージ +16%, EVA +30, EVA +12% increased"
+    },
+    "poi_b1_e": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_k": {
+      "name": "猛毒の心得",
+      "description": "毒付与率 +10%, 毒ダメージ +28%, 毒ダメージ吸収 +12%, EVA +45, EVA +20% increased"
+    },
+    "poi_b2_c": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_n": {
+      "name": "蔓延",
+      "description": "毒付与率 +10%, 毒スタック +1, EVA +35, EVA +10% increased"
+    },
+    "poi_b2_e": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_g1": {
+      "name": "活力",
+      "description": "HP +55, ブロック率 +1%"
+    },
+    "poi_b2_g2": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "poi_b2_k": {
+      "name": "幻影蓄積",
+      "description": "EVA +60, EVA +25% increased, EVA 12% more, 連続回避後の被弾時シールド回復 +8%"
+    },
+    "poi_b3_c": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_n": {
+      "name": "封毒障壁",
+      "description": "毒付与率 +8%, 毒ダメージ吸収 +10%, EVA +40, EVA +15% increased, シールド +10% increased, 継続ダメージをシールドで受ける, 毒耐性 +20%"
+    },
+    "poi_b3_e": {
+      "name": "毒の研鑽",
+      "description": "毒付与率 +5%, 毒ダメージ +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_g1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "poi_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "poi_b3_k": {
+      "name": "純粋毒",
+      "description": "毒ダメージ 65% more, 毒ダメージ吸収 +25%, 通常ダメージ無効"
+    },
+    "pet_b1_c": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_b1_n": {
+      "name": "調教の心得",
+      "description": "HP +120, DEF +20, 毎秒HP回復 +0.8%, ダメージ遅延 +3%, ペット効果 +10%, ペットドロップ率 +0.2%"
+    },
+    "pet_b1_e": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_b1_k": {
+      "name": "生命の絆",
+      "description": "HP +260, HP 16% more, ダメージ遅延 +5%, ペット効果 +20%"
+    },
+    "pet_b2_c": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_b2_n": {
+      "name": "癒やしの絆",
+      "description": "毎秒HP +90回復, HIT時HP +60回復, ペット効果 +10%, ブロック率 +4%"
+    },
+    "pet_b2_e": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_b2_k": {
+      "name": "不屈の絆",
+      "description": "毎秒HP回復 +2%, ダメージ遅延 +5%, HIT時HP +80回復, ペット効果 +25%, ブロック率 +10%"
+    },
+    "pet_b3_c": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_b3_n": {
+      "name": "獣王の加護",
+      "description": "DEF +60, DEF +20% increased, ダメージ遅延 +6%, ペット効果 +15%, ペットドロップ率 +0.3%"
+    },
+    "pet_b3_e": {
+      "name": "絆",
+      "description": "HP +70, DEF +8, ペット効果 +4%"
+    },
+    "pet_b3_g1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "pet_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "pet_b3_k": {
+      "name": "共生",
+      "description": "HP 25% more, 毎秒HP回復 +3%, ダメージ遅延 +6%, HIT時HP +110回復, ペット効果 +40%, ペットドロップ率 +0.5%, 低HP時被ダメ軽減 +20%"
+    },
+    "frz_b1_c": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_b1_n": {
+      "name": "氷術の心得",
+      "description": "DEF +16, チル耐性 +10%, チル付与率 +8%, チル効果 +12%, チル持続 +15%"
+    },
+    "frz_b1_e": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_b1_k": {
+      "name": "氷嵐",
+      "description": "DEF +22, ダメージ遅延 +7%, チル耐性 +20%, チル付与率 +10%, チル効果 +25%"
+    },
+    "frz_b2_c": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_b2_n": {
+      "name": "氷結",
+      "description": "DEF +18, フリーズ耐性 +10%, チル効果 +18%, フリーズ付与率 +3%"
+    },
+    "frz_b2_e": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_b2_k": {
+      "name": "凍結の極み",
+      "description": "DEF +18, フリーズ耐性 +20%, チル持続 +25%, フリーズ付与率 +4%, フリーズ持続 +30%, チル/フリーズ中ダメージ x1.2"
+    },
+    "frz_b3_c": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_b3_n": {
+      "name": "永久凍土",
+      "description": "ダメージ遅延 +7%, フリーズ耐性 +15%, 連続被弾軽減 +12%, 8000msごと状態異常解除, チル効果 +20%, フリーズ付与率 +4%"
+    },
+    "frz_b3_e": {
+      "name": "氷の研鑽",
+      "description": "DEF +8, チル耐性 +2%, チル効果 +7%"
+    },
+    "frz_b3_g1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "frz_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "frz_b3_k": {
+      "name": "絶対零度",
+      "description": "DEF 10% more, ダメージ遅延 +8%, フリーズ付与率 +5%, フリーズ持続 +40%, チル/フリーズ中ダメージ x1.35"
+    },
+    "ign_b1_c": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_b1_n": {
+      "name": "火術の心得",
+      "description": "発火付与率 +8%, 発火ダメージ +18%, 発火ダメージ吸収 +5%"
+    },
+    "ign_b1_e": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_b1_k": {
+      "name": "業火の心得",
+      "description": "発火付与率 +10%, 発火ダメージ +30%, 発火ダメージ吸収 +15%, 発火中の敵からの被ダメ軽減 +6%"
+    },
+    "ign_b2_c": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_b2_n": {
+      "name": "業火",
+      "description": "発火付与率 +10%, 発火ダメージ +24%, 発火時間 +15%, 発火中の敵からの被ダメ軽減 +5%"
+    },
+    "ign_b2_e": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_b2_k": {
+      "name": "劫火",
+      "description": "発火ダメージ +35%, 発火ダメージ 12% more, 発火時間 +25%, 発火ダメージ吸収 +10%, 発火中の敵からの被ダメ軽減 +8%"
+    },
+    "ign_b3_c": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_b3_n": {
+      "name": "業火の支配",
+      "description": "発火付与率 +12%, 発火ダメージ +28%, 発火ダメージ吸収 +16%, 発火中の敵からの被ダメ軽減 +8%"
+    },
+    "ign_b3_e": {
+      "name": "火の研鑽",
+      "description": "発火付与率 +2%, 発火ダメージ +10%"
+    },
+    "ign_b3_g1": {
+      "name": "頑強",
+      "description": "DEF +14"
+    },
+    "ign_b3_g2": {
+      "name": "筋力",
+      "description": "ATK +12, 攻撃速度 +2%"
+    },
+    "ign_b3_k": {
+      "name": "業炎天",
+      "description": "発火ダメージ 40% more, 発火ダメージ吸収 +15%, 発火中の敵からの被ダメ軽減 +10%, ダメージ遅延 +5%"
+    },
+    "stat_def_inc_flat1": {
+      "name": "重装",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc1": {
+      "name": "防御熟達",
+      "description": "DEF +12% increased"
+    },
+    "stat_def_inc_flat2": {
+      "name": "重装",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc2": {
+      "name": "防御熟達",
+      "description": "DEF +12% increased"
+    },
+    "stat_hp_inc_flat1": {
+      "name": "巨体",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc1": {
+      "name": "生命熟達",
+      "description": "HP +12% increased"
+    },
+    "stat_hp_inc_flat2": {
+      "name": "巨体",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc2": {
+      "name": "生命熟達",
+      "description": "HP +12% increased"
+    },
+    "stat_atk_inc_flat1": {
+      "name": "剛腕",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc1": {
+      "name": "攻撃熟達",
+      "description": "ATK +10% increased"
+    },
+    "stat_atk_inc_flat2": {
+      "name": "剛腕",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc2": {
+      "name": "攻撃熟達",
+      "description": "ATK +10% increased"
+    },
+    "sustain_0_hit1": {
+      "name": "吸命",
+      "description": "HIT時HP +30回復"
+    },
+    "sustain_0_leech1": {
+      "name": "会心吸収",
+      "description": "クリティカル時ダメージ吸収 +10%"
+    },
+    "sustain_0_hit2": {
+      "name": "吸命",
+      "description": "HIT時HP +35回復"
+    },
+    "sustain_0_defer1": {
+      "name": "受け流し",
+      "description": "ダメージ遅延 +3%"
+    },
+    "sustain_1_hit1": {
+      "name": "吸命",
+      "description": "HIT時HP +35回復"
+    },
+    "sustain_1_leech1": {
+      "name": "堅守吸収",
+      "description": "ライフスティール +2%, ブロック率 +2%"
+    },
+    "sustain_1_hit2": {
+      "name": "吸命",
+      "description": "HIT時HP +40回復"
+    },
+    "sustain_1_defer1": {
+      "name": "受け流し",
+      "description": "ダメージ遅延 +3%"
+    },
+    "sustain_2_hit1": {
+      "name": "吸命",
+      "description": "HIT時HP +30回復"
+    },
+    "sustain_2_leech1": {
+      "name": "毒血吸収",
+      "description": "毒ダメージ吸収 +8%"
+    },
+    "sustain_2_hit2": {
+      "name": "吸命",
+      "description": "HIT時HP +35回復"
+    },
+    "sustain_2_defer1": {
+      "name": "受け流し",
+      "description": "ダメージ遅延 +3%"
+    },
+    "sustain_3_hit1": {
+      "name": "吸命",
+      "description": "HIT時HP +35回復"
+    },
+    "sustain_3_leech1": {
+      "name": "吸血",
+      "description": "ライフスティール +2%"
+    },
+    "sustain_3_hit2": {
+      "name": "吸命",
+      "description": "HIT時HP +45回復"
+    },
+    "sustain_3_defer1": {
+      "name": "受け流し",
+      "description": "ダメージ遅延 +3%"
+    },
+    "sustain_4_hit1": {
+      "name": "吸命",
+      "description": "HIT時HP +30回復"
+    },
+    "sustain_4_leech1": {
+      "name": "凍傷吸収",
+      "description": "ライフスティール +2%, フリーズ耐性 +5%"
+    },
+    "sustain_4_hit2": {
+      "name": "吸命",
+      "description": "HIT時HP +35回復"
+    },
+    "sustain_4_defer1": {
+      "name": "受け流し",
+      "description": "ダメージ遅延 +3%"
+    },
+    "sustain_5_hit1": {
+      "name": "吸命",
+      "description": "HIT時HP +30回復"
+    },
+    "sustain_5_leech1": {
+      "name": "火勢吸収",
+      "description": "発火ダメージ吸収 +8%"
+    },
+    "sustain_5_hit2": {
+      "name": "吸命",
+      "description": "HIT時HP +35回復"
+    },
+    "sustain_5_defer1": {
+      "name": "受け流し",
+      "description": "ダメージ遅延 +3%"
     }
   },
   "ranking": {
@@ -2320,7 +3298,9 @@
     "igniteResist": "受ける発火ダメージ-{{value}}%",
     "evasion": "EVA+{{value}}",
     "evasionIncreased": "EVA+{{value}}%",
-    "evasionMore": "EVA {{value}}% more"
+    "evasionMore": "EVA {{value}}% more",
+    "hpOnTakenHit": "被弾時HP+{{value}}回復",
+    "shieldOnEvadeStreakHit": "連続回避後の被弾時、回避1回ごとに最大シールドの{{value}}%回復"
   },
   "boost": {
     "dropRate": {
@@ -2416,9 +3396,9 @@
       "description": "戦闘速度3倍速を設定できるようになります"
     },
     "inviteCodeBanner": {
-      "title": "3倍速を無料で有効化",
-      "description": "設定画面から招待コードを共有して、3倍速を有効化しましょう",
-      "activated": "招待コードで3倍速が有効化済み"
+      "title": "3倍速を有効化",
+      "description": "3倍速はショップで購入すると有効化できます",
+      "activated": "3倍速が有効化済み"
     },
     "premiumBundle": {
       "name": "プレミアムバンドル",

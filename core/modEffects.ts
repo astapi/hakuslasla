@@ -50,6 +50,7 @@ export interface PassiveEffectsData {
   ignite_damage_more_pct: number[];
   ignite_duration_pct: number;
   ignite_lifesteal: number;
+  ignite_damage_reduction?: number;
   ignite_spread: boolean;
   ignite_stacking_damage: boolean; // 緩慢なる炎キーストーン
   // その他
@@ -95,6 +96,7 @@ export interface PassiveEffectsData {
   repeat_hit_damage_reduction_pct?: number;
   low_hp_damage_reduction_pct?: number;
   auto_cleanse_interval_ms?: number;
+  chill_freeze_damage_mult?: number;
 }
 
 // ========================================
@@ -121,6 +123,7 @@ export function createEmptyModEffects(): CombinedModEffects {
     igniteDurationPct: 0,
     igniteTickSpeedPct: 0,
     igniteLifesteal: 0,
+    igniteDamageReduction: 0,
     igniteSpread: false,
     igniteStackingDamage: false,
     criticalChance: 0,
@@ -228,6 +231,9 @@ function applyEquipmentMod(effects: CombinedModEffects, mod: ItemModData): void 
       break;
     case 'ignite_lifesteal':
       effects.igniteLifesteal += mod.value;
+      break;
+    case 'ignite_damage_reduction':
+      effects.igniteDamageReduction += mod.value;
       break;
     case 'critical_chance':
       effects.criticalChance += mod.value;
@@ -410,6 +416,7 @@ export function combineMods(
   combined.igniteDamageMorePct.push(...passiveEffects.ignite_damage_more_pct);
   combined.igniteDurationPct += passiveEffects.ignite_duration_pct;
   combined.igniteLifesteal += passiveEffects.ignite_lifesteal;
+  combined.igniteDamageReduction += passiveEffects.ignite_damage_reduction ?? 0;
   if (passiveEffects.ignite_spread) combined.igniteSpread = true;
   if (passiveEffects.ignite_stacking_damage) combined.igniteStackingDamage = true;
   // その他
@@ -462,6 +469,10 @@ export function combineMods(
   // フリーズ系
   combined.freezeChance += passiveEffects.freeze_chance;
   combined.freezeDurationPct += passiveEffects.freeze_duration_pct;
+  combined.chillFreezeDamageMult = Math.max(
+    combined.chillFreezeDamageMult,
+    passiveEffects.chill_freeze_damage_mult ?? 1
+  );
 
   const evasionMoreTotal = combined.evasionMorePct.reduce((sum, v) => sum + v, 0);
   combined.evasion = Math.floor(

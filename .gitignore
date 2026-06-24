@@ -56,5 +56,5 @@ app-example
 # Build artifacts
 build/
 
-images/
+/images/
 storeAssets/

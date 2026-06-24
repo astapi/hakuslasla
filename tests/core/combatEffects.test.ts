@@ -147,6 +147,13 @@ describe('core/combatEffects', () => {
     expect(damagePoisoned).toBeLessThanOrEqual(damageNormal);
   });
 
+  it('calculateEnemyDamage は発火状態で追加軽減を適用する', () => {
+    const mods: CombinedModEffects = { ...emptyMods, igniteDamageReduction: 20 };
+    const damageIgnited = calculateEnemyDamage(10, 0, mods, false, true);
+    const damageNormal = calculateEnemyDamage(10, 0, mods, false, false);
+    expect(damageIgnited).toBeLessThanOrEqual(damageNormal);
+  });
+
   it('calculateEnemyHitChance はAccuracyとEVAの逓減式で命中率を計算する', () => {
     expect(calculateEnemyHitChance(500, 0)).toBe(95);
     expect(calculateEnemyHitChance(500, 500)).toBe(50);

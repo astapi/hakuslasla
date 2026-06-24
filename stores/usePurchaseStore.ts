@@ -272,8 +272,8 @@ export const getCharacterSlotCount = (): number => {
   return state.hasEntitlement(ENTITLEMENT_IDS.CHARACTER_SLOTS) ? 5 : 1;
 };
 
-// 倍速ブーストを持っているか（課金 or 招待コード）
+// 倍速ブーストを持っているか
 export const hasSpeedBoost = (): boolean => {
   const state = usePurchaseStore.getState();
-  return state.hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST) || state.inviteSpeedBoost;
+  return state.hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST);
 };

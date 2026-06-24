@@ -279,7 +279,7 @@ function UniqueDropItem({ itemId }: UniqueDropItemProps) {
           <Text style={styles.modsTitle}>{t('encyclopedia.detail.fixedMods')}:</Text>
           {item.fixedMods.map((mod, index) => (
             <Text key={index} style={styles.modText}>
-              • {getModDescription(mod)}
+              • {getModDescription(mod, t)}
             </Text>
           ))}
         </View>
@@ -315,7 +315,7 @@ function ItemCard({ item }: ItemCardProps) {
           <Text style={styles.modsTitle}>{t('encyclopedia.detail.fixedMods')}:</Text>
           {item.fixedMods.map((mod, index) => (
             <Text key={index} style={styles.modText}>
-              • {getModDescription(mod)}
+              • {getModDescription(mod, t)}
             </Text>
           ))}
         </View>

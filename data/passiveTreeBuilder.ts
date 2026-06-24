@@ -131,6 +131,7 @@ export function describeEffect(effect: PassiveEffect): string {
   more(effect.ignite_damage_more_pct, '発火ダメージ');
   pct(effect.ignite_duration_pct, '発火時間');
   pct(effect.ignite_lifesteal, '発火ダメージ吸収');
+  pct(effect.ignite_damage_reduction, '発火中の敵からの被ダメ軽減');
 
   pct(effect.critical_chance, 'クリティカル率');
   pct(effect.critical_damage, 'クリティカルダメージ');
@@ -174,6 +175,9 @@ export function describeEffect(effect: PassiveEffect): string {
   pct(effect.chill_duration_pct, 'チル持続');
   pct(effect.freeze_chance, 'フリーズ付与率');
   pct(effect.freeze_duration_pct, 'フリーズ持続');
+  if (effect.chill_freeze_damage_mult && effect.chill_freeze_damage_mult !== 1) {
+    parts.push(`チル/フリーズ中ダメージ x${effect.chill_freeze_damage_mult}`);
+  }
 
   return parts.join(', ') || '（効果なし）';
 }

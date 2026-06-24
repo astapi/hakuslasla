@@ -478,15 +478,22 @@ export const tryUniqueDrop = (itemId: string, dropRate: number, uniqueBonus: num
   return undefined;
 };
 
+type TranslationFn = (key: string, options?: Record<string, unknown>) => string;
+
 /**
- * MODの効果を日本語で取得
+ * MODの効果説明を取得
  */
-export function getModDescription(mod: ItemMod | { type: ModType; min: number; max: number }): string {
+export function getModDescription(
+  mod: ItemMod | { type: ModType; min: number; max: number },
+  t?: TranslationFn
+): string {
   // min/maxを持つ範囲指定MOD（図鑑のマスターデータ用）
   const raw = mod as Record<string, unknown>;
   const val = (typeof raw.min === 'number' && typeof raw.max === 'number')
     ? `${raw.min}~${raw.max}`
     : String((mod as ItemMod).value);
+  const tr = (key: string, fallback: string, options: Record<string, unknown> = {}) =>
+    t ? t(key, { defaultValue: fallback, ...options }) : fallback;
 
   switch (mod.type) {
     case 'atk_bonus':
@@ -496,44 +503,46 @@ export function getModDescription(mod: ItemMod | { type: ModType; min: number; m
     case 'hp_bonus':
       return `HP+${val}`;
     case 'hp_regen':
-      return `毎秒HP${val}回復`;
+      return tr('mods.everyTurnHpRegen', `毎秒HP${val}回復`, { value: val });
     case 'hp_regen_pct':
-      return `毎秒HP${val}%回復`;
+      return tr('mods.everyTurnHpRegenPct', `毎秒HP${val}%回復`, { value: val });
     case 'poison_chance':
-      return `毒付与+${val}%`;
+      return tr('modDescriptions.poisonChance', `毒付与+${val}%`, { value: val });
     case 'ignite_chance':
-      return `発火付与+${val}%`;
+      return tr('modDescriptions.igniteChance', `発火付与+${val}%`, { value: val });
     case 'ignite_duration_pct':
-      return `発火時間+${val}%`;
+      return tr('modDescriptions.igniteDuration', `発火時間+${val}%`, { value: val });
     case 'ignite_tick_speed_pct':
-      return `発火速度+${val}%`;
+      return tr('modDescriptions.igniteTickSpeed', `発火速度+${val}%`, { value: val });
     case 'ignite_damage_pct':
-      return `発火ダメージ+${val}%`;
+      return tr('modDescriptions.igniteDamage', `発火ダメージ+${val}%`, { value: val });
     case 'ignite_lifesteal':
-      return `発火ダメージ吸収${val}%`;
+      return tr('modDescriptions.igniteLifesteal', `発火ダメージ吸収${val}%`, { value: val });
     case 'critical_chance':
-      return `クリティカル+${val}%`;
+      return tr('modDescriptions.criticalChance', `クリティカル+${val}%`, { value: val });
     case 'critical_damage':
-      return `クリダメ+${val}%`;
+      return tr('modDescriptions.criticalDamage', `クリダメ+${val}%`, { value: val });
     case 'hp_on_hit':
-      return `HIT時HP+${val}回復`;
+      return tr('modDescriptions.hpOnHit', `HIT時HP+${val}回復`, { value: val });
+    case 'hp_on_taken_hit':
+      return tr('modDescriptions.hpOnTakenHit', `被弾時HP+${val}回復`, { value: val });
     case 'damage_defer_pct':
-      return `ダメージ遅延${val}%`;
+      return tr('modDescriptions.damageDefer', `ダメージ遅延${val}%`, { value: val });
     case 'damage_reduction_pct':
-      return `被ダメ-${val}%`;
+      return tr('modDescriptions.damageReduction', `被ダメ-${val}%`, { value: val });
     case 'evasion':
-      return `EVA+${val}`;
+      return tr('modDescriptions.evasion', `EVA+${val}`, { value: val });
     case 'evasion_increased_pct':
-      return `EVA+${val}%`;
+      return tr('modDescriptions.evasionIncreased', `EVA+${val}%`, { value: val });
     case 'evasion_more_pct':
-      return `EVA ${val}% more`;
+      return tr('modDescriptions.evasionMore', `EVA ${val}% more`, { value: val });
     case 'attack_speed_pct': {
       const sign = typeof raw.min === 'number' ? '' : ((mod as ItemMod).value >= 0 ? '+' : '');
-      return `攻撃速度${sign}${val}%`;
+      return tr('modDescriptions.attackSpeed', `攻撃速度${sign}${val}%`, { value: `${sign}${val}` });
     }
     case 'attack_speed_more_pct': {
       const sign = typeof raw.min === 'number' ? '' : ((mod as ItemMod).value >= 0 ? '+' : '');
-      return `攻撃速度${sign}${val}% more`;
+      return tr('modDescriptions.attackSpeedMore', `攻撃速度${sign}${val}% more`, { value: `${sign}${val}` });
     }
     case 'hp_increased_pct':
       return `HP+${val}%`;
@@ -543,45 +552,47 @@ export function getModDescription(mod: ItemMod | { type: ModType; min: number; m
     case 'def_increased_pct':
       return `DEF+${val}%`;
     case 'time_atk_inc_pct':
-      return `5秒毎にATK+${val}%`;
+      return tr('modDescriptions.timeAtkInc', `5秒毎にATK+${val}%`, { value: val });
     case 'time_def_inc_pct':
-      return `5秒毎にDEF+${val}%`;
+      return tr('modDescriptions.timeDefInc', `5秒毎にDEF+${val}%`, { value: val });
     case 'time_hp_regen':
-      return `5秒毎に毎秒HP+${val}回復`;
+      return tr('modDescriptions.timeHpRegen', `5秒毎に毎秒HP+${val}回復`, { value: val });
     case 'hp_regen_to_atk_pct':
-      return `HP回復量の${val}%をATKに変換`;
+      return tr('modDescriptions.hpRegenToAtk', `HP回復量の${val}%をATKに変換`, { value: val });
     case 'warlord_enrage':
-      return '乱軍の王（HP30%以下で1度だけ発動。攻撃速度+20%, 攻撃時HP回復+300）';
+      return tr('modDescriptions.warlordEnrage', '乱軍の王（HP30%以下で1度だけ発動。攻撃速度+20%, 攻撃時HP回復+300）');
     case 'chill_chance':
-      return `チル付与+${val}%`;
+      return tr('modDescriptions.chillChance', `チル付与+${val}%`, { value: val });
     case 'chill_effect_pct':
-      return `チル効果+${val}%`;
+      return tr('modDescriptions.chillEffect', `チル効果+${val}%`, { value: val });
     case 'chill_duration_pct':
-      return `チル時間+${val}%`;
+      return tr('modDescriptions.chillDuration', `チル時間+${val}%`, { value: val });
     case 'freeze_chance':
-      return `フリーズ付与+${val}%`;
+      return tr('modDescriptions.freezeChance', `フリーズ付与+${val}%`, { value: val });
     case 'freeze_duration_pct':
-      return `フリーズ時間+${val}%`;
+      return tr('modDescriptions.freezeDuration', `フリーズ時間+${val}%`, { value: val });
     case 'poison_damage_pct':
-      return `毒ダメージ+${val}%`;
+      return tr('modDescriptions.poisonDamagePct', `毒ダメージ+${val}%`, { value: val });
     case 'poison_damage_more_pct':
-      return `毒ダメージ${val}% more`;
+      return tr('modDescriptions.poisonDamageMore', `毒ダメージ${val}% more`, { value: val });
     case 'poison_damage_reduction':
-      return `毒状態の敵からの被ダメ-${val}%`;
+      return tr('modDescriptions.poisonDamageReduction', `毒状態の敵からの被ダメ-${val}%`, { value: val });
     case 'hp_on_crit':
-      return `クリティカル時HP+${val}回復`;
+      return tr('modDescriptions.hpOnCrit', `クリティカル時HP+${val}回復`, { value: val });
     case 'critical_follow_up_attack':
-      return `クリティカル時追撃+${val}`;
+      return tr('modDescriptions.criticalFollowUpAttack', `クリティカル時追撃+${val}`, { value: val });
     case 'follow_up_attack_pct':
-      return `双撃の刃（毎攻撃時、ATKの${val}%で追撃）`;
+      return tr('mods.follow_up_attack_pct', `双撃の刃（毎攻撃時、ATKの${val}%で追撃）`, { value: val });
     case 'king_slam':
-      return 'キングスラム（5回攻撃ごとにATK×3の追撃）';
+      return tr('mods.king_slam', 'キングスラム（5回攻撃ごとにATK×3の追撃）');
     case 'royal_roar':
-      return '王の咆哮（3回攻撃ごとに自身の毒・発火・チルを解除）';
+      return tr('mods.royal_roar', '王の咆哮（3回攻撃ごとに自身の毒・発火・チルを解除）');
     case 'ignite_resist_pct':
-      return `灼熱耐性（受ける発火ダメージ-${val}%）`;
+      return tr('modDescriptions.igniteResist', `灼熱耐性（受ける発火ダメージ-${val}%）`, { value: val });
     case 'lifesteal':
-      return `ライフスティール${val}%`;
+      return tr('modDescriptions.lifesteal', `ライフスティール${val}%`, { value: val });
+    case 'shield_on_evade_streak_hit_pct':
+      return tr('modDescriptions.shieldOnEvadeStreakHit', `連続回避後の被弾時、回避1回ごとに最大シールドの${val}%回復`, { value: val });
     case 'atk_more_pct':
       return `ATK ${val}% more`;
     case 'def_more_pct':

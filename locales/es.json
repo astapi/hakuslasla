@@ -138,7 +138,11 @@
   "dungeonSelect": {
     "title": "Seleccionar Mazmorra",
     "subtitle": "Elige una mazmorra para desafiar",
-    "unlockRequirement": "Completa {{dungeonName}} para desbloquear"
+    "unlockRequirement": "Completa {{dungeonName}} para desbloquear",
+    "selectStartFloor": "Seleccionar piso inicial",
+    "startFloorLabel": "Piso inicial {{floor}}",
+    "startButton": "Iniciar",
+    "cancelButton": "Cancelar"
   },
   "encyclopedia": {
     "title": "Archivo",
@@ -192,7 +196,8 @@
     "defeat": "Derrota...",
     "cleared": "¡Mazmorra Completada!",
     "player": "Jugador",
-    "inProgress": "En Batalla"
+    "inProgress": "En Batalla",
+    "tentacleFlurryCountdown": "Ráfaga de Tentáculos en {{count}} ataques"
   },
   "result": {
     "cleared": "¡Mazmorra Completada!",
@@ -294,11 +299,11 @@
     "battleSpeed": {
       "title": "Velocidad de Batalla",
       "description": "Cambia la velocidad de progresión de batalla",
-      "premiumHint": "Velocidad 3x disponible con código de invitación"
+      "premiumHint": "Velocidad 3x disponible en la tienda"
     },
     "inviteCode": {
       "title": "Código de Invitación",
-      "description": "Comparte códigos de invitación con amigos para desbloquear velocidad 3x para ambos",
+      "description": "La función de código de invitación ha finalizado",
       "myCode": "Tu Código de Invitación",
       "copied": "¡Copiado!",
       "receivedFromLink": "El código del enlace ya se ha rellenado",
@@ -306,7 +311,7 @@
       "placeholder": "Código de 6 caracteres",
       "submit": "Enviar",
       "submitting": "Enviando...",
-      "activated": "Velocidad 3x Activada",
+      "activated": "La función de código de invitación ha finalizado",
       "shareText": "¡Aventurémonos juntos en LootDive! Abre este enlace para recibir el código de invitación automáticamente.\nhttps://astapi.net/lootdive/invite?code={{code}}\nSi la app no se abre, introduce manualmente el código {{code}}.",
       "error": {
         "ownCode": "No puedes usar tu propio código",
@@ -318,7 +323,7 @@
       },
       "success": {
         "title": "Activado",
-        "message": "¡Velocidad 3x desbloqueada!"
+        "message": "La función de código de invitación ha finalizado"
       },
       "suspended": "La función de código de invitación no está disponible temporalmente"
     },
@@ -328,13 +333,13 @@
   },
   "inviteLink": {
     "title": "Código de invitación recibido",
-    "description": "Hemos leído un código de invitación desde el enlace. Aplícalo para desbloquear la velocidad 3x.",
+    "description": "La función de código de invitación ha finalizado.",
     "receivedCode": "Código recibido",
     "apply": "Aplicar este código",
     "openSettings": "Abrir ajustes",
     "goHome": "Ir al inicio",
     "result": {
-      "alreadyActivated": "La velocidad 3x ya está desbloqueada."
+      "alreadyActivated": "La función de código de invitación ha finalizado."
     }
   },
   "status": {
@@ -436,7 +441,42 @@
     "freeze_duration_pct": "Dur. congel.",
     "ignite_resist_pct": "Res. ignición",
     "evasion_increased_pct": "Evasión",
-    "evasion_more_pct": "Evasión more"
+    "evasion_more_pct": "Evasión more",
+    "evasion": "EVA",
+    "hp_on_taken_hit": "HP al recibir golpe",
+    "ignite_lifesteal": "Robo ignición",
+    "shield_on_evade_streak_hit_pct": "Escudo evasión",
+    "atk": "ATK",
+    "def": "DEF",
+    "hp": "HP",
+    "auto_cleanse_interval_ms": "Autolimpieza",
+    "block_chance": "Bloqueo",
+    "chill_freeze_damage_mult": "Daño frío/cong.",
+    "chill_resist_pct": "Res. frío",
+    "critical_lifesteal_pct": "Robo crítico",
+    "freeze_resist_pct": "Res. cong.",
+    "hp_to_shield": "HP a escudo",
+    "ignite_damage_more_pct": "Ignición more",
+    "ignite_damage_reduction": "Red. ignición",
+    "ignite_spread": "Propagar ignición",
+    "ignite_stacking_damage": "Ignición acum.",
+    "lifestealPct": "Robo vida",
+    "low_hp_damage_reduction_pct": "Red. HP bajo",
+    "no_direct_damage": "Sin daño directo",
+    "pet_drop_rate_pct": "Drop mascota",
+    "pet_effect_pct": "Efecto mascota",
+    "poison_lifesteal": "Robo veneno",
+    "poison_max_stacks": "Acum. veneno",
+    "poison_resist_pct": "Res. veneno",
+    "repeat_hit_damage_reduction_pct": "Red. golpes rep.",
+    "retaliate_def_pct": "Contra DEF",
+    "shield": "Escudo",
+    "shield_blocks_dot": "Escudo DoT",
+    "shield_increased_pct": "Escudo",
+    "shield_more_pct": "Escudo more",
+    "shield_on_10_attacks_pct": "Escudo/10 golpes",
+    "shield_recharge_delay_ms": "Retraso escudo",
+    "shield_recharge_pct": "Recarga escudo"
   },
   "dungeon": {
     "floors": "{{count}} Pisos",
@@ -1535,7 +1575,15 @@
       "deepEmbrace": "Abrazo Abisal",
       "deepEmbraceDesc": "-20% velocidad de ataque, -30% curación por 3 turnos (se activa bajo 50% HP)",
       "abyssalEbb": "Marea Abisal",
-      "abyssalEbbDesc": "-15% velocidad de ataque por 2 turnos"
+      "abyssalEbbDesc": "-15% velocidad de ataque por 2 turnos",
+      "tentacleFlurry": "Ráfaga de Tentáculos",
+      "tentacleFlurryDesc": "Cada 10.º ataque se convierte en 10 golpes",
+      "frostAura": "Aura Abisal Helada",
+      "frostAuraDesc": "Enfría y congela al jugador al atacar",
+      "freezeResist": "Égida Abisal",
+      "freezeResistDesc": "70% de probabilidad de resistir congelación",
+      "igniteResist": "Brasas Apagadas",
+      "igniteResistDesc": "Reduce el daño de ignición en un tercio"
     },
     "demon_lord": {
       "name": "Mano de la Muerte",
@@ -1600,7 +1648,10 @@
     "kingSlamHit": "¡[Golpe del Rey] estalla! ¡{{damage}} de daño a {{enemy}}!",
     "twinBladeHit": "¡[Hoja Gemela] seguimiento! ¡{{damage}} de daño a {{enemy}}!",
     "royalRoar": "¡[Rugido Real] activado! ¡Veneno y Escalofrío disipados!",
-    "evaded": "¡Evadiste el ataque de {{enemy}}!"
+    "evaded": "¡Evadiste el ataque de {{enemy}}!",
+    "blocked": "¡Bloqueado! ¡Detuviste el ataque de {{enemy}}!",
+    "chillAppliedPlayer": "¡El jugador está enfriado! ¡Velocidad de ataque reducida!",
+    "freezeAppliedPlayer": "¡El jugador está congelado! ¡No puede actuar!"
   },
   "passiveTree": {
     "title": "Árbol Pasivo",
@@ -2256,6 +2307,950 @@
     "ignite_final2": {
       "name": "Llamas Propagantes",
       "description": "[Piedra Angular] Prob. de Ignite +6%, Propagación de Ignite - Cuando un enemigo con ignite muere, el ignite se transfiere al siguiente enemigo. DEF +10% increased"
+    },
+    "warrior_start": {
+      "name": "Postura de Guerrero",
+      "description": "HP +55, ATK +10"
+    },
+    "ranger_start": {
+      "name": "Disciplina del Cazador",
+      "description": "HP +55, ATK +9, EVA +20, EVA +6% increased"
+    },
+    "tamer_start": {
+      "name": "Vínculo del Domador",
+      "description": "HP +70, DEF +8"
+    },
+    "frostmage_start": {
+      "name": "Aptitud de Escarcha",
+      "description": "HP +55, ATK +8, DEF +8, EVA +10"
+    },
+    "elementalist_start": {
+      "name": "Aptitud Arcana",
+      "description": "HP +45, ATK +10, EVA +10"
+    },
+    "cri_j0": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j1": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j2": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_j3": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_si": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_s0": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "cri_s1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "cri_s2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "def_j0": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_j1": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_j2": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_j3": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_s0": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "def_s1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "def_s2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "poi_j0": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j1": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j2": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_j3": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_si": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_s0": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "poi_s1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "poi_s2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "pet_j0": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_j1": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_j2": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_j3": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_si": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_s0": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "pet_s1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "pet_s2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "frz_j0": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_j1": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_j2": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_j3": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_si": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_s0": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "frz_s1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "frz_s2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ign_j0": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_j1": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_j2": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_j3": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_si": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_s0": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ign_s1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ign_s2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring0_0_1": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring0_0_2": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring0_0_3": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring0_0_4": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring0_1_1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring0_1_2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring0_1_3": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring0_1_4": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring0_2_1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring0_2_2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring0_2_3": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring0_2_4": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring0_3_1": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring0_3_2": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring0_3_3": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring0_3_4": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring0_4_1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring0_4_2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring0_4_3": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring0_4_4": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring0_5_1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring0_5_2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring0_5_3": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring0_5_4": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring1_0_1": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring1_0_2": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring1_0_3": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring1_1_1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring1_1_2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring1_1_3": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring1_2_1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring1_2_2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring1_2_3": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring1_3_1": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring1_3_2": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring1_3_3": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring1_4_1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring1_4_2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring1_4_3": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring1_5_1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring1_5_2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring1_5_3": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring2_0_1": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring2_0_2": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring2_1_1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring2_1_2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring2_2_1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring2_2_2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring2_3_1": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring2_3_2": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring2_4_1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring2_4_2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring2_5_1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring2_5_2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring3_0_1": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring3_1_1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring3_2_1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ring3_3_1": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ring3_4_1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "ring3_5_1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "cri_b1_c": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_n": {
+      "name": "Técnica de Guerrero",
+      "description": "ATK +18, Prob. crítico +3%, HP al recibir golpe +25recuperación, Prob. bloqueo +2%"
+    },
+    "cri_b1_e": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b1_k": {
+      "name": "Maestría Crítica",
+      "description": "ATK +8% increased, Prob. crítico +8%, Daño crítico +35%, Daño diferido +3%, HP al recibir golpe +35recuperación, Prob. bloqueo +4%"
+    },
+    "cri_b2_c": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_n": {
+      "name": "Golpe Seguro",
+      "description": "ATK +12, Prob. crítico +5%, Daño crítico +25%, HP al golpear +35recuperación"
+    },
+    "cri_b2_e": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b2_k": {
+      "name": "Asura",
+      "description": "ATK +25, Daño crítico +60%, Daño diferido +4%, HP al recibir golpe +45recuperación, Prob. bloqueo +5%, Vel. ataque 5% more"
+    },
+    "cri_b3_c": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_n": {
+      "name": "Corte Relámpago",
+      "description": "ATK +24, Prob. crítico +5%, Daño crítico +30%, HP al golpear +45recuperación"
+    },
+    "cri_b3_e": {
+      "name": "Entrenamiento",
+      "description": "ATK +10, ATK +2% increased"
+    },
+    "cri_b3_g1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "cri_b3_g2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "cri_b3_k": {
+      "name": "Ejecutor",
+      "description": "ATK +15% increased, ATK 14% more, HP al crítico +120recuperación, Robo de daño crítico +30%, Daño diferido +5%, HP al recibir golpe +70recuperación, HP al golpear +70recuperación, Prob. bloqueo +8%, Reducción por golpes repetidos +15%"
+    },
+    "def_b1_c": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_b1_n": {
+      "name": "Voluntad de Hierro",
+      "description": "DEF +22, DEF +12% increased, Daño diferido +3%, Prob. bloqueo +3%"
+    },
+    "def_b1_e": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_b1_k": {
+      "name": "Muro de Hierro",
+      "description": "DEF +30, DEF +20% increased, DEF 8% more, Daño diferido +6%, Prob. bloqueo +7%"
+    },
+    "def_b2_c": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_b2_n": {
+      "name": "Formación de Barrera",
+      "description": "Daño diferido +3%, Escudo +240, Escudo +25% increased"
+    },
+    "def_b2_e": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_b2_g1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "def_b2_g2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "def_b2_k": {
+      "name": "Armadura Etérea",
+      "description": "Escudo +35% increased, Escudo 10% more, Convierte HP máx. en escudo, El escudo recibe daño prolongado"
+    },
+    "def_b3_c": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_b3_n": {
+      "name": "Armadura Reconstruida",
+      "description": "Daño diferido +3%, Escudo +220, recarga de escudo tras 5000ms, recarga de escudo +10% por segundo"
+    },
+    "def_b3_e": {
+      "name": "Pulido",
+      "description": "DEF +12, Daño diferido +2%"
+    },
+    "def_b3_g1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "def_b3_g2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "def_b3_k": {
+      "name": "Armadura Reactiva",
+      "description": "Daño diferido +5%, contraataque DEF al recibir daño +25%, Escudo 20% more, recuperación de escudo +18% cada 10 ataques, reducción por golpes repetidos +25%, reducción con HP bajo +20%"
+    },
+    "poi_b1_c": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_n": {
+      "name": "Veneno del Cazador",
+      "description": "Prob. veneno +8%, Daño de veneno +16%, EVA +30, EVA +12% increased"
+    },
+    "poi_b1_e": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b1_k": {
+      "name": "Disciplina de Veneno Mortal",
+      "description": "Prob. veneno +10%, Daño de veneno +28%, Robo de daño de veneno +12%, EVA +45, EVA +20% increased"
+    },
+    "poi_b2_c": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_n": {
+      "name": "Propagación",
+      "description": "Prob. veneno +10%, Acumulaciones de veneno +1, EVA +35, EVA +10% increased"
+    },
+    "poi_b2_e": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b2_g1": {
+      "name": "Vitalidad",
+      "description": "HP +55, Prob. bloqueo +1%"
+    },
+    "poi_b2_g2": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "poi_b2_k": {
+      "name": "Acumulación Fantasma",
+      "description": "EVA +60, EVA +25% increased, EVA 12% more, Recupera escudo al recibir golpe tras evadir seguido +8%"
+    },
+    "poi_b3_c": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_n": {
+      "name": "Barrera Antiveneno",
+      "description": "Prob. veneno +8%, Robo de daño de veneno +10%, EVA +40, EVA +15% increased, Escudo +10% increased, El escudo recibe daño prolongado, Res. veneno +20%"
+    },
+    "poi_b3_e": {
+      "name": "Entrenamiento de Veneno",
+      "description": "Prob. veneno +5%, Daño de veneno +4%, EVA +12, EVA +2% increased"
+    },
+    "poi_b3_g1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "poi_b3_g2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "poi_b3_k": {
+      "name": "Veneno Puro",
+      "description": "Daño de veneno 65% more, Robo de daño de veneno +25%, Sin daño directo"
+    },
+    "pet_b1_c": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_b1_n": {
+      "name": "Disciplina de Doma",
+      "description": "HP +120, DEF +20, Reg. HP/s +0.8%, Daño diferido +3%, Efecto mascota +10%, Prob. drop mascota +0.2%"
+    },
+    "pet_b1_e": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_b1_k": {
+      "name": "Vínculo Vital",
+      "description": "HP +260, HP 16% more, Daño diferido +5%, Efecto mascota +20%"
+    },
+    "pet_b2_c": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_b2_n": {
+      "name": "Vínculo Sanador",
+      "description": "Reg. HP/s +90recuperación, HP al golpear +60recuperación, Efecto mascota +10%, Prob. bloqueo +4%"
+    },
+    "pet_b2_e": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_b2_k": {
+      "name": "Vínculo Indomable",
+      "description": "Reg. HP/s +2%, Daño diferido +5%, HP al golpear +80recuperación, Efecto mascota +25%, Prob. bloqueo +10%"
+    },
+    "pet_b3_c": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_b3_n": {
+      "name": "Gracia del Rey Bestia",
+      "description": "DEF +60, DEF +20% increased, Daño diferido +6%, Efecto mascota +15%, Prob. drop mascota +0.3%"
+    },
+    "pet_b3_e": {
+      "name": "Vínculo",
+      "description": "HP +70, DEF +8, Efecto mascota +4%"
+    },
+    "pet_b3_g1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "pet_b3_g2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "pet_b3_k": {
+      "name": "Simbiosis",
+      "description": "HP 25% more, Reg. HP/s +3%, Daño diferido +6%, HP al golpear +110recuperación, Efecto mascota +40%, Prob. drop mascota +0.5%, Reducción con HP bajo +20%"
+    },
+    "frz_b1_c": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_b1_n": {
+      "name": "Disciplina de Escarcha",
+      "description": "DEF +16, Res. frío +10%, Prob. frío +8%, Efecto frío +12%, Duración frío +15%"
+    },
+    "frz_b1_e": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_b1_k": {
+      "name": "Tormenta de Hielo",
+      "description": "DEF +22, Daño diferido +7%, Res. frío +20%, Prob. frío +10%, Efecto frío +25%"
+    },
+    "frz_b2_c": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_b2_n": {
+      "name": "Congelación Profunda",
+      "description": "DEF +18, Res. congelación +10%, Efecto frío +18%, Prob. congelación +3%"
+    },
+    "frz_b2_e": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_b2_k": {
+      "name": "Maestría de Congelación",
+      "description": "DEF +18, Res. congelación +20%, Duración frío +25%, Prob. congelación +4%, Duración congelación +30%, Daño contra enfriados/congelados x1.2"
+    },
+    "frz_b3_c": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_b3_n": {
+      "name": "Permafrost",
+      "description": "Daño diferido +7%, Res. congelación +15%, Reducción por golpes repetidos +12%, 8000ms cada limpia estados alterados, Efecto frío +20%, Prob. congelación +4%"
+    },
+    "frz_b3_e": {
+      "name": "Entrenamiento de Escarcha",
+      "description": "DEF +8, Res. frío +2%, Efecto frío +7%"
+    },
+    "frz_b3_g1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "frz_b3_g2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "frz_b3_k": {
+      "name": "Cero Absoluto",
+      "description": "DEF 10% more, Daño diferido +8%, Prob. congelación +5%, Duración congelación +40%, Daño contra enfriados/congelados x1.35"
+    },
+    "ign_b1_c": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_b1_n": {
+      "name": "Disciplina de Fuego",
+      "description": "Prob. ignición +8%, Daño de ignición +18%, Robo de daño de ignición +5%"
+    },
+    "ign_b1_e": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_b1_k": {
+      "name": "Disciplina Infernal",
+      "description": "Prob. ignición +10%, Daño de ignición +30%, Robo de daño de ignición +15%, Daño recibido de enemigos incendiados reducido +6%"
+    },
+    "ign_b2_c": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_b2_n": {
+      "name": "Fuego Infernal",
+      "description": "Prob. ignición +10%, Daño de ignición +24%, Duración ignición +15%, Daño recibido de enemigos incendiados reducido +5%"
+    },
+    "ign_b2_e": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_b2_k": {
+      "name": "Infierno",
+      "description": "Daño de ignición +35%, Daño de ignición 12% more, Duración ignición +25%, Robo de daño de ignición +10%, Daño recibido de enemigos incendiados reducido +8%"
+    },
+    "ign_b3_c": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_b3_n": {
+      "name": "Dominio Infernal",
+      "description": "Prob. ignición +12%, Daño de ignición +28%, Robo de daño de ignición +16%, Daño recibido de enemigos incendiados reducido +8%"
+    },
+    "ign_b3_e": {
+      "name": "Entrenamiento de Fuego",
+      "description": "Prob. ignición +2%, Daño de ignición +10%"
+    },
+    "ign_b3_g1": {
+      "name": "Firmeza",
+      "description": "DEF +14"
+    },
+    "ign_b3_g2": {
+      "name": "Fuerza",
+      "description": "ATK +12, Vel. ataque +2%"
+    },
+    "ign_b3_k": {
+      "name": "Llama Celestial",
+      "description": "Daño de ignición 40% more, Robo de daño de ignición +15%, Daño recibido de enemigos incendiados reducido +10%, Daño diferido +5%"
+    },
+    "stat_def_inc_flat1": {
+      "name": "Armadura Pesada",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc1": {
+      "name": "Maestría Defensiva",
+      "description": "DEF +12% increased"
+    },
+    "stat_def_inc_flat2": {
+      "name": "Armadura Pesada",
+      "description": "DEF +25"
+    },
+    "stat_def_inc_inc2": {
+      "name": "Maestría Defensiva",
+      "description": "DEF +12% increased"
+    },
+    "stat_hp_inc_flat1": {
+      "name": "Cuerpo Gigante",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc1": {
+      "name": "Maestría Vital",
+      "description": "HP +12% increased"
+    },
+    "stat_hp_inc_flat2": {
+      "name": "Cuerpo Gigante",
+      "description": "HP +100"
+    },
+    "stat_hp_inc_inc2": {
+      "name": "Maestría Vital",
+      "description": "HP +12% increased"
+    },
+    "stat_atk_inc_flat1": {
+      "name": "Brazo Poderoso",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc1": {
+      "name": "Maestría de Ataque",
+      "description": "ATK +10% increased"
+    },
+    "stat_atk_inc_flat2": {
+      "name": "Brazo Poderoso",
+      "description": "ATK +18"
+    },
+    "stat_atk_inc_inc2": {
+      "name": "Maestría de Ataque",
+      "description": "ATK +10% increased"
+    },
+    "sustain_0_hit1": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +30recuperación"
+    },
+    "sustain_0_leech1": {
+      "name": "Absorción Crítica",
+      "description": "Robo de daño crítico +10%"
+    },
+    "sustain_0_hit2": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +35recuperación"
+    },
+    "sustain_0_defer1": {
+      "name": "Desvío",
+      "description": "Daño diferido +3%"
+    },
+    "sustain_1_hit1": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +35recuperación"
+    },
+    "sustain_1_leech1": {
+      "name": "Absorción Defensiva",
+      "description": "Robo de vida +2%, Prob. bloqueo +2%"
+    },
+    "sustain_1_hit2": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +40recuperación"
+    },
+    "sustain_1_defer1": {
+      "name": "Desvío",
+      "description": "Daño diferido +3%"
+    },
+    "sustain_2_hit1": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +30recuperación"
+    },
+    "sustain_2_leech1": {
+      "name": "Absorción de Sangre Tóxica",
+      "description": "Robo de daño de veneno +8%"
+    },
+    "sustain_2_hit2": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +35recuperación"
+    },
+    "sustain_2_defer1": {
+      "name": "Desvío",
+      "description": "Daño diferido +3%"
+    },
+    "sustain_3_hit1": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +35recuperación"
+    },
+    "sustain_3_leech1": {
+      "name": "Robo de Vida",
+      "description": "Robo de vida +2%"
+    },
+    "sustain_3_hit2": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +45recuperación"
+    },
+    "sustain_3_defer1": {
+      "name": "Desvío",
+      "description": "Daño diferido +3%"
+    },
+    "sustain_4_hit1": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +30recuperación"
+    },
+    "sustain_4_leech1": {
+      "name": "Absorción de Escarcha",
+      "description": "Robo de vida +2%, Res. congelación +5%"
+    },
+    "sustain_4_hit2": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +35recuperación"
+    },
+    "sustain_4_defer1": {
+      "name": "Desvío",
+      "description": "Daño diferido +3%"
+    },
+    "sustain_5_hit1": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +30recuperación"
+    },
+    "sustain_5_leech1": {
+      "name": "Absorción de Llama",
+      "description": "Robo de daño de ignición +8%"
+    },
+    "sustain_5_hit2": {
+      "name": "Robo Vital",
+      "description": "HP al golpear +35recuperación"
+    },
+    "sustain_5_defer1": {
+      "name": "Desvío",
+      "description": "Daño diferido +3%"
     }
   },
   "ranking": {
@@ -2303,7 +3298,9 @@
     "igniteResist": "Daño de ignición recibido -{{value}}%",
     "evasion": "Evasión +{{value}}%",
     "evasionIncreased": "Evasión +{{value}}%",
-    "evasionMore": "Evasión {{value}}% more"
+    "evasionMore": "Evasión {{value}}% more",
+    "hpOnTakenHit": "HP +{{value}} al recibir golpe",
+    "shieldOnEvadeStreakHit": "Recupera {{value}}% del escudo máximo por evasión al recibir golpe tras una racha de evasiones"
   },
   "boost": {
     "dropRate": {
@@ -2399,9 +3396,9 @@
       "description": "Desbloquea opciones de velocidad de batalla 2x-3x"
     },
     "inviteCodeBanner": {
-      "title": "Desbloquea 3x Gratis",
-      "description": "Comparte tu código de invitación desde Ajustes para desbloquear velocidad 3x",
-      "activated": "Velocidad 3x activada con código de invitación"
+      "title": "Desbloquea 3x",
+      "description": "Desbloquea velocidad 3x en la tienda",
+      "activated": "Velocidad 3x activada"
     },
     "premiumBundle": {
       "name": "Paquete Premium",
