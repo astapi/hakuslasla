@@ -20,6 +20,7 @@ import {
 } from './types';
 import { getAttackSpeedFromMods } from './modEffects';
 import { createBattleEngine, runBattleEngineToEnd } from './battleEngine';
+import { scaleEnemyHpForDungeon } from './enemyScaling';
 
 // ========================================
 // 初期化
@@ -237,6 +238,7 @@ export function runGaugeDungeon(
       // 敵が見つからない場合はスキップ（エラー状態）
       continue;
     }
+    const scaledEnemy = scaleEnemyHpForDungeon(enemy, dungeon);
 
     // イグナイト伝染: igniteSpread が有効で、前の敵から発火状態を引き継ぐ場合
     const initialIgniteForThisBattle = playerMods.igniteSpread ? spreadIgniteState : null;
@@ -246,7 +248,7 @@ export function runGaugeDungeon(
       playerStats,
       currentHp,
       playerMods,
-      enemy,
+      scaledEnemy,
       config,
       rng,
       dungeon.id,
@@ -302,7 +304,7 @@ export function runGaugeDungeon(
         playerStats,
         playerCurrentHp: currentHp,
         playerMods,
-        enemy: { ...enemy, maxHp: 1, atk: 0, def: 0, exp: 0 }, // ダミー敵
+        enemy: { ...scaledEnemy, maxHp: 1, atk: 0, def: 0, exp: 0 }, // ダミー敵
         config,
         rng,
         dungeonId: dungeon.id,

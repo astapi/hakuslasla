@@ -24,6 +24,7 @@ import {
   IgniteState,
   applyPetBuff,
 } from '@/core';
+import { scaleEnemyHpForDungeon } from '@/core/enemyScaling';
 import { getPet, getPetLevelFactor, tryPetDrop } from '@/data/pets';
 import { CLASS_ABILITIES } from '@/core/player';
 import { settingsRepository, BattleSpeedMultiplier, DEFAULT_BATTLE_SPEED } from '@/db/repositories/settingsRepository';
@@ -853,6 +854,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
   const [krakenFlurryCountdown, setKrakenFlurryCountdown] = useState<number | null>(null);
   const isProcessingRef = useRef(false);
   const isTransitioningRef = useRef(false);
+  const isAutoRunningRef = useRef(false);
+  const lastGaugeUpdateAtRef = useRef(0);
   const battleEngineRef = useRef<ReturnType<typeof createBattleEngine>['engine'] | null>(null);
   // 全周回累計のペットドロップ（petId配列）。リザルト画面表示用
   const petsGainedRef = useRef<string[]>([]);
@@ -865,7 +868,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       const newPaused = !prev;
       if (newPaused) {
         pauseBattleBgm();
-      } else {
+      } else if (!isAutoRunningRef.current) {
         resumeBattleBgm();
       }
       return newPaused;
@@ -874,16 +877,23 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
 
   // 自動周回の開始
   const startAutoRun = useCallback(() => {
+    isAutoRunningRef.current = true;
     setIsAutoRunning(true);
     setIsPaused(false);
+    pauseBattleBgm();
   }, []);
 
   // 自動周回の停止
   const stopAutoRun = useCallback(() => {
+    isAutoRunningRef.current = false;
     setIsAutoRunning(false);
-  }, []);
+    if (!isPaused && state.phase === 'fighting') {
+      resumeBattleBgm();
+    }
+  }, [isPaused, state.phase]);
 
   const retreat = useCallback(async () => {
+    isAutoRunningRef.current = false;
     setIsAutoRunning(false);
     dispatch({ type: 'RETREAT' });
 
@@ -940,15 +950,17 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
 
     // ボスフロアかチェック
     if (dungeon.boss && dungeon.boss.floor === floor) {
-      return getEnemy(dungeon.boss.monsterId);
+      const boss = getEnemy(dungeon.boss.monsterId);
+      return boss ? scaleEnemyHpForDungeon(boss, dungeon) : undefined;
     }
 
     // 通常の敵をランダム選択
     const enemy = getRandomEnemy(dungeon.monsters);
     if (enemy?.id === 'mimic') {
-      return buildMimicForDungeon(dungeon) ?? enemy;
+      const mimic = buildMimicForDungeon(dungeon) ?? enemy;
+      return scaleEnemyHpForDungeon(mimic, dungeon);
     }
-    return enemy;
+    return enemy ? scaleEnemyHpForDungeon(enemy, dungeon) : undefined;
   }, [dungeonId]);
 
   // 戦闘開始
@@ -961,7 +973,9 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     dispatch({ type: 'START_BATTLE', enemy: createBattleEnemy(enemy, dungeonId) });
 
     // BGM再生開始
-    playBattleBgm();
+    if (!isAutoRunningRef.current) {
+      playBattleBgm();
+    }
   }, [getEnemyForFloor, dungeonId, startFloor]);
 
 
@@ -1138,13 +1152,17 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
           const rawSource = typeof data.source === 'string' ? data.source : undefined;
           const source = rawSource === 'king_slam' || rawSource === 'twin_blade' ? rawSource : undefined;
           dispatch({ type: 'PLAYER_ATTACK', damage, isCritical: false, source });
-          playBattleSound('player_attack', characterType);
+          if (!isAutoRunningRef.current) {
+            playBattleSound('player_attack', characterType);
+          }
           break;
         }
         case 'critical_hit': {
           const damage = Number(data.damage ?? 0);
           dispatch({ type: 'PLAYER_ATTACK', damage, isCritical: true });
-          playBattleSound('player_attack', characterType);
+          if (!isAutoRunningRef.current) {
+            playBattleSound('player_attack', characterType);
+          }
           break;
         }
         case 'enemy_attack': {
@@ -1154,7 +1172,9 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
           const evaded = data.evaded === true;
           const playerShield = typeof data.playerShield === 'number' ? data.playerShield : undefined;
           dispatch({ type: 'ENEMY_ATTACK', damage, shieldDamage, blocked, evaded, playerShield });
-          if (!blocked && !evaded) playBattleSound('enemy_attack');
+          if (!isAutoRunningRef.current && !blocked && !evaded) {
+            playBattleSound('enemy_attack');
+          }
           break;
         }
         case 'poison_applied': {
@@ -1415,8 +1435,10 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     }
   }, [state.enemy, state.currentFloor, state.phase, state.playerMaxHp, state.playerCurrentHp, dungeonId, getCombinedModEffects, getTotalStats]);
 
-  // ゲージ制ゲームループ（33msごとに更新 = 約30fps）
+  // ゲージ制ゲームループ（戦闘計算は約30fps、UI反映は必要分だけ間引く）
   const TICK_INTERVAL = 33;
+  const ACTIVE_GAUGE_UPDATE_INTERVAL = 66;
+  const AUTO_RUN_GAUGE_UPDATE_INTERVAL = 500;
   const gameLoopRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -1446,17 +1468,24 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
           handleBattleEventsRef.current(events);
         }
         const coreState = engine.getState();
-        dispatch({
-          type: 'UPDATE_GAUGES',
-          playerGauge: Math.min(100, coreState.player.gauge),
-          enemyGauge: Math.min(100, coreState.enemy.gauge),
-          playerShield: coreState.playerShield,
-          playerMaxShield: coreState.playerMaxShield,
-          enemyChill: coreState.enemyChillState,
-          enemyFreeze: coreState.enemyFreezeState,
-          playerChill: coreState.playerChillState,
-          playerFreeze: coreState.playerFreezeState,
-        });
+        const now = Date.now();
+        const gaugeUpdateInterval = isAutoRunning
+          ? AUTO_RUN_GAUGE_UPDATE_INTERVAL
+          : ACTIVE_GAUGE_UPDATE_INTERVAL;
+        if (now - lastGaugeUpdateAtRef.current >= gaugeUpdateInterval) {
+          lastGaugeUpdateAtRef.current = now;
+          dispatch({
+            type: 'UPDATE_GAUGES',
+            playerGauge: Math.min(100, coreState.player.gauge),
+            enemyGauge: Math.min(100, coreState.enemy.gauge),
+            playerShield: coreState.playerShield,
+            playerMaxShield: coreState.playerMaxShield,
+            enemyChill: coreState.enemyChillState,
+            enemyFreeze: coreState.enemyFreezeState,
+            playerChill: coreState.playerChillState,
+            playerFreeze: coreState.playerFreezeState,
+          });
+        }
         // UberUberクラーケンの触手乱打カウントダウン更新
         const bossEffects = engine.getBossEffects();
         if (enemyId === 'uber_uber_kraken') {
@@ -1476,7 +1505,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
         gameLoopRef.current = null;
       }
     };
-  }, [state.phase, activeEnemyId, isPaused]);
+  }, [state.phase, activeEnemyId, isPaused, isAutoRunning]);
 
   // 戦闘終了時に経験値を付与
   useEffect(() => {
@@ -1546,6 +1575,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
 
     if (state.phase === 'defeat' || state.phase === 'retreat') {
       // 敗北時は自動周回を終了
+      isAutoRunningRef.current = false;
       setIsAutoRunning(false);
       return;
     }

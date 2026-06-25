@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { ms, fs } from '@/utils/scaling';
 import {
@@ -21,26 +21,31 @@ export const SpeedButton: React.FC<SpeedButtonProps> = ({ currentSpeed, onSpeedC
   const hasPremiumSpeed = hasSpeedBoost();
   const season = usePlayerStore((state) => state.season);
   const [speedUnlocked, setSpeedUnlocked] = useState(false);
+  const [unlockChecked, setUnlockChecked] = useState(false);
 
   // 終焉の地クリア済みか確認（課金/招待がない場合のみ）
   useEffect(() => {
     if (hasPremiumSpeed) {
       setSpeedUnlocked(true);
+      setUnlockChecked(true);
       return;
     }
     const check = async () => {
       const unlocked = await settingsRepository.getEndContentUnlocked(season);
       setSpeedUnlocked(unlocked);
+      setUnlockChecked(true);
     };
     check();
   }, [hasPremiumSpeed, season]);
 
   // 利用可能な速度オプションを取得
-  const availableOptions = hasPremiumSpeed
-    ? BATTLE_SPEED_OPTIONS
-    : speedUnlocked
-      ? FREE_BATTLE_SPEED_OPTIONS
-      : [DEFAULT_BATTLE_SPEED] as BattleSpeedMultiplier[];
+  const availableOptions = useMemo(() => (
+    hasPremiumSpeed
+      ? BATTLE_SPEED_OPTIONS
+      : speedUnlocked
+        ? FREE_BATTLE_SPEED_OPTIONS
+        : [DEFAULT_BATTLE_SPEED] as BattleSpeedMultiplier[]
+  ), [hasPremiumSpeed, speedUnlocked]);
 
   const handlePress = useCallback(() => {
     const currentIndex = availableOptions.indexOf(currentSpeed);
@@ -53,19 +58,20 @@ export const SpeedButton: React.FC<SpeedButtonProps> = ({ currentSpeed, onSpeedC
   // 課金していない場合で、現在の速度がプレミアム速度の場合は1倍にリセット
   const displaySpeed = !hasPremiumSpeed && PREMIUM_BATTLE_SPEED_OPTIONS.includes(currentSpeed)
     ? DEFAULT_BATTLE_SPEED
-    : !speedUnlocked && currentSpeed !== DEFAULT_BATTLE_SPEED
+    : unlockChecked && !speedUnlocked && currentSpeed !== DEFAULT_BATTLE_SPEED
       ? DEFAULT_BATTLE_SPEED
       : currentSpeed;
 
   // 利用できない速度が設定されている場合は自動的にリセット
   React.useEffect(() => {
+    if (!unlockChecked) return;
     if (!hasPremiumSpeed && PREMIUM_BATTLE_SPEED_OPTIONS.includes(currentSpeed)) {
       onSpeedChange(DEFAULT_BATTLE_SPEED);
     }
     if (!speedUnlocked && !hasPremiumSpeed && currentSpeed !== DEFAULT_BATTLE_SPEED) {
       onSpeedChange(DEFAULT_BATTLE_SPEED);
     }
-  }, [hasPremiumSpeed, speedUnlocked, currentSpeed, onSpeedChange]);
+  }, [hasPremiumSpeed, speedUnlocked, unlockChecked, currentSpeed, onSpeedChange]);
 
   return (
     <Pressable

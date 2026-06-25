@@ -448,6 +448,8 @@ export interface Dungeon {
   monsters: MonsterSpawn[];
   dropTable: DungeonDropTable;
   boss?: DungeonBoss;           // ボス設定
+  enemyHpMultiplier?: number;   // 通常敵HP倍率
+  bossHpMultiplier?: number;    // ボスHP倍率
   modTierRange?: ModTierRange;  // ダンジョンのMOD tier範囲
   modCountRange?: ModCountRange; // ダンジョンのMOD数範囲
 }

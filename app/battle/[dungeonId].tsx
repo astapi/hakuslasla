@@ -5,7 +5,6 @@ import { PetAvatar } from '@/components/battle/PetAvatar';
 import { getPet, getPetImageKey } from '@/data/pets';
 import { BoostIndicator } from '@/components/battle/BoostIndicator';
 import { SpeedButton } from '@/components/battle/SpeedButton';
-import { Button } from '@/components/common/Button';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getDungeon } from '@/data/dungeons';
 import { useBattle } from '@/hooks/useBattle';
@@ -18,7 +17,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming, cancelAnimation } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { ms, fs, s } from '@/utils/scaling';
-import { getChestImageForItem, getChestRarityForItem } from '@/data/images';
+import { getCharacterImages, getChestImageForItem, getChestRarityForItem } from '@/data/images';
 import { Analytics } from '@/lib/analytics';
 import { UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS } from '@/core/endContent';
 
@@ -214,6 +213,9 @@ export default function BattleScreen() {
   const activePetDef = activePet ? getPet(activePet.petId) : undefined;
   const dungeon = getDungeon(dungeonId || '');
   const insets = useSafeAreaInsets();
+  const playerImageSet = getCharacterImages(characterType);
+  const autoRunPlayerSize = s(128) * (playerImageSet.battleScale ?? 1);
+  const showAutoRunLiteView = isAutoRunning && state.phase !== 'defeat' && state.phase !== 'retreat';
 
   // 攻撃アニメーション用のstate
   const [playerAttacking, setPlayerAttacking] = useState(false);
@@ -233,6 +235,26 @@ export default function BattleScreen() {
 
   // 戦闘ログの変化を監視して攻撃アニメーションをトリガー
   useEffect(() => {
+    if (isAutoRunning) {
+      if (playerAttackTimerRef.current) {
+        clearTimeout(playerAttackTimerRef.current);
+        playerAttackTimerRef.current = null;
+      }
+      if (enemyAttackTimerRef.current) {
+        clearTimeout(enemyAttackTimerRef.current);
+        enemyAttackTimerRef.current = null;
+      }
+      if (blockTimerRef.current) {
+        clearTimeout(blockTimerRef.current);
+        blockTimerRef.current = null;
+      }
+      setPlayerAttacking(false);
+      setEnemyAttacking(false);
+      setPlayerGuardEffect(null);
+      lastProcessedEntryRef.current = state.battleLog[state.battleLog.length - 1] ?? null;
+      return;
+    }
+
     const currentLog = state.battleLog;
     if (currentLog.length === 0) {
       lastProcessedEntryRef.current = null;
@@ -286,7 +308,7 @@ export default function BattleScreen() {
 
     // 最後のエントリを記録
     lastProcessedEntryRef.current = currentLog[currentLog.length - 1];
-  }, [state.battleLog]);
+  }, [state.battleLog, isAutoRunning]);
 
   // アンマウント時にタイマーをクリーンアップ
   useEffect(() => {
@@ -360,7 +382,7 @@ export default function BattleScreen() {
         clearTimeout(timer);
       };
     }
-  }, [state.phase, dungeonId, router, dungeon, state, isAutoRunning, level]);
+  }, [state.phase, dungeonId, router, dungeon, state, isAutoRunning, level, getPetsGained]);
 
   const handleRetreatConfirm = async () => {
     setShowRetreatModal(false);
@@ -369,6 +391,40 @@ export default function BattleScreen() {
 
   const backgroundImage = dungeonId ? backgroundImages[dungeonId] : undefined;
   const showChest = Boolean(state.enemy && state.enemy.currentHp <= 0 && state.lastDroppedItems.length > 0);
+
+  const retreatModal = (
+    <Modal
+      visible={showRetreatModal}
+      transparent
+      animationType="fade"
+      onRequestClose={() => setShowRetreatModal(false)}
+    >
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContent}>
+          <Text style={styles.modalTitle}>{t('battle.retreatConfirm.title')}</Text>
+          <Text style={styles.modalMessage}>
+            {t('battle.retreatConfirm.message')}
+          </Text>
+          <View style={styles.modalButtons}>
+            <Pressable
+              style={[styles.modalButton, styles.modalCancelButton]}
+              onPress={() => setShowRetreatModal(false)}
+              testID="battle-retreat-cancel"
+            >
+              <Text style={styles.modalCancelText}>{t('common.cancel')}</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.modalButton, styles.modalConfirmButton]}
+              onPress={handleRetreatConfirm}
+              testID="battle-retreat-confirm"
+            >
+              <Text style={styles.modalConfirmText}>{t('battle.retreatConfirm.confirm')}</Text>
+            </Pressable>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
 
   // バトルエリアの内容（背景画像の上にはキャラクター画像のみ）
   const battleAreaContent = (
@@ -493,6 +549,81 @@ export default function BattleScreen() {
     </>
   );
 
+  if (showAutoRunLiteView) {
+    return (
+      <View style={[styles.autoRunContainer, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+        <View style={styles.autoRunTopBar}>
+          <View>
+            <Text style={styles.autoRunTitle}>{t('battle.autoRunning')}</Text>
+            <Text style={styles.autoRunSubText}>
+              {t(`dungeons.${dungeonId}.name`)} - {state.currentFloor}/{state.maxFloor}{t('battle.floor')}
+              {state.runCount > 1 && ` (${state.runCount}${t('battle.round')})`}
+            </Text>
+          </View>
+          <SpeedButton currentSpeed={battleSpeed} onSpeedChange={changeBattleSpeed} />
+        </View>
+
+        <View style={styles.autoRunCenter}>
+          <Image
+            source={playerImageSet.battle}
+            style={[
+              styles.autoRunPlayerImage,
+              { width: autoRunPlayerSize, height: autoRunPlayerSize },
+            ]}
+            resizeMode="contain"
+          />
+          {isPaused && (
+            <Text style={styles.autoRunPausedText}>{t('battle.pause')}</Text>
+          )}
+        </View>
+
+        <View style={styles.autoRunStats}>
+          <Text style={styles.autoRunStatText}>HP {state.playerCurrentHp}/{state.playerMaxHp}</Text>
+          {state.enemy && (
+            <Text style={styles.autoRunStatText}>
+              {t(`monsters.${state.enemy.id}.name`, { defaultValue: state.enemy.name })} {state.enemy.currentHp}/{state.enemy.maxHp}
+            </Text>
+          )}
+        </View>
+
+        <View style={styles.autoRunActions}>
+          <Pressable
+            style={[styles.autoRunActionButton, styles.autoRunStopButton]}
+            onPress={stopAutoRun}
+            testID="battle-auto-toggle"
+          >
+            <MaterialCommunityIcons name="autorenew-off" size={ms(18)} color="#DCE8DD" />
+            <Text style={styles.autoRunActionText}>{t('battle.stopAutoRun')}</Text>
+          </Pressable>
+          <Pressable
+            style={[
+              styles.autoRunIconButton,
+              isPaused && styles.floatingIconButtonPaused,
+            ]}
+            onPress={togglePause}
+            testID="battle-toggle-pause"
+          >
+            <MaterialCommunityIcons
+              name={isPaused ? 'play' : 'pause'}
+              size={ms(20)}
+              color={isPaused ? '#FFC107' : '#DCE8DD'}
+            />
+          </Pressable>
+          {isPaused && (
+            <Pressable
+              style={styles.autoRunIconButton}
+              onPress={() => setShowRetreatModal(true)}
+              testID="battle-retreat"
+            >
+              <MaterialCommunityIcons name="exit-run" size={ms(20)} color="#F44336" />
+            </Pressable>
+          )}
+        </View>
+        {retreatModal}
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
       {/* 上部: バトルエリア（背景画像 + キャラクター画像のみ） */}
@@ -599,37 +730,7 @@ export default function BattleScreen() {
       )}
 
       {/* 撤退確認モーダル */}
-      <Modal
-        visible={showRetreatModal}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setShowRetreatModal(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>{t('battle.retreatConfirm.title')}</Text>
-            <Text style={styles.modalMessage}>
-              {t('battle.retreatConfirm.message')}
-            </Text>
-            <View style={styles.modalButtons}>
-              <Pressable
-                style={[styles.modalButton, styles.modalCancelButton]}
-                onPress={() => setShowRetreatModal(false)}
-                testID="battle-retreat-cancel"
-              >
-                <Text style={styles.modalCancelText}>{t('common.cancel')}</Text>
-              </Pressable>
-              <Pressable
-                style={[styles.modalButton, styles.modalConfirmButton]}
-                onPress={handleRetreatConfirm}
-                testID="battle-retreat-confirm"
-              >
-                <Text style={styles.modalConfirmText}>{t('battle.retreatConfirm.confirm')}</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      {retreatModal}
     </View>
   );
 }
@@ -638,6 +739,88 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#15191E',
+  },
+  autoRunContainer: {
+    flex: 1,
+    backgroundColor: '#030504',
+    paddingHorizontal: ms(20),
+  },
+  autoRunTopBar: {
+    minHeight: ms(72),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: ms(12),
+  },
+  autoRunTitle: {
+    fontSize: fs(22),
+    fontWeight: '900',
+    color: '#DCE8DD',
+  },
+  autoRunSubText: {
+    marginTop: ms(4),
+    fontSize: fs(12),
+    color: 'rgba(220, 232, 221, 0.62)',
+  },
+  autoRunCenter: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: ms(10),
+  },
+  autoRunPlayerImage: {
+    opacity: 0.92,
+  },
+  autoRunPausedText: {
+    marginTop: ms(4),
+    fontSize: fs(12),
+    fontWeight: '800',
+    color: '#FFC107',
+  },
+  autoRunStats: {
+    alignItems: 'center',
+    gap: ms(4),
+    paddingBottom: ms(12),
+  },
+  autoRunStatText: {
+    fontSize: fs(12),
+    color: 'rgba(220, 232, 221, 0.58)',
+  },
+  autoRunActions: {
+    minHeight: ms(76),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: ms(10),
+  },
+  autoRunActionButton: {
+    minHeight: ms(42),
+    paddingHorizontal: ms(16),
+    borderRadius: ms(8),
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: ms(8),
+  },
+  autoRunStopButton: {
+    backgroundColor: 'rgba(76, 175, 80, 0.16)',
+    borderColor: 'rgba(76, 175, 80, 0.48)',
+  },
+  autoRunActionText: {
+    fontSize: fs(13),
+    fontWeight: '800',
+    color: '#DCE8DD',
+  },
+  autoRunIconButton: {
+    width: ms(42),
+    height: ms(42),
+    borderRadius: ms(21),
+    backgroundColor: 'rgba(220, 232, 221, 0.08)',
+    borderWidth: 1,
+    borderColor: 'rgba(220, 232, 221, 0.16)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   battleArea: {
     height: s(260),

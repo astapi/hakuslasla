@@ -4,6 +4,7 @@ import { useRouter , useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
+import { EquipmentStatSummary } from '@/components/common/EquipmentStatSummary';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { EquipmentSlot, Item } from '@/types';
@@ -780,17 +781,13 @@ const ItemDetail = memo(({
             />
             <View style={styles.comparisonInfo}>
               <Text style={styles.comparisonName} numberOfLines={2}>{t(`items.${item.id}.name`)}</Text>
-              <View style={styles.comparisonStats}>
-                {stats.totalAtk > 0 && (
-                  <Text style={styles.atkText}>ATK {stats.totalAtk}</Text>
-                )}
-                {stats.totalDef > 0 && (
-                  <Text style={styles.defText}>DEF {stats.totalDef}</Text>
-                )}
-                {stats.totalEvasion > 0 && (
-                  <Text style={styles.evasionText}>EVA {stats.totalEvasion}</Text>
-                )}
-              </View>
+              <EquipmentStatSummary
+                atk={stats.totalAtk}
+                def={stats.totalDef}
+                evasion={stats.totalEvasion}
+                size="small"
+                style={styles.comparisonStats}
+              />
             </View>
           </View>
           {stats.allMods.length > 0 && (
@@ -824,17 +821,13 @@ const ItemDetail = memo(({
                 />
                 <View style={styles.comparisonInfo}>
                   <Text style={styles.comparisonName} numberOfLines={2}>{t(`items.${equippedItem.id}.name`)}</Text>
-                  <View style={styles.comparisonStats}>
-                    {equippedStats.totalAtk > 0 && (
-                      <Text style={styles.atkText}>ATK {equippedStats.totalAtk}</Text>
-                    )}
-                    {equippedStats.totalDef > 0 && (
-                      <Text style={styles.defText}>DEF {equippedStats.totalDef}</Text>
-                    )}
-                    {equippedStats.totalEvasion > 0 && (
-                      <Text style={styles.evasionText}>EVA {equippedStats.totalEvasion}</Text>
-                    )}
-                  </View>
+                  <EquipmentStatSummary
+                    atk={equippedStats.totalAtk}
+                    def={equippedStats.totalDef}
+                    evasion={equippedStats.totalEvasion}
+                    size="small"
+                    style={styles.comparisonStats}
+                  />
                 </View>
               </View>
               {equippedStats.allMods.length > 0 && (
@@ -1007,18 +1000,6 @@ const styles = StyleSheet.create({
   comparisonStats: {
     flexDirection: 'row',
     gap: ms(8),
-  },
-  atkText: {
-    fontSize: fs(11),
-    color: '#FF6B6B',
-  },
-  defText: {
-    fontSize: fs(11),
-    color: '#4ECDC4',
-  },
-  evasionText: {
-    fontSize: fs(11),
-    color: '#80CBC4',
   },
   comparisonMods: {
     marginTop: ms(6),

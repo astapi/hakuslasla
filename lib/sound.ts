@@ -39,6 +39,9 @@ let soundSettings = {
 // プリロード完了フラグ
 let isPreloaded = false;
 
+const SE_THROTTLE_MS = 120;
+const lastSoundPlayedAt: Partial<Record<BattleSoundType, number>> = {};
+
 // 設定を読み込む
 export const loadSoundSettings = async (): Promise<void> => {
   try {
@@ -127,6 +130,10 @@ export const playBattleSound = async (
 ): Promise<void> => {
   // SE無効なら再生しない
   if (!soundSettings.seEnabled) return;
+
+  const now = Date.now();
+  if (now - (lastSoundPlayedAt[type] ?? 0) < SE_THROTTLE_MS) return;
+  lastSoundPlayedAt[type] = now;
 
   try {
     let sound: Audio.Sound | undefined;

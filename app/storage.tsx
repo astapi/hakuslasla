@@ -5,6 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/common/Button';
+import { EquipmentStatSummary } from '@/components/common/EquipmentStatSummary';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { storageRepository } from '@/db';
 import { usePlayerStore } from '@/stores/usePlayerStore';
@@ -399,17 +400,13 @@ const StorageItemDetail = memo(({
         </View>
       </View>
 
-      <View style={styles.detailStats}>
-        {stats.totalAtk > 0 && (
-          <Text style={styles.atkText}>ATK +{stats.totalAtk}</Text>
-        )}
-        {stats.totalDef > 0 && (
-          <Text style={styles.defText}>DEF +{stats.totalDef}</Text>
-        )}
-        {stats.totalEvasion > 0 && (
-          <Text style={styles.evasionText}>EVA +{stats.totalEvasion}</Text>
-        )}
-      </View>
+      <EquipmentStatSummary
+        atk={stats.totalAtk}
+        def={stats.totalDef}
+        evasion={stats.totalEvasion}
+        showPlus
+        style={styles.detailStats}
+      />
 
       {stats.otherMods.length > 0 && (
         <View style={styles.detailMods}>
@@ -516,21 +513,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: ms(16),
     marginBottom: ms(8),
-  },
-  atkText: {
-    fontSize: fs(14),
-    color: '#FF6B6B',
-    fontWeight: 'bold',
-  },
-  defText: {
-    fontSize: fs(14),
-    color: '#4ECDC4',
-    fontWeight: 'bold',
-  },
-  evasionText: {
-    fontSize: fs(14),
-    color: '#80CBC4',
-    fontWeight: 'bold',
   },
   detailMods: {
     marginBottom: ms(12),

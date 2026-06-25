@@ -9,6 +9,7 @@ import {
 } from '../../core/gaugeBattle';
 import { createEmptyModEffects } from '../../core/modEffects';
 import { EnemyConfig, DungeonConfig, Stats } from '../../core/types';
+import { scaleEnemyHpForDungeon } from '../../core/enemyScaling';
 
 describe('core/gaugeBattle', () => {
   const player: Stats = { maxHp: 100, atk: 20, def: 5 };
@@ -54,6 +55,34 @@ describe('core/gaugeBattle', () => {
 
     expect(result.floorsCleared).toBe(2);
     expect(result.cleared).toBe(true);
+  });
+
+  it('scaleEnemyHpForDungeon は通常敵HP倍率を適用する', () => {
+    const dungeon: DungeonConfig = {
+      id: 'scaled',
+      name: 'Scaled',
+      maxFloor: 1,
+      enemies: [enemy.id],
+      dropTable: [],
+      enemyHpMultiplier: 2,
+    };
+
+    expect(scaleEnemyHpForDungeon(enemy, dungeon).maxHp).toBe(40);
+  });
+
+  it('scaleEnemyHpForDungeon はボスHP倍率を通常敵倍率より優先する', () => {
+    const dungeon: DungeonConfig = {
+      id: 'scaled_boss',
+      name: 'Scaled Boss',
+      maxFloor: 1,
+      enemies: [enemy.id],
+      dropTable: [],
+      boss: { monsterId: enemy.id, floor: 1 },
+      enemyHpMultiplier: 2,
+      bossHpMultiplier: 3,
+    };
+
+    expect(scaleEnemyHpForDungeon(enemy, dungeon).maxHp).toBe(60);
   });
 
   it('ticksToSeconds / formatBattleTime が正しく変換する', () => {
