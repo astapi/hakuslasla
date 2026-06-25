@@ -91,6 +91,8 @@ export interface DungeonConfig {
   enemies: string[];
   dropTable: string[];
   boss?: BossConfig;
+  enemyHpMultiplier?: number;
+  bossHpMultiplier?: number;
 }
 
 // ========================================
