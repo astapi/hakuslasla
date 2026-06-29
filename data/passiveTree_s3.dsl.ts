@@ -244,9 +244,10 @@ export function buildS3DslNodes(config: TreeConfig = defaultConfig): BuildResult
     const from = `ring1_${i}_3`;
     t.minorRingOffshoot({
       from,
-      dirDeg: outwardDeg(from),
-      gap: 3.8,
+      dirDeg: outwardDeg(from, -165),
+      gap: 2.8,
       radius: 1.05,
+      entryIndex: 0,
       minors: sustainWheel(`sustain_${i}`, sustainFlavors[i]),
     });
   }

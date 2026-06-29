@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { ImageBackground, ImageSourcePropType, View, Text, StyleSheet, Pressable } from 'react-native';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { useTranslation } from 'react-i18next';
 import { DungeonListItem } from '@/types';
 import { ms, fs, s } from '@/utils/scaling';
@@ -14,6 +15,7 @@ interface DungeonCardProps {
   isDisabled?: boolean;
   testID?: string;
   onRankingPress?: () => void;
+  backgroundImage?: ImageSourcePropType;
 }
 
 export const DungeonCard = ({
@@ -27,6 +29,7 @@ export const DungeonCard = ({
   isDisabled = false,
   testID,
   onRankingPress,
+  backgroundImage,
 }: DungeonCardProps) => {
   const { t } = useTranslation();
   const isTicketMissing = requiresTicket && ticketCount <= 0;
@@ -44,7 +47,33 @@ export const DungeonCard = ({
       onPress={isPressable ? onPress : undefined}
       disabled={!isPressable}
     >
+      {backgroundImage && (
+        <ImageBackground
+          source={backgroundImage}
+          style={styles.cardBackground}
+          imageStyle={styles.cardBackgroundImage}
+          resizeMode="cover"
+        >
+          <View style={styles.cardBackgroundTint} />
+          <Svg style={StyleSheet.absoluteFill} width="100%" height="100%">
+            <Defs>
+              <LinearGradient id="cardBackgroundFade" x1="0%" y1="0%" x2="58%" y2="0%">
+                <Stop offset="0%" stopColor="#0A1016" stopOpacity="1" />
+                <Stop offset="42%" stopColor="#0A1016" stopOpacity="0.62" />
+                <Stop offset="100%" stopColor="#0A1016" stopOpacity="0" />
+              </LinearGradient>
+            </Defs>
+            <Rect x="0" y="0" width="100%" height="100%" fill="url(#cardBackgroundFade)" />
+          </Svg>
+        </ImageBackground>
+      )}
       <View style={[styles.iconContainer, isLocked && styles.lockedIcon]}>
+        <View style={styles.floorRingOuter} pointerEvents="none" />
+        <View style={styles.floorRingInner} pointerEvents="none" />
+        <View style={[styles.floorGem, styles.floorGemTop]} pointerEvents="none" />
+        <View style={[styles.floorGem, styles.floorGemRight]} pointerEvents="none" />
+        <View style={[styles.floorGem, styles.floorGemBottom]} pointerEvents="none" />
+        <View style={[styles.floorGem, styles.floorGemLeft]} pointerEvents="none" />
         {isLocked ? (
           <Text style={styles.lockIcon}>🔒</Text>
         ) : (
@@ -107,11 +136,27 @@ export const DungeonCard = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: ms(12),
-    padding: ms(16),
-    marginBottom: ms(12),
+    backgroundColor: 'rgba(10, 16, 22, 0.78)',
+    borderRadius: ms(8),
+    borderWidth: 1,
+    borderColor: 'rgba(196, 210, 221, 0.22)',
+    padding: ms(12),
     alignItems: 'center',
+    overflow: 'hidden',
+  },
+  cardBackground: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: '50%',
+  },
+  cardBackgroundImage: {
+    opacity: 0.56,
+  },
+  cardBackgroundTint: {
+    flex: 1,
+    backgroundColor: 'rgba(5, 10, 14, 0.2)',
   },
   locked: {
     backgroundColor: 'rgba(50, 50, 50, 0.5)',
@@ -124,10 +169,48 @@ const styles = StyleSheet.create({
     width: s(60),
     height: s(60),
     borderRadius: s(30),
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(4, 9, 14, 0.78)',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: ms(16),
+    position: 'relative',
+  },
+  floorRingOuter: {
+    position: 'absolute',
+    width: s(58),
+    height: s(58),
+    borderRadius: s(29),
+    borderWidth: 1,
+    borderColor: 'rgba(198, 161, 95, 0.62)',
+  },
+  floorRingInner: {
+    position: 'absolute',
+    width: s(48),
+    height: s(48),
+    borderRadius: s(24),
+    borderWidth: 1,
+    borderColor: 'rgba(196, 210, 221, 0.18)',
+  },
+  floorGem: {
+    position: 'absolute',
+    width: s(6),
+    height: s(6),
+    backgroundColor: '#2A2F34',
+    borderWidth: 1,
+    borderColor: 'rgba(198, 161, 95, 0.7)',
+    transform: [{ rotate: '45deg' }],
+  },
+  floorGemTop: {
+    top: s(0),
+  },
+  floorGemRight: {
+    right: s(0),
+  },
+  floorGemBottom: {
+    bottom: s(0),
+  },
+  floorGemLeft: {
+    left: s(0),
   },
   lockedIcon: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
