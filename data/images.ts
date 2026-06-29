@@ -48,6 +48,51 @@ export const getCharacterImages = (type: CharacterType): PlayerImageSet => {
   return characterImages[type] ?? characterImages.warrior;
 };
 
+// ダンジョン背景画像マッピング（戦闘画面・ダンジョン選択画面で共通利用）
+export const dungeonBackgroundImages: Record<string, ImageSourcePropType> = {
+  grassland: require('@/assets/images/backgrounds/grassland.jpg'),
+  cave: require('@/assets/images/backgrounds/cave.jpg'),
+  ruins: require('@/assets/images/backgrounds/ruins.jpg'),
+  goblin_fort: require('@/assets/images/backgrounds/goblin_fort.jpg'),
+  bandit_hideout: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
+  demon_castle: require('@/assets/images/backgrounds/demon_castle.jpg'),
+  vampire_mansion: require('@/assets/images/backgrounds/vampire_mansion.jpg'),
+  ice_cave: require('@/assets/images/backgrounds/ice_cave.jpg'),
+  underwater_cave: require('@/assets/images/backgrounds/underwater_cave.jpg'),
+  volcano: require('@/assets/images/backgrounds/volcano.jpg'),
+  orc_fortress: require('@/assets/images/backgrounds/orc_fortress.jpg'),
+  dark_forest: require('@/assets/images/backgrounds/dark_forest.jpg'),
+  sky_tower: require('@/assets/images/backgrounds/sky_tower.jpg'),
+  hell_gate: require('@/assets/images/backgrounds/hell_gate.jpg'),
+  dragon_nest: require('@/assets/images/backgrounds/dragon_nest.jpg'),
+  sacred_temple: require('@/assets/images/backgrounds/sacred_temple.jpg'),
+  chaos_realm: require('@/assets/images/backgrounds/chaos_realm.jpg'),
+  final_land: require('@/assets/images/backgrounds/final_land.jpg'),
+  dimensional_rush_1: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
+  dimensional_rush_2: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
+  dimensional_rush_3: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
+  dimensional_rush_4: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
+  dimensional_rush_5: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
+  dimensional_rush_6: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
+  dimensional_corridor: require('@/assets/images/backgrounds/dimensional_corridor.jpg'),
+  uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
+  uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
+  uber_vampire: require('@/assets/images/backgrounds/vampire_mansion.jpg'),
+  uber_kraken: require('@/assets/images/backgrounds/underwater_cave.jpg'),
+  uber_demon_lord: require('@/assets/images/backgrounds/demon_castle.jpg'),
+  uber_true_final_boss: require('@/assets/images/backgrounds/final_land.jpg'),
+  uber_uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
+  uber_uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
+  uber_uber_kraken: require('@/assets/images/backgrounds/underwater_cave.jpg'),
+  debug_uber_uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
+  debug_uber_uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
+  debug_uber_uber_kraken: require('@/assets/images/backgrounds/underwater_cave.jpg'),
+};
+
+export const getDungeonBackgroundImage = (dungeonId: string): ImageSourcePropType | undefined => {
+  return dungeonBackgroundImages[dungeonId];
+};
+
 export const chestImages: Record<ChestRarity, ImageSourcePropType> = {
   normal: require('@/assets/images/chests/normal.png'),
   magic: require('@/assets/images/chests/magic.png'),

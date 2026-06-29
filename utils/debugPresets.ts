@@ -566,6 +566,31 @@ export async function applyBuildPresetToCharacter(buildId: string): Promise<bool
   return true;
 }
 
+/**
+ * ストアスクショ用: UberUberゴブリンキング戦向けの状態を作る。
+ * 画面表示用にLv80へ調整する。戦闘中ステータスはuseBattle側で偽装する。
+ */
+export async function applyGoblinKingScreenshotPreset(): Promise<boolean> {
+  const passivePreset = LEVEL_BASED_PRESETS.REGEN_GUARD?.[50];
+  const equipmentSet = DUNGEON_EQUIPMENT_SETS.ruins?.sets.DEF;
+  if (!passivePreset || !equipmentSet) {
+    if (__DEV__) {
+      console.error('Goblin King screenshot preset not found');
+    }
+    return false;
+  }
+
+  const store = usePlayerStore.getState();
+  await store.setDebugLevel(80);
+  await store.applyEquipmentPreset(equipmentSet);
+  await store.applyPassivePreset(passivePreset.nodes);
+
+  if (__DEV__) {
+    console.log('Applied Goblin King screenshot preset');
+  }
+  return true;
+}
+
 // ダンジョン情報（推奨レベル順）
 export const DUNGEON_INFO: { id: string; name: string; level: number }[] = [
   { id: 'grassland', name: '草原', level: 1 },

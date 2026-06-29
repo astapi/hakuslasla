@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Modal, Pressable } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, ScrollView, Modal, Pressable } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
@@ -13,6 +13,7 @@ import { DungeonListItem } from '@/types';
 import { ms, fs } from '@/utils/scaling';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { Analytics } from '@/lib/analytics';
+import { getDungeonBackgroundImage } from '@/data/images';
 import { useState, useCallback, useMemo } from 'react';
 
 // ダンジョンが解放されているか判定
@@ -251,39 +252,49 @@ export default function DungeonSelectScreen() {
 
   return (
     <ScreenWrapper>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>{t('dungeonSelect.title')}</Text>
-        <Text style={styles.subtitle}>{t('dungeonSelect.subtitle')}</Text>
+      <ImageBackground
+        source={getDungeonBackgroundImage('dimensional_rush_1')}
+        style={styles.background}
+        imageStyle={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        <View style={styles.backgroundOverlay}>
+          <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+            <Text style={styles.title}>{t('dungeonSelect.title')}</Text>
+            <Text style={styles.subtitle}>{t('dungeonSelect.subtitle')}</Text>
 
-        <View style={styles.dungeonList}>
-          {dungeons.map((dungeon) => (
-            <DungeonCard
-              key={dungeon.id}
-              dungeon={dungeon}
-              onPress={() => handleDungeonSelect(dungeon.id)}
-              isCleared={dungeon.isCleared}
-              requiresTicket={dungeon.requiresTicket}
-              ticketCount={dungeon.ticketCount}
-              isDisabled={dungeon.isDisabled}
-              testID={`dungeon-card-${dungeon.id}`}
-              onRankingPress={
-                isDimensionalCorridorDungeon(dungeon.id)
-                  ? () => router.push('/ranking')
-                  : undefined
-              }
+            <View style={styles.dungeonList}>
+              {dungeons.map((dungeon) => (
+                <DungeonCard
+                  key={dungeon.id}
+                  dungeon={dungeon}
+                  onPress={() => handleDungeonSelect(dungeon.id)}
+                  isCleared={dungeon.isCleared}
+                  requiresTicket={dungeon.requiresTicket}
+                  ticketCount={dungeon.ticketCount}
+                  isDisabled={dungeon.isDisabled}
+                  testID={`dungeon-card-${dungeon.id}`}
+                  backgroundImage={getDungeonBackgroundImage(dungeon.id)}
+                  onRankingPress={
+                    isDimensionalCorridorDungeon(dungeon.id)
+                      ? () => router.push('/ranking')
+                      : undefined
+                  }
+                />
+              ))}
+            </View>
+          </ScrollView>
+
+          <View style={styles.footer}>
+            <Button
+              title={t('common.back')}
+              onPress={handleBack}
+              variant="secondary"
+              testID="dungeon-back-button"
             />
-          ))}
+          </View>
         </View>
-      </ScrollView>
-
-      <View style={styles.footer}>
-        <Button
-          title={t('common.back')}
-          onPress={handleBack}
-          variant="secondary"
-          testID="dungeon-back-button"
-        />
-      </View>
+      </ImageBackground>
 
       {/* 次元回廊スタート階層選択モーダル */}
       <Modal
@@ -342,11 +353,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#15191E',
   },
+  background: {
+    flex: 1,
+  },
+  backgroundImage: {
+    opacity: 0.48,
+  },
+  backgroundOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(4, 8, 13, 0.68)',
+  },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
     padding: ms(16),
+    paddingBottom: ms(8),
   },
   title: {
     fontSize: fs(24),

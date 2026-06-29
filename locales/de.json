@@ -2,38 +2,38 @@
   "common": {
     "loading": "Laden...",
     "ok": "OK",
-    "back": "Zurueck",
+    "back": "Zurück",
     "close": "Schliessen",
     "cancel": "Abbrechen",
-    "change": "Aendern",
-    "delete": "Loeschen",
-    "reset": "Zuruecksetzen",
+    "change": "Ändern",
+    "delete": "Löschen",
+    "reset": "Zurücksetzen",
     "create": "Erstellen",
     "creating": "Erstelle...",
     "save": "Speichern",
-    "equip": "Ausruesten",
+    "equip": "Ausrüsten",
     "unequip": "Ablegen",
     "sell": "Verkaufen",
     "none": "Keine",
     "unequipped": "Leer",
-    "items": "Gegenstaende",
+    "items": "Gegenstände",
     "ticket": "Ticket"
   },
   "characterSelect": {
     "title": "LootDive",
-    "subtitle": "Charakter waehlen",
+    "subtitle": "Charakter wählen",
     "empty": "Keine Charaktere",
     "emptyHint": "Erstelle einen neuen Charakter um zu beginnen",
     "createNew": "Neuen Charakter erstellen",
     "slotLimitTitle": "Slot-Limit",
     "slotLimitMessage": "Charakter-Slots sind voll ({{current}}/{{max}})",
-    "deleteConfirmTitle": "Charakter loeschen",
-    "deleteConfirmMessage": "\"{{name}}\" loeschen?\nDiese Aktion kann nicht rueckgaengig gemacht werden."
+    "deleteConfirmTitle": "Charakter löschen",
+    "deleteConfirmMessage": "\"{{name}}\" löschen?\nDiese Aktion kann nicht rückgängig gemacht werden."
   },
   "characterCreate": {
     "nameLabel": "Charaktername",
     "namePlaceholder": "Name eingeben",
-    "classLabel": "Klasse waehlen",
+    "classLabel": "Klasse wählen",
     "class": {
       "warrior": "Krieger",
       "elementalist": "Elementarist",
@@ -41,9 +41,9 @@
       "frostmage": "Frostmagier",
       "tamer": "Zähmer"
     },
-    "classAbility": "Klassenfaehigkeit",
+    "classAbility": "Klassenfähigkeit",
     "ability": {
-      "igniteChance": "Entzuendungschance {{value}}%",
+      "igniteChance": "Entzündungschance {{value}}%",
       "criticalChance": "Kritische Trefferchance {{value}}%",
       "attackSpeedPct": "Angriffsgeschwindigkeit +{{value}}%",
       "poisonChance": "Giftchance {{value}}%",
@@ -55,7 +55,7 @@
   },
   "home": {
     "menu": {
-      "skills": "Faehigkeiten",
+      "skills": "Fähigkeiten",
       "inventory": "Inventar",
       "storage": "Lager",
       "settings": "Einstellungen",
@@ -136,8 +136,8 @@
     "confirmDiscardMessage": "Ein {{name}} ablegen?"
   },
   "dungeonSelect": {
-    "title": "Dungeon waehlen",
-    "subtitle": "Waehle einen Dungeon zur Herausforderung",
+    "title": "Dungeon wählen",
+    "subtitle": "Wähle einen Dungeon zur Herausforderung",
     "unlockRequirement": "{{dungeonName}} abschliessen zum Freischalten",
     "selectStartFloor": "Startetage wählen",
     "startFloorLabel": "Startetage {{floor}}",
@@ -157,7 +157,7 @@
       "drops": "Gegenstandsdrops",
       "uniqueDrops": "Einzigartige Drops",
       "dungeonDrops": "Dungeon-Drops",
-      "commonDrops": "Gewoehnliche Drops",
+      "commonDrops": "Gewöhnliche Drops",
       "spawnRate": "Spawnrate {{rate}}%",
       "dropRate": "Droprate {{rate}}%",
       "stats": "Werte",
@@ -165,13 +165,13 @@
       "attackSpeed": "Angriffsgeschw.: {{speed}}",
       "noUniqueDrop": "Keine einzigartigen Drops",
       "fixedMods": "Feste MODs",
-      "bossAbilities": "Boss-Faehigkeiten",
-      "regularSkills": "Regulaere Faehigkeiten (alle 3 Angriffe)",
-      "thresholdSkills": "Schwellen-Faehigkeiten (unter 50% HP)",
-      "persistentSkills": "Permanente Faehigkeiten (von Kampfbeginn an aktiv)",
+      "bossAbilities": "Boss-Fähigkeiten",
+      "regularSkills": "Reguläre Fähigkeiten (alle 3 Angriffe)",
+      "thresholdSkills": "Schwellen-Fähigkeiten (unter 50% HP)",
+      "persistentSkills": "Permanente Fähigkeiten (von Kampfbeginn an aktiv)",
       "everyAttackSkills": "Bei jedem Angriff",
       "every10Skills": "Alle 10 Angriffe",
-      "uberUberPersistentSkills": "Permanente Faehigkeiten (von Kampfbeginn an aktiv)",
+      "uberUberPersistentSkills": "Permanente Fähigkeiten (von Kampfbeginn an aktiv)",
       "uberOnly": "Nur Uber",
       "uberUberOnly": "Nur UberUber"
     },
@@ -186,11 +186,11 @@
     "resume": "Fortsetzen",
     "autoRun": "Auto-Durchlauf",
     "stopAutoRun": "Auto stoppen",
-    "retreat": "Rueckzug",
+    "retreat": "Rückzug",
     "retreatConfirm": {
-      "title": "Rueckzug bestaetigen",
-      "message": "Moechtest du dich wirklich zurueckziehen?\nErhaltene EXP gehen verloren, aber Gegenstaende koennen behalten werden.",
-      "confirm": "Zurueckziehen"
+      "title": "Rückzug bestätigen",
+      "message": "Möchtest du dich wirklich zurückziehen?\nErhaltene EXP gehen verloren, aber Gegenstände können behalten werden.",
+      "confirm": "Zurückziehen"
     },
     "victory": "Sieg!",
     "defeat": "Niederlage...",
@@ -202,34 +202,34 @@
   "result": {
     "cleared": "Dungeon abgeschlossen!",
     "defeat": "Niederlage...",
-    "retreat": "Rueckzug",
-    "runsCompleted": "{{count}} Durchlaeufe abgeschlossen",
+    "retreat": "Rückzug",
+    "runsCompleted": "{{count}} Durchläufe abgeschlossen",
     "floorsCleared": "{{current}}/{{max}} Stockwerke abgeschlossen",
     "rewards": "Belohnungen",
     "exp": "EXP",
     "totalExp": "Gesamt-EXP",
-    "items": "Erhaltene Gegenstaende",
-    "totalItems": "Gegenstaende gesamt ({{count}})",
-    "noItems": "Keine Gegenstaende",
+    "items": "Erhaltene Gegenstände",
+    "totalItems": "Gegenstände gesamt ({{count}})",
+    "noItems": "Keine Gegenstände",
     "pets": "Erhaltene Haustiere",
-    "returnButton": "Zurueck zum Startbildschirm"
+    "returnButton": "Zurück zum Startbildschirm"
   },
   "inventory": {
     "title": "Inventar",
-    "selectItem": "Waehle einen Gegenstand",
-    "selected": "Ausgewaehlt",
-    "equipped": "Ausgeruestet",
+    "selectItem": "Wähle einen Gegenstand",
+    "selected": "Ausgewählt",
+    "equipped": "Ausgerüstet",
     "storage": "Lager",
     "bulkSell": "Alle verkaufen",
     "bulkSellShort": "alle",
     "bulkSellDisabled": "Keine Verkaufsobjekte",
     "bulkSellConfirmTitle": "Alle verkaufen",
-    "bulkSellConfirmMessage": "Alle {{count}} {{slot}}-Gegenstaende verkaufen?\nDiese Aktion kann nicht rueckgaengig gemacht werden.",
+    "bulkSellConfirmMessage": "Alle {{count}} {{slot}}-Gegenstände verkaufen?\nDiese Aktion kann nicht rückgängig gemacht werden.",
     "bulkSellConfirmAction": "Verkaufen",
-    "bulkSellCount": "{{count}} Gegenstaende",
+    "bulkSellCount": "{{count}} Gegenstände",
     "noItemsInSlot": "Kein {{slot}}",
     "tabs": {
-      "equipment": "Ausruestung",
+      "equipment": "Ausrüstung",
       "misc": "Sonstiges"
     },
     "tickets": {
@@ -238,14 +238,14 @@
       "item": "{{name}} Ticket"
     },
     "respec": {
-      "title": "Neuverteilungs-Gegenstaende",
-      "empty": "Keine Neuverteilungs-Gegenstaende",
+      "title": "Neuverteilungs-Gegenstände",
+      "empty": "Keine Neuverteilungs-Gegenstände",
       "item": "Neuverteilungskugel"
     }
   },
   "storage": {
     "title": "Lager",
-    "selectItem": "Waehle einen Gegenstand",
+    "selectItem": "Wähle einen Gegenstand",
     "toInventory": "Ins Inventar",
     "inventoryFull": "Inventar voll",
     "storageFull": "Lager ist voll",
@@ -256,7 +256,7 @@
     "dropFilterTitle": "Drop-Filter-Einstellungen",
     "language": {
       "title": "Sprache",
-      "description": "Waehle die App-Anzeigesprache",
+      "description": "Wähle die App-Anzeigesprache",
       "system": "Systemeinstellungen folgen",
       "japanese": "日本語",
       "english": "English",
@@ -279,13 +279,13 @@
     },
     "modCountFilter": {
       "title": "Minimale MOD-Anzahl",
-      "description": "Nur Gegenstaende mit dieser oder mehr MODs sammeln (0 zum Deaktivieren)",
+      "description": "Nur Gegenstände mit dieser oder mehr MODs sammeln (0 zum Deaktivieren)",
       "disabled": "Deaktiviert",
       "value": "{{count}}+ MODs"
     },
     "tierFilter": {
       "title": "MOD Tier Filter",
-      "description": "Nur Gegenstaende mit mindestens einem MOD auf oder unter diesem Tier sammeln (Tier 1 ist hoechste Qualitaet)",
+      "description": "Nur Gegenstände mit mindestens einem MOD auf oder unter diesem Tier sammeln (Tier 1 ist höchste Qualität)",
       "disabled": "Deaktiviert",
       "value": "Tier {{tier}} oder niedriger",
       "hint": "Tier 1 = Beste, Tier 10 = Niedrigste"
@@ -293,12 +293,12 @@
     "currentFilter": {
       "title": "Aktueller Filter",
       "modCount": "{{count}}+ MODs",
-      "tierBelow": "Enthaelt Tier {{tier}} oder niedrigeren MOD",
+      "tierBelow": "Enthält Tier {{tier}} oder niedrigeren MOD",
       "noFilter": "Kein Filter (alles sammeln)"
     },
     "battleSpeed": {
       "title": "Kampfgeschwindigkeit",
-      "description": "Aendere die Geschwindigkeit des Kampfverlaufs",
+      "description": "Ändere die Geschwindigkeit des Kampfverlaufs",
       "premiumHint": "3x Geschwindigkeit im Shop freischaltbar"
     },
     "inviteCode": {
@@ -344,7 +344,7 @@
   },
   "status": {
     "title": "Status",
-    "tapForDetails": "Tippen fuer Details",
+    "tapForDetails": "Tippen für Details",
     "critRate": "Crit Rate",
     "critDamage": "Crit DMG",
     "poisonChance": "Gift",
@@ -381,12 +381,12 @@
     "attackSpeed": "Angriffsgeschw.",
     "attackSpeedMore": "AG mehr",
     "finalAttackSpeed": "Finale AG",
-    "igniteChance": "Entzuendungschance",
-    "igniteDamage": "Entzuendungsschaden",
-    "igniteDamageMore": "Entzuendung mehr",
-    "igniteDuration": "Entzuendungsdauer",
-    "igniteTickSpeed": "Entzuendungs-Tick",
-    "igniteLifesteal": "Entzuendungsraub",
+    "igniteChance": "Entzündungschance",
+    "igniteDamage": "Entzündungsschaden",
+    "igniteDamageMore": "Entzündung mehr",
+    "igniteDuration": "Entzündungsdauer",
+    "igniteTickSpeed": "Entzündungs-Tick",
+    "igniteLifesteal": "Entzündungsraub",
     "chillChance": "Kältechance",
     "chillEffect": "Kälteeffekt",
     "freezeChance": "Einfrierchance",
@@ -399,7 +399,7 @@
     "evasion": "Ausweichen"
   },
   "equipment": {
-    "title": "Ausruestung",
+    "title": "Ausrüstung",
     "slot": "Slot",
     "item": "Gegenstand",
     "mod": "MOD",
@@ -407,7 +407,7 @@
   },
   "slots": {
     "weapon": "Waffe",
-    "armor": "Ruestung",
+    "armor": "Rüstung",
     "gloves": "Handschuhe",
     "boots": "Stiefel",
     "accessory": "Accessoire"
@@ -434,7 +434,7 @@
     "hp_more_pct": "HP mehr",
     "everyTurnHpRegen": "+{{value}} HP pro Runde",
     "everyTurnHpRegenPct": "+{{value}}% HP pro Runde",
-    "ignite_chance": "Entzuendung",
+    "ignite_chance": "Entzündung",
     "ignite_duration_pct": "Entz.-Dauer",
     "ignite_tick_speed_pct": "Entz.-Tick",
     "ignite_damage_pct": "Entz. DMG",
@@ -505,72 +505,72 @@
   },
   "dungeons": {
     "grassland": {
-      "name": "Anfaengerwiese",
+      "name": "Anfängerwiese",
       "description": "Eine friedliche Wiese, wo Abenteurer ihre Reise beginnen. Heimat schwacher Monster."
     },
     "cave": {
-      "name": "Unterirdische Hoehle",
-      "description": "Eine dunkle Hoehle tief unter der Erde. Mittlere Monster lauern darin."
+      "name": "Unterirdische Höhle",
+      "description": "Eine dunkle Höhle tief unter der Erde. Mittlere Monster lauern darin."
     },
     "ruins": {
       "name": "Vergessene Ruinen",
-      "description": "Ruinen einer alten Zivilisation. Ein gefaehrlicher Ort, wo maechtige Monster umherstreifen."
+      "description": "Ruinen einer alten Zivilisation. Ein gefährlicher Ort, wo mächtige Monster umherstreifen."
     },
     "goblin_fort": {
       "name": "Goblin-Festung",
-      "description": "Eine massive Festung, erbaut von Goblins. Der Goblinkoenig herrscht in ihren Tiefen."
+      "description": "Eine massive Festung, erbaut von Goblins. Der Goblinkönig herrscht in ihren Tiefen."
     },
     "bandit_hideout": {
       "name": "Banditenversteck",
-      "description": "Ein Versteck fuer Bergbanditen, vollgestapelt mit gestohlenen Guetern."
+      "description": "Ein Versteck für Bergbanditen, vollgestapelt mit gestohlenen Gütern."
     },
     "vampire_mansion": {
       "name": "Vampir-Herrenhaus",
       "description": "Ein unheimliches Herrenhaus in der Nacht. Beherrscht von einem unsterblichen Adeligen."
     },
     "underwater_cave": {
-      "name": "Unterwasserhoehle",
-      "description": "Eine mysterioese Hoehle in der Tiefsee. Wassermonster bewachen ihr Territorium."
+      "name": "Unterwasserhöhle",
+      "description": "Eine mysteriöse Höhle in der Tiefsee. Wassermonster bewachen ihr Territorium."
     },
     "orc_fortress": {
       "name": "Ork-Festung",
       "description": "Eine massive Festung, beherrscht von Orks und Trollen. Wilde Krieger warten."
     },
     "demon_castle": {
-      "name": "Daemonenschloss",
-      "description": "Das Schloss des Dunklen Lords, wo Schatten wirbeln. Maechtige Daemonen bewachen ihren Meister."
+      "name": "Dämonenschloss",
+      "description": "Das Schloss des Dunklen Lords, wo Schatten wirbeln. Mächtige Dämonen bewachen ihren Meister."
     },
     "ice_cave": {
-      "name": "Gefrorene Hoehle",
-      "description": "Eine eisige Hoehle tief im Permafrost. Eisige Monster hausen hier."
+      "name": "Gefrorene Höhle",
+      "description": "Eine eisige Höhle tief im Permafrost. Eisige Monster hausen hier."
     },
     "volcano": {
       "name": "Lodernder Vulkan",
-      "description": "Ein gluehend heisses Labyrinth in einem aktiven Vulkan. Feuerkreaturen bewohnen es."
+      "description": "Ein glühend heisses Labyrinth in einem aktiven Vulkan. Feuerkreaturen bewohnen es."
     },
     "dark_forest": {
-      "name": "Abgruendiger Wald",
+      "name": "Abgründiger Wald",
       "description": "Ein lichtloser dunkler Wald. Uralte Bestien lauern darin."
     },
     "sky_tower": {
       "name": "Himmelsturm",
-      "description": "Ein mystischer Turm, der die Wolken durchsticht. Himmlische Waechter warten."
+      "description": "Ein mystischer Turm, der die Wolken durchsticht. Himmlische Wächter warten."
     },
     "hell_gate": {
-      "name": "Hoellentor",
-      "description": "Ein verbotenes Tor, das in die Unterwelt fuehrt. Hoellische Torwaechter blockieren Eindringlinge."
+      "name": "Höllentor",
+      "description": "Ein verbotenes Tor, das in die Unterwelt führt. Höllische Torwächter blockieren Eindringlinge."
     },
     "dragon_nest": {
       "name": "Drachenhort",
-      "description": "Ein legendaeres Nest, wo uralte Drachen schlafen. Die maechtigsten Drachenarten hausen hier."
+      "description": "Ein legendäres Nest, wo uralte Drachen schlafen. Die mächtigsten Drachenarten hausen hier."
     },
     "sacred_temple": {
-      "name": "Goettlicher Tempel",
-      "description": "Ein heiliger Tempel, beschuetzt von Dienern der Goetter."
+      "name": "Göttlicher Tempel",
+      "description": "Ein heiliger Tempel, beschützt von Dienern der Götter."
     },
     "chaos_realm": {
       "name": "Chaosreich",
-      "description": "Eine chaotische Welt zwischen Realitaet und Leere. Alle Gesetze sind hier verzerrt."
+      "description": "Eine chaotische Welt zwischen Realität und Leere. Alle Gesetze sind hier verzerrt."
     },
     "final_land": {
       "name": "Land der Enden",
@@ -578,11 +578,11 @@
     },
     "dimensional_rush_1": {
       "name": "Dimensionssturm I",
-      "description": "Dimensionslabyrinth. Besiege den Goblinkoenig auf Stockwerk 50."
+      "description": "Dimensionslabyrinth. Besiege den Goblinkönig auf Stockwerk 50."
     },
     "dimensional_rush_2": {
       "name": "Dimensionssturm II",
-      "description": "Dimensionslabyrinth. Besiege den Banditenfuehrer auf Stockwerk 70."
+      "description": "Dimensionslabyrinth. Besiege den Banditenführer auf Stockwerk 70."
     },
     "dimensional_rush_3": {
       "name": "Dimensionssturm III",
@@ -594,7 +594,7 @@
     },
     "dimensional_rush_5": {
       "name": "Dimensionssturm V",
-      "description": "Dimensionslabyrinth. Besiege den Daemonenherrscher auf Stockwerk 120."
+      "description": "Dimensionslabyrinth. Besiege den Dämonenherrscher auf Stockwerk 120."
     },
     "dimensional_rush_6": {
       "name": "Dimensionssturm VI",
@@ -602,18 +602,18 @@
     },
     "dimensional_corridor": {
       "name": "Dimensionskorridor",
-      "description": "Ein endloser Korridor zwischen Dimensionen. Feinde werden staerker, je tiefer du gehst."
+      "description": "Ein endloser Korridor zwischen Dimensionen. Feinde werden stärker, je tiefer du gehst."
     },
     "uber_goblin_king": {
-      "name": "Uber Goblinkoenig",
-      "description": "Der in einer anderen Dimension erwachte Goblinkoenig."
+      "name": "Uber Goblinkönig",
+      "description": "Der in einer anderen Dimension erwachte Goblinkönig."
     },
     "uber_uber_goblin_king": {
       "name": "UberUber Goblinkönig",
       "description": "Der ultimativ erwachte Goblinkönig."
     },
     "uber_uber_bandit_leader": {
-      "name": "UberUber Banditenfuehrer",
+      "name": "UberUber Banditenführer",
       "description": "Der ultimative Assassine. Nur jene, die alle Uber-Bosse besiegt haben, dürfen herausfordern."
     },
     "uber_uber_kraken": {
@@ -621,8 +621,8 @@
       "description": "Der im Abgrund verzerrte ultimative Kraken. Nur jene, die alle Uber-Bosse besiegt haben, dürfen herausfordern."
     },
     "uber_bandit_leader": {
-      "name": "Uber Banditenfuehrer",
-      "description": "Der durch Dimensionskraft verstaerkte Banditenfuehrer."
+      "name": "Uber Banditenführer",
+      "description": "Der durch Dimensionskraft verstärkte Banditenführer."
     },
     "uber_vampire": {
       "name": "Uber Vampir",
@@ -630,11 +630,11 @@
     },
     "uber_kraken": {
       "name": "Uber Kraken",
-      "description": "Eine kolossale Kreatur, die ueber die Dimensionsmeere herrscht."
+      "description": "Eine kolossale Kreatur, die über die Dimensionsmeere herrscht."
     },
     "uber_demon_lord": {
-      "name": "Uber Daemonenherrscher",
-      "description": "Der durch Dimensionskraft wiedererstandene Daemonenherrscher."
+      "name": "Uber Dämonenherrscher",
+      "description": "Der durch Dimensionskraft wiedererstandene Dämonenherrscher."
     },
     "uber_true_final_boss": {
       "name": "Uber Wahrer Endboss",
@@ -673,7 +673,7 @@
       "name": "Wiesenstab"
     },
     "cave_iron_staff": {
-      "name": "Hoehlen-Eisenstab"
+      "name": "Höhlen-Eisenstab"
     },
     "light_leather": {
       "name": "Leichtes Leder"
@@ -691,7 +691,7 @@
       "name": "Giftnadel-Ring"
     },
     "cave_iron_sword": {
-      "name": "Hoehlen-Eisenschwert"
+      "name": "Höhlen-Eisenschwert"
     },
     "bone_shield": {
       "name": "Knochenschild"
@@ -709,7 +709,7 @@
       "name": "Knochenschwert"
     },
     "war_ogre_belt": {
-      "name": "Kriegsoger-Guertel"
+      "name": "Kriegsoger-Gürtel"
     },
     "dark_night_mantle": {
       "name": "Dunkelmantel"
@@ -742,7 +742,7 @@
       "name": "Verlorenes Grimoire"
     },
     "stone_wing_boots": {
-      "name": "Steinfluegel-Stiefel"
+      "name": "Steinflügel-Stiefel"
     },
     "goblin_blade": {
       "name": "Goblin-Klinge"
@@ -757,7 +757,7 @@
       "name": "Stachel-Handschuhe"
     },
     "raider_boots": {
-      "name": "Raeuber-Stiefel"
+      "name": "Räuber-Stiefel"
     },
     "tribal_ring": {
       "name": "Stammesring"
@@ -772,13 +772,13 @@
       "name": "Champion-Axt"
     },
     "kings_crown": {
-      "name": "Koenigskrone"
+      "name": "Königskrone"
     },
     "demon_blade": {
-      "name": "Daemonenklinge"
+      "name": "Dämonenklinge"
     },
     "demon_staff": {
-      "name": "Daemonenstab"
+      "name": "Dämonenstab"
     },
     "dark_plate": {
       "name": "Dunkle Platte"
@@ -796,13 +796,13 @@
       "name": "Dunkles Grimoire"
     },
     "demon_horn": {
-      "name": "Daemonenhorn"
+      "name": "Dämonenhorn"
     },
     "wyvern_scale": {
       "name": "Lindwurm-Schuppe"
     },
     "demon_crown": {
-      "name": "Daemonenkrone"
+      "name": "Dämonenkrone"
     },
     "frost_blade": {
       "name": "Frostklinge"
@@ -811,7 +811,7 @@
       "name": "Froststab"
     },
     "ice_armor": {
-      "name": "Eisruestung"
+      "name": "Eisrüstung"
     },
     "frozen_gauntlets": {
       "name": "Gefrorene Handschuhe"
@@ -835,7 +835,7 @@
       "name": "Magmastab"
     },
     "volcano_armor": {
-      "name": "Vulkanruestung"
+      "name": "Vulkanrüstung"
     },
     "flame_gauntlets": {
       "name": "Flammen-Handschuhe"
@@ -871,13 +871,13 @@
       "name": "Schattenstab"
     },
     "dark_bark_armor": {
-      "name": "Dunkelrinden-Ruestung"
+      "name": "Dunkelrinden-Rüstung"
     },
     "nightmare_gauntlets": {
       "name": "Alptraum-Handschuhe"
     },
     "forest_walker_boots": {
-      "name": "Waldlaeufer-Stiefel"
+      "name": "Waldläufer-Stiefel"
     },
     "cursed_eye_ring": {
       "name": "Ring des verfluchten Auges"
@@ -886,7 +886,7 @@
       "name": "Verfluchter Ast"
     },
     "chimera_fang": {
-      "name": "Chimaeren-Zahn"
+      "name": "Chimären-Zahn"
     },
     "sky_blade": {
       "name": "Himmelsklinge"
@@ -895,13 +895,13 @@
       "name": "Himmelsstab"
     },
     "cloud_armor": {
-      "name": "Wolkenruestung"
+      "name": "Wolkenrüstung"
     },
     "storm_gauntlets": {
       "name": "Sturm-Handschuhe"
     },
     "wind_walker_boots": {
-      "name": "Windlaeufer-Stiefel"
+      "name": "Windläufer-Stiefel"
     },
     "sky_sapphire_ring": {
       "name": "Himmelssaphir-Ring"
@@ -910,40 +910,40 @@
       "name": "Donnerfeder"
     },
     "giant_belt": {
-      "name": "Riesenguertel"
+      "name": "Riesengürtel"
     },
     "hellfire_blade": {
-      "name": "Hoellenfeuer-Klinge"
+      "name": "Höllenfeuer-Klinge"
     },
     "hellfire_staff": {
-      "name": "Hoellenfeuer-Stab"
+      "name": "Höllenfeuer-Stab"
     },
     "infernal_plate": {
-      "name": "Hoellenplatte"
+      "name": "Höllenplatte"
     },
     "demon_gauntlets": {
-      "name": "Daemonen-Handschuhe"
+      "name": "Dämonen-Handschuhe"
     },
     "hellwalker_boots": {
-      "name": "Hoellenlaeufer-Stiefel"
+      "name": "Höllenläufer-Stiefel"
     },
     "infernal_ruby_ring": {
-      "name": "Hoellenrubin-Ring"
+      "name": "Höllenrubin-Ring"
     },
     "infernal_armor": {
-      "name": "Hoellenruestung"
+      "name": "Höllenrüstung"
     },
     "balrog_whip": {
       "name": "Balrog-Peitsche"
     },
     "dragon_slayer": {
-      "name": "Drachentoeter"
+      "name": "Drachentöter"
     },
     "dragon_staff": {
       "name": "Drachenstab"
     },
     "dragon_scale_armor": {
-      "name": "Drachenschuppen-Ruestung"
+      "name": "Drachenschuppen-Rüstung"
     },
     "dragon_claw_gauntlets": {
       "name": "Drachenklauen-Handschuhe"
@@ -970,13 +970,13 @@
       "name": "Heiliger Stab"
     },
     "divine_armor": {
-      "name": "Goettliche Ruestung"
+      "name": "Göttliche Rüstung"
     },
     "seraph_gauntlets": {
       "name": "Seraphim-Handschuhe"
     },
     "divine_boots": {
-      "name": "Goettliche Stiefel"
+      "name": "Göttliche Stiefel"
     },
     "holy_diamond_ring": {
       "name": "Heiliger Diamantring"
@@ -994,7 +994,7 @@
       "name": "Chaosstab"
     },
     "void_armor": {
-      "name": "Leerenruestung"
+      "name": "Leerenrüstung"
     },
     "chaos_gauntlets": {
       "name": "Chaos-Handschuhe"
@@ -1018,13 +1018,13 @@
       "name": "Apokalypsenstab"
     },
     "end_armor": {
-      "name": "Endzeit-Ruestung"
+      "name": "Endzeit-Rüstung"
     },
     "titan_gauntlets": {
       "name": "Titanen-Handschuhe"
     },
     "end_walker_boots": {
-      "name": "Endlaeufer-Stiefel"
+      "name": "Endläufer-Stiefel"
     },
     "oblivion_ring": {
       "name": "Ring der Vergessenheit"
@@ -1033,7 +1033,7 @@
       "name": "Weltenfragment"
     },
     "divine_blade": {
-      "name": "Goettliche Klinge"
+      "name": "Göttliche Klinge"
     },
     "crown_of_end": {
       "name": "Krone des Endes"
@@ -1048,7 +1048,7 @@
       "name": "Kraken-Tentakel"
     },
     "uber_kings_crown": {
-      "name": "Uber Koenigskrone"
+      "name": "Uber Königskrone"
     },
     "uber_bandit_crown": {
       "name": "Uber Banditenkrone"
@@ -1060,7 +1060,7 @@
       "name": "Uber Kraken-Tentakel"
     },
     "uber_demon_crown": {
-      "name": "Uber Daemonenkrone"
+      "name": "Uber Dämonenkrone"
     },
     "uber_crown_of_end": {
       "name": "Uber Krone des Endes"
@@ -1081,16 +1081,16 @@
       "name": "UberUber Goblin-Stampfer"
     },
     "uber_bandit_dagger": {
-      "name": "Uber Banditenkoenig-Dolch"
+      "name": "Uber Banditenkönig-Dolch"
     },
     "uber_bandit_coat": {
-      "name": "Uber Banditenkoenig-Mantel"
+      "name": "Uber Banditenkönig-Mantel"
     },
     "uber_bandit_grip": {
-      "name": "Uber Banditenkoenig-Griff"
+      "name": "Uber Banditenkönig-Griff"
     },
     "uber_bandit_steps": {
-      "name": "Uber Banditenkoenig-Schritte"
+      "name": "Uber Banditenkönig-Schritte"
     },
     "uber_vampire_plate": {
       "name": "Uber Vampir-Platte"
@@ -1129,16 +1129,16 @@
       "name": "Uber Kraken-Auge"
     },
     "uber_demon_blade": {
-      "name": "Uber Daemonenherrscher-Klinge"
+      "name": "Uber Dämonenherrscher-Klinge"
     },
     "uber_demon_armor": {
-      "name": "Uber Daemonenherrscher-Ruestung"
+      "name": "Uber Dämonenherrscher-Rüstung"
     },
     "uber_demon_grip": {
-      "name": "Uber Daemonenherrscher-Griff"
+      "name": "Uber Dämonenherrscher-Griff"
     },
     "uber_demon_steps": {
-      "name": "Uber Daemonenherrscher-Schritte"
+      "name": "Uber Dämonenherrscher-Schritte"
     },
     "uber_endblade": {
       "name": "Uber Endzeit-Klinge"
@@ -1180,7 +1180,7 @@
       "name": "Uber Assassinen-Schritte"
     },
     "uber_assassin_pendant": {
-      "name": "Uber Assassinen-Anhaenger"
+      "name": "Uber Assassinen-Anhänger"
     },
     "uber_fortress_blade": {
       "name": "Uber Festungs-Klinge"
@@ -1482,7 +1482,7 @@
       "name": "Gargoyle"
     },
     "goblin_archer": {
-      "name": "Goblin-Bogenschuetze"
+      "name": "Goblin-Bogenschütze"
     },
     "goblin_shaman": {
       "name": "Goblin-Schamane"
@@ -1494,22 +1494,22 @@
       "name": "Goblin-Champion"
     },
     "goblin_king": {
-      "name": "Goblinkoenig"
+      "name": "Goblinkönig"
     },
     "bandit": {
       "name": "Bandit"
     },
     "bandit_archer": {
-      "name": "Banditen-Bogenschuetze"
+      "name": "Banditen-Bogenschütze"
     },
     "bandit_swordsman": {
-      "name": "Banditen-Schwertkaempfer"
+      "name": "Banditen-Schwertkämpfer"
     },
     "bandit_brute": {
       "name": "Banditen-Brutaler"
     },
     "bandit_leader": {
-      "name": "Banditenfuehrer"
+      "name": "Banditenführer"
     },
     "death_knight": {
       "name": "Todesritter"
@@ -1518,13 +1518,13 @@
       "name": "Dunkelmagier"
     },
     "demon": {
-      "name": "Daemon"
+      "name": "Dämon"
     },
     "wyvern": {
       "name": "Lindwurm"
     },
     "demon_lord": {
-      "name": "Daemonenherrscher"
+      "name": "Dämonenherrscher"
     },
     "zombie": {
       "name": "Zombie"
@@ -1611,7 +1611,7 @@
       "name": "Waldhexe"
     },
     "chimera": {
-      "name": "Chimaere"
+      "name": "Chimäre"
     },
     "nightmare": {
       "name": "Nachtmahr"
@@ -1632,10 +1632,10 @@
       "name": "Greif"
     },
     "hell_hound": {
-      "name": "Hoellenhund"
+      "name": "Höllenhund"
     },
     "infernal_knight": {
-      "name": "Hoellenritter"
+      "name": "Höllenritter"
     },
     "succubus": {
       "name": "Sukkubus"
@@ -1662,19 +1662,19 @@
       "name": "Urdrache"
     },
     "divine_knight": {
-      "name": "Goettlicher Ritter"
+      "name": "Göttlicher Ritter"
     },
     "seraph": {
       "name": "Seraph"
     },
     "temple_guardian": {
-      "name": "Tempelwaechter"
+      "name": "Tempelwächter"
     },
     "holy_dragon": {
       "name": "Heiliger Drache"
     },
     "valkyrie": {
-      "name": "Walkuere"
+      "name": "Walküre"
     },
     "chaos_knight": {
       "name": "Chaosritter"
@@ -1701,7 +1701,7 @@
       "name": "Urtitan"
     },
     "god_slayer": {
-      "name": "Goettertoeter"
+      "name": "Göttertöter"
     },
     "end_bringer": {
       "name": "Endbringer"
@@ -1710,19 +1710,19 @@
       "name": "Wahrer Endboss"
     },
     "uber_goblin_king": {
-      "name": "Uber Goblinkoenig"
+      "name": "Uber Goblinkönig"
     },
     "uber_uber_goblin_king": {
       "name": "UberUber Goblinkönig"
     },
     "uber_uber_bandit_leader": {
-      "name": "UberUber Banditenfuehrer"
+      "name": "UberUber Banditenführer"
     },
     "uber_uber_kraken": {
       "name": "UberUber Kraken"
     },
     "uber_bandit_leader": {
-      "name": "Uber Banditenfuehrer"
+      "name": "Uber Banditenführer"
     },
     "uber_vampire": {
       "name": "Uber Vampir"
@@ -1731,7 +1731,7 @@
       "name": "Uber Kraken"
     },
     "uber_demon_lord": {
-      "name": "Uber Daemonenherrscher"
+      "name": "Uber Dämonenherrscher"
     },
     "uber_true_final_boss": {
       "name": "Uber Wahrer Endboss"
@@ -1739,39 +1739,39 @@
   },
   "skills": {
     "skill_atk_1": {
-      "name": "Angriff erhoehen I",
+      "name": "Angriff erhöhen I",
       "description": "ATK +5"
     },
     "skill_hp_1": {
-      "name": "HP erhoehen I",
+      "name": "HP erhöhen I",
       "description": "HP +20"
     },
     "skill_atk_2": {
-      "name": "Angriff erhoehen II",
+      "name": "Angriff erhöhen II",
       "description": "ATK +10"
     },
     "skill_def_1": {
-      "name": "Verteidigung erhoehen I",
+      "name": "Verteidigung erhöhen I",
       "description": "DEF +5"
     },
     "skill_hp_2": {
-      "name": "HP erhoehen II",
+      "name": "HP erhöhen II",
       "description": "HP +50"
     }
   },
   "skillTree": {
-    "title": "Faehigkeitenbaum",
+    "title": "Fähigkeitenbaum",
     "skillPoints": "SP: {{count}}",
     "unlocked": "Freigeschaltet",
-    "available": "Verfuegbar"
+    "available": "Verfügbar"
   },
   "bossSkills": {
     "goblin_king": {
-      "name": "Goblin-Gebruell",
+      "name": "Goblin-Gebrüll",
       "shield": "Schwarmschild",
-      "shieldDesc": "20% Schadensreduzierung fuer 2 Runden, Crit und Giftchance -50%",
+      "shieldDesc": "20% Schadensreduzierung für 2 Runden, Crit und Giftchance -50%",
       "shieldDescUberUber": "20% Schadensreduzierung, Crit und Giftchance -50% (dauerhaft ab Kampfbeginn)",
-      "warlord": "Kriegsfuerst der Horde",
+      "warlord": "Kriegsfürst der Horde",
       "warlordDesc": "+30% Angriffsgeschw., 500 HP bei Treffer heilen (unter 50% HP)",
       "warlordDescUberUber": "+30% Angriffsgeschw., 500 HP bei Treffer heilen (dauerhaft ab Kampfbeginn)",
       "kingsSlam": "Königsschlag",
@@ -1780,25 +1780,25 @@
       "kingsRoarDesc": "Entfernt Gift und Feuer alle 3 Angriffe"
     },
     "bandit_leader": {
-      "name": "Baerenfalle",
-      "bearTrap": "Baerenfalle",
-      "bearTrapDesc": "Spieler Angriffsgeschw. -30% fuer 2 Runden",
+      "name": "Bärenfalle",
+      "bearTrap": "Bärenfalle",
+      "bearTrapDesc": "Spieler Angriffsgeschw. -30% für 2 Runden",
       "bearTrapDescUberUber": "Spieler Angriffsgeschw. -30% (dauerhaft ab Kampfbeginn)",
-      "nightAmbush": "Nachtueberfall",
-      "nightAmbushDesc": "Naechster Angriffsschaden +40%",
+      "nightAmbush": "Nachtüberfall",
+      "nightAmbushDesc": "Nächster Angriffsschaden +40%",
       "shadowBind": "Schattenfesseln",
       "shadowBindDesc": "Heilung dauerhaft um 50% reduziert (unter 50% HP)",
       "shadowBindDescUberUber": "Heilung um 25% reduziert (dauerhaft ab Kampfbeginn)",
       "twinStrike": "Doppelschlagklinge",
-      "twinStrikeDesc": "Loest bei jedem Angriff einen Folgehieb mit gleichem Schaden wie der Hauptangriff aus",
+      "twinStrikeDesc": "Löst bei jedem Angriff einen Folgehieb mit gleichem Schaden wie der Hauptangriff aus",
       "shadowGarrote": "Schattengarotte",
-      "shadowGarroteDesc": "Friert den Spieler alle 10 Angriffe fuer 0,5 Sekunden ein"
+      "shadowGarroteDesc": "Friert den Spieler alle 10 Angriffe für 0,5 Sekunden ein"
     },
     "vampire": {
       "name": "Blutfest",
       "bloodFeast": "Blutfest",
-      "bloodFeastDesc": "150% des naechsten Angriffsschadens heilen",
-      "nightFeast": "Naechtliches Festmahl",
+      "bloodFeastDesc": "150% des nächsten Angriffsschadens heilen",
+      "nightFeast": "Nächtliches Festmahl",
       "nightFeastDesc": "Vergiftet Spieler bei Kampfbeginn",
       "crimsonPact": "Purpurpakt",
       "crimsonPactDesc": "HP basierend auf Schaden heilen (unter 50% HP)"
@@ -1806,11 +1806,11 @@
     "kraken": {
       "name": "Tsunami",
       "tsunami": "Tsunami",
-      "tsunamiDesc": "Naechster Angriff +50% Schaden, Spieler nimmt +30% Schaden fuer 1 Runde",
+      "tsunamiDesc": "Nächster Angriff +50% Schaden, Spieler nimmt +30% Schaden für 1 Runde",
       "deepEmbrace": "Abgrundumarmung",
-      "deepEmbraceDesc": "-20% Angriffsgeschw., -30% Heilung fuer 3 Runden (unter 50% HP)",
+      "deepEmbraceDesc": "-20% Angriffsgeschw., -30% Heilung für 3 Runden (unter 50% HP)",
       "abyssalEbb": "Abyssale Ebbe",
-      "abyssalEbbDesc": "-15% Angriffsgeschw. fuer 2 Runden",
+      "abyssalEbbDesc": "-15% Angriffsgeschw. für 2 Runden",
       "tentacleFlurry": "Tentakelhagel",
       "tentacleFlurryDesc": "Jeder 10. Angriff wird zu 10 Treffern",
       "frostAura": "Abyssale Frostaura",
@@ -1823,7 +1823,7 @@
     "demon_lord": {
       "name": "Todeshand",
       "deathHand": "Todeshand",
-      "deathHandDesc": "-30% Heilung fuer 2 Runden, vergiftet Spieler",
+      "deathHandDesc": "-30% Heilung für 2 Runden, vergiftet Spieler",
       "blackFlame": "Schwarzflammenmal",
       "blackFlameDesc": "+10% Schadensreduzierung permanent (unter 50% HP)",
       "crown": "Krone des Ruins",
@@ -1832,7 +1832,7 @@
     "true_final_boss": {
       "name": "Ende",
       "end": "Ende",
-      "endDesc": "Setzt Spieler-Aktionsanzeige zurueck",
+      "endDesc": "Setzt Spieler-Aktionsanzeige zurück",
       "convergence": "Weltenkonvergenz",
       "timeSever": "Zeittrennung"
     }
@@ -1863,7 +1863,7 @@
     "uberUnlocked": "Uber-Version von {{enemy}} freigeschaltet!",
     "uberTicket": "Uber-Ticket erhalten! ({{count}})",
     "respecToken": "Neuverteilungsgegenstand erhalten! ({{count}})",
-    "bossSkillActivated": "{{enemy}} loest {{skill}} aus!",
+    "bossSkillActivated": "{{enemy}} löst {{skill}} aus!",
     "warlordEnrage": "[Kriegsherr] Aktiviert! Angriffsgeschw.+20%, HP bei Treffer+300",
     "chillApplied": "{{enemy}} ist unterkühlt! Angriffsgeschwindigkeit verringert!",
     "chillAppliedPlayer": "Spieler ist verlangsamt! Angriffstempo sinkt!",
@@ -1876,11 +1876,11 @@
     "retaliateDamage": "Vergeltung! {{damage}} Schaden an {{enemy}}!",
     "enemyHealRegen": "{{enemy}} regeneriert {{amount}} HP!",
     "enemyHealOnHit": "{{enemy}} absorbiert {{amount}} HP!",
-    "igniteApplied": "{{enemy}} entzuendet! ({{damage}} Schaden x {{duration}}s)",
-    "igniteSpread": "Entzuendung breitet sich auf {{enemy}} aus! ({{damage}} Schaden x {{duration}}s)",
-    "igniteDamage": "Entzuendungsschaden! {{enemy}} nimmt {{damage}} Schaden!{{remaining}}{{ended}}",
+    "igniteApplied": "{{enemy}} entzündet! ({{damage}} Schaden x {{duration}}s)",
+    "igniteSpread": "Entzündung breitet sich auf {{enemy}} aus! ({{damage}} Schaden x {{duration}}s)",
+    "igniteDamage": "Entzündungsschaden! {{enemy}} nimmt {{damage}} Schaden!{{remaining}}{{ended}}",
     "igniteRemaining": " ({{seconds}}s verbleibend)",
-    "igniteEnded": " (Entzuendung beendet)",
+    "igniteEnded": " (Entzündung beendet)",
     "hpRegen": "HP-Regen! {{amount}} HP wiederhergestellt!",
     "kingSlamHit": "[Königsschlag] ausgelöst! {{damage}} Schaden an {{enemy}}!",
     "twinBladeHit": "[Zwillingsklinge] Folgeangriff! {{damage}} Schaden an {{enemy}}!",
@@ -1891,15 +1891,15 @@
   "passiveTree": {
     "title": "Passiver Baum",
     "skillPoints": "SP: {{count}}",
-    "zoomHint": "Pinch zum Zoomen / Doppeltippen zum Zuruecksetzen",
+    "zoomHint": "Pinch zum Zoomen / Doppeltippen zum Zurücksetzen",
     "unlocked": "Freigeschaltet",
     "unlockButton": "Freischalten (SP: {{count}})",
     "noSp": "Nicht genug SP",
     "locked": "Voraussetzung erforderlich",
-    "placeholder": "Tippe auf einen Knoten fuer Details",
+    "placeholder": "Tippe auf einen Knoten für Details",
     "respecButton": "Neuverteilen (Kosten: {{count}})",
-    "noRespecToken": "Keine Neuverteilungsgegenstaende",
-    "cannotRespec": "Andere Knoten sind davon abhaengig",
+    "noRespecToken": "Keine Neuverteilungsgegenstände",
+    "cannotRespec": "Andere Knoten sind davon abhängig",
     "startHere": "START"
   },
   "passiveNodes": {
@@ -1916,11 +1916,11 @@
       "description": "Giftchance +3%"
     },
     "poison_3": {
-      "name": "HP erhoehen",
+      "name": "HP erhöhen",
       "description": "HP +20"
     },
     "poison_4": {
-      "name": "Verteidigung erhoehen",
+      "name": "Verteidigung erhöhen",
       "description": "DEF +3"
     },
     "poison_5": {
@@ -1928,15 +1928,15 @@
       "description": "Giftchance +3%"
     },
     "poison_6": {
-      "name": "HP erhoehen II",
+      "name": "HP erhöhen II",
       "description": "HP +25"
     },
     "poison_7": {
-      "name": "Verteidigung erhoehen II",
+      "name": "Verteidigung erhöhen II",
       "description": "DEF +4"
     },
     "poison_key1": {
-      "name": "Gifttraeger",
+      "name": "Giftträger",
       "description": "Giftchance +10%, Giftschaden +20%, Giftlebensraub +30%"
     },
     "poison_8": {
@@ -1944,7 +1944,7 @@
       "description": "Giftchance +5%"
     },
     "poison_9": {
-      "name": "Giftschaden erhoehen I",
+      "name": "Giftschaden erhöhen I",
       "description": "Giftschaden +15%"
     },
     "poison_10": {
@@ -1956,11 +1956,11 @@
       "description": "Giftchance +5%"
     },
     "poison_12": {
-      "name": "Giftschaden erhoehen II",
+      "name": "Giftschaden erhöhen II",
       "description": "Giftschaden +20%"
     },
     "poison_13": {
-      "name": "Gift-Stapelverstaerkung",
+      "name": "Gift-Stapelverstärkung",
       "description": "Gift kann bis zu 2-mal stapeln"
     },
     "poison_a1": {
@@ -1984,7 +1984,7 @@
       "description": "Giftchance +8%"
     },
     "poison_15": {
-      "name": "Toedliches Gift",
+      "name": "Tödliches Gift",
       "description": "Giftschaden +30%"
     },
     "poison_16": {
@@ -2000,7 +2000,7 @@
       "description": "Giftchance +15%, Giftschaden 20% mehr"
     },
     "poison_final2": {
-      "name": "Reines Gift [Schluesselstein]",
+      "name": "Reines Gift [Schlüsselstein]",
       "description": "Kein direkter Schaden mehr. Giftschaden 50% mehr"
     },
     "crit_1": {
@@ -2012,11 +2012,11 @@
       "description": "ATK +10, HP +10, Crit Rate +3%"
     },
     "crit_3": {
-      "name": "Angriff erhoehen",
+      "name": "Angriff erhöhen",
       "description": "ATK +5"
     },
     "crit_4": {
-      "name": "Toedlicher Schlag I",
+      "name": "Tödlicher Schlag I",
       "description": "Crit DMG +30%"
     },
     "crit_5": {
@@ -2024,11 +2024,11 @@
       "description": "ATK +10, HP +10, Crit Rate +3%"
     },
     "crit_6": {
-      "name": "Angriff erhoehen II",
+      "name": "Angriff erhöhen II",
       "description": "ATK +8"
     },
     "crit_7": {
-      "name": "Toedlicher Schlag II",
+      "name": "Tödlicher Schlag II",
       "description": "Crit DMG +50%"
     },
     "crit_key1": {
@@ -2040,11 +2040,11 @@
       "description": "Crit Rate +5%"
     },
     "crit_9": {
-      "name": "Angriffsverstaerkung",
-      "description": "ATK +15% erhoehen"
+      "name": "Angriffsverstärkung",
+      "description": "ATK +15% erhöhen"
     },
     "crit_10": {
-      "name": "Toedlicher Schlag III",
+      "name": "Tödlicher Schlag III",
       "description": "Crit DMG +60%"
     },
     "crit_11": {
@@ -2052,15 +2052,15 @@
       "description": "Crit Rate +5%"
     },
     "crit_12": {
-      "name": "Angriff erhoehen III",
+      "name": "Angriff erhöhen III",
       "description": "ATK +10"
     },
     "crit_13": {
-      "name": "Toedlicher Schlag IV",
+      "name": "Tödlicher Schlag IV",
       "description": "Crit DMG +80%"
     },
     "crit_a1": {
-      "name": "Praezisionsschlag",
+      "name": "Präzisionsschlag",
       "description": "Crit Rate +8%"
     },
     "crit_a2": {
@@ -2084,7 +2084,7 @@
       "description": "HP bei Crit +80"
     },
     "crit_16": {
-      "name": "Toedlicher Schlag V",
+      "name": "Tödlicher Schlag V",
       "description": "Crit DMG +130%"
     },
     "crit_17": {
@@ -2092,7 +2092,7 @@
       "description": "HP bei Crit +100"
     },
     "crit_final1": {
-      "name": "Toedliche Klinge",
+      "name": "Tödliche Klinge",
       "description": "Crit Rate +10%, Crit DMG +200%"
     },
     "crit_final2": {
@@ -2240,7 +2240,7 @@
       "description": "HP bei Treffer +10"
     },
     "vamp_3": {
-      "name": "Angriff erhoehen",
+      "name": "Angriff erhöhen",
       "description": "ATK +5"
     },
     "vamp_4": {
@@ -2252,7 +2252,7 @@
       "description": "HP bei Treffer +10"
     },
     "vamp_6": {
-      "name": "Angriff erhoehen II",
+      "name": "Angriff erhöhen II",
       "description": "ATK +8"
     },
     "vamp_7": {
@@ -2268,8 +2268,8 @@
       "description": "HP bei Treffer +10"
     },
     "vamp_9": {
-      "name": "Angriffsverstaerkung",
-      "description": "ATK +15% erhoehen"
+      "name": "Angriffsverstärkung",
+      "description": "ATK +15% erhöhen"
     },
     "vamp_10": {
       "name": "Anhaltende Erholung",
@@ -2280,7 +2280,7 @@
       "description": "HP bei Treffer +10"
     },
     "vamp_12": {
-      "name": "Angriff erhoehen III",
+      "name": "Angriff erhöhen III",
       "description": "ATK +10"
     },
     "vamp_13": {
@@ -2289,10 +2289,10 @@
     },
     "vamp_a1": {
       "name": "Ansturm",
-      "description": "ATK +20% erhoehen"
+      "description": "ATK +20% erhöhen"
     },
     "vamp_a2": {
-      "name": "Faeuste der Zerstoerung",
+      "name": "Fäuste der Zerstörung",
       "description": "ATK +15"
     },
     "vamp_b1": {
@@ -2308,8 +2308,8 @@
       "description": "HP bei Treffer +10"
     },
     "vamp_15": {
-      "name": "Angriffsverstaerkung II",
-      "description": "ATK +20% erhoehen"
+      "name": "Angriffsverstärkung II",
+      "description": "ATK +20% erhöhen"
     },
     "vamp_16": {
       "name": "Lebensraub VI",
@@ -2332,27 +2332,27 @@
       "description": "HP +30, HP-Regen pro Runde +5"
     },
     "regen_2": {
-      "name": "Vitalitaet I",
+      "name": "Vitalität I",
       "description": "HP-Regen pro Runde +5"
     },
     "regen_3": {
-      "name": "HP erhoehen",
+      "name": "HP erhöhen",
       "description": "HP +25"
     },
     "regen_4": {
-      "name": "Erholung erhoehen",
+      "name": "Erholung erhöhen",
       "description": "HP-Regen pro Runde +8"
     },
     "regen_5": {
-      "name": "Vitalitaet II",
-      "description": "HP +20% erhoehen"
+      "name": "Vitalität II",
+      "description": "HP +20% erhöhen"
     },
     "regen_6": {
-      "name": "HP erhoehen II",
+      "name": "HP erhöhen II",
       "description": "HP +30"
     },
     "regen_7": {
-      "name": "Erholung erhoehen II",
+      "name": "Erholung erhöhen II",
       "description": "HP-Regen pro Runde +10"
     },
     "regen_key1": {
@@ -2360,35 +2360,35 @@
       "description": "HP-Regen pro Runde 2%"
     },
     "regen_8": {
-      "name": "Vitalitaet III",
-      "description": "HP +25% erhoehen"
+      "name": "Vitalität III",
+      "description": "HP +25% erhöhen"
     },
     "regen_9": {
-      "name": "HP-Verstaerkung",
+      "name": "HP-Verstärkung",
       "description": "HP +40"
     },
     "regen_10": {
-      "name": "Erholungsverstaerkung",
+      "name": "Erholungsverstärkung",
       "description": "HP-Regen pro Runde +12"
     },
     "regen_11": {
-      "name": "Vitalitaet IV",
-      "description": "HP +20% erhoehen"
+      "name": "Vitalität IV",
+      "description": "HP +20% erhöhen"
     },
     "regen_12": {
-      "name": "HP erhoehen III",
+      "name": "HP erhöhen III",
       "description": "HP +50"
     },
     "regen_13": {
-      "name": "Erholung erhoehen III",
+      "name": "Erholung erhöhen III",
       "description": "HP-Regen pro Runde +15"
     },
     "regen_a1": {
-      "name": "Widerstandsfaehiges Leben",
-      "description": "HP +30% erhoehen"
+      "name": "Widerstandsfähiges Leben",
+      "description": "HP +30% erhöhen"
     },
     "regen_a2": {
-      "name": "Unnachgiebiger Koerper",
+      "name": "Unnachgiebiger Körper",
       "description": "HP +70"
     },
     "regen_b1": {
@@ -2400,15 +2400,15 @@
       "description": "HP-Regen pro Runde +25"
     },
     "regen_14": {
-      "name": "Vitalitaet V",
-      "description": "HP +25% erhoehen"
+      "name": "Vitalität V",
+      "description": "HP +25% erhöhen"
     },
     "regen_15": {
-      "name": "HP erhoehen IV",
+      "name": "HP erhöhen IV",
       "description": "HP +60"
     },
     "regen_16": {
-      "name": "Erholung erhoehen IV",
+      "name": "Erholung erhöhen IV",
       "description": "HP-Regen pro Runde +20"
     },
     "regen_17": {
@@ -2428,7 +2428,7 @@
       "description": "ATK +3, Angriffsgeschw. +5%"
     },
     "speed_2": {
-      "name": "Agilitaet I",
+      "name": "Agilität I",
       "description": "Angriffsgeschw. +5%"
     },
     "speed_3": {
@@ -2440,15 +2440,15 @@
       "description": "Angriffsgeschw. +5%"
     },
     "speed_5": {
-      "name": "Agilitaet II",
+      "name": "Agilität II",
       "description": "Angriffsgeschw. +5%"
     },
     "speed_6": {
-      "name": "Angriff erhoehen",
+      "name": "Angriff erhöhen",
       "description": "ATK +8"
     },
     "speed_7": {
-      "name": "Agilitaet III",
+      "name": "Agilität III",
       "description": "Angriffsgeschw. +8%"
     },
     "speed_key1": {
@@ -2456,11 +2456,11 @@
       "description": "Angriffsgeschw. +15%"
     },
     "speed_8": {
-      "name": "Agilitaet IV",
+      "name": "Agilität IV",
       "description": "Angriffsgeschw. +8%"
     },
     "speed_9": {
-      "name": "Schnelle Schlaege",
+      "name": "Schnelle Schläge",
       "description": "ATK +10, Angriffsgeschw. +5%"
     },
     "speed_10": {
@@ -2468,12 +2468,12 @@
       "description": "Angriffsgeschw. +10%"
     },
     "speed_11": {
-      "name": "Agilitaet V",
+      "name": "Agilität V",
       "description": "Angriffsgeschw. +10%"
     },
     "speed_12": {
-      "name": "Angriffsverstaerkung",
-      "description": "ATK +15% erhoehen"
+      "name": "Angriffsverstärkung",
+      "description": "ATK +15% erhöhen"
     },
     "speed_13": {
       "name": "Beschleunigung",
@@ -2484,64 +2484,64 @@
       "description": "Angriffsgeschw. 15% mehr"
     },
     "speed_final2": {
-      "name": "Goettergeschwindigkeit",
+      "name": "Göttergeschwindigkeit",
       "description": "Angriffsgeschw. 20% mehr, ATK 10% mehr"
     },
     "ignite_1": {
-      "name": "Entzuendungs-Grundlagen",
-      "description": "HP +20, Entzuendungschance +6%, Entzuendungsschaden +10%"
+      "name": "Entzündungs-Grundlagen",
+      "description": "HP +20, Entzündungschance +6%, Entzündungsschaden +10%"
     },
     "ignite_2": {
-      "name": "Entzuendung erhoehen I",
-      "description": "Entzuendungschance +6%, Entzuendungsschaden +10%"
+      "name": "Entzündung erhöhen I",
+      "description": "Entzündungschance +6%, Entzündungsschaden +10%"
     },
     "ignite_3": {
       "name": "HP & Verteidigung I",
-      "description": "HP +25, DEF +10, Entzuendungschance +6%"
+      "description": "HP +25, DEF +10, Entzündungschance +6%"
     },
     "ignite_4": {
-      "name": "Vitalitaetsverstaerkung I",
-      "description": "DEF +10, HP +10% erhoehen, Entzuendungschance +6%"
+      "name": "Vitalitätsverstärkung I",
+      "description": "DEF +10, HP +10% erhöhen, Entzündungschance +6%"
     },
     "ignite_5": {
-      "name": "Entzuendung erhoehen II",
-      "description": "Entzuendungschance +6%, Entzuendungsschaden +15%"
+      "name": "Entzündung erhöhen II",
+      "description": "Entzündungschance +6%, Entzündungsschaden +15%"
     },
     "ignite_6": {
-      "name": "Entzuendungsdauer I",
-      "description": "Entzuendungschance +6%, Entzuendungsdauer +15%"
+      "name": "Entzündungsdauer I",
+      "description": "Entzündungschance +6%, Entzündungsdauer +15%"
     },
     "ignite_7": {
-      "name": "Widerstandsverstaerkung",
-      "description": "DEF +20, DEF +15% erhoehen, Entzuendungschance +6%"
+      "name": "Widerstandsverstärkung",
+      "description": "DEF +20, DEF +15% erhöhen, Entzündungschance +6%"
     },
     "ignite_key1": {
       "name": "Langsame Flamme",
-      "description": "[Schluesselstein] Entzuendungschance +6%, Schadensreduzierung +10% bei AG < 0.8"
+      "description": "[Schlüsselstein] Entzündungschance +6%, Schadensreduzierung +10% bei AG < 0.8"
     },
     "ignite_8": {
-      "name": "Entzuendung erhoehen III",
-      "description": "Entzuendungschance +6%, Entzuendungsschaden +20%"
+      "name": "Entzündung erhöhen III",
+      "description": "Entzündungschance +6%, Entzündungsschaden +20%"
     },
     "ignite_9": {
-      "name": "Entzuendungsdauer II",
-      "description": "Entzuendungschance +6%, Entzuendungsdauer +20%"
+      "name": "Entzündungsdauer II",
+      "description": "Entzündungschance +6%, Entzündungsdauer +20%"
     },
     "ignite_10": {
-      "name": "Leben erhoehen",
-      "description": "HP +30, HP +15% erhoehen, Entzuendungschance +6%"
+      "name": "Leben erhöhen",
+      "description": "HP +30, HP +15% erhöhen, Entzündungschance +6%"
     },
     "ignite_11": {
-      "name": "Gefestigter Koerper",
-      "description": "DEF +30, DEF +20% erhoehen, Entzuendungschance +6%"
+      "name": "Gefestigter Körper",
+      "description": "DEF +30, DEF +20% erhöhen, Entzündungschance +6%"
     },
     "ignite_final1": {
       "name": "Flammengipfel",
-      "description": "Entzuendungschance +6%, Entzuendungsschaden 25% mehr, HP +10% erhoehen"
+      "description": "Entzündungschance +6%, Entzündungsschaden 25% mehr, HP +10% erhöhen"
     },
     "ignite_final2": {
       "name": "Ausbreitende Flammen",
-      "description": "[Schluesselstein] Entzuendungschance +6%, Flammenausbreitung - Wenn entzuendeter Feind stirbt, uebertraegt Entzuendung auf naechsten Feind. DEF +10% erhoehen"
+      "description": "[Schlüsselstein] Entzündungschance +6%, Flammenausbreitung - Wenn entzündeter Feind stirbt, überträgt Entzündung auf nächsten Feind. DEF +10% erhöhen"
     },
     "warrior_start": {
       "name": "Kriegerhaltung",
@@ -3497,15 +3497,15 @@
     "loadError": "Rangliste konnte nicht geladen werden",
     "retry": "Wiederholen",
     "noData": "Keine Ranglistendaten",
-    "cacheInfo": "Aktualisierung in {{minutes}}min verfuegbar",
+    "cacheInfo": "Aktualisierung in {{minutes}}min verfügbar",
     "season": "Season {{season}}"
   },
   "modDescriptions": {
     "poisonChance": "Giftchance +{{value}}%",
-    "igniteChance": "Entzuendungschance +{{value}}%",
-    "igniteDuration": "Entzuendungsdauer +{{value}}%",
-    "igniteTickSpeed": "Entzuendungs-Tick-Geschw. +{{value}}%",
-    "igniteDamage": "Entzuendungsschaden +{{value}}%",
+    "igniteChance": "Entzündungschance +{{value}}%",
+    "igniteDuration": "Entzündungsdauer +{{value}}%",
+    "igniteTickSpeed": "Entzündungs-Tick-Geschw. +{{value}}%",
+    "igniteDamage": "Entzündungsschaden +{{value}}%",
     "criticalChance": "Crit Rate +{{value}}%",
     "criticalDamage": "Crit DMG +{{value}}%",
     "damageDefer": "Schadensverzögerung {{value}}%",
@@ -3539,14 +3539,14 @@
   },
   "boost": {
     "dropRate": {
-      "title": "Droprate ERHOEHT",
-      "description": "1,5x Droprate fuer 30 Min, +1% Einzigartig",
+      "title": "Droprate ERHÖHT",
+      "description": "1,5x Droprate für 30 Min, +1% Einzigartig",
       "longDescription": "+1% Einzigartige Droprate\n1,5x Gegenstand-Dropchance"
     },
     "tierBoost": {
-      "title": "Hoeherer Tier ERHOEHT",
-      "description": "Hoehere Qualitaets-Droprate ERHOEHT fuer 30 Min",
-      "longDescription": "Hoehere T1-T3 Qualitaets-Tier-Droprate\nNormalerweise sind T4-5 am haeufigsten"
+      "title": "Höherer Tier ERHÖHT",
+      "description": "Höhere Qualitäts-Droprate ERHÖHT für 30 Min",
+      "longDescription": "Höhere T1-T3 Qualitäts-Tier-Droprate\nNormalerweise sind T4-5 am häufigsten"
     },
     "active": "Aktiv",
     "activeRemaining": "Aktiv: {{minutes}} Min verbleibend",
@@ -3555,7 +3555,7 @@
     "close": "Schliessen",
     "error": "Fehler",
     "adLoadFailed": "Werbung konnte nicht geladen werden",
-    "adShowFailed": "Werbung konnte nicht angezeigt werden. Bitte spaeter erneut versuchen.",
+    "adShowFailed": "Werbung konnte nicht angezeigt werden. Bitte später erneut versuchen.",
     "adNotReady": "Werbung nicht bereit. Bitte warten und erneut versuchen.",
     "duration": "Dauer: 30 Min",
     "loadingAd": "Lade Werbung...",
@@ -3567,8 +3567,8 @@
   },
   "modFilter": {
     "tooltipTitle": "MOD-Filter verwenden",
-    "tooltipDescription": "Filtere unerwuenschte Gegenstaende automatisch heraus. Passe die Filtereinstellungen an, um nur die Beute zu behalten, die du brauchst.",
-    "goToSettings": "Einstellungen oeffnen"
+    "tooltipDescription": "Filtere unerwünschte Gegenstände automatisch heraus. Passe die Filtereinstellungen an, um nur die Beute zu behalten, die du brauchst.",
+    "goToSettings": "Einstellungen öffnen"
   },
   "endContentTooltip": {
     "title": "Endgame-Inhalte freigeschaltet!",
@@ -3577,7 +3577,7 @@
   },
   "uberTreeTooltip": {
     "title": "Uber-Passivbaum freigeschaltet!",
-    "description": "Besiege Uber-Bosse, um Punkte zu sammeln und deinen maechtigen Uber-Passivbaum auszubauen"
+    "description": "Besiege Uber-Bosse, um Punkte zu sammeln und deinen mächtigen Uber-Passivbaum auszubauen"
   },
   "dimensionalCorridorTooltip": {
     "title": "Dimensionskorridor freigeschaltet!",
@@ -3588,27 +3588,27 @@
     "title": "Shop",
     "subtitle": "Premium-Funktionen kaufen",
     "purchased": "Gekauft",
-    "restore": "Kaeufe wiederherstellen",
-    "noProducts": "Keine Produkte verfuegbar",
+    "restore": "Käufe wiederherstellen",
+    "noProducts": "Keine Produkte verfügbar",
     "alreadyPurchased": "Bereits gekauft",
     "alreadyPurchasedMessage": "Du besitzt diesen Gegenstand bereits",
-    "notAvailable": "Nicht verfuegbar",
-    "notAvailableMessage": "Dieser Gegenstand ist derzeit nicht verfuegbar",
+    "notAvailable": "Nicht verfügbar",
+    "notAvailableMessage": "Dieser Gegenstand ist derzeit nicht verfügbar",
     "purchaseSuccess": "Kauf abgeschlossen",
     "purchaseSuccessMessage": "Dein Kauf war erfolgreich",
     "purchaseFailed": "Kauf fehlgeschlagen",
     "purchaseFailedMessage": "Kauf konnte nicht abgeschlossen werden",
     "restoreSuccess": "Wiederherstellung abgeschlossen",
-    "restoreSuccessMessage": "Kaeufe erfolgreich wiederhergestellt",
+    "restoreSuccessMessage": "Käufe erfolgreich wiederhergestellt",
     "restoreFailed": "Wiederherstellung fehlgeschlagen",
-    "restoreFailedMessage": "Kaeufe konnten nicht wiederhergestellt werden",
+    "restoreFailedMessage": "Käufe konnten nicht wiederhergestellt werden",
     "inventoryExpansion": {
       "name": "Inventar-Erweiterung",
-      "description": "Erhoeht Inventarlimit von {{from}} auf {{to}}"
+      "description": "Erhöht Inventarlimit von {{from}} auf {{to}}"
     },
     "storageExpansion": {
       "name": "Lager-Erweiterung",
-      "description": "Erhoeht Lagerlimit von {{from}} auf {{to}}"
+      "description": "Erhöht Lagerlimit von {{from}} auf {{to}}"
     },
     "petExpansion": {
       "name": "Haustier-Plätze",
@@ -3616,15 +3616,15 @@
     },
     "tierFilter": {
       "name": "Niedriger-Tier-Filter",
-      "description": "Verhindert Drops von Gegenstaenden niedriger Qualitaet (T8-T10)"
+      "description": "Verhindert Drops von Gegenständen niedriger Qualität (T8-T10)"
     },
     "permanentBoost": {
       "name": "Permanenter Boost",
-      "description": "Einzigartige Droprate +1%, Gegenstand-Droprate x1,5 und erhoehte Hoch-Tier (T1-T3) Dropraten sind immer aktiv"
+      "description": "Einzigartige Droprate +1%, Gegenstand-Droprate x1,5 und erhöhte Hoch-Tier (T1-T3) Dropraten sind immer aktiv"
     },
     "characterSlots": {
       "name": "Charakter-Slots",
-      "description": "Ermoeglicht Erstellung von bis zu 5 Charakteren"
+      "description": "Ermöglicht Erstellung von bis zu 5 Charakteren"
     },
     "speedBoost": {
       "name": "Geschwindigkeits-Boost",
@@ -3683,7 +3683,7 @@
     },
     "uber_uber_bandit_leader": {
       "name": "Wahrer Schattenbezwinger",
-      "description": "UberUber-Banditenfuehrer besiegen"
+      "description": "UberUber-Banditenführer besiegen"
     },
     "uber_uber_kraken": {
       "name": "Wahrer Abgrundbezwinger",

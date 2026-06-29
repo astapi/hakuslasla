@@ -263,7 +263,20 @@ const createExtendedInitialState = (
 };
 
 // 拡張アクション型
-type ExtendedBattleAction = BattleAction | { type: 'RESET_DUNGEON'; playerMaxHp: number; playerMaxShield: number } | { type: 'CLEANSE_ENEMY_POISON_IGNITE' };
+type ExtendedBattleAction =
+  | BattleAction
+  | { type: 'RESET_DUNGEON'; playerMaxHp: number; playerMaxShield: number }
+  | { type: 'CLEANSE_ENEMY_POISON_IGNITE' }
+  | {
+      type: 'SET_SCREENSHOT_BATTLE_STATE';
+      enemyName: string;
+      playerMaxHp: number;
+      playerCurrentHp: number;
+      enemyCurrentHp: number;
+      playerGauge: number;
+      enemyGauge: number;
+      entries: Omit<BattleState['battleLog'][number], 'id'>[];
+    };
 
 // リデューサー
 const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction): ExtendedBattleState => {
@@ -273,6 +286,26 @@ const battleReducer = (state: ExtendedBattleState, action: ExtendedBattleAction)
         ...state,
         enemyPoison: [],
         enemyIgnite: null,
+      };
+
+    case 'SET_SCREENSHOT_BATTLE_STATE':
+      return {
+        ...state,
+        playerMaxHp: action.playerMaxHp,
+        playerCurrentHp: Math.max(1, Math.min(action.playerMaxHp, action.playerCurrentHp)),
+        enemy: state.enemy
+          ? {
+              ...state.enemy,
+              name: action.enemyName,
+              currentHp: Math.max(1, Math.min(state.enemy.maxHp, action.enemyCurrentHp)),
+            }
+          : state.enemy,
+        playerGauge: action.playerGauge,
+        enemyGauge: action.enemyGauge,
+        battleLog: action.entries.map((entry) => ({
+          id: logIdCounter++,
+          ...entry,
+        })),
       };
 
     case 'RESET_DUNGEON':
@@ -746,8 +779,12 @@ const filterDroppedItems = (items: Item[], filter: DropFilterSettings): Item[] =
   });
 };
 
-export const useBattle = (dungeonId: string, options?: { startFloor?: number }) => {
+export const useBattle = (dungeonId: string, options?: { startFloor?: number; prewarmActions?: number; staticBattle?: boolean; screenshotBattle?: boolean; screenshotLanguage?: string }) => {
   const startFloor = options?.startFloor ?? 1;
+  const prewarmActions = Math.max(0, options?.prewarmActions ?? 0);
+  const staticBattle = options?.staticBattle === true;
+  const screenshotBattle = options?.screenshotBattle === true;
+  const screenshotLanguage = options?.screenshotLanguage;
   const { getTotalStats, gainExp, addToInventory, getInventorySpace, equipment, unlockedSkills, unlockedUberSkills, characterType, characterId, pets, activePetInstanceId, petLevels, addPet } = usePlayerStore();
   const stats = getTotalStats();
   const { getDropRateMultiplier, isTierBoosted, checkExpiredBoosts } = useAdBoostStore();
@@ -857,6 +894,8 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
   const isAutoRunningRef = useRef(false);
   const lastGaugeUpdateAtRef = useRef(0);
   const battleEngineRef = useRef<ReturnType<typeof createBattleEngine>['engine'] | null>(null);
+  const hasPrewarmedBattleRef = useRef(false);
+  const screenshotStateKeyRef = useRef('');
   // 全周回累計のペットドロップ（petId配列）。リザルト画面表示用
   const petsGainedRef = useRef<string[]>([]);
   // イグナイト伝染用: 敵撃破時の発火状態を次敵へ引き継ぐ
@@ -891,6 +930,52 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
       resumeBattleBgm();
     }
   }, [isPaused, state.phase]);
+
+  const applyScreenshotBattleState = useCallback((enemy: BattleEnemy) => {
+    const fixedLanguage = screenshotLanguage && screenshotLanguage !== 'system' ? screenshotLanguage : undefined;
+    const fakeT = (key: string, options: Record<string, unknown> = {}): string =>
+      String(i18n.t(key, fixedLanguage ? { ...options, lng: fixedLanguage } : options));
+    const enemyName = fakeT(`monsters.${enemy.id}.name`, { defaultValue: enemy.name });
+
+    dispatch({
+      type: 'SET_SCREENSHOT_BATTLE_STATE',
+      enemyName,
+      playerMaxHp: 5279,
+      playerCurrentHp: 5279,
+      enemyCurrentHp: Math.floor(enemy.maxHp * 0.62),
+      playerGauge: 64,
+      enemyGauge: 38,
+      entries: [
+        { message: fakeT('battleLog.enemyAppeared', { enemy: enemyName }), type: 'info' },
+        {
+          message: fakeT('battleLog.bossSkillActivated', {
+            enemy: enemyName,
+            skill: fakeT('bossSkills.goblin_king.shield'),
+          }),
+          type: 'info',
+        },
+        {
+          message: fakeT('battleLog.bossSkillActivated', {
+            enemy: enemyName,
+            skill: fakeT('bossSkills.goblin_king.warlord'),
+          }),
+          type: 'info',
+        },
+        { message: fakeT('battleLog.playerAttack', { enemy: enemyName, damage: 1184 }), type: 'player_attack' },
+        { message: fakeT('battleLog.enemyAttack', { enemy: enemyName, damage: 312 }), type: 'enemy_attack' },
+        { message: fakeT('battleLog.criticalHit', { enemy: enemyName, damage: 2210 }), type: 'critical' },
+        { message: fakeT('battleLog.blocked', { enemy: enemyName, defaultValue: 'ブロック！' }), type: 'block' },
+        { message: fakeT('battleLog.playerAttack', { enemy: enemyName, damage: 1268 }), type: 'player_attack' },
+        { message: fakeT('battleLog.enemyAttack', { enemy: enemyName, damage: 287 }), type: 'enemy_attack' },
+        { message: fakeT('battleLog.kingSlamHit', { enemy: enemyName, damage: 1836 }), type: 'player_attack' },
+        { message: fakeT('battleLog.blocked', { enemy: enemyName, defaultValue: 'ブロック！' }), type: 'block' },
+        { message: fakeT('battleLog.criticalHit', { enemy: enemyName, damage: 2384 }), type: 'critical' },
+        { message: fakeT('battleLog.enemyAttack', { enemy: enemyName, damage: 329 }), type: 'enemy_attack' },
+        { message: fakeT('battleLog.playerAttack', { enemy: enemyName, damage: 1312 }), type: 'player_attack' },
+        { message: fakeT('battleLog.enemyAttack', { enemy: enemyName, damage: 301 }), type: 'enemy_attack' },
+      ],
+    });
+  }, [screenshotLanguage]);
 
   const retreat = useCallback(async () => {
     isAutoRunningRef.current = false;
@@ -973,10 +1058,10 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     dispatch({ type: 'START_BATTLE', enemy: createBattleEnemy(enemy, dungeonId) });
 
     // BGM再生開始
-    if (!isAutoRunningRef.current) {
+    if (!isAutoRunningRef.current && !staticBattle) {
       playBattleBgm();
     }
-  }, [getEnemyForFloor, dungeonId, startFloor]);
+  }, [getEnemyForFloor, dungeonId, startFloor, staticBattle]);
 
 
   const handleDimensionalRushBossDefeat = useCallback((enemyId: string, enemyName: string) => {
@@ -1430,10 +1515,63 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     (engine as any).__key = key;
     battleEngineRef.current = engine;
     isTransitioningRef.current = false;
-    if (events.length > 0) {
+    if (events.length > 0 && !screenshotBattle) {
       handleBattleEventsRef.current(events);
     }
-  }, [state.enemy, state.currentFloor, state.phase, state.playerMaxHp, state.playerCurrentHp, dungeonId, getCombinedModEffects, getTotalStats]);
+    if (screenshotBattle && !hasPrewarmedBattleRef.current) {
+      hasPrewarmedBattleRef.current = true;
+      screenshotStateKeyRef.current = `${state.enemy.id}:${screenshotLanguage ?? ''}`;
+      applyScreenshotBattleState(state.enemy);
+    } else if (prewarmActions > 0 && !hasPrewarmedBattleRef.current) {
+      hasPrewarmedBattleRef.current = true;
+      let actionCount = 0;
+      let iterations = 0;
+      const maxIterations = 3000;
+      while (actionCount < prewarmActions && iterations < maxIterations) {
+        iterations++;
+        const prewarmEvents = engine.advanceTicks(1);
+        if (prewarmEvents.length === 0) continue;
+
+        actionCount += prewarmEvents.filter((event) =>
+          event.type === 'player_attack' ||
+          event.type === 'critical_hit' ||
+          event.type === 'enemy_attack'
+        ).length;
+        handleBattleEventsRef.current(prewarmEvents);
+
+        if (prewarmEvents.some((event) => event.type === 'enemy_defeated' || event.type === 'player_defeated')) {
+          break;
+        }
+      }
+
+      const coreState = engine.getState();
+      dispatch({
+        type: 'UPDATE_GAUGES',
+        playerGauge: Math.min(100, coreState.player.gauge),
+        enemyGauge: Math.min(100, coreState.enemy.gauge),
+        playerShield: coreState.playerShield,
+        playerMaxShield: coreState.playerMaxShield,
+        enemyChill: coreState.enemyChillState,
+        enemyFreeze: coreState.enemyFreezeState,
+        playerChill: coreState.playerChillState,
+        playerFreeze: coreState.playerFreezeState,
+      });
+    }
+  }, [state.enemy, state.currentFloor, state.phase, state.playerMaxHp, state.playerCurrentHp, dungeonId, prewarmActions, screenshotBattle, screenshotLanguage, applyScreenshotBattleState, getCombinedModEffects, getTotalStats]);
+
+  useEffect(() => {
+    if (!screenshotBattle || !state.enemy) {
+      return;
+    }
+
+    const key = `${state.enemy.id}:${screenshotLanguage ?? ''}`;
+    if (screenshotStateKeyRef.current === key) {
+      return;
+    }
+
+    screenshotStateKeyRef.current = key;
+    applyScreenshotBattleState(state.enemy);
+  }, [screenshotBattle, screenshotLanguage, state.enemy, applyScreenshotBattleState]);
 
   // ゲージ制ゲームループ（戦闘計算は約30fps、UI反映は必要分だけ間引く）
   const TICK_INTERVAL = 33;
@@ -1442,7 +1580,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
   const gameLoopRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    if (state.phase !== 'fighting' || !activeEnemyId || isPaused) {
+    if (state.phase !== 'fighting' || !activeEnemyId || isPaused || staticBattle) {
       if (gameLoopRef.current) {
         clearInterval(gameLoopRef.current);
         gameLoopRef.current = null;
@@ -1505,7 +1643,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
         gameLoopRef.current = null;
       }
     };
-  }, [state.phase, activeEnemyId, isPaused, isAutoRunning]);
+  }, [state.phase, activeEnemyId, isPaused, isAutoRunning, staticBattle]);
 
   // 戦闘終了時に経験値を付与
   useEffect(() => {
@@ -1642,7 +1780,7 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number }) 
     changeBattleSpeed,
     krakenFlurryCountdown,
     getPetsGained,
-    blockChance: Math.min(50, Math.max(0, modEffects.blockChance)),
+    blockChance: screenshotBattle ? 20 : Math.min(50, Math.max(0, modEffects.blockChance)),
     evasion: Math.max(0, modEffects.evasion),
   };
 };

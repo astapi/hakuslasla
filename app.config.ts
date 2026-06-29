@@ -47,6 +47,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
             host: "astapi.net",
             pathPrefix: "/lootdive/invite",
           },
+          {
+            scheme: "https",
+            host: "astapi.net",
+            pathPrefix: "/lootdive/store-goblin-king",
+          },
         ],
         category: ["BROWSABLE", "DEFAULT"],
       },

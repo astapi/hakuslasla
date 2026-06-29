@@ -24,6 +24,7 @@ import {
   applyEquipmentPresetToCharacter,
   BUILD_PRESETS,
   applyBuildPresetToCharacter,
+  applyGoblinKingScreenshotPreset,
   addRankingCharacters,
 } from '@/utils/debugPresets';
 import {
@@ -83,6 +84,7 @@ export default function DebugScreen() {
   const [isApplyingEquip, setIsApplyingEquip] = useState(false);
   const [selectedBuildId, setSelectedBuildId] = useState<string>(BUILD_PRESETS[0]?.id ?? '');
   const [isApplyingBuild, setIsApplyingBuild] = useState(false);
+  const [isOpeningGoblinKingScreenshot, setIsOpeningGoblinKingScreenshot] = useState(false);
 
   // 戦闘速度設定
   const [battleSpeed, setBattleSpeed] = useState<BattleSpeedMultiplier>(DEFAULT_BATTLE_SPEED);
@@ -205,6 +207,24 @@ export default function DebugScreen() {
         },
       ]
     );
+  };
+
+  const handleOpenGoblinKingScreenshotBattle = async () => {
+    setIsOpeningGoblinKingScreenshot(true);
+    try {
+      const success = await applyGoblinKingScreenshotPreset();
+      if (!success) {
+        Alert.alert('エラー', 'ゴブリンキング戦用プリセットの適用に失敗しました');
+        return;
+      }
+      await refresh();
+      router.replace('/battle/uber_uber_goblin_king?startFloor=1&staticBattle=1&screenshotBattle=1' as any);
+    } catch (error) {
+      Alert.alert('エラー', '予期しないエラーが発生しました');
+      console.error(error);
+    } finally {
+      setIsOpeningGoblinKingScreenshot(false);
+    }
   };
 
   // ランキングキャラ追加
@@ -568,6 +588,38 @@ export default function DebugScreen() {
             />
             <Text style={styles.applyButtonText}>
               {isApplyingBuild ? '適用中...' : 'ビルド適用'}
+            </Text>
+          </Pressable>
+        </View>
+
+        {/* ========================================
+            ストアスクショ用
+           ======================================== */}
+        <View style={styles.sectionHeader}>
+          <MaterialCommunityIcons name="camera" size={20} color="#FFB74D" />
+          <Text style={styles.sectionHeaderText}>ストアスクショ用</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Pressable
+            style={[
+              styles.applyButton,
+              styles.screenshotButton,
+              isOpeningGoblinKingScreenshot && styles.applyButtonDisabled,
+            ]}
+            onPress={handleOpenGoblinKingScreenshotBattle}
+            disabled={isOpeningGoblinKingScreenshot}
+          >
+            <MaterialCommunityIcons
+              name="sword-cross"
+              size={20}
+              color="#fff"
+              style={styles.applyIcon}
+            />
+            <Text style={styles.applyButtonText}>
+              {isOpeningGoblinKingScreenshot
+                ? '準備中...'
+                : 'UberUberゴブリンキング 戦闘中へ'}
             </Text>
           </Pressable>
         </View>
@@ -1029,6 +1081,9 @@ const styles = StyleSheet.create({
   },
   applyButtonEquip: {
     backgroundColor: '#4CAF50',
+  },
+  screenshotButton: {
+    backgroundColor: '#B45F06',
   },
   applyButtonDisabled: {
     backgroundColor: '#666',

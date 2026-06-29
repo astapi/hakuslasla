@@ -17,52 +17,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming, cancelAnimation } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { ms, fs, s } from '@/utils/scaling';
-import { getCharacterImages, getChestImageForItem, getChestRarityForItem } from '@/data/images';
+import { getCharacterImages, getChestImageForItem, getChestRarityForItem, getDungeonBackgroundImage } from '@/data/images';
 import { Analytics } from '@/lib/analytics';
 import { UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS } from '@/core/endContent';
-
-// ダンジョン背景画像マッピング
-const backgroundImages: Record<string, ImageSourcePropType> = {
-  grassland: require('@/assets/images/backgrounds/grassland.jpg'),
-  cave: require('@/assets/images/backgrounds/cave.jpg'),
-  ruins: require('@/assets/images/backgrounds/ruins.jpg'),
-  goblin_fort: require('@/assets/images/backgrounds/goblin_fort.jpg'),
-  bandit_hideout: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
-  demon_castle: require('@/assets/images/backgrounds/demon_castle.jpg'),
-  vampire_mansion: require('@/assets/images/backgrounds/vampire_mansion.jpg'),
-  ice_cave: require('@/assets/images/backgrounds/ice_cave.jpg'),
-  underwater_cave: require('@/assets/images/backgrounds/underwater_cave.jpg'),
-  volcano: require('@/assets/images/backgrounds/volcano.jpg'),
-  orc_fortress: require('@/assets/images/backgrounds/orc_fortress.jpg'),
-  dark_forest: require('@/assets/images/backgrounds/dark_forest.jpg'),
-  sky_tower: require('@/assets/images/backgrounds/sky_tower.jpg'),
-  hell_gate: require('@/assets/images/backgrounds/hell_gate.jpg'),
-  dragon_nest: require('@/assets/images/backgrounds/dragon_nest.jpg'),
-  sacred_temple: require('@/assets/images/backgrounds/sacred_temple.jpg'),
-  chaos_realm: require('@/assets/images/backgrounds/chaos_realm.jpg'),
-  final_land: require('@/assets/images/backgrounds/final_land.jpg'),
-  dimensional_rush_1: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
-  dimensional_rush_2: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
-  dimensional_rush_3: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
-  dimensional_rush_4: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
-  dimensional_rush_5: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
-  dimensional_rush_6: require('@/assets/images/backgrounds/dimensional_rush.jpg'),
-  dimensional_corridor: require('@/assets/images/backgrounds/dimensional_corridor.jpg'),
-  uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
-  uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
-  uber_vampire: require('@/assets/images/backgrounds/vampire_mansion.jpg'),
-  uber_kraken: require('@/assets/images/backgrounds/underwater_cave.jpg'),
-  uber_demon_lord: require('@/assets/images/backgrounds/demon_castle.jpg'),
-  uber_true_final_boss: require('@/assets/images/backgrounds/final_land.jpg'),
-  uber_uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
-  uber_uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
-  uber_uber_kraken: require('@/assets/images/backgrounds/underwater_cave.jpg'),
-  debug_uber_uber_goblin_king: require('@/assets/images/backgrounds/goblin_fort.jpg'),
-  debug_uber_uber_bandit_leader: require('@/assets/images/backgrounds/bandit_hideout.jpg'),
-  debug_uber_uber_kraken: require('@/assets/images/backgrounds/underwater_cave.jpg'),
-};
+import { changeLanguage } from '@/lib/i18n';
+import { settingsRepository, type AppLanguage } from '@/db';
 
 type ChestRarity = 'normal' | 'magic' | 'rare' | 'unique';
+const SUPPORTED_DEEP_LINK_LANGUAGES: AppLanguage[] = ['ja', 'en', 'zh', 'ko', 'es', 'fr', 'de', 'system'];
 
 const chestEffectConfig: Record<ChestRarity, {
   dropHeight: number;
@@ -202,20 +164,33 @@ export default function BattleScreen() {
   useKeepAwake(); // 戦闘中はスリープを防止
 
   const { t } = useTranslation();
-  const { dungeonId, startFloor } = useLocalSearchParams<{ dungeonId: string; startFloor?: string }>();
+  const { dungeonId, startFloor, prewarmActions, staticBattle, screenshotBattle, lang } = useLocalSearchParams<{ dungeonId: string; startFloor?: string; prewarmActions?: string; staticBattle?: string; screenshotBattle?: string; lang?: string }>();
   const router = useRouter();
   const parsedStartFloor = startFloor ? parseInt(startFloor, 10) : 1;
-  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed, krakenFlurryCountdown, getPetsGained, blockChance, evasion } = useBattle(dungeonId || '', { startFloor: parsedStartFloor });
+  const parsedPrewarmActions = prewarmActions ? parseInt(prewarmActions, 10) : 0;
+  const isStaticBattle = staticBattle === '1' || staticBattle === 'true';
+  const isScreenshotBattle = screenshotBattle === '1' || screenshotBattle === 'true';
+  const { state, isPaused, togglePause, isAutoRunning, startAutoRun, stopAutoRun, retreat, battleSpeed, changeBattleSpeed, krakenFlurryCountdown, getPetsGained, blockChance, evasion } = useBattle(dungeonId || '', { startFloor: parsedStartFloor, prewarmActions: parsedPrewarmActions, staticBattle: isStaticBattle, screenshotBattle: isScreenshotBattle, screenshotLanguage: lang });
   const { level, characterType, pets, activePetInstanceId } = usePlayerStore();
   const activePet = activePetInstanceId
     ? pets.find((p) => p.instanceId === activePetInstanceId)
     : undefined;
-  const activePetDef = activePet ? getPet(activePet.petId) : undefined;
+  const displayCharacterType = isScreenshotBattle ? 'tamer' : characterType;
+  const activePetDef = isScreenshotBattle ? getPet('pet_phoenix') : activePet ? getPet(activePet.petId) : undefined;
   const dungeon = getDungeon(dungeonId || '');
   const insets = useSafeAreaInsets();
-  const playerImageSet = getCharacterImages(characterType);
+  const playerImageSet = getCharacterImages(displayCharacterType);
   const autoRunPlayerSize = s(128) * (playerImageSet.battleScale ?? 1);
   const showAutoRunLiteView = isAutoRunning && state.phase !== 'defeat' && state.phase !== 'retreat';
+
+  useEffect(() => {
+    if (!lang || !SUPPORTED_DEEP_LINK_LANGUAGES.includes(lang as AppLanguage)) {
+      return;
+    }
+    const nextLanguage = lang as AppLanguage;
+    changeLanguage(nextLanguage);
+    settingsRepository.setLanguage(nextLanguage).catch(() => {});
+  }, [lang]);
 
   // 攻撃アニメーション用のstate
   const [playerAttacking, setPlayerAttacking] = useState(false);
@@ -389,7 +364,7 @@ export default function BattleScreen() {
     await retreat();
   };
 
-  const backgroundImage = dungeonId ? backgroundImages[dungeonId] : undefined;
+  const backgroundImage = dungeonId ? getDungeonBackgroundImage(dungeonId) : undefined;
   const showChest = Boolean(state.enemy && state.enemy.currentHp <= 0 && state.lastDroppedItems.length > 0);
 
   const retreatModal = (
@@ -471,7 +446,7 @@ export default function BattleScreen() {
         <View style={styles.avatarContainer}>
           <CharacterAvatar
             isPlayer
-            characterType={characterType}
+            characterType={displayCharacterType}
             isAttacking={playerAttacking}
             size={s(100)}
             chillState={state.playerChill}
