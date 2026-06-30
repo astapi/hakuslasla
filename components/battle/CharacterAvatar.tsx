@@ -18,7 +18,8 @@ interface CharacterAvatarProps {
   imageId?: string; // モンスターの場合は画像ID
   characterType?: CharacterType; // プレイヤーの場合はキャラクタータイプ
   isAttacking?: boolean; // 攻撃中フラグ
-  size?: number; // アバターサイズ
+  size?: number; // アバターサイズ（レイアウト上の基準サイズ）
+  sizeScale?: number; // 画像のみ拡大する倍率（下端基準で上方向に拡大）
   poisonStacks?: PoisonState[]; // 毒スタック
   igniteState?: IgniteState | null; // 発火状態
   chillState?: ChillState | null; // チル状態
@@ -32,6 +33,7 @@ export const CharacterAvatar = memo(({
   characterType = 'warrior',
   isAttacking = false,
   size = s(80),
+  sizeScale = 1,
   poisonStacks = [],
   igniteState = null,
   chillState = null,
@@ -88,13 +90,16 @@ export const CharacterAvatar = memo(({
   const battleScale = isPlayer
     ? (characterImages[characterType].battleScale ?? 1)
     : (imageId ? (monsterBattleScales[imageId] ?? 1) : 1);
-  const scaledSize = size * battleScale;
+  // レイアウト上の基準サイズ（この枠の下端は sizeScale を変えても固定される）
+  const baseSize = size * battleScale;
+  // 実際に描画する画像サイズ（下端基準で上方向に拡大）
+  const scaledSize = baseSize * sizeScale;
 
   const hasStatusEffects = poisonStacks.length > 0 || igniteState || chillState || freezeState;
 
   return (
     <View style={styles.wrapper}>
-      <Animated.View style={[styles.container, animatedStyle]}>
+      <Animated.View style={[styles.container, { width: baseSize, height: baseSize }, animatedStyle]}>
         {!hideImage && (
           imageSource ? (
             <Image
@@ -103,7 +108,7 @@ export const CharacterAvatar = memo(({
               resizeMode="contain"
             />
           ) : (
-            <View style={[styles.avatarPlaceholder, { width: size, height: size }]}>
+            <View style={[styles.avatarPlaceholder, { width: baseSize, height: baseSize }]}>
               <Text style={styles.avatarPlaceholderText}>?</Text>
             </View>
           )
@@ -147,7 +152,8 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end', // 画像を下端基準で配置（拡大時は上方向に伸びる）
+    overflow: 'visible',
   },
   avatar: {
     // サイズはpropsで指定

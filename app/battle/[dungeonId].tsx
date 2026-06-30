@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { ms, fs, s } from '@/utils/scaling';
 import { getCharacterImages, getChestImageForItem, getChestRarityForItem, getDungeonBackgroundImage } from '@/data/images';
 import { Analytics } from '@/lib/analytics';
-import { UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS } from '@/core/endContent';
+import { UBER_DUNGEON_IDS, UBER_UBER_DUNGEON_IDS, isUberBoss, isUberUberBoss } from '@/core/endContent';
 import { changeLanguage } from '@/lib/i18n';
 import { settingsRepository, type AppLanguage } from '@/db';
 
@@ -491,6 +491,7 @@ export default function BattleScreen() {
                 imageId={state.enemy.image}
                 isAttacking={enemyAttacking}
                 size={s(100)}
+                sizeScale={isUberUberBoss(state.enemy.id) ? 1.5 : isUberBoss(state.enemy.id) ? 1.3 : 1}
                 poisonStacks={state.enemyPoison}
                 igniteState={state.enemyIgnite}
                 chillState={state.enemyChill}
