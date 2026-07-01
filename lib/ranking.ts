@@ -4,6 +4,7 @@ import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
 import { CLASS_ABILITIES } from '@/core/player';
+import { buildCharacterBuildSnapshot } from '@/utils/buildSnapshot';
 
 type PlayerState = ReturnType<typeof usePlayerStore.getState>;
 
@@ -137,7 +138,18 @@ export const submitUberUberKrakenClearRecord = async (): Promise<boolean> => {
     return false;
   }
 
-  const { stats, build } = buildCurrentRankingPayload(state);
+  const { stats } = buildCurrentRankingPayload(state);
+  // build はデバッグメニューの「ビルドJSON」と同一フォーマット（ペット・Uberスキル等を含む）
+  const build = buildCharacterBuildSnapshot({
+    level: state.level,
+    equipment: state.equipment,
+    pets: state.pets,
+    activePetInstanceId: state.activePetInstanceId,
+    petLevels: state.petLevels,
+    unlockedSkills: state.unlockedSkills,
+    unlockedUberSkills: state.unlockedUberSkills,
+    uberPoints: state.uberPoints,
+  });
 
   try {
     await submitUberUberKrakenClear({

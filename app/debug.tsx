@@ -11,6 +11,7 @@ import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { createItemInstance } from '@/data/items';
+import { buildCharacterBuildSnapshot } from '@/utils/buildSnapshot';
 import {
   PRESET_TYPES,
   PRESET_NAMES,
@@ -291,27 +292,17 @@ export default function DebugScreen() {
 
   // 現在の装備数を計算
   const equippedCount = Object.values(equipment).filter(Boolean).length;
-  const activePet = pets.find((pet) => pet.instanceId === activePetInstanceId) ?? null;
   const buildJson = JSON.stringify(
-    {
+    buildCharacterBuildSnapshot({
       level,
       equipment,
-      activePet: activePet
-        ? {
-            ...activePet,
-            level: petLevels[activePet.petId] ?? 1,
-          }
-        : null,
-      pets: pets.map((pet) => ({
-        ...pet,
-        level: petLevels[pet.petId] ?? 1,
-      })),
+      pets,
       activePetInstanceId,
       petLevels,
       unlockedSkills,
       unlockedUberSkills,
       uberPoints,
-    },
+    }),
     null,
     2
   );

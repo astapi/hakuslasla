@@ -16,6 +16,7 @@ import * as Application from 'expo-application';
 import { Platform } from 'react-native';
 import { CharacterType, Equipment } from '@/types';
 import { getRankingCollectionName } from './rankingSeason';
+import { CharacterBuildSnapshot } from '@/utils/buildSnapshot';
 
 // ============================================
 // Types
@@ -196,7 +197,8 @@ export interface UberClearEntry {
   season: number;
   updatedAt: Timestamp;
   stats: RankingStats;
-  build: RankingBuild;
+  // デバッグメニューの「ビルドJSON」と同一フォーマット（ペット・Uberスキル等を含む）
+  build: CharacterBuildSnapshot;
 }
 
 /**
@@ -210,7 +212,7 @@ export const submitUberUberKrakenClear = async (params: {
   level: number;
   season: number;
   stats: RankingStats;
-  build: RankingBuild;
+  build: CharacterBuildSnapshot;
 }): Promise<void> => {
   // 開発環境では送信しない
   if (__DEV__) {
