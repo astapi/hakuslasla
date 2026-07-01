@@ -14,7 +14,7 @@ import {
 } from '@react-native-firebase/firestore';
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
-import { CharacterType, Equipment } from '@/types';
+import { CharacterType } from '@/types';
 import { getRankingCollectionName } from './rankingSeason';
 import { CharacterBuildSnapshot } from '@/utils/buildSnapshot';
 
@@ -62,12 +62,6 @@ export interface RankingStats {
   attackSpeed: number;
 }
 
-export interface RankingBuild {
-  level: number;
-  equipment: Equipment;
-  unlockedSkills: string[];
-}
-
 export interface RankingEntry {
   deviceId: string;
   localCharId: number;
@@ -76,7 +70,8 @@ export interface RankingEntry {
   floorReached: number;
   updatedAt: Timestamp;
   stats: RankingStats;
-  build?: RankingBuild;
+  // デバッグメニューの「ビルドJSON」と同一フォーマット（ペット・Uberスキル等を含む）
+  build?: CharacterBuildSnapshot;
 }
 
 export interface RankingEntryWithRank extends RankingEntry {
@@ -148,7 +143,7 @@ export const submitScore = async (params: {
   type: CharacterType;
   floorReached: number;
   stats: RankingStats;
-  build: RankingBuild;
+  build: CharacterBuildSnapshot;
   season?: number;
 }): Promise<void> => {
   // 開発環境では送信しない
@@ -160,7 +155,7 @@ export const submitScore = async (params: {
   const deviceId = await getDeviceId();
   const docId = `${deviceId}_${params.localCharId}`;
 
-  const entry: Omit<RankingEntry, 'updatedAt' | 'build'> & { updatedAt: FieldValue; build: RankingBuild } = {
+  const entry: Omit<RankingEntry, 'updatedAt' | 'build'> & { updatedAt: FieldValue; build: CharacterBuildSnapshot } = {
     deviceId,
     localCharId: params.localCharId,
     name: params.name,

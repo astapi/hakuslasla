@@ -1,20 +1,21 @@
-import { submitScore, submitUberUberKrakenClear, RankingStats, RankingBuild } from './firestore';
+import { submitScore, submitUberUberKrakenClear, RankingStats } from './firestore';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
 import { CLASS_ABILITIES } from '@/core/player';
-import { buildCharacterBuildSnapshot } from '@/utils/buildSnapshot';
+import { buildCharacterBuildSnapshot, CharacterBuildSnapshot } from '@/utils/buildSnapshot';
 
 type PlayerState = ReturnType<typeof usePlayerStore.getState>;
 
 /**
  * 現在のプレイヤー状態から Firestore 送信用の stats / build を組み立てる。
  * 次元回廊ランキングと UberUberクリア記録で共通利用する。
+ * build はデバッグメニューの「ビルドJSON」と同一フォーマット（ペット・Uberスキル等を含む）。
  */
 export const buildCurrentRankingPayload = (
   state: PlayerState
-): { stats: RankingStats; build: RankingBuild } => {
+): { stats: RankingStats; build: CharacterBuildSnapshot } => {
   // ステータス計算
   const stats = state.getTotalStats();
   const passiveEffects = calculatePassiveEffects(state.unlockedSkills);
@@ -69,11 +70,16 @@ export const buildCurrentRankingPayload = (
     }),
   };
 
-  const build: RankingBuild = {
+  const build = buildCharacterBuildSnapshot({
     level: state.level,
     equipment: state.equipment,
+    pets: state.pets,
+    activePetInstanceId: state.activePetInstanceId,
+    petLevels: state.petLevels,
     unlockedSkills: state.unlockedSkills,
-  };
+    unlockedUberSkills: state.unlockedUberSkills,
+    uberPoints: state.uberPoints,
+  });
 
   return { stats: rankingStats, build };
 };
@@ -138,18 +144,7 @@ export const submitUberUberKrakenClearRecord = async (): Promise<boolean> => {
     return false;
   }
 
-  const { stats } = buildCurrentRankingPayload(state);
-  // build はデバッグメニューの「ビルドJSON」と同一フォーマット（ペット・Uberスキル等を含む）
-  const build = buildCharacterBuildSnapshot({
-    level: state.level,
-    equipment: state.equipment,
-    pets: state.pets,
-    activePetInstanceId: state.activePetInstanceId,
-    petLevels: state.petLevels,
-    unlockedSkills: state.unlockedSkills,
-    unlockedUberSkills: state.unlockedUberSkills,
-    uberPoints: state.uberPoints,
-  });
+  const { stats, build } = buildCurrentRankingPayload(state);
 
   try {
     await submitUberUberKrakenClear({
