@@ -32,7 +32,7 @@ import { badgeRepository } from '@/db/repositories/badgeRepository';
 import { getUberBossClearBadgeId, DIMENSIONAL_BADGE_ID, DIMENSIONAL_BADGE_FLOOR } from '@/data/badges';
 import { calculateUberTreeEffects } from '@/data/uberTree';
 import { Analytics } from '@/lib/analytics';
-import { submitDimensionalCorridorScore } from '@/lib/ranking';
+import { submitDimensionalCorridorScore, submitUberUberKrakenClearRecord } from '@/lib/ranking';
 import { preloadBattleSounds, unloadBattleSounds, playBattleSound, playBattleBgm, stopBattleBgm, pauseBattleBgm, resumeBattleBgm } from '@/lib/sound';
 import {
   BASE_BOSS_BY_UBER,
@@ -1677,7 +1677,12 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number; pr
           // Uberボスクリアバッジ付与
           const uberBadgeId = getUberBossClearBadgeId(state.dungeonId);
           if (uberBadgeId && characterId) {
-            await badgeRepository.awardBadge(characterId, uberBadgeId);
+            const newlyAwarded = await badgeRepository.awardBadge(characterId, uberBadgeId);
+            // UberUberクラーケンを「そのキャラで初めて」クリアしたときだけ Firestore に記録
+            // （バッジは1キャラ1回のみ付与されるため newlyAwarded が初回クリアの判定になる）
+            if (newlyAwarded && state.dungeonId === 'uber_uber_kraken') {
+              await submitUberUberKrakenClearRecord();
+            }
           }
         }
 

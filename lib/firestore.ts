@@ -175,6 +175,70 @@ export const submitScore = async (params: {
   await setDoc(docRef, entry);
 };
 
+// ============================================
+// UberUberクラーケン クリア記録
+// ============================================
+
+/**
+ * UberUberクラーケンのクリア記録コレクション名
+ * ランキングと違いシーズンでリセットしない実績なので単一コレクションに集約し、
+ * 判別用に season フィールドをドキュメントへ持たせる。
+ */
+export const UBER_UBER_KRAKEN_CLEARS_COLLECTION = 'uber_uber_kraken_clears';
+
+export interface UberClearEntry {
+  deviceId: string;
+  localCharId: number;
+  name: string;
+  type: CharacterType;
+  dungeonId: string;
+  level: number;
+  season: number;
+  updatedAt: Timestamp;
+  stats: RankingStats;
+  build: RankingBuild;
+}
+
+/**
+ * UberUberクラーケンの初回クリアを記録（初回クリア時のみ呼ぶこと）
+ * docId = `${deviceId}_${localCharId}` で1キャラ1ドキュメント。
+ */
+export const submitUberUberKrakenClear = async (params: {
+  localCharId: number;
+  name: string;
+  type: CharacterType;
+  level: number;
+  season: number;
+  stats: RankingStats;
+  build: RankingBuild;
+}): Promise<void> => {
+  // 開発環境では送信しない
+  if (__DEV__) {
+    console.log('[UberClear] DEV mode - skip submit:', params);
+    return;
+  }
+
+  const deviceId = await getDeviceId();
+  const docId = `${deviceId}_${params.localCharId}`;
+
+  const entry: Omit<UberClearEntry, 'updatedAt'> & { updatedAt: FieldValue } = {
+    deviceId,
+    localCharId: params.localCharId,
+    name: params.name,
+    type: params.type,
+    dungeonId: 'uber_uber_kraken',
+    level: params.level,
+    season: params.season,
+    stats: params.stats,
+    build: params.build,
+    updatedAt: serverTimestamp(),
+  };
+
+  const db = getFirestore();
+  const docRef = doc(db, UBER_UBER_KRAKEN_CLEARS_COLLECTION, docId);
+  await setDoc(docRef, entry);
+};
+
 /**
  * 自分のランキングエントリを取得
  */

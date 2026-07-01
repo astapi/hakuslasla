@@ -1,37 +1,19 @@
-import { submitScore, RankingStats } from './firestore';
+import { submitScore, submitUberUberKrakenClear, RankingStats, RankingBuild } from './firestore';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
 import { combineMods, getAttackSpeedFromMods } from '@/core/modEffects';
 import { CLASS_ABILITIES } from '@/core/player';
 
+type PlayerState = ReturnType<typeof usePlayerStore.getState>;
+
 /**
- * 次元回廊のランキングスコアを送信（記録更新時のみ）
- * @param floorReached 到達階層
- * @returns 記録更新があった場合はtrue
+ * 現在のプレイヤー状態から Firestore 送信用の stats / build を組み立てる。
+ * 次元回廊ランキングと UberUberクリア記録で共通利用する。
  */
-export const submitDimensionalCorridorScore = async (
-  floorReached: number
-): Promise<boolean> => {
-  const state = usePlayerStore.getState();
-
-  if (!state.characterId) {
-    console.log('[Ranking] No character loaded');
-    return false;
-  }
-
-  // ローカルで記録更新チェック（キャラのシーズンのキーで記録）
-  const isNewRecord = await settingsRepository.setDimensionalCorridorBest(
-    state.characterId,
-    floorReached,
-    state.season
-  );
-
-  if (!isNewRecord) {
-    console.log('[Ranking] Not a new record, skip submit');
-    return false;
-  }
-
+export const buildCurrentRankingPayload = (
+  state: PlayerState
+): { stats: RankingStats; build: RankingBuild } => {
   // ステータス計算
   const stats = state.getTotalStats();
   const passiveEffects = calculatePassiveEffects(state.unlockedSkills);
@@ -86,11 +68,43 @@ export const submitDimensionalCorridorScore = async (
     }),
   };
 
-  const build = {
+  const build: RankingBuild = {
     level: state.level,
     equipment: state.equipment,
     unlockedSkills: state.unlockedSkills,
   };
+
+  return { stats: rankingStats, build };
+};
+
+/**
+ * 次元回廊のランキングスコアを送信（記録更新時のみ）
+ * @param floorReached 到達階層
+ * @returns 記録更新があった場合はtrue
+ */
+export const submitDimensionalCorridorScore = async (
+  floorReached: number
+): Promise<boolean> => {
+  const state = usePlayerStore.getState();
+
+  if (!state.characterId) {
+    console.log('[Ranking] No character loaded');
+    return false;
+  }
+
+  // ローカルで記録更新チェック（キャラのシーズンのキーで記録）
+  const isNewRecord = await settingsRepository.setDimensionalCorridorBest(
+    state.characterId,
+    floorReached,
+    state.season
+  );
+
+  if (!isNewRecord) {
+    console.log('[Ranking] Not a new record, skip submit');
+    return false;
+  }
+
+  const { stats, build } = buildCurrentRankingPayload(state);
 
   try {
     await submitScore({
@@ -98,7 +112,7 @@ export const submitDimensionalCorridorScore = async (
       name: state.characterName,
       type: state.characterType,
       floorReached,
-      stats: rankingStats,
+      stats,
       build,
       season: state.season,
     });
@@ -106,6 +120,39 @@ export const submitDimensionalCorridorScore = async (
     return true;
   } catch (error) {
     console.error('[Ranking] Failed to submit score:', error);
+    return false;
+  }
+};
+
+/**
+ * UberUberクラーケンの初回クリアを Firestore に記録する。
+ * 初回クリア判定は呼び出し側（バッジ新規付与）で行うため、ここでは無条件に送信する。
+ * @returns 送信に成功した場合は true
+ */
+export const submitUberUberKrakenClearRecord = async (): Promise<boolean> => {
+  const state = usePlayerStore.getState();
+
+  if (!state.characterId) {
+    console.log('[UberClear] No character loaded');
+    return false;
+  }
+
+  const { stats, build } = buildCurrentRankingPayload(state);
+
+  try {
+    await submitUberUberKrakenClear({
+      localCharId: state.characterId,
+      name: state.characterName,
+      type: state.characterType,
+      level: state.level,
+      season: state.season,
+      stats,
+      build,
+    });
+    console.log('[UberClear] Clear submitted');
+    return true;
+  } catch (error) {
+    console.error('[UberClear] Failed to submit clear:', error);
     return false;
   }
 };
