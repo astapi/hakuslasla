@@ -9,6 +9,7 @@ import { ScreenWrapper } from '@/components/common/ScreenWrapper';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
 import {
   PURCHASE_PRODUCTS,
+  isPackageAvailableInCurrentVersion,
   ENTITLEMENT_IDS,
   INVENTORY_BASE_SIZE,
   INVENTORY_EXPANDED_SIZE,
@@ -144,7 +145,9 @@ export default function ShopScreen() {
       hasEntitlement(ENTITLEMENT_IDS.EXPANDED_STORAGE) &&
       hasEntitlement(ENTITLEMENT_IDS.TIER_FILTER_ENABLED) &&
       hasEntitlement(ENTITLEMENT_IDS.PERMANENT_BOOST) &&
-      hasEntitlement(ENTITLEMENT_IDS.CHARACTER_SLOTS)
+      hasEntitlement(ENTITLEMENT_IDS.CHARACTER_SLOTS) &&
+      hasEntitlement(ENTITLEMENT_IDS.EXPANDED_PETS) &&
+      hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST)
     );
   };
 
@@ -209,13 +212,13 @@ export default function ShopScreen() {
       ) : (
         <>
           <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-            {availablePackages.filter(pkg => PURCHASE_PRODUCTS.some(p => p.packageId === pkg.identifier)).length === 0 ? (
+            {availablePackages.filter(pkg => isPackageAvailableInCurrentVersion(pkg.identifier)).length === 0 ? (
               <View style={styles.emptyState}>
                 <MaterialCommunityIcons name="store-off" size={ms(48)} color="#666" />
                 <Text style={styles.emptyStateText}>{t('shop.noProducts')}</Text>
               </View>
             ) : (
-              availablePackages.filter(pkg => PURCHASE_PRODUCTS.some(p => p.packageId === pkg.identifier)).map((pkg, index) => {
+              availablePackages.filter(pkg => isPackageAvailableInCurrentVersion(pkg.identifier)).map((pkg, index) => {
                 const displayInfo = getPackageDisplayInfo(pkg);
                 // バンドル商品の場合は全Entitlement保有をチェック、それ以外は個別チェック
                 const isPurchased = isBundleProduct(displayInfo.entitlementId)
