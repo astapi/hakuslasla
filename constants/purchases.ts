@@ -3,6 +3,7 @@
  */
 
 import { Platform } from 'react-native';
+import * as Application from 'expo-application';
 
 // RevenueCat API Keys
 // __DEV__ は開発ビルドでtrue、リリースビルドでfalse
@@ -53,6 +54,7 @@ export interface PurchaseProduct {
   nameKey: string;        // i18nキー
   descriptionKey: string; // i18nキー
   iconName: string;       // MaterialCommunityIconsの名前
+  minVersion?: string;    // この商品を表示する最低アプリバージョン（未指定なら常に表示）
 }
 
 export const PURCHASE_PRODUCTS: PurchaseProduct[] = [
@@ -76,6 +78,7 @@ export const PURCHASE_PRODUCTS: PurchaseProduct[] = [
     nameKey: 'shop.petExpansion.name',
     descriptionKey: 'shop.petExpansion.description',
     iconName: 'paw',
+    minVersion: '2.0.0', // v2.0.0未満のリリース済みアプリには表示しない
   },
   {
     packageId: 'tier_filter',
@@ -113,3 +116,35 @@ export const PURCHASE_PRODUCTS: PurchaseProduct[] = [
     iconName: 'crown',
   },
 ];
+
+/**
+ * セマンティックバージョン比較: current < minimum なら true
+ */
+function isVersionOlder(current: string, minimum: string): boolean {
+  const parse = (v: string) => v.split('.').map(Number);
+  const cur = parse(current);
+  const min = parse(minimum);
+  for (let i = 0; i < 3; i++) {
+    const c = cur[i] ?? 0;
+    const m = min[i] ?? 0;
+    if (c < m) return true;
+    if (c > m) return false;
+  }
+  return false;
+}
+
+/**
+ * このpackageIdの商品を、現在のアプリバージョンで表示してよいか判定する。
+ * - PURCHASE_PRODUCTS に無い（＝自分たちの商品でない）package は false
+ * - minVersion 指定があり、現在バージョンがそれ未満なら false（旧リリースへの露出を防ぐ）
+ *
+ * RevenueCatのOfferingはリモート設定のため、商品を追加すると旧バージョンの
+ * アプリにも即座に配信されてしまう。この関数でクライアント側のバージョンゲートを行う。
+ */
+export function isPackageAvailableInCurrentVersion(packageId: string): boolean {
+  const product = PURCHASE_PRODUCTS.find((p) => p.packageId === packageId);
+  if (!product) return false;
+  if (!product.minVersion) return true;
+  const current = Application.nativeApplicationVersion ?? '0.0.0';
+  return !isVersionOlder(current, product.minVersion);
+}
