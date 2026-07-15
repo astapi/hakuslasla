@@ -44,8 +44,8 @@ interface PurchaseActions {
   // 商品を購入
   purchasePackage: (pkg: PurchasesPackage) => Promise<{ success: boolean; error?: string }>;
 
-  // 購入履歴をリストア
-  restorePurchases: () => Promise<{ success: boolean; error?: string }>;
+  // 購入履歴をリストア（restoredCount=0 は「復元対象が無かった」であり成功ではない）
+  restorePurchases: () => Promise<{ success: boolean; error?: string; restoredCount: number }>;
 
   // 顧客情報を更新（Entitlementsも更新）
   refreshCustomerInfo: () => Promise<void>;
@@ -189,10 +189,12 @@ export const usePurchaseStore = create<PurchaseState & PurchaseActions>()((set, 
         entitlements: newEntitlements,
       });
 
-      return { success: true };
+      console.log('[Purchase] Restored entitlements:', Array.from(newEntitlements));
+
+      return { success: true, restoredCount: newEntitlements.size };
     } catch (error: any) {
       console.error('[Purchase] Restore failed:', error);
-      return { success: false, error: error.message || 'unknown_error' };
+      return { success: false, error: error.message || 'unknown_error', restoredCount: 0 };
     } finally {
       set({ isLoading: false });
     }
@@ -272,8 +274,9 @@ export const getCharacterSlotCount = (): number => {
   return state.hasEntitlement(ENTITLEMENT_IDS.CHARACTER_SLOTS) ? 5 : 1;
 };
 
-// 倍速ブーストを持っているか
+// 倍速ブーストを持っているか（課金 or 招待コード）
+// 招待コードによる新規付与は終了済み。既存保有者のローカル記録のみ参照する。
 export const hasSpeedBoost = (): boolean => {
   const state = usePurchaseStore.getState();
-  return state.hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST);
+  return state.hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST) || state.inviteSpeedBoost;
 };

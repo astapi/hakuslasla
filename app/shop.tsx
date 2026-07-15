@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PurchasesPackage } from 'react-native-purchases';
 import { Button } from '@/components/common/Button';
 import { ScreenWrapper } from '@/components/common/ScreenWrapper';
-import { usePurchaseStore } from '@/stores/usePurchaseStore';
+import { usePurchaseStore, hasSpeedBoost } from '@/stores/usePurchaseStore';
 import {
   PURCHASE_PRODUCTS,
   isPackageAvailableInCurrentVersion,
@@ -114,16 +114,24 @@ export default function ShopScreen() {
     const result = await restorePurchases();
     setIsRestoring(false);
 
-    if (result.success) {
+    if (!result.success) {
       Alert.alert(
-        t('shop.restoreSuccess'),
-        t('shop.restoreSuccessMessage'),
+        t('shop.restoreFailed'),
+        t('shop.restoreFailedMessage'),
+        [{ text: t('common.ok') }]
+      );
+    } else if (result.restoredCount === 0) {
+      // 通信は成功したが購入が1件も見つからなかった。成功扱いにすると
+      // 「復元したのに反映されない」と受け取られるため明確に伝える。
+      Alert.alert(
+        t('shop.restoreEmpty'),
+        t('shop.restoreEmptyMessage'),
         [{ text: t('common.ok') }]
       );
     } else {
       Alert.alert(
-        t('shop.restoreFailed'),
-        t('shop.restoreFailedMessage'),
+        t('shop.restoreSuccess'),
+        t('shop.restoreSuccessMessage'),
         [{ text: t('common.ok') }]
       );
     }
@@ -224,7 +232,12 @@ export default function ShopScreen() {
                 const isPurchased = isBundleProduct(displayInfo.entitlementId)
                   ? isBundlePurchased()
                   : hasEntitlement(displayInfo.entitlementId);
-                const isDisabled = isPurchased;
+                // 招待コードで解放済み（課金は未購入）。新規付与は終了済みだが、
+                // 既存保有者には解放済みと表示し、重複購入させない。
+                const isInviteActivated = displayInfo.entitlementId === ENTITLEMENT_IDS.SPEED_BOOST
+                  && !hasEntitlement(ENTITLEMENT_IDS.SPEED_BOOST)
+                  && hasSpeedBoost();
+                const isDisabled = isPurchased || isInviteActivated;
                 const price = pkg.product.priceString;
 
                 return (
@@ -248,7 +261,12 @@ export default function ShopScreen() {
 
                     <View style={styles.productInfo}>
                       <Text style={styles.productName}>{displayInfo.name}</Text>
-                      {isPurchased ? (
+                      {isInviteActivated ? (
+                        <View style={styles.statusRow}>
+                          <MaterialCommunityIcons name="check-circle" size={ms(14)} color="#4CAF50" />
+                          <Text style={styles.statusText}>{t('shop.inviteActivated')}</Text>
+                        </View>
+                      ) : isPurchased ? (
                         <View style={styles.statusRow}>
                           <MaterialCommunityIcons name="check-circle" size={ms(14)} color="#4CAF50" />
                           <Text style={styles.statusText}>{t('shop.purchased')}</Text>

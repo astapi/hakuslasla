@@ -680,6 +680,22 @@ export default function DebugScreen() {
             </Text>
           </View>
 
+          {/* 招待付与は本番では終了済み。既存保有者の復活を検証するための再現用 */}
+          <Pressable
+            style={styles.applyButton}
+            onPress={async () => {
+              const next = !inviteBoostActive;
+              await settingsRepository.setInviteSpeedBoost(next);
+              usePurchaseStore.getState().setInviteSpeedBoost(next);
+              setInviteBoostActive(next);
+            }}
+          >
+            <MaterialCommunityIcons name="speedometer" size={20} color="#fff" style={styles.applyIcon} />
+            <Text style={styles.applyButtonText}>
+              招待コード倍速を{inviteBoostActive ? '無効化' : '有効化'}
+            </Text>
+          </Pressable>
+
           <Pressable
             style={[styles.applyButton, styles.resetButton]}
             onPress={() => {

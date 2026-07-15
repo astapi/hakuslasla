@@ -3588,6 +3588,7 @@
     "title": "ショップ",
     "subtitle": "プレミアム機能を購入",
     "purchased": "購入済み",
+    "inviteActivated": "招待コードで有効化済み",
     "restore": "購入を復元",
     "noProducts": "商品がありません",
     "alreadyPurchased": "購入済み",
@@ -3602,6 +3603,8 @@
     "restoreSuccessMessage": "購入履歴を復元しました",
     "restoreFailed": "復元失敗",
     "restoreFailedMessage": "購入履歴の復元に失敗しました",
+    "restoreEmpty": "復元対象なし",
+    "restoreEmptyMessage": "復元できる購入が見つかりませんでした。購入時と同じApple IDでサインインしているかご確認ください。",
     "inventoryExpansion": {
       "name": "インベントリ拡張",
       "description": "インベントリのアイテム数の上限を{{from}}個から{{to}}個に拡張します"

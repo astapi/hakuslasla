@@ -3588,6 +3588,7 @@
     "title": "Shop",
     "subtitle": "Purchase Premium Features",
     "purchased": "Purchased",
+    "inviteActivated": "Activated via invite code",
     "restore": "Restore Purchases",
     "noProducts": "No products available",
     "alreadyPurchased": "Already Purchased",
@@ -3602,6 +3603,8 @@
     "restoreSuccessMessage": "Purchases restored successfully",
     "restoreFailed": "Restore Failed",
     "restoreFailedMessage": "Failed to restore purchases",
+    "restoreEmpty": "Nothing to Restore",
+    "restoreEmptyMessage": "No previous purchases were found. Please make sure you are signed in with the same Apple ID you used to purchase.",
     "inventoryExpansion": {
       "name": "Inventory Expansion",
       "description": "Increases inventory item limit from {{from}} to {{to}}"

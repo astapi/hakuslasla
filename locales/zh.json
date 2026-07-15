@@ -3588,6 +3588,7 @@
     "title": "商店",
     "subtitle": "购买高级功能",
     "purchased": "已购买",
+    "inviteActivated": "已通过邀请码激活",
     "restore": "恢复购买",
     "noProducts": "没有可用商品",
     "alreadyPurchased": "已购买",
@@ -3602,6 +3603,8 @@
     "restoreSuccessMessage": "购买恢复成功",
     "restoreFailed": "恢复失败",
     "restoreFailedMessage": "购买恢复失败",
+    "restoreEmpty": "无可恢复的购买",
+    "restoreEmptyMessage": "未找到可恢复的购买记录。请确认您已使用购买时的 Apple ID 登录。",
     "inventoryExpansion": {
       "name": "背包扩展",
       "description": "将背包物品上限从{{from}}增加到{{to}}"
