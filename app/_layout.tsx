@@ -67,6 +67,9 @@ export default function RootLayout() {
         // RevenueCatを初期化
         await usePurchaseStore.getState().initialize();
 
+        // 招待コードによる倍速ブースト（新規付与は終了。既存保有者の維持のみ）
+        await usePurchaseStore.getState().loadInviteSpeedBoost();
+
         // 広告をバックグラウンドでプリロード
         adService.preloadAll();
 

@@ -3588,6 +3588,7 @@
     "title": "Shop",
     "subtitle": "Premium-Funktionen kaufen",
     "purchased": "Gekauft",
+    "inviteActivated": "Per Einladungscode aktiviert",
     "restore": "Käufe wiederherstellen",
     "noProducts": "Keine Produkte verfügbar",
     "alreadyPurchased": "Bereits gekauft",
@@ -3602,6 +3603,8 @@
     "restoreSuccessMessage": "Käufe erfolgreich wiederhergestellt",
     "restoreFailed": "Wiederherstellung fehlgeschlagen",
     "restoreFailedMessage": "Käufe konnten nicht wiederhergestellt werden",
+    "restoreEmpty": "Nichts wiederherzustellen",
+    "restoreEmptyMessage": "Es wurden keine früheren Käufe gefunden. Bitte stelle sicher, dass du mit derselben Apple-ID angemeldet bist, mit der du gekauft hast.",
     "inventoryExpansion": {
       "name": "Inventar-Erweiterung",
       "description": "Erhöht Inventarlimit von {{from}} auf {{to}}"

@@ -3588,6 +3588,7 @@
     "title": "Boutique",
     "subtitle": "Acheter des fonctionnalités premium",
     "purchased": "Acheté",
+    "inviteActivated": "Activé par code d’invitation",
     "restore": "Restaurer les achats",
     "noProducts": "Aucun produit disponible",
     "alreadyPurchased": "Déjà acheté",
@@ -3602,6 +3603,8 @@
     "restoreSuccessMessage": "Les achats ont été restaurés avec succès",
     "restoreFailed": "Échec de la restauration",
     "restoreFailedMessage": "Échec de la restauration des achats",
+    "restoreEmpty": "Aucun achat à restaurer",
+    "restoreEmptyMessage": "Aucun achat antérieur n’a été trouvé. Vérifiez que vous êtes connecté avec l’identifiant Apple utilisé lors de l’achat.",
     "inventoryExpansion": {
       "name": "Extension d'inventaire",
       "description": "Augmente la limite d'objets de l'inventaire de {{from}} à {{to}}"

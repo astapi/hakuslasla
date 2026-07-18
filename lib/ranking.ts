@@ -72,6 +72,7 @@ export const buildCurrentRankingPayload = (
     level: state.level,
     equipment: state.equipment,
     unlockedSkills: state.unlockedSkills,
+    unlockedUberSkills: state.unlockedUberSkills,
   };
 
   return { stats: rankingStats, build };

@@ -65,6 +65,10 @@ export interface RankingBuild {
   level: number;
   equipment: Equipment;
   unlockedSkills: string[];
+  // Uberツリーの解放ノード。ビルド分析ツール（tools/build-explorer）で
+  // パッシブツリーと同様にヒートマップ表示するために記録する。
+  // 過去に記録されたドキュメントには存在しないため optional。
+  unlockedUberSkills?: string[];
 }
 
 export interface RankingEntry {
