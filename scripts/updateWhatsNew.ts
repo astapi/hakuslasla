@@ -130,38 +130,49 @@ interface VersionsResponse {
 
 // 各言語のwhatsNewテキスト
 const whatsNewByLocale: Record<string, string> = {
-  ja: `【更新】
-• スクリーンショットを更新しました`,
+  ja: `【不具合修正】
+• 招待コードで解放した3倍速解放が使用できなくなる不具合を修正しました
+• 購入を復元した際、復元できる購入がない場合でも「復元しました」と表示される不具合を修正しました`,
 
-  'en-US': `[Updates]
-• Updated screenshots`,
+  'en-US': `[Bug Fixes]
+• Fixed an issue where Speed Boost unlocked with an Invite Code became unavailable
+• Fixed an issue where Restore Purchases reported success even when no purchases were found`,
 
-  'en-GB': `[Updates]
-• Updated screenshots`,
+  'en-GB': `[Bug Fixes]
+• Fixed an issue where Speed Boost unlocked with an Invite Code became unavailable
+• Fixed an issue where Restore Purchases reported success even when no purchases were found`,
 
-  'en-AU': `[Updates]
-• Updated screenshots`,
+  'en-AU': `[Bug Fixes]
+• Fixed an issue where Speed Boost unlocked with an Invite Code became unavailable
+• Fixed an issue where Restore Purchases reported success even when no purchases were found`,
 
-  'en-CA': `[Updates]
-• Updated screenshots`,
+  'en-CA': `[Bug Fixes]
+• Fixed an issue where Speed Boost unlocked with an Invite Code became unavailable
+• Fixed an issue where Restore Purchases reported success even when no purchases were found`,
 
-  'zh-Hans': `【更新】
-• 更新了截图`,
+  'zh-Hans': `【问题修复】
+• 修复了通过邀请码解锁的速度提升无法使用的问题
+• 修复了恢复购买时即使没有可恢复的购买也显示「已恢复」的问题`,
 
-  ko: `[업데이트]
-• 스크린샷을 업데이트했습니다`,
+  ko: `[버그 수정]
+• 초대 코드로 해제한 배속 부스트를 사용할 수 없게 되는 문제를 수정했습니다
+• 구매 복원 시 복원할 구매가 없어도 「복원했습니다」라고 표시되는 문제를 수정했습니다`,
 
-  'es-ES': `[Actualizaciones]
-• Se actualizaron las capturas de pantalla`,
+  'es-ES': `[Corrección de errores]
+• Se corrigió un error por el que el Boost de Velocidad desbloqueado con un Código de Invitación dejaba de estar disponible
+• Se corrigió un error por el que Restaurar Compras indicaba éxito aunque no se encontrara ninguna compra`,
 
-  'es-MX': `[Actualizaciones]
-• Se actualizaron las capturas de pantalla`,
+  'es-MX': `[Corrección de errores]
+• Se corrigió un error por el que el Boost de Velocidad desbloqueado con un Código de Invitación dejaba de estar disponible
+• Se corrigió un error por el que Restaurar Compras indicaba éxito aunque no se encontrara ninguna compra`,
 
-  'fr-FR': `[Mises à jour]
-• Mise à jour des captures d'écran`,
+  'fr-FR': `[Corrections de bugs]
+• Correction d'un problème rendant indisponible le Boost de vitesse débloqué avec un Code d'invitation
+• Correction d'un problème où Restaurer les achats indiquait une réussite même sans achat trouvé`,
 
-  'de-DE': `[Aktualisierungen]
-• Screenshots aktualisiert`,
+  'de-DE': `[Fehlerbehebungen]
+• Fehler behoben, durch den der mit einem Einladungscode freigeschaltete Geschwindigkeits-Boost nicht mehr verfügbar war
+• Fehler behoben, bei dem „Käufe wiederherstellen" Erfolg meldete, obwohl keine Käufe gefunden wurden`,
 };
 
 // メイン処理
