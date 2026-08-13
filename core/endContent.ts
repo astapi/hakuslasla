@@ -64,6 +64,7 @@ export const DEBUG_DIMENSIONAL_DUNGEON_IDS: string[] = [
   'debug_uber_uber_goblin_king',
   'debug_uber_uber_bandit_leader',
   'debug_uber_uber_kraken',
+  'debug_uber_uber_demon_lord',
 ];
 
 // 元の異次元ラッシュでのボス階層（スケーリング計算に使用）
@@ -104,6 +105,7 @@ export const UBER_UBER_BOSS_BY_UBER: Record<string, string> = {
   uber_goblin_king: 'uber_uber_goblin_king',
   uber_bandit_leader: 'uber_uber_bandit_leader',
   uber_kraken: 'uber_uber_kraken',
+  uber_demon_lord: 'uber_uber_demon_lord',
 };
 
 export const UBER_BY_UBER_UBER = Object.fromEntries(
@@ -191,6 +193,7 @@ export const getEnemyAtkMultiplier = (enemyId: string): number => {
   if (baseId === 'goblin_king') return uber ? 1.35 : 1.2;
   if (baseId === 'bandit_leader') return uberUber ? 1.3 : 1;
   if (baseId === 'kraken') return uberUber ? 1.5 : uber ? 1.3 : 1.15;
+  if (baseId === 'demon_lord') return uberUber ? 1.6 : 1;
   if (baseId === 'true_final_boss') return uber ? 1.8 : 1.5;
   return 1;
 };
@@ -206,7 +209,8 @@ export const getEnemyAttackSpeedMultiplier = (enemyId: string): number => {
 export const getEnemyDamageReductionPct = (enemyId: string): number => {
   const baseId = getBaseBossId(enemyId);
   const uber = isUberBoss(enemyId);
-  if (baseId === 'demon_lord') return uber ? 4 : 2;
+  const uberUber = isUberUberBoss(enemyId);
+  if (baseId === 'demon_lord') return uberUber ? 8 : uber ? 4 : 2;
   return 0;
 };
 
@@ -223,9 +227,27 @@ export const getEnemyRegenPerSecond = (enemyId: string): number => {
   const uberUber = isUberUberBoss(enemyId);
   if (baseId === 'goblin_king') return uberUber ? 3000 : uber ? 2000 : 0;
   if (baseId === 'kraken') return uberUber ? 2500 : uber ? 150 : 100;
-  if (baseId === 'demon_lord') return uber ? 1400 : 1000;
+  if (baseId === 'demon_lord') return uberUber ? 10000 : uber ? 1400 : 1000;
   if (baseId === 'true_final_boss') return uber ? 3000 : 2200;
   return 0;
+};
+
+// UberUber魔王のエンレイジ（撃破制限時間）設定。
+// graceSec 経過後、敵自身の攻撃倍率が毎秒 atkRatePerSec ずつ線形に増加し続ける（上限なし）。
+// ＝「敵が時間とともに強くなる」。プレイヤーの防御・回避・ブロックはそのまま機能するため、
+// 弱体化ではなく純粋に敵が強い。速く倒す（火力）ほど激化前に決着でき、
+// 耐久を上げるほど激化に長く耐えられる＝火力×耐久のステータスチェック。
+export const DEMON_LORD_ENRAGE = {
+  graceSec: 50,
+  atkRatePerSec: 0.04,
+} as const;
+
+export const getEnemyEnrageAtkMult = (enemyId: string, elapsedSec: number): number => {
+  if (!isUberUberBoss(enemyId)) return 1;
+  if (getBaseBossId(enemyId) !== 'demon_lord') return 1;
+  const over = elapsedSec - DEMON_LORD_ENRAGE.graceSec;
+  if (over <= 0) return 1;
+  return 1 + over * DEMON_LORD_ENRAGE.atkRatePerSec;
 };
 
 export const getPlayerPoisonFromBoss = (
@@ -233,11 +255,12 @@ export const getPlayerPoisonFromBoss = (
 ): { damage: number; turns: number } | null => {
   const baseId = getBaseBossId(enemyId);
   const uber = isUberBoss(enemyId);
+  const uberUber = isUberUberBoss(enemyId);
   if (baseId === 'vampire') {
     return { damage: uber ? 120 : 80, turns: 5 };
   }
   if (baseId === 'demon_lord') {
-    return { damage: uber ? 180 : 120, turns: 6 };
+    return { damage: uberUber ? 300 : uber ? 180 : 120, turns: 6 };
   }
   return null;
 };

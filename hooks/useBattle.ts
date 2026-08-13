@@ -8,6 +8,7 @@ import {
   getDimensionalRushEnemy,
   getDimensionalCorridorEnemy,
   DIMENSIONAL_CORRIDOR_ID,
+  UBER_UBER_DUNGEON_IDS,
 } from '@/data/endContents';
 import { getRandomEnemy, getEnemy } from '@/data/enemies';
 import { tryUniqueDrop, rollDropCount, rollDropItems } from '@/data/items';
@@ -32,7 +33,7 @@ import { badgeRepository } from '@/db/repositories/badgeRepository';
 import { getUberBossClearBadgeId, DIMENSIONAL_BADGE_ID, DIMENSIONAL_BADGE_FLOOR } from '@/data/badges';
 import { calculateUberTreeEffects } from '@/data/uberTree';
 import { Analytics } from '@/lib/analytics';
-import { submitDimensionalCorridorScore, submitUberUberKrakenClearRecord } from '@/lib/ranking';
+import { submitDimensionalCorridorScore, submitUberUberClearRecord } from '@/lib/ranking';
 import { preloadBattleSounds, unloadBattleSounds, playBattleSound, playBattleBgm, stopBattleBgm, pauseBattleBgm, resumeBattleBgm } from '@/lib/sound';
 import {
   BASE_BOSS_BY_UBER,
@@ -40,7 +41,9 @@ import {
   getBaseBossId,
   DIMENSIONAL_RUSH_BOSS_IDS,
   DEBUG_DIMENSIONAL_DUNGEON_IDS,
+  isEndContentDungeon,
 } from '@/core/endContent';
+import { ENGRAVE_DEFS, ENGRAVE_DROP_CHANCE_BOSS, ENGRAVE_DROP_CHANCE_NORMAL } from '@/data/engraveMods';
 import i18n from '@/lib/i18n';
 import { isUniqueItem } from '@/utils/item';
 
@@ -129,6 +132,7 @@ const createBattleEnemy = (enemy: Enemy, dungeonId: string): BattleEnemy => ({
   attackSpeed: enemy.attackSpeed ?? 1.0,
   uniqueDrop: enemy.uniqueDrop,
   uniqueDrops: enemy.uniqueDrops,
+  isBoss: enemy.isBoss,
 });
 
 const buildMimicForDungeon = (dungeon: Dungeon): Enemy | undefined => {
@@ -1178,6 +1182,25 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number; pr
       })();
     }
 
+    // 刻印ドロップ（終焉以降のエンドコンテンツのみ・ボスは確定、通常敵は低確率）
+    const engraveChance = state.enemy.isBoss
+      ? ENGRAVE_DROP_CHANCE_BOSS
+      : ENGRAVE_DROP_CHANCE_NORMAL;
+    if (isEndContentDungeon(state.dungeonId) && Math.random() < engraveChance) {
+      const def = ENGRAVE_DEFS[Math.floor(Math.random() * ENGRAVE_DEFS.length)];
+      const engraveName = i18n.t(`engrave.mods.${def.id}`, { defaultValue: def.id });
+      void (async () => {
+        await settingsRepository.addEngraveStone(def.id);
+        dispatch({
+          type: 'ADD_LOG',
+          entry: {
+            message: i18n.t('battleLog.engraveDrop', { name: engraveName }),
+            type: 'victory',
+          },
+        });
+      })();
+    }
+
     handleMimicDefeat(state.enemy.id);
 
     // イグナイト伝染: 発火状態を次の敵に引き継ぐ
@@ -1678,10 +1701,10 @@ export const useBattle = (dungeonId: string, options?: { startFloor?: number; pr
           const uberBadgeId = getUberBossClearBadgeId(state.dungeonId);
           if (uberBadgeId && characterId) {
             const newlyAwarded = await badgeRepository.awardBadge(characterId, uberBadgeId);
-            // UberUberクラーケンを「そのキャラで初めて」クリアしたときだけ Firestore に記録
+            // UberUberボスを「そのキャラで初めて」クリアしたときだけ Firestore に記録
             // （バッジは1キャラ1回のみ付与されるため newlyAwarded が初回クリアの判定になる）
-            if (newlyAwarded && state.dungeonId === 'uber_uber_kraken') {
-              await submitUberUberKrakenClearRecord();
+            if (newlyAwarded && UBER_UBER_DUNGEON_IDS.includes(state.dungeonId)) {
+              await submitUberUberClearRecord(state.dungeonId);
             }
           }
         }

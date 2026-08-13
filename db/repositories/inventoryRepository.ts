@@ -129,6 +129,22 @@ export const inventoryRepository = {
   },
 
   /**
+   * インベントリ内アイテムを上書き更新（クラフト等でMODを書き換える用）。
+   * instanceId は維持したまま item_data を差し替える。
+   */
+  async updateItem(characterId: number, item: Item): Promise<boolean> {
+    const db = await getDatabase();
+    const result = await db.runAsync(
+      `UPDATE character_inventory SET item_data = ?
+       WHERE character_id = ? AND instance_id = ?`,
+      JSON.stringify(item),
+      characterId,
+      item.instanceId
+    );
+    return result.changes > 0;
+  },
+
+  /**
    * 特定のアイテムを取得
    */
   async getItem(characterId: number, instanceId: string): Promise<Item | null> {

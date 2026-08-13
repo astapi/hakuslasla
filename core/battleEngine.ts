@@ -34,6 +34,7 @@ import {
   getEnemyAtkMultiplier,
   getEnemyAttackSpeedMultiplier,
   getEnemyDamageReductionPct,
+  getEnemyEnrageAtkMult,
   getEnemyHpOnHit,
   getEnemyRegenPerSecond,
   getPlayerAtkMultiplier,
@@ -571,7 +572,9 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         let regenPerSecond = enemyRegenBase;
         const baseBossId = getBaseBossId(enemyId);
         const isUber = isUberBoss(enemyId);
-        if (baseBossId === 'demon_lord' && isUber && engine.bossEffects.demonCrown) {
+        // Uber魔王のみHP50%以下で再生2倍。UberUber魔王はエンレイジ（撃破制限時間）が
+        // 難易度の主軸のため、再生はフラットに保ち非単調な壁を作らない。
+        if (baseBossId === 'demon_lord' && isUber && !isUberUberBoss(enemyId) && engine.bossEffects.demonCrown) {
           regenPerSecond *= 2;
         }
         const nextEnemyHp = Math.min(
@@ -1128,7 +1131,12 @@ const advanceBattleEngineTicks = (engine: BattleEngineState, ticks: number): Bat
         engine.state.enemyPoisonStacks.length > 0,
         engine.state.enemyIgniteState !== null
       );
-      const enemyAttackMultiplier = engine.bossEffects.enemyAttackMult * engine.bossEffects.enemyNextAttackMult;
+      // UberUber魔王のエンレイジ（撃破制限時間）: 時間経過で攻撃倍率が増加し続ける
+      const enrageMult = isEndContent
+        ? getEnemyEnrageAtkMult(enemyId, engine.state.elapsedTicks / engine.config.ticksPerSecond)
+        : 1;
+      const enemyAttackMultiplier =
+        engine.bossEffects.enemyAttackMult * engine.bossEffects.enemyNextAttackMult * enrageMult;
       const rawEnemyDamage = Math.floor(enemyDamage * enemyAttackMultiplier);
       const totalEnemyDamage = Math.floor(rawEnemyDamage * engine.bossEffects.playerDamageTakenMult);
       const enemyHit = rollEnemyHit(engine.state.enemy.accuracy, engine.playerMods.evasion, engine.rng);

@@ -84,6 +84,8 @@ interface PlayerActions {
   removeFromInventory: (instanceId: string) => Promise<boolean>;
   // 複数アイテムをインベントリから削除
   removeItemsFromInventory: (instanceIds: string[]) => Promise<number>;
+  // アイテムを上書き更新（クラフト等でMODを書き換える）。インベントリ/装備中どちらも対応
+  updateItemInstance: (item: Item) => Promise<boolean>;
   // 計算されたステータスを取得
   getTotalStats: () => { maxHp: number; atk: number; def: number };
   // インベントリの最大容量を取得
@@ -466,6 +468,32 @@ export const usePlayerStore = create<PlayerState & PlayerActions>()((set, get) =
 
     set({
       inventory: state.inventory.filter((i) => i.instanceId !== instanceId),
+    });
+    return true;
+  },
+
+  updateItemInstance: async (item: Item): Promise<boolean> => {
+    const state = get();
+    if (!state.characterId) return false;
+
+    // 装備中か判定
+    const equippedSlot = (Object.keys(state.equipment) as EquipmentSlot[]).find(
+      (slot) => state.equipment[slot]?.instanceId === item.instanceId
+    );
+
+    if (equippedSlot) {
+      await equipmentRepository.equip(state.characterId, equippedSlot, item);
+      set({ equipment: { ...state.equipment, [equippedSlot]: item } });
+      return true;
+    }
+
+    // インベントリ内
+    const inInventory = state.inventory.some((i) => i.instanceId === item.instanceId);
+    if (!inInventory) return false;
+    const ok = await inventoryRepository.updateItem(state.characterId, item);
+    if (!ok) return false;
+    set({
+      inventory: state.inventory.map((i) => (i.instanceId === item.instanceId ? item : i)),
     });
     return true;
   },

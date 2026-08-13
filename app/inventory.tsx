@@ -11,7 +11,7 @@ import { EquipmentSlot, Item } from '@/types';
 import { getItemIcon, getSlotIcon } from '@/data/itemIcons';
 import { storageRepository } from '@/db/repositories/storageRepository';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
-import { getModDescription, getTierColor, getTierDisplayName } from '@/data/items';
+import { getModDescription, getModTierColor, getTierDisplayName } from '@/data/items';
 import { ms, fs } from '@/utils/scaling';
 import { UBER_BOSS_BY_BASE } from '@/data/endContents';
 import { calculatePassiveEffects } from '@/data/passiveTree';
@@ -115,8 +115,8 @@ function calculateItemStats(
     for (const mod of item.mods) {
       let desc = '';
       const tier = mod.tier ?? 10;  // 既存アイテムはデフォルトtier 10
-      const tierLabel = getTierDisplayName(tier);
-      const color = getTierColor(tier);
+      const tierLabel = mod.engraved ? t('engrave.tag', { defaultValue: '刻印' }) : getTierDisplayName(tier);
+      const color = getModTierColor(mod);
 
       switch (mod.type) {
         case 'atk_bonus':

@@ -175,6 +175,7 @@ export interface ItemMod {
   type: ModType;
   value: number;
   tier: number;  // 1〜10（1が最高、10が最低）
+  engraved?: boolean;  // 刻印クラフトで付与されたMOD（true時はティア表示を「刻印」にする / 1装備1つまで）
 }
 
 // Tier別の値範囲
@@ -401,6 +402,7 @@ export interface Enemy {
   accuracy?: number; // 命中精度（%）。プレイヤー攻撃は必中
   uniqueDrop: UniqueDrop | null; // モンスター固有ドロップ
   uniqueDrops?: UniqueDrop[]; // 複数ユニークドロップ（Uber用）
+  isBoss?: boolean; // ボスかどうか（刻印ドロップ率などの判定に使用）
 }
 
 // モンスター出現設定
@@ -508,6 +510,7 @@ export interface BattleEnemy {
   accuracy?: number;
   exp: number;
   attackSpeed: number; // 攻撃速度
+  isBoss?: boolean; // ボスかどうか（刻印ドロップ率などの判定に使用）
 }
 
 // 戦闘ログエントリ

@@ -183,6 +183,14 @@ export function getTierColor(tier: number): string {
   return '#AAAAAA';                      // 灰色（T9-T10）
 }
 
+/** 刻印MODのティア表示色（専用色で区別） */
+export const ENGRAVED_MOD_COLOR = '#FF7043';
+
+/** MODのティア表示色を取得（刻印なら専用色） */
+export function getModTierColor(mod: { tier: number; engraved?: boolean }): string {
+  return mod.engraved ? ENGRAVED_MOD_COLOR : getTierColor(mod.tier);
+}
+
 /**
  * 1戦闘あたりのドロップ設定
  */

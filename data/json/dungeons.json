@@ -1362,6 +1362,25 @@
       "modTierRange": { "minTier": 10, "maxTier": 1 },
       "modCountRange": { "min": 3, "max": 4 }
     },
+    "debug_uber_uber_demon_lord": {
+      "id": "debug_uber_uber_demon_lord",
+      "name": "DEBUG: UberUber 魔王",
+      "description": "デバッグ用。UberUber魔王が単体で出現する。チケット不要。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_uber_demon_lord", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_uber_demon_lord",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [],
+        "dungeon": []
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 3, "max": 4 }
+    },
     "dimensional_corridor": {
       "id": "dimensional_corridor",
       "name": "次元回廊",
@@ -1439,6 +1458,26 @@
       ],
       "boss": {
         "monsterId": "uber_uber_kraken",
+        "floor": 1
+      },
+      "dropTable": {
+        "common": [],
+        "dungeon": []
+      },
+      "modTierRange": { "minTier": 10, "maxTier": 1 },
+      "modCountRange": { "min": 3, "max": 4 },
+      "requiresTicket": true
+    },
+    "uber_uber_demon_lord": {
+      "id": "uber_uber_demon_lord",
+      "name": "UberUber 魔王",
+      "description": "全てのUberボスとUberUberボスを退けた者の前にのみ顕現する、次元を超えた魔王。凄まじい再生力を持ち、生半可な火力では傷一つ与えられない。",
+      "maxFloor": 1,
+      "monsters": [
+        { "monsterId": "uber_uber_demon_lord", "spawnRate": 100 }
+      ],
+      "boss": {
+        "monsterId": "uber_uber_demon_lord",
         "floor": 1
       },
       "dropTable": {

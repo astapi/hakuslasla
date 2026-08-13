@@ -144,6 +144,10 @@ export default function HomeScreen() {
     router.push('/storage');
   };
 
+  const handleOpenCraft = () => {
+    router.push('/craft' as '/home');
+  };
+
   const handleOpenPets = () => {
     router.push('/pets' as '/home');
   };
@@ -307,6 +311,17 @@ export default function HomeScreen() {
             <MaterialCommunityIcons name="treasure-chest" size={tabIconSize} color={colors.iconMuted} />
           </View>
           <Text style={styles.menuLabel}>{t('home.menu.storage')}</Text>
+        </Pressable>
+
+        <Pressable
+          style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
+          onPress={handleOpenCraft}
+          testID="home-menu-craft"
+        >
+          <View style={styles.menuIconContainer}>
+            <MaterialCommunityIcons name="hammer" size={tabIconSize} color={colors.iconMuted} />
+          </View>
+          <Text style={styles.menuLabel}>{t('home.menu.craft', { defaultValue: '刻印' })}</Text>
         </Pressable>
 
         <Pressable

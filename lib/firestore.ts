@@ -189,6 +189,13 @@ export const submitScore = async (params: {
  * 判別用に season フィールドをドキュメントへ持たせる。
  */
 export const UBER_UBER_KRAKEN_CLEARS_COLLECTION = 'uber_uber_kraken_clears';
+export const UBER_UBER_DEMON_LORD_CLEARS_COLLECTION = 'uber_uber_demon_lord_clears';
+
+/** UberUberボスのクリア記録を保存するコレクション名（ダンジョンID別） */
+export const UBER_UBER_CLEARS_COLLECTION_BY_DUNGEON: Record<string, string> = {
+  uber_uber_kraken: UBER_UBER_KRAKEN_CLEARS_COLLECTION,
+  uber_uber_demon_lord: UBER_UBER_DEMON_LORD_CLEARS_COLLECTION,
+};
 
 export interface UberClearEntry {
   deviceId: string;
@@ -204,10 +211,12 @@ export interface UberClearEntry {
 }
 
 /**
- * UberUberクラーケンの初回クリアを記録（初回クリア時のみ呼ぶこと）
+ * UberUberボスの初回クリアを記録（初回クリア時のみ呼ぶこと）
  * docId = `${deviceId}_${localCharId}` で1キャラ1ドキュメント。
+ * dungeonId ごとに専用コレクションへ保存する。
  */
-export const submitUberUberKrakenClear = async (params: {
+export const submitUberUberClear = async (params: {
+  dungeonId: string;
   localCharId: number;
   name: string;
   type: CharacterType;
@@ -216,6 +225,12 @@ export const submitUberUberKrakenClear = async (params: {
   stats: RankingStats;
   build: RankingBuild;
 }): Promise<void> => {
+  const collection = UBER_UBER_CLEARS_COLLECTION_BY_DUNGEON[params.dungeonId];
+  if (!collection) {
+    console.warn('[UberClear] Unknown UberUber dungeonId, skip submit:', params.dungeonId);
+    return;
+  }
+
   // 開発環境では送信しない
   if (__DEV__) {
     console.log('[UberClear] DEV mode - skip submit:', params);
@@ -230,7 +245,7 @@ export const submitUberUberKrakenClear = async (params: {
     localCharId: params.localCharId,
     name: params.name,
     type: params.type,
-    dungeonId: 'uber_uber_kraken',
+    dungeonId: params.dungeonId,
     level: params.level,
     season: params.season,
     stats: params.stats,
@@ -239,7 +254,7 @@ export const submitUberUberKrakenClear = async (params: {
   };
 
   const db = getFirestore();
-  const docRef = doc(db, UBER_UBER_KRAKEN_CLEARS_COLLECTION, docId);
+  const docRef = doc(db, collection, docId);
   await setDoc(docRef, entry);
 };
 

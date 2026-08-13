@@ -75,6 +75,7 @@ export const ITEM_ICONS: Record<string, ImageSourcePropType> = {
   uber_kraken_fin: require('@/assets/images/items/unique/uber_kraken_fin.png'),
   uber_kraken_shell: require('@/assets/images/items/unique/uber_kraken_shell.png'),
   uber_kraken_tentacle: require('@/assets/images/items/unique/uber_kraken_tentacle.png'),
+  uber_uber_demon_sigil: require('@/assets/images/items/unique/uber_demon_crown.png'),
   uber_uber_double_strike_ring: require('@/assets/images/items/unique/uber_uber_double_strike_ring.png'),
   uber_uber_goblin_stomp: require('@/assets/images/items/unique/uber_uber_goblin_stomp.png'),
   uber_uber_kraken_mantle: require('@/assets/images/items/unique/uber_uber_kraken_mantle.png'),

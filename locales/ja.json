@@ -17,7 +17,8 @@
     "none": "なし",
     "unequipped": "未装備",
     "items": "個",
-    "ticket": "入場券"
+    "ticket": "入場券",
+    "all": "すべて"
   },
   "characterSelect": {
     "title": "LootDive",
@@ -63,7 +64,8 @@
       "encyclopedia": "図鑑",
       "shop": "ショップ",
       "uberTree": "Uber",
-      "pets": "ペット"
+      "pets": "ペット",
+      "craft": "刻印"
     },
     "renameCharacter": "キャラクター名を変更"
   },
@@ -639,6 +641,10 @@
     "uber_true_final_boss": {
       "name": "Uber 終焉の王",
       "description": "真の終焉をもたらす存在。"
+    },
+    "uber_uber_demon_lord": {
+      "name": "UberUber 魔王",
+      "description": "全てのUberボスとUberUberボスを退けた者の前にのみ顕現する、次元を超えた魔王。凄まじい再生力を持ち、生半可な火力では傷一つ与えられない。"
     }
   },
   "items": {
@@ -1735,6 +1741,9 @@
     },
     "uber_true_final_boss": {
       "name": "Uber 終焉の王"
+    },
+    "uber_uber_demon_lord": {
+      "name": "UberUber 魔王"
     }
   },
   "skills": {
@@ -1827,7 +1836,9 @@
       "blackFlame": "黒炎の刻印",
       "blackFlameDesc": "ダメージ軽減+10%（永続、HP50%以下で発動）",
       "crown": "破滅の冠",
-      "crownDesc": "攻撃時HP回復効果が有効化（HP50%以下で発動）"
+      "crownDesc": "攻撃時HP回復効果が有効化（HP50%以下で発動）",
+      "infernalWrath": "滅びの刻限",
+      "infernalWrathDesc": "一定時間経過後、魔王の攻撃が時間とともに際限なく激化していく。速く倒し切れなければ、いずれどんな強者も滅ぼされる"
     },
     "true_final_boss": {
       "name": "終焉",
@@ -1886,7 +1897,8 @@
     "kingSlamHit": "【キングスラム】炸裂！ {{enemy}}に{{damage}}ダメージ！",
     "twinBladeHit": "【双撃の刃】追撃！ {{enemy}}に{{damage}}ダメージ！",
     "royalRoar": "【王の咆哮】発動！ 毒・チルを解除した！",
-    "evaded": "{{enemy}}の攻撃を回避！"
+    "evaded": "{{enemy}}の攻撃を回避！",
+    "engraveDrop": "{{name}}の刻印を入手！"
   },
   "passiveTree": {
     "title": "パッシブツリー",
@@ -3694,7 +3706,11 @@
     },
     "earned": "獲得済み",
     "notEarned": "未獲得",
-    "newBadge": "新しいバッジを獲得！"
+    "newBadge": "新しいバッジを獲得！",
+    "uber_uber_demon_lord": {
+      "name": "次元の魔を統べる者",
+      "description": "UberUber魔王を撃破"
+    }
   },
   "uberTree": {
     "title": "Uberツリー",
@@ -3716,5 +3732,43 @@
     "updateButton": "アップデート",
     "maintenanceTitle": "メンテナンス中",
     "maintenanceMessage": "現在メンテナンス中です。\nしばらくお待ちください。"
+  },
+  "engrave": {
+    "title": "刻印クラフト",
+    "hint": "レア装備に狙ったMODを1つ彫り込む（1装備につき1つ・ユニーク不可）",
+    "tag": "刻印",
+    "apply": "刻印する",
+    "applied": "刻印しました！",
+    "replaceHint": "MODが4つ埋まっています。置き換えるMODを選んでください",
+    "section": {
+      "stones": "① 刻印を選ぶ",
+      "items": "② 装備を選ぶ",
+      "preview": "③ プレビュー"
+    },
+    "empty": {
+      "stones": "刻印を持っていません（終焉以降のダンジョンでドロップ）",
+      "items": "この刻印を彫れるレア装備がありません"
+    },
+    "error": {
+      "already": "この装備は既に刻印済みです",
+      "unique": "ユニーク装備には刻印できません",
+      "slot": "このスロットには彫れません",
+      "generic": "刻印できませんでした",
+      "noStone": "刻印が足りません"
+    },
+    "mods": {
+      "hp_on_hit": "HIT時回復",
+      "evasion_increased_pct": "回避率",
+      "hp_regen_to_atk_pct": "回復→ATK変換",
+      "ignite_damage_pct": "発火ダメージ",
+      "atk_increased_pct": "ATK増加",
+      "critical_damage": "クリダメージ",
+      "hp_bonus": "最大HP",
+      "def_increased_pct": "DEF増加",
+      "attack_speed_pct": "攻撃速度",
+      "hp_regen": "HP自動回復",
+      "damage_reduction_pct": "ダメージ軽減",
+      "evasion": "回避"
+    }
   }
 }

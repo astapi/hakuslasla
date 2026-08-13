@@ -34,6 +34,7 @@ export const DEBUG_DUNGEON_IDS: string[] = [
   'debug_dimensional_true_final_boss',
   'debug_uber_uber_goblin_king',
   'debug_uber_uber_bandit_leader',
+  'debug_uber_uber_demon_lord',
 ];
 
 // ダンジョンリスト（選択画面用）

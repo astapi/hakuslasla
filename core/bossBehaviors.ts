@@ -195,6 +195,19 @@ export const createBossIntroEvents = (
     };
   }
 
+  // UberUber魔王: フリーズ耐性50%
+  // 「滅びの刻限（エンレイジ）」が難易度の主軸のため、
+  // フリーズで拘束し続けて時間制限を無効化されるのを防ぐ。
+  // 半減であり無効化ではないので、氷結ビルドの強みは残る。
+  if (isUberUberBoss(enemyId) && getBaseBossId(enemyId) === 'demon_lord') {
+    return {
+      events,
+      initBossEffects: {
+        enemyFreezeResistPct: 50,
+      },
+    };
+  }
+
   return { events };
 };
 
