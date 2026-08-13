@@ -511,6 +511,89 @@ export const migrations: Migration[] = [
       }
     },
   },
+  {
+    // V15 → V16: 壊れたパッシブツリーの修復
+    //
+    // 旧 canRefundNode は「直接の子の前提条件」しか見ておらず、S3ツリーで
+    // requiredNodes に OR 条件が入ったことで、返却により
+    // 「スタートから到達できない浮島ノード」が発生していた。
+    // （記録済みクリアデータの約1/3が、ルール上ありえない構成になっていた）
+    //
+    // 判定ロジックは data/passiveTree.ts 側で修正済み。ここでは既存セーブを救済する:
+    //   - 全キャラのパッシブを検証し、スタートから到達できない構成のキャラは
+    //     パッシブを全リセット（ステータスもクラス基礎値+レベル分に戻す）
+    //   - 失ったスキルポイントは全額返還
+    //   - 影響の有無に関わらず、お詫びとしてリスペックトークンを80個付与
+    version: 16,
+    migrate: async (db: SQLite.SQLiteDatabase) => {
+      // 動的 import: マイグレーションはアプリ起動時に走るため、
+      // ツリー計算モジュールを都度読み込む（React 非依存なので安全）
+      const {
+        isConnectedFromStart,
+        setActivePassiveClass,
+        setActivePassiveSeason,
+        calculatePassiveEffects,
+      } = await import('@/data/passiveTree');
+      const { CLASS_INITIAL_STATS } = await import('@/core/player');
+
+      const characters = await db.getAllAsync<{
+        id: number;
+        type: string;
+        level: number;
+        season: number;
+        skill_points: number;
+      }>('SELECT id, type, level, season, skill_points FROM characters');
+
+      for (const ch of characters) {
+        const rows = await db.getAllAsync<{ skill_id: string }>(
+          'SELECT skill_id FROM character_skills WHERE character_id = ?',
+          ch.id
+        );
+        const unlocked = rows.map((r) => r.skill_id);
+        if (unlocked.length === 0) continue;
+
+        // そのキャラのシーズン/クラスのツリーで検証する
+        setActivePassiveSeason(ch.season);
+        setActivePassiveClass(ch.type as never);
+
+        if (isConnectedFromStart(unlocked)) continue;
+
+        // 壊れている → パッシブを全リセット
+        await db.runAsync('DELETE FROM character_skills WHERE character_id = ?', ch.id);
+
+        // ステータスをクラス基礎値+レベル分に戻す（refundSkill と同じ式）
+        const classStats = CLASS_INITIAL_STATS[ch.type as keyof typeof CLASS_INITIAL_STATS];
+        const empty = calculatePassiveEffects([]);
+        const maxHp = classStats.maxHp + (ch.level - 1) * 5 + empty.hp;
+        const atk = classStats.atk + empty.atk;
+        const def = classStats.def + empty.def;
+
+        // 消費済みのスキルポイントを全額返還
+        const restoredPoints = ch.skill_points + unlocked.length;
+
+        await db.runAsync(
+          'UPDATE characters SET skill_points = ?, max_hp = ?, atk = ?, def = ? WHERE id = ?',
+          restoredPoints,
+          maxHp,
+          atk,
+          def,
+          ch.id
+        );
+      }
+
+      // リスペックトークンを80個付与（全プレイヤー共通・既存保有分に加算）
+      const tokenRow = await db.getFirstAsync<{ value: string }>(
+        "SELECT value FROM game_settings WHERE key = 'respec_tokens'"
+      );
+      const current = tokenRow ? parseInt(tokenRow.value, 10) : 0;
+      const next = (Number.isFinite(current) ? current : 0) + 80;
+      await db.runAsync(
+        `INSERT INTO game_settings (key, value) VALUES ('respec_tokens', ?)
+         ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+        String(next)
+      );
+    },
+  },
 ];
 
 /**

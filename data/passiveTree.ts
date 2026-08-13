@@ -228,9 +228,39 @@ export function canUnlockNode(nodeId: string, unlockedNodes: string[]): boolean 
 }
 
 /**
+ * 取得済みノード集合が「スタートから順に取得していける構成か」を判定する。
+ * スタートから canUnlockNode を満たすノードを貪欲に辿り、全ノードに到達できれば true。
+ *
+ * requiredNodes は OR 条件を含むため「直接の親が残っているか」だけでは不十分で、
+ * 親側が丸ごとスタートから切り離されていると浮島（到達不能な集合）が生まれる。
+ * そのためグローバルな到達可能性で検証する。
+ */
+export function isConnectedFromStart(unlockedNodes: string[]): boolean {
+  const start = getStartNodeId();
+  if (!unlockedNodes.includes(start)) return unlockedNodes.length === 0;
+
+  const reached: string[] = [start];
+  const reachedSet = new Set(reached);
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const id of unlockedNodes) {
+      if (reachedSet.has(id)) continue;
+      if (canUnlockNode(id, reached)) {
+        reached.push(id);
+        reachedSet.add(id);
+        changed = true;
+      }
+    }
+  }
+  return reachedSet.size === new Set(unlockedNodes).size;
+}
+
+/**
  * ノードがリスペック（返却）可能か判定
  * - スタートノードは返却不可
- * - 依存している取得済みノードがある場合は返却不可
+ * - 返却後も、残る取得済みノードが全てスタートから到達可能である必要がある
+ *   （OR条件により「直接の親」だけ見ると浮島が発生するため、全体の連結性で判定）
  */
 export function canRefundNode(nodeId: string, unlockedNodes: string[]): boolean {
   const node = getPassiveNode(nodeId);
@@ -240,16 +270,7 @@ export function canRefundNode(nodeId: string, unlockedNodes: string[]): boolean 
   if (!unlockedNodes.includes(nodeId)) return false;
 
   const remaining = unlockedNodes.filter((id) => id !== nodeId);
-  for (const childId of node.childNodes) {
-    if (!remaining.includes(childId)) continue;
-    const childNode = getPassiveNode(childId);
-    if (!childNode) continue;
-    if (!areRequirementsMet(childNode, remaining)) {
-      return false;
-    }
-  }
-
-  return true;
+  return isConnectedFromStart(remaining);
 }
 
 /**
