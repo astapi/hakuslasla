@@ -17,7 +17,8 @@
     "none": "Aucun",
     "unequipped": "Vide",
     "items": "objets",
-    "ticket": "Ticket"
+    "ticket": "Ticket",
+    "all": "Tous"
   },
   "characterSelect": {
     "title": "LootDive",
@@ -63,7 +64,8 @@
       "encyclopedia": "Archives",
       "shop": "Boutique",
       "uberTree": "Uber",
-      "pets": "Familiers"
+      "pets": "Familiers",
+      "craft": "Gravure"
     },
     "renameCharacter": "Renommer le personnage"
   },
@@ -639,6 +641,10 @@
     "uber_true_final_boss": {
       "name": "Uber Vrai Boss Final",
       "description": "L'être qui apporte les véritables fins."
+    },
+    "uber_uber_demon_lord": {
+      "name": "UberUber Seigneur Démon",
+      "description": "Un seigneur démon au-delà des dimensions, qui n'apparaît que devant ceux ayant repoussé tous les boss Uber et UberUber. Sa régénération monstrueuse ignore tout sauf la plus puissante offensive."
     }
   },
   "items": {
@@ -1830,7 +1836,9 @@
       "blackFlame": "Marque de flamme noire",
       "blackFlameDesc": "+10% de réduction de dégâts de façon permanente (se déclenche sous 50% HP)",
       "crown": "Couronne de ruine",
-      "crownDesc": "Active la récupération de HP par coup (se déclenche sous 50% HP)"
+      "crownDesc": "Active la récupération de HP par coup (se déclenche sous 50% HP)",
+      "infernalWrath": "L'Heure de la Ruine",
+      "infernalWrathDesc": "Passé un délai de grâce, ses attaques s'intensifient sans fin. Si vous ne l'abattez pas vite, même le plus puissant sera détruit."
     },
     "true_final_boss": {
       "name": "Fin",
@@ -1889,7 +1897,8 @@
     "evaded": "Attaque de {{enemy}} esquivée !",
     "blocked": "Bloqué ! Vous avez stoppé l’attaque de {{enemy}} !",
     "chillAppliedPlayer": "Le joueur est ralenti ! Vitesse d’attaque réduite !",
-    "freezeAppliedPlayer": "Le joueur est gelé ! Incapable d’agir !"
+    "freezeAppliedPlayer": "Le joueur est gelé ! Incapable d’agir !",
+    "engraveDrop": "Gravure {{name}} obtenue !"
   },
   "passiveTree": {
     "title": "Arbre passif",
@@ -3697,7 +3706,11 @@
     },
     "earned": "Obtenu",
     "notEarned": "Non obtenu",
-    "newBadge": "Nouveau badge obtenu !"
+    "newBadge": "Nouveau badge obtenu !",
+    "uber_uber_demon_lord": {
+      "name": "Souverain du Démon Dimensionnel",
+      "description": "Vaincu le UberUber Seigneur Démon"
+    }
   },
   "uberTree": {
     "title": "Arbre Uber",
@@ -3719,5 +3732,43 @@
     "updateButton": "Mettre à jour",
     "maintenanceTitle": "Maintenance en cours",
     "maintenanceMessage": "L'application est en maintenance.\nVeuillez réessayer plus tard."
+  },
+  "engrave": {
+    "title": "Gravure",
+    "hint": "Grave un mod choisi sur un objet rare (un par objet, uniques exclus)",
+    "tag": "Gravure",
+    "apply": "Graver",
+    "applied": "Gravé !",
+    "replaceHint": "Les 4 emplacements de mods sont pleins. Choisissez un mod à remplacer.",
+    "section": {
+      "stones": "1. Choisir une gravure",
+      "items": "2. Choisir un objet",
+      "preview": "3. Aperçu"
+    },
+    "empty": {
+      "stones": "Vous n'avez aucune gravure (butin des donjons après la fin)",
+      "items": "Aucun objet rare ne peut recevoir cette gravure"
+    },
+    "error": {
+      "already": "Cet objet est déjà gravé",
+      "unique": "Impossible de graver les objets uniques",
+      "slot": "Ce mod ne va pas sur cet emplacement",
+      "generic": "Échec de la gravure",
+      "noStone": "Pas assez de gravures"
+    },
+    "mods": {
+      "hp_on_hit": "PV par coup",
+      "evasion_increased_pct": "Esquive %",
+      "hp_regen_to_atk_pct": "Régén. vers ATQ",
+      "ignite_damage_pct": "Dégâts d'embrasement",
+      "atk_increased_pct": "ATQ augmentée",
+      "critical_damage": "Dégâts critiques",
+      "hp_bonus": "PV max",
+      "def_increased_pct": "DÉF augmentée",
+      "attack_speed_pct": "Vitesse d'attaque",
+      "hp_regen": "Régén. de PV",
+      "damage_reduction_pct": "Réduction de dégâts",
+      "evasion": "Esquive"
+    }
   }
 }

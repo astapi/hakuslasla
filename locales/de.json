@@ -17,7 +17,8 @@
     "none": "Keine",
     "unequipped": "Leer",
     "items": "Gegenstände",
-    "ticket": "Ticket"
+    "ticket": "Ticket",
+    "all": "Alle"
   },
   "characterSelect": {
     "title": "LootDive",
@@ -63,7 +64,8 @@
       "encyclopedia": "Archiv",
       "shop": "Shop",
       "uberTree": "Uber",
-      "pets": "Haustiere"
+      "pets": "Haustiere",
+      "craft": "Gravur"
     },
     "renameCharacter": "Charakter umbenennen"
   },
@@ -639,6 +641,10 @@
     "uber_true_final_boss": {
       "name": "Uber Wahrer Endboss",
       "description": "Das Wesen, das wahre Enden bringt."
+    },
+    "uber_uber_demon_lord": {
+      "name": "UberUber Dämonenherrscher",
+      "description": "Ein Dämonenherrscher jenseits der Dimensionen, der nur vor jenen erscheint, die alle Uber- und UberUber-Bosse bezwungen haben. Seine monströse Regeneration trotzt allem außer dem mächtigsten Ansturm."
     }
   },
   "items": {
@@ -1830,7 +1836,9 @@
       "blackFlame": "Schwarzflammenmal",
       "blackFlameDesc": "+10% Schadensreduzierung permanent (unter 50% HP)",
       "crown": "Krone des Ruins",
-      "crownDesc": "Aktiviert HP-Heilung bei Treffer (unter 50% HP)"
+      "crownDesc": "Aktiviert HP-Heilung bei Treffer (unter 50% HP)",
+      "infernalWrath": "Stunde des Untergangs",
+      "infernalWrathDesc": "Nach einer Schonfrist eskalieren seine Angriffe endlos mit der Zeit. Wer ihn nicht schnell niederstreckt, wird selbst als Stärkster vernichtet."
     },
     "true_final_boss": {
       "name": "Ende",
@@ -1889,7 +1897,8 @@
     "twinBladeHit": "[Zwillingsklinge] Folgeangriff! {{damage}} Schaden an {{enemy}}!",
     "royalRoar": "[Königsruf] aktiviert! Gift und Kälte entfernt!",
     "evaded": "Angriff von {{enemy}} ausgewichen!",
-    "blocked": "Geblockt! Du hast den Angriff von {{enemy}} gestoppt!"
+    "blocked": "Geblockt! Du hast den Angriff von {{enemy}} gestoppt!",
+    "engraveDrop": "{{name}}-Gravur erhalten!"
   },
   "passiveTree": {
     "title": "Passiver Baum",
@@ -3697,7 +3706,11 @@
     },
     "earned": "Erhalten",
     "notEarned": "Nicht erhalten",
-    "newBadge": "Neues Abzeichen erhalten!"
+    "newBadge": "Neues Abzeichen erhalten!",
+    "uber_uber_demon_lord": {
+      "name": "Herrscher über den dimensionalen Dämon",
+      "description": "Den UberUber Dämonenherrscher besiegt"
+    }
   },
   "uberTree": {
     "title": "Uber-Baum",
@@ -3719,5 +3732,43 @@
     "updateButton": "Aktualisieren",
     "maintenanceTitle": "Wartungsarbeiten",
     "maintenanceMessage": "Die App wird gerade gewartet.\nBitte versuche es später erneut."
+  },
+  "engrave": {
+    "title": "Gravur",
+    "hint": "Graviert einen gewählten Mod auf einen seltenen Gegenstand (einer pro Gegenstand, Uniques ausgeschlossen)",
+    "tag": "Gravur",
+    "apply": "Gravieren",
+    "applied": "Graviert!",
+    "replaceHint": "Alle 4 Mod-Plätze sind belegt. Wähle einen Mod zum Ersetzen.",
+    "section": {
+      "stones": "1. Gravur wählen",
+      "items": "2. Gegenstand wählen",
+      "preview": "3. Vorschau"
+    },
+    "empty": {
+      "stones": "Du hast keine Gravuren (Beute aus Endgame-Dungeons)",
+      "items": "Kein seltener Gegenstand nimmt diese Gravur an"
+    },
+    "error": {
+      "already": "Dieser Gegenstand ist bereits graviert",
+      "unique": "Uniques können nicht graviert werden",
+      "slot": "Dieser Mod passt nicht auf diesen Platz",
+      "generic": "Gravur fehlgeschlagen",
+      "noStone": "Nicht genug Gravuren"
+    },
+    "mods": {
+      "hp_on_hit": "LP bei Treffer",
+      "evasion_increased_pct": "Ausweichen %",
+      "hp_regen_to_atk_pct": "Regen. zu ANG",
+      "ignite_damage_pct": "Entzündungsschaden",
+      "atk_increased_pct": "ANG erhöht",
+      "critical_damage": "Kritischer Schaden",
+      "hp_bonus": "Max. LP",
+      "def_increased_pct": "VER erhöht",
+      "attack_speed_pct": "Angriffstempo",
+      "hp_regen": "LP-Regeneration",
+      "damage_reduction_pct": "Schadensreduktion",
+      "evasion": "Ausweichen"
+    }
   }
 }

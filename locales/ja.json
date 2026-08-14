@@ -645,6 +645,46 @@
     "uber_uber_demon_lord": {
       "name": "UberUber 魔王",
       "description": "全てのUberボスとUberUberボスを退けた者の前にのみ顕現する、次元を超えた魔王。凄まじい再生力を持ち、生半可な火力では傷一つ与えられない。"
+    },
+    "debug_dimensional_goblin_king": {
+      "name": "DEBUG: 異次元ゴブリンキング",
+      "description": "デバッグ用。異次元ラッシュ50階のゴブリンキングが単体で出現する。"
+    },
+    "debug_dimensional_bandit_leader": {
+      "name": "DEBUG: 異次元盗賊の頭",
+      "description": "デバッグ用。異次元ラッシュ70階の盗賊の頭が単体で出現する。"
+    },
+    "debug_dimensional_vampire": {
+      "name": "DEBUG: 異次元ヴァンパイア",
+      "description": "デバッグ用。異次元ラッシュ90階のヴァンパイアが単体で出現する。"
+    },
+    "debug_dimensional_kraken": {
+      "name": "DEBUG: 異次元クラーケン",
+      "description": "デバッグ用。異次元ラッシュ110階のクラーケンが単体で出現する。"
+    },
+    "debug_dimensional_demon_lord": {
+      "name": "DEBUG: 異次元魔王",
+      "description": "デバッグ用。異次元ラッシュ120階の魔王が単体で出現する。"
+    },
+    "debug_dimensional_true_final_boss": {
+      "name": "DEBUG: 異次元真の最終ボス",
+      "description": "デバッグ用。異次元ラッシュ200階の真の最終ボスが単体で出現する。"
+    },
+    "debug_uber_uber_goblin_king": {
+      "name": "DEBUG: UberUber ゴブリンキング",
+      "description": "デバッグ用。UberUberゴブリンキングが単体で出現する。チケット不要。"
+    },
+    "debug_uber_uber_bandit_leader": {
+      "name": "DEBUG: UberUber 盗賊の頭",
+      "description": "デバッグ用。UberUber盗賊の頭が単体で出現する。チケット不要。"
+    },
+    "debug_uber_uber_kraken": {
+      "name": "DEBUG: UberUber クラーケン",
+      "description": "デバッグ用。UberUberクラーケンが単体で出現する。チケット不要。"
+    },
+    "debug_uber_uber_demon_lord": {
+      "name": "DEBUG: UberUber 魔王",
+      "description": "デバッグ用。UberUber魔王が単体で出現する。チケット不要。"
     }
   },
   "items": {

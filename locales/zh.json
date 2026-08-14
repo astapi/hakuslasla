@@ -17,7 +17,8 @@
     "none": "无",
     "unequipped": "空",
     "items": "件物品",
-    "ticket": "入场券"
+    "ticket": "入场券",
+    "all": "全部"
   },
   "characterSelect": {
     "title": "LootDive",
@@ -63,7 +64,8 @@
       "encyclopedia": "图鉴",
       "shop": "商店",
       "uberTree": "Uber",
-      "pets": "宠物"
+      "pets": "宠物",
+      "craft": "刻印"
     },
     "renameCharacter": "重命名角色"
   },
@@ -639,6 +641,10 @@
     "uber_true_final_boss": {
       "name": "Uber 真·最终Boss",
       "description": "带来真正终结的存在。"
+    },
+    "uber_uber_demon_lord": {
+      "name": "UberUber 魔王",
+      "description": "只在击退所有Uber与UberUber首领者面前显现的超越次元的魔王。拥有惊人的再生力，半吊子的火力无法伤其分毫。"
     }
   },
   "items": {
@@ -1830,7 +1836,9 @@
       "blackFlame": "黑焰印记",
       "blackFlameDesc": "永久获得+10%减伤（HP低于50%时触发）",
       "crown": "毁灭之冠",
-      "crownDesc": "启用命中回复HP（HP低于50%时触发）"
+      "crownDesc": "启用命中回复HP（HP低于50%时触发）",
+      "infernalWrath": "灭亡之刻",
+      "infernalWrathDesc": "经过一定时间后，魔王的攻击将随时间无止境地激化。若不能迅速击倒，再强的强者也终将被毁灭"
     },
     "true_final_boss": {
       "name": "终结",
@@ -1889,7 +1897,8 @@
     "evaded": "闪避了{{enemy}}的攻击！",
     "blocked": "格挡！你挡住了{{enemy}}的攻击！",
     "chillAppliedPlayer": "玩家陷入寒冷状态！攻击速度下降！",
-    "freezeAppliedPlayer": "玩家被冻结！无法行动！"
+    "freezeAppliedPlayer": "玩家被冻结！无法行动！",
+    "engraveDrop": "获得了{{name}}的刻印！"
   },
   "passiveTree": {
     "title": "被动技能树",
@@ -3697,7 +3706,11 @@
     },
     "earned": "已获得",
     "notEarned": "未获得",
-    "newBadge": "获得了新徽章！"
+    "newBadge": "获得了新徽章！",
+    "uber_uber_demon_lord": {
+      "name": "统御次元之魔者",
+      "description": "击败UberUber魔王"
+    }
   },
   "uberTree": {
     "title": "Uber天赋树",
@@ -3719,5 +3732,43 @@
     "updateButton": "更新",
     "maintenanceTitle": "维护中",
     "maintenanceMessage": "应用正在维护中。\n请稍后再试。"
+  },
+  "engrave": {
+    "title": "刻印制作",
+    "hint": "在稀有装备上刻入一个指定MOD（每件装备1个·传奇不可）",
+    "tag": "刻印",
+    "apply": "刻印",
+    "applied": "刻印成功！",
+    "replaceHint": "MOD已满4个。请选择要替换的MOD",
+    "section": {
+      "stones": "① 选择刻印",
+      "items": "② 选择装备",
+      "preview": "③ 预览"
+    },
+    "empty": {
+      "stones": "没有刻印（在终焉之后的地下城掉落）",
+      "items": "没有可刻印的稀有装备"
+    },
+    "error": {
+      "already": "该装备已被刻印",
+      "unique": "传奇装备无法刻印",
+      "slot": "该部位无法刻入",
+      "generic": "刻印失败",
+      "noStone": "刻印不足"
+    },
+    "mods": {
+      "hp_on_hit": "命中回复",
+      "evasion_increased_pct": "闪避率",
+      "hp_regen_to_atk_pct": "回复转ATK",
+      "ignite_damage_pct": "点燃伤害",
+      "atk_increased_pct": "ATK提升",
+      "critical_damage": "暴击伤害",
+      "hp_bonus": "最大HP",
+      "def_increased_pct": "DEF提升",
+      "attack_speed_pct": "攻击速度",
+      "hp_regen": "HP自动回复",
+      "damage_reduction_pct": "伤害减免",
+      "evasion": "闪避"
+    }
   }
 }

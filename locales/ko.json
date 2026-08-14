@@ -17,7 +17,8 @@
     "none": "없음",
     "unequipped": "비어 있음",
     "items": "아이템",
-    "ticket": "티켓"
+    "ticket": "티켓",
+    "all": "전체"
   },
   "characterSelect": {
     "title": "LootDive",
@@ -63,7 +64,8 @@
       "encyclopedia": "도감",
       "shop": "상점",
       "uberTree": "Uber",
-      "pets": "펫"
+      "pets": "펫",
+      "craft": "각인"
     },
     "renameCharacter": "캐릭터 이름 변경"
   },
@@ -639,6 +641,10 @@
     "uber_true_final_boss": {
       "name": "Uber 진정한 최종 보스",
       "description": "진정한 종말을 가져오는 존재."
+    },
+    "uber_uber_demon_lord": {
+      "name": "UberUber 마왕",
+      "description": "모든 Uber 및 UberUber 보스를 물리친 자 앞에만 나타나는, 차원을 초월한 마왕. 엄청난 재생력을 지녀 어설픈 화력으로는 상처 하나 낼 수 없다."
     }
   },
   "items": {
@@ -1830,7 +1836,9 @@
       "blackFlame": "흑염의 표식",
       "blackFlameDesc": "영구적으로 피해 감소 +10% (HP 50% 이하에서 발동)",
       "crown": "파멸의 왕관",
-      "crownDesc": "적중 시 HP 회복 활성화 (HP 50% 이하에서 발동)"
+      "crownDesc": "적중 시 HP 회복 활성화 (HP 50% 이하에서 발동)",
+      "infernalWrath": "멸망의 시각",
+      "infernalWrathDesc": "일정 시간이 지나면 마왕의 공격이 시간이 갈수록 끝없이 격화된다. 빠르게 쓰러뜨리지 못하면 어떤 강자라도 결국 멸망한다"
     },
     "true_final_boss": {
       "name": "종말",
@@ -1889,7 +1897,8 @@
     "evaded": "{{enemy}}의 공격을 회피!",
     "blocked": "블록! {{enemy}}의 공격을 막았다!",
     "chillAppliedPlayer": "플레이어가 냉각 상태가 되었다! 공격 속도 감소!",
-    "freezeAppliedPlayer": "플레이어가 빙결 상태가 되었다! 행동 불가!"
+    "freezeAppliedPlayer": "플레이어가 빙결 상태가 되었다! 행동 불가!",
+    "engraveDrop": "{{name}} 각인을 획득!"
   },
   "passiveTree": {
     "title": "패시브 트리",
@@ -3697,7 +3706,11 @@
     },
     "earned": "획득 완료",
     "notEarned": "미획득",
-    "newBadge": "새로운 뱃지를 획득했습니다!"
+    "newBadge": "새로운 뱃지를 획득했습니다!",
+    "uber_uber_demon_lord": {
+      "name": "차원의 마를 다스리는 자",
+      "description": "UberUber 마왕 격파"
+    }
   },
   "uberTree": {
     "title": "Uber 트리",
@@ -3719,5 +3732,43 @@
     "updateButton": "업데이트",
     "maintenanceTitle": "점검 중",
     "maintenanceMessage": "현재 점검 중입니다.\n잠시 후 다시 시도해 주세요."
+  },
+  "engrave": {
+    "title": "각인 제작",
+    "hint": "레어 장비에 원하는 MOD를 하나 새깁니다 (장비당 1개·유니크 불가)",
+    "tag": "각인",
+    "apply": "각인하기",
+    "applied": "각인했습니다!",
+    "replaceHint": "MOD가 4개 모두 찼습니다. 교체할 MOD를 선택하세요",
+    "section": {
+      "stones": "① 각인 선택",
+      "items": "② 장비 선택",
+      "preview": "③ 미리보기"
+    },
+    "empty": {
+      "stones": "각인을 가지고 있지 않습니다 (종언 이후 던전에서 드롭)",
+      "items": "이 각인을 새길 수 있는 레어 장비가 없습니다"
+    },
+    "error": {
+      "already": "이 장비는 이미 각인되었습니다",
+      "unique": "유니크 장비에는 각인할 수 없습니다",
+      "slot": "이 슬롯에는 새길 수 없습니다",
+      "generic": "각인에 실패했습니다",
+      "noStone": "각인이 부족합니다"
+    },
+    "mods": {
+      "hp_on_hit": "적중 시 회복",
+      "evasion_increased_pct": "회피율",
+      "hp_regen_to_atk_pct": "회복→ATK 변환",
+      "ignite_damage_pct": "발화 피해",
+      "atk_increased_pct": "ATK 증가",
+      "critical_damage": "치명타 피해",
+      "hp_bonus": "최대 HP",
+      "def_increased_pct": "DEF 증가",
+      "attack_speed_pct": "공격 속도",
+      "hp_regen": "HP 자동 회복",
+      "damage_reduction_pct": "피해 감소",
+      "evasion": "회피"
+    }
   }
 }

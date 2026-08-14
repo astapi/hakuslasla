@@ -17,7 +17,8 @@
     "none": "Ninguno",
     "unequipped": "Vacío",
     "items": "objetos",
-    "ticket": "Ticket"
+    "ticket": "Ticket",
+    "all": "Todos"
   },
   "characterSelect": {
     "title": "LootDive",
@@ -63,7 +64,8 @@
       "encyclopedia": "Archivo",
       "shop": "Tienda",
       "uberTree": "Uber",
-      "pets": "Mascotas"
+      "pets": "Mascotas",
+      "craft": "Grabado"
     },
     "renameCharacter": "Renombrar Personaje"
   },
@@ -639,6 +641,10 @@
     "uber_true_final_boss": {
       "name": "Uber Jefe Final Verdadero",
       "description": "El ser que trae finales verdaderos."
+    },
+    "uber_uber_demon_lord": {
+      "name": "UberUber Señor Demonio",
+      "description": "Un señor demonio más allá de las dimensiones, que solo se manifiesta ante quienes han repelido a todos los jefes Uber y UberUber. Su monstruosa regeneración resiste todo salvo la ofensiva más poderosa."
     }
   },
   "items": {
@@ -1830,7 +1836,9 @@
       "blackFlame": "Marca de Llama Negra",
       "blackFlameDesc": "+10% reducción de daño permanente (se activa bajo 50% HP)",
       "crown": "Corona de Ruina",
-      "crownDesc": "Habilita recuperación de HP al golpear (se activa bajo 50% HP)"
+      "crownDesc": "Habilita recuperación de HP al golpear (se activa bajo 50% HP)",
+      "infernalWrath": "Hora de la Ruina",
+      "infernalWrathDesc": "Tras un periodo de gracia, sus ataques se intensifican sin límite con el tiempo. Si no lo derrotas rápido, incluso el más fuerte será destruido."
     },
     "true_final_boss": {
       "name": "Fin",
@@ -1889,7 +1897,8 @@
     "evaded": "¡Evadiste el ataque de {{enemy}}!",
     "blocked": "¡Bloqueado! ¡Detuviste el ataque de {{enemy}}!",
     "chillAppliedPlayer": "¡El jugador está enfriado! ¡Velocidad de ataque reducida!",
-    "freezeAppliedPlayer": "¡El jugador está congelado! ¡No puede actuar!"
+    "freezeAppliedPlayer": "¡El jugador está congelado! ¡No puede actuar!",
+    "engraveDrop": "¡Obtuviste el grabado {{name}}!"
   },
   "passiveTree": {
     "title": "Árbol Pasivo",
@@ -3697,7 +3706,11 @@
     },
     "earned": "Obtenida",
     "notEarned": "No obtenida",
-    "newBadge": "¡Nueva insignia obtenida!"
+    "newBadge": "¡Nueva insignia obtenida!",
+    "uber_uber_demon_lord": {
+      "name": "Soberano del Demonio Dimensional",
+      "description": "Derrotaste al UberUber Señor Demonio"
+    }
   },
   "uberTree": {
     "title": "Árbol Uber",
@@ -3719,5 +3732,43 @@
     "updateButton": "Actualizar",
     "maintenanceTitle": "En mantenimiento",
     "maintenanceMessage": "La app está en mantenimiento.\nInténtalo de nuevo más tarde."
+  },
+  "engrave": {
+    "title": "Grabado",
+    "hint": "Graba un mod elegido en un objeto raro (uno por objeto, únicos excluidos)",
+    "tag": "Grabado",
+    "apply": "Grabar",
+    "applied": "¡Grabado!",
+    "replaceHint": "Las 4 ranuras de mods están llenas. Elige un mod para reemplazar.",
+    "section": {
+      "stones": "1. Elige un grabado",
+      "items": "2. Elige un objeto",
+      "preview": "3. Vista previa"
+    },
+    "empty": {
+      "stones": "No tienes grabados (caen en mazmorras posteriores al final)",
+      "items": "Ningún objeto raro admite este grabado"
+    },
+    "error": {
+      "already": "Este objeto ya está grabado",
+      "unique": "No se pueden grabar objetos únicos",
+      "slot": "Este mod no va en esta ranura",
+      "generic": "Fallo al grabar",
+      "noStone": "No hay suficientes grabados"
+    },
+    "mods": {
+      "hp_on_hit": "HP al golpear",
+      "evasion_increased_pct": "Evasión %",
+      "hp_regen_to_atk_pct": "Regen. a ATK",
+      "ignite_damage_pct": "Daño de ignición",
+      "atk_increased_pct": "ATK aumentado",
+      "critical_damage": "Daño crítico",
+      "hp_bonus": "HP máx.",
+      "def_increased_pct": "DEF aumentada",
+      "attack_speed_pct": "Vel. de ataque",
+      "hp_regen": "Regen. de HP",
+      "damage_reduction_pct": "Reducción de daño",
+      "evasion": "Evasión"
+    }
   }
 }

@@ -140,6 +140,15 @@ export const createBossIntroEvents = (
       damagePerTick: poison.damage,
       remainingTicks: poison.turns,
     };
+    // UberUber魔王は毒持ちだが、フリーズ耐性も併せて設定する必要があるため
+    // ここで初期効果を返す（毒の早期returnより後ろに置くと到達しない）
+    if (isUberUberBoss(enemyId) && getBaseBossId(enemyId) === 'demon_lord') {
+      return {
+        events,
+        playerPoison: stack,
+        initBossEffects: { enemyFreezeResistPct: 50 },
+      };
+    }
     return { events, playerPoison: stack };
   }
 
@@ -191,19 +200,6 @@ export const createBossIntroEvents = (
         enemyAttackPlayerChillChance: 20,
         enemyAttackPlayerFreezeChance: 10,
         enemyIgniteDamageMult: 2 / 3,
-      },
-    };
-  }
-
-  // UberUber魔王: フリーズ耐性50%
-  // 「滅びの刻限（エンレイジ）」が難易度の主軸のため、
-  // フリーズで拘束し続けて時間制限を無効化されるのを防ぐ。
-  // 半減であり無効化ではないので、氷結ビルドの強みは残る。
-  if (isUberUberBoss(enemyId) && getBaseBossId(enemyId) === 'demon_lord') {
-    return {
-      events,
-      initBossEffects: {
-        enemyFreezeResistPct: 50,
       },
     };
   }
