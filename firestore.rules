@@ -26,6 +26,12 @@ service cloud.firestore {
       allow write: if true;
     }
 
+    // UberUber魔王 クリア記録
+    match /uber_uber_demon_lord_clears/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
     // 招待コード
     match /invite_codes/{deviceId} {
       // 読み取り: 全員可（コード検索に必要）
