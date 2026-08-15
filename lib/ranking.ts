@@ -1,4 +1,4 @@
-import { submitScore, submitUberUberKrakenClear, RankingStats, RankingBuild } from './firestore';
+import { submitScore, submitUberUberClear, RankingStats, RankingBuild } from './firestore';
 import { settingsRepository } from '@/db/repositories/settingsRepository';
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import { calculatePassiveEffects } from '@/data/passiveTree';
@@ -126,11 +126,12 @@ export const submitDimensionalCorridorScore = async (
 };
 
 /**
- * UberUberクラーケンの初回クリアを Firestore に記録する。
+ * UberUberボスの初回クリアを Firestore に記録する。
  * 初回クリア判定は呼び出し側（バッジ新規付与）で行うため、ここでは無条件に送信する。
+ * @param dungeonId 記録対象のUberUberダンジョンID（uber_uber_kraken / uber_uber_demon_lord など）
  * @returns 送信に成功した場合は true
  */
-export const submitUberUberKrakenClearRecord = async (): Promise<boolean> => {
+export const submitUberUberClearRecord = async (dungeonId: string): Promise<boolean> => {
   const state = usePlayerStore.getState();
 
   if (!state.characterId) {
@@ -141,7 +142,8 @@ export const submitUberUberKrakenClearRecord = async (): Promise<boolean> => {
   const { stats, build } = buildCurrentRankingPayload(state);
 
   try {
-    await submitUberUberKrakenClear({
+    await submitUberUberClear({
+      dungeonId,
       localCharId: state.characterId,
       name: state.characterName,
       type: state.characterType,
@@ -150,7 +152,7 @@ export const submitUberUberKrakenClearRecord = async (): Promise<boolean> => {
       stats,
       build,
     });
-    console.log('[UberClear] Clear submitted');
+    console.log('[UberClear] Clear submitted:', dungeonId);
     return true;
   } catch (error) {
     console.error('[UberClear] Failed to submit clear:', error);

@@ -140,6 +140,15 @@ export const createBossIntroEvents = (
       damagePerTick: poison.damage,
       remainingTicks: poison.turns,
     };
+    // UberUber魔王は毒持ちだが、フリーズ耐性も併せて設定する必要があるため
+    // ここで初期効果を返す（毒の早期returnより後ろに置くと到達しない）
+    if (isUberUberBoss(enemyId) && getBaseBossId(enemyId) === 'demon_lord') {
+      return {
+        events,
+        playerPoison: stack,
+        initBossEffects: { enemyFreezeResistPct: 50 },
+      };
+    }
     return { events, playerPoison: stack };
   }
 

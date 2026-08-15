@@ -69,6 +69,13 @@
       "descriptionKey": "badges.uber_uber_kraken.description",
       "condition": { "type": "uber_uber_boss_clear", "dungeonId": "uber_uber_kraken" },
       "icon": "trophy"
+    },
+    {
+      "id": "badge_uber_uber_demon_lord",
+      "nameKey": "badges.uber_uber_demon_lord.name",
+      "descriptionKey": "badges.uber_uber_demon_lord.description",
+      "condition": { "type": "uber_uber_boss_clear", "dungeonId": "uber_uber_demon_lord" },
+      "icon": "trophy"
     }
   ]
 }

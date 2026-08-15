@@ -10,6 +10,7 @@ const SE_ENABLED_KEY = 'se_enabled';
 const END_CONTENT_UNLOCK_KEY = 'end_content_unlocked';
 const UBER_UNLOCKS_KEY = 'uber_boss_unlocks';
 const UBER_TICKETS_KEY = 'uber_boss_tickets';
+const ENGRAVE_STONES_KEY = 'engrave_stones';
 const RESPEC_TOKENS_KEY = 'respec_tokens';
 const DUNGEON_CLEAR_RECORDS_KEY = 'dungeon_clear_records';
 const DIMENSIONAL_CORRIDOR_BEST_KEY = 'dimensional_corridor_best';
@@ -235,6 +236,44 @@ export const settingsRepository = {
       current[bossId] = nextCount;
     }
     await this.set(seasonKey(UBER_TICKETS_KEY, season), JSON.stringify(current));
+    return true;
+  },
+
+  // 刻印（クラフト通貨）: MOD種別ID -> 所持数。シーズン非依存（クラフト素材は永続）。
+  async getEngraveStones(): Promise<Record<string, number>> {
+    const value = await this.get(ENGRAVE_STONES_KEY);
+    if (!value) return {};
+    try {
+      return JSON.parse(value) as Record<string, number>;
+    } catch {
+      return {};
+    }
+  },
+
+  async getEngraveStoneCount(engraveId: string): Promise<number> {
+    const current = await this.getEngraveStones();
+    return current[engraveId] ?? 0;
+  },
+
+  async addEngraveStone(engraveId: string, count: number = 1): Promise<number> {
+    const current = await this.getEngraveStones();
+    const nextCount = (current[engraveId] ?? 0) + count;
+    current[engraveId] = nextCount;
+    await this.set(ENGRAVE_STONES_KEY, JSON.stringify(current));
+    return nextCount;
+  },
+
+  async consumeEngraveStone(engraveId: string, count: number = 1): Promise<boolean> {
+    const current = await this.getEngraveStones();
+    const available = current[engraveId] ?? 0;
+    if (available < count) return false;
+    const nextCount = available - count;
+    if (nextCount <= 0) {
+      delete current[engraveId];
+    } else {
+      current[engraveId] = nextCount;
+    }
+    await this.set(ENGRAVE_STONES_KEY, JSON.stringify(current));
     return true;
   },
 

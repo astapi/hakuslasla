@@ -199,6 +199,12 @@
       "maxFloor": 1
     },
     {
+      "id": "uber_uber_demon_lord",
+      "name": "UberUber 魔王",
+      "description": "全ての試練を乗り越えた者だけが挑める、究極の魔王。",
+      "maxFloor": 1
+    },
+    {
       "id": "debug_dimensional_goblin_king",
       "name": "DEBUG: 異次元ラッシュ - ゴブリンキング",
       "description": "デバッグ用。異次元ラッシュのボスが単体で出現する。",
@@ -250,6 +256,12 @@
       "id": "debug_uber_uber_kraken",
       "name": "DEBUG: UberUber クラーケン",
       "description": "デバッグ用。UberUberクラーケンが単体で出現する。チケット不要。",
+      "maxFloor": 1
+    },
+    {
+      "id": "debug_uber_uber_demon_lord",
+      "name": "DEBUG: UberUber 魔王",
+      "description": "デバッグ用。UberUber魔王が単体で出現する。チケット不要。",
       "maxFloor": 1
     },
     {

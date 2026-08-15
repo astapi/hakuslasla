@@ -2678,6 +2678,31 @@
         }
       ]
     },
+    "uber_uber_demon_sigil": {
+      "id": "uber_uber_demon_sigil",
+      "name": "UberUber 業炎の魔印",
+      "slot": "accessory",
+      "atk": 220,
+      "def": 220,
+      "fixedMods": [
+        {
+          "type": "atk_bonus",
+          "value": 150
+        },
+        {
+          "type": "hp_regen_to_atk_pct",
+          "value": 30
+        },
+        {
+          "type": "hp_regen",
+          "value": 300
+        },
+        {
+          "type": "ignite_resist_pct",
+          "value": 40
+        }
+      ]
+    },
     "grassland_evasion_armor": {
       "id": "grassland_evasion_armor",
       "name": "草原の外套",

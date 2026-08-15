@@ -11,17 +11,18 @@ import {
 } from '../../data/badges';
 
 describe('バッジシステム', () => {
-  it('10種類のバッジが定義されている', () => {
-    expect(BADGES.length).toBe(10);
+  it('11種類のバッジが定義されている', () => {
+    expect(BADGES.length).toBe(11);
   });
 
   it('ALL_BADGE_IDS は全バッジIDを含む', () => {
-    expect(ALL_BADGE_IDS.length).toBe(10);
+    expect(ALL_BADGE_IDS.length).toBe(11);
     expect(ALL_BADGE_IDS).toContain('badge_uber_goblin_king');
     expect(ALL_BADGE_IDS).toContain('badge_dimensional_4000');
     expect(ALL_BADGE_IDS).toContain('badge_uber_uber_goblin_king');
     expect(ALL_BADGE_IDS).toContain('badge_uber_uber_bandit_leader');
     expect(ALL_BADGE_IDS).toContain('badge_uber_uber_kraken');
+    expect(ALL_BADGE_IDS).toContain('badge_uber_uber_demon_lord');
   });
 
   it('BADGE_IDS_EXCEPT_UBER_UBER はUberUberバッジと次元回廊バッジを除外する', () => {
@@ -72,13 +73,14 @@ describe('バッジシステム', () => {
     expect(uberBadges.length).toBe(6);
   });
 
-  it('uber_uber_boss_clearバッジが3つ存在する', () => {
+  it('uber_uber_boss_clearバッジが4つ存在する', () => {
     const uberUberBadges = BADGES.filter(b => b.condition.type === 'uber_uber_boss_clear');
-    expect(uberUberBadges.length).toBe(3);
+    expect(uberUberBadges.length).toBe(4);
     const dungeonIds = uberUberBadges.map(b => b.condition.dungeonId);
     expect(dungeonIds).toContain('uber_uber_goblin_king');
     expect(dungeonIds).toContain('uber_uber_bandit_leader');
     expect(dungeonIds).toContain('uber_uber_kraken');
+    expect(dungeonIds).toContain('uber_uber_demon_lord');
   });
 
   it('dimensional_floorバッジが1つ存在する', () => {

@@ -77,6 +77,7 @@ const BOSS_ABILITIES_MAP: Record<string, BossAbilities> = {
     bossId: 'demon_lord',
     regularSkills: [
       { skillKey: 'deathHand', descKey: 'deathHandDesc' },
+      { skillKey: 'infernalWrath', descKey: 'infernalWrathDesc', isUberUberOnly: true, triggerType: 'persistent' },
     ],
     thresholdSkills: [
       { skillKey: 'blackFlame', descKey: 'blackFlameDesc', isThreshold: true },

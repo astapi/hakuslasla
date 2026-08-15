@@ -17,7 +17,8 @@
     "none": "None",
     "unequipped": "Empty",
     "items": "items",
-    "ticket": "Ticket"
+    "ticket": "Ticket",
+    "all": "All"
   },
   "characterSelect": {
     "title": "LootDive",
@@ -63,7 +64,8 @@
       "encyclopedia": "Archive",
       "shop": "Shop",
       "uberTree": "Uber",
-      "pets": "Pets"
+      "pets": "Pets",
+      "craft": "Engrave"
     },
     "renameCharacter": "Rename Character"
   },
@@ -639,6 +641,10 @@
     "uber_true_final_boss": {
       "name": "Uber True Final Boss",
       "description": "The being that brings true endings."
+    },
+    "uber_uber_demon_lord": {
+      "name": "UberUber Demon Lord",
+      "description": "A demon lord beyond dimensions, manifesting only before those who have repelled every Uber and UberUber boss. Its monstrous regeneration shrugs off all but the mightiest onslaught."
     }
   },
   "items": {
@@ -1735,6 +1741,9 @@
     },
     "uber_true_final_boss": {
       "name": "Uber True Final Boss"
+    },
+    "uber_uber_demon_lord": {
+      "name": "UberUber Demon Lord"
     }
   },
   "skills": {
@@ -1827,7 +1836,9 @@
       "blackFlame": "Blackflame Mark",
       "blackFlameDesc": "+10% damage reduction permanently (triggers below 50% HP)",
       "crown": "Crown of Ruin",
-      "crownDesc": "Enables HP recovery on hit (triggers below 50% HP)"
+      "crownDesc": "Enables HP recovery on hit (triggers below 50% HP)",
+      "infernalWrath": "Hour of Ruin",
+      "infernalWrathDesc": "After a grace period, the Demon Lord's attacks escalate endlessly over time. Fail to bring it down quickly and even the mightiest will eventually be destroyed."
     },
     "true_final_boss": {
       "name": "End",
@@ -1886,7 +1897,8 @@
     "kingSlamHit": "[King's Slam] triggered! {{damage}} damage to {{enemy}}!",
     "twinBladeHit": "[Twin Blade] follow-up! {{damage}} damage to {{enemy}}!",
     "royalRoar": "[Royal Roar] triggered! Cleansed poison and chill!",
-    "evaded": "Evaded {{enemy}}'s attack!"
+    "evaded": "Evaded {{enemy}}'s attack!",
+    "engraveDrop": "Obtained {{name}} Engrave!"
   },
   "passiveTree": {
     "title": "Passive Tree",
@@ -3694,7 +3706,11 @@
     },
     "earned": "Earned",
     "notEarned": "Not Earned",
-    "newBadge": "New Badge Earned!"
+    "newBadge": "New Badge Earned!",
+    "uber_uber_demon_lord": {
+      "name": "Sovereign of the Dimensional Demon",
+      "description": "Defeated the UberUber Demon Lord"
+    }
   },
   "uberTree": {
     "title": "Uber Tree",
@@ -3716,5 +3732,43 @@
     "updateButton": "Update",
     "maintenanceTitle": "Under Maintenance",
     "maintenanceMessage": "The app is currently under maintenance.\nPlease try again later."
+  },
+  "engrave": {
+    "title": "Engraving",
+    "hint": "Engrave one chosen mod onto a rare item (one per item, uniques excluded)",
+    "tag": "Engrave",
+    "apply": "Engrave",
+    "applied": "Engraved!",
+    "replaceHint": "All 4 mod slots are full. Choose a mod to replace.",
+    "section": {
+      "stones": "1. Choose an Engrave",
+      "items": "2. Choose an Item",
+      "preview": "3. Preview"
+    },
+    "empty": {
+      "stones": "You have no Engraves (drop from endgame dungeons)",
+      "items": "No rare item can take this Engrave"
+    },
+    "error": {
+      "already": "This item is already engraved",
+      "unique": "Cannot engrave unique items",
+      "slot": "This mod cannot go on this slot",
+      "generic": "Engraving failed",
+      "noStone": "Not enough Engraves"
+    },
+    "mods": {
+      "hp_on_hit": "HP on Hit",
+      "evasion_increased_pct": "Evasion %",
+      "hp_regen_to_atk_pct": "Regen to ATK",
+      "ignite_damage_pct": "Ignite Damage",
+      "atk_increased_pct": "ATK Increased",
+      "critical_damage": "Crit Damage",
+      "hp_bonus": "Max HP",
+      "def_increased_pct": "DEF Increased",
+      "attack_speed_pct": "Attack Speed",
+      "hp_regen": "HP Regen",
+      "damage_reduction_pct": "Damage Reduction",
+      "evasion": "Evasion"
+    }
   }
 }

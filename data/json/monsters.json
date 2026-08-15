@@ -1638,6 +1638,45 @@
         }
       ],
       "accuracy": 410
+    },
+    "uber_uber_demon_lord": {
+      "id": "uber_uber_demon_lord",
+      "name": "UberUber 魔王",
+      "image": "demon_lord",
+      "maxHp": 1300000,
+      "atk": 4200,
+      "def": 2000,
+      "exp": 15000,
+      "attackSpeed": 0.7,
+      "isBoss": true,
+      "uniqueDrop": null,
+      "uniqueDrops": [
+        {
+          "itemId": "uber_demon_blade",
+          "dropRate": 8
+        },
+        {
+          "itemId": "uber_demon_armor",
+          "dropRate": 8
+        },
+        {
+          "itemId": "uber_demon_grip",
+          "dropRate": 8
+        },
+        {
+          "itemId": "uber_demon_steps",
+          "dropRate": 8
+        },
+        {
+          "itemId": "uber_demon_crown",
+          "dropRate": 8
+        },
+        {
+          "itemId": "uber_uber_demon_sigil",
+          "dropRate": 20
+        }
+      ],
+      "accuracy": 500
     }
   }
 }

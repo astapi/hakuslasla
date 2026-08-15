@@ -237,6 +237,12 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="craft"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="battle"
           options={{
             headerShown: false,

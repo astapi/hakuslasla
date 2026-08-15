@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google Play 組織アカウント登録 & 住所非公開ガイド</title>
+<style>
+  :root{
+    --bg:#0f1220; --card:#1a1f36; --card2:#222842; --line:#2e3556;
+    --text:#eef1ff; --muted:#a6adce; --accent:#7c9bff; --accent2:#5ee0b0;
+    --danger:#ff6b6b; --warn:#ffcf5c; --ok:#5ee0b0; --ios:#8ec5ff; --gp:#c8f79a;
+    --shadow:0 8px 30px rgba(0,0,0,.35);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f5f6fb; --card:#ffffff; --card2:#eef1fb; --line:#dde2f2;
+      --text:#1a1f36; --muted:#5a6180; --accent:#3b5bdb; --accent2:#0ca678;
+      --danger:#e03131; --warn:#c78a00; --ok:#0ca678; --ios:#1971c2; --gp:#2f9e44;
+      --shadow:0 8px 30px rgba(30,40,90,.10);
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:32px 20px 80px}
+  header.hero{
+    background:linear-gradient(135deg,#3b5bdb22,#0ca67822);
+    border:1px solid var(--line); border-radius:20px; padding:34px 30px; margin-bottom:34px;
+  }
+  header.hero h1{margin:0 0 8px; font-size:26px; letter-spacing:.02em}
+  header.hero p{margin:0; color:var(--muted); font-size:14px}
+  .goal{margin-top:18px; padding:14px 16px; background:var(--card); border-radius:12px; border-left:4px solid var(--accent); font-size:14.5px}
+  h2{font-size:20px; margin:44px 0 16px; display:flex; align-items:center; gap:10px}
+  h2 .num{display:inline-flex; width:30px; height:30px; align-items:center; justify-content:center;
+    background:var(--accent); color:#fff; border-radius:9px; font-size:15px; flex:none}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; box-shadow:var(--shadow)}
+  .card + .card{margin-top:16px}
+  p{margin:.5em 0}
+  small{color:var(--muted)}
+  /* store comparison */
+  .stores{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media (max-width:640px){.stores{grid-template-columns:1fr}}
+  .store{border-radius:16px; padding:20px; border:1px solid var(--line)}
+  .store.ios{background:linear-gradient(160deg,var(--card),#8ec5ff14)}
+  .store.gp{background:linear-gradient(160deg,var(--card),#c8f79a14)}
+  .store h3{margin:0 0 4px; font-size:17px}
+  .badge{display:inline-block; font-size:11px; padding:3px 9px; border-radius:20px; font-weight:700; letter-spacing:.03em}
+  .badge.safe{background:#0ca67826; color:var(--ok)}
+  .badge.bad{background:#e0313126; color:var(--danger)}
+  .store ul{margin:12px 0 0; padding-left:18px; font-size:14px}
+  .store li{margin:5px 0}
+  .verdict{margin-top:14px; font-weight:700; font-size:14px}
+  .verdict.safe{color:var(--ok)} .verdict.bad{color:var(--danger)}
+  /* table */
+  table{width:100%; border-collapse:collapse; font-size:14px; margin-top:6px}
+  th,td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{color:var(--muted); font-weight:600; font-size:12.5px; letter-spacing:.03em}
+  tr td:first-child{font-weight:600}
+  .yes{color:var(--ok); font-weight:700}
+  .no{color:var(--danger); font-weight:700}
+  .maybe{color:var(--warn); font-weight:700}
+  .hl{background:var(--card2)}
+  /* flow */
+  .flow{display:flex; flex-direction:column; gap:0}
+  .step{display:flex; gap:16px; align-items:flex-start; position:relative; padding-bottom:22px}
+  .step:not(:last-child)::before{content:""; position:absolute; left:19px; top:40px; bottom:-2px; width:2px; background:var(--line)}
+  .step .dot{flex:none; width:40px; height:40px; border-radius:12px; background:var(--accent); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px; z-index:1}
+  .step .body{padding-top:4px}
+  .step .body b{font-size:15.5px}
+  .step .body p{margin:2px 0 0; font-size:13.5px; color:var(--muted)}
+  .warnbox{margin-top:0; margin-bottom:18px; background:#e0313112; border:1px solid #e0313140; border-left:4px solid var(--danger);
+    border-radius:12px; padding:14px 16px; font-size:14px}
+  .warnbox b{color:var(--danger)}
+  /* match diagram */
+  .match{display:flex; flex-direction:column; gap:14px}
+  .matchrow{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+  .chip{padding:8px 14px; border-radius:10px; font-size:13.5px; font-weight:700; border:1px solid var(--line); background:var(--card2)}
+  .link{font-size:20px; color:var(--muted)}
+  .must{color:var(--ok); font-size:12px; font-weight:700; border:1px solid #0ca67840; background:#0ca67818; padding:3px 9px; border-radius:20px}
+  .opt{color:var(--warn); font-size:12px; font-weight:700; border:1px solid #c78a0040; background:#c78a0018; padding:3px 9px; border-radius:20px}
+  /* timeline pill */
+  .tl{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:8px}
+  .tl .seg{flex:1; min-width:110px; background:var(--card2); border:1px solid var(--line); border-radius:10px; padding:10px 12px; text-align:center; font-size:12.5px}
+  .tl .seg b{display:block; font-size:13.5px; margin-bottom:2px}
+  .foot{margin-top:40px; color:var(--muted); font-size:12px; text-align:center}
+  a{color:var(--accent)}
+  .pill{display:inline-block; background:var(--card2); border:1px solid var(--line); border-radius:20px; padding:2px 10px; font-size:12px; color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="pill">個人事業主 → Google Play 組織アカウント</span>
+    <h1>DUNS取得 & 住所非公開 ガイド</h1>
+    <p>調査日: 2026-07-24 ／ 対象: 課金あり（アプリ内購入）アプリを Google Play に出す個人開発者</p>
+    <div class="goal">
+      <b>🎯 ゴール：</b>新規個人アカウントの「20人テスター×14日」要件を避けるため <b>組織アカウント</b>で登録する。
+      そのために <b>DUNS</b> を取り、Google Play で全世界公開される住所を<b>自宅ではなくバーチャルオフィス</b>にする。
+    </div>
+  </header>
+
+  <!-- 1. 住所公開の真実 -->
+  <h2><span class="num">1</span>住所公開の真実（ストアで違う）</h2>
+  <div class="stores">
+    <div class="store ios">
+      <h3>🍎 iOS / App Store <span class="badge safe">EUで回避可</span></h3>
+      <ul>
+        <li>住所公開は <b>EUのDSA "trader" 開示</b>が原因</li>
+        <li>公式明記：住所公開は <b>「EU27カ国に配信している場合のみ」</b></li>
+        <li>→ EU非配信なら住所公開は発生しない</li>
+        <li><small>⚠️ trader status の<b>申告自体はEU非配信でも必要</b>。ただし申告≠住所公開（公開はEU配信が条件）</small></li>
+      </ul>
+      <div class="verdict safe">✅ EU非配信なら自宅住所は出ない（Apple公式で確認済み）</div>
+    </div>
+    <div class="store gp">
+      <h3>🤖 Android / Google Play <span class="badge bad">回避不可</span></h3>
+      <ul>
+        <li>住所公開のトリガーは <b>「収益化（有料/アプリ内購入）」</b></li>
+        <li><b>EU配信と無関係・全世界対象</b></li>
+        <li>実機確認済：JP / US / DE すべてで住所フル表示</li>
+      </ul>
+      <div class="verdict bad">❌ EU非配信でも住所は日本でも公開される</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <b>💡 どこに出る？</b> 開発者一覧ページには出ない。
+    <b>各アプリ詳細ページ →「アプリのサポート／デベロッパーについて」を展開</b>すると、屋号・住所・電話・メールが表示される。
+    <br><small>実例の開発者は住所が「西新宿3-3-13（＝GMOオフィスサポートのバーチャルオフィス）」だった。プロも自宅は隠している。</small>
+  </div>
+
+  <!-- 2. 個人 vs 組織 -->
+  <h2><span class="num">2</span>個人アカウント vs 組織アカウント</h2>
+  <div class="card">
+    <table>
+      <tr><th>項目</th><th>個人（Personal）</th><th>組織（Organization）</th></tr>
+      <tr><td>DUNSナンバー</td><td>不要</td><td class="no">必須</td></tr>
+      <tr class="hl"><td>20人テスター×14日 要件</td><td class="no">あり（2023/11/13以降）</td><td class="yes">免除・即本番公開</td></tr>
+      <tr><td>公開される情報</td><td>本名＋国</td><td>屋号＋住所</td></tr>
+      <tr><td>屋号での表示</td><td class="no">✕</td><td class="yes">○</td></tr>
+    </table>
+    <p style="margin-top:12px"><b>→ テスター20人が無理なので「組織アカウント」一択。</b></p>
+  </div>
+
+  <!-- 3. DUNS -->
+  <h2><span class="num">3</span>DUNSナンバー（個人事業主でも取れる）</h2>
+  <div class="card">
+    <table>
+      <tr><th>ルート</th><th>費用</th><th>日数</th></tr>
+      <tr><td>無料（D&amp;B 直接）</td><td>0円</td><td>公称30日／実際40日の例も</td></tr>
+      <tr class="hl"><td>有料（東京商工リサーチ / TSR）</td><td class="yes">3,300円</td><td class="yes">約1週間（8営業日）</td></tr>
+    </table>
+    <p style="margin-top:12px"><small>⚠️ 屋号は <b>英語表記（ローマ字）</b>で DUNS に登録される。日本語だけだと突き合わせで不一致になる。</small></p>
+  </div>
+
+  <!-- 4. 手順（順序が命） -->
+  <h2><span class="num">4</span>手順 — <span style="color:var(--danger)">順序が命</span></h2>
+  <div class="warnbox">
+    <b>⚠️ 先に Play Console へ自宅住所を登録するのは厳禁。</b>
+    後から公開住所を変えるには Google サポートへの個別申請が必要で、時間がかかる・受け付けられないこともある。
+  </div>
+  <div class="card">
+    <div class="flow">
+      <div class="step"><div class="dot">1</div><div class="body"><b>バーチャルオフィスを契約</b><p>まず公開用の住所を確保する</p></div></div>
+      <div class="step"><div class="dot">2</div><div class="body"><b>TSR経由で DUNS の登録住所を VO住所に更新</b><p>屋号は日本語＋英語表記でそろえる</p></div></div>
+      <div class="step"><div class="dot">3</div><div class="body"><b>D&amp;B データベースへの反映を待つ</b><p>数日〜1週間。D&amp;B 公式 lookup で反映を確認できる</p></div></div>
+      <div class="step"><div class="dot">4</div><div class="body"><b>反映後に Play Console 組織アカウントを登録</b><p>同じ住所・屋号で。ここで初めて Google に触る</p></div></div>
+    </div>
+    <div class="tl">
+      <div class="seg"><b>VO契約</b>即日</div>
+      <div class="seg"><b>DUNS住所更新</b>TSR ~1週間</div>
+      <div class="seg"><b>D&amp;B反映</b>数日〜1週間</div>
+      <div class="seg"><b>Play登録</b>反映後</div>
+    </div>
+    <p style="margin-top:10px; text-align:center"><b>合計 約2週間</b>を見込む</p>
+  </div>
+
+  <!-- 5. 一致させるもの -->
+  <h2><span class="num">5</span>「一致させるもの」整理</h2>
+  <div class="card">
+    <div class="match">
+      <div class="matchrow">
+        <span class="chip">DUNS 住所</span><span class="link">⇄</span><span class="chip">Google 住所</span>
+        <span class="must">✅ 必須（両方VO）</span>
+      </div>
+      <div class="matchrow">
+        <span class="chip">屋号（英語表記）</span><span class="link">⇄</span><span class="chip">開業届 の屋号</span>
+        <span class="must">✅ そろえる</span>
+      </div>
+      <div class="matchrow">
+        <span class="chip">開業届 住所</span><span class="link">⇄</span><span class="chip">DUNS / Google 住所</span>
+        <span class="opt">⭕ 登録時は不一致でもOK</span>
+      </div>
+    </div>
+    <p style="margin-top:14px; font-size:14px">
+      <b>ポイント：</b>開業届の住所は<b>自宅のままスタートしてOK</b>。確定申告前に VO へ移せば足りる実例あり。
+      逆に <b>屋号（英語表記）は最初からそろえる</b>。
+    </p>
+  </div>
+
+  <!-- 6. バーチャルオフィス -->
+  <h2><span class="num">6</span>バーチャルオフィス比較</h2>
+  <div class="card">
+    <table>
+      <tr><th>サービス</th><th>月額</th><th>特徴</th></tr>
+      <tr class="hl"><td>GMOオフィスサポート</td><td class="yes">660円〜<br><small>転送あり≒1,650円</small></td><td>Play/DUNS用途の実績多数・入会金0。住所例＝西新宿3-3-13</td></tr>
+      <tr><td>レゾナンス</td><td>990円〜</td><td>法人登記・郵便転送・<b>専用電話</b>オプション豊富</td></tr>
+      <tr><td>バーチャルオフィス1</td><td>翌年基本料0円〜</td><td>渋谷・千代田。初期コスト重視</td></tr>
+      <tr><td>Mr.バーチャルオフィス</td><td>270円〜</td><td>最安級。実績・範囲は要確認</td></tr>
+    </table>
+    <p style="margin-top:14px; font-size:14px">
+      🏆 <b>安さ＆実績重視 → GMOオフィスサポート</b>／
+      <b>公開用の電話番号もまとめたい → レゾナンス</b>（Playの連絡先欄には電話番号も公開されるため）。
+    </p>
+    <p style="font-size:13px"><small>✔ 契約時：<b>郵便物転送プラン</b>を選ぶ（DUNS/Google関連の郵送物受け取り用）／屋号は日本語＋英語の両方を用意。</small></p>
+  </div>
+
+  <!-- To-Do -->
+  <h2><span class="num">7</span>To-Do</h2>
+  <div class="card">
+    <table>
+      <tr><td>☐ 屋号を決める（日本語＋英語表記）</td></tr>
+      <tr class="hl"><td>☐ バーチャルオフィス契約（GMO or レゾナンス／転送あり）</td></tr>
+      <tr><td>☐ TSR で DUNS 取得（住所＝VO・英語屋号）</td></tr>
+      <tr class="hl"><td>☐ D&amp;B lookup で反映確認</td></tr>
+      <tr><td>☐ Play Console 組織アカウント登録（同じ住所・屋号）</td></tr>
+      <tr class="hl"><td>☐ （確定申告前まで）開業届の事業所住所を VO に変更</td></tr>
+    </table>
+  </div>
+
+  <!-- 8. 誤解しやすいポイント -->
+  <h2><span class="num">8</span>調査中に訂正した「誤解しやすい点」</h2>
+  <div class="warnbox">
+    <b>正直な訂正記録。</b>今回、一度出した結論を後で直した箇所。ブログ側というより <b>筆者(AI)の推論ミス</b>も含む。
+  </div>
+  <div class="card">
+    <table>
+      <tr><th>一度の誤り</th><th>正しくは</th></tr>
+      <tr><td class="no">住所公開はEU限定</td><td class="yes">Google Playは「収益化」が全世界トリガー。JP/US/DE全部で表示を実機確認。<br><small>※iOSはEU限定で正しい＝別軸</small></td></tr>
+      <tr class="hl"><td class="no">開業届の住所も必ず一致</td><td class="yes">必須は「DUNS⇄Google」。開業届住所は登録時不一致でもOK（後で変更）。必須は屋号の英語表記</td></tr>
+      <tr><td class="no">一覧ページに住所ない＝非公開</td><td class="yes">住所は各アプリ詳細ページの「アプリのサポート」欄に出る。一覧ページには元々ない</td></tr>
+    </table>
+  </div>
+
+  <!-- 9. 参考リンク -->
+  <h2><span class="num">9</span>参考リンク・情報源</h2>
+  <div class="card">
+    <p><b>✅ 公式（信頼度：高）</b></p>
+    <ul style="font-size:13.5px; margin-top:4px">
+      <li><a href="https://developer.apple.com/help/app-store-connect/manage-compliance-information/manage-european-union-digital-services-act-trader-requirements/">Apple: EU DSA trader要件</a> — EU非配信ならtrader情報不要（iOSの根拠）</li>
+      <li><a href="https://support.google.com/googleplay/android-developer/answer/13628312?hl=ja">Google Play: アカウント作成に必要な情報</a></li>
+      <li><a href="https://support.google.com/googleplay/android-developer/answer/13634081?hl=ja">Google Play: アカウント情報の表示・管理</a> — 販売アカウントは完全な住所を表示（Google Playの根拠）</li>
+      <li><a href="https://support.google.com/googleplay/android-developer/thread/342999155">Google Play コミュニティ: 無料アプリのみなら住所は必要か</a></li>
+    </ul>
+  </div>
+  <div class="card">
+    <p><b>✅ 実例ブログ（実際に手順を追った記録）</b></p>
+    <ul style="font-size:13.5px; margin-top:4px">
+      <li><a href="https://note.com/gentle_prawn80/n/nbbd8c337ddcf">バーチャルオフィスでPlay Consoleの公開住所を隠す【DUNS住所変更の順序が命】</a>（tokiyuta）★「順序」の根拠</li>
+      <li><a href="https://note.com/gentle_prawn80/n/nb24b634a2d16">Complete Guide for Sole Proprietors to Obtain a Google Play Organization Account</a>（tokiyuta）</li>
+      <li><a href="https://zac-lab.com/posts/20250514/">個人事業主がGoogle Playに組織アカウントとして登録してみた</a>（zac-lab）</li>
+      <li><a href="https://teammoko.jp/googleplay_account_makeorg">【Google Play】個人事業主で組織アカウントを作成する方法</a>（teammoko）★屋号の英語表記の根拠</li>
+      <li><a href="https://toriaezuugoku.com/googleplay/">Googleに住所公開されたくなくて個人事業主として開業しました</a>（toriaezuugoku）</li>
+      <li><a href="https://zenn.dev/hidenori3/articles/a0b29488c738e4">Play Console アカウント確認対応で個人事業主になる</a>（zenn / hidenori3）</li>
+      <li><a href="https://note.com/gigabit_million/n/n9ae2c315ed16">Google確認の勢いで個人事業主を開業した話</a>（note / ギガビット）</li>
+      <li><a href="https://blog.mrym.tv/2024/08/">Google Playの住所公開に開業届で対応する</a>（趣味グラマのブログ）</li>
+      <li><a href="https://mozuun.com/blog/google-play-developer-individual-or-organization/">Google Play Developer登録は「個人」と「組織」どちらが正解？</a>（mozuun）</li>
+    </ul>
+  </div>
+  <div class="card" style="border-color:#c78a0055">
+    <p><b>⚠️ 読み間違えやすい／注意が必要な情報源</b></p>
+    <ul style="font-size:13.5px; margin-top:4px">
+      <li><b>英語の "trader status" 系記事</b>（makaka.org, median.co 等）— 内容は正しいが <b>Apple・EUのDSAの話</b>。Google Playに当てはめると「EU非配信なら住所出ない」と誤解する。<b>Google Playは収益化トリガー（全世界）で別物</b>。</li>
+      <li><a href="https://www.phonearena.com/news/Google-Play-to-require-public-physical-address-for-monetized-app-developers_id60839">PhoneArena: 収益化アプリは住所公開が必要</a> — 結論は正しいが <b>元は2014年の古い記事</b>。最新は公式で裏取りを。</li>
+      <li><b>DUNS代行系の記事</b>（globallinkconsulting等）— 取得日数が「1〜2週間」「最大30日」と記事によりバラつく。<b>無料ルートは長め</b>と理解。</li>
+    </ul>
+    <p style="font-size:12.5px; color:var(--muted)"><small>※実例ブログは体験談のため費用・日数・手順は時期や個人差でズレる。最終根拠は Google/Apple 公式と D&amp;B 公式 lookup。</small></p>
+  </div>
+
+  <div class="foot">
+    このファイルはローカル用メモです。ブラウザで開いて確認してください。<br>
+    調査日 2026-07-24
+  </div>
+
+</div>
+</body>
+</html>

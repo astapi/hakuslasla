@@ -1,7 +1,7 @@
 /**
- * UberUberクラーケンの新規クリアを検知して Discord に通知する。
+ * UberUberボス（クラーケン / 魔王）の新規クリアを検知して Discord に通知する。
  *
- * Firestore の `uber_uber_kraken_clears` コレクションを REST API でポーリングし、
+ * Firestore の各ボスのクリア記録コレクションを REST API でポーリングし、
  * まだ通知していないドキュメント（discordNotified が未設定）を Discord Webhook へ送信する。
  * 通知済みのドキュメントには discordNotified=true を書き戻すため、
  * CI ランナー側に状態を持つ必要がなく、重複通知を防げる。
@@ -16,7 +16,33 @@
  */
 
 const PROJECT_ID = 'lootdiveapp';
-const COLLECTION_NAME = 'uber_uber_kraken_clears';
+
+/** 通知対象のUberUberボス。コレクションを増やす場合はここに追加する。 */
+interface BossNotifyConfig {
+  /** Firestoreのクリア記録コレクション名 */
+  collection: string;
+  /** Discord埋め込みのタイトル */
+  title: string;
+  /** 本文中のボス名 */
+  bossName: string;
+  /** 埋め込みの色 */
+  color: number;
+}
+
+const BOSSES: BossNotifyConfig[] = [
+  {
+    collection: 'uber_uber_kraken_clears',
+    title: '🦑 UberUberクラーケン 撃破！',
+    bossName: 'UberUberクラーケン',
+    color: 0x1abc9c,
+  },
+  {
+    collection: 'uber_uber_demon_lord_clears',
+    title: '👹 UberUber魔王 撃破！',
+    bossName: 'UberUber魔王',
+    color: 0x8e44ad,
+  },
+];
 
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || '';
 const DRY_RUN = process.env.DRY_RUN === '1';
@@ -61,12 +87,12 @@ function decodeDocument(doc: any): { docId: string; data: Record<string, any> } 
   return { docId, data };
 }
 
-async function fetchClears(): Promise<{ docId: string; data: Record<string, any> }[]> {
+async function fetchClears(collection: string): Promise<{ docId: string; data: Record<string, any> }[]> {
   const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents:runQuery`;
 
   const body = {
     structuredQuery: {
-      from: [{ collectionId: COLLECTION_NAME }],
+      from: [{ collectionId: collection }],
       // 古いクリアから順に通知する
       orderBy: [{ field: { fieldPath: 'updatedAt' }, direction: 'ASCENDING' }],
     },
@@ -92,9 +118,9 @@ async function fetchClears(): Promise<{ docId: string; data: Record<string, any>
 /**
  * 通知済みフラグを Firestore に書き戻す（他フィールドは updateMask で保持）。
  */
-async function markNotified(docId: string, nowIso: string): Promise<void> {
+async function markNotified(collection: string, docId: string, nowIso: string): Promise<void> {
   const url =
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION_NAME}/${docId}` +
+    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${collection}/${docId}` +
     `?updateMask.fieldPaths=discordNotified&updateMask.fieldPaths=discordNotifiedAt`;
 
   const res = await fetch(url, {
@@ -124,7 +150,7 @@ const CLASS_LABELS: Record<string, string> = {
   tamer: 'テイマー',
 };
 
-function buildDiscordPayload(data: Record<string, any>): unknown {
+function buildDiscordPayload(data: Record<string, any>, boss: BossNotifyConfig): unknown {
   const stats = data.stats || {};
   const classLabel = CLASS_LABELS[data.type] || data.type || '?';
   const name = data.name || '???';
@@ -134,9 +160,9 @@ function buildDiscordPayload(data: Record<string, any>): unknown {
   return {
     embeds: [
       {
-        title: '🦑 UberUberクラーケン 撃破！',
-        description: `**${name}** (${classLabel} / Lv${level}) が UberUberクラーケンを初クリアしました！`,
-        color: 0x1abc9c,
+        title: boss.title,
+        description: `**${name}** (${classLabel} / Lv${level}) が ${boss.bossName}を初クリアしました！`,
+        color: boss.color,
         fields: [
           { name: 'HP', value: String(stats.maxHp ?? '?'), inline: true },
           { name: 'ATK', value: String(stats.atk ?? '?'), inline: true },
@@ -170,39 +196,50 @@ async function main() {
     process.exit(1);
   }
 
-  const docs = await fetchClears();
-  const pending = docs.filter((d) => d.data.discordNotified !== true);
-
-  console.log(`取得: ${docs.length}件 / 未通知: ${pending.length}件`);
-
-  if (pending.length === 0) {
-    console.log('新規クリアなし');
-    process.exit(0);
-  }
-
   // Firestore の timestampValue は "毎回同じ" を保証したいので固定。
   const nowIso = new Date().toISOString();
 
-  let notified = 0;
-  for (const doc of pending) {
-    const label = `${doc.data.name || '???'} (${doc.docId})`;
-    if (DRY_RUN) {
-      console.log(`[DRY_RUN] 通知対象: ${label}`);
+  let totalPending = 0;
+  let totalNotified = 0;
+
+  for (const boss of BOSSES) {
+    let docs: { docId: string; data: Record<string, any> }[];
+    try {
+      docs = await fetchClears(boss.collection);
+    } catch (err) {
+      // 1ボスの取得に失敗しても他のボスは処理する
+      console.error(`[${boss.bossName}] 取得失敗:`, err);
       continue;
     }
 
-    try {
-      await sendDiscord(buildDiscordPayload(doc.data));
-      await markNotified(doc.docId, nowIso);
-      notified++;
-      console.log(`通知完了: ${label}`);
-    } catch (err) {
-      // 1件失敗しても他を止めない。未通知のまま残るので次回リトライされる。
-      console.error(`通知失敗: ${label}`, err);
+    const pending = docs.filter((d) => d.data.discordNotified !== true);
+    totalPending += pending.length;
+    console.log(`[${boss.bossName}] 取得: ${docs.length}件 / 未通知: ${pending.length}件`);
+
+    for (const doc of pending) {
+      const label = `${doc.data.name || '???'} (${doc.docId})`;
+      if (DRY_RUN) {
+        console.log(`  [DRY_RUN] 通知対象: ${label}`);
+        continue;
+      }
+
+      try {
+        await sendDiscord(buildDiscordPayload(doc.data, boss));
+        await markNotified(boss.collection, doc.docId, nowIso);
+        totalNotified++;
+        console.log(`  通知完了: ${label}`);
+      } catch (err) {
+        // 1件失敗しても他を止めない。未通知のまま残るので次回リトライされる。
+        console.error(`  通知失敗: ${label}`, err);
+      }
     }
   }
 
-  console.log(`\n完了（${notified}/${pending.length}件 通知）`);
+  if (totalPending === 0) {
+    console.log('\n新規クリアなし');
+  } else {
+    console.log(`\n完了（${totalNotified}/${totalPending}件 通知）`);
+  }
   process.exit(0);
 }
 
