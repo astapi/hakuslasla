@@ -58,3 +58,6 @@ build/
 
 /images/
 storeAssets/
+
+# ローカル取得データ（Firestoreからのエクスポート等）
+local-data/

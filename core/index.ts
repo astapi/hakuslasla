@@ -78,6 +78,23 @@ export type {
   PoisonDamageResult,
 } from './combatEffects';
 
+// 中立の戦闘ルール層（PvE / PvP 共有）
+// combatEffects と同名の関数を含むため、名前空間として再エクスポートする
+import * as combat from './combat';
+export { combat };
+
+export type {
+  CombatantView,
+  StatusView,
+  AttackOutcome,
+  PoisonApplyOutcome,
+  PoisonDamageOutcome,
+  IgniteDamageOutcome,
+  ChillProcessOutcome,
+  FreezeApplyOutcome,
+  FreezeProcessOutcome,
+} from './combat';
+
 // ゲージ制戦闘関連
 export {
   createGaugeBattleState,
@@ -97,6 +114,52 @@ export type {
   BattleEngine,
   BattleEngineConfig,
 } from './battleEngine';
+
+// PvP対称エンジン
+export {
+  createPvpEngine,
+  runPvpBattle,
+  resolveActionOrder,
+  computeSuddenDeathMult,
+  woundMultiplier,
+  clonePvpMods,
+} from './pvpEngine';
+
+export {
+  PVP_RULESET_V1,
+  PVP_RULESET_LATEST,
+  getPvpRuleset,
+  listPvpRulesetVersions,
+} from './pvp/ruleset';
+
+export type {
+  PvpRuleset,
+  PvpStatusResistMode,
+  PvpPoisonResistTarget,
+  PvpWarlordEnragePhase,
+} from './pvp/ruleset';
+
+export {
+  createPvpRngStreams,
+  derivePvpSeed,
+  assertValidPvpSeed,
+} from './pvp/rng';
+
+export type { PvpRngStreams } from './pvp/rng';
+
+export type {
+  PvpBattleInput,
+  PvpBattleState,
+  PvpBuildSnapshot,
+  PvpCombatant,
+  PvpEndReason,
+  PvpEngine,
+  PvpEvent,
+  PvpEventType,
+  PvpResult,
+  PvpSideIndex,
+  PvpWinner,
+} from './pvp/types';
 
 // ボス行動（ID定義）
 export type { BossSkillId } from './bossBehaviors';
