@@ -109,6 +109,12 @@ const applyEventsToUiState = (state: UiState, events: BattleEvent[]): void => {
         state.playerHp = Math.max(0, state.playerHp - damage);
         break;
       }
+      case 'deferred_damage': {
+        // 遅延ダメージ（damageDeferPct）もプレイヤーHPを削る
+        const damage = Number(data.damage ?? 0);
+        state.playerHp = Math.max(0, state.playerHp - damage);
+        break;
+      }
       case 'enemy_defeated':
         state.winner = 'player';
         break;
