@@ -446,13 +446,15 @@ export default function UberTreeScreen() {
               <View style={styles.infoPanelHeader}>
                 <View style={[styles.routeDot, { backgroundColor: ROUTE_COLORS[selectedNode.route] }]} />
                 <Text style={[styles.infoPanelTitle, { color: ROUTE_COLORS[selectedNode.route] }]}>
-                  {selectedNode.name}
+                  {t(`uberNodes.${selectedNode.id}.name`, { defaultValue: selectedNode.name })}
                 </Text>
                 {isUnlocked(selectedNode.id) && (
                   <Text style={styles.unlockedBadge}>{t('uberTree.unlocked')}</Text>
                 )}
               </View>
-              <Text style={styles.infoPanelDescription}>{selectedNode.description}</Text>
+              <Text style={styles.infoPanelDescription}>
+                {t(`uberNodes.${selectedNode.id}.description`, { defaultValue: selectedNode.description })}
+              </Text>
 
               {selectedNode.id !== UBER_TREE_START_NODE_ID && !isUnlocked(selectedNode.id) && (
                 <View style={styles.infoPanelActions}>

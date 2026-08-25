@@ -1436,6 +1436,9 @@
     },
     "final_land_evasion_accessory": {
       "name": "End Charm"
+    },
+    "uber_uber_demon_sigil": {
+      "name": "UberUber Sigil of Hellfire"
     }
   },
   "monsters": {
@@ -1744,6 +1747,9 @@
     },
     "uber_uber_demon_lord": {
       "name": "UberUber Demon Lord"
+    },
+    "kelpy": {
+      "name": "Kelpie"
     }
   },
   "skills": {
@@ -3498,6 +3504,58 @@
     "sustain_5_defer1": {
       "name": "Deflection",
       "description": "Damage defer +3%"
+    },
+    "ice_1": {
+      "name": "Ice Basics",
+      "description": "HP +15, Chill chance +3%"
+    },
+    "ice_2": {
+      "name": "Frost Knowledge I",
+      "description": "Chill chance +3%"
+    },
+    "ice_3": {
+      "name": "Ice Barrier",
+      "description": "DEF +5, Chill effect +10%"
+    },
+    "ice_4": {
+      "name": "Lasting Frost",
+      "description": "Chill duration +20%"
+    },
+    "ice_5": {
+      "name": "Frost Knowledge II",
+      "description": "Chill chance +5%"
+    },
+    "ice_6": {
+      "name": "Sign of Freezing",
+      "description": "Freeze chance +2%"
+    },
+    "ice_7": {
+      "name": "HP Up",
+      "description": "HP +20, DEF +3"
+    },
+    "ice_key1": {
+      "name": "Freezing Dominion",
+      "description": "[Keystone] Chill chance +8%, Chill effect +20%, Freeze chance +2%"
+    },
+    "ice_8": {
+      "name": "Abyssal Chill",
+      "description": "Chill chance +5%, Chill effect +15%"
+    },
+    "ice_9": {
+      "name": "Permafrost",
+      "description": "Freeze chance +2%, Freeze duration +30%"
+    },
+    "ice_10": {
+      "name": "Ice Armor",
+      "description": "DEF +10, Damage defer +5%, Chill duration +25%"
+    },
+    "ice_final1": {
+      "name": "Absolute Zero",
+      "description": "Chill chance +5%, Freeze chance +2%, Chill effect +25%"
+    },
+    "ice_final2": {
+      "name": "Glacial End",
+      "description": "Freeze chance +2%, Freeze duration +50%, HP +15% increased"
     }
   },
   "ranking": {
@@ -3724,6 +3782,108 @@
       "venom": "Path of Venom",
       "inferno": "Path of Inferno",
       "frostbite": "Path of Frostbite"
+    }
+  },
+  "uberNodes": {
+    "uber_start": {
+      "name": "Origin of Awakening",
+      "description": ""
+    },
+    "uber_atk_1": {
+      "name": "Seed of Destruction",
+      "description": "ATK +5% increased"
+    },
+    "uber_atk_2": {
+      "name": "Torrent of Destruction",
+      "description": "ATK +8% increased"
+    },
+    "uber_atk_3": {
+      "name": "Apex of Destruction",
+      "description": "ATK 10% more"
+    },
+    "uber_atk_4": {
+      "name": "Heavy Strike Awakening",
+      "description": "Heavy Strike: Attack Speed -20%, leech 100% of damage dealt as HP. Each attack applies a Grievous stack (max 5). Each Grievous stack multiplies damage by 1.2x. Loses 1 stack every 4 enemy actions."
+    },
+    "uber_def_1": {
+      "name": "Foundation of Immortality",
+      "description": "HP +10% increased"
+    },
+    "uber_def_2": {
+      "name": "Will of Steel",
+      "description": "DEF +10% increased, Damage defer +8%"
+    },
+    "uber_def_3": {
+      "name": "Fountain of Life",
+      "description": "HP regen/sec +5, HP 5% more"
+    },
+    "uber_def_4": {
+      "name": "Guardian Awakening",
+      "description": "Defense Conversion: adds DEF + half of Max HP to ATK"
+    },
+    "uber_crit_1": {
+      "name": "Keen Edge",
+      "description": "Critical Chance +5%"
+    },
+    "uber_crit_2": {
+      "name": "Knowledge of Vitals",
+      "description": "Critical Damage +15%"
+    },
+    "uber_crit_3": {
+      "name": "Mind's Eye",
+      "description": "Critical Chance +3%, Attack Speed +5%"
+    },
+    "uber_crit_4": {
+      "name": "Twin Strike Awakening",
+      "description": "Crit Follow-up: a critical hit triggers a follow-up attack dealing 100% ATK"
+    },
+    "uber_poison_1": {
+      "name": "Venomous Aptitude",
+      "description": "Poison Chance +5%"
+    },
+    "uber_poison_2": {
+      "name": "Corroding Fangs",
+      "description": "Poison Damage +15%"
+    },
+    "uber_poison_3": {
+      "name": "Seeping Venom Mist",
+      "description": "Poison Chance +5%, Poison Damage +10%"
+    },
+    "uber_poison_4": {
+      "name": "Venom Awakening",
+      "description": "Venomous Instinct: each poison application inflicts 1.5 stacks. Fractions accumulate and grant an extra stack once they reach 1."
+    },
+    "uber_ignite_1": {
+      "name": "Infernal Spark",
+      "description": "Ignite Chance +5%"
+    },
+    "uber_ignite_2": {
+      "name": "Scorching Flame",
+      "description": "Ignite Damage +15%"
+    },
+    "uber_ignite_3": {
+      "name": "Blazing Fury",
+      "description": "Ignite Chance +5%, Ignite Damage +10%"
+    },
+    "uber_ignite_4": {
+      "name": "Inferno Awakening",
+      "description": "Searing Acceleration: Ignite duration is halved and its damage interval is halved as well."
+    },
+    "uber_ice_1": {
+      "name": "Breath of Frost",
+      "description": "Chill Chance +5%"
+    },
+    "uber_ice_2": {
+      "name": "Freezing Air",
+      "description": "Chill Chance +3%, Freeze Chance +1%"
+    },
+    "uber_ice_3": {
+      "name": "Prison of Ice Crystals",
+      "description": "Freeze Chance +1%, Chill effect +15%"
+    },
+    "uber_ice_4": {
+      "name": "Frostbite Awakening",
+      "description": "Frostbite Blade: deal 1.5x damage to Chilled or Frozen enemies"
     }
   },
   "forceUpdate": {

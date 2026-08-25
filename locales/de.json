@@ -1436,6 +1436,9 @@
     },
     "final_land_evasion_accessory": {
       "name": "Ende Talisman"
+    },
+    "uber_uber_demon_sigil": {
+      "name": "UberUber Höllenfeuer-Siegel"
     }
   },
   "monsters": {
@@ -1744,6 +1747,9 @@
     },
     "uber_uber_demon_lord": {
       "name": "UberUber Dämonenherrscher"
+    },
+    "kelpy": {
+      "name": "Kelpie"
     }
   },
   "skills": {
@@ -3498,6 +3504,58 @@
     "sustain_5_defer1": {
       "name": "Parade",
       "description": "Schadensverzögerung +3%"
+    },
+    "ice_1": {
+      "name": "Eis-Grundlagen",
+      "description": "HP +15, Kältechance +3%"
+    },
+    "ice_2": {
+      "name": "Frostwissen I",
+      "description": "Kältechance +3%"
+    },
+    "ice_3": {
+      "name": "Eisbarriere",
+      "description": "DEF +5, Kälteeffekt +10%"
+    },
+    "ice_4": {
+      "name": "Anhaltender Frost",
+      "description": "Kältedauer +20%"
+    },
+    "ice_5": {
+      "name": "Frostwissen II",
+      "description": "Kältechance +5%"
+    },
+    "ice_6": {
+      "name": "Anzeichen des Frosts",
+      "description": "Frostchance +2%"
+    },
+    "ice_7": {
+      "name": "HP erhöhen",
+      "description": "HP +20, DEF +3"
+    },
+    "ice_key1": {
+      "name": "Frostige Herrschaft",
+      "description": "[Schlüsselstein] Kältechance +8%, Kälteeffekt +20%, Frostchance +2%"
+    },
+    "ice_8": {
+      "name": "Abgrundkälte",
+      "description": "Kältechance +5%, Kälteeffekt +15%"
+    },
+    "ice_9": {
+      "name": "Permafrost",
+      "description": "Frostchance +2%, Frostdauer +30%"
+    },
+    "ice_10": {
+      "name": "Eisrüstung",
+      "description": "DEF +10, Schadensverzögerung +5%, Kältedauer +25%"
+    },
+    "ice_final1": {
+      "name": "Absoluter Nullpunkt",
+      "description": "Kältechance +5%, Frostchance +2%, Kälteeffekt +25%"
+    },
+    "ice_final2": {
+      "name": "Ende des Gletschers",
+      "description": "Frostchance +2%, Frostdauer +50%, HP +15% increased"
     }
   },
   "ranking": {
@@ -3724,6 +3782,108 @@
       "venom": "Pfad des Gifts",
       "inferno": "Pfad des Infernos",
       "frostbite": "Pfad des Frostbiss"
+    }
+  },
+  "uberNodes": {
+    "uber_start": {
+      "name": "Ursprung des Erwachens",
+      "description": ""
+    },
+    "uber_atk_1": {
+      "name": "Keim der Zerstörung",
+      "description": "ATK +5% increased"
+    },
+    "uber_atk_2": {
+      "name": "Strom der Zerstörung",
+      "description": "ATK +8% increased"
+    },
+    "uber_atk_3": {
+      "name": "Gipfel der Zerstörung",
+      "description": "ATK 10% more"
+    },
+    "uber_atk_4": {
+      "name": "Erwachen des Schweren Schlags",
+      "description": "Schwerer Schlag: Angriffsgeschw. -20%, 100% des verursachten Schadens werden als HP geraubt. Jeder Angriff gewährt einen Schwere-Wunde-Stapel (max. 5). Jeder Stapel multipliziert den Schaden um das 1,2-fache. Alle 4 Gegneraktionen verfällt 1 Stapel."
+    },
+    "uber_def_1": {
+      "name": "Fundament der Unsterblichkeit",
+      "description": "HP +10% increased"
+    },
+    "uber_def_2": {
+      "name": "Wille aus Stahl",
+      "description": "DEF +10% increased, Schadensverzögerung +8%"
+    },
+    "uber_def_3": {
+      "name": "Quell des Lebens",
+      "description": "HP-Regeneration/s +5, HP 5% more"
+    },
+    "uber_def_4": {
+      "name": "Erwachen des Schutzes",
+      "description": "Verteidigungswandlung: DEF + die Hälfte der max. HP werden dem ATK hinzugefügt"
+    },
+    "uber_crit_1": {
+      "name": "Scharfe Klinge",
+      "description": "Crit Rate +5%"
+    },
+    "uber_crit_2": {
+      "name": "Wissen um die Schwachstelle",
+      "description": "Crit DMG +15%"
+    },
+    "uber_crit_3": {
+      "name": "Geistiges Auge",
+      "description": "Crit Rate +3%, Angriffsgeschw. +5%"
+    },
+    "uber_crit_4": {
+      "name": "Erwachen des Doppelschlags",
+      "description": "Krit Nachschlag: Bei einem kritischen Treffer folgt ein Nachschlag mit 100% ATK"
+    },
+    "uber_poison_1": {
+      "name": "Begabung für Gift",
+      "description": "Giftchance +5%"
+    },
+    "uber_poison_2": {
+      "name": "Zersetzende Giftzähne",
+      "description": "Giftschaden +15%"
+    },
+    "uber_poison_3": {
+      "name": "Durchdringender Giftnebel",
+      "description": "Giftchance +5%, Giftschaden +10%"
+    },
+    "uber_poison_4": {
+      "name": "Erwachen des Gifts",
+      "description": "Giftinstinkt: Jede Giftanwendung verursacht 1,5 Stapel. Bruchteile werden angesammelt und gewähren bei 1 einen zusätzlichen Stapel."
+    },
+    "uber_ignite_1": {
+      "name": "Zündung des Infernos",
+      "description": "Entzündungschance +5%"
+    },
+    "uber_ignite_2": {
+      "name": "Glühende Flamme",
+      "description": "Entzündungsschaden +15%"
+    },
+    "uber_ignite_3": {
+      "name": "Lodernder Zorn",
+      "description": "Entzündungschance +5%, Entzündungsschaden +10%"
+    },
+    "uber_ignite_4": {
+      "name": "Erwachen des Infernos",
+      "description": "Sengende Beschleunigung: Die Dauer der Entzündung wird halbiert, ebenso das Schadensintervall."
+    },
+    "uber_ice_1": {
+      "name": "Hauch des Frosts",
+      "description": "Kältechance +5%"
+    },
+    "uber_ice_2": {
+      "name": "Eisige Luft",
+      "description": "Kältechance +3%, Frostchance +1%"
+    },
+    "uber_ice_3": {
+      "name": "Kerker aus Eiskristall",
+      "description": "Frostchance +1%, Kälteeffekt +15%"
+    },
+    "uber_ice_4": {
+      "name": "Erwachen des Frosts",
+      "description": "Frostbiss-Klinge: 1,5-facher Schaden gegen unterkühlte oder eingefrorene Gegner"
     }
   },
   "forceUpdate": {

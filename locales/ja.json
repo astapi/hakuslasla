@@ -1476,6 +1476,9 @@
     },
     "final_land_evasion_accessory": {
       "name": "終焉の護符"
+    },
+    "uber_uber_demon_sigil": {
+      "name": "UberUber 業炎の魔印"
     }
   },
   "monsters": {
@@ -1784,6 +1787,9 @@
     },
     "uber_uber_demon_lord": {
       "name": "UberUber 魔王"
+    },
+    "kelpy": {
+      "name": "ケルピー"
     }
   },
   "skills": {
@@ -3538,6 +3544,58 @@
     "sustain_5_defer1": {
       "name": "受け流し",
       "description": "ダメージ遅延 +3%"
+    },
+    "ice_1": {
+      "name": "氷の心得",
+      "description": "HP +15, チル付与率 +3%"
+    },
+    "ice_2": {
+      "name": "冷気の知識 I",
+      "description": "チル付与率 +3%"
+    },
+    "ice_3": {
+      "name": "氷の防壁",
+      "description": "DEF +5, チル効果 +10%"
+    },
+    "ice_4": {
+      "name": "冷気持続",
+      "description": "チル持続時間 +20%"
+    },
+    "ice_5": {
+      "name": "冷気の知識 II",
+      "description": "チル付与率 +5%"
+    },
+    "ice_6": {
+      "name": "凍結の兆し",
+      "description": "フリーズ確率 +2%"
+    },
+    "ice_7": {
+      "name": "体力強化",
+      "description": "HP +20, DEF +3"
+    },
+    "ice_key1": {
+      "name": "凍てつく支配",
+      "description": "【キーストーン】チル付与率 +8%, チル効果 +20%, フリーズ確率 +2%"
+    },
+    "ice_8": {
+      "name": "深淵の冷気",
+      "description": "チル付与率 +5%, チル効果 +15%"
+    },
+    "ice_9": {
+      "name": "永久凍土",
+      "description": "フリーズ確率 +2%, フリーズ持続時間 +30%"
+    },
+    "ice_10": {
+      "name": "氷の鎧",
+      "description": "DEF +10, ダメージ遅延 +5%, チル持続時間 +25%"
+    },
+    "ice_final1": {
+      "name": "絶対零度",
+      "description": "チル付与率 +5%, フリーズ確率 +2%, チル効果 +25%"
+    },
+    "ice_final2": {
+      "name": "氷河の終焉",
+      "description": "フリーズ確率 +2%, フリーズ持続時間 +50%, HP +15% increased"
     }
   },
   "ranking": {
@@ -3764,6 +3822,108 @@
       "venom": "猛毒の道",
       "inferno": "業火の道",
       "frostbite": "氷結の道"
+    }
+  },
+  "uberNodes": {
+    "uber_start": {
+      "name": "覚醒の起点",
+      "description": ""
+    },
+    "uber_atk_1": {
+      "name": "破壊の萌芽",
+      "description": "ATK +5% increased"
+    },
+    "uber_atk_2": {
+      "name": "破壊の奔流",
+      "description": "ATK +8% increased"
+    },
+    "uber_atk_3": {
+      "name": "破壊の頂点",
+      "description": "ATK 10% more"
+    },
+    "uber_atk_4": {
+      "name": "重撃の覚醒",
+      "description": "重撃: 攻撃速度-20%、与ダメージの100%をHP吸収。攻撃ごとに重傷スタック付与(上限5)。重傷1スタックごとにダメージ1.2倍。敵行動4回で1スタック減少。"
+    },
+    "uber_def_1": {
+      "name": "不滅の礎",
+      "description": "HP +10% increased"
+    },
+    "uber_def_2": {
+      "name": "鋼の意志",
+      "description": "DEF +10% increased, ダメージ遅延 +8%"
+    },
+    "uber_def_3": {
+      "name": "生命の泉",
+      "description": "毎秒HP回復 +5, HP 5% more"
+    },
+    "uber_def_4": {
+      "name": "護りの覚醒",
+      "description": "防御転換: DEF + 最大HPの半分をATKに追加"
+    },
+    "uber_crit_1": {
+      "name": "鋭利なる刃",
+      "description": "クリティカル率 +5%"
+    },
+    "uber_crit_2": {
+      "name": "急所の知識",
+      "description": "クリティカルダメージ +15%"
+    },
+    "uber_crit_3": {
+      "name": "心眼",
+      "description": "クリティカル率 +3%, 攻撃速度 +5%"
+    },
+    "uber_crit_4": {
+      "name": "双撃の覚醒",
+      "description": "クリティカル追撃: クリティカル時にATK100%の追撃を行う"
+    },
+    "uber_poison_1": {
+      "name": "猛毒の素養",
+      "description": "毒付与率 +5%"
+    },
+    "uber_poison_2": {
+      "name": "蝕む毒牙",
+      "description": "毒ダメージ +15%"
+    },
+    "uber_poison_3": {
+      "name": "浸透する毒霧",
+      "description": "毒付与率 +5%, 毒ダメージ +10%"
+    },
+    "uber_poison_4": {
+      "name": "猛毒の覚醒",
+      "description": "猛毒の本能: 1回の毒付与で1.5スタックを与える。端数は蓄積され、1になると追加スタックが付与される。"
+    },
+    "uber_ignite_1": {
+      "name": "業火の点火",
+      "description": "発火確率 +5%"
+    },
+    "uber_ignite_2": {
+      "name": "灼熱の炎",
+      "description": "発火ダメージ +15%"
+    },
+    "uber_ignite_3": {
+      "name": "燃え盛る怒り",
+      "description": "発火確率 +5%, 発火ダメージ +10%"
+    },
+    "uber_ignite_4": {
+      "name": "業火の覚醒",
+      "description": "灼熱加速: 発火の継続時間が半分になり、ダメージ間隔も半分になる。"
+    },
+    "uber_ice_1": {
+      "name": "氷結の息吹",
+      "description": "チル付与率 +5%"
+    },
+    "uber_ice_2": {
+      "name": "凍てつく大気",
+      "description": "チル付与率 +3%, フリーズ確率 +1%"
+    },
+    "uber_ice_3": {
+      "name": "氷晶の牢獄",
+      "description": "フリーズ確率 +1%, チル効果強化 +15%"
+    },
+    "uber_ice_4": {
+      "name": "氷結の覚醒",
+      "description": "凍傷の刃: チルまたはフリーズ状態の敵に与えるダメージが1.5倍になる"
     }
   },
   "forceUpdate": {

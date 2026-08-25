@@ -1436,6 +1436,9 @@
     },
     "final_land_evasion_accessory": {
       "name": "终焉护符"
+    },
+    "uber_uber_demon_sigil": {
+      "name": "UberUber 业炎魔印"
     }
   },
   "monsters": {
@@ -1744,6 +1747,9 @@
     },
     "uber_uber_demon_lord": {
       "name": "UberUber 魔王"
+    },
+    "kelpy": {
+      "name": "凯尔派"
     }
   },
   "skills": {
@@ -3498,6 +3504,58 @@
     "sustain_5_defer1": {
       "name": "招架",
       "description": "伤害延迟 +3%"
+    },
+    "ice_1": {
+      "name": "冰之基础",
+      "description": "HP +15, 寒冷概率 +3%"
+    },
+    "ice_2": {
+      "name": "寒气知识 I",
+      "description": "寒冷概率 +3%"
+    },
+    "ice_3": {
+      "name": "冰之壁垒",
+      "description": "DEF +5, 寒冷效果 +10%"
+    },
+    "ice_4": {
+      "name": "寒气持续",
+      "description": "寒冷持续 +20%"
+    },
+    "ice_5": {
+      "name": "寒气知识 II",
+      "description": "寒冷概率 +5%"
+    },
+    "ice_6": {
+      "name": "冻结之兆",
+      "description": "冻结概率 +2%"
+    },
+    "ice_7": {
+      "name": "HP提升",
+      "description": "HP +20, DEF +3"
+    },
+    "ice_key1": {
+      "name": "冰封支配【核心】",
+      "description": "寒冷概率 +8%, 寒冷效果 +20%, 冻结概率 +2%"
+    },
+    "ice_8": {
+      "name": "深渊寒气",
+      "description": "寒冷概率 +5%, 寒冷效果 +15%"
+    },
+    "ice_9": {
+      "name": "永久冻土",
+      "description": "冻结概率 +2%, 冻结持续 +30%"
+    },
+    "ice_10": {
+      "name": "冰之铠甲",
+      "description": "DEF +10, 伤害延迟 +5%, 寒冷持续 +25%"
+    },
+    "ice_final1": {
+      "name": "绝对零度",
+      "description": "寒冷概率 +5%, 冻结概率 +2%, 寒冷效果 +25%"
+    },
+    "ice_final2": {
+      "name": "冰河终焉",
+      "description": "冻结概率 +2%, 冻结持续 +50%, HP +15% increased"
     }
   },
   "ranking": {
@@ -3724,6 +3782,108 @@
       "venom": "剧毒之路",
       "inferno": "业火之路",
       "frostbite": "冰封之路"
+    }
+  },
+  "uberNodes": {
+    "uber_start": {
+      "name": "觉醒起点",
+      "description": ""
+    },
+    "uber_atk_1": {
+      "name": "破坏之芽",
+      "description": "ATK +5% increased"
+    },
+    "uber_atk_2": {
+      "name": "破坏洪流",
+      "description": "ATK +8% increased"
+    },
+    "uber_atk_3": {
+      "name": "破坏之巅",
+      "description": "ATK 10% more"
+    },
+    "uber_atk_4": {
+      "name": "重击觉醒",
+      "description": "重击：攻速 -20%，将造成伤害的 100% 吸收为HP。每次攻击附加重伤层数（上限5）。每层重伤使伤害 ×1.2。敌人行动4次减少1层。"
+    },
+    "uber_def_1": {
+      "name": "不灭之基",
+      "description": "HP +10% increased"
+    },
+    "uber_def_2": {
+      "name": "钢铁意志",
+      "description": "DEF +10% increased，伤害延迟 +8%"
+    },
+    "uber_def_3": {
+      "name": "生命之泉",
+      "description": "每秒HP回复 +5，HP 5% more"
+    },
+    "uber_def_4": {
+      "name": "守护觉醒",
+      "description": "防御转换：将 DEF + 最大HP的一半追加到 ATK"
+    },
+    "uber_crit_1": {
+      "name": "锐利之刃",
+      "description": "Crit 几率 +5%"
+    },
+    "uber_crit_2": {
+      "name": "要害知识",
+      "description": "Crit DMG +15%"
+    },
+    "uber_crit_3": {
+      "name": "心眼",
+      "description": "Crit 几率 +3%，攻速 +5%"
+    },
+    "uber_crit_4": {
+      "name": "双击觉醒",
+      "description": "暴击追击：暴击时发动 ATK 100% 的追击"
+    },
+    "uber_poison_1": {
+      "name": "剧毒素养",
+      "description": "毒几率 +5%"
+    },
+    "uber_poison_2": {
+      "name": "侵蚀毒牙",
+      "description": "毒伤害 +15%"
+    },
+    "uber_poison_3": {
+      "name": "渗透毒雾",
+      "description": "毒几率 +5%，毒伤害 +10%"
+    },
+    "uber_poison_4": {
+      "name": "剧毒觉醒",
+      "description": "剧毒本能：单次施毒附加1.5层。小数部分会累积，达到1时额外附加1层。"
+    },
+    "uber_ignite_1": {
+      "name": "业火点燃",
+      "description": "点燃几率 +5%"
+    },
+    "uber_ignite_2": {
+      "name": "灼热之炎",
+      "description": "点燃伤害 +15%"
+    },
+    "uber_ignite_3": {
+      "name": "燃烧之怒",
+      "description": "点燃几率 +5%，点燃伤害 +10%"
+    },
+    "uber_ignite_4": {
+      "name": "业火觉醒",
+      "description": "灼热加速：点燃的持续时间减半，伤害间隔也减半。"
+    },
+    "uber_ice_1": {
+      "name": "冰封气息",
+      "description": "寒冷几率 +5%"
+    },
+    "uber_ice_2": {
+      "name": "冻结大气",
+      "description": "寒冷几率 +3%，冻结概率 +1%"
+    },
+    "uber_ice_3": {
+      "name": "冰晶牢狱",
+      "description": "冻结概率 +1%，寒冷效果 +15%"
+    },
+    "uber_ice_4": {
+      "name": "冰封觉醒",
+      "description": "冻伤之刃：对寒冷或冻结状态的敌人造成的伤害变为1.5倍"
     }
   },
   "forceUpdate": {
