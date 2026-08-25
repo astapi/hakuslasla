@@ -1436,6 +1436,9 @@
     },
     "final_land_evasion_accessory": {
       "name": "Fin - Charme"
+    },
+    "uber_uber_demon_sigil": {
+      "name": "Sceau du Feu Infernal UberUber"
     }
   },
   "monsters": {
@@ -1744,6 +1747,9 @@
     },
     "uber_uber_demon_lord": {
       "name": "UberUber Seigneur démon"
+    },
+    "kelpy": {
+      "name": "Kelpie"
     }
   },
   "skills": {
@@ -3498,6 +3504,58 @@
     "sustain_5_defer1": {
       "name": "Déviation",
       "description": "Dégâts différés +3%"
+    },
+    "ice_1": {
+      "name": "Bases de la glace",
+      "description": "HP +15, Chance de froid +3%"
+    },
+    "ice_2": {
+      "name": "Connaissance du froid I",
+      "description": "Chance de froid +3%"
+    },
+    "ice_3": {
+      "name": "Barrière de glace",
+      "description": "DEF +5, Effet de froid +10%"
+    },
+    "ice_4": {
+      "name": "Froid persistant",
+      "description": "Durée de froid +20%"
+    },
+    "ice_5": {
+      "name": "Connaissance du froid II",
+      "description": "Chance de froid +5%"
+    },
+    "ice_6": {
+      "name": "Signe de gel",
+      "description": "Chance de gel +2%"
+    },
+    "ice_7": {
+      "name": "HP Up",
+      "description": "HP +20, DEF +3"
+    },
+    "ice_key1": {
+      "name": "Domination glaciale",
+      "description": "[Keystone] Chance de froid +8%, Effet de froid +20%, Chance de gel +2%"
+    },
+    "ice_8": {
+      "name": "Froid abyssal",
+      "description": "Chance de froid +5%, Effet de froid +15%"
+    },
+    "ice_9": {
+      "name": "Permafrost",
+      "description": "Chance de gel +2%, Durée de gel +30%"
+    },
+    "ice_10": {
+      "name": "Armure de glace",
+      "description": "DEF +10, Dégâts différés +5%, Durée de froid +25%"
+    },
+    "ice_final1": {
+      "name": "Zéro absolu",
+      "description": "Chance de froid +5%, Chance de gel +2%, Effet de froid +25%"
+    },
+    "ice_final2": {
+      "name": "Fin glaciaire",
+      "description": "Chance de gel +2%, Durée de gel +50%, HP +15% increased"
     }
   },
   "ranking": {
@@ -3724,6 +3782,108 @@
       "venom": "Voie du Venin",
       "inferno": "Voie de l'Enfer",
       "frostbite": "Voie du Givre"
+    }
+  },
+  "uberNodes": {
+    "uber_start": {
+      "name": "Origine de l'Éveil",
+      "description": ""
+    },
+    "uber_atk_1": {
+      "name": "Germe de la Destruction",
+      "description": "ATK +5% increased"
+    },
+    "uber_atk_2": {
+      "name": "Torrent de Destruction",
+      "description": "ATK +8% increased"
+    },
+    "uber_atk_3": {
+      "name": "Apogée de la Destruction",
+      "description": "ATK 10% more"
+    },
+    "uber_atk_4": {
+      "name": "Éveil du Coup Lourd",
+      "description": "Coup Lourd : Vitesse d'attaque -20%, vole 100% des dégâts infligés en HP. Chaque attaque applique une charge de Blessure Grave (max. 5). Chaque charge multiplie les dégâts par 1,2. Perd 1 charge toutes les 4 actions ennemies."
+    },
+    "uber_def_1": {
+      "name": "Fondation de l'Immortalité",
+      "description": "HP +10% increased"
+    },
+    "uber_def_2": {
+      "name": "Volonté d'Acier",
+      "description": "DEF +10% increased, Dégâts différés +8%"
+    },
+    "uber_def_3": {
+      "name": "Source de Vie",
+      "description": "Régén. HP/s +5, HP 5% more"
+    },
+    "uber_def_4": {
+      "name": "Éveil de la Garde",
+      "description": "Conversion Défensive : ajoute DEF + la moitié des HP max à l'ATK"
+    },
+    "uber_crit_1": {
+      "name": "Lame Acérée",
+      "description": "Chance de Crit +5%"
+    },
+    "uber_crit_2": {
+      "name": "Connaissance des Points Vitaux",
+      "description": "DMG Crit +15%"
+    },
+    "uber_crit_3": {
+      "name": "Œil de l'Esprit",
+      "description": "Chance de Crit +3%, Vitesse d'attaque +5%"
+    },
+    "uber_crit_4": {
+      "name": "Éveil du Double Coup",
+      "description": "Crit poursuite : un coup critique déclenche une poursuite infligeant 100% de l'ATK"
+    },
+    "uber_poison_1": {
+      "name": "Aptitude au Venin",
+      "description": "Chance de poison +5%"
+    },
+    "uber_poison_2": {
+      "name": "Crocs Corrosifs",
+      "description": "Dégâts de poison +15%"
+    },
+    "uber_poison_3": {
+      "name": "Brume Venimeuse Pénétrante",
+      "description": "Chance de poison +5%, Dégâts de poison +10%"
+    },
+    "uber_poison_4": {
+      "name": "Éveil du Venin",
+      "description": "Instinct Venimeux : chaque application de poison inflige 1,5 charge. Les fractions s'accumulent et octroient une charge supplémentaire à 1."
+    },
+    "uber_ignite_1": {
+      "name": "Étincelle de l'Enfer",
+      "description": "Chance d'Ignite +5%"
+    },
+    "uber_ignite_2": {
+      "name": "Flamme Brûlante",
+      "description": "Dégâts d'Ignite +15%"
+    },
+    "uber_ignite_3": {
+      "name": "Fureur Ardente",
+      "description": "Chance d'Ignite +5%, Dégâts d'Ignite +10%"
+    },
+    "uber_ignite_4": {
+      "name": "Éveil de l'Enfer",
+      "description": "Accélération Brûlante : la durée d'Ignite est réduite de moitié, ainsi que son intervalle de dégâts."
+    },
+    "uber_ice_1": {
+      "name": "Souffle du Givre",
+      "description": "Chance de froid +5%"
+    },
+    "uber_ice_2": {
+      "name": "Air Glacial",
+      "description": "Chance de froid +3%, Chance de gel +1%"
+    },
+    "uber_ice_3": {
+      "name": "Prison de Cristal de Glace",
+      "description": "Chance de gel +1%, Effet de froid +15%"
+    },
+    "uber_ice_4": {
+      "name": "Éveil du Givre",
+      "description": "Lame de Givre : inflige 1,5× de dégâts aux ennemis refroidis ou gelés"
     }
   },
   "forceUpdate": {

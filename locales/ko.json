@@ -1436,6 +1436,9 @@
     },
     "final_land_evasion_accessory": {
       "name": "종언의 부적"
+    },
+    "uber_uber_demon_sigil": {
+      "name": "UberUber 업염의 마인"
     }
   },
   "monsters": {
@@ -1744,6 +1747,9 @@
     },
     "uber_uber_demon_lord": {
       "name": "UberUber 마왕"
+    },
+    "kelpy": {
+      "name": "켈피"
     }
   },
   "skills": {
@@ -3498,6 +3504,58 @@
     "sustain_5_defer1": {
       "name": "받아넘기기",
       "description": "피해 지연 +3%"
+    },
+    "ice_1": {
+      "name": "얼음 기초",
+      "description": "HP +15, 냉각 확률 +3%"
+    },
+    "ice_2": {
+      "name": "냉기 지식 I",
+      "description": "냉각 확률 +3%"
+    },
+    "ice_3": {
+      "name": "얼음 방벽",
+      "description": "DEF +5, 냉각 효과 +10%"
+    },
+    "ice_4": {
+      "name": "냉기 지속",
+      "description": "냉각 지속 +20%"
+    },
+    "ice_5": {
+      "name": "냉기 지식 II",
+      "description": "냉각 확률 +5%"
+    },
+    "ice_6": {
+      "name": "빙결의 조짐",
+      "description": "빙결 확률 +2%"
+    },
+    "ice_7": {
+      "name": "HP 증가",
+      "description": "HP +20, DEF +3"
+    },
+    "ice_key1": {
+      "name": "얼어붙는 지배",
+      "description": "[키스톤] 냉각 확률 +8%, 냉각 효과 +20%, 빙결 확률 +2%"
+    },
+    "ice_8": {
+      "name": "심연의 냉기",
+      "description": "냉각 확률 +5%, 냉각 효과 +15%"
+    },
+    "ice_9": {
+      "name": "영구 동토",
+      "description": "빙결 확률 +2%, 빙결 지속 +30%"
+    },
+    "ice_10": {
+      "name": "얼음 갑옷",
+      "description": "DEF +10, 피해 지연 +5%, 냉각 지속 +25%"
+    },
+    "ice_final1": {
+      "name": "절대영도",
+      "description": "냉각 확률 +5%, 빙결 확률 +2%, 냉각 효과 +25%"
+    },
+    "ice_final2": {
+      "name": "빙하의 종언",
+      "description": "빙결 확률 +2%, 빙결 지속 +50%, HP +15% increased"
     }
   },
   "ranking": {
@@ -3724,6 +3782,108 @@
       "venom": "맹독의 길",
       "inferno": "업화의 길",
       "frostbite": "빙결의 길"
+    }
+  },
+  "uberNodes": {
+    "uber_start": {
+      "name": "각성의 기점",
+      "description": ""
+    },
+    "uber_atk_1": {
+      "name": "파괴의 씨앗",
+      "description": "ATK +5% increased"
+    },
+    "uber_atk_2": {
+      "name": "파괴의 격류",
+      "description": "ATK +8% increased"
+    },
+    "uber_atk_3": {
+      "name": "파괴의 정점",
+      "description": "ATK 10% more"
+    },
+    "uber_atk_4": {
+      "name": "강타의 각성",
+      "description": "강타: 공격 속도 -20%, 준 피해의 100%를 HP로 흡수. 공격마다 중상 스택 부여(최대 5). 중상 1스택당 피해 1.2배. 적 행동 4회마다 1스택 감소."
+    },
+    "uber_def_1": {
+      "name": "불멸의 초석",
+      "description": "HP +10% increased"
+    },
+    "uber_def_2": {
+      "name": "강철의 의지",
+      "description": "DEF +10% increased, 피해 지연 +8%"
+    },
+    "uber_def_3": {
+      "name": "생명의 샘",
+      "description": "초당 HP 회복 +5, HP 5% more"
+    },
+    "uber_def_4": {
+      "name": "수호의 각성",
+      "description": "방어 전환: DEF + 최대 HP의 절반을 ATK에 추가"
+    },
+    "uber_crit_1": {
+      "name": "예리한 칼날",
+      "description": "Crit 확률 +5%"
+    },
+    "uber_crit_2": {
+      "name": "급소의 지식",
+      "description": "Crit DMG +15%"
+    },
+    "uber_crit_3": {
+      "name": "심안",
+      "description": "Crit 확률 +3%, 공격 속도 +5%"
+    },
+    "uber_crit_4": {
+      "name": "쌍격의 각성",
+      "description": "크리 추격: 치명타 시 ATK 100%의 추격을 가한다"
+    },
+    "uber_poison_1": {
+      "name": "맹독의 소양",
+      "description": "독 확률 +5%"
+    },
+    "uber_poison_2": {
+      "name": "잠식하는 독니",
+      "description": "독 피해 +15%"
+    },
+    "uber_poison_3": {
+      "name": "침투하는 독안개",
+      "description": "독 확률 +5%, 독 피해 +10%"
+    },
+    "uber_poison_4": {
+      "name": "맹독의 각성",
+      "description": "맹독의 본능: 1회 독 부여로 1.5스택을 부여한다. 소수점은 누적되어 1이 되면 추가 스택이 부여된다."
+    },
+    "uber_ignite_1": {
+      "name": "업화의 점화",
+      "description": "점화 확률 +5%"
+    },
+    "uber_ignite_2": {
+      "name": "작열하는 불꽃",
+      "description": "점화 피해 +15%"
+    },
+    "uber_ignite_3": {
+      "name": "타오르는 분노",
+      "description": "점화 확률 +5%, 점화 피해 +10%"
+    },
+    "uber_ignite_4": {
+      "name": "업화의 각성",
+      "description": "작열 가속: 점화의 지속 시간이 절반이 되고, 피해 간격도 절반이 된다."
+    },
+    "uber_ice_1": {
+      "name": "빙결의 숨결",
+      "description": "냉각 확률 +5%"
+    },
+    "uber_ice_2": {
+      "name": "얼어붙는 대기",
+      "description": "냉각 확률 +3%, 빙결 확률 +1%"
+    },
+    "uber_ice_3": {
+      "name": "빙정의 감옥",
+      "description": "빙결 확률 +1%, 냉각 효과 +15%"
+    },
+    "uber_ice_4": {
+      "name": "빙결의 각성",
+      "description": "동상의 칼날: 냉각 또는 빙결 상태의 적에게 주는 피해가 1.5배가 된다"
     }
   },
   "forceUpdate": {

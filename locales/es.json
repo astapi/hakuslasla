@@ -1436,6 +1436,9 @@
     },
     "final_land_evasion_accessory": {
       "name": "Final - Amuleto"
+    },
+    "uber_uber_demon_sigil": {
+      "name": "Sigilo de Fuego Infernal UberUber"
     }
   },
   "monsters": {
@@ -1744,6 +1747,9 @@
     },
     "uber_uber_demon_lord": {
       "name": "UberUber Señor Demonio"
+    },
+    "kelpy": {
+      "name": "Kelpie"
     }
   },
   "skills": {
@@ -3498,6 +3504,58 @@
     "sustain_5_defer1": {
       "name": "Desvío",
       "description": "Daño diferido +3%"
+    },
+    "ice_1": {
+      "name": "Fundamentos de Hielo",
+      "description": "HP +15, Prob. frío +3%"
+    },
+    "ice_2": {
+      "name": "Conocimiento de Frío I",
+      "description": "Prob. frío +3%"
+    },
+    "ice_3": {
+      "name": "Barrera de Hielo",
+      "description": "DEF +5, Efecto frío +10%"
+    },
+    "ice_4": {
+      "name": "Frío Persistente",
+      "description": "Duración frío +20%"
+    },
+    "ice_5": {
+      "name": "Conocimiento de Frío II",
+      "description": "Prob. frío +5%"
+    },
+    "ice_6": {
+      "name": "Indicio de Congelación",
+      "description": "Prob. congelación +2%"
+    },
+    "ice_7": {
+      "name": "HP Arriba",
+      "description": "HP +20, DEF +3"
+    },
+    "ice_key1": {
+      "name": "Dominio Gélido",
+      "description": "[Piedra Angular] Prob. frío +8%, Efecto frío +20%, Prob. congelación +2%"
+    },
+    "ice_8": {
+      "name": "Frío Abisal",
+      "description": "Prob. frío +5%, Efecto frío +15%"
+    },
+    "ice_9": {
+      "name": "Permafrost",
+      "description": "Prob. congelación +2%, Duración congelación +30%"
+    },
+    "ice_10": {
+      "name": "Armadura de Hielo",
+      "description": "DEF +10, Daño diferido +5%, Duración frío +25%"
+    },
+    "ice_final1": {
+      "name": "Cero Absoluto",
+      "description": "Prob. frío +5%, Prob. congelación +2%, Efecto frío +25%"
+    },
+    "ice_final2": {
+      "name": "Fin Glacial",
+      "description": "Prob. congelación +2%, Duración congelación +50%, HP +15% increased"
     }
   },
   "ranking": {
@@ -3724,6 +3782,108 @@
       "venom": "Senda del Veneno",
       "inferno": "Senda del Infierno",
       "frostbite": "Senda de la Escarcha"
+    }
+  },
+  "uberNodes": {
+    "uber_start": {
+      "name": "Origen del Despertar",
+      "description": ""
+    },
+    "uber_atk_1": {
+      "name": "Semilla de la Destrucción",
+      "description": "ATK +5% increased"
+    },
+    "uber_atk_2": {
+      "name": "Torrente de Destrucción",
+      "description": "ATK +8% increased"
+    },
+    "uber_atk_3": {
+      "name": "Cima de la Destrucción",
+      "description": "ATK 10% more"
+    },
+    "uber_atk_4": {
+      "name": "Despertar del Golpe Pesado",
+      "description": "Golpe Pesado: Velocidad de Ataque -20%, roba como HP el 100% del daño infligido. Cada ataque aplica una carga de Herida Grave (máx. 5). Cada carga de Herida Grave multiplica el daño ×1,2. Pierde 1 carga cada 4 acciones del enemigo."
+    },
+    "uber_def_1": {
+      "name": "Cimiento de la Inmortalidad",
+      "description": "HP +10% increased"
+    },
+    "uber_def_2": {
+      "name": "Voluntad de Acero",
+      "description": "DEF +10% increased, Daño diferido +8%"
+    },
+    "uber_def_3": {
+      "name": "Fuente de Vida",
+      "description": "Reg. HP/s +5, HP 5% more"
+    },
+    "uber_def_4": {
+      "name": "Despertar de la Guardia",
+      "description": "Conversión Defensiva: añade DEF + la mitad del HP máximo al ATK"
+    },
+    "uber_crit_1": {
+      "name": "Filo Afilado",
+      "description": "Prob. Crit +5%"
+    },
+    "uber_crit_2": {
+      "name": "Conocimiento de Puntos Vitales",
+      "description": "DMG Crit +15%"
+    },
+    "uber_crit_3": {
+      "name": "Ojo de la Mente",
+      "description": "Prob. Crit +3%, Velocidad de Ataque +5%"
+    },
+    "uber_crit_4": {
+      "name": "Despertar del Golpe Doble",
+      "description": "Golpe crit: al asestar un crítico se realiza un golpe adicional con 100% de ATK"
+    },
+    "uber_poison_1": {
+      "name": "Aptitud Venenosa",
+      "description": "Prob. de Veneno +5%"
+    },
+    "uber_poison_2": {
+      "name": "Colmillos Corrosivos",
+      "description": "Daño de Veneno +15%"
+    },
+    "uber_poison_3": {
+      "name": "Niebla Venenosa Penetrante",
+      "description": "Prob. de Veneno +5%, Daño de Veneno +10%"
+    },
+    "uber_poison_4": {
+      "name": "Despertar del Veneno",
+      "description": "Instinto Venenoso: cada aplicación de veneno inflige 1,5 cargas. Las fracciones se acumulan y otorgan una carga extra al llegar a 1."
+    },
+    "uber_ignite_1": {
+      "name": "Ignición del Infierno",
+      "description": "Prob. de Ignite +5%"
+    },
+    "uber_ignite_2": {
+      "name": "Llama Abrasadora",
+      "description": "Daño de Ignite +15%"
+    },
+    "uber_ignite_3": {
+      "name": "Furia Ardiente",
+      "description": "Prob. de Ignite +5%, Daño de Ignite +10%"
+    },
+    "uber_ignite_4": {
+      "name": "Despertar del Infierno",
+      "description": "Aceleración Abrasadora: la duración de Ignite se reduce a la mitad y su intervalo de daño también."
+    },
+    "uber_ice_1": {
+      "name": "Aliento de Escarcha",
+      "description": "Prob. de frío +5%"
+    },
+    "uber_ice_2": {
+      "name": "Aire Gélido",
+      "description": "Prob. de frío +3%, Prob. congelación +1%"
+    },
+    "uber_ice_3": {
+      "name": "Prisión de Cristal de Hielo",
+      "description": "Prob. congelación +1%, Efecto frío +15%"
+    },
+    "uber_ice_4": {
+      "name": "Despertar de la Escarcha",
+      "description": "Hoja de Escarcha: inflige ×1,5 de daño a enemigos con frío o congelados"
     }
   },
   "forceUpdate": {
